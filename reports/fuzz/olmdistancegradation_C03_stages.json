@@ -1,0 +1,4728 @@
+{
+  "trace-before": {
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "cf15b1af0cbbcaf4d8e7754d2523c7900a9f4d38cb4e01a1e749fb3bc54523af",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "59825c5a0c2531c50c89856d67847cc6a55c258eb419b432aef8b1b52bb26d4a",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "000000003fff000000ff0000",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "000000003fff000000ff0000",
+        "mode": 1,
+        "public_callback_sha256": "a0d7d5da56e5c2729bc0d391bf8c64c131761463729459782ff7cbd397890b1f",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefe7f3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefe7f3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "3fff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000000000",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "00ff00007eff000000000000",
+        "mode": 1,
+        "public_callback_sha256": "27ea1308df8345db13c24da97a8d0a464ec40ebea89372a9fc38f90a7f7151b0",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000ff0000",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "00ff00007eff000000ff0000",
+        "mode": 1,
+        "public_callback_sha256": "0f15850cbf2d565f3a94455c599aa6cc1cff433bde63f7e387f4e783ad6277ed",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      },
+      {
+        "aex_hex": "000000003f4080c0004080c0",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "40",
+          "different_bytes": 9,
+          "different_words": 9,
+          "expected_bytes": 12,
+          "expected_word_hex": "00",
+          "first_byte": 1,
+          "first_word": 1
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "004080c03f1f3f3f00000000",
+        "mode": 2,
+        "public_callback_sha256": "120b86098777852a241402a1901154ad5b9d0b1e4c08dcf42011c7199026ea31",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefe7f3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefe7f3e",
+              "fefeff3d",
+              "fefe7f3e",
+              "fefe7f3e"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "3f4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c000000000",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "3f",
+          "different_bytes": 3,
+          "different_words": 3,
+          "expected_bytes": 12,
+          "expected_word_hex": "40",
+          "first_byte": 5,
+          "first_word": 5
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "004080c07e3f7e7e00000000",
+        "mode": 2,
+        "public_callback_sha256": "e8501e5040aa4abbe9995dc21a1f940cd0e3bd556d843d786ac6ddbecf763529",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "fefe7e3e",
+              "fefefe3e",
+              "fefefe3e"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c0004080c0",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "7f",
+          "different_bytes": 3,
+          "different_words": 3,
+          "expected_bytes": 12,
+          "expected_word_hex": "40",
+          "first_byte": 5,
+          "first_word": 5
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "004080c07e7fffff004080c0",
+        "mode": 2,
+        "public_callback_sha256": "909d962fcef5505ba83ff9d07177e20a8301965cd45f64d3bd3c8d5203c5f9e4",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000003f",
+              "0000803f",
+              "0000803f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  },
+  "trace-cutoff-after": {
+    "family": "layer",
+    "ownership_cutoff_hex": "17b7d138",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "2a6570d0a7473a3e18f9b09f99767ebb13333bcf3270b6ea899302aba5d10bec",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "73142265f1616fa0dfec5000f0f425a303235c4f8d4d548ac8320dd10a815fc0",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "0000000080875018ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000080875018ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "5a2a7dd5eaf5d0abd54ab07b522226308eb08b74b315eeea220e016ad4c2ce92",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "8180003f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "8180003f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "80875018",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a0307eff000000000000",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "ff10a0307eff000000000000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "922a05bdd986f478cbb2ad3c9c0956001e3a576e9a9705cc2f080801fc77d59d",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a030ff875018ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "ff10a030ff875018ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "1d1722179b824563d241e85d6a161f2fbddb2ae6309645a1548705817facd0ff",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "0000803f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff875018",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "0000000080279077ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000080279077ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "2c43e18619c69905b8a89e108e42241444075e74e2d299498ec344934b70bf95",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "8180003f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "8180003f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "80279077",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a0307e4080c000000000",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "ff10a0307e4080c000000000",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "6f435d1c98287cbe1bbad998ec4088864a8ceff6fccc732bed1b3ad18da3fccc",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a030ff279077ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "ff10a030ff279077ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "148eaa392cd625f0bdd717572ef514c6a019d9cdb6b4f720dbad266271fb5026",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "0000803f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff279077",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  },
+  "trace-cutoff-before": {
+    "family": "layer",
+    "ownership_cutoff_hex": "17b7d138",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "7c7583cf80cb5b0f1e78c2975b35269358254d9c697a17e9987a8fbf9c2e4ef2",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "682365ad3681cf73bdc121061974974b69c14b12b4ffbe60229965796163fb69",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "0000000080875018ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000080875018ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "5a2a7dd5eaf5d0abd54ab07b522226308eb08b74b315eeea220e016ad4c2ce92",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "8180003f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "8180003f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "80875018",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a0307eff000000000000",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "ff",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 12,
+          "expected_word_hex": "00",
+          "first_byte": 9,
+          "first_word": 9
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "ff10a0307eff000000ff0000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "922a05bdd986f478cbb2ad3c9c0956001e3a576e9a9705cc2f080801fc77d59d",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a030ff875018ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "ff10a030ff875018ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "1d1722179b824563d241e85d6a161f2fbddb2ae6309645a1548705817facd0ff",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "0000803f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "978f073f",
+              "e441a13e",
+              "4482c13d"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff875018",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "0000000080279077ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000080279077ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "2c43e18619c69905b8a89e108e42241444075e74e2d299498ec344934b70bf95",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "8180003f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "8180003f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "80279077",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a0307e4080c000000000",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "40",
+          "different_bytes": 3,
+          "different_words": 3,
+          "expected_bytes": 12,
+          "expected_word_hex": "00",
+          "first_byte": 9,
+          "first_word": 9
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "ff10a0307e4080c0004080c0",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "6f435d1c98287cbe1bbad998ec4088864a8ceff6fccc732bed1b3ad18da3fccc",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "ff10a030ff279077ff10a030",
+        "aex_mask_hex": "00ffff00",
+        "background": 1,
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "ff10a030ff279077ff10a030",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "148eaa392cd625f0bdd717572ef514c6a019d9cdb6b4f720dbad266271fb5026",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f8180803da1a0203fc1c0403e8000000080000000010000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "0000803f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "e03f203e",
+              "b2a0103f",
+              "cf5ff03e"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff279077",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "0000803f",
+              "8180803d",
+              "a1a0203f",
+              "c1c0403e"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "ff10a030",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  },
+  "trace-layer-final": {
+    "family": "layer",
+    "ownership_cutoff_hex": "17b7d138",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "97ddf4659a3b463f2d37cd2f52e450c09c8a6863466c941a68e098478625b8fa",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "a9f0dcdda189c06e4b809abb2efb2c0b542710851d1c99263797a96e2158b01e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "000000003fff000000ff0000",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "000000003fff000000ff0000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "a0d7d5da56e5c2729bc0d391bf8c64c131761463729459782ff7cbd397890b1f",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefe7f3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefe7f3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "3fff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000000000",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "00ff00007eff000000000000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "27ea1308df8345db13c24da97a8d0a464ec40ebea89372a9fc38f90a7f7151b0",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000ff0000",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "00ff00007eff000000ff0000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "0f15850cbf2d565f3a94455c599aa6cc1cff433bde63f7e387f4e783ad6277ed",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "000000003f4080c0004080c0",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000080808080ffffffff",
+        "inout": 1,
+        "mac_hex": "000000003f4080c0004080c0",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "120b86098777852a241402a1901154ad5b9d0b1e4c08dcf42011c7199026ea31",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefe7f3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefe7f3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "3f4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c000000000",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff0000000000000000",
+        "inout": 2,
+        "mac_hex": "004080c07e4080c000000000",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "e8501e5040aa4abbe9995dc21a1f940cd0e3bd556d843d786ac6ddbecf763529",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c0004080c0",
+        "aex_mask_hex": "00ffff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "004080c07e4080c0004080c0",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "909d962fcef5505ba83ff9d07177e20a8301965cd45f64d3bd3c8d5203c5f9e4",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0804080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180003f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  },
+  "trace-mask-after": {
+    "family": "mask",
+    "ownership_cutoff_hex": "17b7d138",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "7c7583cf80cb5b0f1e78c2975b35269358254d9c697a17e9987a8fbf9c2e4ef2",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "682365ad3681cf73bdc121061974974b69c14b12b4ffbe60229965796163fb69",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "0000000001ff000000ff0000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000000000000ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000001ff000000ff0000",
+        "mac_mask_hex": "000001",
+        "mode": 1,
+        "public_callback_sha256": "e2fcefcb0c66249b0cac2bef3b746f2f910f9523c79046331994de89dc1d5cf2",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "8180803b",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "8180803b",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "01ff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000000000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff8080808000000000",
+        "inout": 2,
+        "mac_hex": "00ff00007eff000000000000",
+        "mac_mask_hex": "000001",
+        "mode": 1,
+        "public_callback_sha256": "27ea1308df8345db13c24da97a8d0a464ec40ebea89372a9fc38f90a7f7151b0",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fffefd3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fffefd3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000ff0000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "00ff00007eff000000ff0000",
+        "mac_mask_hex": "000001",
+        "mode": 1,
+        "public_callback_sha256": "0f15850cbf2d565f3a94455c599aa6cc1cff433bde63f7e387f4e783ad6277ed",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00000000014080c0004080c0",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "0000000000000000ffffffff",
+        "inout": 1,
+        "mac_hex": "00000000014080c0004080c0",
+        "mac_mask_hex": "000001",
+        "mode": 2,
+        "public_callback_sha256": "e716db70e214ca3a4332dfbd5be2ca6c75e172caead0dcbec0c3c057dea8620d",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "014080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c000000000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff8080808000000000",
+        "inout": 2,
+        "mac_hex": "004080c07e4080c000000000",
+        "mac_mask_hex": "000001",
+        "mode": 2,
+        "public_callback_sha256": "e8501e5040aa4abbe9995dc21a1f940cd0e3bd556d843d786ac6ddbecf763529",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fffefd3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fffefd3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c0004080c0",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "004080c07e4080c0004080c0",
+        "mac_mask_hex": "000001",
+        "mode": 2,
+        "public_callback_sha256": "909d962fcef5505ba83ff9d07177e20a8301965cd45f64d3bd3c8d5203c5f9e4",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  },
+  "trace-mask-before": {
+    "family": "mask",
+    "ownership_cutoff_hex": "17b7d138",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+      "candidate_sha256": "97ddf4659a3b463f2d37cd2f52e450c09c8a6863466c941a68e098478625b8fa",
+      "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+      "dependencies_sha256": {
+        "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+        "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "a9f0dcdda189c06e4b809abb2efb2c0b542710851d1c99263797a96e2158b01e",
+        "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+        "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+        "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [
+        {
+          "builder_default": 0.0,
+          "sampled_default": 1,
+          "slot": 2
+        }
+      ],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "rows": [
+      {
+        "aex_hex": "0000000001ff000000ff0000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "00",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 12,
+          "expected_word_hex": "01",
+          "first_byte": 4,
+          "first_word": 4
+        },
+        "field_hex": "0000000000000000ffffffff",
+        "inout": 1,
+        "mac_hex": "0000000000ff000000ff0000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "e2fcefcb0c66249b0cac2bef3b746f2f910f9523c79046331994de89dc1d5cf2",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": false,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "8180803b",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefeff3a",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "01ff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000000000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "fe",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 12,
+          "expected_word_hex": "7e",
+          "first_byte": 4,
+          "first_word": 4
+        },
+        "field_hex": "ffffffff8080808000000000",
+        "inout": 2,
+        "mac_hex": "00ff0000feff000000000000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "27ea1308df8345db13c24da97a8d0a464ec40ebea89372a9fc38f90a7f7151b0",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": false,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fffefd3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fffe7e3f",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00ff00007eff000000ff0000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "00ff00007eff000000ff0000",
+        "mac_mask_hex": "000101",
+        "mode": 1,
+        "public_callback_sha256": "0f15850cbf2d565f3a94455c599aa6cc1cff433bde63f7e387f4e783ad6277ed",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000001000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7eff0000",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "0000803f",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00ff0000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "00000000014080c0004080c0",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "00",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 12,
+          "expected_word_hex": "01",
+          "first_byte": 4,
+          "first_word": 4
+        },
+        "field_hex": "0000000000000000ffffffff",
+        "inout": 1,
+        "mac_hex": "00000000004080c0004080c0",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "e716db70e214ca3a4332dfbd5be2ca6c75e172caead0dcbec0c3c057dea8620d",
+        "refcon_numerical_hex": "00000000010000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": false,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "0000803f",
+            "mac_composed_argb_bits": [
+              "fefeff3a",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "014080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c000000000",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "fe",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 12,
+          "expected_word_hex": "7e",
+          "first_byte": 4,
+          "first_word": 4
+        },
+        "field_hex": "ffffffff8080808000000000",
+        "inout": 2,
+        "mac_hex": "004080c0fe4080c000000000",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "e8501e5040aa4abbe9995dc21a1f940cd0e3bd556d843d786ac6ddbecf763529",
+        "refcon_numerical_hex": "00000000020000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": false,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fffefd3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fffe7e3f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "00000000",
+            "composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_composed_argb_bits": [
+              "00000000",
+              "00000000",
+              "00000000",
+              "00000000"
+            ],
+            "mac_field_bits": "00000000",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "00000000",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      },
+      {
+        "aex_hex": "004080c07e4080c0004080c0",
+        "aex_mask_hex": "0000ff00",
+        "diff": {
+          "actual_bytes": 12,
+          "actual_word_hex": "",
+          "different_bytes": 0,
+          "different_words": 0,
+          "expected_bytes": 12,
+          "expected_word_hex": "",
+          "first_byte": 12,
+          "first_word": 12
+        },
+        "field_hex": "ffffffff80808080ffffffff",
+        "inout": 3,
+        "mac_hex": "004080c07e4080c0004080c0",
+        "mac_mask_hex": "000101",
+        "mode": 2,
+        "public_callback_sha256": "909d962fcef5505ba83ff9d07177e20a8301965cd45f64d3bd3c8d5203c5f9e4",
+        "refcon_numerical_hex": "00000000030000000000803f0000803f00000000000000000000803f0000000000000000000000008000000080000000000000000000000002000000020000000000803f010000000000000000000000",
+        "source_and_field_equal": true,
+        "source_hex": "004080c0014080c0ff4080c0",
+        "stages": [
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "8180003f",
+            "composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "fefefe3e",
+            "mac_composed_argb_bits": [
+              "fefefe3e",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "8180003f",
+            "mac_source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "7e4080c0",
+            "source_argb_bits": [
+              "8180803b",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          },
+          {
+            "aex_field_bits": "0000803f",
+            "composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "interpolated_bits": "00000000",
+            "mac_composed_argb_bits": [
+              "00000000",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "mac_field_bits": "0000803f",
+            "mac_source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ],
+            "output_hex": "004080c0",
+            "source_argb_bits": [
+              "0000803f",
+              "8180803e",
+              "8180003f",
+              "c1c0403f"
+            ]
+          }
+        ],
+        "watches": [
+          "function=0x1171d00,arg=stack6,size=224",
+          "function=0x1171d00,arg=stack5,deref=24,size=12",
+          "function=0x1170380,arg=r9,deref=24,size=12",
+          "function=0x11749a0,arg=r8,deref=88,size=4"
+        ]
+      }
+    ],
+    "schema": "olm.dg-smart-stage-C03/1"
+  }
+}
