@@ -157,8 +157,10 @@ inline bool EstimateOperationUnits(const WorkGeometry &work,
 	                               int effective_back_strength,
 	                               std::uint64_t *units) noexcept
 {
+    // A Fade-only render has zero scatter work but still owns the fixed
+    // passes. EstimateGeneralDeepRender adds its gather cost separately.
 	if (!units || work.width <= 2 || work.height <= 2 || work.pixels == 0 ||
-		(effective_front_strength <= 0 && effective_back_strength <= 0)) {
+		(effective_front_strength < 0 || effective_back_strength < 0)) {
 		return false;
 	}
 	const std::uint64_t width = static_cast<std::uint64_t>(work.width);
@@ -204,11 +206,12 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 	                       int effective_front_strength,
 	                       int effective_back_strength,
 	                       std::size_t smart_staging_bytes,
-	                       RenderEstimate *result) noexcept
+	                       RenderEstimate *result,
+	                       bool allow_zero_strength = false) noexcept
 {
 	if (!result || effective_front_strength < 0 || effective_front_strength > 4000 ||
 		effective_back_strength < 0 || effective_back_strength > 4000 ||
-		(effective_front_strength == 0 && effective_back_strength == 0)) {
+		(!allow_zero_strength && effective_front_strength == 0 && effective_back_strength == 0)) {
 		return false;
 	}
 	RenderEstimate estimate = {};
@@ -260,7 +263,8 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
         front_fade > 100 || back_fade < 0 || back_fade > 100 ||
         (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
-    if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate)) return false;
+    if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate,
+            front_fade > 0 || back_fade > 0)) return false;
     // Unknown deep Layer values need a full-row bound. After the allocation
     // preflight and finite-pixel scan, the caller can supply a tighter bound
     // which already includes float rounding through the final span multiply.

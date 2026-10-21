@@ -1,0 +1,61 @@
+{
+  "abi_leaf": {
+    "instructions": 31,
+    "rva": "0x1000",
+    "transparent_prepass_exact": true
+  },
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "allocation_sizes": [
+    324,
+    404
+  ],
+  "builder": {
+    "checkin_count": 14,
+    "checkout_slots": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15,
+      16,
+      18,
+      19,
+      20
+    ],
+    "context_sha256": "02f3ed0fdd876002c63849dbc9f61e298bfc575261071e5ba2ff0458e098dbca",
+    "executed_imports": [
+      "memset"
+    ],
+    "normalized_bits": 3241264924
+  },
+  "first_invalid_read": {
+    "allocation_size": 404,
+    "byte_offset": -16,
+    "instruction_rva": "0x37f3",
+    "signed_index": -4
+  },
+  "index": 127,
+  "inference": "The completed session oracle for this input consumes allocator-adjacent memory outside the AEX-owned table. Its final hash is not a portable noise-generator contract.",
+  "instructions": 22674,
+  "loader_sha256": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+  "math_boundary": "Host powf substitute; the signed index is computed before powf and is independent of its result.",
+  "offset": -399.5963134765625,
+  "schema": "directionalblur.zero-noise-boundary/1",
+  "seed": 518,
+  "source_geometry": [
+    3,
+    61
+  ],
+  "stopped_before_invalid_read": true,
+  "table_read_count": 3,
+  "thickness": 10.0,
+  "work_geometry": [
+    65,
+    65
+  ]
+}
