@@ -1,172 +1,135 @@
 status: blocked
 
 summary:
-- Merged `codex/public-beta-roi` at `e3f887b5` into this branch (merge `3168b15e`), preserving F08 and T05.
-- The merged WIP source equals `candidate_source(current upstream source, budget=True)` byte for byte.
-- Stopped on a corpus Classic route changing from successful mismatch to refusal (516); no corpus rebaseline performed.
-- Offset validation reached 108 conditions / 648 exact replays; the 390-condition and 9,645-condition completion gates remain unproven.
-- The production candidate remains for review, NOT approved promotion; removed the unverified WIP completion capture and its active pointer.
+- Round 3 attributes Classic error 516 to `RenderWorld:generic-world-not-admitted@5362`.
+- This is NOT the candidate work-budget guard; the explicit “Any other guard … stop” condition applies.
+- Original AEX succeeds for this witness; Smart matches its raw output, Classic refuses.
+- No long gates or corpus rebaseline were started in Round 3; promotion remains unverified.
+- Merged the latest upstream ticket update, preserving the existing F08/T05/Offset source unchanged.
 
 facts:
 
-1. `git merge codex/public-beta-roi` completed without conflicts. A Python comparison of
-   `probe_radialblur_offset_20261002.candidate_source(git show codex/public-beta-roi:mac/OLMRadialBlur/OLMRadialBlur.cpp)`
-   against production returned `True`. Production differs from `before_source()`;
-   it was not overwritten with the historical source. SHA-256:
-   - merged upstream source: `66ed2aeb5132e0a5670b3801a781e8d3e5a77c142533911c9b497b1b4b30db85`
-   - candidate production: `7cc086b942e9febe858c1a451d2047224bcbda1dc6e2163d79fdf4a7da5d57ea`
-   - original AEX: `ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`
-   - requested offset worker: `93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed`
+`git merge --no-edit codex/public-beta-roi` created merge `748737f4`, incorporating
+upstream `512b36eb`. Only the ticket text changed in this merge. F08 and T05 were
+already incorporated by merge `3168b15e`. Production SHA-256 remains
+`7cc086b942e9febe858c1a451d2047224bcbda1dc6e2163d79fdf4a7da5d57ea`.
+The prior round verified that source equals the budget-enabled Offset semantic
+candidate applied to upstream, rather than replacement with `before_source()`.
 
-2. Ran the WIP promotion runner using the cache worker and its
-   `offset-timeout-reference-build.json` (full command below). Its historical
-   Strength, Rotation-neutral, and Gain calibration passed 18/18 recorded AEX
-   hashes. The runner built production through the existing `noop.build` helpers
-   in O2, ASan/UBSan, and default-contract modes, plus the historical comparison
-   build; compiler flags were not invented. Last completed progress checkpoint:
-   108/390 conditions, 648 exact Classic/Smart replays across three builds.
-   This is a lower bound from the retained log, not a claim about unfinished
-   cases. No retained-suite replays had started. Stopped its process tree after
-   the corpus refusal was identified. See `T01-radial-offset-validation-partial.log`.
+Ran the existing replay with `--jobs 2` (command under verify): exit 1,
+`replay_complete`, one completed witness, `replay_matches_saved=false`.
+The replay report omits the adapter's returned guard list. Added a bounded probe
+that calls the existing adapter directly and retains that list. It uses the
+existing public build helper and flags, without bypasses or numerical changes.
+The direct probe exited 0 and recorded:
 
-3. Ran `tools/fuzz/run.py --plugin radialblur --replay tests/fuzz_corpus/radialblur`
-   with the specified offset worker. All 35 corpus cases completed; saved-result
-   equality was false. The complete 48,603-byte replay is committed as
-   `T01-radial-offset-corpus-replay.json` (SHA-256
-   `2681e1715f63ca1205d1b8474ec1b94ba2cc3cd95a3eb702441f3c7f968d5cde`).
+- Witness: `tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json`.
+  PF32 Zoom, 14x18, Outer Offset 2 in Add mode, Strength 0,
+  input padding 16, output padding 5; input SHA-256
+  `31569c7ee40e978d70ed1118016d90920a7df7f52e5c65339bfd249ded586cad`.
+- Classic: error 516, no output frame, guard
+  `RenderWorld:generic-world-not-admitted@5362`, callback counts `0 0 0 0 0 1 1`.
+- AEX: `status=ok`, guards intact, session clean, output SHA-256
+  `87fd3782a620116260a596081f06a29f0a4e2615dee460dc52ecbd456b56174f`.
+- Smart: error 0, raw exact to that AEX output, no refusal trace;
+  callback counts `1 32 32 1 1 1 1`.
+- Saved Classic was a successful mismatch: 111 differing bytes / 36 words,
+  first word 20 (byte 80), expected `6401c23d`, actual `d83b493e`.
+  Its saved output hash was
+  `e6fc9f007de8a3a8427b8626113abb2d35e7520b1f83ade411b925850aa67945`.
+- Trace evidence: `orchestra/reports/T01-radial-offset-refusal-trace.json`,
+  7,443 bytes, SHA-256
+  `59c3bf7c88b8bcb160090b6f8d1792ec2f21df6e531a527363c255885fc532c2`.
 
-   | Route | Saved status | Observed status | Cases |
-   | --- | --- | --- | ---: |
-   | Classic | mismatch | exact | 23 |
-   | Classic | mismatch | refusal | 1 |
-   | Classic | refusal | refusal | 11 |
-   | Smart | mismatch | exact | 35 |
+Reference qualification: worker SHA-256
+`93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed`.
+This round again reproduces 4/6 fuzz calibration anchors; both PF32 anchors
+still differ from the containment-worker recordings. The prior round's separate
+historical Strength/Rotation-neutral/Gain calibration was 18/18. Thus Smart
+exact here means exact to the requested offset worker; cross-worker numerical
+improvements are not established. Original AEX identity is retained in the JSON.
 
-   First adverse transition:
-   `tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json`, Classic.
-   PF32 Zoom, 14x18, Outer Offset slot 6 = 2, Add mode, Strength = 0,
-   input padding 16 bytes, output padding 5 bytes, saved profile `hdr` with
-   binary pixel reduction. Input SHA-256:
-   `31569c7ee40e978d70ed1118016d90920a7df7f52e5c65339bfd249ded586cad`.
-   Saved Classic returned 0 and hash
-   `e6fc9f007de8a3a8427b8626113abb2d35e7520b1f83ade411b925850aa67945`;
-   it differed in 111 bytes / 36 words, first word 20 (byte 80), expected
-   `6401c23d`, actual `d83b493e`. Current Classic returns 516 with no raw frame;
-   callback counts remain `0 0 0 0 0 1 1`. Current Smart returns 0 and matches
-   the current worker hash `87fd3782a620116260a596081f06a29f0a4e2615dee460dc52ecbd456b56174f`.
-   Therefore the ticket's requirement that every changed route move toward
-   exact is not satisfied. `rebaseline_corpus.py` was NOT run; no expectations
-   or corpus inputs/results were changed.
+One consolidated before/after table follows. Historical and partial observations
+are explicitly identified; no completed seed-1 n=500 after-result exists.
+E = exact, M = mismatch, R = refusal, U = uncompared.
 
-4. Reference qualification limitation discovered while recording results:
-   the fuzz adapter's own six retained calibration hashes match only 4/6 with
-   the requested worker. Both PF32 anchors differ (Zoom actual
-   `40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d`,
-   expected `37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc`;
-   Rotation actual `8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57`,
-   expected `20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07`).
-   The saved corpus used containment worker `3cb4855b...`; 29/35 oracle frame
-   hashes changed in this replay. The table records observed statuses under
-   the new worker, not verified cross-worker numerical improvements. The
-   Classic success-to-refusal transition is independent of oracle pixel values.
+| Suite / route | Before | After candidate | Round 3 evidence / limitation |
+| --- | --- | --- | --- |
+| Offset 390 conditions, three builds, Classic/Smart | Historical 390 exact reported in brief; not independently completed here | Prior round reached 108/390, 648 exact replays | Not resumed: non-budget guard stop |
+| Retained 9,645 conditions, three builds, Classic/Smart | Historical 57,870 exact public replays | Not run to completion | Not resumed: non-budget guard stop |
+| Saved corpus, Classic, 35 cases | 24 M, 11 R | Prior round: 23 E, 12 R | One M→R freshly confirmed; guard above |
+| Saved corpus, Smart, 35 cases | 35 M | Prior round: 35 E | Witness Smart freshly exact; worker qualification limitation applies |
+| Saved corpus PF8 Outer Offset ≠0, both routes | 5 cases / 10 M routes | Prior round: 10 E routes | No new cluster-wide replay; not cross-worker proof |
+| Seed 1 n=500, Classic | Completed baseline: 62 E, 24 M, 413 R, 1 U | Prior partial 325: 86 E, 0 M, 238 R, 1 U | Full after campaign not run; populations differ |
+| Seed 1 n=500, Smart | Completed baseline: 74 E, 35 M, 390 R, 1 U | Prior partial 325: 115 E, 0 M, 209 R, 1 U | Full after campaign not run; populations differ |
 
-5. Started the requested `--n 500 --seed 1` campaign with default remaining
-   fuzz options, separate scratch/corpus destinations, and the requested worker.
-   Terminated it on the stop condition. Last logged checkpoint: 325 completed,
-   299 AEX successes, 23 AEX rejects, 3 AEX budgets; 86 both-route-exact,
-   86 Classic exact / 238 refusal / 1 uncompared, 115 Smart exact / 209 refusal /
-   1 uncompared, 0 pixel mismatch cases. No completed 500-case report exists.
-   See `T01-radial-offset-fuzz-partial.log`. In the completed saved-corpus replay,
-   PF8 cases with nonzero Outer Offset slot 6 number 5; their 10 routes all changed
-   mismatch -> exact with this worker. A full seed-1 cluster comparison is NOT
-   established by the interrupted campaign.
+Table sources: `reports/fuzz/radialblur_20261021.json` (baseline completed 500;
+AEX 461 success, 32 reject, 7 budget),
+`orchestra/reports/T01-radial-offset-corpus-replay.json`,
+`orchestra/reports/T01-radial-offset-fuzz-partial.log`,
+`orchestra/reports/T01-radial-offset-validation-partial.log`, and the fresh trace.
+The old round's detailed provenance remains in this report at commit `16bcc808`.
 
-6. Reviewed the Offset, budget, and planes probes, existing public test helpers,
-   `tests/test_radialblur_*`, and `tests/test_olmradialblur_*`.
-   The runner's `offset.retained_cases()` is the existing cumulative 9,645-case
-   union (NoOp adds 82 to the preceding 9,563). It would perform 57,870 retained
-   replays. Those replays, separate historical tests, budget/plane probes, and a
-   packaged Xcode build were not completed/run after the stop condition.
-   Historical current-capture source identity is not updated to imply a pass.
+policy:
 
-7. Removed the previous worker's 3,869,794-byte unverified completion capture
-   `reports/radialblur_offset_public_20261002.json`, restored the current-capture
-   pointer to upstream's NoOp epoch, and removed the tracked machine-specific
-   `aex` symlink. The promotion runner already resolves AEX via an absolute MAIN
-   path when needed; fuzz uses MAIN in place. No MAIN/cache/emulator edits, no
-   release-gate edits, no push, and no history rewrite. Scratch was 93 MiB after
-   removing 35 disposable compiled executables, dSYM bundles, and interrupted
-   fuzz build/work directories. `git diff --check` passed.
+The allowed work-budget exception does not apply. The measured guard returns
+before `CheckedRadialGenericBudget`; no estimated work was measured and no
+estimate-versus-cap claim is made. The code's work cap remains 350,000,000.
+No expectations, corpus entries, production guards, or budget were changed.
 
 inference:
 
-- The measured refusal blocks promotion and rebaselining under the ticket's
-  explicit stop rule. Its attribution to Offset admission, F08 dispatch, or an
-  already-existing upstream limitation is UNCONFIRMED: no pre-promotion replay
-  of this single witness was performed after the stop condition.
-- The two failing fuzz calibration anchors show that the 18 passing historical
-  anchors do not establish worker equivalence for the fuzz corpus. Do not count
-  its 58 improved routes as proven numerical fixes without resolving that boundary.
-- No claim of 390/390, 9,645 preserved cases, native AE equivalence, or completed
-  500-case fuzz coverage is made. The old worker's reported completion counts
-  were not accepted as fresh evidence.
+The broadened Offset control admission reaches the generic world/layout check.
+For this PF32 witness the output rowbytes are 14×16+5 = 229, incompatible with
+the world pair check's pixel alignment requirement. This explains a layout
+rejection consistent with the measured guard; the guard itself is proven by
+trace. No guard-bypass experiment or source fix was attempted after the stop.
+The new budget term is Rotation-only, whereas this witness is Zoom; the trace
+independently rules out the budget-exception hypothesis.
 
 changed_files:
 
-- `mac/OLMRadialBlur/OLMRadialBlur.cpp`: retained WIP Offset semantic candidate, automatically merged with F08/T05; blocked pending verification.
-- `tools/emulation/probe_radialblur_offset_promote_20261002.py`: retained WIP reproduction runner, used without edits.
-- `aex`: removed WIP absolute symlink.
-- `reports/radialblur_offset_public_20261002.json`: removed unverified WIP capture.
-- `tools/emulation/radialblur_current_public_20261001.py`: reverted WIP capture-pointer change to upstream.
-- `orchestra/reports/T01-radial-offset-promote.md`
-- `orchestra/reports/T01-radial-offset-corpus-replay.json`
-- `orchestra/reports/T01-radial-offset-validation-partial.log`
-- `orchestra/reports/T01-radial-offset-fuzz-partial.log`
-- Other upstream files arrived only through the explicitly requested merge.
+- `tools/fuzz/probe_radialblur_offset_refusal_T01.py`: reproducible direct adapter trace capture, disposable build cleanup.
+- `orchestra/reports/T01-radial-offset-refusal-trace.json`: bounded measured evidence.
+- `orchestra/reports/T01-radial-offset-promote.md`: this Round 3 report.
+- `orchestra/tickets/T01-radial-offset-promote.md`: upstream Round 3 instruction, via requested merge only.
+- Production remains the existing committed Offset candidate with F08/T05; no production edits this round.
 
 verify:
 
-Run from this worktree; use fresh output paths on repeated runs. The first command
-rechecks the blocking witness (expected replay difference/nonzero exit, Classic
-516, Smart exact under this worker, calibration 4/6). The directory replay is
-expected to reproduce the table above. These commands read MAIN assets in place.
+From this worktree, the direct probe should exit 0 and report Classic 516 with
+`RenderWorld:generic-world-not-admitted@5362`, Smart exact, and the AEX hash above.
+The replay command should exit 1 because saved results differ. Both commands
+use MAIN assets and the cache worker read-only, and direct logs to ticket scratch.
+The probe removes its regenerable build directory even on failure.
 
 ```sh
-export TMPDIR="$PWD/orchestra/state/T01-radial-offset-promote"
+export TMPDIR="$PWD/orchestra/state/T01-radial-offset-promote/round3"
+mkdir -p "$TMPDIR"
 worker=/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker
+python3 tools/fuzz/probe_radialblur_offset_refusal_T01.py \
+  --worker "$worker" \
+  --corpus tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json \
+  --scratch "$TMPDIR/direct-trace-work" \
+  --report "$TMPDIR/direct-trace-recheck.json" \
+  > "$TMPDIR/direct-trace-recheck.log" 2>&1
 python3 tools/fuzz/run.py --plugin radialblur --worker "$worker" \
   --replay tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json \
-  --scratch orchestra/state/T01-radial-offset-promote/recheck-work \
-  --report orchestra/state/T01-radial-offset-promote/recheck.json \
-  > "$TMPDIR/recheck.log" 2>&1
-python3 tools/fuzz/run.py --plugin radialblur --worker "$worker" \
-  --replay tests/fuzz_corpus/radialblur \
-  --scratch orchestra/state/T01-radial-offset-promote/recheck-corpus-work \
-  --report orchestra/state/T01-radial-offset-promote/recheck-corpus.json \
-  > "$TMPDIR/recheck-corpus.log" 2>&1
+  --jobs 2 --scratch "$TMPDIR/trace-work" --report "$TMPDIR/trace-recheck.json" \
+  > "$TMPDIR/trace-recheck.log" 2>&1
+git diff --check
 ```
 
-Exact long-run commands used (stopped, NOT expected-pass evidence). Resume only
-after the orchestrator resolves the blocking witness/reference boundary:
-
-```sh
-python3 tools/emulation/probe_radialblur_offset_promote_20261002.py \
-  --worker "$worker" \
-  --worker-build /Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/offset-timeout-reference-build.json \
-  --output "$TMPDIR/merged-validation" --report "$TMPDIR/merged-validation.json" \
-  > "$TMPDIR/merged-validation.log" 2>&1
-python3 tools/fuzz/run.py --plugin radialblur --worker "$worker" --n 500 --seed 1 \
-  --scratch orchestra/state/T01-radial-offset-promote/merged-fuzz-work \
-  --report orchestra/state/T01-radial-offset-promote/merged-fuzz500.json \
-  --corpus orchestra/state/T01-radial-offset-promote/merged-fuzz-corpus \
-  > "$TMPDIR/merged-fuzz500.log" 2>&1
-```
+Actual direct-probe execution used the same arguments with report destination
+`orchestra/reports/T01-radial-offset-refusal-trace.json` and log
+`$TMPDIR/direct-trace.log`; the existing replay used `$TMPDIR/trace.json` and
+`$TMPDIR/trace.log`. Scratch after disposable build cleanup: 93 MiB, below 5 GiB.
 
 next:
 
-- Follow-up: replay the single PF32 odd-output-stride witness on upstream F08 and
-  the Offset candidate to attribute the new refusal; do not edit its expectation.
-- Reconcile the fuzz containment-worker PF32 hashes with the requested offset
-  worker before treating corpus status improvements as numerical proof.
-- Then complete 390 Offset cases and 57,870 retained replays, the requested tests,
-  and all 500 seed-1 cases. Rebaseline only if every changed route moves toward exact.
+Orchestrator decision/follow-up ticket required for the non-budget world/layout
+refusal. Preserve the witness and do not rebaseline it as an exact improvement.
+Resolve the PF32 reference calibration boundary, then complete the Offset 390,
+retained 9,645, existing RadialBlur tests, and seed-1 n=500 before claiming
+promotion. The current promotion runner also needs a reviewed `--jobs 2`
+implementation for those long gates; it currently runs serially.
