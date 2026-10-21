@@ -1,0 +1,279 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      11,
+      8
+    ],
+    "index": 67,
+    "input_padding": 1,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 58
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          128,
+          154,
+          45,
+          169
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          0,
+          153,
+          70,
+          232
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          139,
+          96,
+          128
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          0,
+          206,
+          209,
+          173
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          172,
+          172,
+          19
+        ]
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 67,
+  "input_sha256": "13d314ed74f8b839d301afc265b5005cb78a415bde3ab805613bf1e26634396e",
+  "max_size": 256,
+  "operations": [
+    {
+      "kind": "params",
+      "values": {
+        "2": [
+          255,
+          255,
+          255,
+          255
+        ]
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "3": 0
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "4": 100
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "5": 0
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "8": 1
+      }
+    }
+  ],
+  "pixels_zlib_base64": "eNoBYAGf/v8415sAp/Ky0MU/sP/J2MD/wuwZE9OdjgDjxcz/5bRXAHzYAgCAVYn/CBUR11m9rB0rOEJYOrSmAN5fyXJSXiUt8FyrAAoHPf9A6CwA59HBACVkh220qJAA/s1ckV+mtgAHlA7/ZgimaUJ8Hv+J/xOpR9W1/20RbAAZQ4P/UCOOisOVAAD4/RAAnBEMYaNuQPilNA+EMrG5/zf9E/8BhCsN1hDZ/068OwCOqdwg+5ax/ytgHA7PY9oAgP3oLKN6Kf8GbrP/SCN89A/KJ/+sOz60LOb/APU8/ehfoW//DzDWkfXhmf9HVjUAZ1QSAKWR8/82YHv/uNx4/xKWBAB8IrSBuueOAH16AwAcp1wAAlLPAENeGSiUNUSXaibV/4BFvQA0aBsAX/8Z5rM5kaA0Lrr//VFY/0a22ACUEDzBhtV3iDOyxv8jPywAzAvCJ5eOLfnkaacAYOIVgOIMJP/Ikb+4camS",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother2.aex",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "candidate_sha256": "005d1e5fe0cc07733adf505a732101cbf2f7b35ad05c10bd29d639e09dd30b62",
+    "declarations_sha256": "f07c33d4026db5e63ab823f7831f49a0992e889836a2161e6712990bad91587f",
+    "dependencies_sha256": {
+      "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_decode_lut_10000.h": "3f42b42800e4ea1542210f4a678e36777d8707132b13c9447213a18f2e9e3ba2",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "0a7e7ef2c14943716210fe19bb3dd2e09e60a88960b1223dc17f60d22268271b",
+      "tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp": "22636eb61f2893fbc6b644b6326410a61a6b7eb6b0487e057d774cb3558fe3bc"
+    },
+    "host": "Original AEX Unicorn CPU Smart; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing public key/gamma CLI SDK shim, production EffectMain; Classic added using same params/worlds",
+    "mac_stride": "shared randomly padded input/output stride plus 32-byte guards",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "kind": "params",
+        "values": {
+          "2": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "3": 0
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "4": 100
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "5": 0
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "8": 1
+        }
+      }
+    ],
+    "attempts": 32,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "ok/refusal,exact": 27,
+      "ok/refusal,mismatch": 5
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "47794b301c518d0c409b12fbe9909cf5b298a23a2893b35504d207b536106247",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "error": 25,
+        "metadata": {
+          "CALLBACKS": "0,0,0,0,0,0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 352,
+          "actual_word_hex": "15",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 352,
+          "expected_word_hex": "20",
+          "first_byte": 68,
+          "first_word": 68
+        },
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f5c83234b1be90a23dd396a75f179e67c7df8eaf1d80cd67f65e8c1fe837a426",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

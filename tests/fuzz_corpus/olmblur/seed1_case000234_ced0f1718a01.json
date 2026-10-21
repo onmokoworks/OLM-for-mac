@@ -1,0 +1,228 @@
+{
+  "case": {
+    "depth": 16,
+    "geometry": [
+      1,
+      2
+    ],
+    "index": 234,
+    "input_padding": 3,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 5.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 100.0
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 234,
+  "input_sha256": "212bf69ce56b541b8197199e058aee5d1557fe963097e53646e8e40f50874834",
+  "max_size": 256,
+  "operations": [
+    {
+      "geometry": [
+        30,
+        20
+      ],
+      "kind": "crop"
+    },
+    {
+      "geometry": [
+        15,
+        10
+      ],
+      "kind": "crop"
+    },
+    {
+      "geometry": [
+        7,
+        5
+      ],
+      "kind": "crop"
+    },
+    {
+      "geometry": [
+        3,
+        2
+      ],
+      "kind": "crop"
+    },
+    {
+      "geometry": [
+        1,
+        2
+      ],
+      "kind": "crop"
+    },
+    {
+      "kind": "params",
+      "values": {
+        "4": 1
+      }
+    },
+    {
+      "kind": "pixels",
+      "value": "binary"
+    }
+  ],
+  "pixels_zlib_base64": "eNpjaGCAQQYQCQAdkAOB",
+  "plugin": "olmblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "candidate_sha256": "a82ce7b28b681cf872d5ae18bbc1b0b8fc3e17ffba1617ae4b97db6d4b1381e4",
+    "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+    "dependencies_sha256": {
+      "core/olmblur_fullworker_helper.cpp": "0c0643143abafd5bd5635fd18755a95e8a297b38786b58913e3af2f5df5c6ad2",
+      "core/olmblur_helper.cpp": "ae31902dc64219f9568995d518b7cf8f22a8653644a4a9a8906cf67d90869098",
+      "core/olmblur_worker16_legacy.cpp": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da",
+      "core/olmblur_worker16_nonlegacy.cpp": "e0cec4230006c518514e4c730fa940fb935074a48e401d8e7f586b46b7b4266e",
+      "core/olmblur_worker32_legacy.cpp": "cb861b3dcc572cb2df029ce642c2d7790365e9c92eb81d4735f2b78e71d5f4c3",
+      "core/olmblur_worker32_nonlegacy.cpp": "5db95e5c39c6b232254e4011fcd8e47e2f96d1a8909205e49e25075130df5829",
+      "core/olmblur_worker8_legacy.cpp": "537b416da3b3f8fca50a2bdf90ff01f8cdb7d8b7369a439e7bf5ce573cf943a4",
+      "core/olmblur_worker_orchestration.cpp": "2f896d3e7a838421bb69847f585151da320de1135015b29affa18e8de095caaf",
+      "mac/OLMBlur/OLMBlur.cpp": "9fa58068f6459797d322379ca71f159424a64f5fddd0a495a309ee511eb301ea",
+      "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+      "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+      "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+    },
+    "host": "Original AEX Unicorn CPU Smart; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "geometry": [
+          30,
+          20
+        ],
+        "kind": "crop"
+      },
+      {
+        "geometry": [
+          15,
+          10
+        ],
+        "kind": "crop"
+      },
+      {
+        "geometry": [
+          7,
+          5
+        ],
+        "kind": "crop"
+      },
+      {
+        "geometry": [
+          3,
+          2
+        ],
+        "kind": "crop"
+      },
+      {
+        "geometry": [
+          1,
+          2
+        ],
+        "kind": "crop"
+      },
+      {
+        "kind": "params",
+        "values": {
+          "4": 1
+        }
+      },
+      {
+        "kind": "pixels",
+        "value": "binary"
+      }
+    ],
+    "attempts": 19,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "ok/exact,refusal": 12,
+      "ok/mismatch,exact": 1,
+      "ok/mismatch,refusal": 6
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "f20484ecb64a007cee22d9bf3977cea883077571a595b697be36e7f6f41dfe3f",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 16,
+          "actual_word_hex": "0080",
+          "different_bytes": 4,
+          "different_words": 2,
+          "expected_bytes": 16,
+          "expected_word_hex": "6841",
+          "first_byte": 2,
+          "first_word": 1
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "212bf69ce56b541b8197199e058aee5d1557fe963097e53646e8e40f50874834",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
