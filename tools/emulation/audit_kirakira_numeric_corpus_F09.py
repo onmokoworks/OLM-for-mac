@@ -24,6 +24,8 @@ def main():
     p.add_argument('--after-source',type=Path,default=olmkirakira.SOURCE)
     p.add_argument('--scratch',type=Path,required=True)
     p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--both-routes',action='store_true',
+                   help='Also audit Smart samples in the diagnostic corpus')
     args = p.parse_args()
     args.scratch = args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
@@ -40,7 +42,7 @@ def main():
             case,saved = load_corpus(path,after)
             directory = args.scratch/(corpus+'-'+path.stem); directory.mkdir(exist_ok=True)
             oracle,reference = after.oracle(case,directory,deadline)
-            routes = ['classic','smart'] if not gate_off else ['classic']
+            routes = ['classic','smart'] if not gate_off or args.both_routes else ['classic']
             for route in routes:
                 old,oldraw,*_ = before.candidate(case,directory,route,deadline)
                 new,newraw,*_ = after.candidate(case,directory,route,deadline)
