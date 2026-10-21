@@ -87,3 +87,8 @@ tools/emulation/__pycache__/
 Headers
 Util
 Resources
+
+# orchestrator runtime
+/orchestra/logs/
+/orchestra/state/
+/worktrees/
