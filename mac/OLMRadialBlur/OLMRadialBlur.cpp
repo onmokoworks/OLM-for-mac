@@ -3020,6 +3020,26 @@ static PF_Err RenderZoomTyped(
 		return OLM_RADIAL_REFUSAL("unadmitted-zoom-noise-inner-profile");
 	}
 
+	// The original Zoom builder (57a4..5830) builds its four tables from
+	// Strength and Edge Fade only; Offset/Offset Mode belong to Rotation.
+	// Keep admission above unchanged, but select the same Zoom worker for a
+	// legal offset profile as for its neutral-offset controls. Falling back to
+	// the legacy convolution clamps polar alpha and drops signed contributions
+	// before inverse sampling (F08's original-AEX plane witnesses).
+	OLMRadialBlurInfo zoom_worker_profile = info;
+	zoom_worker_profile.outer_offset_mode = 1;
+	zoom_worker_profile.outer_offset = 0;
+	zoom_worker_profile.inner_offset_mode = 1;
+	zoom_worker_profile.inner_offset = 0;
+	const bool legal_zoom_offsets = info.outer_offset_mode >= 1 && info.outer_offset_mode <= 3 &&
+		info.inner_offset_mode >= 1 && info.inner_offset_mode <= 3 &&
+		info.outer_offset >= 0 && info.outer_offset <= 500 &&
+		info.inner_offset >= 0 && info.inner_offset <= 500;
+	const bool use_native_zoom_baseline = use_generic_baseline ||
+		(legal_zoom_offsets && info.blur_type == 1 &&
+		 info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		 IsGenericBaselineWorldPair<PixelT>(input, output, zoom_worker_profile));
+
 	const A_long w = output->width;
 	const A_long h = output->height;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
@@ -3043,7 +3063,7 @@ static PF_Err RenderZoomTyped(
 	const double base_angle = info.angle_deg * kPi / 180.0;
 	// Original builder: FLOAT32 Quality -> DIVSS reciprocal; constructor:
 	// CVTSS2SD -> MULSD stored constant -> FLOAT32 radians. Count uses DIVSS.
-	const bool use_native_quality_setup = use_generic_baseline || use_generic_size_noise;
+	const bool use_native_quality_setup = use_native_zoom_baseline || use_generic_size_noise;
 	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
 	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
 	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
@@ -3097,7 +3117,7 @@ static PF_Err RenderZoomTyped(
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_pf16_bounded_offset_small =
 		use_aex_pf16_offset_mode2_ui2_small || use_aex_pf16_offset_mode3_ui2_small;
-	bool use_aex_outer_only = use_generic_baseline || use_generic_size_noise || use_generic_type3 || (
+	bool use_aex_outer_only = use_native_zoom_baseline || use_generic_size_noise || use_generic_type3 || (
 		info.inner_strength == 0 && info.inner_offset == 0 && info.inner_edge_fade == 0 &&
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
@@ -3296,7 +3316,7 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
-		const bool use_aex_zoom_inner = (use_generic_baseline && info.inner_strength != 0) ||
+		const bool use_aex_zoom_inner = (use_native_zoom_baseline && info.inner_strength != 0) ||
 			use_aex_pf32_zoom_inner_small ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise ||
 			use_aex_typed_zoom_dual_size_components_32x18 ||
@@ -3305,7 +3325,7 @@ static PF_Err RenderZoomTyped(
 		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? (use_native_quality_setup ? RotationFadeGaussianWeights(info.inner_strength) : ZoomGaussianWeights(info.inner_strength))
 			: std::vector<float>();
-		const A_long outer_fade_span = ((use_generic_baseline && info.outer_edge_fade != 0) ||
+		const A_long outer_fade_span = ((use_native_zoom_baseline && info.outer_edge_fade != 0) ||
 			use_aex_typed_zoom_edge_fade_32x18 ||
 			use_aex_typed_zoom_size_edge_components_32x18 ||
 			use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
@@ -3314,7 +3334,7 @@ static PF_Err RenderZoomTyped(
 			? info.outer_edge_fade : 0;
 		const std::vector<float> outer_fade_weights = outer_fade_span > 0
 			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>();
-		const A_long inner_fade_span = (use_generic_baseline && info.inner_edge_fade != 0) ||
+		const A_long inner_fade_span = (use_native_zoom_baseline && info.inner_edge_fade != 0) ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18
 			? info.inner_edge_fade : 0;
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
