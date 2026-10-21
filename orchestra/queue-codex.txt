@@ -17,3 +17,7 @@ F06-dblur-pf8-feature-dispatch
 F15-olmblur-small-fixture-promotion
 F16-dblur-generated-noise-fallback
 F17-fuzz-per-route-oracle
+F18-route-target-per-plugin
+T12-triage-colorkeep-colorkey
+T13-triage-toondilate
+T11-triage-smoother

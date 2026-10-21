@@ -22,7 +22,7 @@ and `orchestra/reports/T05-radialblur-gate-off-experiment.md` (if present).
    (count, max abs diff, which channels, spatial pattern). Classify per the plan's table
    (docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md): unexplained / port bug / Windows dependency /
    host / comparator / unverified.
-4. Use `--jobs 2` for every fuzz run (the machine is shared by 3 workers).
+4. Use `--jobs 2` for every fuzz run (the machine is shared by several workers). After F17 the fuzz adapters pair routes correctly; read orchestra/reports/F17-fuzz-per-route-oracle.md and F18-route-target-per-plugin.md first, and focus on the route AE actually uses.
 
 ## Done when
 Report contains: ranked guard table, gate-off table, cluster classification table, and
