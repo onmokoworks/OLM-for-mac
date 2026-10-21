@@ -1,0 +1,189 @@
+{
+  "baseline_ref": "b7c1a8b0b5b1981e5e3524442dc401f4016131a0",
+  "counts": {
+    "classic": {
+      "False->True": 3
+    },
+    "smart": {
+      "False->True": 2,
+      "True->True": 1
+    }
+  },
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+    "candidate_sha256": "cf15b1af0cbbcaf4d8e7754d2523c7900a9f4d38cb4e01a1e749fb3bc54523af",
+    "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+    "dependencies_sha256": {
+      "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+      "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "59825c5a0c2531c50c89856d67847cc6a55c258eb419b432aef8b1b52bb26d4a",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+      "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+      "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+      "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.0,
+        "sampled_default": 1,
+        "slot": 2
+      }
+    ],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reproducer_sha256": "d5dd94587b38db929d8e2ebd6bd4a92fe4e6ecd1e869ea3a25c75b97c6626702",
+  "rows": [
+    {
+      "aex_classic_hex": "0080008000800080",
+      "aex_smart_hex": "0000000000000000",
+      "case": "tests/fuzz_corpus/olmdistancegradation/seed1_case000001_ced0f1718a01.json",
+      "depth": 16,
+      "geometry": [
+        1,
+        1
+      ],
+      "oracle_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "routes": {
+        "classic": {
+          "after_exact": true,
+          "after_hex": "0000000000000000",
+          "after_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=8 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=8 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=1 field_x=1 d_alpha=1 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": false,
+          "before_hex": "0000008000000000",
+          "before_sha256": "a9765c4805658a968e5abdccd437e25907681a1cff6375e363239c53b125fcd4",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=8 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=8 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=1 field_x=1 d_alpha=1 out_a=0 out_r=1 out_g=0 out_b=0 store_a=0 store_r=32768 store_g=0 store_b=0 dst_a=0 dst_r=32768 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        },
+        "smart": {
+          "after_exact": true,
+          "after_hex": "0000000000000000",
+          "after_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=8 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=8 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=1 field_x=1 d_alpha=1 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": false,
+          "before_hex": "0000008000000000",
+          "before_sha256": "a9765c4805658a968e5abdccd437e25907681a1cff6375e363239c53b125fcd4",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=8 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=8 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=1 field_x=1 d_alpha=1 out_a=0 out_r=1 out_g=0 out_b=0 store_a=0 store_r=32768 store_g=0 store_b=0 dst_a=0 dst_r=32768 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        }
+      },
+      "source_hex": "0080008000800080"
+    },
+    {
+      "aex_classic_hex": "00000000000000000000000000000000",
+      "aex_smart_hex": "00000000000000000000000000000000",
+      "case": "tests/fuzz_corpus/olmdistancegradation/seed1_case000002_9b13c27c2f2e.json",
+      "depth": 32,
+      "geometry": [
+        1,
+        1
+      ],
+      "oracle_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "routes": {
+        "classic": {
+          "after_exact": true,
+          "after_hex": "00000000000000000000000000000000",
+          "after_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=16 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=0 d_alpha=0 field_x=0\npoint x=0 y=0 alpha=0 d_alpha=0 field_x=0 raw_inside=0 raw_outside=2 inside_x=0 outside_x=1 both_x=1 winner=outside inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=0\nshade x=0 y=0 pixel_size=16 use_bg=0 render_mode=1 src_a=0 src_r=0 src_g=0 src_b=0 field_x=0 d_alpha=0 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": false,
+          "before_hex": "000000000000803f0000000000000000",
+          "before_sha256": "6855960ee428276148fc8745625c44bde7ae835a9e2fa181cc917af9bcad0d6a",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=16 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=0 d_alpha=0 field_x=0\npoint x=0 y=0 alpha=0 d_alpha=0 field_x=0 raw_inside=0 raw_outside=2 inside_x=0 outside_x=1 both_x=1 winner=outside inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=0\nshade x=0 y=0 pixel_size=16 use_bg=0 render_mode=1 src_a=0 src_r=0 src_g=0 src_b=0 field_x=0 d_alpha=0 out_a=0 out_r=1 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        },
+        "smart": {
+          "after_exact": true,
+          "after_hex": "00000000000000000000000000000000",
+          "after_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=16 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=0 d_alpha=0 field_x=0\npoint x=0 y=0 alpha=0 d_alpha=0 field_x=0 raw_inside=0 raw_outside=2 inside_x=0 outside_x=1 both_x=1 winner=outside inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=0\nshade x=0 y=0 pixel_size=16 use_bg=0 render_mode=1 src_a=0 src_r=0 src_g=0 src_b=0 field_x=0 d_alpha=0 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": true,
+          "before_hex": "00000000000000000000000000000000",
+          "before_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=16 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=0 d_alpha=0 field_x=0\npoint x=0 y=0 alpha=0 d_alpha=0 field_x=0 raw_inside=0 raw_outside=2 inside_x=0 outside_x=1 both_x=1 winner=outside inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=0\nshade x=0 y=0 pixel_size=16 use_bg=0 render_mode=1 src_a=0 src_r=0 src_g=0 src_b=0 field_x=0 d_alpha=0 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        }
+      },
+      "source_hex": "00000000000000000000000000000000"
+    },
+    {
+      "aex_classic_hex": "ffffffff",
+      "aex_smart_hex": "00000000",
+      "case": "tests/fuzz_corpus/olmdistancegradation/seed1_case000004_92552f06afe6.json",
+      "depth": 8,
+      "geometry": [
+        1,
+        1
+      ],
+      "oracle_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "routes": {
+        "classic": {
+          "after_exact": true,
+          "after_hex": "00000000",
+          "after_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=4 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=4 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=0 field_x=1 d_alpha=1 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": false,
+          "before_hex": "00ff0000",
+          "before_sha256": "e890f350f4385cfe5b486628906ccb2370663d40763f50d39c272d49b3d583a6",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=4 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=4 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=0 field_x=1 d_alpha=1 out_a=0 out_r=1 out_g=0 out_b=0 store_a=0 store_r=255 store_g=0 store_b=0 dst_a=0 dst_r=255 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        },
+        "smart": {
+          "after_exact": true,
+          "after_hex": "00000000",
+          "after_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+          "after_status": "ok",
+          "after_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=4 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=4 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=0 field_x=1 d_alpha=1 out_a=0 out_r=0 out_g=0 out_b=0 store_a=0 store_r=0 store_g=0 store_b=0 dst_a=0 dst_r=0 dst_g=0 dst_b=0\n",
+          "before_exact": false,
+          "before_hex": "00ff0000",
+          "before_sha256": "e890f350f4385cfe5b486628906ccb2370663d40763f50d39c272d49b3d583a6",
+          "before_status": "ok",
+          "before_trace": "OLMDistanceGradation debug dump\nw=1 h=1 pixel_size=4 invert=0 in_out=1 inside=128 outside=128 render_mode=1 use_bg=0 interp=2 power=1 blur_mode=1 blur_size=0 ds_x=1 ds_y=1\nrow0 x=0 alpha=1 d_alpha=1 field_x=1\npoint x=0 y=0 alpha=1 d_alpha=1 field_x=1 raw_inside=2 raw_outside=0 inside_x=1 outside_x=0 both_x=1 winner=inside-or-tie inside_t=128 outside_t=128 inside_constant_binary=0 outside_constant_binary=0 compose_input_x=1\nshade x=0 y=0 pixel_size=4 use_bg=0 render_mode=1 src_a=1 src_r=1 src_g=1 src_b=0 field_x=1 d_alpha=1 out_a=0 out_r=1 out_g=0 out_b=0 store_a=0 store_r=255 store_g=0 store_b=0 dst_a=0 dst_r=255 dst_g=0 dst_b=0\n",
+          "sanitized_equal": true
+        }
+      },
+      "source_hex": "ffffff00"
+    }
+  ],
+  "sanitized_rows": 6,
+  "schema": "olm.dg-default-owner/1"
+}
