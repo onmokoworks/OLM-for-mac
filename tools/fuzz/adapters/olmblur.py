@@ -35,3 +35,24 @@ class Adapter(PublicAdapter):
         config = directory/'params.txt'
         config.write_text(''.join(f"{p['slot']} {p['kind']} {p['value']}\n" for p in case['parameters']))
         return [self.binary,*case['geometry'],case['depth'],route,config,case['input_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        trace = directory/f'olmblur_refusal_{route}.txt'
+        try:
+            trace.unlink()
+        except OSError:
+            pass
+        env = dict(self.env)
+        env['OLM_REFUSAL_TRACE'] = str(trace)
+        result, raw = super().candidate(case, directory, route, deadline, env=env)
+        guards = []
+        try:
+            guards = [line.strip() for line in trace.read_text().splitlines() if line.strip()]
+        except OSError:
+            pass
+        finally:
+            try:
+                trace.unlink()
+            except OSError:
+                pass
+        return result, raw, guards

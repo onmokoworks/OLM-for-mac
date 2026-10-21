@@ -233,9 +233,9 @@ class PublicAdapter:
         except (KeyError,ValueError,StopIteration,OSError,struct.error) as exc:
             return {'status':'harness_error','diagnostic':repr(exc)},b''
 
-    def candidate(self, case, directory, route, deadline):
+    def candidate(self, case, directory, route, deadline, env=None):
         argv,data = self.candidate_command(case,directory,route)
-        status,out,err = command(argv,data=data,timeout=self.timeout,deadline=deadline,env=self.env)
+        status,out,err = command(argv,data=data,timeout=self.timeout,deadline=deadline,env=env or self.env)
         if status['status']!='ok':
             return dict(status,diagnostic=err.decode(errors='replace')[-1600:]),b''
         try:

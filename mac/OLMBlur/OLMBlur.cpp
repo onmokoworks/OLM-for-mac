@@ -13,7 +13,34 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <vector>
+#include <fcntl.h>
+#include <unistd.h>
 #include "../../core/olm_world_safety.h"
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag@line". The file is
+// only opened on a refusal, and the returned error code and all output bytes
+// are identical whether or not tracing is enabled.
+static PF_Err BlurRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = ::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = ::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_BLUR_REFUSAL(tag) BlurRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_BLUR_ERROR(tag, code) BlurRefusal(__func__, tag, __LINE__, code)
 
 static PF_Err
 About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
@@ -1367,12 +1394,12 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (!params || !output || !params[OLMBLUR_INPUT] ||
 		!params[OLMBLUR_BLUR_AMOUNT] || !params[OLMBLUR_BLUR_SMOOTHNESS] ||
 		!params[OLMBLUR_REPEAT]) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("render-params-null");
 	}
 	PF_EffectWorld *input = &params[OLMBLUR_INPUT]->u.ld;
 	if (!input->data || !output->data || input->width != output->width ||
 		input->height != output->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("render-world-geometry");
 	}
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
@@ -1381,7 +1408,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	ERR(world_suite->PF_GetPixelFormat(input, &input_format));
 	ERR(world_suite->PF_GetPixelFormat(output, &output_format));
 	if (err) return err;
-	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_format != output_format) return OLM_BLUR_REFUSAL("render-format-mismatch");
 
 	std::size_t pixel_bytes = 0;
 	switch (output_format) {
@@ -1395,12 +1422,12 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		// The retained Windows classic owner tests only PF_WorldFlag_DEEP,
 		// so PF32 aliases its PF16 branch.  Keep the unowned float route
 		// fail-closed; the advertised numerical PF32 owner is Smart Render.
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("classic-pf32-unowned");
 	default:
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("classic-format-unknown");
 	}
 	ERR(ClassicCopyGeometry(input, output, pixel_bytes));
-	if (err) return err;
+	if (err) return OLM_BLUR_REFUSAL("classic-copy-geometry");
 
 	// The current Windows classic export reads only parameter slots 1..3 and,
 	// with the registered float-slider default, observes a zero low dword for
@@ -1413,7 +1440,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	const A_long blur_smoothness = params[OLMBLUR_BLUR_SMOOTHNESS]->u.fd.value;
 	const A_long repeat = params[OLMBLUR_REPEAT]->u.sd.value;
 	if (blur_amount != 5.0 || blur_smoothness != 100 * 65536 || repeat != 2) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("classic-nondefault-tuple");
 	}
 
 	olm::world_safety::TightStaging staging;
@@ -1424,11 +1451,12 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		 (std::size_t)output->rowbytes, pixel_bytes});
 	if (stage_status != olm::world_safety::Status::ok)
 		return stage_status == olm::world_safety::Status::out_of_memory ?
-			PF_Err_OUT_OF_MEMORY : PF_Err_BAD_CALLBACK_PARAM;
+			OLM_BLUR_ERROR("classic-staging-oom", PF_Err_OUT_OF_MEMORY) :
+			OLM_BLUR_REFUSAL("classic-staging");
 	std::memcpy(staging.output_data(), staging.input_data(),
 		staging.row_bytes() * staging.height());
 	return staging.commit() == olm::world_safety::Status::ok ?
-		PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+		PF_Err_NONE : OLM_BLUR_REFUSAL("classic-commit");
 }
 
 static PF_Err
@@ -1436,7 +1464,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 {
 	(void)out_data;
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
-		!extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
+		!extra->cb->checkout_layer) return OLM_BLUR_REFUSAL("prerender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
@@ -1453,6 +1481,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		extra->output->pre_render_data = NULL;
 		extra->output->flags = 0;
 	}
+	if (err) return BlurRefusal(__func__, "prerender-checkout", __LINE__, err);
 	return err;
 }
 
@@ -1548,33 +1577,46 @@ GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
 	return active <= (size_t)world->rowbytes;
 }
 
-static bool
-GenericBetaTuple(const PublicBlurParamValues& raw, A_long width, A_long height)
+// Returns the first failing admission reason, or NULL when the tuple is
+// admitted.  The order and predicates are unchanged from the original boolean
+// gate; the tag exists only for refusal attribution.
+static const char *
+GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long height)
 {
-	if (!isfinite(raw.amount) || raw.amount < 1.0 || raw.amount > 1000.0 ||
-		raw.smoothness_fixed < 1 * 65536 || raw.smoothness_fixed > 100 * 65536 ||
-		raw.repeat < 1 || raw.repeat > 10 || raw.bias < 1 || raw.bias > 2 ||
-		(raw.legacy != 0 && raw.legacy != 1) || width <= 0 || height <= 0 ||
-		width > 4096 || height > 2160)
-		return false;
+	if (!isfinite(raw.amount)) return "generic-amount-nonfinite";
+	if (raw.amount < 1.0 || raw.amount > 1000.0) return "generic-amount-range";
+	if (raw.smoothness_fixed < 1 * 65536 || raw.smoothness_fixed > 100 * 65536)
+		return "generic-smoothness-range";
+	if (raw.repeat < 1 || raw.repeat > 10) return "generic-repeat-range";
+	if (raw.bias < 1 || raw.bias > 2) return "generic-bias-range";
+	if (raw.legacy != 0 && raw.legacy != 1) return "generic-legacy-range";
+	if (width <= 0 || height <= 0) return "generic-size-invalid";
+	if (width > 4096 || height > 2160) return "generic-size-too-large";
 	// Preserve the tiny captured fixtures below as exact compatibility owners.
-	if (width <= 24 && height <= 24) return false;
+	if (width <= 24 && height <= 24) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
-	if (usize_width > ((size_t)-1) / usize_height) return false;
+	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
 	// PF32 is the worst case: packed source/destination plus two RGB float
 	// planes and flags approach 57 bytes/pixel.  Leave allocator headroom while
 	// admitting a full UHD frame at ordinary settings.
-	if (pixels > (640u * 1024u * 1024u) / 64u) return false;
+	if (pixels > (640u * 1024u * 1024u) / 64u) return "generic-pixels-budget";
 	// The current workers are synchronous and have no host abort callback.
 	// Bound their dominant O(pixels * radius * repeat) cost before entering the
 	// worker; host/perf timeouts remain an outer watchdog, never a cancellation
 	// mechanism for an already-running render.
 	const size_t radius=(size_t)ceil(raw.amount);
 	const size_t max_work=3600u*1000u*1000u;
-	if (!radius || pixels > max_work/radius ||
-		pixels*radius > max_work/(size_t)raw.repeat) return false;
-	return true;
+	if (!radius) return "generic-zero-radius";
+	if (pixels > max_work/radius) return "generic-work-budget";
+	if (pixels*radius > max_work/(size_t)raw.repeat) return "generic-repeat-work-budget";
+	return NULL;
+}
+
+static bool
+GenericBetaTuple(const PublicBlurParamValues& raw, A_long width, A_long height)
+{
+	return GenericBetaTupleRefusal(raw, width, height) == NULL;
 }
 
 static PF_Err
@@ -1827,23 +1869,32 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!in_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 		!in_data->inter.checkout_param || !in_data->inter.checkin_param)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_BLUR_REFUSAL("smartrender-inputs");
 	PF_Err err=PF_Err_NONE; PF_EffectWorld *input_world=NULL,*output_world=NULL;
 	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT,&input_world));
 	ERR(extra->cb->checkout_output(in_data->effect_ref,&output_world));
-	if (err || !input_world || !output_world) return err ? err : PF_Err_BAD_CALLBACK_PARAM;
+	if (err) return BlurRefusal(__func__, "smartrender-checkout", __LINE__, err);
+	if (!input_world || !output_world) return OLM_BLUR_REFUSAL("smartrender-world-null");
 	BlurParams bp; AEFX_CLR_STRUCT(bp); PublicBlurParamValues raw; AEFX_CLR_STRUCT(raw);
 	err = CheckoutPublicBlurParams(in_data, &bp, &raw);
+	if (err) return BlurRefusal(__func__, "smartrender-param-checkout", __LINE__, err);
 	const short bpc=extra->input->bitdepth;
 	const size_t pixel_bytes=bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u));
 	// Generic beta lane.  Exact fixture admissions remain below as a fallback,
 	// retaining their special source and arithmetic contracts.
-	if (!err && GenericBetaTuple(raw,input_world->width,input_world->height) &&
-		GenericBetaWorld(input_world,pixel_bytes,input_world->width,input_world->height) &&
-		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height) &&
+	const char *const generic_tuple_refusal =
+		GenericBetaTupleRefusal(raw,input_world->width,input_world->height);
+	const bool generic_input_ok =
+		GenericBetaWorld(input_world,pixel_bytes,input_world->width,input_world->height);
+	const bool generic_output_ok =
+		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height);
+	const bool generic_downsample =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
-		in_data->downsample_y.num==1 && in_data->downsample_y.den==1) {
+		in_data->downsample_y.num==1 && in_data->downsample_y.den==1;
+	if (!err && !generic_tuple_refusal && generic_input_ok && generic_output_ok &&
+		generic_downsample) {
 		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+		if (err) err=BlurRefusal(__func__, "generic-formats", __LINE__, err);
 		olm::world_safety::TightStaging staging;
 		if (!err) {
 			const olm::world_safety::Status stage_status = staging.prepare(
@@ -1854,9 +1905,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				 (size_t)output_world->height, (size_t)output_world->rowbytes,
 				 pixel_bytes});
 			if (stage_status == olm::world_safety::Status::out_of_memory)
-				err = PF_Err_OUT_OF_MEMORY;
+				err = OLM_BLUR_ERROR("generic-staging-oom", PF_Err_OUT_OF_MEMORY);
 			else if (stage_status != olm::world_safety::Status::ok)
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_BLUR_REFUSAL("generic-staging");
 		}
 		PF_EffectWorld staged_input = *input_world;
 		PF_EffectWorld staged_output = *output_world;
@@ -1866,12 +1917,13 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			staged_output.data = (PF_PixelPtr)staging.output_data();
 			staged_output.rowbytes = (A_long)staging.row_bytes();
 			err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+			if (err) err=BlurRefusal(__func__, "generic-render", __LINE__, err);
 		}
 		const PF_Err checkin_err=extra->cb->checkin_layer_pixels ?
 			extra->cb->checkin_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT) : PF_Err_NONE;
-		if (!err) err=checkin_err;
+		if (!err) err=checkin_err ? BlurRefusal(__func__, "generic-checkin", __LINE__, checkin_err) : checkin_err;
 		if (!err && staging.commit() != olm::world_safety::Status::ok)
-			err=PF_Err_BAD_CALLBACK_PARAM;
+			err=OLM_BLUR_REFUSAL("generic-commit");
 		return err;
 	}
 	const bool public24 = raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&
@@ -1985,8 +2037,13 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		source_kind=PublicBlurSourcePF32LegacyRedBoundary;width=7;height=5;rowbytes=125;
 	}
 	const size_t active=(size_t)width*pixel_bytes;
-	if (!err && source_kind==PublicBlurSourceNone)
-		err=PF_Err_BAD_CALLBACK_PARAM;
+	if (!err && source_kind==PublicBlurSourceNone) {
+		if (generic_tuple_refusal) err=OLM_BLUR_REFUSAL(generic_tuple_refusal);
+		else if (!generic_input_ok) err=OLM_BLUR_REFUSAL("generic-input-world");
+		else if (!generic_output_ok) err=OLM_BLUR_REFUSAL("generic-output-world");
+		else if (!generic_downsample) err=OLM_BLUR_REFUSAL("generic-downsample");
+		else err=OLM_BLUR_REFUSAL("exact-source-none");
+	}
 	// The Windows exported Smart owner materializes the fixed-slider value
 	// from the signed high word of PF_Fixed.  Preserve that public boundary
 	// only for the three admitted fractional-Smoothness fixtures; the full
@@ -1994,12 +2051,22 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!err && (public8LegacySmooth || public16LegacySmooth || public32LegacySmooth))
 		bp.blur_smoothness=(float)(int16_t)((uint32_t)raw.smoothness_fixed >> 16);
 	if (!err && (in_data->downsample_x.num!=1 || in_data->downsample_x.den!=1 ||
-		in_data->downsample_y.num!=1 || in_data->downsample_y.den!=1 ||
-		!pixel_bytes || !ExactPublicWorld(input_world,bpc,width,height,rowbytes) ||
-		!ExactPublicWorld(output_world,bpc,width,height,rowbytes) ||
-		!PublicWorldsDisjoint(input_world,output_world,height) ||
-		!ExactPublicSource(input_world,bpc,raw.legacy!=0,source_kind))) err=PF_Err_BAD_CALLBACK_PARAM;
-	if (!err) err = GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+		in_data->downsample_y.num!=1 || in_data->downsample_y.den!=1))
+		err=OLM_BLUR_REFUSAL("exact-downsample");
+	if (!err && !pixel_bytes) err=OLM_BLUR_REFUSAL("exact-bitdepth");
+	if (!err && !ExactPublicWorld(input_world,bpc,width,height,rowbytes))
+		err=OLM_BLUR_REFUSAL("exact-input-world");
+	if (!err && !ExactPublicWorld(output_world,bpc,width,height,rowbytes))
+		err=OLM_BLUR_REFUSAL("exact-output-world");
+	if (!err && !PublicWorldsDisjoint(input_world,output_world,height))
+		err=OLM_BLUR_REFUSAL("exact-worlds-overlap");
+	if (!err && !ExactPublicSource(input_world,bpc,raw.legacy!=0,source_kind))
+		err=OLM_BLUR_REFUSAL("exact-source-mismatch");
+	if (!err) {
+		err = GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+		if (err) err=BlurRefusal(__func__, "exact-formats", __LINE__, err);
+	}
+	if (err) return err;
 	if (!err) try {
 		const size_t pixels=(size_t)width*(size_t)height;
 		std::vector<PF_PixelFloat> source_words(pixels),destination_words(pixels);
@@ -2011,14 +2078,19 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		staged_input.data=(PF_PixelPtr)source;staged_input.rowbytes=(A_long)active;
 		staged_output.data=(PF_PixelPtr)destination;staged_output.rowbytes=(A_long)active;
 		err=PF_COPY(&staged_input,&staged_output,NULL,NULL);
-		if(!err) err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+		if (!err) {
+			err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+			if (err) err=BlurRefusal(__func__, "exact-render", __LINE__, err);
+		}
 		if(!err) for(size_t y=0;y<(size_t)height;++y) {
 			unsigned char *out=(unsigned char*)output_world->data+y*output_world->rowbytes;
 			const unsigned char *in=(const unsigned char*)input_world->data+y*input_world->rowbytes;
 			memcpy(out,destination+y*active,active);
 			memcpy(out+active,in+active,(size_t)output_world->rowbytes-active);
 		}
-	} catch(const std::bad_alloc&){err=PF_Err_OUT_OF_MEMORY;}
+	} catch(const std::bad_alloc&){
+		err=BlurRefusal(__func__, "exact-bad-alloc", __LINE__, PF_Err_OUT_OF_MEMORY);
+	}
 	return err;
 }
 

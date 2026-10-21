@@ -1,0 +1,1772 @@
+{
+  "budget_minutes": 30,
+  "case_timeout_seconds": 10,
+  "cases": [],
+  "claims_not_made": [
+    "Signature clusters are not proven root causes.",
+    "Finite random coverage is not all-input compatibility.",
+    "This is CPU AEX emulation vs a fake SDK host, not native AE/Windows UCRT validation.",
+    "AEX packed strides vs Mac random padding does not establish AEX odd-stride support."
+  ],
+  "completed": 39,
+  "corpus_max_bytes": 2000000,
+  "deadline_reached": false,
+  "elapsed_seconds": 4.9224,
+  "framework_sha256": {
+    "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+    "tools/fuzz/adapters/colorkeep.py": "8905fb46fb5efe366ad50a28be52a7d7c10712b94800515e58640405c03660c1",
+    "tools/fuzz/adapters/olmblur.py": "c0b0501aa49f1706f70c2b6d06a7fb580ec1a9255110bab2238894e110868b84",
+    "tools/fuzz/adapters/olmcolorkey.py": "ad5ade6755c69a33142ebe8a7df3154435d77893119ca5eb1269daaf92ecafac",
+    "tools/fuzz/adapters/olmdirectionalblur.py": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+    "tools/fuzz/adapters/olmdistancegradation.py": "2e58d20d22b65e07fc16c2d59157ae113620fec8ad154a51d62d759323b1e4c1",
+    "tools/fuzz/adapters/olmkirakira.py": "84c38bf2abf6268bc1cf98c20a2af4d7160f6f616eccc8b69bf42e8970f4f3c0",
+    "tools/fuzz/adapters/olmsmoother.py": "ae62cd7ea76ee6f5f3f0e953705fd603294d1f1bd7c10aa8b0d25001c0af7512",
+    "tools/fuzz/adapters/olmsmoother2.py": "d0dc7494912ae86e7eda08e66a1d13103750f49f46005e081ec4396d720ed9e2",
+    "tools/fuzz/adapters/olmtoondilate.py": "7103eb0724d5a84102d1acd72d559b70a96d4dfc7b7f29e943f956302f290ce1",
+    "tools/fuzz/adapters/public.py": "134744b9d78e4f9e3a4866e5e19defed0b84ab8bc809266c9778d20e60ea5ca1",
+    "tools/fuzz/adapters/radialblur.py": "596a59111874409f72c7a1430e002eaf0b002c82c967057fac092807831a6039",
+    "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
+    "tools/fuzz/core.py": "16a1e410e0c43a4b822ac4697a82d3e2723acf5025d605ff1069480c086a1fbd",
+    "tools/fuzz/kirakira_triage_summary.py": "36340cb869e8bb40601190519a9efa321c15ecf16418eda380fc3a3f91119131",
+    "tools/fuzz/rebaseline_corpus.py": "ca70b9badfac664a498a4b66adf9e36ed3e6166bfea85c2a06c3b6a54509d29c",
+    "tools/fuzz/refusal_census.py": "741ee0f8ad24acde87a77af8ce63cc63f142ebb24167eb821e0d63b568302152",
+    "tools/fuzz/run.py": "7209037849fa05710977c3a6723aa64f0aeb5a37668fcb8b5a05c34a12a0c3da",
+    "tools/fuzz/test_adapters.py": "1f3cb30aadb20d41db823b065468159336ed61c1bcd61655a13471e96c55ffb2",
+    "tools/fuzz/test_framework.py": "c5f3fa8bf01539378c6319fdb1e90973fddbc2d083b7cc7c6459294a5eeec111",
+    "tools/fuzz/triage_directionalblur.py": "6a563f9ccadf1bc7ed515ade56c032ab2c0a0c9df68b49c14a31b591315b409a",
+    "tools/fuzz/triage_distancegradation.py": "5910d6f2495c3cc7745f7aafb5f6b321b3da32ced0327bb0006271dbab685939",
+    "tools/fuzz/triage_kirakira.py": "e3be0501c6781594549808f8239e7392d884e8a2eba23912164af11beb6216fa",
+    "tools/fuzz/triage_olmblur.py": "93475162965987cdf992157bd1ea7c277e546a34dc5d1b4ca1c441cc3d20ae5f"
+  },
+  "generator_version": 1,
+  "jobs": 2,
+  "max_size": 256,
+  "plugin": "olmblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "candidate_sha256": "942d049bbf91dfe262273a0334d598d6bd77b789bc892fda5e0951ad46cf68cb",
+    "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+    "dependencies_sha256": {
+      "core/olmblur_fullworker_helper.cpp": "0c0643143abafd5bd5635fd18755a95e8a297b38786b58913e3af2f5df5c6ad2",
+      "core/olmblur_helper.cpp": "ae31902dc64219f9568995d518b7cf8f22a8653644a4a9a8906cf67d90869098",
+      "core/olmblur_worker16_legacy.cpp": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da",
+      "core/olmblur_worker16_nonlegacy.cpp": "e0cec4230006c518514e4c730fa940fb935074a48e401d8e7f586b46b7b4266e",
+      "core/olmblur_worker32_legacy.cpp": "cb861b3dcc572cb2df029ce642c2d7790365e9c92eb81d4735f2b78e71d5f4c3",
+      "core/olmblur_worker32_nonlegacy.cpp": "5db95e5c39c6b232254e4011fcd8e47e2f96d1a8909205e49e25075130df5829",
+      "core/olmblur_worker8_legacy.cpp": "537b416da3b3f8fca50a2bdf90ff01f8cdb7d8b7369a439e7bf5ce573cf943a4",
+      "core/olmblur_worker_orchestration.cpp": "2f896d3e7a838421bb69847f585151da320de1135015b29affa18e8de095caaf",
+      "mac/OLMBlur/OLMBlur.cpp": "cf362169e4ca3bd76d06fe59e31c4d07401964bbe5bf19189cd9d142c6da4cf3",
+      "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+      "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+      "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "replay": "tests/fuzz_corpus/olmblur",
+  "replay_matches_saved": true,
+  "replays": [
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000004_adfc483da30a.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "37c024fbfe1f1e6ced43ce5ec4a49facfafd9b5f5cbad684b19ee506732aec38",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 1680,
+              "actual_word_hex": "95",
+              "different_bytes": 24,
+              "different_words": 24,
+              "expected_bytes": 1680,
+              "expected_word_hex": "94",
+              "first_byte": 511,
+              "first_word": 511
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "a30c657a3d5625b5210d8504b2b6e4162d7a9d67559b2c7b359d974cc6e9e521",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000005_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ecf5a9f8f5447667781beb77fedf4ad50d1b61a38a961c1db981e707a3967fe2",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 64,
+              "actual_word_hex": "0080",
+              "different_bytes": 30,
+              "different_words": 15,
+              "expected_bytes": 64,
+              "expected_word_hex": "0453",
+              "first_byte": 26,
+              "first_word": 13
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "04a65fe623413ea61b20a6016fa80a1cc79b105a6b72d489743332c4b101e07d",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000008_92552f06afe6.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "43c454e3edea8a68c818b3adffd81e0346892c0e09e5e03139e075d0d70eeefd",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 8,
+              "actual_word_hex": "ff",
+              "different_bytes": 6,
+              "different_words": 6,
+              "expected_bytes": 8,
+              "expected_word_hex": "82",
+              "first_byte": 1,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "6063bc19034a649d5db82faba3202fa49686f330578b05ea95528e090c182d06",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000025_def4b9242090.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "868ad15246c33b8139a561eac74d6a09ac473981b99630650839a1e26872c389",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 720,
+              "actual_word_hex": "35c1493f",
+              "different_bytes": 59,
+              "different_words": 27,
+              "expected_bytes": 720,
+              "expected_word_hex": "2cb1493f",
+              "first_byte": 20,
+              "first_word": 5
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "c01beb4d150d2e0d9462a3389d26bf63475666ec4721df74ecf72ece636a46d3",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000029_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 336,
+              "actual_word_hex": "a355",
+              "different_bytes": 48,
+              "different_words": 45,
+              "expected_bytes": 336,
+              "expected_word_hex": "a555",
+              "first_byte": 12,
+              "first_word": 6
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "6d01aa5d77ab348e23f146279be070a26b7790f784320ee7b88366ea3fd81b9a",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000040_1e01a8a5cbd2.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4b09c767e3541418e8732dbccc9025b2efb104a6cdceb7da565eddc2dc9af7c6",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 49056,
+              "actual_word_hex": "993f",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 49056,
+              "expected_word_hex": "9a3f",
+              "first_byte": 31292,
+              "first_word": 15646
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "d52d844b641f0a8e41ac4742f9607da899d08e4dc525479e4d076fd48a93d2c4",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000055_37726b848558.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "fdc272c159f22b40ff1d611cb75bc69be91b37405fd2a802e43b348f6733dce6",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 104,
+              "actual_word_hex": "93",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 104,
+              "expected_word_hex": "92",
+              "first_byte": 26,
+              "first_word": 26
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "2a7a2ffd7414b5b51192f66527d14896f418dec2a8ebddea809d73ebd64cd094",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000074_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "960c8cd6e571a9377e3806727699a6c815a5c1edb2393579d5e07e0e10996b3d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 24,
+              "actual_word_hex": "0080",
+              "different_bytes": 4,
+              "different_words": 2,
+              "expected_bytes": 24,
+              "expected_word_hex": "6841",
+              "first_byte": 10,
+              "first_word": 5
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "5ee5314c8be5cbf15630946b407cf8745bc1fc975e9f1aad67181a6a751413c0",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000092_def4b9242090.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "db3d2abd17fd68c60d53b46818ec8f61808ae6888d4e812a3e11d68d5bb1d368",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 448,
+              "actual_word_hex": "c617c03e",
+              "different_bytes": 3,
+              "different_words": 3,
+              "expected_bytes": 448,
+              "expected_word_hex": "c717c03e",
+              "first_byte": 4,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "1e2aaaa069a3b23480a82ecd1ea1e445bc7a83c16f1ed707ce2c0e44c67c4681",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000093_83728685d1c5.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "63697a346c7697cc346b1b9f78bdc22c69d4fb2e6c95eadab5f02a3fbeab7f43",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 288,
+              "actual_word_hex": "fb60",
+              "different_bytes": 2,
+              "different_words": 2,
+              "expected_bytes": 288,
+              "expected_word_hex": "f860",
+              "first_byte": 122,
+              "first_word": 61
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "26bbc2a294fb3ff36ee0c8f1373ce12b52be2e3cc049b5cc3d9b91c1ba99f889",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000099_9b13c27c2f2e.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "9f4d3b6ad9bc7010cb46e0b04a54946b6f453eb72a0ddf540f89669d7294aa21",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 496,
+              "actual_word_hex": "4523c17f",
+              "different_bytes": 22,
+              "different_words": 9,
+              "expected_bytes": 496,
+              "expected_word_hex": "4623c1ff",
+              "first_byte": 116,
+              "first_word": 29
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "da455d7a617a260329b84e23f541bc0ec6a79fd5e007ff7020db7468c938c354",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000104_37726b848558.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "db70e5a7c7a62d34a60eb43d69cf9b5dca703335a8a2ad9e656ffb6d7478f689",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 124,
+              "actual_word_hex": "5b",
+              "different_bytes": 4,
+              "different_words": 4,
+              "expected_bytes": 124,
+              "expected_word_hex": "5a",
+              "first_byte": 14,
+              "first_word": 14
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "4e9c242bd0b04456ea537846386b5b24f1066aa9a0acc3cd77c7c856ef0fe5b7",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000114_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b194573987f1d4faf8c0a89856fb2c8837a87e1e85ad0a24d865906554c3063d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 16,
+              "actual_word_hex": "8614",
+              "different_bytes": 12,
+              "different_words": 6,
+              "expected_bytes": 16,
+              "expected_word_hex": "3b26",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "6964c807d7dcda927f888af9460d9e978e97acb200d8ab8ee8f97183f40d2a4e",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000115_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "3d1f388f20d2966b0f894c040ca82beeb8eaea923eac72eee6ee1cd71dc21504",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 208,
+              "actual_word_hex": "191a",
+              "different_bytes": 34,
+              "different_words": 34,
+              "expected_bytes": 208,
+              "expected_word_hex": "1a1a",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "849fd9e94cfce9c13d092f461e5b1abfa4ce3cd8b2fb0428770db51e80634641",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000120_def4b9242090.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "f626fe32a90b1912fe020a407c3da24fb5bc641dc2b972cddd5a05f52102d88a",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 416,
+              "actual_word_hex": "b239aa3e",
+              "different_bytes": 51,
+              "different_words": 30,
+              "expected_bytes": 416,
+              "expected_word_hex": "bb39aa3e",
+              "first_byte": 136,
+              "first_word": 34
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "bbab6d2b4f0495af75b5f14da1a78b6080ef74897aaedfdd33226ad8eed181f5",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000122_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "82e3ee660cd879a58ec6e6c4450a4589581a558c0a364f9a0faa65a04c479353",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 40,
+              "actual_word_hex": "0080",
+              "different_bytes": 8,
+              "different_words": 4,
+              "expected_bytes": 40,
+              "expected_word_hex": "6841",
+              "first_byte": 10,
+              "first_word": 5
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "47d9a4dc3a5353e5ca3e27696507d49d37c607b83eacf388aceb2b056c0702ca",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000127_83728685d1c5.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4c089d91fb6d2c822a94b39d5128bc693726bd96561ccccc698296222ce447ec",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 240,
+              "actual_word_hex": "5b5a",
+              "different_bytes": 8,
+              "different_words": 8,
+              "expected_bytes": 240,
+              "expected_word_hex": "545a",
+              "first_byte": 58,
+              "first_word": 29
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "5eaac845b38ef5ecb78fa9f062031fb966bd6a7c449390ab9f71fc4453a16593",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000128_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4a87d4620f31db94d5ab69faaa5489c9e07c9eaf36357b3b6e393a912722573d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 40,
+              "actual_word_hex": "0080",
+              "different_bytes": 8,
+              "different_words": 4,
+              "expected_bytes": 40,
+              "expected_word_hex": "6841",
+              "first_byte": 26,
+              "first_word": 13
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "39e034930b283b0b60c6c1b8fa137663bbe1028bfa3069111326a164834ea292",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000157_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "fade0878072a98147bfb522a9f1c8d25715d18b6c0839d610fd1b398cee42851",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 232,
+              "actual_word_hex": "ea2a",
+              "different_bytes": 11,
+              "different_words": 11,
+              "expected_bytes": 232,
+              "expected_word_hex": "eb2a",
+              "first_byte": 86,
+              "first_word": 43
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "2a2290808e52da4d20a611667a8c390b02051986a852f891f75b1957a7731478",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000159_92552f06afe6.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 16,
+              "actual_word_hex": "00",
+              "different_bytes": 4,
+              "different_words": 4,
+              "expected_bytes": 16,
+              "expected_word_hex": "7d",
+              "first_byte": 9,
+              "first_word": 9
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "f576e928bb5465342a1515b6095adbfe38269f95be09f418ede23155d4481c8c",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000176_44f767dbce91.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "291155c8eb33f79271b43ac37e1e92e16a031ab1bc4c2e6d8cf21c607d3f2755",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 172,
+              "actual_word_hex": "80",
+              "different_bytes": 12,
+              "different_words": 12,
+              "expected_bytes": 172,
+              "expected_word_hex": "7f",
+              "first_byte": 5,
+              "first_word": 5
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "9d17dda39ff94f4ce6b55050bbfe7de284fe46dbd76e23202f1e23378df927b0",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000181_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "52be92e663de3a33367e2af92ad6bda4799446736470a641b9cc9763aa267c8f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 96,
+              "actual_word_hex": "0080",
+              "different_bytes": 18,
+              "different_words": 9,
+              "expected_bytes": 96,
+              "expected_word_hex": "026a",
+              "first_byte": 34,
+              "first_word": 17
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "acd6a3f9a557d8b69c68d0ed403dcf80c9c7ffaee57121962ca521d144cfedf1",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000191_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "9dc2033fa54159589727a43e72381d7b7a50fffa150508e2a719c3ade4ea676c",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 24,
+              "actual_word_hex": "2633",
+              "different_bytes": 17,
+              "different_words": 9,
+              "expected_bytes": 24,
+              "expected_word_hex": "fd53",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "351a252a2993a6875c0af0f936202159e0a25d693b5e7b7683014986ca3c3a12",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000196_1e01a8a5cbd2.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "40437d83081e2de44e86720d8e99642909c23d5676bbcb23d67caa9887d4a1b6",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 368,
+              "actual_word_hex": "ca5a",
+              "different_bytes": 43,
+              "different_words": 42,
+              "expected_bytes": 368,
+              "expected_word_hex": "bd5a",
+              "first_byte": 18,
+              "first_word": 9
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "cae5c1a9399ece0e61e83978775cae64e6189546cf2b4fd0e78864fb46452914",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000203_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "447e43bb880c3be1c0259e90bfb988ab7fade8ac4ba62ab17abb91388afc9af2",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 16,
+              "actual_word_hex": "4f7f",
+              "different_bytes": 12,
+              "different_words": 6,
+              "expected_bytes": 16,
+              "expected_word_hex": "1f6e",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "f88ced293c7aaf90619d9418b5b2ca15a8a288a97560095770587f8f40e4e170",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000206_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ee181d53f32263545c4592796e22154b6358b05adcf212220917eb77ac083c15",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 280,
+              "actual_word_hex": "7e55",
+              "different_bytes": 11,
+              "different_words": 11,
+              "expected_bytes": 280,
+              "expected_word_hex": "7f55",
+              "first_byte": 28,
+              "first_word": 14
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "381b663f16b3fc48c87d63a2763dc1c5202b0a8b7716c63a3c8c7fae7123e7ae",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000210_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ab88c38ecc5d61ee4c6c4aabb7612deb6ef0931ec5fb8be6c5e15846dfda0d85",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 352,
+              "actual_word_hex": "c209",
+              "different_bytes": 29,
+              "different_words": 15,
+              "expected_bytes": 352,
+              "expected_word_hex": "ce06",
+              "first_byte": 146,
+              "first_word": 73
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "d26901838bd6693e499df2bac33eb485aff5ab10394b29748b8e28ad611d08e0",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000214_656ab133c0a9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "d4a8300f0b0235c7124d66713b01ca1d55d9700b0803338349e475e06bcc7e9a",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 272,
+              "actual_word_hex": "2c2a",
+              "different_bytes": 14,
+              "different_words": 14,
+              "expected_bytes": 272,
+              "expected_word_hex": "2b2a",
+              "first_byte": 10,
+              "first_word": 5
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "57e93d4a8d47aac068b863ca15d556224d85fed58d1e3d9108d9efdd0322435c",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000230_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "09fe2ed251b1fb171f348fdafff9a27be58e4a02ea963c3169ab41c52f7bf5b2",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 24,
+              "actual_word_hex": "0080",
+              "different_bytes": 8,
+              "different_words": 4,
+              "expected_bytes": 24,
+              "expected_word_hex": "6841",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "1751c470115ca0adbc3642dbb1db6eea5ab8b723321fcf54b42e941274938cea",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000234_ced0f1718a01.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "f20484ecb64a007cee22d9bf3977cea883077571a595b697be36e7f6f41dfe3f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 16,
+              "actual_word_hex": "0080",
+              "different_bytes": 4,
+              "different_words": 2,
+              "expected_bytes": 16,
+              "expected_word_hex": "6841",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "212bf69ce56b541b8197199e058aee5d1557fe963097e53646e8e40f50874834",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 232,
+              "actual_word_hex": "fc4e",
+              "different_bytes": 2,
+              "different_words": 2,
+              "expected_bytes": 232,
+              "expected_word_hex": "fd4e",
+              "first_byte": 138,
+              "first_word": 69
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "1d610bb2cdd847ff8d6d29d5c6dc906dd9bc01b4f7ee73d33afaf81647be044a",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000236_fac8522494e3.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "72e0e9564bbe6d3a3da4d2cde44188519c3ff04b875901a150d5c93dc061db29",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 1280,
+              "actual_word_hex": "41",
+              "different_bytes": 17,
+              "different_words": 17,
+              "expected_bytes": 1280,
+              "expected_word_hex": "42",
+              "first_byte": 51,
+              "first_word": 51
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "400eaea8cd7c0828df292dfcbffd8091886906eea72066506f34986721261924",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000244_37726b848558.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "6c4c12a9374e5988071da7f716031d7005a81bbe22546deea7a3647c33805304",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 100,
+              "actual_word_hex": "45",
+              "different_bytes": 8,
+              "different_words": 8,
+              "expected_bytes": 100,
+              "expected_word_hex": "44",
+              "first_byte": 6,
+              "first_word": 6
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "c237cc10b1ed793cbca0185e6e9ac2ccf8964a2acee5632600cc892ce1fff81b",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000247_def4b9242090.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "c5978394d709ef4a33c09a1d024ae4ccd61a7cc2d72e68f23ea4c5a333b71fdb",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 432,
+              "actual_word_hex": "73dc163f",
+              "different_bytes": 3,
+              "different_words": 3,
+              "expected_bytes": 432,
+              "expected_word_hex": "74dc163f",
+              "first_byte": 4,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "7486b77eef05bd364dfac1cc0d3b7a771e3be972ab4a2abee77652b1dc420de1",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000261_1e01a8a5cbd2.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 200,
+              "actual_word_hex": "6e3b",
+              "different_bytes": 21,
+              "different_words": 20,
+              "expected_bytes": 200,
+              "expected_word_hex": "543b",
+              "first_byte": 108,
+              "first_word": 54
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "889ad224430a25fc8107c0b7226b6570a63c84b69f507a11ef0c43958329b99e",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000268_83728685d1c5.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "720a0cafe24059e3871671325cf329ce6782ce098b78be4ff3581f5ff351caeb",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 232,
+              "actual_word_hex": "2749",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 232,
+              "expected_word_hex": "2649",
+              "first_byte": 92,
+              "first_word": 46
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "ab61d3fe7ff16a6c2834ce2cda73a2a923339f65f9b98ce5134798ac5319cef4",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000270_8214084afb2c.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "476373ffeaa3d3fc640abc5993e0b8dab45d1ea9d306e69f584dfb7fa90a27cd",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 448,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 81,
+              "different_words": 27,
+              "expected_bytes": 448,
+              "expected_word_hex": "ffff7f3f",
+              "first_byte": 4,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "46bea35dd6b3ef41f6a72c5259f74ec1bca1eaf9a9d754b000ead7801f5547a0",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000271_92552f06afe6.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b006885657ada0d86bab0add89e9103d1e66e7e97c38c4a40aaee3d211295912",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 8,
+              "actual_word_hex": "00",
+              "different_bytes": 4,
+              "different_words": 4,
+              "expected_bytes": 8,
+              "expected_word_hex": "7d",
+              "first_byte": 1,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "a4d3d0205572b69e004f5bf320f891d7c889abe3da6eefb9ff18d05713fa5346",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": true,
+      "path": "tests/fuzz_corpus/olmblur/seed1_case000272_def4b9242090.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "957aaa99eb2dc68c65249477bb607b545a9113bc113aef5e7ab960b34caa2a58",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 496,
+              "actual_word_hex": "a489ab3e",
+              "different_bytes": 108,
+              "different_words": 54,
+              "expected_bytes": 496,
+              "expected_word_hex": "298cab3e",
+              "first_byte": 36,
+              "first_word": 9
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "3885490845530c0346b96201fe4dde1235994f5326758fe7bca1fa53064f704d",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ],
+  "requested": 39,
+  "schema": "olm-fuzz-report/1",
+  "scratch_bytes_before_cleanup": 4168300,
+  "seed": 1,
+  "shrink_attempts": 32,
+  "shrink_seconds": 10,
+  "started_utc": "2026-10-21T15:47:53.498059+00:00",
+  "status": "replay_complete"
+}
