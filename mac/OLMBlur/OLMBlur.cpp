@@ -1631,7 +1631,13 @@ CheckoutPublicBlurParams(PF_InData *in_data, BlurParams *bp, PublicBlurParamValu
 			in_data->time_step, in_data->time_scale, &p);
 		if (err) return err;
 		if (ordinal == 0) { raw->amount=p.u.fs_d.value; bp->blur_amount=(float)raw->amount; }
-		else if (ordinal == 1) { raw->smoothness_fixed=p.u.fd.value; bp->blur_smoothness=(float)raw->smoothness_fixed/65536.0f; }
+		else if (ordinal == 1) {
+			raw->smoothness_fixed=p.u.fd.value;
+			// The exported Windows Smart builder reads the signed high word
+			// of PF_Fixed (FUN_180009b40), discarding its fractional bits.
+			// Keep the full raw value for admission checks on both lanes.
+			bp->blur_smoothness=(float)(int16_t)((uint32_t)raw->smoothness_fixed >> 16);
+		}
 		else if (ordinal == 2) { raw->repeat=p.u.sd.value; bp->repeat=raw->repeat; }
 		else if (ordinal == 3) { raw->bias=p.u.pd.value; bp->bias_dir=raw->bias; }
 		else { raw->legacy=p.u.bd.value; bp->legacy=raw->legacy; }
@@ -2050,12 +2056,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		else if (!generic_downsample) err=OLM_BLUR_REFUSAL("generic-downsample");
 		else err=OLM_BLUR_REFUSAL("exact-source-none");
 	}
-	// The Windows exported Smart owner materializes the fixed-slider value
-	// from the signed high word of PF_Fixed.  Preserve that public boundary
-	// only for the three admitted fractional-Smoothness fixtures; the full
-	// fixed value above remains part of each exact admission predicate.
-	if (!err && (public8LegacySmooth || public16LegacySmooth || public32LegacySmooth))
-		bp.blur_smoothness=(float)(int16_t)((uint32_t)raw.smoothness_fixed >> 16);
 	if (!err && (in_data->downsample_x.num!=1 || in_data->downsample_x.den!=1 ||
 		in_data->downsample_y.num!=1 || in_data->downsample_y.den!=1))
 		err=OLM_BLUR_REFUSAL("exact-downsample");

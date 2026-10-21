@@ -1,4 +1,60 @@
 {
+  "C05_smart_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "ae4d2cf454fd4c30a4e71127500c0bd29e9845a5a4e81f0c72c4cd6ce28a5d5f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "diff": {
+            "actual_bytes": 336,
+            "actual_word_hex": "a355",
+            "different_bytes": 48,
+            "different_words": 45,
+            "expected_bytes": 336,
+            "expected_word_hex": "a555",
+            "first_byte": 12,
+            "first_word": 6
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "0"
+          },
+          "raw_sha256": "6d01aa5d77ab348e23f146279be070a26b7790f784320ee7b88366ea3fd81b9a",
+          "status": "mismatch"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "report": "orchestra/reports/C05-olmblur-smart.md"
+  },
   "case": {
     "depth": 16,
     "geometry": [
@@ -60,7 +116,7 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
     "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
-    "candidate_sha256": "942d049bbf91dfe262273a0334d598d6bd77b789bc892fda5e0951ad46cf68cb",
+    "candidate_sha256": "3af8692e13e2526d2022d00de742cd77fedc9b7732a0b727220ae86ceedec9a5",
     "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
     "dependencies_sha256": {
       "core/olmblur_fullworker_helper.cpp": "0c0643143abafd5bd5635fd18755a95e8a297b38786b58913e3af2f5df5c6ad2",
@@ -71,8 +127,8 @@
       "core/olmblur_worker32_nonlegacy.cpp": "5db95e5c39c6b232254e4011fcd8e47e2f96d1a8909205e49e25075130df5829",
       "core/olmblur_worker8_legacy.cpp": "537b416da3b3f8fca50a2bdf90ff01f8cdb7d8b7369a439e7bf5ce573cf943a4",
       "core/olmblur_worker_orchestration.cpp": "2f896d3e7a838421bb69847f585151da320de1135015b29affa18e8de095caaf",
-      "mac/OLMBlur/OLMBlur.cpp": "cf362169e4ca3bd76d06fe59e31c4d07401964bbe5bf19189cd9d142c6da4cf3",
-      "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+      "mac/OLMBlur/OLMBlur.cpp": "9e89e2d077d606f1a8da8c866a4a473238e5262b3de39adeb5c7899a298e9dcb",
+      "orchestra/state/C05-olmblur-smart/run_l9nhvsyv/variant/mac/OLMBlur/OLMBlur.cpp": "9e89e2d077d606f1a8da8c866a4a473238e5262b3de39adeb5c7899a298e9dcb",
       "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
       "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
       "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
@@ -99,8 +155,8 @@
       "value": 0
     },
     "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
-    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
-    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_noop_highdepth_reference_20261002/target/release/aex-guest-worker",
+    "worker_sha256": "9ac2c86cb707e23de7c360c128d61b14d0b4c3b71b417baa3e7e116fe6af42b7",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -159,23 +215,13 @@
         "status": "refusal"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 336,
-          "actual_word_hex": "a355",
-          "different_bytes": 48,
-          "different_words": 45,
-          "expected_bytes": 336,
-          "expected_word_hex": "a555",
-          "first_byte": 12,
-          "first_word": 6
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 5 5 0",
           "ERROR": "0"
         },
-        "raw_sha256": "6d01aa5d77ab348e23f146279be070a26b7790f784320ee7b88366ea3fd81b9a",
-        "status": "mismatch"
+        "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
