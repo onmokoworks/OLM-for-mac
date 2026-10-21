@@ -31,3 +31,14 @@ Promote the interrupted RadialBlur **Offset** fix into production
 Offset 390 exact AND previously-exact RadialBlur suites still exact (0 diffs,
 0 new rejections), with counts reported. If anything regresses: do not "fix" by
 editing expectations — report the first mismatch and stop (status: blocked).
+
+## Update (orchestrator)
+- Reference workers are rebuilt in `/Users/onmk/.cache/olm-emu/` (see `orchestra/reports/emu_index.json`
+  and `orchestra/reports/T00-rebuild-reference-workers.md`). Use `radial_offset_reference_20261002`
+  wherever the scripts expect `/tmp/radial_offset_bound_reference_20261002` (pass by argument).
+  Binary hashes differ from recorded ones only because the build path is embedded; before relying
+  on a worker, calibrate it: replay a few recorded original-AEX output hashes and confirm equality.
+- The new fuzzer (`tools/fuzz/`, README) can also be used: after promotion, replay
+  `tests/fuzz_corpus/radialblur` and run `--n 500 --seed 1`; report how the Offset mismatch
+  cluster (PF8 Outer Offset, slot 6) changes. Corpus hash changes are evidence, not failures.
+- A previous attempt of this ticket stopped on a permissions error; that is fixed.
