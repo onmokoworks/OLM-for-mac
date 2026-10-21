@@ -21,5 +21,6 @@ F18-route-target-per-plugin
 T12-triage-colorkeep-colorkey
 T13-triage-toondilate
 T11-triage-smoother
+F21-toondilate-pf32-seed
 F19-colorkeep-host-flags-and-byte-safe
 F20-colorkey-zero-color-and-byte-safe
