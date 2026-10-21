@@ -1396,12 +1396,30 @@ static bool IsGenericBetaMode34TupleForGeometry(
 			135.0 + info.glow_rotation, info.blur_mode);
 }
 
+static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
+{
+	// F10: FUN_18114f4a0 zero-initializes all five ray planes and skips
+	// each helper when its length is zero. Aggregation then leaves zero glow;
+	// the normal typed outer writer still runs (this is not a source copy).
+	// Seed/channel, colors, ramps and rotation cannot contribute on this branch.
+	// Keep resize and fractional source-opacity conversion outside this proof.
+	// The caller retains the generic finite-SDR, full-frame and storage guards.
+	return !info.approximated_input && info.source_opacity == 1.0 &&
+		info.glow_opacity >= 0.0 && info.glow_opacity <= 100.0 &&
+		info.channel >= 1 && info.channel <= 6 &&
+		info.blur_mode >= 1 && info.blur_mode <= 3 &&
+		(info.merge_mode == 1 || info.merge_mode == 2) &&
+		info.vertical_length == 0 && info.horizontal_length == 0 &&
+		info.diagonal_length == 0 && info.diagonal2_length == 0 &&
+		info.highlight_radius == 0;
+}
+
 static bool IsGenericBetaTupleForGeometry(
 	const OLMKiraKiraInfo &info,
 	A_long width,
 	A_long height)
 {
-	return (IsGenericBetaMode12Tuple(info) &&
+	return ((IsGenericBetaMode12Tuple(info) || IsZeroRayTuple(info)) &&
 			IsGenericBetaFullFrameDimensions(width, height)) ||
 		IsGenericBetaMode34TupleForGeometry(info, width, height);
 }
