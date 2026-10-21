@@ -286,45 +286,59 @@
     },
     "routes": {
       "classic": {
-        "diff": {
-          "actual_bytes": 4,
-          "actual_word_hex": "35",
-          "different_bytes": 1,
-          "different_words": 1,
-          "expected_bytes": 4,
-          "expected_word_hex": "28",
-          "first_byte": 0,
-          "first_word": 0
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "0 0 0 1 1",
           "ERROR": "0"
         },
-        "raw_sha256": "cadd7538cdefdaac64742213a59f286d52c43d82ac72014a6067f64042266af8",
-        "status": "mismatch"
+        "raw_sha256": "87b18399311fdf9c8e5ccb01825fa87cc57f6038ba94ecfd8255324295214db5",
+        "status": "exact"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 4,
-          "actual_word_hex": "35",
-          "different_bytes": 1,
-          "different_words": 1,
-          "expected_bytes": 4,
-          "expected_word_hex": "28",
-          "first_byte": 0,
-          "first_word": 0
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "21 21 1 1 1",
           "ERROR": "0"
         },
-        "raw_sha256": "cadd7538cdefdaac64742213a59f286d52c43d82ac72014a6067f64042266af8",
-        "status": "mismatch"
+        "raw_sha256": "87b18399311fdf9c8e5ccb01825fa87cc57f6038ba94ecfd8255324295214db5",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "revalidated": {
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "candidate_sha256": "52e0cd4f4875e66c5a1774cf42c672214bea1cad4c19b53aa6783fa8661d0730",
+      "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+      "dependencies_sha256": {
+        "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+        "core/dblur_frontonly.cpp": "82cf90b237ec0ea9e76dfb47f1fa4b80d2940e8d05b990fefab5a03a527df651",
+        "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+        "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "e02a2973a032a77c861a0c86bb8043da6a72f2820141b7a950460c436f9c9156",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+        "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab"
+      },
+      "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "oracle_render_path": "smartfx",
+      "out_of_range_builder_defaults": [],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "report": "reports/fuzz/f06_dblur_pf8_dispatch/corpus.json",
+    "ticket": "F06-dblur-pf8-feature-dispatch"
   },
   "schema": "olm-fuzz-case/1",
   "seed": 1

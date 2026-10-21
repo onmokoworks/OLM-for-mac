@@ -292,158 +292,6 @@ static void CopyWorld(PF_EffectWorld *input, PF_EffectWorld *output)
 	}
 }
 
-struct FloatImage {
-	A_long width = 0;
-	A_long height = 0;
-	std::vector<float> rgba;
-};
-
-static float ClampFloat(float v, float lo, float hi)
-{
-	return std::max(lo, std::min(v, hi));
-}
-
-static A_u_char Quantize8(float value)
-{
-	value = ClampFloat(value, 0.0f, 1.0f) * 255.0f;
-	return (A_u_char)std::floor(value + 0.5f);
-}
-
-static std::vector<float> DirectionalGaussianWeights(A_long length)
-{
-	length = std::max<A_long>(length, 1);
-	std::vector<float> weights((size_t)length, 1.0f);
-	for (A_long i = 0; i < length; ++i) {
-		weights[(size_t)i] = olm::dblur::gaussian_weight((int)length, (int)i);
-	}
-	return weights;
-}
-
-static void SampleBilinear(const FloatImage &image, float x, float y, float out[4])
-{
-	const A_long w = image.width;
-	const A_long h = image.height;
-	if (x < 0.0f || x > (float)(w - 1) || y < 0.0f || y > (float)(h - 1)) {
-		out[0] = out[1] = out[2] = out[3] = 0.0f;
-		return;
-	}
-	A_long x0 = (A_long)std::floor(x);
-	A_long y0 = (A_long)std::floor(y);
-	A_long x1 = std::min<A_long>(x0 + 1, w - 1);
-	A_long y1 = std::min<A_long>(y0 + 1, h - 1);
-	float fx = x - (float)x0;
-	float fy = y - (float)y0;
-	auto at = [&](A_long px, A_long py, int c) -> float {
-		return image.rgba[((size_t)py * w + px) * 4 + c];
-	};
-	for (int c = 0; c < 4; ++c) {
-		float top = at(x0, y0, c) * (1.0f - fx) + at(x1, y0, c) * fx;
-		float bottom = at(x0, y1, c) * (1.0f - fx) + at(x1, y1, c) * fx;
-		out[c] = top * (1.0f - fy) + bottom * fy;
-	}
-}
-
-static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
-                                 const OLMDirectionalBlurInfo &info)
-{
-	if (info.noise_variation != 0.0 || info.back_strength != 0 ||
-	    info.front_alpha_fade != 0 || info.back_alpha_fade != 0) {
-		CopyWorld<PF_Pixel8>(input, output);
-		return PF_Err_NONE;
-	}
-
-	const A_long w = output->width;
-	const A_long h = output->height;
-	const A_long pixels = w * h;
-	FloatImage src;
-	src.width = w;
-	src.height = h;
-	src.rgba.resize((size_t)pixels * 4);
-	for (A_long y = 0; y < h; ++y) {
-		for (A_long x = 0; x < w; ++x) {
-			const PF_Pixel8 *p = PixelAtConst<PF_Pixel8>(input, x, y);
-			const size_t idx = ((size_t)y * w + x) * 4;
-			src.rgba[idx + 0] = (float)p->red / 255.0f;
-			src.rgba[idx + 1] = (float)p->green / 255.0f;
-			src.rgba[idx + 2] = (float)p->blue / 255.0f;
-			src.rgba[idx + 3] = (float)p->alpha / 255.0f;
-		}
-	}
-
-	const double scale_x = info.render_scale_x > 0.0 ? info.render_scale_x : 1.0;
-	const double scale_y = info.render_scale_y > 0.0 ? info.render_scale_y : 1.0;
-	const double angle = -info.angle_deg * kPi / 180.0;
-	const float vx = (float)std::cos(angle);
-	const float vy = (float)std::sin(angle);
-	const double scale = std::sqrt(std::pow(vx * scale_x, 2) + std::pow(vy * scale_y, 2));
-	const A_long strength = std::max<A_long>(0, (A_long)((double)info.front_strength * scale));
-	if (strength <= 1) {
-		CopyWorld<PF_Pixel8>(input, output);
-		return PF_Err_NONE;
-	}
-
-	const std::vector<float> weights = DirectionalGaussianWeights(strength);
-	const float center = ((float)h - 1.0f) * 0.5f;
-	const float span = std::max(center, 1.0f);
-	const float sharp_tail = (float)(info.front_sharp_tail / 100.0);
-
-	std::vector<float> accum_rgb((size_t)pixels * 3, 0.0f);
-	std::vector<float> accum_sum((size_t)pixels, 0.0f);
-	std::vector<float> accum_alpha((size_t)pixels, 0.0f);
-	for (A_long p = 0; p < pixels; ++p) {
-		const size_t src_idx = (size_t)p * 4;
-		const float alpha = src.rgba[src_idx + 3];
-		accum_sum[(size_t)p] = alpha;
-		accum_alpha[(size_t)p] = alpha;
-		for (int c = 0; c < 3; ++c) {
-			accum_rgb[(size_t)p * 3 + c] = src.rgba[src_idx + c] * alpha;
-		}
-	}
-
-	for (A_long i = 1; i < strength; ++i) {
-		const float base_weight = weights[(size_t)i];
-		for (A_long y = 0; y < h; ++y) {
-			float tail = 1.0f;
-			if (sharp_tail > 0.0f) {
-				tail = std::max(0.0f, 1.0f - std::fabs((float)y - center) * sharp_tail / span);
-				if ((float)i >= (float)strength * tail) continue;
-			}
-			A_long weight_idx = i;
-			if (sharp_tail > 0.0f) {
-				weight_idx = std::max<A_long>(0, std::min<A_long>((A_long)((float)i / std::max(tail, 1.0e-6f)), strength - 1));
-			}
-			const float weight = sharp_tail > 0.0f ? weights[(size_t)weight_idx] : base_weight;
-			for (A_long x = 0; x < w; ++x) {
-				float sample[4];
-				SampleBilinear(src, (float)x - vx * (float)i, (float)y - vy * (float)i, sample);
-				float alpha = sample[3] * weight;
-				if (info.size_variation != 0.0) {
-					alpha *= std::pow(ClampFloat(sample[3], 0.0f, 1.0f), (float)(info.size_variation / 100.0));
-				}
-				const A_long p = y * w + x;
-				for (int c = 0; c < 3; ++c) {
-					accum_rgb[(size_t)p * 3 + c] += sample[c] * alpha;
-				}
-				accum_sum[(size_t)p] += alpha;
-				accum_alpha[(size_t)p] = std::max(accum_alpha[(size_t)p], alpha);
-			}
-		}
-	}
-
-	for (A_long y = 0; y < h; ++y) {
-		for (A_long x = 0; x < w; ++x) {
-			const A_long p = y * w + x;
-			const float denom = std::max((float)strength, 1.0f);
-			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
-			out->red   = Quantize8((accum_rgb[(size_t)p * 3 + 0] / denom) * (float)info.brightness_gain);
-			out->green = Quantize8((accum_rgb[(size_t)p * 3 + 1] / denom) * (float)info.brightness_gain);
-			out->blue  = Quantize8((accum_rgb[(size_t)p * 3 + 2] / denom) * (float)info.brightness_gain);
-			out->alpha = Quantize8(accum_alpha[(size_t)p]);
-		}
-	}
-	return PF_Err_NONE;
-}
-
 static bool NoiseCoefficientHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 	                                          A_long width,
 	                                          A_long height)
@@ -1203,6 +1051,25 @@ static bool GenericDeepFeatureWorldsSafe(const PF_EffectWorld *input,
             &estimate, layer_coefficient_bound);
 }
 
+static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
+    const PF_EffectWorld *output, const OLMDirectionalBlurInfo &info,
+    std::size_t staging_bytes = 0)
+{
+    // F06: the AEX PF8 work predicate at 0x180004b50 includes both Fades.
+    // Its existing float core also handles noise-free Size/Sharp combinations.
+    // The gate-off campaign still differs for Size x Fade and generated Noise;
+    // keep those outside this fallback instead of silently copying the input.
+    if (info.noise_variation != 0.0 ||
+        (info.size_variation != 0.0 &&
+            (info.front_alpha_fade != 0 || info.back_alpha_fade != 0))) return false;
+    olm::dblur::generic::RenderEstimate estimate = {};
+    // PF8 uses the same float workspace and tables as deep rendering. The PF16
+    // estimate conservatively overcounts its packed source/destination bytes.
+    return GenericDeepWorldsSafe<PF_Pixel8>(input, output, NeutralStrengthView(info), true) &&
+        GenericDeepFeatureEstimate(info, input->width, input->height, 16,
+            staging_bytes, &estimate);
+}
+
 static bool GenericPF32FiniteInput(const PF_EffectWorld *input)
 {
 	for (A_long y = 0; y < input->height; ++y) {
@@ -1592,21 +1459,23 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			return OLM_DIRECTIONAL_REFUSAL("pf8-type3-unadmitted-world");
 		}
 	}
-	// AEX PF16 0x180003c90 / PF32 0x1800057b0 copy the input first,
+	// AEX PF8 0x180004a20 / PF16 0x180003c90 / PF32 0x1800057b0 copy the input first,
     // then return when both Strengths and both Alpha Fades are zero.
     // Gain, angle, tails, size and noise do not participate in that test.
-    if ((bitdepth == 16 || bitdepth == 32) &&
+    if ((bitdepth == 8 || bitdepth == 16 || bitdepth == 32) &&
         info.front_strength == 0 && info.back_strength == 0 &&
         info.front_alpha_fade == 0 && info.back_alpha_fade == 0) {
         std::uintptr_t begin = 0, end = 0;
-        const std::size_t pixel_size = bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+        const std::size_t pixel_size = bitdepth == 8 ? sizeof(PF_Pixel8) :
+            (bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
         if (!input || !output || input->width <= 0 || input->height <= 0 ||
             input->width != output->width || input->height != output->height ||
             !PayloadSpan(input, &begin, &end) || !PayloadSpan(output, &begin, &end) ||
             static_cast<std::size_t>(input->width) * pixel_size > static_cast<std::size_t>(input->rowbytes) ||
             static_cast<std::size_t>(output->width) * pixel_size > static_cast<std::size_t>(output->rowbytes))
             return OLM_DIRECTIONAL_REFUSAL("deep-copy-world");
-        if (bitdepth == 16) CopyWorld<PF_Pixel16>(input, output);
+        if (bitdepth == 8) CopyWorld<PF_Pixel8>(input, output);
+        else if (bitdepth == 16) CopyWorld<PF_Pixel16>(input, output);
         else CopyWorld<PF_PixelFloat>(input, output);
         return PF_Err_NONE;
     }
@@ -1676,7 +1545,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			// dimensions/origin boundary.
 			return OLM_DIRECTIONAL_REFUSAL("pf8-layer-unadmitted");
 		}
-		return RenderDirectional8(input, output, info);
+		if (CanUsePF8FeatureFallback(input, output, info)) {
+			return RenderExact8(input, output, nullptr, info);
+		}
+		return OLM_DIRECTIONAL_REFUSAL("pf8-feature-unadmitted");
 	}
 	if (bitdepth == 16) {
 		const bool retained_exact = IsRetainedNeutralExact(input, output, info, 16);
@@ -2517,7 +2389,9 @@ extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
 	PF_RenderRequest normalized = {};
 	const bool retained_exact = IsRetainedNeutralExact(input, output, *info, bitdepth);
 	const bool generic = !retained_exact &&
-		(bitdepth == 8 ? IsGenericNeutral8Parameters(*info)
+		(bitdepth == 8 ? (IsGenericNeutral8Parameters(*info) ||
+            (!CanUseExact8(input, output, nullptr, *info) &&
+                CanUsePF8FeatureFallback(input, output, *info)))
 			: ((bitdepth == 16 || bitdepth == 32) &&
                (IsGenericNeutralDeepParameters(*info) || IsGenericDeepFeatureShape(*info))));
 	return generic && DirectionalNormalizeFullFrameRequest(
@@ -2735,19 +2609,24 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			}
 			const bool retained_exact = IsRetainedNeutralExact(
 				input_world, output_world, info, extra->input->bitdepth);
-			const bool generic_features =
-				(extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
-				IsGenericDeepFeatureShape(info);
+			const bool pf8_feature_fallback = extra->input->bitdepth == 8 &&
+                IsGenericDeepFeatureShape(info) &&
+                !CanUseExact8(input_world, output_world, noise_world, info);
+			const bool generic_features = pf8_feature_fallback ||
+				((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
+				IsGenericDeepFeatureShape(info));
 			const bool generic_shape = !retained_exact &&
 				(IsGenericNeutralShape(info) || generic_features);
 			int effective_front_strength = 0, effective_back_strength = 0;
 			if (!err && generic_shape) {
 				const auto strength_info = generic_features ? NeutralStrengthView(info) : info;
 				const bool parameters_safe = GenericEffectiveStrengths(
-					strength_info, extra->input->bitdepth != 8, &effective_front_strength,
+					strength_info, generic_features || extra->input->bitdepth != 8, &effective_front_strength,
 					&effective_back_strength, generic_features);
 				const bool worlds_safe = extra->input->bitdepth == 8
-					? CanUseGenericNeutral8(input_world, output_world, info)
+					? (pf8_feature_fallback
+                        ? CanUsePF8FeatureFallback(input_world, output_world, info, output_end - output_begin)
+                        : CanUseGenericNeutral8(input_world, output_world, info))
 					: (extra->input->bitdepth == 16
 						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features)
 						: (extra->input->bitdepth == 32 &&
@@ -2755,7 +2634,8 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				olm::dblur::generic::RenderEstimate smart_estimate = {};
 				bool estimate_safe = generic_features
 					? GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
-						extra->input->bitdepth, output_end - output_begin, &smart_estimate, 1.0)
+						pf8_feature_fallback ? 16 : extra->input->bitdepth,
+                        output_end - output_begin, &smart_estimate, 1.0)
 					: olm::dblur::generic::EstimateRender(input_world->width, input_world->height,
 						extra->input->bitdepth, effective_front_strength, effective_back_strength,
 						output_end - output_begin, &smart_estimate);
