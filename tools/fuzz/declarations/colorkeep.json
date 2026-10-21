@@ -1,0 +1,2823 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "capture": "Original AEX PARAMS_SETUP via existing AEXCompat session protocol, no render",
+  "parameters": [
+    {
+      "default_value": 1.0,
+      "flags": 64,
+      "index": -1,
+      "name": "Enabled Color Num",
+      "param_type": 1,
+      "precision": null,
+      "slider_max": 100.0,
+      "slider_min": 0.0,
+      "slot": 1,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 100.0,
+      "valid_min": 0.0
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 2,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 3,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 4,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 5,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 6,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 7,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 8,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 9,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 10,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 11,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 12,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 13,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 14,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 15,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 16,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 17,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 18,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 19,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 20,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 21,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 22,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 23,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 24,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 25,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 26,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 27,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 28,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 29,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 30,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 31,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 32,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 33,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 34,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 35,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 36,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 37,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 38,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 39,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 40,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 41,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 42,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 43,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 44,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 45,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 46,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 47,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 48,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 49,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 50,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 51,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 52,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 53,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 54,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 55,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 56,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 57,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 58,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 59,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 60,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 61,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 62,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 63,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 64,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 65,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 66,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 67,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 68,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 69,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 70,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 71,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 72,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 73,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 74,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 75,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 76,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 77,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 78,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 79,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 80,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 81,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 82,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 83,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 84,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 85,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 86,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 87,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 88,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 89,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 90,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 91,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 92,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 93,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 94,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 95,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 96,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 97,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 98,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 99,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 100,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "current_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 101,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    }
+  ],
+  "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261"
+}
