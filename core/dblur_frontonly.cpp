@@ -115,7 +115,8 @@ static int render_rgba8(
     bool expfloat = false, bool process_full_height = false) {
     const bool layer_mode = noise_variation_percent > 0.0f && noise_type == 3;
     if (input_rgba == nullptr || output_rgba == nullptr || width <= 0 ||
-        height <= 0 || (front_strength <= 0 && back_strength <= 0) ||
+        height <= 0 || (front_strength <= 0 && back_strength <= 0 &&
+                       front_alpha_fade <= 0 && back_alpha_fade <= 0) ||
         front_strength < 0 || back_strength < 0 || front_alpha_fade < 0 ||
         back_alpha_fade < 0 ||
         !std::isfinite(angle_degrees) ||
