@@ -37,7 +37,7 @@ class Mode4FullCallerHostlessExactTests(unittest.TestCase):
         source = PRODUCTION.read_text(encoding="utf-8")
         self.assertIn("olm::kirakira::highlight_isotropic_box_blur(", source)
         self.assertIn(
-            "*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::WriteAexTruncate(out);",
+            "StoreWorldPixel<PixelT>(output, x, y, PixelTraits<PixelT>::WriteAexTruncate(out));",
             source,
         )
         self.assertNotIn(

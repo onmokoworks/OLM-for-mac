@@ -79,7 +79,11 @@ def main():
                 if args.experiment in ('layout', 'all'):
                     old = ('if ((reinterpret_cast<uintptr_t>(world->data) % alignment) != 0 ||\n'
                            '\t\t(static_cast<size_t>(world->rowbytes) % alignment) != 0) {')
-                    assert source.count(old) == 1
+                    # F03 byte IO removes the alignment-only gate. Keep the
+                    # experiment replayable without bypassing any span checks.
+                    assert source.count(old) == 1 or (
+                        source.count(old) == 0 and
+                        'Byte copies admit unaligned bases' in source)
                     source = source.replace(old, ('if (!OLM_KIRA_TRIAGE_GATE_OFF &&\n'
                         '\t\t((reinterpret_cast<uintptr_t>(world->data) % alignment) != 0 ||\n'
                         '\t\t(static_cast<size_t>(world->rowbytes) % alignment) != 0)) {'))
