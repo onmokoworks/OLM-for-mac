@@ -1,4 +1,17 @@
 {
+  "c02_revalidated": {
+    "baseline": "ae083498",
+    "reason": "general operation restored against paired AEX stages",
+    "smart_before": {
+      "error": 0,
+      "metadata": {
+        "COUNTS": "21 21 1 1 1",
+        "ERROR": "0"
+      },
+      "raw_sha256": "3908cb39c1d11f63cf5558718099d4d21469007d4cf95be60fc3ac2cca4ea2bc",
+      "status": "mismatch"
+    }
+  },
   "case": {
     "depth": 8,
     "geometry": [
@@ -267,27 +280,17 @@
           "COUNTS": "0 0 0 1 1",
           "ERROR": "0"
         },
-        "raw_sha256": "3908cb39c1d11f63cf5558718099d4d21469007d4cf95be60fc3ac2cca4ea2bc",
+        "raw_sha256": "c072a1c07eedb05b14f3e3c03ec226af6d43d22f4bf2e7f257bbb02e0ca2cbda",
         "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 8,
-          "actual_word_hex": "c3",
-          "different_bytes": 2,
-          "different_words": 2,
-          "expected_bytes": 8,
-          "expected_word_hex": "c4",
-          "first_byte": 1,
-          "first_word": 1
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "21 21 1 1 1",
           "ERROR": "0"
         },
-        "raw_sha256": "3908cb39c1d11f63cf5558718099d4d21469007d4cf95be60fc3ac2cca4ea2bc",
-        "status": "mismatch"
+        "raw_sha256": "c072a1c07eedb05b14f3e3c03ec226af6d43d22f4bf2e7f257bbb02e0ca2cbda",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

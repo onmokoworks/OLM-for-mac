@@ -1,0 +1,9 @@
+{
+  "final_production_binding_matches_noise_verification": true,
+  "scope": "Static cached worker source is corroborating evidence, not a hermetic binary/source identity claim; live full-render/leaf outcomes are primary evidence.",
+  "static_sources_sha256": {
+    "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/crates/aex-guest-worker/src/x64/imports.rs": "760843b6093977249c8f0bb5c9a9a5763fde2e84b20eefd11b72aef2de1faa4b",
+    "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/vendor/unicorn-engine-sys/qemu/fpu/softfloat-specialize.inc.c": "cd91c50329311b2b551db9eb4060655e1ba03cd4c0d899c83f083ae3f18b9fb6",
+    "core/dblur_gaussian.h": "c51bfca6d7f8a3d30ac58f3a2605a2bade053876c42f1179c0e02f60adb8258c"
+  }
+}

@@ -61,8 +61,13 @@ float build_component_map(const std::vector<float>& image, int width, int height
         pending.clear();
         component.clear();
         pending.push_back(start);
-        int minimum_y = height;
-        int maximum_y = -1;
+        // AEX 0x28e0 visits horizontal runs in raster order. The first run
+        // sets minimum_y, while maximum_y retains its initial zero; 0x27d0
+        // updates the maximum only in the other arm of the min/max branch.
+        // The raster-first seed is already the component's minimum row.
+        // A component confined to that row therefore keeps maximum_y == 0.
+        const int minimum_y = start / width;
+        int maximum_y = 0;
         while (!pending.empty()) {
             const int pixel = pending.back();
             pending.pop_back();
@@ -72,8 +77,7 @@ float build_component_map(const std::vector<float>& image, int width, int height
             component.push_back(pixel);
             const int x = pixel % width;
             const int y = pixel / width;
-            minimum_y = std::min(minimum_y, y);
-            maximum_y = std::max(maximum_y, y);
+            if (y > minimum_y) maximum_y = std::max(maximum_y, y);
             const int neighbours[4] = {pixel - 1, pixel + 1, pixel - width, pixel + width};
             const bool allowed[4] = {x > 0, x + 1 < width, y > 0, y + 1 < height};
             for (int index = 0; index < 4; ++index) {
