@@ -508,7 +508,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long length,
 	double angle_deg,
 	A_long passes,
-	A_long blur_mode)
+	A_long blur_mode,
+	bool scalar_unit_alpha = false)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
@@ -536,11 +537,13 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// Mode 3's hard public Length range 1..1000 is geometry-general above the
-	// bounded minimum leaf; smaller exceptions remain fixture-only. Unsupported tuples fail closed
-	// instead of silently substituting the Mode-2 box approximation.
+	// C04 additionally restores the tiny scalar Alpha/Length>=2 operation.
+	// Keep the historical boundary for other seed/Highlight pipelines until
+	// their upstream and aggregation stages are reconciled.
 	const bool mode3_admitted =
-		olm::kirakira::mode3_gaussian_admitted(rw, rh, length);
+		olm::kirakira::mode3_gaussian_admitted(rw, rh, length) ||
+		(scalar_unit_alpha &&
+		 olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length));
 	if (blur_mode == 3 && !mode3_admitted) return input;
 	if (blur_mode == 3) {
 		olm::kirakira::HorizontalGaussian gaussian;
@@ -727,7 +730,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
-		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode);
+		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
+			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0);
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -1468,6 +1472,59 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.diagonal2_use_ramp, info.diagonal2_ramp) &&
 		ray_is_admitted(info.highlight_radius, 500, info.highlight_color,
 			info.highlight_use_ramp, info.highlight_ramp);
+}
+
+static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
+	PF_PixelFormat format, A_long width, A_long height)
+{
+	// The directional Mode-3 operation is independent of the Highlight branch,
+	// whose two-dimensional Gaussian is not implemented here.
+	if (info.blur_mode != 3 || info.highlight_radius != 0 ||
+		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
+	OLMKiraKiraInfo box_info = info;
+	box_info.blur_mode = 2;
+	if (!IsAlphaBoxTuple(box_info, format, true)) return false;
+
+	// Bound the sum of all four Gaussian/warp workloads, not just one ray.
+	// Reflection in the scalar row filter may fold repeatedly at tiny widths.
+	const A_long lengths[] = {info.vertical_length, info.horizontal_length,
+		info.diagonal_length, info.diagonal2_length};
+	const double offsets[] = {90.0, 0.0, 45.0, 135.0};
+	const uint64_t frame_pixels = static_cast<uint64_t>(width) * height;
+	uint64_t work = frame_pixels * 20u;
+	uint64_t largest_workspace = 0, largest_kernel = 0;
+	for (int ray = 0; ray != 4; ++ray) {
+		const A_long length = lengths[ray];
+		if (length == 0) continue;
+		if (length == 1) return false;
+		const auto trig = olm::kirakira::extent_sincos(info.glow_rotation + offsets[ray]);
+		const A_long rw = AexRotatedExtent(width, height,
+			std::abs(trig.cosine), std::abs(trig.sine));
+		const A_long rh = AexRotatedExtent(height, width,
+			std::abs(trig.cosine), std::abs(trig.sine));
+		if (!olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length)) return false;
+		const uint64_t pixels = static_cast<uint64_t>(rw) * rh;
+		const uint64_t taps = static_cast<uint64_t>(length) * 4u + 1u;
+		const uint64_t radius = static_cast<uint64_t>(length) * 2u;
+		const uint64_t period = static_cast<uint64_t>(rw - 1);
+		const uint64_t folds = std::max<uint64_t>(1u, (radius + period - 1u) / period);
+		uint64_t filter_work = 0, warp_work = 0;
+		if (!KiraCheckedMultiply(pixels, taps, &filter_work) ||
+			!KiraCheckedMultiply(filter_work, folds, &filter_work) ||
+			!KiraCheckedMultiply(pixels, 8u, &warp_work) ||
+			!KiraCheckedAdd(work, filter_work, &work) ||
+			!KiraCheckedAdd(work, warp_work, &work)) return false;
+		largest_workspace = std::max(largest_workspace, pixels);
+		largest_kernel = std::max(largest_kernel, taps);
+	}
+	// Conservative peak: all retained frame planes plus the largest active
+	// helper's three float workspaces and its float/double kernel storage.
+	uint64_t bytes = frame_pixels * 92u, workspace_bytes = 0, kernel_bytes = 0;
+	if (!KiraCheckedMultiply(largest_workspace, 12u, &workspace_bytes) ||
+		!KiraCheckedMultiply(largest_kernel, 12u, &kernel_bytes) ||
+		!KiraCheckedAdd(bytes, workspace_bytes, &bytes) ||
+		!KiraCheckedAdd(bytes, kernel_bytes, &bytes)) return false;
+	return work <= UINT64_C(12000000000) && bytes <= (UINT64_C(1) << 30);
 }
 
 static bool IsGenericBetaTupleForGeometry(
@@ -2482,6 +2539,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
 				 IsAlphaBoxTuple(info, format, true) ||
+				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsZeroRayTuple(info)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(

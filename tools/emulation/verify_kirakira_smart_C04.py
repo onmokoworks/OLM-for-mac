@@ -19,6 +19,12 @@ from probe_kirakira_tiny_owner_F04 import owner_source
 
 
 def cases(adapter, family):
+    if family == 'gaussian-length1':
+        case=next(c for c in cases(adapter,'gaussian-boundary') if c['index']==24)
+        for param in case['parameters']:
+            if param['slot'] in (10,16,22,28): param['value']=1
+        yield case
+        return
     if family.endswith('-boundary'):
         gaussian=family.startswith('gaussian')
         depths=(8,16,32) if gaussian else (8,)
@@ -73,12 +79,13 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('zero','alpha','gaussian','gaussian-all','pf8','pf8-flat','pf8-boundary','gaussian-boundary'))
+    p.add_argument('--family', choices=('zero','alpha','gaussian','gaussian-all','pf8','pf8-flat','pf8-boundary','gaussian-boundary','gaussian-length1'))
     p.add_argument('--gate-off', action='store_true')
     p.add_argument('--before-source', type=Path)
     p.add_argument('--campaign-dir', type=Path)
     p.add_argument('--campaign-only', action='store_true')
     p.add_argument('--negatives', action='store_true')
+    p.add_argument('--gaussian-negatives', action='store_true')
     p.add_argument('--seeds', type=int, nargs='+', default=[1,4])
     args=p.parse_args()
     scratch=args.scratch.resolve()
@@ -102,16 +109,20 @@ def main():
                 oracle,reference=after.oracle(case,directory,deadline,'smart')
                 result,raw=observation(after,case,directory,'smart',deadline,reference)
                 row={k:v for k,v in case.items() if k!='pixels'}
-                row.update(input_sha256=sha(case['pixels']),oracle=oracle,result=result)
+                row.update(input_sha256=sha(case['pixels']),reference_sha256=sha(reference),oracle=oracle,result=result)
                 report['rows'].append(row)
                 save()
-                assert oracle['status']=='ok' and result['status']=='exact', row
+                expected=('mismatch' if args.gate_off else 'refusal') if args.family=='gaussian-length1' else 'exact'
+                report['expected_matrix_status']=expected
+                assert oracle['status']=='ok' and result['status']==expected, row
                 if len(report['rows'])%24==0: print('exact',len(report['rows']),flush=True)
-        if args.negatives:
-            base=next(cases(after,'alpha'))
+        if args.negatives or args.gaussian_negatives:
+            base=next(cases(after,'gaussian' if args.gaussian_negatives else 'alpha'))
             report['negatives']=[]
             variants=[]
-            for slot,value in ((1,3),(2,3),(4,1),(6,99),(8,99),(9,99),(40,-2147483648/65536)):
+            controls=((1,3),(2,4 if args.gaussian_negatives else 3),(4,1),(6,99),(8,99),(9,99),(40,-2147483648/65536))
+            if args.gaussian_negatives: controls += ((10,1),(34,1))
+            for slot,value in controls:
                 case=copy.deepcopy(base)
                 for param in case['parameters']:
                     if param['slot']==slot: param['value']=value
@@ -147,6 +158,9 @@ def main():
                         assert a[index]['result']['oracle']==b[index]['result']['oracle']
                         assert old==new or old['status']=='refusal' and new['status'] in ('refusal','exact'),(seed,index,old,new)
                         case=after.generate(seed,index)
+                        assert sha(case['pixels'])==a[index]['input_sha256']==b[index]['input_sha256']
+                        for field in ('geometry','depth','parameters','input_padding','output_padding'):
+                            assert case[field]==a[index][field]==b[index][field],(seed,index,field)
                         result,raw,*_=after.candidate(case,directory,'smart',deadline)
                         assert result['status']==('ok' if new['status']=='exact' else new['status']),(index,result,new)
                         if result['status']=='ok': assert sha(raw)==new['raw_sha256']
@@ -154,7 +168,7 @@ def main():
                     report['campaigns'][str(seed)]=dict(before=campaigns['before']['summary'],after=campaigns['after']['summary'],improved=changes,sanitized_routes=300)
                     save()
         report['status']='passed';save()
-        print('PASS',len(report['rows']),'matrix;',len(report['corpus']),'corpus;',len(report['campaigns']),'campaigns',flush=True)
+        print('PASS',report.get('expected_matrix_status','exact'),len(report['rows']),'matrix;',len(report['corpus']),'corpus;',len(report['campaigns']),'campaigns',flush=True)
     except BaseException as exc:
         report.update(status='failed',error=repr(exc));save();raise
     finally:

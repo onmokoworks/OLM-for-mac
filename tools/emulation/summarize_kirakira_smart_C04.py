@@ -37,17 +37,36 @@ if a.phase != 'tiny':
             'pf8-boundary','pf8-campaign-verify','pf8-replay','pf8-rebased') if prefix=='pf8' else
            ('gaussian-final-probe','gaussian-final-boundary','gaussian-verify','gaussian-campaign-verify',
             'gaussian-corpus-audit','gaussian-boundary','gaussian-negatives','gaussian-replay','gaussian-rebased',
-            'gaussian-production-trace'))
+            'gaussian-production-trace','gaussian-before-trace','gaussian-length1-evidence','gaussian-length1-refusal'))
     for name in names:
         r=read(name)
         if name.endswith(('replay','rebased')): r={k:r[k] for k in ('status','completed','replay_matches_saved','replays')}
         elif 'rows' in r and r['rows'] and 'parameters' in r['rows'][0]:
-            r['rows']=[{k:v for k,v in row.items() if k!='parameters'} for row in r['rows']]
+            r['rows']=[{k:v for k,v in row.items() if k!='parameters' or row.get('result',{}).get('status')!='exact'} for row in r['rows']]
         report['checks'][name]=r
     for path in [root/'mac/OLMKiraKira/OLMKiraKira.cpp',*sorted((root/'core').glob('kirakira*.h')),
                  *sorted((root/'tools/emulation').glob('*kirakira*C04*'))]:
         report['sources'][str(path.relative_to(root))]=digest(path)
+    if prefix=='gaussian':
+        report['remaining_refusals']={}
+        for seed in (1,4):
+            current=read(f'gaussian-campaigns/after-seed{seed}')
+            off={c['index']:c for c in read(f'gaussian-off-seed{seed}')['cases']}
+            remaining=[]
+            for case in current['cases']:
+                if case['result']['routes']['smart']['status']!='refusal': continue
+                params={v['slot']:v['value'] for v in case['parameters']}
+                remaining.append(dict(index=case['index'],input_sha256=case['input_sha256'],
+                    geometry=case['geometry'],depth=case['depth'],profile=case['profile'],
+                    channel=params[1],mode=params[2],oracle=case['result']['oracle'],
+                    diagnostic=off[case['index']]['result']['routes']['smart']))
+            report['remaining_refusals'][str(seed)]=remaining
     report['fast_tests']=(a.scratch/f'{prefix}-fast-tests.log').read_text().strip()
+    sanitizer=a.scratch/f'{prefix}-sanitizer-tests.log'
+    if sanitizer.exists(): report['sanitizer_tests']=sanitizer.read_text().strip()
+    if prefix=='gaussian':
+        report['frozen_headers']={n:digest(a.scratch/n) for n in ('gaussian_before.h','gaussian_C04_final.h','gaussian_C04.h')}
+        assert report['frozen_headers']['gaussian_C04_final.h']==report['sources']['core/kirakira_gaussian.h']
     a.report.parent.mkdir(parents=True,exist_ok=True)
     a.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
     print('wrote',a.report,'bytes',a.report.stat().st_size)

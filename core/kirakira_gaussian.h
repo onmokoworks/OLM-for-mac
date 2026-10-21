@@ -18,6 +18,14 @@ inline bool mode3_gaussian_admitted(int width, int height, int length)
            (width == 15 && height == 6 && length == 9);
 }
 
+// C04: the scalar Alpha owner constructs each workspace as at least
+// source_extent + 4. Length 1 selects the separate five-tap optimized row
+// dispatch and remains outside this additional tiny contract.
+inline bool mode3_scalar_gaussian_workspace_admitted(int width, int height, int length)
+{
+    return width >= 5 && height >= 5 && length >= 2 && length <= 1000;
+}
+
 // Recovered CV_32FC1 Gaussian primitive
 // (Size(0, 1), length * 0.5, borderType=BORDER_DEFAULT). Production use is
 // deliberately bounded to the exact geometry-general/fixture contracts above.

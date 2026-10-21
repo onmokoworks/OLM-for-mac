@@ -1,16 +1,27 @@
-status: partial
+status: done
 
 summary:
-- Two clusters closed: tiny Smart ownership (`cc42826f`) and PF8 unit-strength Alpha normalization/admission (this commit).
-- Cumulative Smart seed1: 48 -> 103 -> 130 exact; seed4: 40 -> 93 -> 128 exact; zero admitted mismatches.
-- All baseline exact outputs are retained; independent matrices, sanitizer replays and corpus sample audits pass.
-- Detailed second-cluster facts and verification are in `C04-kira-smart-pf8.md`; the first-cluster record is retained below.
-- Tiny scalar Gaussian remains the third investigation; its Length1 counterexample is excluded from the candidate.
+- Three clusters closed in separate commits: tiny Smart ownership, PF8 Alpha normalization, and scalar Alpha Gaussian Length2–1000.
+- Smart seed1: 48 -> 103 -> 130 -> 134 exact; seed4: 40 -> 93 -> 128 -> 131 exact, with zero admitted mismatches throughout.
+- All baseline-exact Smart outputs persist; corpus changes only toward exact and strict production replay passes 8/8.
+- Independent matrices and final 600-route ASan/UBSan replay pass; Length1 retains a reproducible excluded counterexample.
+- The ticket's three-cluster stop condition is met; remaining numerical families need follow-up tickets.
 
 facts:
 
 Base `1b656d418ba44543da2225097108796f0937d9cc`, branch `orch/C04-kira-smart`.
 Read AGENT_GUIDE, compatibility plan, GOTCHAS, KiraKira ledger restrictions, T06/F03/F04/F09/F10/F11/F12 and F18. MAIN, original binaries, external emulator sources/workers, release gates and ledger remain unchanged. No rebuild, push or install.
+
+Final cumulative results (exact / mismatch / refusal, n300, jobs2):
+
+| State | Seed1 | Fresh seed4 |
+|---|---|---|
+| Base |48 / 0 / 252|40 / 0 / 260|
+| Tiny ownership, `cc42826f` |103 / 0 / 197|93 / 0 / 207|
+| PF8 Alpha, `e7f23f66` |130 / 0 / 170|128 / 0 / 172|
+| Scalar Alpha Gaussian, this commit |134 / 0 / 166|131 / 0 / 169|
+
+Detailed later-cluster reports: [PF8](C04-kira-smart-pf8.md), [Gaussian](C04-kira-smart-gaussian.md). Machine records are `reports/fuzz/olmkirakira_smart_C04_{tiny,pf8,gaussian}.json`; each binds its own source revision and evidence. The following first-cluster facts are historical; final results are the table above and the two linked reports.
 
 Machine evidence: `reports/fuzz/olmkirakira_smart_C04_tiny.json` binds source/core/worker/AEX hashes, campaign records and transitions, independent matrices, original-AEX traces, corpus comparisons, negative tests and actual test logs. The reproduction programs never update corpus expectations.
 
@@ -55,18 +66,19 @@ The two metadata changes reflect reaching the balanced parameter checkout/checki
 
 Existing tests: 25 fast tests pass; compiled generic-beta ASan/UBSan test passes (54 internal rows, including HD, 50.201 seconds). Only its read-only SDK root is rebound to MAIN; source and harness remain in this worktree. `git diff --check` passes. Scratch is below 5 GiB and completed build directories are removed by the tools.
 
-Additional measured boundaries, not production promotions:
+Additional boundaries measured during the first cluster (subsequent outcomes are in the linked reports):
 
-- Broad PF8 Alpha/box admission is refuted by independent matrix index48 (5x3, ramp): 1/60 bytes differs, first byte5 AEX `d2`, Mac `d3`. A no-ramp variant matrix is refuted at index72 (7x11): 2/308 bytes differ, first byte53 AEX `d9`, Mac `da`. Both provide new counterexample values; neither is admitted. Index72's original full-caller trace binds to the public worker and first differs at **glow**, after exact source/seed/rays.
-- Enabling the existing Gaussian operation for positive tiny helper dimensions in a scratch source makes C30/210, C31/23 and C32/232 all captured stages and final bytes exact; all three original traces bind to public Smart. An independent PF16/PF32 directional Gaussian gate-off matrix has 84/84 exact outputs under sanitizers. Full production/corpus acceptance is not yet performed for this separate change.
+- Broad PF8 Alpha/box admission is refuted by independent matrix index48 (5x3, ramp): 1/60 bytes differs, first byte5 AEX `d2`, Mac `d3`. A no-ramp variant matrix is refuted at index72 (7x11): 2/308 bytes differ, first byte53 AEX `d9`, Mac `da`. Both provided new counterexample values; neither was admitted in the first commit. The second commit fixes their first divergent operation before admission. Index72's original full-caller trace binds to the public worker and first differs at **glow**, after exact source/seed/rays.
+- Enabling the existing Gaussian operation for positive tiny helper dimensions in a scratch source makes C30/210, C31/23 and C32/232 all captured stages and final bytes exact; all three original traces bind to public Smart. An independent PF16/PF32 directional Gaussian gate-off matrix has 84/84 exact outputs under sanitizers. At this first-cluster stage, production/corpus acceptance had not yet been performed. The third commit supplies it for Length2–1000 and excludes the measured Length1 failure.
 
 inference:
 
 The storage geometry restriction had survived the F11 numeric fixes; those fixes now make the bounded Alpha/box tiny branch promotable. Independent matrices, two seeds, original pre-render behavior and the bound C60 stages support the general ownership/admission change. Finite probes do not establish arbitrary native AE, UCRT, custom ramps, ROI/downsample, HDR or all floating inputs.
 
-The PF8 first-glow divergence points to the known separate-division versus reciprocal-multiply normalization boundary; further arithmetic and corpus verification is required. The tiny Gaussian fallback is a separate observed operation omission. Neither finding justifies admitting unresolved color seeds or non-unit controls.
+Subsequent paired traces establish the PF8 normalization operation and the tiny scalar Gaussian omission as the two additional causes fixed in this ticket. Their detailed reports distinguish observed evidence from unresolved inference. Color seeds, non-unit controls and the Length1 one-word residual remain unproven and are not newly admitted.
 
 changed_files:
+- `core/kirakira_gaussian.h`
 - `mac/OLMKiraKira/OLMKiraKira.cpp`
 - `tools/emulation/verify_kirakira_smart_C04.py`
 - `tools/emulation/trace_kirakira_smart_C04.py`
@@ -75,14 +87,18 @@ changed_files:
 - `tests/fuzz_corpus/olmkirakira/refusal_seed1_case000008.json`
 - `tests/fuzz_corpus/olmkirakira/refusal_seed1_case000016.json`
 - `reports/fuzz/olmkirakira_smart_C04_tiny.json`
+- `reports/fuzz/olmkirakira_smart_C04_pf8.json`
+- `reports/fuzz/olmkirakira_smart_C04_gaussian.json`
 - `orchestra/reports/C04-kira-smart.md`
+- `orchestra/reports/C04-kira-smart-pf8.md`
+- `orchestra/reports/C04-kira-smart-gaussian.md`
 
 verify:
 
 Run from this worktree; use scratch for all temporary files and logs:
 
 ```sh
-s="$PWD/orchestra/state/C04-kira-smart"
+s="$PWD/orchestra/state/C04-kira-smart/recheck-final"
 mkdir -p "$s"
 export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
 py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
@@ -92,15 +108,32 @@ for seed in 1 4; do
   python3 tools/fuzz/run.py --plugin olmkirakira --n 300 --seed "$seed" --jobs 2 --shrink-attempts 0 --shrink-seconds 0 --scratch "$s" --report "$s/after-seed$seed.json" --corpus "$s/after-seed$seed-corpus" > "$s/after-seed$seed.log" 2>&1
 done
 python3 tools/emulation/verify_kirakira_smart_C04.py --family zero --before-source "$s/base.cpp" --scratch "$s/recheck-zero" --report "$s/recheck-zero.json" > "$s/recheck-zero.log" 2>&1
-python3 tools/emulation/verify_kirakira_smart_C04.py --family alpha --scratch "$s/recheck-alpha" --report "$s/recheck-alpha.json" > "$s/recheck-alpha.log" 2>&1
+for family in alpha pf8 pf8-flat pf8-boundary gaussian-all gaussian-boundary; do
+  python3 tools/emulation/verify_kirakira_smart_C04.py --family "$family" --scratch "$s/recheck-$family" --report "$s/recheck-$family.json" > "$s/recheck-$family.log" 2>&1
+done
 python3 tools/emulation/verify_kirakira_smart_C04.py --before-source "$s/base.cpp" --campaign-dir "$s" --campaign-only --scratch "$s/recheck-campaigns" --report "$s/recheck-campaigns.json" > "$s/recheck-campaigns.log" 2>&1
-python3 tools/emulation/verify_kirakira_smart_C04.py --negatives --scratch "$s/recheck-negative" --report "$s/recheck-negative.json" > "$s/recheck-negative.log" 2>&1
+python3 tools/emulation/verify_kirakira_smart_C04.py --gaussian-negatives --scratch "$s/recheck-negative" --report "$s/recheck-negative.json" > "$s/recheck-negative.log" 2>&1
 "$py" tools/emulation/trace_kirakira_smart_C04.py --corpus-index 148 --production --require-exact --scratch "$s/recheck-trace" --report "$s/recheck-trace.json" > "$s/recheck-trace.log" 2>&1
 python3 tools/fuzz/run.py --plugin olmkirakira --jobs 2 --replay tests/fuzz_corpus/olmkirakira --scratch "$s" --report "$s/recheck-replay.json" --corpus "$s/recheck-replay-corpus" > "$s/recheck-replay.log" 2>&1
 ```
 
-Expected: campaign table above; 378+168 exact matrix outputs; 70 corpus comparisons without numerical regression; 600 sanitized campaign routes; 8 clean negative refusals; 9 exact trace stages/public binding; strict replay8/8. Existing 25-test command and compiled sanitizer recipe are the unchanged F12 report commands, with scratch set to this ticket.
+Expected: baseline 48/0/252 and 40/0/260; final 134/0/166 and 131/0/169. All baseline-exact records unchanged. The seven independent matrix families execute 378+168+120+120+20+180+30 = 1,016 exact comparisons (not a claim of unique inputs across families). Seventy cumulative corpus comparisons have no numerical regression; 600 sanitized campaign routes pass; 10 negative refusals; 9 exact tiny trace stages/public binding; strict replay 8/8. The linked reports give the PF8/Gaussian paired traces and fixed-admission sample-audit commands, including the expected-red Length1 witness.
+
+Existing fast tests and compiled sanitizer (final measured results: 25 tests pass; 54 internal sanitizer rows pass, including HD):
+
+```sh
+PYTHONPATH=tests python3 -m unittest test_olmkirakira_generic_beta_lane_20260820 test_olmkirakira_merge2_float_oracle_20260728 test_olmkirakira_outer_compose_oracle_20260728 test_olmkirakira_mode4_fullcaller_hostless_exact_20260807.Mode4FullCallerHostlessExactTests.test_mac_production_owns_the_bounded_highlight_and_typed_writer > "$s/fast.log" 2>&1
+PYTHONPATH=tests python3 - > "$s/sanitizer.log" 2>&1 <<'PYTEST'
+import pathlib, unittest
+import test_olmkirakira_generic_beta_sanitizers_20260820 as test
+test.ROOT = pathlib.Path('/Users/onmk/Documents/Projects/Personal/OLM as')
+r = unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromModule(test))
+raise SystemExit(not r.wasSuccessful())
+PYTEST
+git diff --check
+```
 
 next:
-- Continue with the measured PF8 normalization and tiny Gaussian boundaries, keeping their closed clusters in separate commits.
-- Non-unit controls, channel3/6 four-plane seeds, Mode3 Highlight, approximation, native AE/UCRT and ROI/downsample remain outside this first promotion.
+- Stop after the three closed clusters. Final seed1 has 166 refusals: 13 lack original Smart output, and 153 have an AEX-rendered reference. Gate-off diagnostic results for those 153 are 84 exact / 69 mismatch; the 84 need general branch proofs before admission.
+- Largest remaining diagnostic parameter group is Channel1/Mode2 (27 cases). Trace non-unit control/seed/opacity materialization next; these group labels are not established root causes.
+- Separate follow-ups: four-plane color seeds, Mode3 Length1 and Highlight, approximation, native AE/UCRT, custom ramps, HDR and ROI/downsample. No push was performed.
