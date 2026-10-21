@@ -508,7 +508,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long length,
 	double angle_deg,
 	A_long passes,
-	A_long blur_mode)
+	A_long blur_mode,
+	bool scalar_unit_alpha = false)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
@@ -536,11 +537,13 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// Mode 3's hard public Length range 1..1000 is geometry-general above the
-	// bounded minimum leaf; smaller exceptions remain fixture-only. Unsupported tuples fail closed
-	// instead of silently substituting the Mode-2 box approximation.
+	// C04 additionally restores the tiny scalar Alpha/Length>=2 operation.
+	// Keep the historical boundary for other seed/Highlight pipelines until
+	// their upstream and aggregation stages are reconciled.
 	const bool mode3_admitted =
-		olm::kirakira::mode3_gaussian_admitted(rw, rh, length);
+		olm::kirakira::mode3_gaussian_admitted(rw, rh, length) ||
+		(scalar_unit_alpha &&
+		 olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length));
 	if (blur_mode == 3 && !mode3_admitted) return input;
 	if (blur_mode == 3) {
 		olm::kirakira::HorizontalGaussian gaussian;
@@ -727,7 +730,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
-		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode);
+		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
+			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0);
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -772,11 +776,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
 			// FUN_18114fd90 uses one reciprocal and three multiplies.
-			// F09 extends the PF32 proof to PF16: C28 matches through
-			// the rays and first differs at these separate divisions.
-			// PF8 retains its existing boundary pending the independent
-			// seed/ray differences in its corpus (see the F09 report).
-			if (bitdepth != 8) {
+			// F09 proves PF16/32; C04 proves the PF8 unit-exponent Alpha
+			// scalar branch through source, seed and every ray. Restore its
+			// first differing operation here. Other PF8 seed branches retain
+			// their prior boundary until their upstream arithmetic is closed.
+			if (bitdepth != 8 ||
+				(info.channel == 1 && info.strength_multiplier == 1.0)) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
@@ -1223,6 +1228,15 @@ static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height)
 			kMaxGenericPixels;
 }
 
+static bool IsSmartOwnerFullFrameDimensions(A_long width, A_long height)
+{
+	// C04: full-frame ownership is independent of numerical tuple admission.
+	// Tiny frames are admitted below only for separately proven branches.
+	constexpr int64_t kMaxGenericPixels = INT64_C(4096) * INT64_C(2160);
+	return width >= 1 && height >= 1 && width <= 4096 && height <= 4096 &&
+		static_cast<int64_t>(width) * static_cast<int64_t>(height) <= kMaxGenericPixels;
+}
+
 // Generic beta lane: retain the parameter tuples already closed against the
 // Windows owners, but allow their Mode 1-4 algorithms to consume arbitrary
 // full-frame source pixels and ordinary host layouts. Keeping this separate
@@ -1412,17 +1426,20 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 		info.highlight_radius == 0;
 }
 
-static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
+	bool admit_pf8 = false)
 {
 	// F12: the Alpha constructor (18114edf0) produces one scalar channel.
 	// Strength 100% makes its powf exponent exactly one; Fade Out is unused.
 	// Modes 1/2 select one/three box passes in 181150790, and the Highlight
 	// branch in 18114f4a0 uses the corresponding isotropic box passes. F11
 	// recovers their shared float sin/cos and workspace extent arithmetic.
-	// Keep the PF8 normalization difference, color seed constructors, Gaussian,
-	// resizing, and opacity materialization outside this admission. The caller
+	// C04 additionally proves PF8 on Smart after scalar normalization recovery.
+	// Keep color seed constructors, Gaussian, resizing and opacity materialization
+	// outside this admission. The caller
 	// still requires finite SDR pixels and the existing full-frame/layout caps.
-	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128) ||
+	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128 &&
+		 !(admit_pf8 && format == PF_PixelFormat_ARGB32)) ||
 		info.channel != 1 || (info.blur_mode != 1 && info.blur_mode != 2) ||
 		(info.merge_mode != 1 && info.merge_mode != 2) ||
 		info.approximated_input || info.strength_multiplier != 1.0 ||
@@ -1455,6 +1472,59 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
 			info.diagonal2_use_ramp, info.diagonal2_ramp) &&
 		ray_is_admitted(info.highlight_radius, 500, info.highlight_color,
 			info.highlight_use_ramp, info.highlight_ramp);
+}
+
+static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
+	PF_PixelFormat format, A_long width, A_long height)
+{
+	// The directional Mode-3 operation is independent of the Highlight branch,
+	// whose two-dimensional Gaussian is not implemented here.
+	if (info.blur_mode != 3 || info.highlight_radius != 0 ||
+		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
+	OLMKiraKiraInfo box_info = info;
+	box_info.blur_mode = 2;
+	if (!IsAlphaBoxTuple(box_info, format, true)) return false;
+
+	// Bound the sum of all four Gaussian/warp workloads, not just one ray.
+	// Reflection in the scalar row filter may fold repeatedly at tiny widths.
+	const A_long lengths[] = {info.vertical_length, info.horizontal_length,
+		info.diagonal_length, info.diagonal2_length};
+	const double offsets[] = {90.0, 0.0, 45.0, 135.0};
+	const uint64_t frame_pixels = static_cast<uint64_t>(width) * height;
+	uint64_t work = frame_pixels * 20u;
+	uint64_t largest_workspace = 0, largest_kernel = 0;
+	for (int ray = 0; ray != 4; ++ray) {
+		const A_long length = lengths[ray];
+		if (length == 0) continue;
+		if (length == 1) return false;
+		const auto trig = olm::kirakira::extent_sincos(info.glow_rotation + offsets[ray]);
+		const A_long rw = AexRotatedExtent(width, height,
+			std::abs(trig.cosine), std::abs(trig.sine));
+		const A_long rh = AexRotatedExtent(height, width,
+			std::abs(trig.cosine), std::abs(trig.sine));
+		if (!olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length)) return false;
+		const uint64_t pixels = static_cast<uint64_t>(rw) * rh;
+		const uint64_t taps = static_cast<uint64_t>(length) * 4u + 1u;
+		const uint64_t radius = static_cast<uint64_t>(length) * 2u;
+		const uint64_t period = static_cast<uint64_t>(rw - 1);
+		const uint64_t folds = std::max<uint64_t>(1u, (radius + period - 1u) / period);
+		uint64_t filter_work = 0, warp_work = 0;
+		if (!KiraCheckedMultiply(pixels, taps, &filter_work) ||
+			!KiraCheckedMultiply(filter_work, folds, &filter_work) ||
+			!KiraCheckedMultiply(pixels, 8u, &warp_work) ||
+			!KiraCheckedAdd(work, filter_work, &work) ||
+			!KiraCheckedAdd(work, warp_work, &work)) return false;
+		largest_workspace = std::max(largest_workspace, pixels);
+		largest_kernel = std::max(largest_kernel, taps);
+	}
+	// Conservative peak: all retained frame planes plus the largest active
+	// helper's three float workspaces and its float/double kernel storage.
+	uint64_t bytes = frame_pixels * 92u, workspace_bytes = 0, kernel_bytes = 0;
+	if (!KiraCheckedMultiply(largest_workspace, 12u, &workspace_bytes) ||
+		!KiraCheckedMultiply(largest_kernel, 12u, &kernel_bytes) ||
+		!KiraCheckedAdd(bytes, workspace_bytes, &bytes) ||
+		!KiraCheckedAdd(bytes, kernel_bytes, &bytes)) return false;
+	return work <= UINT64_C(12000000000) && bytes <= (UINT64_C(1) << 30);
 }
 
 static bool IsGenericBetaTupleForGeometry(
@@ -2144,7 +2214,7 @@ static bool GenericBetaRenderDimensions(
 		in_data->downsample_y.num != in_data->downsample_y.den) {
 		return false;
 	}
-	if (!IsGenericBetaFullFrameDimensions(in_data->width, in_data->height)) {
+	if (!IsSmartOwnerFullFrameDimensions(in_data->width, in_data->height)) {
 		return false;
 	}
 	*width = in_data->width;
@@ -2215,7 +2285,7 @@ static bool SmartGenericBetaWorldPairIsFullFrame(
 	A_long height)
 {
 	return input && output &&
-		IsGenericBetaFullFrameDimensions(width, height) &&
+		IsSmartOwnerFullFrameDimensions(width, height) &&
 		input->width == width && input->height == height &&
 		output->width == width && output->height == height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
@@ -2293,7 +2363,6 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	AEFX_CLR_STRUCT(in_result);
 
 	const bool generic_beta_request =
-		!RectIsFullSmartClosure(requested_rect) &&
 		request_contains_generic_full_frame;
 	const PF_LRect full_rect = generic_beta_request
 		? PF_LRect{0, 0, generic_render_width, generic_render_height}
@@ -2422,7 +2491,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			pre->comp_height == kMode3SmartClosureHeight;
 		const bool pre_is_generic_beta = pre &&
 			pre->generic_full_frame_request &&
-			IsGenericBetaFullFrameDimensions(
+			IsSmartOwnerFullFrameDimensions(
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
 		const bool exact_world_layout =
@@ -2469,7 +2538,9 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				generic_world_layout && pre_is_generic_beta &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
-				 IsAlphaBoxTuple(info, format)) &&
+				 IsAlphaBoxTuple(info, format, true) ||
+				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
+				 IsZeroRayTuple(info)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",

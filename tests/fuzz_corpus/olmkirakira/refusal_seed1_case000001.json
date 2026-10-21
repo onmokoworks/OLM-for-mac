@@ -1,4 +1,50 @@
 {
+  "C04_expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "reason": "Smart tiny full-frame ownership; case 1 refusal to exact; cases 8/16 remain refusals with balanced parameter callbacks after geometry validation.",
+    "report": "orchestra/reports/C04-kira-smart.md"
+  },
   "case": {
     "depth": 16,
     "geometry": [
@@ -253,12 +299,13 @@
         "status": "refusal"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
-          "COUNTS": "0 0 0 0 0",
-          "ERROR": "516"
+          "COUNTS": "1 1 1 25 25",
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
