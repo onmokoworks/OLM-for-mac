@@ -1026,7 +1026,8 @@ static bool CheckedRadialGenericBudget(
 	const OLMRadialBlurInfo &info,
 	bool smart_render,
 	size_t *estimated_bytes = nullptr,
-	uint64_t *estimated_work = nullptr)
+	uint64_t *estimated_work = nullptr,
+	bool stage_input = false)
 {
 	static constexpr uint64_t kMaxPixels = UINT64_C(4096) * UINT64_C(2160);
 	static constexpr uint64_t kMaxBytes = UINT64_C(1) << 30;
@@ -1078,7 +1079,7 @@ static bool CheckedRadialGenericBudget(
 	const uint64_t polar = angular * radius;
 
 	// Conservative peak for the generic Size/Noise topology: source/factor
-	// planes, polar transform/accumulators, one tight Smart destination, and a
+	// planes, polar transform/accumulators, tight Smart destination/input, and a
 	// fixed reserve for vectors, weights, thread state, and allocator overhead.
 	if (pixels > (UINT64_MAX - kReserveBytes) / 40 || polar > UINT64_MAX / 52)
 		return false;
@@ -1086,6 +1087,10 @@ static bool CheckedRadialGenericBudget(
 	if (smart_render) {
 		if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
 		bytes += pixels * pixel_bytes;
+		if (stage_input) {
+			if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
+			bytes += pixels * pixel_bytes;
+		}
 	}
 	const uint64_t raw_strength = (uint64_t)info.outer_strength + (uint64_t)info.inner_strength;
 	const double budget_quality_scale = 0.2 / (double)budget_quality_step;
@@ -6126,6 +6131,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_ParamDef *param_ptrs[OLMRADIALBLUR_NUM_PARAMS] = {};
 	bool param_checked_out[OLMRADIALBLUR_NUM_PARAMS] = {};
 	std::vector<std::uint8_t> staged_output;
+	std::vector<PF_Pixel16> aligned_input16;
+	std::vector<PF_PixelFloat> aligned_input32;
+	PF_EffectWorld aligned_input_world = {};
 	PF_EffectWorld staged_world = {};
 	std::size_t active_row_bytes = 0;
 	bool render_complete = false;
@@ -6197,9 +6205,14 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 					input_format != expected_format || output_format != expected_format ||
 					(noise_world && noise_format != expected_format))) err = OLM_RADIAL_REFUSAL("smartrender-format");
 			}
+			const std::size_t input_alignment = extra->input->bitdepth == 16 ? alignof(PF_Pixel16) :
+				extra->input->bitdepth == 32 ? alignof(PF_PixelFloat) : 1;
+			const bool stage_input = !IsRadialNoOpControlProfile(info) &&
+				((reinterpret_cast<std::uintptr_t>(input_world->data) % input_alignment) != 0 ||
+				 (static_cast<std::size_t>(input_world->rowbytes) % input_alignment) != 0);
 			if (!err && !IsRadialNoOpControlProfile(info) && IsGenericRadialControlProfile(info) &&
 				!CheckedRadialGenericBudget(input_world->width, input_world->height,
-					extra->input->bitdepth, info, true)) {
+					extra->input->bitdepth, info, true, nullptr, nullptr, stage_input)) {
 				err = OLM_RADIAL_ERROR("smartrender-generic-budget", PF_Err_OUT_OF_MEMORY);
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
@@ -6225,7 +6238,36 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
 				ERR(CaptureDiagnosticPF32World("input", input_world, info, extra->input->bitdepth));
 				#endif
-				if (!err) err = RenderWorld(input_world, &staged_world, noise_world, info,
+				PF_EffectWorld *render_input = input_world;
+				// AE worlds are byte-strided. Preserve every active input byte while
+				// giving the typed workers (including admission probes) aligned rows.
+				// The original checked-out world remains owned by the host; no-op
+				// copies retain their byte-only path. Output publication stays atomic.
+				if (!err && stage_input) {
+					if (active_row_bytes > static_cast<std::size_t>(input_world->rowbytes)) {
+						err = OLM_RADIAL_REFUSAL("smartrender-input-rowbytes");
+					} else {
+						const std::size_t bytes = active_row_bytes * static_cast<std::size_t>(input_world->height);
+						void *aligned_data = nullptr;
+						if (extra->input->bitdepth == 16) {
+							aligned_input16.resize(bytes / sizeof(PF_Pixel16));
+							aligned_data = aligned_input16.data();
+						} else {
+							aligned_input32.resize(bytes / sizeof(PF_PixelFloat));
+							aligned_data = aligned_input32.data();
+						}
+						for (A_long y = 0; y < input_world->height; ++y)
+							std::memcpy(reinterpret_cast<std::uint8_t *>(aligned_data) +
+								static_cast<std::size_t>(y) * active_row_bytes,
+								reinterpret_cast<const std::uint8_t *>(input_world->data) +
+								static_cast<std::size_t>(y) * input_world->rowbytes, active_row_bytes);
+						aligned_input_world = *input_world;
+						aligned_input_world.data = reinterpret_cast<PF_PixelPtr>(aligned_data);
+						aligned_input_world.rowbytes = static_cast<A_long>(active_row_bytes);
+						render_input = &aligned_input_world;
+					}
+				}
+				if (!err) err = RenderWorld(render_input, &staged_world, noise_world, info,
 				                            extra->input->bitdepth);
 				render_complete = err == PF_Err_NONE;
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
