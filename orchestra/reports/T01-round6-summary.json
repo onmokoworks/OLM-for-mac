@@ -1,0 +1,618 @@
+{
+  "artifacts": {
+    "orchestra/reports/T01-round6-after1.log": {
+      "bytes": 6387,
+      "sha256": "30dea1aea25928e4593dd23355c8d17b3353a2ba1e1238224ebfdceaf2d916a4"
+    },
+    "orchestra/reports/T01-round6-after2.log": {
+      "bytes": 3316,
+      "sha256": "3ca1fbe6b7281a576fa6a95b835c7a726aba47e5c9b5a2c9254d776a40c048ef"
+    },
+    "orchestra/reports/T01-round6-base1.log": {
+      "bytes": 5685,
+      "sha256": "7fafe14dbdbf03160c89c04d3ba59859809dbd976547998ca996f29bee75cf4f"
+    },
+    "orchestra/reports/T01-round6-base2.log": {
+      "bytes": 3309,
+      "sha256": "7d6bca508bd3e6d6730814f6d967058db1d179205fbce66034c223cef9fd05b1"
+    },
+    "orchestra/reports/T01-round6-compare1.log": {
+      "bytes": 3117,
+      "sha256": "b8dea080ad7f98201ac8d4bed415ac6e5f7dedac527056e79a19b8fbfec7eb1b"
+    },
+    "orchestra/reports/T01-round6-compare2.log": {
+      "bytes": 2113,
+      "sha256": "ce0b6d76bbcccf0a65eac4aca0faf993157b7a72e43c2ba9c8f5e023a2710af6"
+    },
+    "orchestra/reports/T01-round6-corpus-after.json": {
+      "bytes": 49653,
+      "sha256": "61a76f76b3913c669ecc31b497b76ae0378844979697b6fb1a8479333f41cbc7"
+    },
+    "orchestra/reports/T01-round6-corpus-after.log": {
+      "bytes": 277,
+      "sha256": "8de8d224c3a3cad60e20c94644f3b245006dc9f8ce3ba04df93eddc1b0e4711d"
+    },
+    "orchestra/reports/T01-round6-corpus-base.json": {
+      "bytes": 49652,
+      "sha256": "ee9e697b9777cc71d880bb23e4b28156ee80e872bcaa5a5905aaba3092a0cd13"
+    },
+    "orchestra/reports/T01-round6-corpus-base.log": {
+      "bytes": 276,
+      "sha256": "a4da76dad3bc74512c0dc6b8ba00b57fcaac620accb6f0abdc8d714941ab3918"
+    },
+    "orchestra/reports/T01-round6-corpus-compare.log": {
+      "bytes": 946,
+      "sha256": "f677c42c1d958d17c828a1a1b2329dd691adc005fcac6bed2bf1e133488c5a17"
+    },
+    "orchestra/reports/T01-round6-corpus-comparison.json": {
+      "bytes": 1282,
+      "sha256": "46ad95132dd426c0d4e876cb7075fc66edc758c19e062dab49563e3f7bd0a9d8"
+    },
+    "orchestra/reports/T01-round6-gates.json": {
+      "bytes": 1400072,
+      "sha256": "9cdc3c9cdf0ce1d56851730fa17dac33004ee4f7376d9762e72505195bb5d006"
+    },
+    "orchestra/reports/T01-round6-gates.log": {
+      "bytes": 11185,
+      "sha256": "5c59b1db251962ed80ea8180c6b2ae9266b5b0445763ab1e24d4bfae636c7178"
+    },
+    "orchestra/reports/T01-round6-seed1-after.json": {
+      "bytes": 1731477,
+      "sha256": "01b91e776d4ab1bd2f4483cc550e30a3e4d112de145a8f988e54917623091ddf"
+    },
+    "orchestra/reports/T01-round6-seed1-base.json": {
+      "bytes": 1731790,
+      "sha256": "68e2b74ad75d46e75add874641c184633afc69d3d59c9eb3f5695c774c69cc87"
+    },
+    "orchestra/reports/T01-round6-seed1-comparison.json": {
+      "bytes": 7270,
+      "sha256": "76da84a711c1335ece7ee4f4bf4ae9203e4354cf73abf627595a1432f316840b"
+    },
+    "orchestra/reports/T01-round6-seed2-after.json": {
+      "bytes": 1047503,
+      "sha256": "7af711319411516361951690a2c8bbade83d5e4f1f16b2aa6d191276d0354634"
+    },
+    "orchestra/reports/T01-round6-seed2-base.json": {
+      "bytes": 1047739,
+      "sha256": "b83462fa5d36cbb563226c9821a10bcefea8166c4902867ebc166eef8b22363a"
+    },
+    "orchestra/reports/T01-round6-seed2-comparison.json": {
+      "bytes": 4077,
+      "sha256": "b64483bc24054ba423f196b3fef78497e24e325395dbc0dac08bb722e2e66021"
+    },
+    "orchestra/reports/T01-round6-tests.json": {
+      "bytes": 2243,
+      "sha256": "3d6313861beff0dbe7349ce003786314a492146f5947f414190823d1bb7cb908"
+    },
+    "orchestra/reports/T01-round6-tests.log": {
+      "bytes": 3328,
+      "sha256": "c02f1feedfa45dbc92e374ed568ee61cdfa88ee535599ca199cf36536a04ec5c"
+    },
+    "orchestra/reports/T01-round6-witnesses-seed2.json": {
+      "bytes": 13847,
+      "sha256": "bb82041702a91a6aaf438e77dd576b2763097f2d240acca469ff18c4dfbb8b97"
+    },
+    "orchestra/reports/T01-round6-witnesses-seed2.log": {
+      "bytes": 129,
+      "sha256": "a5c658e091bbd68909901757ea35e0d76a79fdc620a173b41aa54ff5dbea9102"
+    },
+    "orchestra/reports/T01-round6-witnesses.json": {
+      "bytes": 35970,
+      "sha256": "786f6ea9a620bf807efe2ab50959c8eb32684038b4d31efe995029f83a1acbda"
+    },
+    "orchestra/reports/T01-round6-witnesses.log": {
+      "bytes": 748,
+      "sha256": "40cc732aa171c93511e05519d22a1f5a9bea4b6b07009089c30338001fd07d7e"
+    }
+  },
+  "calibration_exact": 18,
+  "corpus_before_revision": "f842ed7d",
+  "corpus_changed_entries": 35,
+  "corpus_saved_to_candidate": [
+    {
+      "after": "exact",
+      "before": "mismatch",
+      "count": 23,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 11,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "mismatch",
+      "count": 35,
+      "route": "smart"
+    }
+  ],
+  "forbidden": {
+    "corpus": [],
+    "seed1": [],
+    "seed2": []
+  },
+  "offset": {
+    "before_different": 16,
+    "before_rejected": 342,
+    "both_commands_exact": 390,
+    "case_count": 390
+  },
+  "pf8_outer_offset": {
+    "seed1": {
+      "after": [
+        {
+          "count": 21,
+          "route": "classic",
+          "status": "exact"
+        },
+        {
+          "count": 19,
+          "route": "classic",
+          "status": "refusal"
+        },
+        {
+          "count": 21,
+          "route": "smart",
+          "status": "exact"
+        },
+        {
+          "count": 19,
+          "route": "smart",
+          "status": "refusal"
+        }
+      ],
+      "before": [
+        {
+          "count": 5,
+          "route": "classic",
+          "status": "exact"
+        },
+        {
+          "count": 35,
+          "route": "classic",
+          "status": "refusal"
+        },
+        {
+          "count": 5,
+          "route": "smart",
+          "status": "exact"
+        },
+        {
+          "count": 35,
+          "route": "smart",
+          "status": "refusal"
+        }
+      ]
+    },
+    "seed2": {
+      "after": [
+        {
+          "count": 8,
+          "route": "classic",
+          "status": "exact"
+        },
+        {
+          "count": 11,
+          "route": "classic",
+          "status": "refusal"
+        },
+        {
+          "count": 8,
+          "route": "smart",
+          "status": "exact"
+        },
+        {
+          "count": 11,
+          "route": "smart",
+          "status": "refusal"
+        }
+      ],
+      "before": [
+        {
+          "count": 3,
+          "route": "classic",
+          "status": "exact"
+        },
+        {
+          "count": 16,
+          "route": "classic",
+          "status": "refusal"
+        },
+        {
+          "count": 3,
+          "route": "smart",
+          "status": "exact"
+        },
+        {
+          "count": 16,
+          "route": "smart",
+          "status": "refusal"
+        }
+      ]
+    }
+  },
+  "policy": {
+    "corpus": [],
+    "seed1": [],
+    "seed2": []
+  },
+  "production_source_sha256": "bbe3731138805156ed487136e70dad5c39731fc560a284956b9f47e44d0297d8",
+  "retained": [
+    {
+      "conditions": 1140,
+      "public_replays": 6840,
+      "suite": "gain"
+    },
+    {
+      "conditions": 30,
+      "public_replays": 180,
+      "suite": "getters"
+    },
+    {
+      "conditions": 384,
+      "public_replays": 2304,
+      "suite": "independent"
+    },
+    {
+      "conditions": 952,
+      "public_replays": 5712,
+      "suite": "noise_range"
+    },
+    {
+      "conditions": 82,
+      "public_replays": 492,
+      "suite": "noop"
+    },
+    {
+      "conditions": 2262,
+      "public_replays": 13572,
+      "suite": "quality"
+    },
+    {
+      "conditions": 96,
+      "public_replays": 576,
+      "suite": "rotation_size_noise_independent"
+    },
+    {
+      "conditions": 1532,
+      "public_replays": 9192,
+      "suite": "seed_thickness"
+    },
+    {
+      "conditions": 720,
+      "public_replays": 4320,
+      "suite": "size_enabled"
+    },
+    {
+      "conditions": 560,
+      "public_replays": 3360,
+      "suite": "size_range"
+    },
+    {
+      "conditions": 180,
+      "public_replays": 1080,
+      "suite": "size_topology"
+    },
+    {
+      "conditions": 1128,
+      "public_replays": 6768,
+      "suite": "strength"
+    },
+    {
+      "conditions": 252,
+      "public_replays": 1512,
+      "suite": "topology"
+    },
+    {
+      "conditions": 28,
+      "public_replays": 168,
+      "suite": "typed"
+    },
+    {
+      "conditions": 299,
+      "public_replays": 1794,
+      "suite": "zoom_fade"
+    }
+  ],
+  "retained_conditions": 9645,
+  "retained_public_replays": 57870,
+  "route_tables": {
+    "corpus": [
+      {
+        "after": {
+          "exact": 23,
+          "mismatch": 1,
+          "refusal": 11
+        },
+        "before": {
+          "exact": 23,
+          "mismatch": 1,
+          "refusal": 11
+        },
+        "route": "classic"
+      },
+      {
+        "after": {
+          "exact": 35
+        },
+        "before": {
+          "exact": 35
+        },
+        "route": "smart"
+      }
+    ],
+    "seed1": [
+      {
+        "after": {
+          "exact": 138,
+          "mismatch": 2,
+          "refusal": 359,
+          "uncompared": 1
+        },
+        "before": {
+          "exact": 85,
+          "mismatch": 1,
+          "refusal": 413,
+          "uncompared": 1
+        },
+        "route": "classic"
+      },
+      {
+        "after": {
+          "exact": 184,
+          "mismatch": 2,
+          "refusal": 313,
+          "uncompared": 1
+        },
+        "before": {
+          "exact": 109,
+          "refusal": 390,
+          "uncompared": 1
+        },
+        "route": "smart"
+      }
+    ],
+    "seed2": [
+      {
+        "after": {
+          "exact": 88,
+          "mismatch": 3,
+          "refusal": 209
+        },
+        "before": {
+          "exact": 63,
+          "mismatch": 3,
+          "refusal": 234
+        },
+        "route": "classic"
+      },
+      {
+        "after": {
+          "exact": 116,
+          "mismatch": 2,
+          "refusal": 182
+        },
+        "before": {
+          "exact": 82,
+          "mismatch": 1,
+          "refusal": 217
+        },
+        "route": "smart"
+      }
+    ]
+  },
+  "schema": "radialblur.T01-round6/1",
+  "tests": {
+    "archived": false,
+    "baseline_revision": null,
+    "errors": 0,
+    "failures": 1,
+    "rows": [
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_generic_baseline_accepts_arbitrary_pixels_geometry_and_padding)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_generic_baseline_parameter_range_under_asan_ubsan)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_generic_radial_budget_bounds_memory_work_and_smart_staging)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_generic_type3_zoom_extent_stride_alias_and_rotation_boundary)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_global_polar_request_normalizes_to_full_frame_and_rejects_tiles)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_smart_lifecycle_advertises_extra_pixels_and_preserves_cleanup)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_size_noise_classic_effectmain_all_depths_and_families)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_typed_inner_geometry_guard_accepts_centered_padded_and_rejects_near_misses)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_windows_group_controls_are_real_ae_topics)"
+      },
+      {
+        "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/T01-radial-offset-promote/tests/test_olmradialblur_parameter_ui_parity_20260806.py\", line 21, in test_windows_control_types_and_ui_ranges_are_preserved\n    assert \"PF_Precision_HUNDREDTHS, 0, 0,\\n\\t                     THICKNESS_DISK_ID\" in SOURCE\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+        "status": "failure",
+        "test": "unittest.case.FunctionTestCase (test_windows_control_types_and_ui_ranges_are_preserved)"
+      },
+      {
+        "status": "pass",
+        "test": "unittest.case.FunctionTestCase (test_windows_visible_names_and_popup_labels_are_preserved)"
+      }
+    ],
+    "tests": 11
+  },
+  "unlisted": {
+    "corpus": [],
+    "seed1": [
+      {
+        "after": {
+          "diff": {
+            "actual_bytes": 5712,
+            "actual_word_hex": "4623c1ff",
+            "different_bytes": 827,
+            "different_words": 328,
+            "expected_bytes": 5712,
+            "expected_word_hex": "00000000",
+            "first_byte": 0,
+            "first_word": 0
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "0",
+            "INFO": "0 23 0 0"
+          },
+          "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+          "status": "mismatch"
+        },
+        "before": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "516",
+            "INFO": "0 23 0 0"
+          },
+          "status": "refusal"
+        },
+        "case": 89,
+        "refusal_guards": {},
+        "route": "classic"
+      },
+      {
+        "after": {
+          "diff": {
+            "actual_bytes": 5712,
+            "actual_word_hex": "4623c1ff",
+            "different_bytes": 827,
+            "different_words": 328,
+            "expected_bytes": 5712,
+            "expected_word_hex": "00000000",
+            "first_byte": 0,
+            "first_word": 0
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 23 0 0"
+          },
+          "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+          "status": "mismatch"
+        },
+        "before": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "516",
+            "INFO": "0 23 0 0"
+          },
+          "status": "refusal"
+        },
+        "case": 89,
+        "refusal_guards": {},
+        "route": "smart"
+      },
+      {
+        "after": {
+          "diff": {
+            "actual_bytes": 8096,
+            "actual_word_hex": "4623c1ff",
+            "different_bytes": 1220,
+            "different_words": 375,
+            "expected_bytes": 8096,
+            "expected_word_hex": "0000807f",
+            "first_byte": 64,
+            "first_word": 16
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "3472225128e8d27cd696247395b0eb5c36bc334181bedcccc0fb393abe3cfb1e",
+          "status": "mismatch"
+        },
+        "before": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "case": 459,
+        "refusal_guards": {
+          "classic": [
+            "RenderZoomTyped:unadmitted-zoom-profile@2894"
+          ]
+        },
+        "route": "smart"
+      }
+    ],
+    "seed2": [
+      {
+        "after": {
+          "diff": {
+            "actual_bytes": 1152,
+            "actual_word_hex": "0000c07f",
+            "different_bytes": 142,
+            "different_words": 47,
+            "expected_bytes": 1152,
+            "expected_word_hex": "0000807f",
+            "first_byte": 34,
+            "first_word": 8
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "b1533640d1c92cc3426bb75856e342b78ce84516f5a767d6b8bd546d9abdb582",
+          "status": "mismatch"
+        },
+        "before": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "case": 217,
+        "refusal_guards": {
+          "classic": [
+            "RenderZoomTyped:unadmitted-zoom-profile@2894"
+          ]
+        },
+        "route": "smart"
+      }
+    ]
+  }
+}

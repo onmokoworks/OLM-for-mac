@@ -1,0 +1,352 @@
+{
+  "after_source_sha256": "bbe3731138805156ed487136e70dad5c39731fc560a284956b9f47e44d0297d8",
+  "before_source_sha256": "66ed2aeb5132e0a5670b3801a781e8d3e5a77c142533911c9b497b1b4b30db85",
+  "cases": 500,
+  "forbidden": [],
+  "oracle_changes": [],
+  "oracle_rechecks": [
+    {
+      "after": "exact",
+      "before": "uncompared",
+      "case": 363,
+      "label": "after",
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "uncompared",
+      "case": 363,
+      "label": "after",
+      "route": "smart"
+    },
+    {
+      "after": "exact",
+      "before": "uncompared",
+      "case": 421,
+      "label": "after",
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "uncompared",
+      "case": 421,
+      "label": "after",
+      "route": "smart"
+    }
+  ],
+  "pf8_outer_offset": {
+    "after": [
+      {
+        "count": 21,
+        "route": "classic",
+        "status": "exact"
+      },
+      {
+        "count": 19,
+        "route": "classic",
+        "status": "refusal"
+      },
+      {
+        "count": 21,
+        "route": "smart",
+        "status": "exact"
+      },
+      {
+        "count": 19,
+        "route": "smart",
+        "status": "refusal"
+      }
+    ],
+    "before": [
+      {
+        "count": 5,
+        "route": "classic",
+        "status": "exact"
+      },
+      {
+        "count": 35,
+        "route": "classic",
+        "status": "refusal"
+      },
+      {
+        "count": 5,
+        "route": "smart",
+        "status": "exact"
+      },
+      {
+        "count": 35,
+        "route": "smart",
+        "status": "refusal"
+      }
+    ]
+  },
+  "policy": [],
+  "raw_transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 84,
+      "route": "classic"
+    },
+    {
+      "after": "uncompared",
+      "before": "exact",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 52,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 359,
+      "route": "classic"
+    },
+    {
+      "after": "uncompared",
+      "before": "refusal",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "uncompared",
+      "before": "uncompared",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 108,
+      "route": "smart"
+    },
+    {
+      "after": "uncompared",
+      "before": "exact",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 74,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 2,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 313,
+      "route": "smart"
+    },
+    {
+      "after": "uncompared",
+      "before": "refusal",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "uncompared",
+      "before": "uncompared",
+      "count": 1,
+      "route": "smart"
+    }
+  ],
+  "transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 85,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 53,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 359,
+      "route": "classic"
+    },
+    {
+      "after": "uncompared",
+      "before": "uncompared",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 109,
+      "route": "smart"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 75,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 2,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 313,
+      "route": "smart"
+    },
+    {
+      "after": "uncompared",
+      "before": "uncompared",
+      "count": 1,
+      "route": "smart"
+    }
+  ],
+  "unlisted": [
+    {
+      "after": {
+        "diff": {
+          "actual_bytes": 5712,
+          "actual_word_hex": "4623c1ff",
+          "different_bytes": 827,
+          "different_words": 328,
+          "expected_bytes": 5712,
+          "expected_word_hex": "00000000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "0",
+          "INFO": "0 23 0 0"
+        },
+        "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+        "status": "mismatch"
+      },
+      "before": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "516",
+          "INFO": "0 23 0 0"
+        },
+        "status": "refusal"
+      },
+      "case": 89,
+      "refusal_guards": {},
+      "route": "classic"
+    },
+    {
+      "after": {
+        "diff": {
+          "actual_bytes": 5712,
+          "actual_word_hex": "4623c1ff",
+          "different_bytes": 827,
+          "different_words": 328,
+          "expected_bytes": 5712,
+          "expected_word_hex": "00000000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "INFO": "0 23 0 0"
+        },
+        "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+        "status": "mismatch"
+      },
+      "before": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "516",
+          "INFO": "0 23 0 0"
+        },
+        "status": "refusal"
+      },
+      "case": 89,
+      "refusal_guards": {},
+      "route": "smart"
+    },
+    {
+      "after": {
+        "diff": {
+          "actual_bytes": 8096,
+          "actual_word_hex": "4623c1ff",
+          "different_bytes": 1220,
+          "different_words": 375,
+          "expected_bytes": 8096,
+          "expected_word_hex": "0000807f",
+          "first_byte": 64,
+          "first_word": 16
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "3472225128e8d27cd696247395b0eb5c36bc334181bedcccc0fb393abe3cfb1e",
+        "status": "mismatch"
+      },
+      "before": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "516",
+          "INFO": "0 0 0 0"
+        },
+        "status": "refusal"
+      },
+      "case": 459,
+      "refusal_guards": {
+        "classic": [
+          "RenderZoomTyped:unadmitted-zoom-profile@2894"
+        ]
+      },
+      "route": "smart"
+    }
+  ]
+}
