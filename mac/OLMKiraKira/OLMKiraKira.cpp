@@ -8,6 +8,7 @@
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
 #include "../../core/kirakira_merge2.h"
+#include "../../core/kirakira_sincos.h"
 
 #include <algorithm>
 #include <cstdarg>
@@ -203,9 +204,9 @@ static int Reflect101Index(int i, int n)
 	return i;
 }
 
-static A_long AexRotatedExtent(A_long major, A_long minor, double abs_major, double abs_minor)
+static A_long AexRotatedExtent(A_long major, A_long minor, float abs_major, float abs_minor)
 {
-	return std::max<A_long>(major + 4, (A_long)((double)major * abs_major + (double)minor * abs_minor + 4.0));
+	return olm::kirakira::rotated_extent(major, minor, abs_major, abs_minor);
 }
 
 // PF worlds describe rows in bytes. Copy through an aligned local value:
@@ -512,10 +513,9 @@ static std::vector<float> RotatedAxisBoxBlur(
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
 	if (length <= 0) return input;
-	const double pi = 3.14159265358979323846;
-	const double rad = angle_deg * pi / 180.0;
-	const double ac = std::abs(std::cos(rad));
-	const double as = std::abs(std::sin(rad));
+	const auto trig = olm::kirakira::extent_sincos(angle_deg);
+	const float ac = std::abs(trig.cosine);
+	const float as = std::abs(trig.sine);
 	const A_long rw = AexRotatedExtent(width, height, ac, as);
 	const A_long rh = AexRotatedExtent(height, width, ac, as);
 	const double temp_cx = (double)rw * 0.5;
@@ -1271,10 +1271,9 @@ static bool IsGenericBetaMode3BudgetAdmitted(
 		!IsGenericBetaFullFrameDimensions(width, height)) {
 		return false;
 	}
-	const double pi = 3.14159265358979323846;
-	const double radians = info.glow_rotation * pi / 180.0;
-	const double absolute_cosine = std::abs(std::cos(radians));
-	const double absolute_sine = std::abs(std::sin(radians));
+	const auto trig = olm::kirakira::extent_sincos(info.glow_rotation);
+	const float absolute_cosine = std::abs(trig.cosine);
+	const float absolute_sine = std::abs(trig.sine);
 	const A_long rotated_width =
 		AexRotatedExtent(width, height, absolute_cosine, absolute_sine);
 	const A_long rotated_height =
@@ -1350,10 +1349,9 @@ static bool GenericBetaDirectionalRayIsAdmitted(
 	A_long blur_mode)
 {
 	if (length <= 0) return true;
-	const double pi = 3.14159265358979323846;
-	const double radians = angle_degrees * pi / 180.0;
-	const double absolute_cosine = std::abs(std::cos(radians));
-	const double absolute_sine = std::abs(std::sin(radians));
+	const auto trig = olm::kirakira::extent_sincos(angle_degrees);
+	const float absolute_cosine = std::abs(trig.cosine);
+	const float absolute_sine = std::abs(trig.sine);
 	const A_long rotated_width =
 		AexRotatedExtent(width, height, absolute_cosine, absolute_sine);
 	const A_long rotated_height =
