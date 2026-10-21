@@ -1,0 +1,108 @@
+{
+  "cache_root": "/Users/onmk/.cache/olm-emu",
+  "hash_note": "Recorded worker_sha256 values embed the original absolute build path and AEXCOMPAT_BUILD_REVISION; relocated rebuilds cannot reproduce them byte-exactly. All source-file manifests match the recorded reports.",
+  "links": [
+    {
+      "build_json": null,
+      "matches_recorded": false,
+      "name": "radial_frozen_reference_bd878da",
+      "parent": null,
+      "recipe": "git archive bd878da64dc6e91a24a78c6b00fce30f783dc3b0 guest from AEXCompat; cargo build --release --offline --locked -p aex-guest-worker with rust 1.93.1 and AEXCOMPAT_BUILD_REVISION=bd878da64dc6",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+      "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+      "worker_sha256_recorded": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_controlled_reference_20261001/controlled-reference-build.json",
+      "matches_recorded": false,
+      "name": "radial_controlled_reference_20261001",
+      "parent": "radial_frozen_reference_bd878da",
+      "recipe": "tools/emulation/build_radialblur_controlled_math_worker_20261001.py (local variant, frozen-hash assertion relaxed)",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_controlled_reference_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "a67383ee4e6d56d06f6e1795295ea85b082727746ff7aa9db346e59851546a8f",
+      "worker_sha256_recorded": "2db82335a6113c65b507b7db966ee8738c75dae4e459125b69da6b82d5fc1d50"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_typed_trace_reference_20261001/typed-trace-build.json",
+      "matches_recorded": false,
+      "name": "radial_typed_trace_reference_20261001",
+      "parent": "radial_controlled_reference_20261001",
+      "recipe": "tools/emulation/build_radialblur_typed_trace_worker_20261001.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_typed_trace_reference_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "1b965a02a1386c056b665979fb0f363bd0e78ba05b19bef524ad98ed2072cc1b",
+      "worker_sha256_recorded": "44677dbd999e60fc976ac7604710fd3b5a8e448f298ce73a27acf2289c88cd61"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_axis_reference_20261001/axis-reference-build.json",
+      "matches_recorded": false,
+      "name": "radial_axis_reference_20261001",
+      "parent": "radial_typed_trace_reference_20261001",
+      "recipe": "tools/emulation/build_radialblur_axis_reference_20261001.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_axis_reference_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "f45db6a215bbe3847b19b646ceab9717c2fe9e10d19752ad8fbd6e58aaa8cc9a",
+      "worker_sha256_recorded": "a47872674412dfd8f51052c678405cade701a5c80a5062b6038199dd76fd9c6b"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_doublecast_reference_20261001/doublecast-reference-build.json",
+      "matches_recorded": false,
+      "name": "radial_doublecast_reference_20261001",
+      "parent": "radial_axis_reference_20261001",
+      "recipe": "tools/emulation/build_radialblur_doublecast_reference_20261001.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_doublecast_reference_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "f59d30f4c404142830affdbab80582c53328b16abf7074a3c236260bdf513855",
+      "worker_sha256_recorded": "722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/window-reference-build.json",
+      "matches_recorded": false,
+      "name": "radial_windows_reference_v2_20261001",
+      "parent": "radial_doublecast_reference_20261001",
+      "recipe": "tools/emulation/build_radialblur_readonly_windows_reference_20261001.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c",
+      "worker_sha256_recorded": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_noop_highdepth_reference_20261002/noop-reference-build.json",
+      "matches_recorded": false,
+      "name": "radial_noop_highdepth_reference_20261002",
+      "parent": "radial_windows_reference_v2_20261001",
+      "recipe": "tools/emulation/build_radialblur_noop_reference_20261002.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_noop_highdepth_reference_20261002/target/release/aex-guest-worker",
+      "worker_sha256": "9ac2c86cb707e23de7c360c128d61b14d0b4c3b71b417baa3e7e116fe6af42b7",
+      "worker_sha256_recorded": "8c56f1aa411c18cfd92fb101c053bc6468e15c0907a4c0f311c19359f31aef47"
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/offset-timeout-reference-build.json",
+      "matches_recorded": null,
+      "name": "radial_offset_reference_20261002",
+      "parent": "radial_windows_reference_v2_20261001",
+      "recipe": "tools/emulation/build_radialblur_offset_reference_20261002.py",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker",
+      "worker_sha256": "93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed",
+      "worker_sha256_recorded": null
+    },
+    {
+      "build_json": "/Users/onmk/.cache/olm-emu/radial_offset_bound_reference_20261002/offset-bound-alias.json",
+      "matches_recorded": null,
+      "name": "radial_offset_bound_reference_20261002",
+      "parent": "radial_offset_reference_20261002",
+      "recipe": "alias; see offset-bound-alias.json (no distinct committed recipe)",
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_offset_bound_reference_20261002/target/release/aex-guest-worker",
+      "worker_sha256": "93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed",
+      "worker_sha256_recorded": null
+    }
+  ],
+  "offset_bound_note": "Ticket chain names radial_offset_reference_20261002 -> radial_offset_bound_reference_20261002, but the committed offset recipe is a single deadline-bound (120s) build whose probe requires the windows worker as parent. No committed recipe/patch yields a separate bound child; the offset output is the offset_bound-equivalent worker.",
+  "root_source": {
+    "branch": "issue1584-signal-ui",
+    "commit": "bd878da64dc6e91a24a78c6b00fce30f783dc3b0",
+    "repo": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat",
+    "subdir": "guest"
+  },
+  "schema": "olm-emu.worker-index/1",
+  "toolchain": {
+    "children": "rustup default 1.95.0 (cache dirs have no rust-toolchain.toml)",
+    "root": "rust 1.93.1 (repo rust-toolchain.toml pin)"
+  }
+}
