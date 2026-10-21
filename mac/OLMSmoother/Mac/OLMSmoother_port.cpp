@@ -31,11 +31,39 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <vector>
 #include <new>
 #include <exception>
+#include <fcntl.h>
+#include <unistd.h>
 #include "../../../core/olm_sha256_rows.h"
 #include "../../../core/olm_world_safety.h"
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag@line". The file is
+// only opened on a refusal, and the returned error code and all output bytes
+// are identical whether or not tracing is enabled.
+static PF_Err SmootherRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = write(handle, entry, (size_t)length);
+				(void)written;
+			}
+			close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_SMOOTHER_REFUSAL(tag) SmootherRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_SMOOTHER_ERROR(tag, code) SmootherRefusal(__func__, tag, __LINE__, code)
 
 #ifdef OLMSMOOTHER_SHIM_H
 // The standalone evidence harness only needs a stable non-zero rejection.
@@ -3826,27 +3854,30 @@ WorldDepth(PF_InData *in_data,
            PF_EffectWorld *world,
            short *depth)
 {
-	if (!in_data || !out_data || !world || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !out_data || !world || !depth)
+		return OLM_SMOOTHER_REFUSAL("world-depth-args");
 #ifdef OLMSMOOTHER_SHIM_H
 	if (world->bitdepth == 8 || world->bitdepth == 16 || world->bitdepth == 32) {
 		*depth = world->bitdepth;
 		return PF_Err_NONE;
 	}
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_SMOOTHER_REFUSAL("world-depth-shim-bitdepth");
 #else
 	PF_Err err = PF_Err_NONE;
 	PF_PixelFormat format = PF_PixelFormat_INVALID;
 	(void)out_data;
 	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
-	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->pica_basicP->ReleaseSuite)
+		return OLM_SMOOTHER_REFUSAL("world-depth-pica");
 	const void *raw_suite = nullptr;
 	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
 		kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
-	if (acquire_err) return (PF_Err)acquire_err;
+	if (acquire_err) return OLM_SMOOTHER_ERROR("world-depth-acquire", (PF_Err)acquire_err);
 	if (!raw_suite) {
 		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
 			kPFWorldSuite, kPFWorldSuiteVersion2);
-		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+		return release_err ? OLM_SMOOTHER_ERROR("world-depth-no-suite", (PF_Err)release_err)
+		                   : OLM_SMOOTHER_REFUSAL("world-depth-no-suite");
 	}
 	PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
 	try {
@@ -3861,12 +3892,12 @@ WorldDepth(PF_InData *in_data,
 	const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
 		kPFWorldSuite, kPFWorldSuiteVersion2);
 	if (!err && release_err) err = (PF_Err)release_err;
-	if (err) return err;
+	if (err) return OLM_SMOOTHER_ERROR("world-depth-getpixelformat", err);
 	switch (format) {
 	case PF_PixelFormat_ARGB32:  *depth = 8;  return PF_Err_NONE;
 	case PF_PixelFormat_ARGB64:  *depth = 16; return PF_Err_NONE;
 	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
-	default: return PF_Err_BAD_CALLBACK_PARAM;
+	default: return OLM_SMOOTHER_REFUSAL("world-depth-unsupported-format");
 	}
 #endif
 }
@@ -3972,17 +4003,21 @@ ValidatePublicWorlds(PF_InData *in_data,
 	// world boundary and the interpolation handlers write neighbouring output
 	// pixels. A non-zero extent/ROI or independently rendered tile therefore has
 	// no finite halo that guarantees composition parity with a full-frame pass.
-	if (!input || !output || !input->data || !output->data || !depth ||
-	    input->width <= 0 || input->height <= 0 ||
-	    input->width != output->width || input->height != output->height ||
-	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
-	    input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
+	if (!input || !output || !input->data || !output->data || !depth)
+		return OLM_SMOOTHER_REFUSAL("world-args-null");
+	if (input->width <= 0 || input->height <= 0)
+		return OLM_SMOOTHER_REFUSAL("world-geometry-nonpositive");
+	if (input->width != output->width || input->height != output->height)
+		return OLM_SMOOTHER_REFUSAL("world-dimension-mismatch");
+	if (input->rowbytes <= 0 || output->rowbytes <= 0)
+		return OLM_SMOOTHER_REFUSAL("world-rowbytes-nonpositive");
+	if (input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
 	    input->extent_hint.right != input->width ||
 	    input->extent_hint.bottom != input->height ||
 	    output->extent_hint.left != 0 || output->extent_hint.top != 0 ||
 	    output->extent_hint.right != output->width ||
 	    output->extent_hint.bottom != output->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SMOOTHER_REFUSAL("world-extent-not-full-frame");
 	}
 	// Bound the public lane to the production envelope exercised by the beta
 	// suite.  The contour walkers are frame-wide and Render stages both worlds,
@@ -3992,15 +4027,16 @@ ValidatePublicWorlds(PF_InData *in_data,
 	static const size_t kMaxPixels = (size_t)4096 * (size_t)2160;
 	if (input->width > kMaxSide || input->height > kMaxSide ||
 	    (size_t)input->width > kMaxPixels / (size_t)input->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SMOOTHER_REFUSAL("world-geometry-envelope");
 	}
 	short input_depth = 0, output_depth = 0;
 	PF_Err err = WorldDepth(in_data, out_data, input, &input_depth);
 	if (!err) err = WorldDepth(in_data, out_data, output, &output_depth);
 	if (err) return err;
-	if (input_depth != output_depth || input_depth == 32) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
+	if (input_depth != output_depth)
+		return OLM_SMOOTHER_REFUSAL("world-depth-mismatch");
+	if (input_depth == 32)
+		return OLM_SMOOTHER_REFUSAL("world-depth-32-unsupported");
 	const size_t pixel_size = input_depth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16);
 	const olm::world_safety::ConstWorld safe_input = {
 		input->data, (size_t)input->width, (size_t)input->height,
@@ -4008,11 +4044,13 @@ ValidatePublicWorlds(PF_InData *in_data,
 	const olm::world_safety::ConstWorld safe_output = {
 		output->data, (size_t)output->width, (size_t)output->height,
 		(size_t)output->rowbytes, pixel_size};
-	if (olm::world_safety::validate_layout(safe_input) != olm::world_safety::Status::ok ||
-	    olm::world_safety::validate_layout(safe_output) != olm::world_safety::Status::ok ||
-	    olm::world_safety::require_disjoint(safe_input, safe_output) !=
+	if (olm::world_safety::validate_layout(safe_input) != olm::world_safety::Status::ok)
+		return OLM_SMOOTHER_REFUSAL("world-input-layout");
+	if (olm::world_safety::validate_layout(safe_output) != olm::world_safety::Status::ok)
+		return OLM_SMOOTHER_REFUSAL("world-output-layout");
+	if (olm::world_safety::require_disjoint(safe_input, safe_output) !=
 	        olm::world_safety::Status::ok) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SMOOTHER_REFUSAL("world-overlap");
 	}
 	*depth = input_depth;
 	return PF_Err_NONE;
@@ -4024,14 +4062,15 @@ ValidatePublicWorlds(PF_InData *in_data,
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
-	if (!params || !params[SM_INPUT]) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!params || !params[SM_INPUT])
+		return OLM_SMOOTHER_REFUSAL("render-null-params");
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
 	short bitdepth = 0;
 	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &bitdepth);
 	if (err) return err;
-	if (!V1ClassicAdmission((const PF_ParamDef *const *)params, input, bitdepth)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
+	if (!V1ClassicAdmission((const PF_ParamDef *const *)params, input, bitdepth))
+		return OLM_SMOOTHER_REFUSAL("classic-admission");
+
 	const size_t pixel_size = bitdepth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16);
 	olm::world_safety::TightStaging staging;
 	const olm::world_safety::Status stage_status = staging.prepare(
@@ -4041,7 +4080,8 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		 (size_t)output->rowbytes, pixel_size});
 	if (stage_status != olm::world_safety::Status::ok) {
 		return stage_status == olm::world_safety::Status::out_of_memory ?
-			(PF_Err)4 : PF_Err_BAD_CALLBACK_PARAM;
+			OLM_SMOOTHER_ERROR("render-staging-out-of-memory", (PF_Err)4)
+			: OLM_SMOOTHER_REFUSAL("render-staging-layout");
 	}
 	PF_EffectWorld staged_input = *input;
 	PF_EffectWorld staged_output = *output;
@@ -4052,7 +4092,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	staged_output.rowbytes = (A_long)staging.row_bytes();
 	err = DispatchRender(in_data, params, &staged_input, &staged_output, bitdepth);
 	if (!err && staging.commit() != olm::world_safety::Status::ok)
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_SMOOTHER_REFUSAL("render-staging-commit");
 	return err;
 }
 
@@ -4072,7 +4112,8 @@ static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
 	if (!in_data || !out_data || !extra || !extra->input || !extra->output ||
-	    !extra->cb || !extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
+	    !extra->cb || !extra->cb->checkout_layer)
+		return OLM_SMOOTHER_REFUSAL("smart-prerender-args");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
@@ -4095,11 +4136,12 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 {
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SMOOTHER_REFUSAL("smart-render-args");
 	}
 	#ifndef OLMSMOOTHER_SHIM_H
 	if (!in_data->pica_basicP || !in_data->inter.checkout_param ||
-	    !in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->inter.checkin_param)
+		return OLM_SMOOTHER_REFUSAL("smart-render-pica");
 	#endif
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = nullptr;
@@ -4127,7 +4169,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			param_list[0].u.ld = *input_world;
 			short bitdepth = 0;
 			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &bitdepth);
-			if (!err && bitdepth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+			if (!err && bitdepth != extra->input->bitdepth)
+				err = OLM_SMOOTHER_REFUSAL("smart-render-bitdepth-mismatch");
 			// Mac Public Beta Smart lane: reuse the Windows-derived Classic integer
 			// kernel, but render into a private tight world.  Host output is committed
 			// only after every parameter and layer checkout has been balanced, so a
@@ -4150,7 +4193,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				render_complete = !err;
 			}
 		} else if (!err) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_SMOOTHER_REFUSAL("smart-render-null-worlds");
 		}
 	} catch (PF_Err &thrown_err) {
 		if (!err) err = thrown_err;
