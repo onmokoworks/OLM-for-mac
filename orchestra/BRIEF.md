@@ -11,7 +11,7 @@ reviews your diff, and merges it. Stay inside the ticket.
   `tools/emulation/.venv`, `.venv-cv455`) live only in MAIN — use them by absolute
   path, never copy them.
 - Emulator source: `/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat*`
-  (read-only). Prebuilt reference workers: `MAIN/.cache/emu/INDEX.json` (use these
+  (read-only). Prebuilt reference workers: `/Users/onmk/.cache/olm-emu/INDEX.json` (use these
   by absolute path; do not rebuild unless your ticket says so).
 - Shared contract: `AGENT_GUIDE.md`. Per-plugin forbidden actions:
   `notes/CONFORMANCE_LEDGER.md` (grep the plugin section; do not read the whole file).

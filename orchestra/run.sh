@@ -29,6 +29,11 @@ case $engine in
       opencode run --dir "$wt" "${marg[@]}" "$prompt" < /dev/null >> "$log" 2>&1 && break
       grep -q 'UnknownError\|Model not found' "$log" || break
       echo "[run.sh] transient failure, retry $try" >> "$log"; sleep 30
+    done
+    for nudge in 1 2; do
+      [[ -f "$wt/orchestra/reports/$id.md" ]] && break
+      echo "[run.sh] no report, nudge $nudge" >> "$log"
+      opencode run --continue --dir "$wt" "${marg[@]}" "You stopped without the required report. If work remains and you are not blocked, continue the ticket now. In any case, finish by writing and committing orchestra/reports/$id.md in the exact format from the brief." < /dev/null >> "$log" 2>&1
     done ;;
   codex)    codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-high} "${marg[@]}" "$prompt" < /dev/null > "$log" 2>&1 ;;
   *) echo "unknown engine $engine"; exit 1 ;;

@@ -4,7 +4,7 @@ probes depend on, into a **persistent shared cache**, and record their identity.
 All previous builds lived in /tmp and are gone.
 
 ## Exception to brief rule 6
-For this ticket you MAY write to `/Users/onmk/Documents/Projects/Personal/OLM as/.cache/emu/`
+For this ticket you MAY write to `/Users/onmk/.cache/olm-emu/` (outside the repo because the repo path contains a space, which breaks the unicorn cmake build)
 (gitignored). Nothing else in MAIN.
 
 ## Facts
@@ -25,11 +25,11 @@ For this ticket you MAY write to `/Users/onmk/Documents/Projects/Personal/OLM as
 1. Work out the exact chain order and the root parent (which AEXCompat checkout +
    commit; the root "parent-build" JSON must exist or be reconstructable). Grep,
    don't read whole files.
-2. Build each link into `.cache/emu/<link-name>/` with its build JSON next to it.
+2. Build each link into `/Users/onmk/.cache/olm-emu/<link-name>/` with its build JSON next to it.
    Run cargo with output to a log; check the tail only.
 3. Compare each resulting worker_sha256 / source sha with the recorded ones.
    Mismatch = report it (toolchain drift is possible); do not patch to force a match.
-4. Write `.cache/emu/INDEX.json`: link name -> worker path, sha256, parent, recipe.
+4. Write `/Users/onmk/.cache/olm-emu/INDEX.json`: link name -> worker path, sha256, parent, recipe.
    Also commit a copy as `orchestra/reports/emu_index.json`.
 
 ## Done when
