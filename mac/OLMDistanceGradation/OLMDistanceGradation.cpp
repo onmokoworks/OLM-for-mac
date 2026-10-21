@@ -923,11 +923,13 @@ static inline void compose_pixel(
 		out_a = out_r = out_g = out_b = X;
 		return;
 	}
-	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	if ((!p.smart_owner || (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) &&
+	    p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_BOTH && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
 		out_a = out_r = out_g = out_b = X;
 		return;
 	}
+	const float staged_x = X;
 	// Invert: default (OFF) flips X to 1 - X; checked (ON) keeps X as-is.
 	if (!p.invert) X = 1.0f - X;
 
@@ -979,6 +981,22 @@ static inline void compose_pixel(
 	    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
 		out_a = out_r = out_g = X;
 		out_b = field_aux;
+		return;
+	}
+	// The public Smart typed callbacks consume the source RGB directly for
+	// Layer/no-background. They do not unpremultiply it or multiply RGB by
+	// the new alpha. On the unblurred path all staged field lanes are X;
+	// ownership below 0.0001 exits before color selection, retaining those lanes.
+	// Keep Classic and blurred staging on their separate existing contracts.
+	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
+	    !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
+		if (d_alpha < 0.0001f) {
+			out_a = 0.0f;
+			out_r = out_g = out_b = staged_x;
+		} else {
+			out_a = d_alpha * X;
+			out_r = src_r; out_g = src_g; out_b = src_b;
+		}
 		return;
 	}
 	// RGB selection:
@@ -1205,7 +1223,8 @@ template<> void shade_scanline<PF_Pixel16>(
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
-		if (p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
+		if ((!p.smart_owner || (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) &&
+		    p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
 		    src[i].alpha > 0 && src[i].alpha <= 193 &&
 		    src[i].red == 0 && src[i].green == 0 && src[i].blue == 0) {
 			bool inherit_r = false, inherit_g = false, inherit_b = false;
