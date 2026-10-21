@@ -25,18 +25,29 @@ cd "$wt"
 marg=(); [[ -n $model ]] && marg=(-m "$model")
 case $engine in
   opencode)
-    for try in 1 2 3; do
-      opencode run --dir "$wt" "${marg[@]}" "$prompt" < /dev/null >> "$log" 2>&1 && break
-      grep -q 'UnknownError\|Model not found' "$log" || break
-      echo "[run.sh] transient failure, retry $try" >> "$log"; sleep 30
-    done
-    for nudge in 1 2; do
+    # Run one opencode turn with a stall watchdog: kill if the log stops growing for STALL_MIN minutes.
+    oc(){ # $1 = extra flags, $2 = prompt
+      opencode run --dir "$wt" ${=1} "${marg[@]}" "$2" < /dev/null >> "$log" 2>&1 &
+      local pid=$! last=$(stat -f %z "$log") idle=0
+      while kill -0 $pid 2>/dev/null; do
+        sleep 60; local now=$(stat -f %z "$log")
+        if (( now == last )); then (( idle++ )); else idle=0; last=$now; fi
+        if (( idle >= ${STALL_MIN:-20} )); then
+          echo "[run.sh] stall ${idle}m, killing $pid" >> "$log"; pkill -P $pid; kill $pid; wait $pid; return 124
+        fi
+      done
+      wait $pid
+    }
+    oc "" "$prompt"; rc=$?
+    for attempt in 1 2 3; do
+      if [[ $rc -ne 0 ]] && grep -q 'UnknownError\|Model not found' "$log" && (( attempt == 1 )); then
+        echo "[run.sh] transient failure, retry" >> "$log"; sleep 30; oc "" "$prompt"; rc=$?; continue
+      fi
       [[ -f "$wt/orchestra/reports/$id.md" ]] && break
-      echo "[run.sh] no report, nudge $nudge" >> "$log"
-      opencode run --continue --dir "$wt" "${marg[@]}" "You stopped without the required report. If work remains and you are not blocked, continue the ticket now. In any case, finish by writing and committing orchestra/reports/$id.md in the exact format from the brief." < /dev/null >> "$log" 2>&1
+      echo "[run.sh] no report (rc=$rc), continue $attempt" >> "$log"
+      oc "--continue" "You stopped without the required report (or the session stalled). If work remains and you are not blocked, continue the ticket now. In any case, finish by writing and committing orchestra/reports/$id.md in the exact format from the brief."; rc=$?
     done ;;
-  codex)    codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-high} "${marg[@]}" "$prompt" < /dev/null > "$log" 2>&1 ;;
+  codex)    codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-high} "${marg[@]}" "$prompt" < /dev/null > "$log" 2>&1; rc=$? ;;
   *) echo "unknown engine $engine"; exit 1 ;;
 esac
-rc=$?
 echo "exit $rc $(date +%s)" >> "$MAIN/orchestra/state/$id.meta"
