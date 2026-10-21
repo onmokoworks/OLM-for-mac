@@ -5,7 +5,8 @@ summary:
 - All 235 baseline exact Smart outputs are unchanged; fresh seed 2 improves 243 → 265 exact with no exact regressions.
 - Ten T10 representative signatures now have exact rotated planes, component maps, divisors and final pixels; 17 saved Smart mismatches become exact.
 - 656 cases agree between O2 and ASan/UBSan on both Mac routes; two retained regression tests pass (684 renders).
-- Refusal admission and the remaining mathematical-import boundary are being investigated separately; no gate is relaxed in this commit.
+- Cluster 2 admits bounded generated Noise: Smart seed1 257 → 262 exact, seed2 265 → 269; no new mismatch or exact regression.
+- Size×Fade and the remaining mathematical-import boundary are retained for separate investigation.
 
 facts:
 
@@ -89,3 +90,41 @@ Expected at this commit: 257 exact / 1 mismatch / 40 refusal / 2 uncompared Smar
 next:
 - Gate-off PF8 generated-Noise and Size×Fade families separately; retain any unproven cross or negative-Offset allocator boundary.
 - Record the PF16 neutral expf dependency boundary without changing the ledger-preserved Gaussian contract.
+
+
+## Cluster 2 — bounded generated-Noise fallback
+
+facts:
+- Baseline is cluster-1 commit `08216d532f12921d9d3fce1352a772d717336650`. The public PF8 fallback now permits generated Noise when Offset is nonnegative, Noise Type is not Layer, and Size×Fade is absent. Existing exact/retained routes keep precedence and all world/workspace/staging/budget checks remain. No noise generator arithmetic, negative-index policy or output conversion changed.
+- The blanket scratch-only gate experiment ran seed1+seed2 n300 with O2 and ASan/UBSan, 600 Smart cases. Seed1: 26 changed refusals → 21 exact / 1 mismatch / 4 core refusals. Seed2: 20 changed → 17 exact / 1 mismatch / 2 core refusals. No sanitizer disagreement. The two mismatches both have Size×Fade without Noise: seed1 index200 differs by 11 bytes (first offset73, `31` → `32`); seed2 index152 differs by 1 byte (offset30895, `f7` → `f6`). This refutes blanket admission and provides new byte boundaries. Production retains that cross guard. Negative Offset and Layer stay excluded from the new fallback.
+- F16's unresolved generated-Noise index102 has a now-paired first divergence: rotated plane, divisor and 1818 weights exact, old component map differs by eight words and final output by one byte. With the restored map, all stages/final bytes agree. Index145 has two old map-word differences but identical final bytes; corrected map and final bytes are exact. Both original fixtures match cached Smart session outputs. These are generated unshrunk inputs, not the already-exact saved reductions.
+- Production verifier passes 656 cases (600 generated + 56 saved), both routes, normal vs ASan/UBSan. All base-exact Smart bytes remain unchanged, all newly rendered outputs are exact in both seeds. No corpus file changes in this commit.
+
+| Smart set | Before exact/mismatch/refusal/uncompared | After | New exact indices |
+|---|---|---|---|
+| seed1 n300 | 257 / 1 / 40 / 2 | 262 / 1 / 35 / 2 | 102,131,139,145,226 |
+| seed2 n300 | 265 / 1 / 32 / 2 | 269 / 1 / 28 / 2 | 72,163,254,271 |
+| saved corpus | 54 / 2 / 0 / 0 | 54 / 2 / 0 / 0 | none |
+
+The required n300/seed1/jobs2 campaign exits 0 with 298 completed AEX Smart renders and two wall budgets. No accepted-output hash changes except refusal→exact. Corpus before/after is 56 identical current result dictionaries. The verifier was invoked with `--baseline HEAD` while HEAD was `08216d5`; its committed evidence additionally resolves that revision explicitly.
+
+inference:
+- The component-map fix closes the F06/F16 positive-Offset generated-Noise counterexample. General admission of the demonstrated feature shape is supported; arbitrary Noise×Size×Fade and negative-Offset native allocation semantics are not.
+- A successful blanket case does not establish all crosses: the production rule deliberately preserves the independently disproven Size×Fade boundary.
+
+changed_files (cluster 2):
+- mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
+- tools/fuzz/probe_directionalblur_c02_admission.py (scratch-only experiment; pinned baseline for repeatability)
+- tools/emulation/probe_directionalblur_c02_stages.py (generated-input/leaf/stage options)
+- reports/fuzz/c02_dblur_smart/{noise-after,noise-verify,noise-stages-before,noise-stages-after,gate}.json
+- orchestra/reports/C02-dblur-smart.md
+
+verify (cluster 2, same S/W/P and temporary environment as above):
+
+```sh
+python3 tools/fuzz/verify_directionalblur_c02.py --baseline 08216d532f12921d9d3fce1352a772d717336650 --worker "$W" --report "$S/noise-verify-recheck.json" --corpus > "$S/noise-verify-recheck.log" 2>&1
+python3 tools/fuzz/probe_directionalblur_c02_admission.py --baseline 08216d532f12921d9d3fce1352a772d717336650 --worker "$W" --report "$S/gate-recheck.json" > "$S/gate-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/noise-stages-recheck.json" --indices 102 145 > "$S/noise-stages-recheck.log" 2>&1
+```
+
+Expected: verifier PASS 656, production Smart 262/1/35/2 (seed1) and 269/1/28/2 (seed2), gate 600 O2/sanitized matches with the two recorded Size×Fade mismatches, two generated-Noise stage/final pairs exact. Cluster1 historical counts remain tied to its commit; current campaign is 262 exact.

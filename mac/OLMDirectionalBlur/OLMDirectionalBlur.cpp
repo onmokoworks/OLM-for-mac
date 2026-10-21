@@ -1056,10 +1056,12 @@ static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
     std::size_t staging_bytes = 0)
 {
     // F06: the AEX PF8 work predicate at 0x180004b50 includes both Fades.
-    // Its existing float core also handles noise-free Size/Sharp combinations.
-    // The gate-off campaign still differs for Size x Fade and generated Noise;
-    // keep those outside this fallback instead of silently copying the input.
-    if (info.noise_variation != 0.0 ||
+    // The component-map row bounds now match the AEX, including single-row
+    // groups, so generated Noise can use this same core. Keep negative Offset
+    // (native out-of-allocation reads), Layer, and the still-unproven Size x
+    // Fade cross outside this fallback. Earlier retained routes keep precedence.
+    if ((info.noise_variation != 0.0 &&
+            (info.noise_type == 3 || info.noise_offset < 0)) ||
         (info.size_variation != 0.0 &&
             (info.front_alpha_fade != 0 || info.back_alpha_fade != 0))) return false;
     olm::dblur::generic::RenderEstimate estimate = {};

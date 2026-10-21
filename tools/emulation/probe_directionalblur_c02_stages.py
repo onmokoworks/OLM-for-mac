@@ -15,7 +15,7 @@ import types
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT/'tools/fuzz'))
-from adapters.olmdirectionalblur import Adapter
+from adapters.olmdirectionalblur import Adapter, SOURCE
 from adapters.public import replace_once
 from core import load_corpus, sha
 from aex_loader import AexLoader
@@ -31,10 +31,21 @@ class TracedAdapter(Adapter):
     def __init__(self,args):
         super().__init__(args)
         self.core_ref=args.core_ref
+        self.gate_off=args.gate_off
 
     def compile(self, argv, deadline):
         argv = list(argv)
         if argv[0] == 'clang++':
+            host=Path(next(str(x) for x in argv if str(x).endswith('/host.cpp')))
+            if self.gate_off:
+                body=SOURCE.read_text()
+                start=body.index('    if (',body.index('static bool CanUsePF8FeatureFallback'))
+                end=body.index('return false;',start)+len('return false;')
+                body=body[:start]+body[end:]
+                body=body.replace('#include "../../core/',f'#include "{ROOT}/core/')
+                body=body.replace('#include "OLMDirectionalBlur.h"',f'#include "{SOURCE.with_suffix(".h")}"')
+                source=host.with_name('gate.cpp');source.write_text(body)
+                host.write_text(replace_once(host.read_text(),str(SOURCE),str(source)))
             original = ROOT/'core/dblur_frontonly.cpp'
             target = Path(next(str(x) for x in argv if str(x).endswith('/host.cpp'))).with_name('trace_core.cpp')
             body = (subprocess.check_output(['git','show',f'{self.core_ref}:core/dblur_frontonly.cpp'],cwd=ROOT).decode()
@@ -57,12 +68,18 @@ static void c02_dump(const char* name, const float* data, size_t count) {
                 '    char name[80]; std::snprintf(name,sizeof(name),"weights-%d",count);\n'
                 '    c02_dump(name,weights.data(),weights.size());\n    return weights;')
             body = body.replace('        a = b;', '        a = b;\n        c02_dump("rotated",a.data(),a.size());')
+            body = replace_once(body,'            const float divisor = denominator[pixel];',
+                '            if (pixel==0) {\n'
+                '              c02_dump("row-output",buffer_b.data(),buffer_b.size());\n'
+                '              c02_dump("denominator",denominator.data(),denominator.size());\n'
+                '              c02_dump("alpha-max",alpha_max.data(),alpha_max.size());\n'
+                '            }\n            const float divisor = denominator[pixel];')
             target.write_text(prefix+body)
             argv = [target if x == original else x for x in argv]+['-I',ROOT/'core']
         return super().compile(argv, deadline)
 
 
-def run_fixture(case, directory, aex, expf_leaf='double-round'):
+def run_fixture(case, directory, aex, expf_leaf='double-round',powf_leaf='double-round'):
     body = FIXTURE.read_text().replace(
         '(row_width // 2, 73), (row_width // 2, row_width - 72)',
         '(row_width // 2, 0), (row_width // 2, row_width - 1)')
@@ -89,10 +106,17 @@ def run_fixture(case, directory, aex, expf_leaf='double-round'):
             assert all(self.read_bytes(p,16)==bytes(4)+b'\xa5'*12 for p in ptrs[2:])
             trace['abi_leaf_instructions']=checked['instructions']
             def rowdriver(ld,address,size):
-                if stages: return
                 sp=ld.uc.reg_read(UC_X86_REG_RSP)
                 ctx=fixture.u64(ld,sp+0x38)
                 ww,wh=fixture.u32(ld,ctx+0x80a0),fixture.u32(ld,ctx+0x80a4)
+                if ld.uc.reg_read(UC_X86_REG_RDX)==(wh//min(wh,32))*min(wh,32):
+                    dst=fixture.u64(ld,ld.uc.reg_read(UC_X86_REG_R9))
+                    def after(ld,address,size):
+                        stages['row-output']=ld.read_bytes(dst,ww*wh*16)
+                        stages['denominator']=ld.read_bytes(fixture.u64(ld,ctx+0x8080),ww*wh*4)
+                        stages['alpha-max']=ld.read_bytes(fixture.u64(ld,ctx+0x8088),ww*wh*4)
+                    self.add_code_hook(fixture.u64(ld,sp),after)
+                if 'rotated' in stages: return
                 src=fixture.u64(ld,ld.uc.reg_read(UC_X86_REG_R8))
                 stages['rotated']=ld.read_bytes(src,ww*wh*16)
                 stages['map']=ld.read_bytes(fixture.u64(ld,ctx+0x8118),ww*wh*16)
@@ -124,7 +148,7 @@ def run_fixture(case, directory, aex, expf_leaf='double-round'):
         '--actual-iterate-callbacks','--no-detour-rotate','--no-detour-rowdriver',
         '--downsample-num','1','--downsample-den','1','--world-area','0','0',str(w),str(h),
         '--max-instructions','200000000']
-    sys.argv+=['--expf-leaf',expf_leaf]
+    sys.argv+=['--expf-leaf',expf_leaf,'--powf-leaf',powf_leaf]
     for p in case['parameters']:
         slot,value=p['slot'],p['value']
         if slot not in names: continue
@@ -146,6 +170,10 @@ def main():
     p.add_argument('--expf-leaf',choices=['double-round','native-f32'],default='double-round')
     p.add_argument('--allow-fixture-difference',action='store_true')
     p.add_argument('--core-ref',help='Read the traced core from this git revision (no checkout)')
+    p.add_argument('--indices',type=int,nargs='+',help='Trace generated cases instead of saved clusters')
+    p.add_argument('--seed',type=int,default=1)
+    p.add_argument('--gate-off',action='store_true',help='Scratch-only PF8 fallback admission')
+    p.add_argument('--powf-leaf',choices=['double-round','native-f32'],default='double-round')
     args=p.parse_args()
     args.main,args.max_size,args.case_timeout=ROOT.parent.parent,256,30
     SCRATCH.mkdir(parents=True,exist_ok=True)
@@ -156,24 +184,28 @@ def main():
     with tempfile.TemporaryDirectory(prefix='stages_',dir=SCRATCH) as tmp:
         tmp=Path(tmp);adapter=TracedAdapter(args)
         report['provenance']=adapter.prepare(tmp,time.monotonic()+180)
-        for target in triage['clusters']:
-            if target['cluster'] not in args.clusters: continue
+        targets=([{'cluster':i,'generated':True} for i in args.indices] if args.indices else
+                 [t for t in triage['clusters'] if t['cluster'] in args.clusters])
+        for target in targets:
             directory=tmp/str(target['cluster']);directory.mkdir()
-            case,_=load_corpus(ROOT/target['corpus'],adapter)
-            trace,stages,native=run_fixture(case,directory,adapter.aex,args.expf_leaf)
+            case=(adapter.generate(args.seed,target['cluster']) if target.get('generated') else
+                  load_corpus(ROOT/target['corpus'],adapter)[0])
+            trace,stages,native=run_fixture(case,directory,adapter.aex,args.expf_leaf,args.powf_leaf)
             oracle,reference=adapter.oracle(case,directory,time.monotonic()+60)
             assert oracle['status']=='ok'
             adapter.env['OLM_C02_TRACE']=str(directory)
             result,mac,_=adapter.candidate(case,directory,'smart',time.monotonic()+60)
             assert result['status']=='ok'
-            row={'cluster':target['cluster'],'corpus':target['corpus'],'trace':trace,
+            row={'cluster':target['cluster'],'corpus':target.get('corpus'),'seed':args.seed,
+                'generated':bool(target.get('generated')),'trace':trace,
                 'fixture_session':compare(native,reference),'final':compare(reference,mac),
                 'stages':{name:compare(raw,(directory/name).read_bytes(),4) for name,raw in stages.items() if (directory/name).is_file()}}
             # Exact words around each stage's first divergence are reviewable.
             for name,raw in stages.items():
                 if name not in row['stages']: continue
-                row['stages'][name]['aex_hex']=raw.hex()
-                row['stages'][name]['mac_hex']=(directory/name).read_bytes().hex()
+                if len(raw)<=65536:
+                    row['stages'][name]['aex_hex']=raw.hex()
+                    row['stages'][name]['mac_hex']=(directory/name).read_bytes().hex()
             report['cases'].append(row)
             args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
             if not args.allow_fixture_difference: assert native==reference, row['fixture_session']
@@ -182,6 +214,8 @@ def main():
     report['probe_sha256']=sha(Path(__file__).read_bytes())
     report['fixture_sha256']=sha(FIXTURE.read_bytes())
     report['expf_leaf']=args.expf_leaf
+    report['powf_leaf']=args.powf_leaf
+    report['gate_off']=args.gate_off
     report['core_ref']=args.core_ref
     report['traced_core_sha256']=adapter.traced_core_sha256
     args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
