@@ -233,8 +233,16 @@
     "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
     "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
     "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
-    "host": "AEXCompat Unicorn CPU Smart; SDK fake Mac Classic/Smart EffectMain",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
     "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
     "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
     "source_sha256": "347c9fd41c3ca6fcc9146efd5b60b5985e86c0c34b31d0309ef488847f01e2db",
     "stage_support": "session protocol + public EffectMain harness expose final raw only",
@@ -283,8 +291,32 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
       "classic": {
+        "diff": {
+          "actual_bytes": 784,
+          "actual_word_hex": "6e",
+          "different_bytes": 629,
+          "different_words": 629,
+          "expected_bytes": 784,
+          "expected_word_hex": "00",
+          "first_byte": 0,
+          "first_word": 0
+        },
         "error": 0,
         "metadata": {
           "COUNTS": "0 0 0 0 0 1 1",
@@ -292,7 +324,7 @@
           "INFO": "0 32 0 0"
         },
         "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
-        "status": "exact"
+        "status": "mismatch"
       },
       "smart": {
         "error": 0,
@@ -306,6 +338,41 @@
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "route_oracle_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "0",
+            "INFO": "0 32 0 0"
+          },
+          "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+          "status": "exact"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 32 0 0"
+          },
+          "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+          "status": "exact"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "ticket": "F17-fuzz-per-route-oracle"
   },
   "schema": "olm-fuzz-case/1",
   "seed": 1

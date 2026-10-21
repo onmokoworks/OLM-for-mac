@@ -150,12 +150,12 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
     "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
     "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
-    "candidate_sha256": "b469e6b31a39b467fb72b1d10ff9803f980d4eed7b912c89d13fcd6fa8f4c14d",
+    "candidate_sha256": "cf15b1af0cbbcaf4d8e7754d2523c7900a9f4d38cb4e01a1e749fb3bc54523af",
     "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
     "dependencies_sha256": {
       "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
       "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
-      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "980904dc73bbf27d0f80d45aef2e28bd8d47ba24504a306b6a09f236b03b2ca2",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "59825c5a0c2531c50c89856d67847cc6a55c258eb419b432aef8b1b52bb26d4a",
       "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
       "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
       "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
@@ -174,11 +174,19 @@
       "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
       "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
     },
-    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
     "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
     "layer": "None; independent layer worlds outside this adapter",
     "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
     "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
     "out_of_range_builder_defaults": [
       {
         "builder_default": 0.0,
@@ -194,8 +202,8 @@
       "total": 1,
       "value": 0
     },
-    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
-    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -272,17 +280,31 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "9d4b936a67c21ab14da09aa480239b43ea122c9c933d876013ee3012e464c16b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "692f214afe1bf717b00d342c0d6753912543c7e717b2f11ac0714ea88799ded5",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
       "classic": {
         "diff": {
           "actual_bytes": 12,
           "actual_word_hex": "00",
-          "different_bytes": 3,
-          "different_words": 3,
+          "different_bytes": 9,
+          "different_words": 9,
           "expected_bytes": 12,
           "expected_word_hex": "ff",
-          "first_byte": 3,
-          "first_word": 3
+          "first_byte": 0,
+          "first_word": 0
         },
         "error": 0,
         "metadata": {
@@ -313,6 +335,59 @@
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "route_oracle_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "692f214afe1bf717b00d342c0d6753912543c7e717b2f11ac0714ea88799ded5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "classic": {
+          "diff": {
+            "actual_bytes": 12,
+            "actual_word_hex": "00",
+            "different_bytes": 3,
+            "different_words": 3,
+            "expected_bytes": 12,
+            "expected_word_hex": "ff",
+            "first_byte": 3,
+            "first_word": 3
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 0",
+            "ERROR": "0"
+          },
+          "raw_sha256": "c47adf5274bdeb9dbbe73e1e406537f8ca25384e46fb2e96aaefedd2118b396d",
+          "status": "mismatch"
+        },
+        "smart": {
+          "diff": {
+            "actual_bytes": 12,
+            "actual_word_hex": "00",
+            "different_bytes": 3,
+            "different_words": 3,
+            "expected_bytes": 12,
+            "expected_word_hex": "ff",
+            "first_byte": 3,
+            "first_word": 3
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 1 1 1 12 12",
+            "ERROR": "0"
+          },
+          "raw_sha256": "c47adf5274bdeb9dbbe73e1e406537f8ca25384e46fb2e96aaefedd2118b396d",
+          "status": "mismatch"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "ticket": "F17-fuzz-per-route-oracle"
   },
   "schema": "olm-fuzz-case/1",
   "seed": 1

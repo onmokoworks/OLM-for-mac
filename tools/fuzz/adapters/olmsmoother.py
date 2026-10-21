@@ -13,6 +13,8 @@ class Adapter(PublicAdapter):
     output_format = 'raw'
     oracle_route = None  # Original v1 advertises Classic only; use worker auto.
     oracle_path = 'classic'
+    oracle_routes = {'classic': 'classic', 'smart': 'classic'}
+    original_routes = {'classic': 'render', 'smart': 'absent; Mac Smart wrapper is explicitly compared to original Classic'}
 
     def build(self, scratch, deadline):
         body = HOST.read_text().split('static unsigned short Widen',1)[0]

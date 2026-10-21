@@ -131,11 +131,19 @@
       "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
       "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9"
     },
-    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
     "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
     "layer": "None; independent layer worlds outside this adapter",
     "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
     "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
     "out_of_range_builder_defaults": [
       {
         "builder_default": 0.0,
@@ -151,8 +159,8 @@
       "total": 1,
       "value": 0
     },
-    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
-    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -185,6 +193,20 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
       "classic": {
         "error": 0,
@@ -206,6 +228,39 @@
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "route_oracle_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 0",
+            "ERROR": "0"
+          },
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "status": "exact"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 1 1 1 12 12",
+            "ERROR": "0"
+          },
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "status": "exact"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "ticket": "F17-fuzz-per-route-oracle"
   },
   "schema": "olm-fuzz-case/1",
   "seed": 1

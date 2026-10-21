@@ -42,6 +42,9 @@ class PublicAdapter:
     aex_name = None
     oracle_route = 'smart'
     oracle_path = 'smartfx'
+    oracle_routes = {'classic': 'classic', 'smart': 'smart'}
+    original_routes = {'classic': 'render', 'smart': 'render'}
+    no_write_fill = None
     # Override only sampling weights/subsets, never the builder's legal bounds.
     small_controls = ()
 
@@ -155,7 +158,8 @@ class PublicAdapter:
                 'out_of_range_builder_defaults':[{'slot':d['slot'],'builder_default':d['default_value'],
                     'sampled_default':p['value']} for d,p in zip(self.controls,self.defaults(1,1))
                     if p['kind'] not in ('a','p','c') and p['value']!=d['default_value']],
-                'host':f'Original AEX Unicorn CPU {self.oracle_path}; production Mac EffectMain Classic + Smart fake host',
+                'host':'Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host',
+                'oracle_routes':self.oracle_routes, 'original_routes':self.original_routes,
                 'oracle_render_path':self.oracle_path,
                 'time':{'value':0,'scale':24,'step':1,'total':1},
                 'world':'full frame, origin 0, downsample 1:1, raw ARGB, no conversion',
@@ -185,11 +189,13 @@ class PublicAdapter:
             '-Wl,-dead_strip','-framework','Cocoa','-o',binary],deadline)
         return binary
 
-    def oracle(self, case, directory, deadline):
+    def oracle(self, case, directory, deadline, route=None):
         with tempfile.TemporaryDirectory(prefix='native_',dir=directory) as td:
-            return self._oracle(case,Path(td),deadline)
+            return self._oracle(case,Path(td),deadline,route)
 
-    def _oracle(self, case, directory, deadline):
+    def _oracle(self, case, directory, deadline, route=None):
+        selected = self.oracle_route if route is None else route
+        expected_path = self.oracle_path if route is None else {"classic":"classic", "smart":"smartfx"}[route]
         ip,op = directory/'input.raw',directory/'output.raw'
         ip.write_bytes(case['pixels'])
         encoded = []
@@ -204,7 +210,7 @@ class PublicAdapter:
             'current_time':{'value':0,'scale':24,'step':1,'total':1},'parameters':'v4|'+';'.join(encoded)}).encode()
         status,out,err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
             '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
-            *(['--fixture-render-path',self.oracle_route] if self.oracle_route else [])],data=struct.pack('<I',len(request))+request,
+            *(['--fixture-render-path',selected] if selected else [])],data=struct.pack('<I',len(request))+request,
             timeout=self.timeout,deadline=deadline,env=self.env)
         if status['status']!='ok':
             reason = err.decode(errors='replace')
@@ -225,7 +231,7 @@ class PublicAdapter:
                 return {'status':'reject','diagnostic':json.dumps(frame)[-1600:]},b''
             raw = op.read_bytes()
             if not (frame['output']['guards_intact'] and frame['output']['checksum']==sha(raw)
-                    and len(raw)==len(case['pixels']) and frame['output']['render_path']==self.oracle_path
+                    and len(raw)==len(case['pixels']) and frame['output']['render_path']==expected_path
                     and close['session_clean'] and not close['unsupported_suite_calls']
                     and not close['dropped_unsupported_suite_calls']):
                 return {'status':'harness_error','diagnostic':'guard/checksum/size/route/session invariant'},b''

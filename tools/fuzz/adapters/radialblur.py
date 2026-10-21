@@ -26,6 +26,8 @@ class Adapter:
     name = 'radialblur'
     generator_version = 1
     routes = ('classic', 'smart')
+    oracle_routes = {'classic': 'classic', 'smart': 'smart'}
+    original_routes = {'classic': 'render', 'smart': 'render'}
 
     def __init__(self, options):
         self.max_size = options.max_size
@@ -180,7 +182,8 @@ class Adapter:
             'declarations_sha256': sha(DECLARATIONS.read_bytes()),
             'harness_sha256': sha(body.encode()),
             'compiler': 'clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)',
-            'host': 'AEXCompat Unicorn CPU Smart; SDK fake Mac Classic/Smart EffectMain',
+            'host': 'AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain',
+            'oracle_routes':self.oracle_routes, 'original_routes':self.original_routes,
             'coordinates': 'Mac pixel PF_Fixed; AEX percent via public.native_case',
             'time': {'value': 0, 'scale': 24, 'step': 1, 'total': 1},
             'world': 'full frame, origin 0, downsample 1:1, raw ARGB; no color conversion',
@@ -210,13 +213,13 @@ class Adapter:
             raise RuntimeError('AEX worker did not render any calibration: '+json.dumps(calibrations))
         return provenance
 
-    def oracle(self, case, directory, deadline):
+    def oracle(self, case, directory, deadline, route='smart'):
         # Like public.native_render: the worker creates exclusive sidecar dumps.
         # Every replay/reduction needs a fresh directory, including on rejection.
         with tempfile.TemporaryDirectory(prefix='native_', dir=directory) as name:
-            return self._oracle(case, Path(name), deadline)
+            return self._oracle(case, Path(name), deadline, route)
 
-    def _oracle(self, case, directory, deadline):
+    def _oracle(self, case, directory, deadline, route='smart'):
         ip, op = directory/'input.raw', directory/'output.raw'
         ip.write_bytes(case['pixels'])
         op.unlink(missing_ok=True)
@@ -231,7 +234,7 @@ class Adapter:
                               'parameters':'v4|'+';'.join(encoded)}).encode()
         status, out, err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
                                    '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
-                                   '--fixture-render-path','smart'],
+                                   '--fixture-render-path',route],
                                   data=struct.pack('<I',len(request))+request,
                                   timeout=self.timeout, deadline=deadline, env=self.env)
         if status['status'] != 'ok':
@@ -254,7 +257,7 @@ class Adapter:
                 return {'status':'reject', 'diagnostic':json.dumps(frame)[-1600:]}, b''
             raw = op.read_bytes()
             if not (frame['output']['guards_intact'] and frame['output']['checksum']==sha(raw)
-                    and len(raw)==len(case['pixels']) and frame['output']['render_path']=='smartfx'
+                    and len(raw)==len(case['pixels']) and frame['output']['render_path']=={'classic':'classic','smart':'smartfx'}[route]
                     and close['session_clean'] and not close['unsupported_suite_calls']
                     and not close['dropped_unsupported_suite_calls']):
                 return {'status':'harness_error', 'diagnostic':'guard/checksum/size/route/session invariant'}, b''

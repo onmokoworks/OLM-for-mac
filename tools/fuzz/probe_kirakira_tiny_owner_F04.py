@@ -88,9 +88,9 @@ def main():
             result = super().prepare(scratch, deadline)
             return dict(result, experiment=self.experiment_binding)
 
-        def oracle(self, case, directory, deadline):
-            status, raw = super().oracle(case, directory, deadline)
-            reference = directory/'reference.raw'
+        def oracle(self, case, directory, deadline, route=None):
+            status, raw = super().oracle(case, directory, deadline, route)
+            reference = directory/f'reference-{route or self.oracle_route}.raw'
             reference.unlink(missing_ok=True)
             if status['status'] == 'ok':
                 reference.write_bytes(raw)
@@ -106,7 +106,7 @@ def main():
                        route=route, input_sha256=sha(case['pixels']),
                        candidate=outcome[0], guards=outcome[2],
                        trace=path.read_text().splitlines() if path.exists() else [])
-            reference = directory/'reference.raw'
+            reference = directory/f'reference-{route or self.oracle_route}.raw'
             if reference.exists() and outcome[0]['status'] == 'ok':
                 expected = reference.read_bytes()
                 row['exact'] = expected == outcome[1]

@@ -1578,10 +1578,9 @@ GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
 }
 
 // Returns the first failing admission reason, or NULL when the tuple is
-// admitted.  The order and predicates are unchanged from the original boolean
-// gate; the tag exists only for refusal attribution.
+// admitted. Tags retain the first failing admission reason.
 static const char *
-GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long height)
+GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long height, short bpc)
 {
 	if (!isfinite(raw.amount)) return "generic-amount-nonfinite";
 	if (raw.amount < 1.0 || raw.amount > 1000.0) return "generic-amount-range";
@@ -1592,8 +1591,13 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	if (raw.legacy != 0 && raw.legacy != 1) return "generic-legacy-range";
 	if (width <= 0 || height <= 0) return "generic-size-invalid";
 	if (width > 4096 || height > 2160) return "generic-size-too-large";
-	// Preserve the tiny captured fixtures below as exact compatibility owners.
-	if (width <= 24 && height <= 24) return "generic-small-fixture";
+	// F17: the non-Legacy single-pass branch avoids repeated-radius decay;
+	// a singleton has no neighbouring samples on either axis. Both integer
+	// depths are exact in the public AEX seed and boundary matrices. Execute
+	// the normal worker; other small families retain their fixture owners.
+	const bool integer_small = (bpc == 8 || bpc == 16) && raw.legacy == 0 &&
+		(raw.repeat == 1 || (width == 1 && height == 1));
+	if (width <= 24 && height <= 24 && !integer_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
@@ -1611,12 +1615,6 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	if (pixels > max_work/radius) return "generic-work-budget";
 	if (pixels*radius > max_work/(size_t)raw.repeat) return "generic-repeat-work-budget";
 	return NULL;
-}
-
-static bool
-GenericBetaTuple(const PublicBlurParamValues& raw, A_long width, A_long height)
-{
-	return GenericBetaTupleRefusal(raw, width, height) == NULL;
 }
 
 static PF_Err
@@ -1883,7 +1881,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	// Generic beta lane.  Exact fixture admissions remain below as a fallback,
 	// retaining their special source and arithmetic contracts.
 	const char *const generic_tuple_refusal =
-		GenericBetaTupleRefusal(raw,input_world->width,input_world->height);
+		GenericBetaTupleRefusal(raw,input_world->width,input_world->height,bpc);
 	const bool generic_input_ok =
 		GenericBetaWorld(input_world,pixel_bytes,input_world->width,input_world->height);
 	const bool generic_output_ok =
@@ -1891,41 +1889,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	const bool generic_downsample =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
 		in_data->downsample_y.num==1 && in_data->downsample_y.den==1;
-	if (!err && !generic_tuple_refusal && generic_input_ok && generic_output_ok &&
-		generic_downsample) {
-		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
-		if (err) err=BlurRefusal(__func__, "generic-formats", __LINE__, err);
-		olm::world_safety::TightStaging staging;
-		if (!err) {
-			const olm::world_safety::Status stage_status = staging.prepare(
-				{input_world->data, (size_t)input_world->width,
-				 (size_t)input_world->height, (size_t)input_world->rowbytes,
-				 pixel_bytes},
-				{output_world->data, (size_t)output_world->width,
-				 (size_t)output_world->height, (size_t)output_world->rowbytes,
-				 pixel_bytes});
-			if (stage_status == olm::world_safety::Status::out_of_memory)
-				err = OLM_BLUR_ERROR("generic-staging-oom", PF_Err_OUT_OF_MEMORY);
-			else if (stage_status != olm::world_safety::Status::ok)
-				err = OLM_BLUR_REFUSAL("generic-staging");
-		}
-		PF_EffectWorld staged_input = *input_world;
-		PF_EffectWorld staged_output = *output_world;
-		if (!err) {
-			staged_input.data = (PF_PixelPtr)const_cast<uint8_t *>(staging.input_data());
-			staged_input.rowbytes = (A_long)staging.row_bytes();
-			staged_output.data = (PF_PixelPtr)staging.output_data();
-			staged_output.rowbytes = (A_long)staging.row_bytes();
-			err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
-			if (err) err=BlurRefusal(__func__, "generic-render", __LINE__, err);
-		}
-		const PF_Err checkin_err=extra->cb->checkin_layer_pixels ?
-			extra->cb->checkin_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT) : PF_Err_NONE;
-		if (!err) err=checkin_err ? BlurRefusal(__func__, "generic-checkin", __LINE__, checkin_err) : checkin_err;
-		if (!err && staging.commit() != olm::world_safety::Status::ok)
-			err=OLM_BLUR_REFUSAL("generic-commit");
-		return err;
-	}
 	const bool public24 = raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&
 		raw.repeat==1 && raw.bias==1 && (raw.legacy==0 || raw.legacy==1) &&
 		input_world->width==24 && input_world->height==24;
@@ -2035,6 +1998,49 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		source_kind=PublicBlurSourcePF32LegacyMixedAlpha;width=public32Legacy18x12?18:9;height=public32Legacy18x12?12:7;rowbytes=width*16+13;
 	} else if (public32Legacy7x5) {
 		source_kind=PublicBlurSourcePF32LegacyRedBoundary;width=7;height=5;rowbytes=125;
+	}
+	// Preserve the established fixture's copy/padding and callback contract
+	// when its complete source/world admission matches. The new generic rule
+	// handles other inputs without changing that exact owner's lifecycle.
+	const bool exact_fixture_owner = source_kind != PublicBlurSourceNone &&
+		ExactPublicWorld(input_world,bpc,width,height,rowbytes) &&
+		ExactPublicWorld(output_world,bpc,width,height,rowbytes) &&
+		PublicWorldsDisjoint(input_world,output_world,height) &&
+		ExactPublicSource(input_world,bpc,raw.legacy!=0,source_kind);
+	if (!err && !generic_tuple_refusal && generic_input_ok && generic_output_ok &&
+		generic_downsample && !exact_fixture_owner) {
+		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+		if (err) err=BlurRefusal(__func__, "generic-formats", __LINE__, err);
+		olm::world_safety::TightStaging staging;
+		if (!err) {
+			const olm::world_safety::Status stage_status = staging.prepare(
+				{input_world->data, (size_t)input_world->width,
+				 (size_t)input_world->height, (size_t)input_world->rowbytes,
+				 pixel_bytes},
+				{output_world->data, (size_t)output_world->width,
+				 (size_t)output_world->height, (size_t)output_world->rowbytes,
+				 pixel_bytes});
+			if (stage_status == olm::world_safety::Status::out_of_memory)
+				err = OLM_BLUR_ERROR("generic-staging-oom", PF_Err_OUT_OF_MEMORY);
+			else if (stage_status != olm::world_safety::Status::ok)
+				err = OLM_BLUR_REFUSAL("generic-staging");
+		}
+		PF_EffectWorld staged_input = *input_world;
+		PF_EffectWorld staged_output = *output_world;
+		if (!err) {
+			staged_input.data = (PF_PixelPtr)const_cast<uint8_t *>(staging.input_data());
+			staged_input.rowbytes = (A_long)staging.row_bytes();
+			staged_output.data = (PF_PixelPtr)staging.output_data();
+			staged_output.rowbytes = (A_long)staging.row_bytes();
+			err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+			if (err) err=BlurRefusal(__func__, "generic-render", __LINE__, err);
+		}
+		const PF_Err checkin_err=extra->cb->checkin_layer_pixels ?
+			extra->cb->checkin_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT) : PF_Err_NONE;
+		if (!err) err=checkin_err ? BlurRefusal(__func__, "generic-checkin", __LINE__, checkin_err) : checkin_err;
+		if (!err && staging.commit() != olm::world_safety::Status::ok)
+			err=OLM_BLUR_REFUSAL("generic-commit");
+		return err;
 	}
 	const size_t active=(size_t)width*pixel_bytes;
 	if (!err && source_kind==PublicBlurSourceNone) {

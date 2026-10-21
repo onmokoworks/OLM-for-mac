@@ -103,17 +103,17 @@ def main():
                     limitation='Bypasses selected admission checks and optionally typed alignment; span/format checks, request normalization, helper fallbacks and arithmetic unchanged')
             return super().compile(argv, deadline)
 
-        def oracle(self, case, directory, deadline):
+        def oracle(self, case, directory, deadline, route=None):
             if args.details:
-                (directory/'triage-reference.raw').unlink(missing_ok=True)
-            status, raw = super().oracle(case, directory, deadline)
+                (directory/f'triage-reference-{route or self.oracle_route}.raw').unlink(missing_ok=True)
+            status, raw = super().oracle(case, directory, deadline, route)
             if args.details and status['status'] == 'ok':
-                (directory/'triage-reference.raw').write_bytes(raw)
+                (directory/f'triage-reference-{route or self.oracle_route}.raw').write_bytes(raw)
             return status, raw
 
         def candidate(self, case, directory, route, deadline):
             outcome = super().candidate(case, directory, route, deadline)
-            reference = directory/'triage-reference.raw'
+            reference = directory/f'triage-reference-{route or self.oracle_route}.raw'
             if args.details and reference.exists() and outcome[0]['status'] == 'ok':
                 expected, actual = reference.read_bytes(), outcome[1]
                 if expected != actual:

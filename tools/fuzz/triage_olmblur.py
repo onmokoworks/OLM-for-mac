@@ -125,7 +125,7 @@ def run_gate_case(adapter, index, route, scratch, deadline):
     case = adapter.generate(1, index)
     with tempfile.TemporaryDirectory(prefix=f'gate_{index}_', dir=scratch) as name:
         directory = Path(name)
-        oracle, reference = adapter.oracle(case, directory, deadline)
+        oracle, reference = adapter.oracle(case, directory, deadline, route)
         outcome = adapter.candidate(case, directory, route, deadline)
         result, raw = outcome[0], outcome[1]
         guards = outcome[2] if len(outcome) > 2 else []
@@ -255,9 +255,10 @@ def cluster_table(adapter, args, scratch, deadline):
         path, data, case = min(members, key=weight)
         with tempfile.TemporaryDirectory(prefix='cluster_', dir=scratch) as name:
             directory = Path(name)
-            oracle, reference = adapter.oracle(case, directory, deadline)
-            routes = {}
+            routes, oracles = {}, {}
             for route in adapter.routes:
+                oracle, reference = adapter.oracle(case, directory, deadline, route)
+                oracles[route] = oracle
                 outcome = adapter.candidate(case, directory, route, deadline)
                 result, raw = outcome[0], outcome[1]
                 entry = {'status': result['status'], 'error': result.get('error')}
@@ -273,7 +274,7 @@ def cluster_table(adapter, args, scratch, deadline):
                      'geometry': case['geometry'], 'depth': case['depth'],
                      'profile': case.get('profile'), 'parameters': params,
                      'input_sha256': data['input_sha256'],
-                     'oracle_status': oracle['status'], 'routes': routes,
+                     'oracle_status': {route:o['status'] for route,o in oracles.items()}, 'routes': routes,
                      'saved_routes': saved['result']['routes'] if 'result' in data else None})
     return rows
 

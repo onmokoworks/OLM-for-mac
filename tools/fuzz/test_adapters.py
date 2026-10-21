@@ -94,7 +94,7 @@ class CorpusBudget(unittest.TestCase):
 @unittest.skipUnless(os.environ.get('OLM_FUZZ_INTEGRATION')=='1','requires retained AEX worker and Mac compiler')
 class PublicAnchors(unittest.TestCase):
     def test_kirakira_retained_mode1_three_depths(self):
-        """All random inputs refused: prove this adapter reaches known owners."""
+        """Preserve the Mac/Smart anchor while checking original Classic separately."""
         retained = ROOT/'refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json'
         records = json.loads(retained.read_text())['rows']
         a = adapter('olmkirakira',256)
@@ -116,9 +116,12 @@ class PublicAnchors(unittest.TestCase):
                 case = dict(parameters=parameters,geometry=[5,3],depth=depth,pixels=pixels,input_padding=12,output_padding=12)
                 result = evaluate(a,case,directory,deadline)
                 expected = next(r['actual_exported_raw_sha256'] for r in records if r['depth']==f'PF{depth}')
-                self.assertEqual(result['oracle'].get('raw_sha256'),expected)
+                self.assertEqual(result['oracles']['smart'].get('raw_sha256'),expected)
+                self.assertEqual(result['routes']['smart']['status'],'exact')
                 for route in a.routes:
-                    self.assertEqual(result['routes'][route]['status'],'exact')
+                    self.assertEqual(result['routes'][route]['raw_sha256'],expected)
+                self.assertEqual(result['oracles']['classic'].get('raw_sha256'),sha(bytes(len(pixels))))
+                self.assertEqual(result['routes']['classic']['status'],'mismatch')
                 observations.append({'depth':depth,'result':result,'expected_sha256':expected})
             (SCRATCH/'kirakira-anchor.json').write_text(json.dumps({
                 'provenance':provenance,'retained_report_sha256':sha(retained.read_bytes()),'observations':observations},indent=2)+'\n')
