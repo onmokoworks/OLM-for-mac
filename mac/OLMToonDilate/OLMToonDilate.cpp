@@ -3,12 +3,39 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cerrno>
+#include <cstdlib>
+#include <fcntl.h>
+#include <unistd.h>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <limits>
 #include <new>
 #include <vector>
+
+// Optional refusal attribution; error codes and rendering are unchanged.
+// Preserve errno as well, including when the diagnostic file cannot be opened.
+static PF_Err ToonRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+    const int saved_errno = errno;
+    const char *path = std::getenv("OLM_REFUSAL_TRACE");
+    if (path && path[0]) {
+        const int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        if (fd >= 0) {
+            char entry[384];
+            const int n = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+            if (n > 0 && static_cast<size_t>(n) < sizeof(entry)) {
+                const ssize_t written = ::write(fd, entry, static_cast<size_t>(n));
+                (void)written;
+            }
+            ::close(fd);
+        }
+    }
+    errno = saved_errno;
+    return err;
+}
+#define OLM_TOON_ERROR(tag, err) ToonRefusal(__func__, tag, __LINE__, err)
 
 // The Windows AEX emits a zero curve tolerance for Search Radius. Adobe's
 // shared helper otherwise substitutes the audio-oriented 0.05 default.
@@ -266,7 +293,7 @@ static PF_Err ValidateToonPublicAdmission(
 {
 	if (!in_data || !input || !output || !family_out || !span_out ||
 		!input->data || !output->data || input->width <= 0 || input->height <= 0)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("public-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	const ToonPublicFamily family = ToonAdmittedFamily(in_data, input, info);
 	const A_long expected_rowbytes = input->width * static_cast<A_long>(sizeof(PixelT)) + 13;
 	if (family == ToonPublicFamily_None || output->width != input->width ||
@@ -280,11 +307,11 @@ static PF_Err ValidateToonPublicAdmission(
 		output->extent_hint.left != 301 || output->extent_hint.top != 401 ||
 		output->extent_hint.right != 301 + output->width ||
 		output->extent_hint.bottom != 401 + output->height)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("public-profile-layout", PF_Err_BAD_CALLBACK_PARAM);
 	const size_t span = static_cast<size_t>(expected_rowbytes) * static_cast<size_t>(input->height);
 	if (!ToonWorldRangesDoNotOverlap(input, output, span, span) ||
 		!ToonPublicSourceMatches<PixelT>(input, family))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("public-overlap-source", PF_Err_BAD_CALLBACK_PARAM);
 	*family_out = family;
 	*span_out = span;
 	return PF_Err_NONE;
@@ -309,13 +336,13 @@ static PF_Err ValidateToonBetaAdmission(
 		output->width <= 0 || output->height <= 0 ||
 		!std::isfinite(info.search_radius) || info.search_radius < 0.0 ||
 		info.search_radius > 100.0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("beta-inputs-radius", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	if (!((in_data->downsample_x.num == 0 && in_data->downsample_x.den == 0) ||
 		  (in_data->downsample_x.num > 0 && in_data->downsample_x.den > 0)) ||
 		!((in_data->downsample_y.num == 0 && in_data->downsample_y.den == 0) ||
 		  (in_data->downsample_y.num > 0 && in_data->downsample_y.den > 0))) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("beta-downsample", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const int64_t offset_x64 = (int64_t)output->origin_x - input->origin_x;
 	const int64_t offset_y64 = (int64_t)output->origin_y - input->origin_y;
@@ -324,7 +351,7 @@ static PF_Err ValidateToonBetaAdmission(
 		(tiled && (offset_x64 < 0 || offset_y64 < 0 || offset_x64 > input->width ||
 			offset_y64 > input->height || output->width > input->width - offset_x64 ||
 			output->height > input->height - offset_y64))) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("beta-tile-bounds", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const size_t input_width = static_cast<size_t>(input->width);
 	const size_t input_height = static_cast<size_t>(input->height);
@@ -332,27 +359,27 @@ static PF_Err ValidateToonBetaAdmission(
 	const size_t output_height = static_cast<size_t>(output->height);
 	if (input_width > std::numeric_limits<size_t>::max() / sizeof(PixelT) ||
 		output_width > std::numeric_limits<size_t>::max() / sizeof(PixelT))
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("beta-row-overflow", PF_Err_OUT_OF_MEMORY);
 	const size_t input_active_rowbytes = input_width * sizeof(PixelT);
 	const size_t output_active_rowbytes = output_width * sizeof(PixelT);
 	if (input->rowbytes <= 0 || output->rowbytes <= 0 ||
 		static_cast<size_t>(input->rowbytes) < input_active_rowbytes ||
 		static_cast<size_t>(output->rowbytes) < output_active_rowbytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("beta-rowbytes", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	if (input_height > std::numeric_limits<size_t>::max() /
 			static_cast<size_t>(input->rowbytes) ||
 		output_height > std::numeric_limits<size_t>::max() /
 			static_cast<size_t>(output->rowbytes)) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("beta-span-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 	const size_t input_span = input_height * static_cast<size_t>(input->rowbytes);
 	const size_t staged_span = output_height * static_cast<size_t>(output->rowbytes);
 	static constexpr size_t kMaxRenderWorkingSet = (size_t)3 * 1024 * 1024 * 1024;
 	if (input_span > kMaxRenderWorkingSet || staged_span > kMaxRenderWorkingSet - input_span)
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("beta-working-set", PF_Err_OUT_OF_MEMORY);
 	if (!ToonWorldRangesDoNotOverlap(input, output, input_span, staged_span))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("beta-overlap", PF_Err_BAD_CALLBACK_PARAM);
 	*output_span = staged_span;
 	return PF_Err_NONE;
 }
@@ -370,17 +397,17 @@ static PF_Err RenderTileTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		return RenderTyped<PixelT>(input, output, info);
 	}
 	if (input->width <= 0 || input->height <= 0 || output->width <= 0 || output->height <= 0)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("tile-dimensions", PF_Err_BAD_CALLBACK_PARAM);
 	const int64_t ox64 = (int64_t)output->origin_x - input->origin_x;
 	const int64_t oy64 = (int64_t)output->origin_y - input->origin_y;
 	if (ox64 < 0 || oy64 < 0 || ox64 > input->width || oy64 > input->height ||
 		output->width > input->width - ox64 || output->height > input->height - oy64)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("tile-bounds", PF_Err_BAD_CALLBACK_PARAM);
 	const A_long ox = (A_long)ox64;
 	const A_long oy = (A_long)oy64;
 	const size_t rowbytes = static_cast<size_t>(input->width) * sizeof(PixelT);
 	if (static_cast<size_t>(input->height) > std::numeric_limits<size_t>::max() / rowbytes)
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("tile-span-overflow", PF_Err_OUT_OF_MEMORY);
 	std::vector<uint8_t> rendered(rowbytes * static_cast<size_t>(input->height));
 	PF_EffectWorld halo_world = *input;
 	halo_world.data = reinterpret_cast<PF_PixelPtr>(rendered.data());
@@ -400,33 +427,33 @@ static PF_Err RenderTileTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 template <typename PixelT>
 static PF_Err ValidateWorlds(const PF_EffectWorld *input, const PF_EffectWorld *output, size_t *pixel_count)
 {
-	if (!input || !output || !pixel_count) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!input || !output || !pixel_count) return OLM_TOON_ERROR("world-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	if (output->width < 0 || output->height < 0 ||
 	    input->width < output->width || input->height < output->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("world-dimensions", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const size_t width = static_cast<size_t>(output->width);
 	const size_t height = static_cast<size_t>(output->height);
 	if (width != 0 && height > std::numeric_limits<size_t>::max() / width) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("world-pixel-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 	*pixel_count = width * height;
-	if (*pixel_count > std::vector<uint32_t>().max_size()) return PF_Err_OUT_OF_MEMORY;
+	if (*pixel_count > std::vector<uint32_t>().max_size()) return OLM_TOON_ERROR("world-vector-limit", PF_Err_OUT_OF_MEMORY);
 	if (*pixel_count == 0) return PF_Err_NONE;
 	if (!input->data || !output->data || input->rowbytes <= 0 || output->rowbytes <= 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("world-data-stride", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	if (width > std::numeric_limits<size_t>::max() / sizeof(PixelT)) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("world-row-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 	const size_t visible_rowbytes = width * sizeof(PixelT);
 	if (static_cast<size_t>(input->rowbytes) < visible_rowbytes ||
 	    static_cast<size_t>(output->rowbytes) < visible_rowbytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("world-rowbytes", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	if (height - 1 > std::numeric_limits<size_t>::max() / static_cast<size_t>(input->rowbytes) ||
 	    height - 1 > std::numeric_limits<size_t>::max() / static_cast<size_t>(output->rowbytes)) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_TOON_ERROR("world-span-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 	return PF_Err_NONE;
 }
@@ -434,7 +461,7 @@ static PF_Err ValidateWorlds(const PF_EffectWorld *input, const PF_EffectWorld *
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDilateInfo &info)
 {
-	if (!input || !output) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!input || !output) return OLM_TOON_ERROR("render-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	const A_long w = output->width;
 	const A_long h = output->height;
 	size_t pixel_count = 0;
@@ -456,7 +483,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		!std::isfinite(comp_width) || comp_width <= 0.0 ||
 		!std::isfinite(scaled_radius) || scaled_radius < 0.0 ||
 		scaled_radius > (PF_FpLong)kMaxEffectiveRadius) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("render-effective-radius", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const A_long r_eff = (A_long)std::ceil(scaled_radius);
 	if (r_eff <= 0) {
@@ -537,7 +564,7 @@ RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDilateIn
 	} else if (bitdepth == 32) {
 		return RenderTyped<PF_PixelFloat>(input, output, info);
 	}
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_TOON_ERROR("render-bitdepth", PF_Err_BAD_CALLBACK_PARAM);
 }
 
 static PF_Err
@@ -546,7 +573,7 @@ RenderTileWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDila
 	if (bitdepth == 8) return RenderTileTyped<PF_Pixel8>(input, output, info);
 	if (bitdepth == 16) return RenderTileTyped<PF_Pixel16>(input, output, info);
 	if (bitdepth == 32) return RenderTileTyped<PF_PixelFloat>(input, output, info);
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_TOON_ERROR("tile-bitdepth", PF_Err_BAD_CALLBACK_PARAM);
 }
 
 static PF_Err
@@ -617,7 +644,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 	    !extra->cb->checkout_layer) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("prerender-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
@@ -637,11 +664,11 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		PF_Err checkin_err = PF_CHECKIN_PARAM(in_data, &radius_param);
 		if (checkin_err) return checkin_err;
 		if (!std::isfinite(radius) || radius < 0.0 || radius > 100.0)
-			return PF_Err_BAD_CALLBACK_PARAM;
+			return OLM_TOON_ERROR("prerender-radius", PF_Err_BAD_CALLBACK_PARAM);
 		A_long halo = 0;
 		if (!ToonCheckedHalo(radius, in_data->downsample_x.num,
 			in_data->downsample_x.den, &halo))
-			return PF_Err_BAD_CALLBACK_PARAM;
+			return OLM_TOON_ERROR("prerender-halo", PF_Err_BAD_CALLBACK_PARAM);
 		auto subtract_clamped = [halo](A_long value) -> A_long {
 			return value <= halo ? 0 : value - halo;
 		};
@@ -692,7 +719,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!in_data || !out_data || !in_data->pica_basicP || !extra || !extra->input || !extra->cb ||
 	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 	    !in_data->inter.checkout_param || !in_data->inter.checkin_param) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("smart-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
@@ -704,7 +731,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!err) input_checked_out = true;
 	auto finish = [&](PF_Err primary) -> PF_Err {
 		if (requires_layer_checkin && input_checked_out) {
-			if (!extra->cb->checkin_layer_pixels) return primary ? primary : PF_Err_BAD_CALLBACK_PARAM;
+			if (!extra->cb->checkin_layer_pixels) return primary ? primary : OLM_TOON_ERROR("smart-missing-checkin", PF_Err_BAD_CALLBACK_PARAM);
 			PF_Err cleanup = extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMTOONDILATE_INPUT);
 			if (!primary) primary = cleanup;
 			input_checked_out = false;
@@ -714,7 +741,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (err) return err;
 	err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 	if (err) return finish(err);
-	if (!input_world || !output_world) return finish(PF_Err_BAD_CALLBACK_PARAM);
+	if (!input_world || !output_world) return finish(OLM_TOON_ERROR("smart-worlds", PF_Err_BAD_CALLBACK_PARAM));
 	requires_layer_checkin = requires_layer_checkin ||
 		input_world->width != output_world->width || input_world->height != output_world->height ||
 		input_world->origin_x != output_world->origin_x || input_world->origin_y != output_world->origin_y;
@@ -758,14 +785,14 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	}
 	if (err) return finish(err);
 	if (expected_format == PF_PixelFormat_INVALID || input_format != expected_format ||
-		output_format != expected_format) return finish(PF_Err_BAD_CALLBACK_PARAM);
+		output_format != expected_format) return finish(OLM_TOON_ERROR("smart-format", PF_Err_BAD_CALLBACK_PARAM));
 
 	size_t span = 0;
 	switch (extra->input->bitdepth) {
 	case 8: err = ValidateToonBetaAdmission<PF_Pixel8>(in_data, input_world, output_world, info, &span); break;
 	case 16: err = ValidateToonBetaAdmission<PF_Pixel16>(in_data, input_world, output_world, info, &span); break;
 	case 32: err = ValidateToonBetaAdmission<PF_PixelFloat>(in_data, input_world, output_world, info, &span); break;
-	default: err = PF_Err_BAD_CALLBACK_PARAM; break;
+	default: err = OLM_TOON_ERROR("smart-bitdepth", PF_Err_BAD_CALLBACK_PARAM); break;
 	}
 	if (err) return finish(err);
 
@@ -781,9 +808,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		err = finish(err);
 		if (!err) std::memcpy(output_world->data, staged_bytes.data(), span);
 	} catch (const std::bad_alloc &) {
-		err = finish(PF_Err_OUT_OF_MEMORY);
+		err = finish(OLM_TOON_ERROR("smart-allocation", PF_Err_OUT_OF_MEMORY));
 	} catch (...) {
-		err = finish(PF_Err_INTERNAL_STRUCT_DAMAGED);
+		err = finish(OLM_TOON_ERROR("smart-exception", PF_Err_INTERNAL_STRUCT_DAMAGED));
 	}
 
 	// Preserve the recorded no-checkin lifecycle for retained full-frame exact
@@ -802,7 +829,7 @@ GetToonPixelFormats(
 	if (!in_data || !input_world || !output_world || !input_format || !output_format ||
 	    !in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
 	    !in_data->pica_basicP->ReleaseSuite) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_TOON_ERROR("format-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const void *suite_ptr = NULL;
 	PF_Err err = PF_Err_NONE;
@@ -817,7 +844,7 @@ GetToonPixelFormats(
 			const PF_WorldSuite2 *world_suite =
 				reinterpret_cast<const PF_WorldSuite2 *>(suite_ptr);
 			if (!world_suite || !world_suite->PF_GetPixelFormat) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_TOON_ERROR("format-suite", PF_Err_BAD_CALLBACK_PARAM);
 			} else {
 				err = world_suite->PF_GetPixelFormat(input_world, input_format);
 				if (!err) err = world_suite->PF_GetPixelFormat(output_world, output_format);
@@ -826,9 +853,9 @@ GetToonPixelFormats(
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
 	} catch (const std::bad_alloc &) {
-		err = PF_Err_OUT_OF_MEMORY;
+		err = OLM_TOON_ERROR("format-allocation", PF_Err_OUT_OF_MEMORY);
 	} catch (...) {
-		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		err = OLM_TOON_ERROR("format-exception", PF_Err_INTERNAL_STRUCT_DAMAGED);
 	}
 	if (acquired) {
 		try {
@@ -838,9 +865,9 @@ GetToonPixelFormats(
 		} catch (PF_Err &cleanup_err) {
 			if (!err) err = cleanup_err;
 		} catch (const std::bad_alloc &) {
-			if (!err) err = PF_Err_OUT_OF_MEMORY;
+			if (!err) err = OLM_TOON_ERROR("release-allocation", PF_Err_OUT_OF_MEMORY);
 		} catch (...) {
-			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+			if (!err) err = OLM_TOON_ERROR("release-exception", PF_Err_INTERNAL_STRUCT_DAMAGED);
 		}
 	}
 	return err;
@@ -891,9 +918,9 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
 	} catch (const std::bad_alloc &) {
-		err = PF_Err_OUT_OF_MEMORY;
+		err = OLM_TOON_ERROR("entry-allocation", PF_Err_OUT_OF_MEMORY);
 	} catch (...) {
-		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		err = OLM_TOON_ERROR("entry-exception", PF_Err_INTERNAL_STRUCT_DAMAGED);
 	}
 	return err;
 }
