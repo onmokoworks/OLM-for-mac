@@ -16,3 +16,4 @@ F12-kira-admission-repromotion
 F06-dblur-pf8-feature-dispatch
 F15-olmblur-small-fixture-promotion
 F16-dblur-generated-noise-fallback
+F17-fuzz-per-route-oracle
