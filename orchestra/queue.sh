@@ -7,7 +7,7 @@ while true; do
   next=""
   while read -r t; do
     [[ -z $t || $t == \#* ]] && continue
-    grep -q '^exit' "$MAIN/orchestra/state/$t.meta" 2>/dev/null && continue
+    [[ -f "$MAIN/orchestra/state/$t.meta" ]] && continue  # started or done; delete meta to re-run
     next=$t; break
   done < "$q"
   [[ -z $next ]] && { sleep 120; continue; }
