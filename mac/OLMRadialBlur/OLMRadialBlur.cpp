@@ -13,12 +13,39 @@
 #include <cstdio>
 #include <cstring>
 #include <exception>
+#include <fcntl.h>
 #include <limits>
 #include <map>
 #include <memory>
 #include <thread>
 #include <type_traits>
+#include <unistd.h>
 #include <vector>
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag". The file is only
+// opened on a refusal, and the returned error code and all output bytes are
+// identical whether or not tracing is enabled.
+static PF_Err RadialRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = std::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (std::size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_RADIAL_REFUSAL(tag) RadialRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_RADIAL_ERROR(tag, code) RadialRefusal(__func__, tag, __LINE__, code)
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
@@ -2531,9 +2558,9 @@ static PF_Err RenderZoomTyped(
 	const bool source_components_1_4_9 = source_components_area_profile &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, true);
 	if (use_generic_baseline && info.size_variation != 0.0 && !source_general_topology) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("generic-size-variation-topology");
 	}
-	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
+	if (use_generic_size_noise && !source_general_topology) return OLM_RADIAL_REFUSAL("generic-size-noise-topology");
 	const PF_FpLong offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
@@ -2797,7 +2824,7 @@ static PF_Err RenderZoomTyped(
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("unadmitted-zoom-profile");
 	}
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
@@ -2965,7 +2992,7 @@ static PF_Err RenderZoomTyped(
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
 		// unsupported render indistinguishable from an exact identity result.
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("unadmitted-zoom-noise-inner-profile");
 	}
 
 	const A_long w = output->width;
@@ -3007,7 +3034,7 @@ static PF_Err RenderZoomTyped(
 	size_t polar_rgba_words = 0;
 	if (!CheckedCellProduct(radius_count, angular_count, 4, &polar_rgba_words) ||
 		polar_rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_RADIAL_ERROR("zoom-polar-size-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 
 	FloatImage polar;
@@ -3116,7 +3143,7 @@ static PF_Err RenderZoomTyped(
 			if (!olm::dblur::generate_radial_noise_plane(
 					w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
 					&noise_plane, &noise_width, &noise_height)) {
-				return PF_Err_OUT_OF_MEMORY;
+				return OLM_RADIAL_ERROR("zoom-noise-plane-failure", PF_Err_OUT_OF_MEMORY);
 			}
 			const olm::dblur::NoisePlaneView noise_view{
 				noise_plane.data(), noise_width, (float)info.thickness};
@@ -3514,9 +3541,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool source_components_1_4_9 = source_components_area_profile &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, false);
 	if (use_generic_baseline && info.size_variation != 0.0 && !source_general_topology) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("generic-size-variation-topology");
 	}
-	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
+	if (use_generic_size_noise && !source_general_topology) return OLM_RADIAL_REFUSAL("generic-size-noise-topology");
 	const bool use_aex_pf32_opaque_size_variation_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -4076,7 +4103,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_typed_rotation_size_noise_components_32x18 &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
 	     !use_aex_pf32_edge_fade_cross_small))) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("unadmitted-rotation-profile");
 	}
 
 	const A_long w = output->width;
@@ -4292,7 +4319,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
 	const bool use_generic_two_stage = use_generic_baseline || use_generic_size_noise;
-	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return OLM_RADIAL_REFUSAL("unadmitted-two-stage-profile");
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
@@ -4340,7 +4367,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	size_t polar_rgba_words = 0;
 	if (!CheckedCellProduct(radius_count, angular_count, 4, &polar_rgba_words) ||
 		polar_rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) {
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_RADIAL_ERROR("rotation-polar-size-overflow", PF_Err_OUT_OF_MEMORY);
 	}
 
 	FloatImage polar;
@@ -4389,7 +4416,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (!olm::dblur::generate_radial_noise_plane(
 				w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
 				&noise_plane, &noise_width, &noise_height)) {
-			return PF_Err_OUT_OF_MEMORY;
+			return OLM_RADIAL_ERROR("rotation-noise-plane-failure", PF_Err_OUT_OF_MEMORY);
 		}
 		const olm::dblur::NoisePlaneView noise_view{
 			noise_plane.data(), noise_width, (float)info.thickness};
@@ -5066,17 +5093,17 @@ static PF_Err ValidateNoiseLayerWorld(const PF_EffectWorld *noise_world, short b
 {
 	if (!noise_world || !noise_world->data || noise_world->width <= 0 ||
 		noise_world->height <= 0 || noise_world->rowbytes <= 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("noise-world-invalid");
 	}
 	A_long pixel_bytes = 0;
 	switch (bitdepth) {
 	case 8: pixel_bytes = (A_long)sizeof(PF_Pixel8); break;
 	case 16: pixel_bytes = (A_long)sizeof(PF_Pixel16); break;
 	case 32: pixel_bytes = (A_long)sizeof(PF_PixelFloat); break;
-	default: return PF_Err_BAD_CALLBACK_PARAM;
+	default: return OLM_RADIAL_REFUSAL("noise-bitdepth");
 	}
 	if (noise_world->rowbytes / pixel_bytes < noise_world->width) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("noise-rowbytes");
 	}
 	return PF_Err_NONE;
 }
@@ -5098,7 +5125,7 @@ static PF_Err ComposeType3LayerSpanAEX(
 		noise_world->width <= 0 || noise_world->height <= 0 ||
 		noise_world->rowbytes < noise_world->width * (A_long)sizeof(PixelT) ||
 		cell_count != (size_t)input_world->width * input_world->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("compose-span-invalid");
 	}
 
 	// FUN_18000b630 embeds these exact binary64 constants.  They are adjacent
@@ -5195,7 +5222,7 @@ static PF_Err RenderRadialNoOpCopy(PF_EffectWorld *input, PF_EffectWorld *output
 		input->rowbytes <= 0 || output->rowbytes <= 0 ||
 		active > static_cast<std::size_t>(input->rowbytes) ||
 		active > static_cast<std::size_t>(output->rowbytes) ||
-		!RadialPayloadsDisjoint(input, output)) return PF_Err_BAD_CALLBACK_PARAM;
+		!RadialPayloadsDisjoint(input, output)) return OLM_RADIAL_REFUSAL("noop-copy-layout");
 	// Copy bytes to preserve high-depth values, signed zero and NaN payloads.
 	// No polar planes, float arithmetic, alignment or Blur work budget is used.
 	for (A_long y = 0; y < input->height; ++y)
@@ -5211,20 +5238,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	if (info.noise_type == 3 && !RequiresNoiseLayer(info)) {
 		// A zero/negative Type-3 amount does not belong to the sole admitted
 		// NV25 layer tuple; do not let it fall through a generic neutral lane.
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("type3-zero-noise");
 	}
 	if (RequiresNoiseLayer(info)) {
 		PF_Err noise_err = ValidateNoiseLayerWorld(noise_world, bitdepth);
 		if (noise_err) return noise_err;
 		if (!RadialPayloadsDisjoint(input, noise_world) ||
-			!RadialPayloadsDisjoint(output, noise_world)) return PF_Err_BAD_CALLBACK_PARAM;
+			!RadialPayloadsDisjoint(output, noise_world)) return OLM_RADIAL_REFUSAL("noise-payload-overlap");
 		// Only the exact-source 9x7 Zoom/NV25 tuple is admitted below. Every
 		// other Type-3 layer state remains fail-closed in RenderZoomTyped.
-		if (info.blur_type != 1) return PF_Err_BAD_CALLBACK_PARAM;
+		if (info.blur_type != 1) return OLM_RADIAL_REFUSAL("type3-nonzoom");
 		if (bitdepth == 8) return RenderZoom8(input, output, info, noise_world);
 		if (bitdepth == 16) return RenderZoom16(input, output, info, noise_world);
 		if (bitdepth == 32) return RenderZoomFloat(input, output, info, noise_world);
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("type3-bitdepth");
 	}
 	// A request whose controls select the generic beta family must either pass
 	// that family's complete world/layout contract or stop here.  In
@@ -5241,8 +5268,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
-		else return PF_Err_BAD_CALLBACK_PARAM;
-		if (!admitted) return PF_Err_BAD_CALLBACK_PARAM;
+		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
+		if (!admitted) return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
 		// Original typed callers copy the world first and stop when all six
 		// Strength, Offset and Fade integers are zero, regardless of Gain/Noise.
 		if (info.outer_strength == 0 && info.inner_strength == 0 &&
@@ -5258,7 +5285,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			return PF_Err_NONE;
 		}
 		if (!CheckedRadialGenericBudget(input->width, input->height, bitdepth, info, false))
-			return PF_Err_OUT_OF_MEMORY;
+			return OLM_RADIAL_ERROR("generic-budget", PF_Err_OUT_OF_MEMORY);
 	}
 	if (bitdepth == 8) {
 		if (info.blur_type == 2) return RenderRotationTyped<PF_Pixel8>(input, output, info);
@@ -5272,7 +5299,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (info.blur_type == 2) return RenderRotationTyped<PF_PixelFloat>(input, output, info);
 		return RenderZoomFloat(input, output, info);
 	}
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_RADIAL_REFUSAL("render-bitdepth");
 }
 
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
@@ -5631,7 +5658,7 @@ GetRadialPixelFormats(
 	if (!in_data || !input_world || !output_world || !input_format || !output_format ||
 		(noise_world && !noise_format) || !in_data->pica_basicP ||
 		!in_data->pica_basicP->AcquireSuite || !in_data->pica_basicP->ReleaseSuite) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("pixel-format-inputs");
 	}
 	const void *suite_ptr = NULL;
 	PF_Err err = PF_Err_NONE;
@@ -5646,7 +5673,7 @@ GetRadialPixelFormats(
 			const PF_WorldSuite2 *world_suite =
 				reinterpret_cast<const PF_WorldSuite2 *>(suite_ptr);
 			if (!world_suite || !world_suite->PF_GetPixelFormat) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_RADIAL_REFUSAL("world-suite-missing-getpixelformat");
 			} else {
 				err = world_suite->PF_GetPixelFormat(input_world, input_format);
 				if (!err) err = world_suite->PF_GetPixelFormat(output_world, output_format);
@@ -5658,7 +5685,7 @@ GetRadialPixelFormats(
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
 	} catch (const std::bad_alloc &) {
-		err = PF_Err_OUT_OF_MEMORY;
+		err = OLM_RADIAL_ERROR("format-bad-alloc", PF_Err_OUT_OF_MEMORY);
 	} catch (...) {
 		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
@@ -5670,7 +5697,7 @@ GetRadialPixelFormats(
 		} catch (PF_Err &cleanup_err) {
 			if (!err) err = cleanup_err;
 		} catch (const std::bad_alloc &) {
-			if (!err) err = PF_Err_OUT_OF_MEMORY;
+			if (!err) err = OLM_RADIAL_ERROR("format-release-bad-alloc", PF_Err_OUT_OF_MEMORY);
 		} catch (...) {
 			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 		}
@@ -5682,9 +5709,9 @@ static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
 	if (!in_data || !out_data || !params || !output ||
-		!params[OLMRADIALBLUR_INPUT]) return PF_Err_BAD_CALLBACK_PARAM;
+		!params[OLMRADIALBLUR_INPUT]) return OLM_RADIAL_REFUSAL("render-params-null");
 	for (A_long index = 1; index < OLMRADIALBLUR_NUM_PARAMS; ++index) {
-		if (!params[index]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[index]) return OLM_RADIAL_REFUSAL("render-param-null");
 	}
 	OLMRadialBlurInfo info = InfoFromParams(params,
 		params[OLMRADIALBLUR_INPUT]->u.ld.width,
@@ -5695,14 +5722,14 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	PF_PixelFormat noise_format = PF_PixelFormat_INVALID;
 	PF_EffectWorld *noise_world = NULL;
 	if (RequiresNoiseLayer(info)) {
-		if (!params[OLMRADIALBLUR_NOISE_LAYER]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[OLMRADIALBLUR_NOISE_LAYER]) return OLM_RADIAL_REFUSAL("render-noise-param-null");
 		noise_world = &params[OLMRADIALBLUR_NOISE_LAYER]->u.ld;
 	}
 	PF_Err err = GetRadialPixelFormats(in_data, input, output, noise_world,
 		&format, &output_format, noise_world ? &noise_format : NULL);
 	if (err) return err;
 	if (output_format != format || (noise_world && noise_format != format)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("render-format-mismatch");
 	}
 
 	short bitdepth = 0;
@@ -5717,7 +5744,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		bitdepth = 32;
 		break;
 	default:
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("render-bitdepth-unknown");
 	}
 	return RenderWorld(input, output, noise_world, info, bitdepth);
 }
@@ -5878,12 +5905,12 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 		!extra->cb->checkout_layer || !in_data->inter.checkout_param ||
-		!in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+		!in_data->inter.checkin_param) return OLM_RADIAL_REFUSAL("prerender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_LRect full_frame_rect = {};
 	if (!NormalizeGlobalPolarRenderRequest(in_data, &req, &full_frame_rect))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_RADIAL_REFUSAL("prerender-request");
 	PF_CheckoutResult in_result = {};
 	PF_CheckoutResult noise_result = {};
 	PF_ParamDef noise_type;
@@ -5959,7 +5986,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 		!extra->cb->checkin_layer_pixels || !in_data->inter.checkout_param ||
-		!in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+		!in_data->inter.checkin_param) return OLM_RADIAL_REFUSAL("smartrender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
 	PF_EffectWorld *noise_world  = NULL;
@@ -5981,16 +6008,16 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		err = extra->cb->checkout_layer_pixels(
 			in_data->effect_ref, OLMRADIALBLUR_INPUT, &input_world);
 		input_checked_out = err == PF_Err_NONE;
-		if (!err && (!input_world || !input_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && (!input_world || !input_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-input-world");
 		if (!err && requires_noise_layer) {
 			err = extra->cb->checkout_layer_pixels(
 				in_data->effect_ref, OLMRADIALBLUR_NOISE_LAYER, &noise_world);
 			noise_checked_out = err == PF_Err_NONE;
-			if (!err && (!noise_world || !noise_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
+			if (!err && (!noise_world || !noise_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-noise-world");
 		}
 		if (!err) {
 			err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
-			if (!err && (!output_world || !output_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
+			if (!err && (!output_world || !output_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-output-world");
 		}
 		if (!err && (!pre ||
 			!IsGlobalPolarFullFrameWorld(input_world, pre->full_frame_rect) ||
@@ -5998,12 +6025,12 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			// A partial checkout cannot be evaluated independently by a global polar
 			// transform. PreRender requested/advertised the full-frame overscan; if AE
 			// does not honor it, fail closed instead of rendering a tile-local result.
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_RADIAL_REFUSAL("smartrender-partial-checkout");
 		}
 		if (!err && (!RadialPayloadsDisjoint(input_world, output_world) ||
 			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world) ||
 			                 !RadialPayloadsDisjoint(output_world, noise_world))))) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_RADIAL_REFUSAL("smartrender-payload-overlap");
 		}
 		for (int i = 1; !err && i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
 			AEFX_CLR_STRUCT(checked[i]);
@@ -6025,7 +6052,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		if (!err) {
 			OLMRadialBlurInfo info = InfoFromParams(param_ptrs, comp_w, comp_h);
 			if (RequiresNoiseLayer(info) != requires_noise_layer) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_RADIAL_REFUSAL("smartrender-noise-requirement");
 			}
 			if (!err) {
 				PF_PixelFormat input_format = PF_PixelFormat_INVALID;
@@ -6042,25 +6069,25 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				}
 				if (!err && (expected_format == PF_PixelFormat_INVALID ||
 					input_format != expected_format || output_format != expected_format ||
-					(noise_world && noise_format != expected_format))) err = PF_Err_BAD_CALLBACK_PARAM;
+					(noise_world && noise_format != expected_format))) err = OLM_RADIAL_REFUSAL("smartrender-format");
 			}
 			if (!err && !IsRadialNoOpControlProfile(info) && IsGenericRadialControlProfile(info) &&
 				!CheckedRadialGenericBudget(input_world->width, input_world->height,
 					extra->input->bitdepth, info, true)) {
-				err = PF_Err_OUT_OF_MEMORY;
+				err = OLM_RADIAL_ERROR("smartrender-generic-budget", PF_Err_OUT_OF_MEMORY);
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
 			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end) ||
 				!RadialActiveRowBytes(extra->input->bitdepth, output_world->width,
 				                          &active_row_bytes) ||
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes))) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_RADIAL_REFUSAL("smartrender-output-span");
 			}
 			if (!err) {
 				const std::size_t height = static_cast<std::size_t>(output_world->height);
 				if (height == 0 || active_row_bytes >
 					std::numeric_limits<std::size_t>::max() / height) {
-					err = PF_Err_BAD_CALLBACK_PARAM;
+					err = OLM_RADIAL_REFUSAL("smartrender-stage-overflow");
 				} else {
 					staged_output.assign(active_row_bytes * height, 0);
 				}
@@ -6185,7 +6212,7 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
 	} catch (const std::bad_alloc &) {
-		err = PF_Err_OUT_OF_MEMORY;
+		err = OLM_RADIAL_ERROR("effectmain-bad-alloc", PF_Err_OUT_OF_MEMORY);
 	} catch (...) {
 		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}

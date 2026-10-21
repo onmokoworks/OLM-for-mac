@@ -257,21 +257,35 @@ class Adapter:
     def candidate(self, case, directory, route, deadline):
         config = directory/'parameters.txt'
         config.write_text(public.initial.config_text(case))
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
         status, raw, err = command([self.binary,*case['geometry'],case['depth'],route,config,
                                    case['input_padding'],case['output_padding']],
-                                  data=case['pixels'], timeout=self.timeout, deadline=deadline, env=self.env)
+                                  data=case['pixels'], timeout=self.timeout, deadline=deadline, env=env)
+        # Optional attribution: the candidate binary appends "function:tag" to the
+        # trace only when an admission guard refuses. With tracing unavailable the
+        # list stays empty and every status/byte below is unchanged.
+        guards = []
+        try:
+            if trace.is_file():
+                guards = [line.strip() for line in trace.read_text().splitlines() if line.strip()]
+        except OSError:
+            guards = []
+        finally:
+            trace.unlink(missing_ok=True)
         if status['status'] != 'ok':
-            return dict(status, diagnostic=err.decode(errors='replace')[-1600:]), b''
+            return dict(status, diagnostic=err.decode(errors='replace')[-1600:]), b'', guards
         try:
             metadata = dict(line.split(' ',1) for line in err.decode().splitlines())
             error = int(metadata['ERROR'])
             if error:
-                return {'status':'refusal', 'error':error, 'metadata':metadata}, b''
+                return {'status':'refusal', 'error':error, 'metadata':metadata}, b'', guards
             if len(raw) != len(case['pixels']):
-                return {'status':'harness_error','diagnostic':'output length'}, b''
-            return {'status':'ok','error':0,'metadata':metadata}, raw
+                return {'status':'harness_error','diagnostic':'output length'}, b'', guards
+            return {'status':'ok','error':0,'metadata':metadata}, raw, guards
         except (ValueError,KeyError) as exc:
-            return {'status':'harness_error','diagnostic':repr(exc)}, b''
+            return {'status':'harness_error','diagnostic':repr(exc)}, b'', guards
 
     def first_stage(self, case, directory, results, deadline):
         return None

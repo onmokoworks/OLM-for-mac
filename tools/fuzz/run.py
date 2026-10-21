@@ -85,9 +85,12 @@ def run_one(adapter, seed, index, scratch, deadline, args, provenance):
     case = adapter.generate(seed, index)
     with tempfile.TemporaryDirectory(prefix=f'case_{index}_', dir=scratch) as name:
         directory = Path(name)
-        original = evaluate(adapter, case, directory, deadline)
+        attribution = {}
+        original = evaluate(adapter, case, directory, deadline, attribution)
         row = {k:v for k,v in case.items() if k != 'pixels'}
         row.update(input_sha256=sha(case['pixels']), result=original)
+        if attribution:
+            row['refusal_guards'] = attribution
         if mismatch_routes(original):
             reduced, observed, reduction = shrink(adapter, case, original, directory,
                 min(deadline, time.monotonic()+args.shrink_seconds), args.shrink_attempts)

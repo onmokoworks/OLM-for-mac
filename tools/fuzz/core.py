@@ -54,11 +54,14 @@ def raw_diff(expected, actual, depth):
             'actual_word_hex': actual[word*unit:(word+1)*unit].hex()}
 
 
-def evaluate(adapter, case, directory, deadline):
+def evaluate(adapter, case, directory, deadline, attribution=None):
     oracle, reference = adapter.oracle(case, directory, deadline)
     results = {}
     for route in adapter.routes:
-        result, raw = adapter.candidate(case, directory, route, deadline)
+        outcome = adapter.candidate(case, directory, route, deadline)
+        result, raw = outcome[0], outcome[1]
+        if attribution is not None and len(outcome) > 2 and outcome[2]:
+            attribution[route] = outcome[2]
         if result['status'] == 'ok':
             result['raw_sha256'] = sha(raw)
             if oracle['status'] == 'ok':
