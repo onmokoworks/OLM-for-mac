@@ -2837,13 +2837,16 @@ static void scan_cee0(int out[3], const GridDesc *g, const int in[2]) {
 	}
 	int y = y0;
 	if (y0 > 0) {
-		while (cp_b(g, x, y, 0) != 0) {                    // A@(x,y)!=0
-			if (cp_b(g, x, y, 1) != 0) break;               // R@(x,y)!=0
-			if (x > 0 && cp_b(g, x - 1, y, 1) != 0) break;  // R@(x-1,y)!=0
-			y--;
+		for (;;) {
+			// 0x18000cf84 branches to INC R10D only when this probe
+			// stops on A==0. Reaching row zero via DEC at 0x18000cf91
+			// exits directly; it must not probe row zero and backtrack.
+			if (cp_b(g, x, y, 0) == 0) { ++y; break; }
+			if (cp_b(g, x, y, 1) != 0) break;
+			if (x > 0 && cp_b(g, x - 1, y, 1) != 0) break;
+			--y;
 			if (y < 1) break;
 		}
-		if (cp_b(g, x, y, 0) == 0) y++;
 	}
 	bool p1 = (y > 0) && cp_b(g, x,     y - 1, 0) != 0;     // A@(x, y-1)
 	bool p2 = cp_b(g, x,     y, 1) != 0;                     // R@(x, y)

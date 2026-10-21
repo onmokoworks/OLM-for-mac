@@ -1,0 +1,684 @@
+{
+  "before": {
+    "cases": 1632,
+    "mismatches": 37,
+    "sanitizer_errors": 0,
+    "rows": [
+      {
+        "pattern": 0,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          0
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffff00ff00ffff0000ff000000ff00ffff00ff00ff00ff00ff00ff0000ffffffff00ffff00ff0000ffffff0000ffff00ff00ff00ffffffffffffffffffff"
+      },
+      {
+        "pattern": 0,
+        "input_xy": [
+          3,
+          2
+        ],
+        "aex": [
+          3,
+          0,
+          0
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffff00ff00ffff0000ff000000ff00ffff00ff00ff00ff00ff00ff0000ffffffff00ffff00ff0000ffffff0000ffff00ff00ff00ffffffffffffffffffff"
+      },
+      {
+        "pattern": 4,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          1
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffffffffff000000ffffff000000000000000000ffffff00ffff0000ff0000ff0000ffff000000ff0000ff00ff00ffff0000ff0000ffffffff0000000000"
+      },
+      {
+        "pattern": 11,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "00000000000000ffffffff000000ffffff0000ffff0000ffff0000ffff00ff00ffffffff000000ffffff00ff00ff00ff00ff00ffff000000ffff000000ff00ff"
+      },
+      {
+        "pattern": 11,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          1
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "00000000000000ffffffff000000ffffff0000ffff0000ffff0000ffff00ff00ffffffff000000ffffff00ff00ff00ff00ff00ffff000000ffff000000ff00ff"
+      },
+      {
+        "pattern": 12,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "000000000000ffffffff00ff00ff00ffff00ffffff00000000ff00ff0000000000ffffff00ff000000ffff0000ffff0000ff0000ffff00ff000000000000ffff"
+      },
+      {
+        "pattern": 16,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          1
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ffff00ff00000000ff00ffffffffffffff000000ff000000ffffff00ff000000ff00ff00ffffffffffff0000ff00ffffff0000ffff00ffff00ff00ff0000ffff"
+      },
+      {
+        "pattern": 22,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          5
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "00ffff0000ff00ff00ff000000ff0000ff0000ffff0000ff00000000000000000000ff000000ff00ff0000ff00ffffffff00ff00ff000000000000ff00ffff00"
+      },
+      {
+        "pattern": 23,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          0
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ff00ff0000000000ffffff0000ffff000000ff00ff00ff00ff00ffff00ffff0000ffffff000000ff00ff0000ff00ffffffff0000ff000000ffffffffffff"
+      },
+      {
+        "pattern": 29,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          5
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "ffff0000ffff00ff00ffff00ffff00ff000000ff00000000ff00ffff0000ff000000ffffffffff00ffffff0000ffff000000ffff0000ffffff0000ffffffff00"
+      },
+      {
+        "pattern": 36,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          5
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ff0000ffffffff00ffff00ff00ffffffff0000ff00ffffffff00ff00ff00ffffff00ffff00ff00000000ff00ffffff00ffff0000ff00ffff00ffffffffff0000"
+      },
+      {
+        "pattern": 37,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          5
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ffff000000ff0000ffffff0000ffffffff000000ffffffff00000000ff00ffff0000ff00ff0000000000ffff000000ffffffff000000ff00ffff00ffff000000"
+      },
+      {
+        "pattern": 39,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          0
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000ffffff000000000000ffffff00ff000000ff000000ff00ff00ff00ffffff0000ff0000ff0000000000ff00ffff000000ff000000ff000000ff00ff"
+      },
+      {
+        "pattern": 42,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          5
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffffffffffff00ffff000000ffffff00ff000000ffffff000000ffff00ffff0000000000ffffffffff00ff00ff0000ffffffff000000ff00ff00ff000000"
+      },
+      {
+        "pattern": 58,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          2
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ff000000000000000000000000ffff00000000ff00ff00ff0000ffffff00ffff0000ffffff000000ffff00000000ffff00000000ff00ffff0000ffff00000000"
+      },
+      {
+        "pattern": 62,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          1
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "00ff0000ff00ff0000ffffff00000000ff0000ff000000ff000000ffff0000ff0000ffffffffffff00ffffff00ff00000000ffffff00ffffffff0000ffff00ff"
+      },
+      {
+        "pattern": 65,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          1
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "00ff00ff0000ff00ff00ff00ff0000ff0000ffffff00ffff00ff00ffffffffffff0000000000ffffffff00ff0000000000ff00ff00ff00ffff00ff00ffff00ff"
+      },
+      {
+        "pattern": 70,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          2
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffff0000ff0000ffff0000000000ff0000ff000000ffff0000ff00ff0000ff00ff00ff000000ffff0000ffffffffffffff00ffff0000ff000000ffff0000"
+      },
+      {
+        "pattern": 75,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          1
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffffffff00ff00000000ff000000ffffffffff0000ffff00ffffffff00ffff00ffff000000ffff0000ffffff00000000ff00ffff00ff0000ff0000ffff00"
+      },
+      {
+        "pattern": 75,
+        "input_xy": [
+          2,
+          2
+        ],
+        "aex": [
+          2,
+          0,
+          1
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffffffff00ff00000000ff000000ffffffffff0000ffff00ffffffff00ffff00ffff000000ffff0000ffffff00000000ff00ffff00ff0000ff0000ffff00"
+      },
+      {
+        "pattern": 77,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          1
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ffff00000000ff00ffff0000ff00ffffff00ffffff000000ff0000ffffff00ffff00ff000000000000ffff0000000000ff0000ff00ffff00ffffff00ff00ff00"
+      },
+      {
+        "pattern": 78,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          5
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffffff000000ffffffff00ffff00ffff00ffffff00ffff0000ffff00ff000000ffffffff00000000ffff00ff0000ffffffff000000ffff00000000ffff00"
+      },
+      {
+        "pattern": 82,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          1
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ffffff00ffffff0000ffffffffffffff0000ff0000ffffff00ffff00ff00000000ff00ffffffffff00ff000000ff00ffff000000ff0000ffff000000ff00ff"
+      },
+      {
+        "pattern": 85,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          1
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ffff00000000ffffff0000ff00000000ff000000ff00000000ffffffff0000ffffff00ffff0000ffff000000ffffff000000ff0000ff000000ffffff00ff0000"
+      },
+      {
+        "pattern": 90,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffff000000000000ff000000ff00ff0000ffff0000ff0000ffffff0000ff00ff0000ffffff0000ffff00ffff00ff00000000ff0000ffff0000ffffffffff"
+      },
+      {
+        "pattern": 90,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          0
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffff000000000000ff000000ff00ff0000ffff0000ff0000ffffff0000ff00ff0000ffffff0000ffff00ffff00ff00000000ff0000ffff0000ffffffffff"
+      },
+      {
+        "pattern": 101,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffff00000000000000ffff00ff00ff00ffffff00000000ff0000ff00ffff0000ffffff0000ffffffff000000000000ff00ff00ffffffff00ff0000ff00ff"
+      },
+      {
+        "pattern": 101,
+        "input_xy": [
+          1,
+          2
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ffff00000000000000ffff00ff00ff00ffffff00000000ff0000ff00ffff0000ffffff0000ffffffff000000000000ff00ff00ffffffff00ff0000ff00ff"
+      },
+      {
+        "pattern": 103,
+        "input_xy": [
+          2,
+          1
+        ],
+        "aex": [
+          2,
+          0,
+          1
+        ],
+        "mac": [
+          2,
+          1,
+          0
+        ],
+        "classes_hex": "00ff0000ffffffff0000ff0000000000ffffff000000ffffff00ffffffffffffff000000ffff00000000ff00ff00ff0000ff00ffffff0000ffff0000000000ff"
+      },
+      {
+        "pattern": 113,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          1
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "ffff00ff0000ff00ffff000000ffffffff000000ff00ffff00ff0000ffffff00ff0000ffffff00ffff00ffff0000ffffffffff00ff000000ff00ffff00ffffff"
+      },
+      {
+        "pattern": 122,
+        "input_xy": [
+          3,
+          1
+        ],
+        "aex": [
+          3,
+          0,
+          1
+        ],
+        "mac": [
+          3,
+          1,
+          0
+        ],
+        "classes_hex": "ff00ff0000ffffffffff0000000000ffff000000ffff00ffff00ffffff0000ff0000ff00ff0000ffffffffff00ffffff00ffffffffffffff00ff0000ffffffff"
+      },
+      {
+        "pattern": 128,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff00000000000000000000000000000000000000000000000000000000000000ff0000000000000000000000"
+      },
+      {
+        "pattern": 130,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff000000000000000000000000000000ffff0000000000000000000000000000ff0000000000000000000000"
+      },
+      {
+        "pattern": 132,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff000000000000000000000000ff0000ff000000000000000000000000000000ff0000000000000000000000"
+      },
+      {
+        "pattern": 134,
+        "input_xy": [
+          1,
+          1
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff000000000000000000000000000000ff000000000000000000000000000000ff0000000000000000000000"
+      },
+      {
+        "pattern": 134,
+        "input_xy": [
+          1,
+          2
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff000000000000000000000000000000ff000000000000000000000000000000ff0000000000000000000000"
+      },
+      {
+        "pattern": 134,
+        "input_xy": [
+          1,
+          3
+        ],
+        "aex": [
+          1,
+          0,
+          0
+        ],
+        "mac": [
+          1,
+          1,
+          0
+        ],
+        "classes_hex": "0000000000000000000000000000000000000000ff000000000000000000000000000000ff000000000000000000000000000000ff0000000000000000000000"
+      }
+    ]
+  },
+  "after": {
+    "cases": 1632,
+    "mismatches": 0,
+    "sanitizer_errors": 0,
+    "rows": []
+  },
+  "base": "65834249",
+  "source_sha256": "e5ab723f375bd919297cfffa382e242dba0c35d268ff3444de69fa47a9c19a64",
+  "pattern_seed": 1901
+}

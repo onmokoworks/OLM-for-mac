@@ -1,0 +1,278 @@
+{
+  "source_sha256": "89b841cbfe251207a49b31ca102c3534b181a69106a68abba27389c2f6a357e9",
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "cases": [
+    {
+      "index": 67,
+      "geometry": [
+        11,
+        8
+      ],
+      "xy": [
+        6,
+        1
+      ],
+      "input_sha256": "13d314ed74f8b839d301afc265b5005cb78a415bde3ab805613bf1e26634396e",
+      "core_public_aex_join": true,
+      "public_exact": false,
+      "public_aex_sha256": "47794b301c518d0c409b12fbe9909cf5b298a23a2893b35504d207b536106247",
+      "public_mac_sha256": "f5c83234b1be90a23dd396a75f179e67c7df8eaf1d80cd67f65e8c1fe837a426",
+      "source_plane_sha256": "910783ff639b2ccae1c6fa7aad77461bb70dfba14422ef346996866956198678",
+      "aex_events": [
+        {
+          "pc": "0x18000e290",
+          "caller": "0x18000fb23",
+          "descriptor": [
+            6,
+            0,
+            0,
+            6,
+            1,
+            9
+          ],
+          "scale_m": "0x3e800000",
+          "scale_h": "0x3f000000"
+        },
+        {
+          "pc": "0x180013630",
+          "caller": "0x18000e2cd",
+          "width": "0x3f000000",
+          "position": 0,
+          "edge": "0x3e800000"
+        },
+        {
+          "pc": "0x1800104d0",
+          "caller": "0x18000e304",
+          "xy": [
+            6,
+            2
+          ],
+          "weight": "0x3d800000"
+        },
+        {
+          "pc": "0x18000e7c0",
+          "caller": "0x180010112",
+          "descriptor": [
+            6,
+            1,
+            3,
+            6,
+            1,
+            9
+          ],
+          "scale_m": "0x3d800000",
+          "scale_h": "0x0"
+        },
+        {
+          "pc": "0x18000e290",
+          "caller": "0x180010112",
+          "descriptor": [
+            6,
+            1,
+            3,
+            6,
+            1,
+            9
+          ],
+          "scale_m": "0x3f800000",
+          "scale_h": "0x3f000000"
+        },
+        {
+          "pc": "0x180013630",
+          "caller": "0x18000e2cd",
+          "width": "0x3f800000",
+          "position": 0,
+          "edge": "0x3e800000"
+        },
+        {
+          "pc": "0x1800104d0",
+          "caller": "0x18000e304",
+          "xy": [
+            6,
+            2
+          ],
+          "weight": "0x3e000000"
+        }
+      ],
+      "stages": {
+        "class_plane": {
+          "equal": true,
+          "aex_bytes": 352,
+          "mac_bytes": 352,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": null,
+          "mac_hex": null
+        },
+        "polygon": {
+          "equal": false,
+          "aex_bytes": 40,
+          "mac_bytes": 40,
+          "different_bytes": 2,
+          "first_byte": 38,
+          "aex_hex": "660b813dd4562a3f5c95ec3eaaa9293f0000803d660b813dd4562a3f5c95ec3eaaa9293f0000003e",
+          "mac_hex": "660b813dd4562a3f5c95ec3eaaa9293f0000803d660b813dd4562a3f5c95ec3eaaa9293f0000803d"
+        },
+        "center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "61eb463b5e3e0b3be6233f3d00000000",
+          "mac_hex": "61eb463b5e3e0b3be6233f3d00000000"
+        },
+        "c0d0_center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "00000000000000000000000000000000",
+          "mac_hex": "00000000000000000000000000000000"
+        },
+        "c0d0_polygon": {
+          "equal": false,
+          "aex_bytes": 40,
+          "mac_bytes": 40,
+          "different_bytes": 2,
+          "first_byte": 38,
+          "aex_hex": "190c2b3d6dc8e13e65cb9c3eaaa9293f0000803d190c2b3d6dc8e13e65cb9c3eaaa9293f0000003e",
+          "mac_hex": "190c2b3d6dc8e13e65cb9c3eaaa9293f0000803d190c2b3d6dc8e13e65cb9c3eaaa9293f0000803d"
+        },
+        "ab00": {
+          "equal": false,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 13,
+          "first_byte": 0,
+          "aex_hex": "1349003c5256a93d18316b3d7f7efe3d",
+          "mac_hex": "190cab3b6dc8613d65cb1c3daaa9a93d"
+        },
+        "b120": {
+          "equal": false,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 4,
+          "first_byte": 8,
+          "aex_hex": "660b813dd4562a3f5c95ec3e7f7efe3d",
+          "mac_hex": "660b813dd4562a3f5b95ec3eaaa9a93d"
+        }
+      }
+    },
+    {
+      "index": 134,
+      "geometry": [
+        48,
+        18
+      ],
+      "xy": [
+        25,
+        1
+      ],
+      "input_sha256": "2563ee101aa0a745c1ad0934950ebee1fd8177c418cdc25fcb76c49b381c0a28",
+      "core_public_aex_join": true,
+      "public_exact": false,
+      "public_aex_sha256": "3c756113d68dfeaf1eabe221b7c1527ddf058b6cc101c3bc78a16583f558e1d8",
+      "public_mac_sha256": "b5e3180d290b3a5a84e852795a540ffddb3103d0c418b9c6b9782e5afad5e85f",
+      "source_plane_sha256": "09e079807e68ae39934e58d6e6f6993be6e80c4b6527e59139583ad557a46233",
+      "aex_events": [
+        {
+          "pc": "0x18000e290",
+          "caller": "0x18001074e",
+          "descriptor": [
+            25,
+            0,
+            0,
+            25,
+            1,
+            1
+          ],
+          "scale_m": "0x3f000000",
+          "scale_h": "0x3f800000"
+        },
+        {
+          "pc": "0x180013630",
+          "caller": "0x18000e2cd",
+          "width": "0x3f800000",
+          "position": 0,
+          "edge": "0x3f000000"
+        },
+        {
+          "pc": "0x1800104d0",
+          "caller": "0x18000e304",
+          "xy": [
+            25,
+            2
+          ],
+          "weight": "0x3e800000"
+        }
+      ],
+      "stages": {
+        "class_plane": {
+          "equal": true,
+          "aex_bytes": 3456,
+          "mac_bytes": 3456,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": null,
+          "mac_hex": null
+        },
+        "polygon": {
+          "equal": false,
+          "aex_bytes": 20,
+          "mac_bytes": 20,
+          "different_bytes": 1,
+          "first_byte": 18,
+          "aex_hex": "03624d3e6a01803ec88f613c0000803f0000803e",
+          "mac_hex": "03624d3e6a01803ec88f613c0000803f0000003e"
+        },
+        "center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "cf8a353ec9bc723d8e25203c0080533e",
+          "mac_hex": "cf8a353ec9bc723d8e25203c0080533e"
+        },
+        "c0d0_center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "2efc153df88a483c074f043b0080533e",
+          "mac_hex": "2efc153df88a483c074f043b0080533e"
+        },
+        "c0d0_polygon": {
+          "equal": false,
+          "aex_bytes": 20,
+          "mac_bytes": 20,
+          "different_bytes": 1,
+          "first_byte": 18,
+          "aex_hex": "03624d3e6a01803ec88f613c0000803f0000803e",
+          "mac_hex": "03624d3e6a01803ec88f613c0000803f0000003e"
+        },
+        "ab00": {
+          "equal": false,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 11,
+          "first_byte": 0,
+          "aex_hex": "93ef9e3d71ce923d8665a23b0050cf3e",
+          "mac_hex": "aaed693dd0df2b3d0a8d643b00889c3e"
+        },
+        "b120": {
+          "equal": false,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 11,
+          "first_byte": 0,
+          "aex_hex": "1543443eb548353e1989483c0050cf3e",
+          "mac_hex": "314a3f3ee28b0c3e7ce43a3c00889c3e"
+        }
+      }
+    }
+  ]
+}
