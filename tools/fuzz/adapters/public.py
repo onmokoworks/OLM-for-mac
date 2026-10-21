@@ -40,6 +40,8 @@ class PublicAdapter:
     generator_version = 1
     routes = ('classic', 'smart')
     aex_name = None
+    oracle_route = 'smart'
+    oracle_path = 'smartfx'
     # Override only sampling weights/subsets, never the builder's legal bounds.
     small_controls = ()
 
@@ -153,7 +155,8 @@ class PublicAdapter:
                 'out_of_range_builder_defaults':[{'slot':d['slot'],'builder_default':d['default_value'],
                     'sampled_default':p['value']} for d,p in zip(self.controls,self.defaults(1,1))
                     if p['kind'] not in ('a','p','c') and p['value']!=d['default_value']],
-                'host':'Original AEX Unicorn CPU Smart; production Mac EffectMain Classic + Smart fake host',
+                'host':f'Original AEX Unicorn CPU {self.oracle_path}; production Mac EffectMain Classic + Smart fake host',
+                'oracle_render_path':self.oracle_path,
                 'time':{'value':0,'scale':24,'step':1,'total':1},
                 'world':'full frame, origin 0, downsample 1:1, raw ARGB, no conversion',
                 'layer':'None; independent layer worlds outside this adapter',
@@ -201,7 +204,7 @@ class PublicAdapter:
             'current_time':{'value':0,'scale':24,'step':1,'total':1},'parameters':'v4|'+';'.join(encoded)}).encode()
         status,out,err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
             '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
-            '--fixture-render-path','smart'],data=struct.pack('<I',len(request))+request,
+            *(['--fixture-render-path',self.oracle_route] if self.oracle_route else [])],data=struct.pack('<I',len(request))+request,
             timeout=self.timeout,deadline=deadline,env=self.env)
         if status['status']!='ok':
             reason = err.decode(errors='replace')
@@ -222,7 +225,7 @@ class PublicAdapter:
                 return {'status':'reject','diagnostic':json.dumps(frame)[-1600:]},b''
             raw = op.read_bytes()
             if not (frame['output']['guards_intact'] and frame['output']['checksum']==sha(raw)
-                    and len(raw)==len(case['pixels']) and frame['output']['render_path']=='smartfx'
+                    and len(raw)==len(case['pixels']) and frame['output']['render_path']==self.oracle_path
                     and close['session_clean'] and not close['unsupported_suite_calls']
                     and not close['dropped_unsupported_suite_calls']):
                 return {'status':'harness_error','diagnostic':'guard/checksum/size/route/session invariant'},b''
