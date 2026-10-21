@@ -47,6 +47,29 @@ static PF_Err RadialRefusal(const char *function, const char *tag, int line, PF_
 #define OLM_RADIAL_REFUSAL(tag) RadialRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
 #define OLM_RADIAL_ERROR(tag, code) RadialRefusal(__func__, tag, __LINE__, code)
 
+// EXPERIMENT ONLY: a scratch build may name admission-guard tags in
+// OLM_RADIAL_EXPERIMENT_BYPASS to fall through those guards. Empty by default,
+// so shipped behavior and output bytes are unchanged (verified by corpus replay).
+#ifndef OLM_RADIAL_EXPERIMENT_BYPASS
+#define OLM_RADIAL_EXPERIMENT_BYPASS ""
+#endif
+
+static bool RadialExperimentBypass(const char *tag)
+{
+	static constexpr const char *bypass = OLM_RADIAL_EXPERIMENT_BYPASS;
+	if (bypass[0] == '\0') return false;
+	const std::size_t tag_length = std::strlen(tag);
+	for (const char *item = bypass; *item;) {
+		const char *separator = std::strchr(item, ',');
+		const std::size_t item_length = separator
+			? static_cast<std::size_t>(separator - item) : std::strlen(item);
+		if (item_length == tag_length && std::strncmp(item, tag, tag_length) == 0) return true;
+		if (!separator) break;
+		item = separator + 1;
+	}
+	return false;
+}
+
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
 static float RadialNoiseOffsetRadians(PF_Fixed raw_angle)
@@ -2823,7 +2846,8 @@ static PF_Err RenderZoomTyped(
 		!use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
-		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
+		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
+		!RadialExperimentBypass("unadmitted-zoom-profile")) {
 		return OLM_RADIAL_REFUSAL("unadmitted-zoom-profile");
 	}
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
@@ -2988,7 +3012,8 @@ static PF_Err RenderZoomTyped(
 	    !use_aex_typed_zoom_type3_layer_span_small &&
 	    !use_aex_typed_zoom_transform_worker_32x18 &&
 	    !use_aex_typed_zoom_any_size_edge_noise_components_32x18 &&
-	    !use_aex_typed_zoom_size_noise_components_32x18))) {
+	    !use_aex_typed_zoom_size_noise_components_32x18)) &&
+		!RadialExperimentBypass("unadmitted-zoom-noise-inner-profile")) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
 		// unsupported render indistinguishable from an exact identity result.
@@ -4102,7 +4127,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_typed_rotation_any_size_edge_noise_components_32x18 &&
 	     !use_aex_typed_rotation_size_noise_components_32x18 &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
-	     !use_aex_pf32_edge_fade_cross_small))) {
+	     !use_aex_pf32_edge_fade_cross_small)) &&
+		!RadialExperimentBypass("unadmitted-rotation-profile")) {
 		return OLM_RADIAL_REFUSAL("unadmitted-rotation-profile");
 	}
 
@@ -4319,7 +4345,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
 	const bool use_generic_two_stage = use_generic_baseline || use_generic_size_noise;
-	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return OLM_RADIAL_REFUSAL("unadmitted-two-stage-profile");
+	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact &&
+		!RadialExperimentBypass("unadmitted-two-stage-profile")) return OLM_RADIAL_REFUSAL("unadmitted-two-stage-profile");
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
@@ -5235,7 +5262,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
 {
 	if (IsRadialNoOpControlProfile(info)) return RenderRadialNoOpCopy(input, output, info, bitdepth);
-	if (info.noise_type == 3 && !RequiresNoiseLayer(info)) {
+	if (info.noise_type == 3 && !RequiresNoiseLayer(info) &&
+		!RadialExperimentBypass("type3-zero-noise")) {
 		// A zero/negative Type-3 amount does not belong to the sole admitted
 		// NV25 layer tuple; do not let it fall through a generic neutral lane.
 		return OLM_RADIAL_REFUSAL("type3-zero-noise");
@@ -5269,7 +5297,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
-		if (!admitted) return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
+		if (!admitted && !RadialExperimentBypass("generic-world-not-admitted"))
+			return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
 		// Original typed callers copy the world first and stop when all six
 		// Strength, Offset and Fade integers are zero, regardless of Gain/Noise.
 		if (info.outer_strength == 0 && info.inner_strength == 0 &&
