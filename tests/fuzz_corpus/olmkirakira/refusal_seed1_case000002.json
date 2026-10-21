@@ -163,6 +163,38 @@
     "profile": "sdr",
     "seed": 1
   },
+  "expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "report": "orchestra/reports/F12-kira-admission-repromotion.md",
+    "ticket": "F12-kira-admission-repromotion"
+  },
   "generator_version": 1,
   "index": 2,
   "input_sha256": "e1555855b414b299e3598fe9bce776291bd9842184b93b599cbd98c7fcacb2f4",
@@ -222,20 +254,22 @@
     },
     "routes": {
       "classic": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "0 0 0 0 0",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+        "status": "exact"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
-          "COUNTS": "1 1 1 0 0",
-          "ERROR": "516"
+          "COUNTS": "1 1 1 25 25",
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
