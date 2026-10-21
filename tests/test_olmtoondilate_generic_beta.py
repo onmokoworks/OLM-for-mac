@@ -156,6 +156,33 @@ def test_production_worker_generic_lane_is_asan_ubsan_clean():
     _compile_and_run(["-fsanitize=address,undefined", "-fno-omit-frame-pointer"])
 
 
+def test_pf32_seed_boundaries_match_original_aex_raw_witnesses():
+    report = json.loads((ROOT / "reports/fuzz/olmtoondilate_F21_verification.json").read_text())
+    assert report["status"] == "PASS"
+    assert report["builds"]["after"]["aex_sha256"] == (
+        "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    )
+    rows = report["witnesses"]
+    assert len(rows) == 64
+    blocks = []
+    for row in rows:
+        width, height = row["geometry"]
+        data = ",".join(str(b) for b in bytes.fromhex(row["input_hex"]))
+        blocks.append(f'''{{
+ uint8_t input[] = {{{data}}}, output[32]{{}};
+ PF_EffectWorld in{{input,{width}*16,{width},{height}}};
+ PF_EffectWorld out{{output,{width}*16,{width},{height}}};
+ OLMToonDilateInfo info{{2.0,{width}.0}};
+ if(RenderWorld(&in,&out,info,32))return 1;
+ if(std::fwrite(output,1,32,stdout)!=32)return 2;
+}}''')
+    probe = STUB.split("int main(){", 1)[0] + "int main(){" + "\n".join(blocks) + "return 0;}"
+    output = _compile_and_run([], probe).stdout
+    assert len(output) == len(rows) * 32
+    for i, row in enumerate(rows):
+        assert hashlib.sha256(output[i*32:(i+1)*32]).hexdigest() == row["oracle_sha256"], row["name"]
+
+
 def test_smart_adapter_requests_halo_and_uses_coordinate_aware_tile_worker():
     source = SOURCE.read_text(encoding="utf-8")
     assert "req.rect.left = subtract_clamped(req.rect.left);" in source

@@ -1,5 +1,6 @@
 import unittest
 import random
+import math
 from pathlib import Path
 
 
@@ -13,7 +14,7 @@ def render_typed(source, depth, search_radius=1.0, comp_width=None):
     width = len(source[0])
     output = [[pixel for pixel in row] for row in source]
     maximum = {8: 255, 16: 32768, 32: 1.0}[depth]
-    opaque = lambda pixel: pixel[3] == maximum if depth in (8, 16) else pixel[3] >= 1.0
+    opaque = lambda pixel: pixel[3] == maximum or (depth == 32 and math.isnan(pixel[3]))
     radius = int(__import__("math").ceil(search_radius * width / (comp_width or width)))
     distances = [[2**32 - 1] * width for _ in range(height)]
 
@@ -57,13 +58,13 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         self.assertIn("PF_OutFlag2_FLOAT_COLOR_AWARE", source)
         self.assertIn("RenderTyped<PF_Pixel16>", source)
         self.assertIn("RenderTyped<PF_PixelFloat>", source)
-        self.assertIn("RenderWorld(input_world, &staged_world, info, extra->input->bitdepth)", source)
+        self.assertIn("RenderTileWorld(input_world, &staged_world, info, extra->input->bitdepth)", source)
         self.assertIn("ValidateToonBetaAdmission<PF_Pixel8>", source)
         self.assertIn("ValidateToonBetaAdmission<PF_Pixel16>", source)
         self.assertIn("ValidateToonBetaAdmission<PF_PixelFloat>", source)
         self.assertIn("input->width != output->width", source)
-        self.assertIn("static_cast<size_t>(input->rowbytes) < active_rowbytes", source)
-        self.assertIn("height * static_cast<size_t>(output->rowbytes)", source)
+        self.assertIn("static_cast<size_t>(input->rowbytes) < input_active_rowbytes", source)
+        self.assertIn("output_height * static_cast<size_t>(output->rowbytes)", source)
         smart = source[source.index("static PF_Err\nSmartRender"):source.index(
             "static PF_Err\nGetToonPixelFormats", source.index("static PF_Err\nSmartRender")
         )]
@@ -139,7 +140,7 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
     def test_public_beta_admission_is_source_and_geometry_independent(self):
         source = SOURCE.read_text(encoding="utf-8")
         start = source.index("static PF_Err ValidateToonBetaAdmission")
-        end = source.index("template <typename PixelT>\nstatic PF_Err ValidateWorlds", start)
+        end = source.index("template <typename PixelT>\nstatic PF_Err RenderTyped", start)
         admission = source[start:end]
         self.assertNotIn("ToonPublicSourceMatches", admission)
         self.assertNotIn("input->width ==", admission)
