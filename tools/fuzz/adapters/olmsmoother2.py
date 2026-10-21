@@ -1,4 +1,6 @@
 """Smoother2: extend the retained public key/gamma replay host to Classic."""
+import copy
+
 from .public import PublicAdapter, ROOT, replace_once
 
 SOURCE = ROOT/'mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp'
@@ -47,3 +49,18 @@ class Adapter(PublicAdapter):
         config.write_text(''.join(f"{p['slot']} c "+' '.join(map(str,p['value']))+'\n' if p['kind']=='c'
                                   else f"{p['slot']} s {p['value']}\n" for p in case['parameters']))
         return [self.binary,*case['geometry'],f"PF{case['depth']}",config,route,case['input_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        # Keep attribution outside the compared result, as in RadialBlur.
+        # The trace only exists when the candidate appends a named guard; the
+        # returned status and bytes are identical with or without tracing.
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        local = copy.copy(self)
+        local.env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        try:
+            result, raw = PublicAdapter.candidate(local, case, directory, route, deadline)
+            guards = [line.strip() for line in trace.read_text().splitlines() if line.strip()] if trace.is_file() else []
+            return result, raw, guards
+        finally:
+            trace.unlink(missing_ok=True)
