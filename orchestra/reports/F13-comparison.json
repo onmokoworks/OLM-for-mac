@@ -1,0 +1,690 @@
+{
+  "after_source_sha256": "347c9fd41c3ca6fcc9146efd5b60b5985e86c0c34b31d0309ef488847f01e2db",
+  "before_source_sha256": "bbe3731138805156ed487136e70dad5c39731fc560a284956b9f47e44d0297d8",
+  "corpus_measured_transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 23,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 11,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 35,
+      "route": "smart"
+    }
+  ],
+  "corpus_rows": [
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000006_253d4390d90b.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000029_b099428e963b.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000034_f67ec58a433d.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000041_42e5f8af427d.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000043_5a4c69b38522.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000044_d1d38fe702c9.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000050_aa6536a877df.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000081_9774c69c219e.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000091_0f4b356bb556.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000152_0f4b356bb556.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000153_f8d4024784b4.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000180_f67ec58a433d.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000203_f8d4024784b4.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000221_dc2eff5fb2aa.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000230_f8d4024784b4.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000253_0f4b356bb556.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000268_c68d152bb97c.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000269_d7848a7c740d.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000271_9a5b282a1ffa.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000303_5a4c69b38522.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000305_93a01b17e479.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000328_93a01b17e479.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000347_d1d38fe702c9.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000369_90303525f87f.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000379_dc2eff5fb2aa.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000384_d1d38fe702c9.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000390_f8d4024784b4.json",
+      "routes": {
+        "classic": {
+          "after": "refusal",
+          "before": "refusal",
+          "saved": "refusal"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000421_71f8c982c45b.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json",
+      "routes": {
+        "classic": {
+          "after": "mismatch",
+          "before": "mismatch",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000440_e04d91d93cb4.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000444_253d4390d90b.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000448_d1d38fe702c9.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000458_e04d91d93cb4.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000486_0f4b356bb556.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    },
+    {
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000487_5a4c69b38522.json",
+      "routes": {
+        "classic": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        },
+        "smart": {
+          "after": "exact",
+          "before": "exact",
+          "saved": "mismatch"
+        }
+      }
+    }
+  ],
+  "corpus_saved_transitions": [
+    {
+      "after": "exact",
+      "before": "mismatch",
+      "count": 23,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 11,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "mismatch",
+      "count": 35,
+      "route": "smart"
+    }
+  ],
+  "fuzz_changes": [
+    {
+      "after": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "516",
+          "INFO": "0 23 0 0"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": {
+          "actual_bytes": 5712,
+          "actual_word_hex": "4623c1ff",
+          "different_bytes": 827,
+          "different_words": 328,
+          "expected_bytes": 5712,
+          "expected_word_hex": "00000000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "0",
+          "INFO": "0 23 0 0"
+        },
+        "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+        "status": "mismatch"
+      },
+      "index": 89,
+      "route": "classic"
+    },
+    {
+      "after": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "516",
+          "INFO": "0 23 0 0"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": {
+          "actual_bytes": 5712,
+          "actual_word_hex": "4623c1ff",
+          "different_bytes": 827,
+          "different_words": 328,
+          "expected_bytes": 5712,
+          "expected_word_hex": "00000000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "INFO": "0 23 0 0"
+        },
+        "raw_sha256": "1b3f15cd7c85c74a5e2cf37ebbbd1183d61b9bfdbc44e3462fd5991c5a70c6fa",
+        "status": "mismatch"
+      },
+      "index": 89,
+      "route": "smart"
+    }
+  ],
+  "fuzz_transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 79,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 220,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 108,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "mismatch",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 191,
+      "route": "smart"
+    }
+  ],
+  "preserved_exact_hashes": 187
+}

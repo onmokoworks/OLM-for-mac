@@ -208,11 +208,11 @@
         }
       },
       {
-        "actual_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
         "depth": 32,
         "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
         "family": 1,
-        "matches_retained": true,
+        "matches_retained": false,
         "oracle": {
           "guards_intact": true,
           "session_clean": true,
@@ -244,11 +244,11 @@
         }
       },
       {
-        "actual_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
         "depth": 32,
         "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
         "family": 2,
-        "matches_retained": true,
+        "matches_retained": false,
         "oracle": {
           "guards_intact": true,
           "session_clean": true,
@@ -256,7 +256,10 @@
         }
       }
     ],
-    "candidate_sha256": "0676dde9ac0d4f61af5ff78e4a4ddb50ed44bc16190b58e66dd6b56d457fdc8a",
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "d0cfb37eec389a268f4bd92b82baebc1d9ad9b1bf8d55a688014fd7ffcf419e4",
+    "candidate_source_sha256": "347c9fd41c3ca6fcc9146efd5b60b5985e86c0c34b31d0309ef488847f01e2db",
     "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
     "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
     "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
@@ -266,7 +269,7 @@
     "host": "AEXCompat Unicorn CPU Smart; SDK fake Mac Classic/Smart EffectMain",
     "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
     "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
-    "source_sha256": "344f79b0e1064839d26ad5df341aa664ae513e05a9934b5c06405b6b8eb89cc0",
+    "source_sha256": "347c9fd41c3ca6fcc9146efd5b60b5985e86c0c34b31d0309ef488847f01e2db",
     "stage_support": "session protocol + public EffectMain harness expose final raw only",
     "time": {
       "scale": 24,
@@ -274,8 +277,8 @@
       "total": 1,
       "value": 0
     },
-    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
-    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker",
+    "worker_sha256": "93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
   },
   "reduction": {
@@ -342,22 +345,12 @@
     "first_mismatching_stage": null,
     "oracle": {
       "guards_intact": true,
-      "raw_sha256": "15e736d2958005fb2ed6d257323fdb02793b2c1e2045cb6d085318cd4a67b1a7",
+      "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
       "session_clean": true,
       "status": "ok"
     },
     "routes": {
       "classic": {
-        "diff": {
-          "actual_bytes": 32,
-          "actual_word_hex": "fdff7f3f",
-          "different_bytes": 7,
-          "different_words": 2,
-          "expected_bytes": 32,
-          "expected_word_hex": "0000803f",
-          "first_byte": 20,
-          "first_word": 5
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "0 0 0 0 0 1 1",
@@ -365,19 +358,9 @@
           "INFO": "0 0 0 0"
         },
         "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
-        "status": "mismatch"
+        "status": "exact"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 32,
-          "actual_word_hex": "fdff7f3f",
-          "different_bytes": 7,
-          "different_words": 2,
-          "expected_bytes": 32,
-          "expected_word_hex": "0000803f",
-          "first_byte": 20,
-          "first_word": 5
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 32 32 1 1 1 1",
@@ -385,7 +368,7 @@
           "INFO": "0 0 0 0"
         },
         "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
-        "status": "mismatch"
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
