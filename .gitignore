@@ -93,3 +93,4 @@ Resources
 /orchestra/state/
 /worktrees/
 .opencode/
+/.cache/
