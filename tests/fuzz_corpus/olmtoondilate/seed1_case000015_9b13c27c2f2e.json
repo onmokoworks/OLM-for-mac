@@ -1,0 +1,162 @@
+{
+  "case": {
+    "depth": 32,
+    "geometry": [
+      1,
+      9
+    ],
+    "index": 15,
+    "input_padding": 7,
+    "output_padding": 5,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 2.0
+      }
+    ],
+    "profile": "signed",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 15,
+  "input_sha256": "93f1f34eb3fc171db81ec58df1f8bdd3ffe8fc4117ff3e5d61da6212c2437c39",
+  "max_size": 256,
+  "operations": [
+    {
+      "geometry": [
+        4,
+        9
+      ],
+      "kind": "crop"
+    },
+    {
+      "geometry": [
+        1,
+        9
+      ],
+      "kind": "crop"
+    },
+    {
+      "kind": "params",
+      "values": {
+        "1": 2.0
+      }
+    }
+  ],
+  "pixels_zlib_base64": "eNpjYGCw/7sw3CF9QsCBjf/tHRiA/GdV9vvP3GA9YGebAOQ32HNZFTvEelcduHrimD1I/sTvoAPv5JfY/1grd8DWbL+9TKq4w9mDAQ6Kf+QcrJ5YH1BO5XXQe6bo8Odt8z6Q+q2HPOyjz/zc33g64wCIv9eww/7ohEb7GZODD4DMN2fXdXjPq3Tgd+pzewCRITuh",
+  "plugin": "olmtoondilate",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "candidate_sha256": "d3d48f6dd12b903550aeeadbf7541a29f93a34915f917b222d9290d497e36408",
+    "classic_owner": "Production PF_Cmd_RENDER is an intentional successful no-op. Its untouched destination differs from the AEX Smart reference; these are cross-route differences, not kernel residuals.",
+    "classic_owner_evidence": "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub",
+    "declarations_sha256": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc",
+    "dependencies_sha256": {
+      "mac/OLMToonDilate/OLMToonDilate.cpp": "c49f86774d395f1bbb838f723b0fa830f819b291112fdaa14063d007081724e4",
+      "mac/OLMToonDilate/OLMToonDilate.h": "40eef7a6c652dbd3ef77bc3a5a0eddcc3cf59796599ab53f2c245f8c6770ff70",
+      "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp": "17fcace86b9d5c95fe6d4d136a5df04f7659f60d39ac45296e8ecf335df10f00",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "tools/fuzz/harnesses/toondilate_main.cpp": "0d0704935eb0aa31d4d6e8dcc70a633648ebe79479ddb3c463d017577bacad51"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "geometry": [
+          4,
+          9
+        ],
+        "kind": "crop"
+      },
+      {
+        "geometry": [
+          1,
+          9
+        ],
+        "kind": "crop"
+      },
+      {
+        "kind": "params",
+        "values": {
+          "1": 2.0
+        }
+      }
+    ],
+    "attempts": 13,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "ok/mismatch,exact": 10,
+      "ok/mismatch,mismatch": 3
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "501461adefd891bfd5e245ed582c61337157338b79217b077d5ffb647023f3c4",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 144,
+          "actual_word_hex": "eeeeeeee",
+          "different_bytes": 144,
+          "different_words": 36,
+          "expected_bytes": 144,
+          "expected_word_hex": "0000803f",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "9fa0311d72ce07220aea97bb4f5c011fb001e441c74459aba12155601c7d6c45",
+        "status": "mismatch"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 144,
+          "actual_word_hex": "3d36bf3f",
+          "different_bytes": 41,
+          "different_words": 12,
+          "expected_bytes": 144,
+          "expected_word_hex": "0000803f",
+          "first_byte": 64,
+          "first_word": 16
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 2 2",
+          "ERROR": "0"
+        },
+        "raw_sha256": "827c2540f8ee6d3cfd1b7ce67db6b6c4fab2513621f872b564d73ca294e4b0fc",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
