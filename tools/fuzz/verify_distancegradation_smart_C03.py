@@ -48,10 +48,35 @@ def matrix(a):
            yield f'{depth}/{geometry}/low{low}/inout{inout}/invert{invert}/interp{interp}',c
 
 
+
+def cutoff_matrix(a):
+    """Independent ownership cutoff neighbors, colors, owners and backgrounds."""
+    below=struct.unpack('<f',struct.pack('<I',0x38d1b716))[0]
+    at=struct.unpack('<f',struct.pack('<I',0x38d1b717))[0]
+    above=struct.unpack('<f',struct.pack('<I',0x38d1b718))[0]
+    for depth in (8,16,32):
+      top={8:255,16:32768,32:1.0}[depth]
+      fmt={8:'<4B',16:'<4H',32:'<4f'}[depth]
+      alphas={8:[0,1,2,128,255],16:[0,1,3,4,32768],32:[0.,below,at,above,1.]}[depth]
+      colors=(.25,.5,.75) if depth==32 else (top//4,top//2,top*3//4)
+      pixels=b''.join(struct.pack(fmt,alpha,*colors) for alpha in alphas)
+      for geometry in ([5,1],[1,5]):
+       for inout in (1,2,3):
+        for invert in (0,1):
+         for interp in (1,2,3):
+          for mode in (1,2):
+           for bg in (0,1):
+            c=dict(geometry=geometry,depth=depth,profile='sdr',parameters=a.defaults(*geometry),pixels=pixels,input_padding=3,output_padding=5)
+            values={1:invert,2:inout,3:4,4:3,5:mode,6:bg,7:[255,28,53,238],8:[255,16,160,48],9:interp}
+            for q in c['parameters']:
+             if q['slot'] in values:q['value']=values[q['slot']]
+            yield f'{depth}/{geometry}/inout{inout}/invert{invert}/interp{interp}/mode{mode}/bg{bg}',c
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--before-ref',default='1b656d418ba44543da2225097108796f0937d9cc');p.add_argument('--campaign',type=Path,action='append',default=[])
-    p.add_argument('--matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
+    p.add_argument('--matrix',action='store_true');p.add_argument('--cutoff-matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
     args=p.parse_args();args.scratch=args.scratch.resolve();assert args.scratch.is_relative_to(ROOT/'orchestra/state/C03-dg-smart')
     args.scratch.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch));tempfile.tempdir=str(args.scratch)
     before_source=subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
@@ -81,8 +106,8 @@ def main():
           rows.append(result)
         counts=dict(Counter(f"{r['before_exact']}->{r['after_exact']}" for r in rows))
         report['campaigns'].append(dict(seed=data['seed'],campaign_sha256=sha(campaign.read_bytes()),counts=counts,rows=rows));print('CAMPAIGN',data['seed'],counts,flush=True)
-      if args.matrix:
-        for label,c in matrix(a):
+      if args.matrix or args.cutoff_matrix:
+        for label,c in (cutoff_matrix(a) if args.cutoff_matrix else matrix(a)):
           oracle,reference=a.oracle(c,wd,deadline,'smart');assert oracle['status']=='ok',(label,oracle)
           result,_,raw=compare(c,sha(reference));result.update(label=label,input_sha256=sha(c['pixels']),oracle_sha256=sha(reference))
           if not result['after_exact']:result['diff']=raw_diff(reference,raw,c['depth'])

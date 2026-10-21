@@ -1,13 +1,15 @@
 status: partial
 
 summary:
-- Closed the unblurred Smart Layer/no-background source-color operation: raw source RGB, original ownership cutoff, and normal alpha interpolation.
-- Seed 1 Smart: 177/65/51/7 -> 199/43/51/7 (exact/mismatch/refusal/uncompared); all 177 base-exact outputs unchanged.
-- Fresh seed 2: 168 -> 191 exact; all base-exact outputs unchanged. Sanitized replays agree byte-for-byte.
-- Independent typed Layer matrix: 300/324 exact; the 24 remaining PF8 cases first diverge at the source mask, now captured for the next cluster.
-- One retained corpus case improves to exact; 144 retain their output/status. Refusal guards remain unchanged.
+- Closed Smart unblurred Layer source composition and the Smart source-mask quantization boundary in separate commits.
+- Seed 1 Smart: 177/65/51/7 -> 199/43/51/7 -> 216/26/51/7 (E/M/R/U); every prior exact output preserved.
+- Fresh seed 2: 168 -> 191 -> 208 exact; sanitized replays agree with ordinary output.
+- Independent Layer matrix now 324/324 exact across three depths; all 24 prior mask residuals are resolved.
+- Three retained corpus cases have improved to exact across the two fixes. Refusal guards remain unchanged.
 
 facts:
+
+Cluster 1 (commit `9b7401f9`, Layer source composition):
 - Starting HEAD: `1b656d418ba44543da2225097108796f0937d9cc`, branch `orch/C03-dg-smart`.
 - Read AGENT_GUIDE, GOTCHAS, the DG forbidden-action row, compatibility plan, T07, F01/F02 and F10/F12 methods. MAIN and emulator sources are read-only. Worker INDEX was inspected; the existing retained public worker remains `/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker`, SHA-256 `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261`. No rebuild.
 - Original AEX SHA-256: `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`. All comparisons use original AEX Smart against production Mac public Smart, with typed raw bytes. Native AE/UCRT equivalence is not claimed.
@@ -26,9 +28,22 @@ Corpus rebaseline (fresh base/current Smart, Classic unchanged):
 | `seed1_case000135_12bacfc8ca6e.json` | mismatch, `c47adf5274bdeb9dbbe73e1e406537f8ca25384e46fb2e96aaefedd2118b396d` | exact, `692f214afe1bf717b00d342c0d6753912543c7e717b2f11ac0714ea88799ded5` | result/provenance refreshed |
 | Other 144 | 139 exact / 5 mismatch | unchanged | none |
 
+Cluster 2 (Smart source-mask quantization; base `9b7401f9`):
+- `source_mask_owns_alpha` now accepts the owner. Smart uses FLOAT32 `alpha*255 >= 1.5`, matching nearest-even 8-bit conversion followed by threshold strictly above 1; Classic retains the original depth-dependent rule. The actual mask builder and logging use the same owner selection. No EDT/normalization/blur/writer operation changes.
+- Natural Smart source bytes `[0,1,255]` produce original mask `00 00 ff` (plus one padding byte); before Mac mask is `00 01 01`, after `00 00 01`. First differing mask sample is x=1, before field generation. Six original public/callback hashes remain bound; after the fix all six source, staged-field and final-output pairs agree. For Inside RGB the pre-fix first output difference is alpha at x=1, AEX `01`, Mac `00`.
+- Full seed-1 census exits 0, 300 complete: Smart 216 exact / 26 mismatch / 51 refusal / 7 uncompared, AEX 290 success / 8 reject / 2 budget, Classic unchanged at 10/290. `verify_distancegradation_smart_C03.py --before-ref 9b7401f9` verifies 199->216 exact on seed 1 and 191->208 on fresh seed 2, no exact changes; seed 2 final E/M/R/U is 208/22/62/8.
+- Sanitized and ordinary current runs agree for all 600 campaign inputs, 324 independent matrix inputs and 145 corpus inputs; no sanitizer diagnostics. Matrix: 300 prior exact unchanged, 24 mismatch->exact. Existing beta tests: 9 pass. Build outputs are automatically removed.
+- Public production corpus replay after each of clusters 1 and 2 exits 0, 145 completed and all 145 `matches_saved` (report aggregate is boolean true).
+- Corpus comparison to `9b7401f9`: 140 exact unchanged, 2 mismatch->exact, 3 mismatch unchanged. Only result/provenance are rebaselined for the two improvements below. Inputs, controls, reduction history and oracle hashes are preserved. Full hashes and transition data are in `reports/fuzz/olmdistancegradation_C03_mask.json`.
+
+| Corpus case (Smart only) | Before | After |
+| --- | --- | --- |
+| `seed1_case000091_92552f06afe6.json` | mismatch; `4de36cd696c423238792fc42f583878a3cf38bacda2fa2da6f1550811f8e3e3a` | exact; `b0570697ecf859f4e0f3768f0c7edb0fdc7e668cfd89be3f2a65d7afef5fa8ed` |
+| `seed1_case000139_92552f06afe6.json` | mismatch; `f6fc2d44ee3319c47476a7918d2e0d35cba8e801bebc910296dd4a6cfbb11a9f` | exact; `8007046ac31b84e8d5b2ecf91b30307308d01a0064779a9faf9ce3f109eea89a` |
+
 inference:
 - The Layer residual is caused by applying legacy Classic source-color heuristics to the Smart callback. The restored operation is limited to unblurred Layer/no-background, preserving Classic and blurred contracts.
-- The remaining matrix differences are upstream mask ownership. They require a separate Smart mask fix; they do not justify retuning EDT, final-byte rounding, or accepting tolerance.
+- The 24 first-commit matrix differences were caused by Smart inheriting the Classic PF8 inclusive mask. The second commit restores the public Smart owner boundary; it does not retune EDT or final-byte rounding.
 - Broad PF32 gate removal is unsafe on the measured inputs. Inactive Blur Modes 2–4 at size zero are a promising separate rule (7 exact gate-off cases on each seed), but no admission is claimed here.
 
 changed_files:
@@ -36,8 +51,8 @@ changed_files:
 - `tools/emulation/trace_distancegradation_smart_C03.py`
 - `tools/fuzz/probe_distancegradation_smart_C03.py`
 - `tools/fuzz/verify_distancegradation_smart_C03.py`
-- `reports/fuzz/olmdistancegradation_C03_{layer,stages,gates}.json`
-- `tests/fuzz_corpus/olmdistancegradation/seed1_case000135_12bacfc8ca6e.json`
+- `reports/fuzz/olmdistancegradation_C03_{layer,mask,stages,gates}.json`
+- `tests/fuzz_corpus/olmdistancegradation/seed1_case000135_12bacfc8ca6e.json` and the two mask cases listed above
 - `orchestra/reports/C03-dg-smart.md`
 
 verify:
@@ -51,8 +66,8 @@ python3 tools/fuzz/verify_distancegradation_smart_C03.py --scratch "$s/verify-la
 '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C03.py --scratch "$s/trace" --report "$s/verify-trace.json" > "$s/verify-trace.log" 2>&1
 python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 2 --scratch "$s" --report "$s/replay.json" > "$s/replay.log" 2>&1
 ```
-Expected at this cluster commit: seed 1 199/43/51/7; verifier base-exact preserved, 324 matrix rows with 300 exact and 24 explicitly retained mask residuals, sanitizer equality for all rows, one corpus improvement versus starting source; six public/callback/paired traces; replay 145/145 matches_saved. Timeouts may vary under shared-machine load; compare explicit oracle statuses. Reproduce the gate-off experiment with `probe_distancegradation_smart_C03.py --experiment all --sanitized --smart-only` plus the same campaign arguments (diagnostic only).
+Expected after cluster 2: seed 1 216/26/51/7; verifier base-exact preserved, 324/324 matrix rows exact, sanitizer equality for all rows, three corpus improvements versus starting source; six public/callback/paired traces; replay 145/145 matches_saved. Timeouts may vary under shared-machine load; compare explicit oracle statuses. Reproduce the gate-off experiment with `probe_distancegradation_smart_C03.py --experiment all --sanitized --smart-only` plus the same campaign arguments (diagnostic only).
 
 next:
-- Continue with the captured Smart source-mask boundary; then re-rank the residuals and investigate the next cluster.
+- Continue with the captured Smart early ownership exit: Outside/background at full source alpha currently writes foreground RGB after AEX has already exited. The six background-control captures are retained in the stages artifact.
 - Keep HDR/signed/nonfinite, Power, effective blur and native dependency/host boundaries explicit. No release gate, ledger, MAIN, external worker, installed bundle or other plugin changed; no push or history rewrite.

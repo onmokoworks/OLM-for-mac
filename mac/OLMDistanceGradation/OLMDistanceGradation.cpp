@@ -678,8 +678,13 @@ static void dt_to_normalized(
 //    of the source mask, matching the Windows 8U-convert +
 //    cvThreshold(thresh=1.0) field staging; this closes case_0023
 //    (Both + Outside Threshold=0) bg_on/bg_off to nonzero_px=0.
-static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size)
+static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size, bool smart_owner)
 {
+	// Public Smart owners call FUN_1811749a0 for every depth: convert alpha
+	// to an 8-bit plane (nearest-even), then threshold strictly above 1.
+	// The FLOAT32 product at the 1.5 tie rounds to 2. Classic retains its
+	// separately witnessed depth-dependent source mask.
+	if (smart_owner) return alpha * 255.0f >= 1.5f;
 	if (pixel_size == sizeof(PF_Pixel8)) return alpha > 0.0f;
 	return alpha > (1.5f / 255.0f);
 }
@@ -709,7 +714,7 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 		std::vector<float> inside_norm((size_t)w * h, 0.0f);
 		std::vector<float> outside_norm((size_t)w * h, 0.0f);
 		for (long i = 0; i < w * h; ++i) {
-			inside_mask[i] = source_mask_owns_alpha(alpha[i], pixel_size) ? 1 : 0;
+			inside_mask[i] = source_mask_owns_alpha(alpha[i], pixel_size, p.smart_owner) ? 1 : 0;
 			outside_mask[i] = inside_mask[i] ? 0 : 1;
 		}
 		bool constant_interp = (p.interp_mode == INTERP_CONSTANT);
@@ -752,9 +757,9 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 	fclose(f);
 }
 
-static void build_mask_from_alpha(const float *alpha, u_char *mask, long w, long h, size_t pixel_size)
+static void build_mask_from_alpha(const float *alpha, u_char *mask, long w, long h, size_t pixel_size, bool smart_owner)
 {
-	for (long i = 0; i < w * h; ++i) mask[i] = source_mask_owns_alpha(alpha[i], pixel_size) ? 1 : 0;
+	for (long i = 0; i < w * h; ++i) mask[i] = source_mask_owns_alpha(alpha[i], pixel_size, smart_owner) ? 1 : 0;
 }
 static void invert_mask(u_char *mask, long w, long h)
 {
@@ -796,7 +801,7 @@ static void build_distance_field(
 	df.d_alpha.assign((size_t)w * h, 0.0f);
 
 	std::vector<u_char> mask((size_t)w * h);
-	build_mask_from_alpha(alpha, mask.data(), w, h, p.pixel_size);
+	build_mask_from_alpha(alpha, mask.data(), w, h, p.pixel_size, p.smart_owner);
 
 	// d_alpha: source ownership follows the same depth-dependent mask rule
 	for (long i = 0; i < w * h; ++i) df.d_alpha[i] = mask[i] ? 1.0f : 0.0f;

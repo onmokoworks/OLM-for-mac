@@ -33,6 +33,7 @@ def reg(ld,r):return ld.uc.reg_read(r).to_bytes(16,'little')[:4].hex()
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--family',choices=['layer','mask'],default='layer')
+    p.add_argument('--background',type=int,choices=[0,1],default=0)
     args=p.parse_args();args.scratch=args.scratch.resolve();args.scratch.mkdir(parents=True,exist_ok=True)
     assert args.scratch.is_relative_to(ROOT/'orchestra/state/C03-dg-smart')
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch));tempfile.tempdir=str(args.scratch)
@@ -51,6 +52,8 @@ def main():
             for q in case['parameters']:
                 if q['slot']==5:q['value']=mode
                 if q['slot']==2:q['value']=inout
+                if q['slot']==6:q['value']=args.background
+                if q['slot']==8:q['value']=[255,16,160,48]
             params=[]
             for q in case['parameters']:
                 name=next(d['name'] for d in a.binding['parameters'] if d['slot']==q['slot'])
@@ -98,7 +101,7 @@ def main():
                 stages[x]['aex_field_bits']=bits(field[x*4+1]/255)
                 assert stages[x]['source_argb_bits']==stages[x]['mac_source_argb_bits']
                 if args.family=='layer':assert stages[x]['mac_field_bits']==stages[x]['aex_field_bits']
-            report['rows'].append(dict(mode=mode,inout=inout,source_hex=source.hex(),field_hex=field.hex(),
+            report['rows'].append(dict(mode=mode,inout=inout,background=args.background,source_hex=source.hex(),field_hex=field.hex(),
                 refcon_numerical_hex=state[0x90:].hex(),aex_hex=raw.hex(),mac_hex=mac.hex(),diff=raw_diff(raw,mac,8),
                 public_callback_sha256=sha(raw),source_and_field_equal=all(v['mac_field_bits']==v['aex_field_bits'] for v in stages),mac_mask_hex=mask_path.read_bytes().hex(),aex_mask_hex=ws['watch-4']['after']['hex'],stages=stages,watches=watches))
     args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
