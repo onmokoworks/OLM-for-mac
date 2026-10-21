@@ -10,12 +10,17 @@ def compare(before, after, key):
     assert before.keys() == after.keys()
     rows = []
     transitions = Counter()
+    refusal_error_changes = []
     for identity, left in before.items():
         right = after[identity]
         a, b = left['result']['routes']['smart'], right['result']['routes']['smart']
         # A changed rendered result must become exact. Refusal diagnostics can
         # move when source lines change; numerical status/hash/error cannot.
         same = all(a.get(k) == b.get(k) for k in ('status', 'raw_sha256', 'error'))
+        if key == 'cases' and a['status'] == b['status'] == 'refusal':
+            if a.get('error') != b.get('error'):
+                refusal_error_changes.append(dict(identity=identity, before=a.get('error'), after=b.get('error')))
+            same = True
         assert same or b['status'] == 'exact', (identity, a, b)
         if a['status'] == 'exact':
             assert b['status'] == 'exact' and a['raw_sha256'] == b['raw_sha256'], identity
@@ -26,7 +31,7 @@ def compare(before, after, key):
         rows.append(dict(identity=identity, input_sha256=left.get('input_sha256'),
                          before=a, after=b, oracle=right['result']['oracles']['smart'],
                          before_guards=left.get('refusal_guards', {}).get('smart', [])))
-    return dict(kind=key, transitions=dict(transitions), rows=rows)
+    return dict(kind=key, transitions=dict(transitions), refusal_error_changes=refusal_error_changes, rows=rows)
 
 
 def main():

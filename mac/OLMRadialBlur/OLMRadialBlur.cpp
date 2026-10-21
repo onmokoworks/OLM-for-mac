@@ -942,7 +942,9 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.inner_edge_fade >= 0 && info.inner_edge_fade <= 100 && inner_offset_supported &&
 		info.repeat_border != FALSE && std::isfinite(info.ratio) &&
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
-		info.angle_deg >= -360.0 && info.angle_deg <= 360.0 &&
+		// The public AD getter supplies signed 16.16 degrees, not a one-turn
+		// slider. The existing fixed-radian transform handles that full domain.
+		info.angle_deg >= -32768.0 && info.angle_deg < 32768.0 &&
 		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 50.0 &&
 		std::isfinite(info.brightness_gain) && info.brightness_gain >= 0.0 && info.brightness_gain <= 10.0 &&
 		(std::isfinite(info.size_variation) && info.size_variation >= 0.0 && info.size_variation <= 100.0) &&

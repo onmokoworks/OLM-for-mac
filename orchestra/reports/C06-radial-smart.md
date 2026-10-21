@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Closed the Smart typed-input alignment cluster: stage active rows into correctly typed aligned storage before admission probes and rendering.
-- Seed 1 Smart exact 108→168; fresh seed 3 exact 113→166. All 221 prior exact hashes are preserved; no newly admitted mismatch.
-- 600 sanitized Smart campaign replays and 72 independent layout renders are clean; eight existing smoke tests pass.
-- Corpus 35/35 is unchanged, so no expectation rebaseline is needed.
-- Angle and remaining Zoom/Rotation refusal clusters are still under investigation; this commit closes one general cause.
+- Closed Smart typed-input alignment and the full public signed-16.16 Angle admission domain.
+- Seed 1 Smart exact 108→168→187; fresh seed 3 113→166→176. No lost exact hashes or new mismatches.
+- Angle acceptance: 600 clean sanitized campaign replays, 240 original inputs/720 exact layout renders, eight smoke tests.
+- Corpus remains 35/35 unchanged; no rebaseline is needed.
+- Repeat Border is still experimental: its scalar sampler dispatch requires correction before admission.
 
 facts:
 
@@ -32,6 +32,17 @@ Seed 3 index 46 is a **pre-existing** Smart mismatch, unchanged in both builds: 
 
 Corpus replay before/after: 35/35 `matches_saved`, all 35 Smart exact hashes unchanged; Classic results also unchanged. Rebaseline table: 35 exact→exact, zero changed rows. Eight existing RadialBlur generic baseline, sanitizer, budget, Type3, Smart contract, size/noise and typed geometry tests pass. `git diff --check` passes. Machine evidence is `C06-alignment.evidence.json`, including input hashes, complete transitions, source/reference bindings, sanitizer outcomes and smoke results. The final typed-buffer source was independently replayed against both measured campaigns in ordinary and sanitized builds; their intermediate source identities remain explicitly recorded rather than overwritten.
 
+Angle milestone (second commit): production now admits the signed 16.16 AD getter domain `[-32768,32768)` instead of an arbitrary ±360-degree subset. `InfoFromParams` divides the original signed fixed value by 65536; no angle normalization, trigonometric operation, rounding, or output writer changed. The existing fixed-radian transform executes for newly admitted profiles.
+
+| Campaign | Smart before E/M/R | Smart after E/M/R | retained exact |
+|---|---|---|---:|
+| Seed 1 | 168/0/132 | 187/0/113 | 168 |
+| Seed 3 | 166/1/133 | 176/1/123 | 166 |
+
+All 29 admissions are original-renderable and exact. Seed-3 cases 116, 263 and 274 remain refused but now reach the generic resource-budget return (error 516→4); the audit records these diagnostic changes separately. Corpus comparisons still require exact saved results. Both campaigns completed 300 cases. The independent angle matrix covers 3×5 and 11×7, all three depths, Zoom/Rotation, Ratio 1/2.25 and ten angles: both signed fixed endpoints, the neighbor of the negative endpoint, ±720, ±360 and the adjacent fixed value outside each one-turn boundary, and zero. All 240 original Smart references and 720 sanitized Mac layout renders match. The 600 sanitized campaign replays are identical and clean. The inherited seed-3 index-46 mismatch is unchanged. The first smoke pass failed only the stale rejection of Angle 360.01; the test now accepts 360+1/65536 and rejects the unrepresentable +32768. The rerun passes 8/8. Corpus 35/35 remains unchanged. Evidence: `C06-angle.evidence.json`; final Angle source SHA256 `9e7d4d4f3455ae41a3ffb04e05f2249b75de9607e8d660193ed49629ce84c0af`.
+
+The Angle evidence uses the same worker and campaign commands, with scratch/report prefixes `angle` and `angle3`. Final verification command was `verify_radialblur_smart_C06.py --campaign orchestra/state/C06-radial-smart/angle.json --campaign orchestra/state/C06-radial-smart/angle3.json --independent --matrix angles --smoke --output orchestra/state/C06-radial-smart/angle-final-verified`, with its output redirected to the matching log. No Angle experiment was promoted until the fresh seed and boundary matrix passed.
+
 inference:
 
 The refusal reduction comes from restoring the input storage contract before existing general algorithms, not relaxing numerical comparisons or selecting output values. The retained original worker receives packed input; these experiments establish Mac odd-stride equivalence to that original packed render, not native Windows odd-stride support. This is bounded CPU-emulator evidence, not native AE/UCRT conformance or a claim about arbitrary remaining profiles.
@@ -39,9 +50,11 @@ The refusal reduction comes from restoring the input storage contract before exi
 changed_files:
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp`
 - `tests/test_olmradialblur_generic_budget_20260821.py`
+- `tests/test_olmradialblur_generic_baseline_20260820.py`
 - `tools/fuzz/verify_radialblur_smart_C06.py`
 - `tools/fuzz/summarize_radialblur_smart_C06.py`
 - `orchestra/reports/C06-alignment.evidence.json`
+- `orchestra/reports/C06-angle.evidence.json`
 - `orchestra/reports/C06-radial-smart.md`
 
 verify:
@@ -50,10 +63,10 @@ Run at this commit from the worktree root:
 
 ```sh
 py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
-export TMPDIR="$PWD/orchestra/state/C06-radial-smart/recheck-alignment"
+export TMPDIR="$PWD/orchestra/state/C06-radial-smart/recheck-angle"
 mkdir -p "$TMPDIR"
 PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/verify_radialblur_smart_C06.py \
-  --evidence orchestra/reports/C06-alignment.evidence.json --independent --smoke \
+  --evidence orchestra/reports/C06-angle.evidence.json --independent --matrix angles --smoke \
   --output "$TMPDIR/verify" > "$TMPDIR/verify.log" 2>&1
 PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/run.py --plugin radialblur \
   --n 300 --seed 1 --jobs 2 --case-timeout 30 --budget-minutes 120 \
@@ -67,8 +80,8 @@ PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/run.py --plugin radialblur \
 git diff --check
 ```
 
-Expected: verifier pass, 600 identical/clean Smart outcomes, 72 independent exact renders, 8/8 smoke tests; seed-1 Smart 168 exact / 0 mismatch / 132 refusal (oracle timeouts can vary); corpus 35/35 matching. The fuzz runner's nonzero status for diagnostic Classic mismatches is separate from Smart acceptance.
+Expected: verifier pass, 600 identical/clean Smart outcomes, 720 independent exact renders, 8/8 smoke tests; seed-1 Smart 187 exact / 0 mismatch / 113 refusal (oracle timeouts can vary); corpus 35/35 matching. The fuzz runner's nonzero status for diagnostic Classic mismatches is separate from Smart acceptance.
 
 next:
-- Continue the ticket with the largest remaining Zoom refusal subclusters (Angle domain and Repeat Border), preserving this exact set.
+- Continue the ticket with the remaining Zoom Repeat Border scalar-field dispatch, preserving this exact set. Alignment is commit `981ef3ac`.
 - Investigate fresh-seed index 46's retained three-word mismatch separately if it becomes the selected cluster.
