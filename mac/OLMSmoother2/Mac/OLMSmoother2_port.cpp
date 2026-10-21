@@ -4518,7 +4518,13 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		float la = a.r * WIN_LUMA_R + a.g * WIN_LUMA_G + a.b * WIN_LUMA_B;
 		float lb = b.r * WIN_LUMA_R + b.g * WIN_LUMA_G + b.b * WIN_LUMA_B;
 		float dy = std::fabs(la - lb);
-		float maxv = std::max(std::max(dr, dg), std::max(db, dy));
+		// FUN_18000b2b0: COMISS dg,dr + CMOVBE selects dr on
+		// unordered; COMISS db,max selects the prior value on unordered.
+		// MAXSS max,dy then selects dy on unordered. A balanced std::max
+		// tree has a different NaN propagation path.
+		float maxv = dg > dr ? dg : dr;
+		maxv = db > maxv ? db : maxv;
+		maxv = maxv > dy ? maxv : dy;
 		return maxv + std::fabs(a.a - b.a);
 	};
 	// Class-plane threshold = (float)*(int *)(param_5 + 0x1c) / 100.0 + 0.001.
