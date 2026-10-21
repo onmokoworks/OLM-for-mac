@@ -42,3 +42,13 @@ editing expectations — report the first mismatch and stop (status: blocked).
   `tests/fuzz_corpus/radialblur` and run `--n 500 --seed 1`; report how the Offset mismatch
   cluster (PF8 Outer Offset, slot 6) changes. Corpus hash changes are evidence, not failures.
 - A previous attempt of this ticket stopped on a permissions error; that is fixed.
+
+## Handover (orchestrator, 2nd worker)
+- A previous worker (DeepSeek Flash) ran ~3h without finishing; its uncommitted work is now the
+  WIP commit at the tip of this branch. Review it critically; keep only what you can verify.
+- The branch is stale: `codex/public-beta-roi` has since merged F08 (Zoom zero-variation Offset
+  dispatch fix in the same file) and T05 (compile-time-off bypass switches). First merge
+  `codex/public-beta-roi` into this branch and resolve conflicts, preserving F08 behavior.
+- After promotion also rebaseline `tests/fuzz_corpus/radialblur` with
+  `tools/fuzz/rebaseline_corpus.py` ONLY if every changed route moves toward exact
+  (report the before/after table). F08 already moved 6 cases mismatch->exact that are not yet rebaselined.
