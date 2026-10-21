@@ -110,7 +110,11 @@ struct ToonPixelTraits<PF_Pixel16> {
 
 template <>
 struct ToonPixelTraits<PF_PixelFloat> {
-	static bool opaque(const PF_PixelFloat &p) { return p.alpha >= 1.0f; }
+	static bool opaque(const PF_PixelFloat &p) {
+		// AEX 0x1801a698e: UCOMISS / CMOVZ selects a seed for equality or
+		// unordered (NaN), but not finite HDR alpha or either infinity.
+		return p.alpha == 1.0f || std::isnan(p.alpha);
+	}
 };
 
 template <typename PixelT>
