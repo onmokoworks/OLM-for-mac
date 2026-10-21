@@ -25,3 +25,9 @@ F21-toondilate-pf32-seed
 F19-colorkeep-host-flags-and-byte-safe
 F20-colorkey-zero-color-and-byte-safe
 F22-smoother-classifier-stack-ub
+C01-smoother2-smart
+C02-dblur-smart
+C03-dg-smart
+C04-kira-smart
+C05-olmblur-smart
+C06-radial-smart
