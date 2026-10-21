@@ -1,5 +1,41 @@
 #include "ColorKeep.h"
 #include "AEFX_SuiteHandlerTemplate.h"
+// Optional refusal attribution; errors and output bytes are unchanged.
+#include <cerrno>
+#include <cstdio>
+#include <cstdlib>
+#if !defined(AE_OS_WIN)
+#include <fcntl.h>
+#include <unistd.h>
+#endif
+static PF_Err ColorKeepRefusal(const char *function, const char *tag, int line)
+{
+#if !defined(AE_OS_WIN)
+    const int saved_errno = errno;
+    const char *path = std::getenv("OLM_REFUSAL_TRACE");
+    if (path && path[0]) {
+        const int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        if (fd >= 0) {
+            char entry[384];
+            const int n = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+            if (n > 0 && static_cast<size_t>(n) < sizeof(entry)) {
+                const ssize_t written = ::write(fd, entry, static_cast<size_t>(n));
+                (void)written;
+            }
+            ::close(fd);
+        }
+    }
+    errno = saved_errno;
+#endif
+    return PF_Err_BAD_CALLBACK_PARAM;
+}
+#define OLM_COLORKEEP_REFUSAL(tag) ColorKeepRefusal(__func__, tag, __LINE__)
+
+// T12 scratch experiment only. Default builds retain every guard.
+#ifndef OLM_COLORKEEP_EXPERIMENT_BYPASS
+#define OLM_COLORKEEP_EXPERIMENT_BYPASS 0
+#endif
+
 #include <stdint.h>
 #include <math.h>
 #include <new>
@@ -137,7 +173,7 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	                                      short bitdepth)
 {
 	if (!input || !output || !input->data || !output->data) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-null");
 	}
 	A_long pixel_bytes = 0;
 	size_t pixel_alignment = 0;
@@ -155,44 +191,44 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 		pixel_alignment = alignof(PF_PixelFloat);
 		break;
 	default:
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-bitdepth");
 	}
 	if (input->width <= 0 || input->height <= 0 ||
 	    output->width <= 0 || output->height <= 0 ||
 	    input->width > INT32_MAX / pixel_bytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-dimensions");
 	}
 	const A_long active_rowbytes = input->width * pixel_bytes;
 	if (output->width > INT32_MAX / pixel_bytes ||
 	    input->rowbytes < active_rowbytes ||
 	    output->rowbytes < output->width * pixel_bytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-rowbytes");
 	}
 	const bool expected_deep = bitdepth == 16;
 	const bool input_is_deep = (input->world_flags & PF_WorldFlag_DEEP) != 0;
 	const bool output_is_deep = (output->world_flags & PF_WorldFlag_DEEP) != 0;
-	if (input_is_deep != expected_deep ||
-	    output_is_deep != expected_deep ||
+	if ((!OLM_COLORKEEP_EXPERIMENT_BYPASS &&
+	     (input_is_deep != expected_deep || output_is_deep != expected_deep)) ||
 	    (int64_t)output->origin_x < input->origin_x ||
 	    (int64_t)output->origin_y < input->origin_y ||
 	    (int64_t)output->origin_x + output->width > (int64_t)input->origin_x + input->width ||
 	    (int64_t)output->origin_y + output->height > (int64_t)input->origin_y + input->height) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-flags-or-bounds");
 	}
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
 	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
 	if (input_begin % pixel_alignment != 0 || output_begin % pixel_alignment != 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-alignment");
 	}
 	const size_t input_span = (size_t)input->rowbytes * (size_t)input->height;
 	const size_t output_span = (size_t)output->rowbytes * (size_t)output->height;
 	if (input_begin > UINTPTR_MAX - input_span || output_begin > UINTPTR_MAX - output_span) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-span-overflow");
 	}
 	const uintptr_t input_end = input_begin + input_span;
 	const uintptr_t output_end = output_begin + output_span;
 	if (input_begin < output_end && output_begin < input_end) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("world-overlap");
 	}
 	return PF_Err_NONE;
 }
@@ -327,14 +363,14 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	    !params[COLORKEEP_INPUT] || !params[COLORKEEP_ENABLED_COLOR_NUM] ||
 	    !in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
 	    !in_data->pica_basicP->ReleaseSuite) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("render-inputs");
 	}
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 	const A_long count = params[COLORKEEP_ENABLED_COLOR_NUM]->u.sd.value;
-	if (!ColorKeepCountIsAdmitted(count)) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!ColorKeepCountIsAdmitted(count)) return OLM_COLORKEEP_REFUSAL("color-count");
 	for (A_long i = 0; i < count; ++i) {
-		if (!params[COLORKEEP_COLOR_FIRST + i]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[COLORKEEP_COLOR_FIRST + i]) return OLM_COLORKEEP_REFUSAL("palette-null");
 	}
 
 	PF_EffectWorld *input = &params[COLORKEEP_INPUT]->u.ld;
@@ -345,23 +381,23 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	ERR(world_suite->PF_GetPixelFormat(input, &input_format));
 	ERR(world_suite->PF_GetPixelFormat(output, &output_format));
 	if (err) return err;
-	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_format != output_format) return OLM_COLORKEEP_REFUSAL("render-format-mismatch");
 
 	short bitdepth = 0;
 	switch (input_format) {
 	case PF_PixelFormat_ARGB32: bitdepth = 8; break;
 	case PF_PixelFormat_ARGB64: bitdepth = 16; break;
-	default: return PF_Err_BAD_CALLBACK_PARAM;
+	default: return OLM_COLORKEEP_REFUSAL("classic-bitdepth");
 	}
 	ERR(ColorKeepValidateWorldPair(input, output, bitdepth));
 	if (err) return err;
-	if (!ColorKeepIsOneToOne(in_data, output)) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!ColorKeepIsOneToOne(in_data, output)) return OLM_COLORKEEP_REFUSAL("render-mapping");
 
 	ColorKeepInfo info;
 	AEFX_CLR_STRUCT(info);
 	ERR(CheckoutInfo(in_data, params, &info, count));
 	if (err) return err;
-	if (info.count != count) return PF_Err_BAD_CALLBACK_PARAM;
+	if (info.count != count) return OLM_COLORKEEP_REFUSAL("checkout-count");
 	if (bitdepth == 16) {
 		ERR(ColorKeepRenderMapped<PF_Pixel16>(in_data, suites.Iterate16Suite2(),
 		                                      input, output, &info, ColorKeep16Func));
@@ -381,7 +417,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 {
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 	    !extra->cb->checkout_layer) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("prerender-inputs");
 	}
 	PF_Err err = PF_Err_NONE;
 
@@ -408,7 +444,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	    !in_data->pica_basicP ||
 	    !in_data->pica_basicP->AcquireSuite || !in_data->pica_basicP->ReleaseSuite ||
 	    !in_data->inter.checkout_param || !in_data->inter.checkin_param) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEEP_REFUSAL("smartrender-inputs");
 	}
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
@@ -421,9 +457,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	if (!err) ERR(ColorKeepValidateWorldPair(input_world, output_world,
 	                                         extra->input->bitdepth));
 	if (!err && !ColorKeepIsOneToOne(in_data, output_world))
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_COLORKEEP_REFUSAL("smartrender-mapping");
 	if (err || !input_world || !output_world) {
-		if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = OLM_COLORKEEP_REFUSAL("smartrender-world-null");
 		if (input_checked_out && extra->cb->checkin_layer_pixels) {
 			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
 				in_data->effect_ref, COLORKEEP_INPUT);
@@ -455,7 +491,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		}
 		if (!err && (input_format != expected_format ||
 		             output_format != expected_format)) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_COLORKEEP_REFUSAL("smartrender-format");
 		}
 
 		ColorKeepInfo info;
@@ -467,7 +503,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		if (!err) err = phase_err;
 		if (!err) {
 			info.count = checked_params[0].u.sd.value;
-			if (!ColorKeepCountIsAdmitted(info.count)) err = PF_Err_BAD_CALLBACK_PARAM;
+			if (!ColorKeepCountIsAdmitted(info.count)) err = OLM_COLORKEEP_REFUSAL("color-count");
 		}
 
 		for (A_long i = 0; i < info.count && !err; ++i) {
@@ -516,7 +552,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				ERR(ColorKeepRenderMapped<PF_PixelFloat>(in_data, suites.IterateFloatSuite2(),
 				                                         input_world, &smart_output_world, &info, ColorKeepFloatFunc));
 			} else if (!err) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_COLORKEEP_REFUSAL("smartrender-bitdepth");
 			}
 			smart_rendered = err == PF_Err_NONE;
 	} catch (PF_Err &thrown_err) {

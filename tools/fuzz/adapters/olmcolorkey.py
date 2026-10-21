@@ -3,13 +3,14 @@ import random
 import struct
 from core import case_seed
 from .public import PublicAdapter, ROOT, replace_once
+from .color_triage import ColorTriage
 
 HOST = ROOT/'tools/emulation/colorkey_thin_public_host_20261001.hpp'
 HARNESS = ROOT/'tools/emulation/colorkey_typed_controls_harness_20261001.cpp'
 SOURCE = ROOT/'mac/OLMColorKey/OLMColorKey.cpp'
 
 
-class Adapter(PublicAdapter):
+class Adapter(ColorTriage, PublicAdapter):
     name = 'olmcolorkey'
     aex_name = 'OLMColorKey'
     output_format = 'raw'
@@ -63,8 +64,8 @@ class Adapter(PublicAdapter):
         return self.compile_sdk(scratch,header+body,SOURCE,deadline),[HOST,HARNESS,SOURCE,SOURCE.with_suffix('.h')]
 
     def scope(self):
-        return {'mac_stride':'shared randomly padded input/output stride from existing ColorKey helper',
-                'palette':'all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels'}
+        return dict(super().scope(), **{'mac_stride':'shared randomly padded input/output stride from existing ColorKey helper',
+                'palette':'all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels'})
 
     def candidate_command(self, case, directory, route):
         # Same configuration format as typed_controls.config_text.
