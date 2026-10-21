@@ -33,11 +33,11 @@ facts:
 - `olmsmoother2`: `complete`, 300/300 cases, 7.2078 s; corpus 8 files / 63493 bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 0, "classic_refusal": 300, "pixel_mismatch_cases": 8, "smart_exact": 292, "smart_mismatch": 8}`. Campaign SHA-256 `6c03a88446fc0b99e1fd48107c8b7346a381ce5bb9b654944ca39dd453dca220`; AEX `7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7`.
   First mismatch: seed 1, index 17, PF32, [19, 158], smart: `{"actual_bytes": 48032, "actual_word_hex": "0000c07f", "different_bytes": 158, "different_words": 155, "expected_bytes": 48032, "expected_word_hex": "0000c0ff", "first_byte": 419, "first_word": 104}`.
   Corpus replay: 8/8 match saved statuses and raw hashes; replay_complete.
-- `olmkirakira`: `complete`, 300/300 cases, 26.9077 s; corpus 0 files / 0 bytes. Full counters: `{"aex_ok": 287, "aex_reject": 13, "both_routes_exact": 0, "classic_refusal": 300, "pixel_mismatch_cases": 0, "smart_refusal": 300}`. Campaign SHA-256 `19107f0366fc5b235ff2087e970d1f9a88f80ab3d16ea70a46165dce173237c7`; AEX `60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7`.
+- `olmkirakira`: `complete`, 300/300 cases, 26.9077 s; corpus 0 JSON files / 0 JSON bytes. Full counters: `{"aex_ok": 287, "aex_reject": 13, "both_routes_exact": 0, "classic_refusal": 300, "pixel_mismatch_cases": 0, "smart_refusal": 300}`. Campaign SHA-256 `19107f0366fc5b235ff2087e970d1f9a88f80ab3d16ea70a46165dce173237c7`; AEX `60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7`.
 - `olmblur`: `complete`, 300/300 cases, 16.419 s; corpus 39 files / 224399 bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 0, "classic_mismatch": 13, "classic_refusal": 287, "pixel_mismatch_cases": 39, "smart_exact": 76, "smart_mismatch": 26, "smart_refusal": 198}`. Campaign SHA-256 `e102ed06e56d0cac83cc8107eacaec0038c34dac73b17072deb1cacb34afb350`; AEX `f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b`.
   First mismatch: seed 1, index 4, PF8, [117, 244], smart: `{"actual_bytes": 114192, "actual_word_hex": "80", "different_bytes": 2974, "different_words": 2974, "expected_bytes": 114192, "expected_word_hex": "81", "first_byte": 1, "first_word": 1}`.
   Corpus replay: 39/39 match saved statuses and raw hashes; replay_complete.
-- `colorkeep`: `complete`, 300/300 cases, 5.0488 s; corpus 0 files / 0 bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 205, "classic_exact": 205, "classic_refusal": 95, "pixel_mismatch_cases": 0, "smart_exact": 205, "smart_refusal": 95}`. Campaign SHA-256 `2c8e83f98adb1c38bd4f2a7eec434236da30c1a7b386244b144283ec7c34f8f1`; AEX `6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86`.
+- `colorkeep`: `complete`, 300/300 cases, 5.0488 s; corpus 0 JSON files / 0 JSON bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 205, "classic_exact": 205, "classic_refusal": 95, "pixel_mismatch_cases": 0, "smart_exact": 205, "smart_refusal": 95}`. Campaign SHA-256 `2c8e83f98adb1c38bd4f2a7eec434236da30c1a7b386244b144283ec7c34f8f1`; AEX `6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86`.
 - `olmdistancegradation`: `complete`, 300/300 cases, 117.3146 s; corpus 145 files / 1132045 bytes. Full counters: `{"aex_budget": 2, "aex_ok": 290, "aex_reject": 8, "both_routes_exact": 0, "classic_exact": 145, "classic_mismatch": 145, "classic_uncompared": 10, "pixel_mismatch_cases": 145, "smart_refusal": 300}`. Campaign SHA-256 `fb7297dc5e4b9aef6e185a5b5bfea6638111ff62702ef186fd3640fd50724b1e`; AEX `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`.
   First mismatch: seed 1, index 0, PF8, [21, 19], classic: `{"actual_bytes": 1596, "actual_word_hex": "ee", "different_bytes": 1, "different_words": 1, "expected_bytes": 1596, "expected_word_hex": "b4", "first_byte": 232, "first_word": 232}`.
   Corpus replay: 145/145 match saved statuses and raw hashes; replay_complete.
@@ -52,6 +52,12 @@ facts:
 - ToonDilate: all 300 Classic differences compare an intentionally untouched `0xee` destination against AEX Smart output. The production entry switch and `tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py` identify original legacy owner `FUN_1801a7840` as a constant-zero no-op. These are cross-route differences, not 300 numerical kernel defects. Smart has 23 actual raw mismatches; first: seed 1/index 15, PF32, 9×19, 908 differing bytes / 240 words, first word 32, AEX `0000803f`, Mac `dabfd93f`.
 - KiraKira and DistanceGradation builders expose defaults outside their own declared ranges (gain 0.10000000149011612 below 1; In/Out 0 below 1). The snapshots preserve those facts; generated and shrunk defaults use the legal minimum. KiraKira was re-campaigned after this sampling correction.
 
+- `OLM_FUZZ_INTEGRATION=1 PYTHONDONTWRITEBYTECODE=1 TMPDIR="$PWD/orchestra/state/T04-fuzz-adapters-all-plugins" python3 tools/fuzz/test_framework.py`: 8/8 tests pass in 9.317 s, including actual worker replay/shrinking.
+- `OLM_FUZZ_INTEGRATION=1 PYTHONDONTWRITEBYTECODE=1 TMPDIR="$PWD/orchestra/state/T04-fuzz-adapters-all-plugins" python3 tools/fuzz/test_adapters.py`: 5/5 tests pass in 5.261 s. Tests cover all nine generators' legality/reproducibility, geometry extremes, out-of-range builder defaults, concurrent corpus cap retention, and KiraKira public transport anchors.
+- KiraKira's retained Mode-1 5×3 anchor is exact for AEX and both Mac routes at PF8/PF16/PF32. Original retained AEX hashes: `ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b`, `ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d`, `0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6`. Reproduction is the integration test above; it reads the existing retained report, not new expected-value patches.
+- All 580 retained JSON counterexamples replay with identical statuses and raw hashes. No corpus file was omitted by the cap in these campaigns. Largest per-plugin corpus: ToonDilate, 1,390,299 bytes; all are below 2,000,000 bytes. Scratch was 1.8 MiB after disposable builds/worlds were cleaned. No `/tmp` writes, push, or history rewrite.
+- Campaign source/framework hashes bind each measured revision; later adapter additions and documentation do not rewrite earlier evidence hashes. The final integration tests use the complete tree.
+
 inference:
 - These are finite CPU-emulation residuals, not native AE or Windows UCRT equivalence. Signature clusters are not proven causes; no numerical production changes were attempted.
 - Refusals are public PF_Err results; their internal budget/unsupported-control cause is not inferred. A successful Mac render with a rejected/timed-out oracle is uncompared.
@@ -63,12 +69,17 @@ changed_files:
 - tools/fuzz/adapters/public.py and per-plugin adapter modules
 - tools/fuzz/declarations/*.json and tools/fuzz/capture_declarations.py
 - tools/fuzz/run.py (bounded corpus retention)
+- tools/fuzz/harnesses/*.cpp and *.hpp (public host input glue only)
+- tools/fuzz/test_adapters.py
+- tools/fuzz/README.md
 - reports/fuzz/*_20261021.json for the plugins above
 - tests/fuzz_corpus/<plugin>/*.json
 - orchestra/reports/T04-fuzz-adapters-all-plugins.md
 
 verify:
 ```sh
+OLM_FUZZ_INTEGRATION=1 PYTHONDONTWRITEBYTECODE=1 TMPDIR="$PWD/orchestra/state/T04-fuzz-adapters-all-plugins" python3 tools/fuzz/test_framework.py
+OLM_FUZZ_INTEGRATION=1 PYTHONDONTWRITEBYTECODE=1 TMPDIR="$PWD/orchestra/state/T04-fuzz-adapters-all-plugins" python3 tools/fuzz/test_adapters.py
 python3 tools/fuzz/run.py --plugin olmdirectionalblur --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify-corpus
 python3 tools/fuzz/run.py --plugin olmdirectionalblur --replay tests/fuzz_corpus/olmdirectionalblur --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify-replay.json
 python3 tools/fuzz/run.py --plugin olmcolorkey --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmcolorkey-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmcolorkey-verify-corpus
@@ -86,7 +97,7 @@ python3 tools/fuzz/run.py --plugin olmsmoother --replay tests/fuzz_corpus/olmsmo
 python3 tools/fuzz/run.py --plugin olmtoondilate --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmtoondilate-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmtoondilate-verify-corpus
 python3 tools/fuzz/run.py --plugin olmtoondilate --replay tests/fuzz_corpus/olmtoondilate --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmtoondilate-verify-replay.json
 ```
-Expected: campaigns complete 300 cases with zero framework errors; retained corpus replay matches saved raw hashes/statuses. Keep the recorded worker/source hashes for comparable measurements. Read full counters for uncompared/error cells in addition to the compact summary table.
+Expected: 8 framework tests and 5 adapter tests pass; campaigns complete 300 cases with zero framework errors; retained corpus replay matches saved raw hashes/statuses. Keep the recorded worker/source hashes for comparable measurements. Read full counters for uncompared/error cells in addition to the compact summary table.
 
 next:
 - Separate follow-up tickets for DirectionalBlur (56), ColorKey (3), Smoother2 Smart (8), OLMBlur (39), DistanceGradation Classic (145), Smoother PF8 (29), and ToonDilate Smart (23) mismatch cases. These 303 cases exclude ToonDilate's additional 277 Classic-only no-op differences; they are measurements, not proven production causes.
