@@ -124,6 +124,8 @@ def summarize(rows):
             continue
         result = row['result']
         counts['aex_'+result['oracle']['status']] += 1
+        for route, oracle in result.get('oracles', {}).items():
+            counts['aex_'+route+'_'+oracle['status']] += 1
         statuses = [r['status'] for r in result['routes'].values()]
         counts['both_routes_exact'] += all(s=='exact' for s in statuses)
         counts['pixel_mismatch_cases'] += 'mismatch' in statuses

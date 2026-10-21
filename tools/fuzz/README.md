@@ -87,7 +87,8 @@ corpus after touching the switch.
 Write only `tools/fuzz/adapters/NAME.py` exporting `Adapter(options)`. Implement
 `name`, `generator_version`, `routes`, `max_size`, `prepare(scratch, deadline)`
 (return provenance), `defaults(w,h)`, `generate(seed,index)`,
-`oracle(case,dir,deadline)` and `candidate(case,dir,route,deadline)` (return status
+`oracle(case,dir,deadline,route=None)` with explicit `oracle_routes` ownership, and
+`candidate(case,dir,route,deadline)` (return status
 metadata plus raw bytes). Cases carry `parameters` with slot/kind/value, `geometry`,
 `depth`, `pixels`, `seed` and `index`. Implement `resize(cropped_case,old_geometry)`,
 `simple_pixels(case)`, and `first_stage(...)` (return None if paired stages are
@@ -104,15 +105,15 @@ is enabled. Original AEX files and SDK assets remain in MAIN. Adapter modules:
 
 | `--plugin` | Original owner | Mac public host | Scope notes |
 |---|---|---|---|
-| `olmdirectionalblur` | Smart | real SDK | Recovered fixed sliders; declared Noise Type 1..2, no independent layer |
-| `olmcolorkey` | Smart | real SDK | All 25 color groups; mixed matching and independent pixels |
-| `olmsmoother2` | Smart | retained CLI SDK shim | Key, smoothing, version, gamma, five gamma colors; Classic refusal retained |
-| `olmkirakira` | Smart | real SDK | Default ramp handles; recovered native raw-fixed Rotation → Mac degrees |
-| `olmblur` | Smart | real SDK | All five controls; fixed Smoothness; host copy preserves inactive padding |
-| `colorkeep` | Smart | real SDK | All 100 colors; counts include 1/4/5/99/100 and random values |
-| `olmdistancegradation` | Smart | retained SDK shim | All 12 public controls; no field/compose bypass |
+| `olmdirectionalblur` | Classic / Smart | real SDK | Recovered fixed sliders; declared Noise Type 1..2, no independent layer |
+| `olmcolorkey` | Classic / Smart | real SDK | All 25 color groups; mixed matching and independent pixels |
+| `olmsmoother2` | Classic no-write / Smart | retained CLI SDK shim | Key, smoothing, version, gamma, five gamma colors; Classic refusal retained |
+| `olmkirakira` | Classic / Smart | real SDK | Default ramp handles; recovered native raw-fixed Rotation → Mac degrees |
+| `olmblur` | Classic / Smart | real SDK | All five controls; fixed Smoothness; host copy preserves inactive padding |
+| `colorkeep` | Classic / Smart | real SDK | All 100 colors; counts include 1/4/5/99/100 and random values |
+| `olmdistancegradation` | Classic / Smart | retained SDK shim | All 12 public controls; no field/compose bypass |
 | `olmsmoother` | Classic | retained CLI SDK shim | Exactly the three v1 controls; original does not advertise Smart |
-| `olmtoondilate` | Smart | real SDK | Radius 0..100; Classic is an intentional successful no-op |
+| `olmtoondilate` | Classic no-write / Smart | real SDK | Radius 0..100; Classic is an intentional successful no-op |
 
 Run each independently, in the requested order, for example:
 
@@ -158,13 +159,37 @@ Two interpretation boundaries matter in the first measurements:
   its PF16 legacy deep worlds; PF32 is not advertised by the AEX. These are AEX
   rejects, and successful Mac outputs remain **uncompared**. No emulator was built.
 - ToonDilate's Classic handler intentionally returns success without rendering,
-  matching the original legacy owner's documented no-op. The benchmark still
-  records its raw destination-vs-AEX-Smart differences, but these are **cross-route
-  differences**, not numerical kernel defects. Its Smart mismatches are separate
-  in the route counters. Do not change the Classic no-op to chase this comparison.
+  matching the original legacy owner's documented no-op. F17 checks each
+  destination against its own initial fill and records `no_write` separately.
+  Historical destination-vs-AEX-Smart differences were cross-route comparisons.
 
 `test_adapters.py` checks reproducible legal cases, builder anomalies, geometry,
 concurrent corpus retention, and (with integration enabled) the existing KiraKira
-Mode-1 5x3 public anchor at all three depths. Both Mac routes and the retained
-worker must match the previously recorded AEX hashes. This anchor establishes
+Mode-1 5x3 public anchor at all three depths. Both Mac routes retain the recorded Smart output hashes; original Classic
+returns zero-filled destinations on these anchors, so its route verdict is a
+mismatch. This anchor establishes
 transport on those inputs; it does not generalize KiraKira's admission boundary.
+
+F17 route ownership: the shared public and RadialBlur adapters request original
+Classic and Smart independently. `result.oracles[route]` is authoritative for
+that Mac route, including rejection, hash and no-write semantics. The historical
+`result.oracle` field remains the primary (Smart) reference for old diagnostic
+consumers only; it must not be used to compare Classic. Summary `aex_classic_*`
+and `aex_smart_*` counters distinguish their failures; legacy `aex_*` is primary.
+Smoother v1 exposes only original Classic: both Mac wrappers explicitly bind to
+that owner, retaining its existing single-oracle serialization and corpus.
+
+ToonDilate and Smoother2 Classic are declared no-write commands (T04/T08 static
+and public-selector evidence). Their AEX destination must remain initially zero.
+A successful Mac call must retain its own host's initial destination bytes;
+`no_write` is counted separately from numerical `exact`, and writes become
+`no_write_violation` retained by the reducer. Smoother2's current Mac refusal
+remains a refusal. This is final destination preservation, not a trace proving
+that no intermediate store executed, and is not native AE buffer semantics.
+
+`legacy_campaign_F17.py` reproduces the pre-F17 comparator from the fixed base
+commit for controlled before/after measurements only. `rebaseline_corpus.py
+--route-correction` permits changed Classic verdicts only with identical Mac
+hashes and explicit matching-route provenance, validates all entries before
+writing, and retains the complete prior result. It rejects changed Smart results,
+changed candidate bytes, transient oracle budgets and invalid oracle invariants.

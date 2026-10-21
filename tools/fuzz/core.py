@@ -55,9 +55,22 @@ def raw_diff(expected, actual, depth):
 
 
 def evaluate(adapter, case, directory, deadline, attribution=None):
-    oracle, reference = adapter.oracle(case, directory, deadline)
+    pairing = getattr(adapter, 'oracle_routes', {route: None for route in adapter.routes})
+    references = {owner: adapter.oracle(case, directory, deadline, owner) if owner is not None
+                  else adapter.oracle(case, directory, deadline) for owner in dict.fromkeys(pairing.values())}
+    oracles = {}
     results = {}
     for route in adapter.routes:
+        oracle, reference = references[pairing[route]]
+        oracle = dict(oracle)
+        if oracle['status'] == 'ok':
+            oracle['raw_sha256'] = sha(reference)
+        oracles[route] = oracle
+        no_write = getattr(adapter, 'original_routes', {}).get(pairing[route]) == 'no-write'
+        if no_write:
+            oracle['semantics'] = 'no-write; AEX destination initially zero'
+            if oracle['status'] == 'ok' and reference != bytes(len(case['pixels'])):
+                oracle.update(status='harness_error', diagnostic='declared no-write AEX changed destination')
         outcome = adapter.candidate(case, directory, route, deadline)
         result, raw = outcome[0], outcome[1]
         if attribution is not None and len(outcome) > 2 and outcome[2]:
@@ -65,22 +78,30 @@ def evaluate(adapter, case, directory, deadline, attribution=None):
         if result['status'] == 'ok':
             result['raw_sha256'] = sha(raw)
             if oracle['status'] == 'ok':
-                result['status'] = 'exact' if reference == raw else 'mismatch'
-                if reference != raw:
-                    result['diff'] = raw_diff(reference, raw, case['depth'])
+                if no_write:
+                    # No numeric image exists for a no-write command. Check the
+                    # Mac host's own initial bytes, never another route's image.
+                    unchanged = raw == bytes([adapter.no_write_fill]) * len(case['pixels'])
+                    result['status'] = 'no_write' if unchanged else 'no_write_violation'
+                else:
+                    result['status'] = 'exact' if reference == raw else 'mismatch'
+                    if reference != raw:
+                        result['diff'] = raw_diff(reference, raw, case['depth'])
             else:
                 result['status'] = 'uncompared'
         results[route] = result
-    if oracle['status'] == 'ok':
-        oracle['raw_sha256'] = sha(reference)
     stage = adapter.first_stage(case, directory, results, deadline) if any(
         r['status'] == 'mismatch' for r in results.values()) else None
-    return {'oracle': oracle, 'routes': results, 'first_mismatching_stage': stage,
+    # Keep the historical primary reference for diagnostic consumers. It must
+    # never be used for per-route comparisons; oracles is authoritative.
+    primary = oracles[adapter.routes[-1]]
+    route_metadata = {'oracles': oracles} if len(references) > 1 else {}
+    return {**route_metadata, 'oracle': primary, 'routes': results, 'first_mismatching_stage': stage,
             'stage_observation': 'paired stages unavailable; final raw output only' if stage is None else 'paired stages'}
 
 
 def mismatch_routes(result):
-    return [route for route, value in result['routes'].items() if value['status'] == 'mismatch']
+    return [route for route, value in result['routes'].items() if value['status'] in ('mismatch', 'no_write_violation')]
 
 
 def crop(case, width, height):

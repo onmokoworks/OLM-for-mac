@@ -13,7 +13,7 @@ class GenericBetaLaneTest(unittest.TestCase):
         cls.source = SOURCE.read_text()
 
     def test_lane_precedes_exact_fixture_admission(self):
-        generic = self.source.index("GenericBetaTuple(raw")
+        generic = self.source.index("GenericBetaTupleRefusal(raw")
         exact = self.source.index("const bool public24", generic)
         self.assertLess(generic, exact)
 
@@ -33,7 +33,7 @@ class GenericBetaLaneTest(unittest.TestCase):
 
     def test_geometry_memory_and_work_limits_are_explicit(self):
         body = re.search(
-            r"static bool\s+GenericBetaTuple\(.*?\n\}", self.source, re.S
+            r"static const char \*\s+GenericBetaTupleRefusal\(.*?\n\}", self.source, re.S
         ).group(0)
         for contract in (
             "width > 4096",
@@ -46,7 +46,9 @@ class GenericBetaLaneTest(unittest.TestCase):
             self.assertIn(contract, body)
 
     def test_exact_small_fixtures_remain_owned_by_exact_lane(self):
-        self.assertIn("if (width <= 24 && height <= 24) return false;", self.source)
+        self.assertIn('if (width <= 24 && height <= 24 && !integer_small)', self.source)
+        self.assertIn('(bpc == 8 || bpc == 16) && raw.legacy == 0', self.source)
+        self.assertIn('(raw.repeat == 1 || (width == 1 && height == 1))', self.source)
 
 
 if __name__ == "__main__":

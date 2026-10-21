@@ -8,6 +8,8 @@ SOURCE = ROOT/'mac/OLMToonDilate/OLMToonDilate.cpp'
 
 
 class Adapter(PublicAdapter):
+    original_routes = {'classic': 'no-write', 'smart': 'render'}
+    no_write_fill = 0xee
     name = 'olmtoondilate'
     aex_name = 'OLMToonDilate'
     output_format = 'raw'
@@ -23,7 +25,7 @@ class Adapter(PublicAdapter):
 
     def scope(self):
         return {'classic_owner':'Production PF_Cmd_RENDER is an intentional successful no-op. '
-                'Its untouched destination differs from the AEX Smart reference; these are cross-route differences, not kernel residuals.',
+                'Compare untouched destinations against their own initial fill (Mac 0xee, AEX zero); no numerical Classic output exists.',
                 'classic_owner_evidence':'tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub'}
 
     def candidate_command(self, case, directory, route):

@@ -9,6 +9,8 @@ SHIM = ROOT/'cli/OLMSmoother2/shim'
 
 
 class Adapter(PublicAdapter):
+    original_routes = {'classic': 'no-write', 'smart': 'render'}
+    no_write_fill = 0xee
     name = 'olmsmoother2'
     aex_name = 'OLMSmoother2'
     output_format = 'hex'
