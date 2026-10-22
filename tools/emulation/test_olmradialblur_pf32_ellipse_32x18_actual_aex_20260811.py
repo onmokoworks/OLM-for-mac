@@ -49,7 +49,9 @@ def isolated(effect: str, mode: str, ratio: float, angle: float, expected=None):
             inp.write_bytes(pickle.dumps(expected))
             cmd.append(str(inp))
         cmd.append(str(out))
-        process = subprocess.run(cmd)
+        import os
+        env = dict(os.environ, OLM_SELF_SPAWN_CHILD="1")
+        process = subprocess.run(cmd, env=env, timeout=1800)
         return process.returncode, pickle.loads(out.read_bytes()) if out.exists() else None
 
 
@@ -111,4 +113,10 @@ if __name__ == "__main__":
         else:
             configure_rotation(ratio, angle); result = rotation.mac_production(expected)
         Path(sys.argv[5]).write_bytes(pickle.dumps(result)); raise SystemExit(0)
+    import os
+    if action.startswith("--") or os.environ.get("OLM_SELF_SPAWN_CHILD"):
+        # A self-spawned child with a malformed command line must never re-run main():
+        # that recursion forked hundreds of processes when an actual-AEX capture failed.
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

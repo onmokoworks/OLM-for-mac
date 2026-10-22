@@ -1,5 +1,6 @@
-F24-colorkey-hostless-roi-flag
+F25-self-respawn-guard
 I02-integration-finish
+F24-colorkey-hostless-roi-flag
 C17-radial-smart-r3
 C18-dblur-smart-r3
 C19-dg-smart-r4
