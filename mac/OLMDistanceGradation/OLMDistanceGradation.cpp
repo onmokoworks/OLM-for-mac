@@ -1019,7 +1019,13 @@ static inline void compose_pixel(
 	float d_alpha;
 	switch (p.in_out) {
 	case IN_OUT_INSIDE:  d_alpha = src_a; break;
-	case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; break;
+	case IN_OUT_OUTSIDE:
+		d_alpha = 1.0f - src_a;
+		if (d_alpha < 0) d_alpha = 0;
+		// Original Smart callback 181170e00 caps ownership before composition.
+		// Negative source alpha must not amplify the Outside alpha above one.
+		if (p.smart_owner && d_alpha > 1.0f) d_alpha = 1.0f;
+		break;
 	default:             d_alpha = 1.0f; break; // BOTH
 	}
 	if (!p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
@@ -1470,7 +1476,7 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 }
 
 static bool pf32_smart_worlds_are_bounded_sdr(
-	const PF_LayerDef *input, const PF_LayerDef *output)
+	const PF_LayerDef *input, const PF_LayerDef *output, const DGParams &p)
 {
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
@@ -1497,9 +1503,18 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 			reinterpret_cast<const uint8_t *>(input->data) + y * (size_t)input->rowbytes);
 		for (size_t x = 0; x < width; ++x) {
 			const PF_PixelFloat &pixel = row[x];
+			// The original float-to-mask conversion rounds through signed int32.
+			// Positive overflow would produce the SSE invalid integer, then zero
+			// after byte saturation; it is outside this finite-domain admission.
+			if (pixel.alpha * 255.0f >= 2147483648.0f) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
-				if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
+				if (!std::isfinite(value)) return false;
+				// Extended samples use only the witnessed identity-filter lane.
+				// Effective filters retain their SDR boundary (Gaussian rounding
+				// and the original large-kernel PF32 Median rejection are separate).
+				if ((value < 0.0f || value > 1.0f) &&
+				    !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 			}
 		}
 	}
@@ -1575,7 +1590,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
 	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
-	    !pf32_smart_worlds_are_bounded_sdr(input, output)) {
+	    !pf32_smart_worlds_are_bounded_sdr(input, output, p)) {
 		return OLM_DG_REFUSAL("pf32-smart-bounded-sdr");
 	}
 
@@ -1619,8 +1634,12 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		any_owned |= owned;
 		any_unowned |= !owned;
 	}
-	// Extended float conversion semantics remain outside this restored lane.
-	p.degenerate_mask = bounded_alpha && (!any_owned || !any_unowned);
+	// Original Smart owner 18117339f..1811733ba tests the converted mask count,
+	// regardless of source alpha range. PF32 inputs passed the finite/conversion
+	// guard above; Classic retains its prior bounded-alpha contract.
+	p.degenerate_mask =
+		(bounded_alpha || (smart_owner && sizeof(P) == sizeof(PF_PixelFloat))) &&
+		(!any_owned || !any_unowned);
 	build_distance_field(alpha.data(), df, p, w, h);
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
