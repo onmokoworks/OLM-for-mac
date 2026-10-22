@@ -539,7 +539,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	double angle_deg,
 	A_long passes,
 	A_long blur_mode,
-	bool scalar_unit_alpha = false,
+	bool scalar_alpha_gaussian = false,
 	bool recovered_scalar_box = false)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
@@ -573,7 +573,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	// their upstream and aggregation stages are reconciled.
 	const bool mode3_admitted =
 		olm::kirakira::mode3_gaussian_admitted(rw, rh, length) ||
-		(scalar_unit_alpha &&
+		(scalar_alpha_gaussian &&
 		 olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length));
 	if (blur_mode == 3 && !mode3_admitted) return input;
 	if (blur_mode == 3) {
@@ -670,12 +670,17 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 	return pixels;
 }
 
-// Original Alpha constructor 18114edf0 owns a scalar powf seed. The box
-// pipeline is paired through its source/seed/rays/aggregation/outer writer.
-static bool UsesRecoveredAlphaBoxPipeline(const OLMKiraKiraInfo &info)
+// Original Alpha constructor 18114edf0 owns a scalar powf seed. C07 pairs
+// the box pipeline; C13 pairs the directional Gaussian pipeline with the
+// same constructor, percentage materialization and aggregation. Keep the
+// unresolved Length-1, Highlight and resize operations outside this recovery.
+static bool UsesRecoveredScalarAlphaPipeline(const OLMKiraKiraInfo &info)
 {
-	return info.channel == 1 && (info.blur_mode == 1 || info.blur_mode == 2) &&
-		!info.approximated_input;
+	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
+		info.vertical_length != 1 && info.horizontal_length != 1 &&
+		info.diagonal_length != 1 && info.diagonal2_length != 1;
+	return info.channel == 1 && !info.approximated_input &&
+		(info.blur_mode == 1 || info.blur_mode == 2 || directional_gaussian);
 }
 
 static std::vector<float> MakeSeed(
@@ -686,8 +691,8 @@ static std::vector<float> MakeSeed(
 {
 	std::vector<float> seed((size_t)w * h);
 	// Original double threshold 0.001 selects float replacement 0x3a83126f.
-	const bool scalar_alpha_box = UsesRecoveredAlphaBoxPipeline(info);
-	const double exponent = scalar_alpha_box
+	const bool recovered_scalar_alpha = UsesRecoveredScalarAlphaPipeline(info);
+	const double exponent = recovered_scalar_alpha
 		? (double)std::max(0.001f, (float)info.strength_multiplier)
 		: std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
 	const float fade_threshold = (float)info.fade_out;
@@ -702,7 +707,7 @@ static std::vector<float> MakeSeed(
 			const FloatRGBA &p = pixels[(size_t)y * w + x];
 			float v = 0.0f;
 			if (info.channel == 1) {
-				v = scalar_alpha_box ? std::pow(p.a, (float)exponent)
+				v = recovered_scalar_alpha ? std::pow(p.a, (float)exponent)
 					: (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
 				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
@@ -782,8 +787,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
 		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0,
-			UsesRecoveredAlphaBoxPipeline(info));
+			info.channel == 1 && info.highlight_radius == 0 &&
+				(info.strength_multiplier == 1.0 || UsesRecoveredScalarAlphaPipeline(info)),
+			UsesRecoveredScalarAlphaPipeline(info));
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -810,7 +816,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	// historical 0.62 PNG-fit scaffold is not part of the AEX owner path.
 	float scale = (float)info.brightness_gain;
 	const float highlight_scale = (float)info.brightness_gain;
-	if (info.strength_multiplier <= 1.0e-6 && !UsesRecoveredAlphaBoxPipeline(info)) {
+	if (info.strength_multiplier <= 1.0e-6 && !UsesRecoveredScalarAlphaPipeline(info)) {
 		scale = 127.0 / 255.0;
 	}
 	std::vector<FloatRGBA> glow((size_t)work_width * work_height);
@@ -831,10 +837,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			// F09 proves PF16/32; C04 proves unit-exponent PF8 Alpha. C07
 			// closes the remaining scalar Alpha box seed operations, allowing
 			// the same original normalization for non-unit strengths too.
+			// C13 pairs it through the directional Gaussian pipeline as well.
 			// Other PF8 seed branches retain their unresolved boundary.
 			if (bitdepth != 8 ||
 				(info.channel == 1 && info.strength_multiplier == 1.0) ||
-				UsesRecoveredAlphaBoxPipeline(info)) {
+				UsesRecoveredScalarAlphaPipeline(info)) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
@@ -945,9 +952,9 @@ static void KiraDiagnosticInfo(const char *label, const OLMKiraKiraInfo &info)
 // FUN_18114e860 uses CVTDQ2PS/MULSS with float constant 0x3c23d70a
 // for Strength and both Opacity controls. Keep unresolved color/resize/Gaussian
 // pipelines outside this recovery until their upstream boundaries are closed.
-static PF_FpLong ReadAlphaBoxPercent(A_long value, const OLMKiraKiraInfo &info)
+static PF_FpLong ReadScalarAlphaPercent(A_long value, const OLMKiraKiraInfo &info)
 {
-	if (UsesRecoveredAlphaBoxPipeline(info)) return (float)value * 0.01f;
+	if (UsesRecoveredScalarAlphaPipeline(info)) return (float)value * 0.01f;
 	return value / 100.0;
 }
 
@@ -966,9 +973,9 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
 	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
 	info->approximated_input = params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value;
-	info->strength_multiplier = ReadAlphaBoxPercent(params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value, *info);
-	info->glow_opacity = ReadAlphaBoxPercent(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
-	info->source_opacity = ReadAlphaBoxPercent(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
+	info->strength_multiplier = ReadScalarAlphaPercent(params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value, *info);
+	info->glow_opacity = ReadScalarAlphaPercent(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
+	info->source_opacity = ReadScalarAlphaPercent(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
 	PF_Err err = CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color);
@@ -1124,9 +1131,9 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_MERGE_MODE, info->merge_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_APPROX_INPUT, info->approximated_input = param->u.bd.value);
 
-	info->strength_multiplier = ReadAlphaBoxPercent(raw_strength, *info);
-	info->glow_opacity = ReadAlphaBoxPercent(raw_glow_opacity, *info);
-	info->source_opacity = ReadAlphaBoxPercent(raw_source_opacity, *info);
+	info->strength_multiplier = ReadScalarAlphaPercent(raw_strength, *info);
+	info->glow_opacity = ReadScalarAlphaPercent(raw_glow_opacity, *info);
+	info->source_opacity = ReadScalarAlphaPercent(raw_source_opacity, *info);
 #undef CHECKOUT_SMART_DECODE
 #undef CHECKOUT_SMART_VALUE
 	return PF_Err_NONE;
@@ -1576,7 +1583,7 @@ static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
-	if (!IsAlphaBoxTuple(box_info, format, true)) return false;
+	if (!IsAlphaBoxTuple(box_info, format, true, true, true)) return false;
 
 	// Bound the sum of all four Gaussian/warp workloads, not just one ray.
 	// Reflection in the scalar row filter may fold repeatedly at tiny widths.

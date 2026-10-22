@@ -27,6 +27,37 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-negative':
+        base = next(c for c in cases(adapter, 'gaussian-controls') if c['index'] == 166)
+        for i, mutation in enumerate(((10,1), (34,1), (4,1), (1,2),
+                                      (6,1001), (8,10001), (9,101), None)):
+            case = copy.deepcopy(base)
+            case['index'] = i
+            if mutation:
+                for param in case['parameters']:
+                    if param['slot'] == mutation[0]: param['value'] = mutation[1]
+            else:
+                case['pixels'] = struct.pack('<f', 2.0) + case['pixels'][4:]
+            yield case
+        return
+    if family == 'gaussian-ramps':
+        for case in cases(adapter, 'gaussian-controls'):
+            i = case['index']
+            for param in case['parameters']:
+                if param['slot'] in (13,19,25,31,37): param['value'] = (i+param['slot'])%2
+                if param['slot'] == 5: param['value'] = (1,1.25,100)[i%3]
+                if param['slot'] == 40: param['value'] = (-31,0,22,359,45000000)[i%5]/65536
+            yield case
+        return
+    if family == 'gaussian-lengths':
+        for i, (depth, length, strength) in enumerate(itertools.product(
+                (8,16,32), (2,3,50,1000), (1,537))):
+            case = matrix_case(adapter, i, (1,1), depth, 1+i%2, 3, 1)
+            values = {6:strength,8:1703,9:97,10:length,16:0,22:0,28:0,34:0,40:22/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
     if family == 'gaussian-controls':
         for case in cases(adapter, 'strength-combined'):
             i = case['index']
@@ -176,7 +207,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls'), default='source-opacity')
+    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
