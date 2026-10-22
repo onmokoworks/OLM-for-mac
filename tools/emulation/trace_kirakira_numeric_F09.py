@@ -30,8 +30,10 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
         UC_X86_REG_RSP, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
     p = {v['slot']: v['value'] for v in case['parameters']}
-    w, h = case['geometry']; n = w*h
-    stages = {}; geometry = []; row_filters = {}
+    fw, fh = case['geometry']; fn = fw*fh
+    w, h = (fw//2, fh//2) if p[4] else (fw, fh)
+    n = w*h
+    stages = {}; geometry = []; row_filters = {}; resize_writers = []
     original = base.AexLoader
 
     class Loader(original):
@@ -70,11 +72,39 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
             super().call_function(0x181230a80,
                 int_args=[probe_rgba,probe_rgba+4,probe_rgba+8,probe_rgba+12,probe_input],max_instructions=1000)
             assert self.read_bytes(probe_rgba,16) == struct.pack('<4f',1,0,0,1)
-            raw = alloc(case['pixels']); pixels = alloc(bytes(n*16))
+            raw = alloc(case['pixels']); pixels = alloc(bytes(fn*16))
             reader = {8:0x181230a80,16:0x181230af0,32:0x181230b60}[case['depth']]
-            for i in range(n):
+            for i in range(fn):
                 q = pixels+i*16
                 super().call_function(reader, int_args=[q,q+4,q+8,q+12,raw+i*case['depth']//2], max_instructions=1000)
+            full_pixels = pixels
+            stages['source_full'] = words(pixels, fn*4)
+            def resize(data, sw, sh, dw, dh):
+                from unicorn import UC_HOOK_MEM_WRITE
+                from unicorn.x86_const import UC_X86_REG_RIP
+                output = alloc(bytes(dw*dh*16))
+                mats = []
+                for ptr, width, height in ((data, sw, sh), (output, dw, dh)):
+                    mat = alloc(bytes(96))
+                    super(Loader,self).call_function(0x181157770,
+                        int_args=[mat,height,width,29,ptr,width*16], max_instructions=100000)
+                    mats.append(mat)
+                a = alloc(struct.pack('<IIQQ', 0x1010000,0,mats[0],0))
+                b = alloc(struct.pack('<IIQQ', 0x2010000,0,mats[1],0))
+                writers = {}
+                def wrote(uc, access, address, size, value, user):
+                    pc = hex(uc.reg_read(UC_X86_REG_RIP))
+                    writers[pc] = writers.get(pc, 0) + 1
+                hook = self.uc.hook_add(UC_HOOK_MEM_WRITE, wrote,
+                    begin=output, end=output+dw*dh*16-1)
+                try:
+                    super(Loader,self).call_function(0x1812639f0,
+                        int_args=[a,b,dw+(dh<<32),0,0,1], float_args={3:0.0},max_instructions=200000000)
+                finally:
+                    self.uc.hook_del(hook)
+                resize_writers.append(dict(source=[sw,sh], destination=[dw,dh], interpolation=1, writers=writers))
+                return output
+            if p[4]: pixels = resize(pixels,fw,fh,w,h)
             stages['source'] = words(pixels,n*4)
             def sincos_entry(ld, _addr, _size):
                 geometry.append(dict(radians_f32_hex=struct.pack('<I',ld.uc.reg_read(UC_X86_REG_XMM0)&0xffffffff).hex()))
@@ -145,8 +175,9 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
             ctor = {1:0x18114edb0,2:0x1811505c0,4:0x18114ec20}.get(p[1],0x18114eed0)
             super().call_function(ctor,int_args=[obj],max_instructions=1000)
             angles = alloc(struct.pack('<5i',*[a+round(p[40]*65536) for a in (90,0,45,135)],0))
-            lengths = alloc(struct.pack('<5i',*[p[s] for s in (10,16,22,28,34)]))
-            assert all(p[s] == 0 for s in (13,19,25,31,37)) and not p[4]
+            lengths = alloc(struct.pack('<5i',*[p[s]//2 if p[4] else p[s] for s in (10,16,22,28,34)]))
+            assert all(p[flag] == 0 or p[length] == 0
+                       for flag, length in zip((13,19,25,31,37), (10,16,22,28,34)))
             colors = alloc(struct.pack('<20f',*[v/255 for s in (11,17,23,29,35) for v in p[s]]))
             ramps = alloc(bytes(5*0x144)); flags = alloc(bytes(5)); glow = alloc(bytes(n*16))
             bits = lambda f: struct.unpack('<I',struct.pack('<f',f))[0]
@@ -163,10 +194,12 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 int_args=[obj,host,pixels,glow,angles,lengths,colors,ramps,flags,p[2],w,h,bits(percent(p[6])),bits(p[7]),1,bits(p[5])],
                 max_instructions=200_000_000)
             stages['glow'] = words(glow,n*4)
+            if p[4]: glow = resize(glow,w,h,fw,fh)
+            stages['glow_full'] = words(glow,fn*4)
             owner = alloc(bytes(0x200))
             for off,data in ((0x38,struct.pack('<f',percent(p[8]))),(0x3c,struct.pack('<f',percent(p[9]))),
-                (0x44,struct.pack('<i',p[3])),(0x58,struct.pack('<i',n)),
-                (0x128,struct.pack('<Q',pixels)),(0x190,struct.pack('<Q',glow))):
+                (0x44,struct.pack('<i',p[3])),(0x58,struct.pack('<i',fn)),
+                (0x128,struct.pack('<Q',full_pixels)),(0x190,struct.pack('<Q',glow))):
                 self.write_bytes(owner+off,data)
             output = alloc(bytes(len(case['pixels'])))
             compose = {8:0x18114e110,16:0x18114ddc0,32:0x18114e460}[case['depth']]
@@ -176,8 +209,8 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                     (UC_X86_REG_XMM0,UC_X86_REG_XMM1,UC_X86_REG_XMM2,UC_X86_REG_XMM3)]))
             super().add_code_hook({8:0x181230b90,16:0x181230bd0,32:0x181230c20}[case['depth']],before_writer)
             world = alloc(bytes(0x40))
-            self.write_bytes(world+0x18,struct.pack('<Qiii',output,len(case['pixels']),n,1))
-            super().call_function(compose,int_args=[owner,world],max_instructions=max(200_000,n*1000))
+            self.write_bytes(world+0x18,struct.pack('<Qiii',output,len(case['pixels']),fn,1))
+            super().call_function(compose,int_args=[owner,world],max_instructions=max(200_000,fn*1000))
             stages['output'] = self.read_bytes(output,len(case['pixels'])).hex()
             stages['composed'] = composed.hex()
             return result
@@ -187,7 +220,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
         result = base.run(SimpleNamespace(aex_path=aex,width=w,height=h,length=50,sigma=0,max_instructions=200_000_000))
     finally:
         base.AexLoader = original
-    return dict(stages=stages,geometry=geometry,row_filters=row_filters,status=result['status'],error=result.get('error'),
+    return dict(stages=stages,geometry=geometry,row_filters=row_filters,resize_writers=resize_writers,status=result['status'],error=result.get('error'),
                 crt=result.get('manual_crt_initializers_diagnostic'))
 
 
@@ -212,10 +245,11 @@ static void F09Dump(const char *name, const void *data, size_t size) {
         assert source.count(marker) == 1, marker
         source = source.replace(marker,text+'\n'+marker)
     insert('\tconst A_long passes = BlurModePasses(info.blur_mode);',
-           '\tF09Dump("source", working_pixels.data(), working_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("seed", seed.data(), seed.size()*4);')
+           '\tF09Dump("source_full", source_pixels.data(), source_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("source", working_pixels.data(), working_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("seed", seed.data(), seed.size()*4);')
     insert('\tfloat scale = (float)info.brightness_gain;', '\n'.join(f'\tF09Dump("ray{i}", {name}.data(), {name}.size()*4);' for i,name in enumerate(('vertical','horizontal','diagonal','diagonal2','highlight'))))
     insert('\tstd::vector<FloatRGBA> composed((size_t)work_width * work_height);','\tF09Dump("glow", glow.data(), glow.size()*sizeof(FloatRGBA));')
-    insert('\tstd::vector<FloatRGBA> glow_full;', '\tF09Dump("composed", composed.data(), composed.size()*sizeof(FloatRGBA));')
+    insert('\tfor (A_long y = 0; y < h; ++y) {\n\t\tfor (A_long x = 0; x < w; ++x) {\n\t\t\tconst size_t idx = (size_t)y * w + x;',
+           '\tF09Dump("glow_full", glow_full.data(), glow_full.size()*sizeof(FloatRGBA));\n\tF09Dump("composed", output_pixels.data(), output_pixels.size()*sizeof(FloatRGBA));')
     insert('\ttemp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);',
         '\t++F09Ray; F09Dump(("helper"+std::to_string(F09Ray)+"_op0_in").c_str(),temp_a.data(),temp_a.size()*4);')
     insert('\tstd::vector<float> temp_b((size_t)rw * rh);',

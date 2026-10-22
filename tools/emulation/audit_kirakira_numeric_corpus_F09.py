@@ -46,19 +46,21 @@ def main():
             for route in routes:
                 old,oldraw,*_ = before.candidate(case,directory,route,deadline)
                 new,newraw,*_ = after.candidate(case,directory,route,deadline)
+                admitted_exact = old['status']=='refusal' and new['status']=='ok' and newraw==reference
                 unit = case['depth']//8
                 changed = [i for i in range(0,len(oldraw),unit) if oldraw[i:i+unit]!=newraw[i:i+unit]]
                 away = [i//unit for i in changed if newraw[i:i+unit]!=reference[i:i+unit]]
                 row = dict(corpus=corpus,index=case['index'],route=route,oracle=oracle,
                     before=old,after=new,before_sha256=sha(oldraw),after_sha256=sha(newraw),
                     reference_sha256=sha(reference),changed_samples=len(changed),changed_not_to_exact=away,
+                    newly_admitted_exact=admitted_exact,
                     before_diff=raw_diff(reference,oldraw,case['depth']) if old['status']=='ok' and reference!=oldraw else None,
                     after_diff=raw_diff(reference,newraw,case['depth']) if new['status']=='ok' and reference!=newraw else None)
                 report['rows'].append(row)
                 args.report.parent.mkdir(parents=True,exist_ok=True)
                 args.report.write_text(json.dumps(report,indent=2)+'\n')
-                assert old['status']==new['status']
-                assert len(oldraw)==len(newraw)
+                assert old['status']==new['status'] or admitted_exact
+                assert len(oldraw)==len(newraw) or admitted_exact
                 assert oracle['status']=='ok' and not away, row
                 if changed:
                     print(corpus,case['index'],route,'changed_samples',len(changed),'all now exact',flush=True)

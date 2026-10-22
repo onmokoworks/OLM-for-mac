@@ -741,6 +741,13 @@ static A_long BlurModePasses(A_long blur_mode)
 	}
 }
 
+static bool HasZeroRays(const OLMKiraKiraInfo &info)
+{
+	return info.vertical_length == 0 && info.horizontal_length == 0 &&
+		info.diagonal_length == 0 && info.diagonal2_length == 0 &&
+		info.highlight_radius == 0;
+}
+
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth)
 {
@@ -859,6 +866,17 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (use_approximated_input) {
 		glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h);
 		output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h);
+		if (HasZeroRays(info)) {
+			// Original typed owners resize glow, then compose with the original
+			// full-resolution source. With all rays disabled, 18114f4a0 leaves
+			// every glow lane zero; neither resize can affect that invariant.
+			// Active-ray IPP interpolation remains a separate proof boundary.
+			for (size_t i = 0; i < output_pixels.size(); ++i) {
+				output_pixels[i] = info.merge_mode == 2
+					? ComposeMerge2Pixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity)
+					: ComposePremultiplyPixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity);
+			}
+		}
 	} else {
 		glow_full = std::move(glow);
 		output_pixels = std::move(composed);
@@ -1482,9 +1500,17 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 		info.channel >= 1 && info.channel <= 6 &&
 		info.blur_mode >= 1 && info.blur_mode <= 3 &&
 		(info.merge_mode == 1 || info.merge_mode == 2) &&
-		info.vertical_length == 0 && info.horizontal_length == 0 &&
-		info.diagonal_length == 0 && info.diagonal2_length == 0 &&
-		info.highlight_radius == 0;
+		HasZeroRays(info);
+}
+
+static bool IsSmartZeroRayTuple(const OLMKiraKiraInfo &info, A_long width, A_long height)
+{
+	// Half-resolution IPP resize rejects some one-pixel working dimensions.
+	// C13 proves the zero-glow invariant only when both work dimensions >= 2.
+	if (info.approximated_input && (width < 4 || height < 4)) return false;
+	OLMKiraKiraInfo full = info;
+	full.approximated_input = FALSE;
+	return IsZeroRayTuple(full);
 }
 
 static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
@@ -2630,7 +2656,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 					info, input_world->width, input_world->height) ||
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
-				 IsZeroRayTuple(info)) &&
+				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
 				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
 			KiraDiagnosticLog(

@@ -1,4 +1,50 @@
 {
+  "C13_zero_approximation_expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "bfd6d535131a45e8a31340082147c4928edd44f2e05fe127081a1900b3cc0edc",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 26 26",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "reason": "Original full-resolution source composed with the proven zero-glow plane.",
+    "report": "orchestra/reports/C13-kira-smart-r3-zero-approx.md"
+  },
   "case": {
     "depth": 8,
     "geometry": [
@@ -253,12 +299,13 @@
         "status": "refusal"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 26 26",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

@@ -27,6 +27,56 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-controls':
+        for case in cases(adapter, 'strength-combined'):
+            i = case['index']
+            values = {2: 3, 10: 2+i%4, 16: 7, 22: 3 if i%2 else 0,
+                      28: 15 if i%3 else 0, 34: 0}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+                if param['slot'] in (13,19,25,31,37): param['value'] = 0
+            yield case
+        return
+    if family == 'approximation-zero-negative':
+        for i, (geometry, depth) in enumerate(itertools.product(
+                ((1, 1), (1, 9), (2, 2), (2, 9), (3, 3)), (8, 16, 32))):
+            case = matrix_case(adapter, i, geometry, depth, 1, 2, 1)
+            for param in case['parameters']:
+                if param['slot'] == 4: param['value'] = 1
+            yield case
+        for i in range(3):
+            case = matrix_case(adapter, 15+i, (7, 11), 32, 1, 2, 1)
+            for param in case['parameters']:
+                if param['slot'] == 4: param['value'] = 1
+                if i == 0 and param['slot'] == 10: param['value'] = 1
+                if i == 1 and param['slot'] == 9: param['value'] = 97
+            if i == 2: case['pixels'] = struct.pack('<f', 2.0) + case['pixels'][4:]
+            yield case
+        return
+    if family == 'approximation-zero':
+        for i, (geometry, depth, mode, channel) in enumerate(itertools.product(
+                ((4, 4), (4, 9), (9, 4), (6, 8), (7, 11), (9, 7), (17, 13)),
+                (8, 16, 32), (1, 2, 3), (1, 2, 3, 4, 5, 6))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, mode, channel)
+            for param in case['parameters']:
+                if param['slot'] == 4: param['value'] = 1
+            yield case
+        return
+    if family == 'approximation':
+        for i, (geometry, depth, mode, merge, rays) in enumerate(itertools.product(
+                ((2, 2), (2, 9), (9, 2), (6, 8), (7, 11), (9, 7), (17, 13)),
+                (8, 16, 32), (1, 2), (1, 2), (0, 1, 2))):
+            case = matrix_case(adapter, i, geometry, depth, merge, mode, 1)
+            controls = {4: 1, 5: (1, 1.25, 100)[i % 3],
+                        6: (0, 1, 97, 100, 537, 1000)[i % 6],
+                        8: (0, 1, 40, 100, 1703, 10000)[(i // 3) % 6],
+                        9: (0, 1, 40, 97, 100)[i % 5], 40: 22 / 65536}
+            for j, slot in enumerate((10, 16, 22, 28, 34)):
+                controls[slot] = (0, 1, (7, 2, 3, 15, 5)[j])[rays]
+            for param in case['parameters']:
+                if param['slot'] in controls: param['value'] = controls[param['slot']]
+            yield case
+        return
     if family == 'invalid-input':
         base = next(cases(adapter, 'finite-seed'))
         for i, (channel, bits) in enumerate(((0, 0xbf800000), (0, 0x7f800000),
@@ -126,12 +176,14 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input'), default='source-opacity')
+    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
     p.add_argument('--require-exact', action='store_true')
+    p.add_argument('--require-refusal', action='store_true')
     p.add_argument('--expect-finite-domain', action='store_true')
+    p.add_argument('--keep-trace', action='store_true', help='Keep raw trace planes in ticket scratch')
     args = p.parse_args()
     scratch = args.scratch.resolve()
     assert scratch.is_relative_to(ROOT / 'orchestra/state')
@@ -177,10 +229,14 @@ def main():
             if args.trace_index is not None:
                 original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
                 row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
+                row['aex_resize_writers'] = original.get('resize_writers', [])
                 stages = original['stages']
+                if args.keep_trace:
+                    for name, data in stages.items():
+                        if isinstance(data, str): (directory / ('aex_' + name + '.raw')).write_bytes(bytes.fromhex(data))
                 row['public_bound'] = oracle['status'] == 'ok' and bytes.fromhex(stages['output']) == reference
                 paired = {}
-                for name in ('source', 'seed', 'ray0', 'ray1', 'ray2', 'ray3', 'ray4', 'glow', 'composed'):
+                for name in ('source_full', 'source', 'seed', 'ray0', 'ray1', 'ray2', 'ray3', 'ray4', 'glow', 'glow_full', 'composed'):
                     expected = bytes.fromhex(stages[name])
                     actual = (directory / (name + '.raw')).read_bytes()
                     paired[name] = dict(exact=expected == actual, aex_sha256=sha(expected),
@@ -197,6 +253,9 @@ def main():
                 save()
                 assert row['public_bound'], 'unbound trace: no first-stage claim'
             save()
+            if args.require_refusal:
+                assert not args.require_exact and result['status'] == 'refusal', (case['index'], result)
+                continue
             assert oracle['status'] == 'ok', oracle
             if args.expect_finite_domain:
                 assert not args.gate_off and case['depth'] == 32
@@ -225,7 +284,7 @@ def main():
         raise
     finally:
         shutil.rmtree(scratch / 'build', ignore_errors=True)
-        shutil.rmtree(scratch / 'case', ignore_errors=True)
+        if not args.keep_trace: shutil.rmtree(scratch / 'case', ignore_errors=True)
 
 
 if __name__ == '__main__':
