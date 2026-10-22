@@ -4,3 +4,7 @@ C17-radial-smart-r3
 C18-dblur-smart-r3
 C19-dg-smart-r4
 F07-radial-misaligned-ub
+C20-colorkey-smart
+C21-olmblur-smart-r5
+C22-kira-smart-r5
+C23-smoother2-colorkeep-toondilate-fresh
