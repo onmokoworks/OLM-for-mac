@@ -1597,7 +1597,12 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// the normal worker; other small families retain their fixture owners.
 	const bool integer_small = (bpc == 8 || bpc == 16) && raw.legacy == 0 &&
 		(raw.repeat == 1 || (width == 1 && height == 1));
-	if (width <= 24 && height <= 24 && !integer_small) return "generic-small-fixture";
+	// C10: the default non-Legacy schedule is independently verified with
+	// arbitrary small-frame sources. PF32's source domain is checked below;
+	// NaN payload propagation is not established by the finite-input evidence.
+	const bool default_small = bpc == 32 && raw.legacy == 0 &&
+		raw.amount == 5.0 && raw.repeat == 2;
+	if (width <= 24 && height <= 24 && !integer_small && !default_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
@@ -1615,6 +1620,21 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	if (pixels > max_work/radius) return "generic-work-budget";
 	if (pixels*radius > max_work/(size_t)raw.repeat) return "generic-repeat-work-budget";
 	return NULL;
+}
+
+static bool
+SmallDefaultPF32Source(const PF_EffectWorld *world)
+{
+	// Called only after GenericBetaWorld validates the full active storage.
+	for (A_long y=0; y<world->height; ++y) {
+		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
+		for (A_long x=0; x<world->width; ++x) {
+			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
+			for (int c=0;c<4;++c)
+				if (!(argb[c]>=0.0f && argb[c]<=1.0f)) return false;
+		}
+	}
+	return true;
 }
 
 static PF_Err
@@ -1886,12 +1906,16 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	const size_t pixel_bytes=bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u));
 	// Generic beta lane.  Exact fixture admissions remain below as a fallback,
 	// retaining their special source and arithmetic contracts.
-	const char *const generic_tuple_refusal =
+	const char *generic_tuple_refusal =
 		GenericBetaTupleRefusal(raw,input_world->width,input_world->height,bpc);
 	const bool generic_input_ok =
 		GenericBetaWorld(input_world,pixel_bytes,input_world->width,input_world->height);
 	const bool generic_output_ok =
 		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height);
+	if (!generic_tuple_refusal && generic_input_ok && bpc==32 &&
+		input_world->width<=24 && input_world->height<=24 &&
+		!SmallDefaultPF32Source(input_world))
+		generic_tuple_refusal="generic-small-pf32-domain";
 	const bool generic_downsample =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
 		in_data->downsample_y.num==1 && in_data->downsample_y.den==1;
