@@ -96,7 +96,7 @@ def main():
     if not args.measure_only:
         source = public.SOURCE.read_text()
         hp=out/'planes.cpp'
-        body=zoom.plane_harness()
+        body=zoom.plane_harness().replace('w>64||h>64', 'w>256||h>256')
         marker='dump("polar.f32",probe_polar.data(),probe_polar.size()*4);'
         assert body.count(marker)==1
         hp.write_text(body.replace(marker,marker+'dump("weights.f32",probe_weights.data(),probe_weights.size()*4);'))
@@ -152,7 +152,7 @@ def main():
             fmt, scale = ('H',32768) if case['depth']==16 else ('f',1)
             values=[v for (v,) in struct.iter_unpack('<'+fmt,case['pixels'])]
             packed=bytes(round(v/scale*255) for v in values)
-            restored=b''.join(struct.pack('<'+fmt, int(v/255*32768) if fmt=='H' else v/255) for v in packed)
+            restored=b''.join(struct.pack('<'+fmt, (v*32768+127)//255 if fmt=='H' else v/255) for v in packed)
             assert restored==case['pixels'], 'Typed input is not losslessly representable through PNG trace transport'
         image.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',packed)]);image.save(directory/'input.png')
         command=[str(tracer),'render-trace-png',str(adapter.aex),str(directory/'input.png'),str(directory/'trace.png'),'--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']]]

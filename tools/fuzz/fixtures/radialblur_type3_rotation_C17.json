@@ -1,0 +1,158 @@
+{
+  "case": {
+    "seed": 1,
+    "index": 239,
+    "depth": 16,
+    "geometry": [
+      22,
+      1
+    ],
+    "profile": "sdr",
+    "parameters": [
+      {
+        "slot": 1,
+        "kind": "u",
+        "value": 2
+      },
+      {
+        "slot": 2,
+        "kind": "p",
+        "value": [
+          11.0,
+          0.5
+        ]
+      },
+      {
+        "slot": 4,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 5,
+        "kind": "u",
+        "value": 1
+      },
+      {
+        "slot": 6,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 7,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 10,
+        "kind": "i",
+        "value": 11
+      },
+      {
+        "slot": 11,
+        "kind": "u",
+        "value": 1
+      },
+      {
+        "slot": 12,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 13,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 15,
+        "kind": "b",
+        "value": 1
+      },
+      {
+        "slot": 17,
+        "kind": "s",
+        "value": 1.0
+      },
+      {
+        "slot": 18,
+        "kind": "a",
+        "value": 0.0
+      },
+      {
+        "slot": 20,
+        "kind": "s",
+        "value": 5.0
+      },
+      {
+        "slot": 21,
+        "kind": "s",
+        "value": 4.936187120291705
+      },
+      {
+        "slot": 22,
+        "kind": "s",
+        "value": 0.0
+      },
+      {
+        "slot": 24,
+        "kind": "s",
+        "value": 0.0
+      },
+      {
+        "slot": 25,
+        "kind": "u",
+        "value": 3
+      },
+      {
+        "slot": 27,
+        "kind": "i",
+        "value": 1
+      },
+      {
+        "slot": 28,
+        "kind": "a",
+        "value": 0.0
+      },
+      {
+        "slot": 29,
+        "kind": "s",
+        "value": 10.0
+      }
+    ],
+    "input_padding": 7,
+    "output_padding": 11
+  },
+  "input_hex": "0000a827f06fdf5e1515af2e8908747400806f6f9e1dbd3c0000f17030309f1e000057575252121200008c0b73739f1e0080ea6946462929fb7a444426260909008013132f2f66660080151596158b0a008023231c1c95140000c746f473c6450000d04f61615e5efa797979b02fa322f6757575c544303000002121f776ec6b00005b5b5d5d494900800c0c0b0b2b2b5f5f0303a524b8370000df5e8a09971600809a19b1304b4b0080f27115154f4f",
+  "input_sha256": "deac3b9bc1d9ae57383ee99d88312405a950392bf17f82eed986d6dcdbedbda8",
+  "result": {
+    "oracle": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "raw_sha256": "f6e265a16f4da6bf73cca3eb26f956d7e2b9fde16f5d7a7a945549d42a19b9d9"
+    },
+    "routes": {
+      "smart": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "d45f10ea2ad28e5766cb2f383713c07022a4f0d11d8971afb0f1235d87f03152",
+        "diff": {
+          "expected_bytes": 176,
+          "actual_bytes": 176,
+          "different_bytes": 15,
+          "different_words": 13,
+          "first_byte": 0,
+          "first_word": 0,
+          "expected_word_hex": "0000",
+          "actual_word_hex": "4000"
+        }
+      }
+    },
+    "first_mismatching_stage": null,
+    "stage_observation": "paired stages unavailable; final raw output only"
+  }
+}
