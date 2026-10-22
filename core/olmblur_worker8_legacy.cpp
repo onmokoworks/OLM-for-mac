@@ -57,6 +57,18 @@ void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) 
     }
 }
 
+// AEX 0x180007fdf converts floorf's result with CVTTSS2SI, then stores AL.
+// Converting NaN/infinity directly to uint8_t is undefined in C++; the x86
+// indefinite int32 result has a zero low byte.
+std::uint8_t store_byte(float value) {
+    const float rounded = std::floor(value + 0.5f);
+    const std::int32_t converted =
+        (rounded >= -2147483648.0f && rounded < 2147483648.0f)
+            ? static_cast<std::int32_t>(rounded)
+            : INT32_MIN;
+    return static_cast<std::uint8_t>(static_cast<std::uint32_t>(converted));
+}
+
 }  // namespace
 
 void render(const std::uint8_t* source_argb,
@@ -111,9 +123,9 @@ void render(const std::uint8_t* source_argb,
     for (std::size_t pixel = 0; pixel < pixels; ++pixel) {
         const float* rgb = plane_a.data() + pixel * 3;
         std::uint8_t* destination = destination_argb + pixel * 4;
-        destination[1] = static_cast<std::uint8_t>(std::floor(rgb[0] + 0.5f));
-        destination[2] = static_cast<std::uint8_t>(std::floor(rgb[1] + 0.5f));
-        destination[3] = static_cast<std::uint8_t>(std::floor(rgb[2] + 0.5f));
+        destination[1] = store_byte(rgb[0]);
+        destination[2] = store_byte(rgb[1]);
+        destination[3] = store_byte(rgb[2]);
     }
 }
 

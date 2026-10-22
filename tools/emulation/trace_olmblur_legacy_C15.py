@@ -99,6 +99,12 @@ def main():
             (work/'input.bin').write_bytes(c['pixels']);(work/'expected.bin').write_bytes(reference)
             stages=[];imports=[];writer=[]
             class Traced(original_loader):
+                def register_libm_impls(self, *args, **kwargs):
+                    super().register_libm_impls(*args, **kwargs)
+                    # The base loader installs this table directly, bypassing
+                    # register_import_impl. Explicitly bind all observed imports.
+                    for name in ('pow', 'powf', 'expf'):
+                        self.register_import_impl(name, self.import_impls[name])
                 def register_import_impl(self,name,impl):
                     if name in ('pow','powf','expf'):
                         def observed(uc,unused):

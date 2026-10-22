@@ -48,6 +48,18 @@ def cases(adapter,depth):
         yield dict(index=i,geometry=list(geometry),depth=depth,parameters=params,pixels=bytes(pixels),input_padding=7,output_padding=11,profile=profile)
 
 
+def conversion_cases(adapter, depth):
+    assert depth == 8
+    rng=random.Random(15102026)
+    domain=itertools.product(((4,9),(7,11),(18,18)),(1.,1.5),(1.,25.,45.,66.,84.,100.),(2,6,10),(1,2))
+    for i,(geometry,amount,smoothness,repeat,bias) in enumerate(domain):
+        w,h=geometry
+        pixels=b''.join(struct.pack('<4B',0 if rng.randrange(5)==0 else rng.randrange(1,256),*(rng.randrange(256) for _ in range(3))) for _ in range(w*h))
+        params=adapter.defaults(w,h)
+        for p in params:p['value']={1:amount,2:smoothness,3:repeat,4:bias,5:1}[p['slot']]
+        yield dict(index=i,geometry=list(geometry),depth=depth,parameters=params,pixels=pixels,input_padding=3,output_padding=9,profile='sparse-alpha-independent')
+
+
 def build(a,work,revision,diagnostic=True):
     original=olmblur.SOURCE;cores=olmblur.CORES
     target=work/'variant/mac/OLMBlur';target.mkdir(parents=True);cr=work/'variant/core';cr.mkdir()
@@ -69,7 +81,7 @@ def build(a,work,revision,diagnostic=True):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
-    p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true');p.add_argument('--source-boundaries',action='store_true')
+    p.add_argument('--conversion-boundaries',action='store_true');p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true');p.add_argument('--source-boundaries',action='store_true')
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state/C15-olmblur-smart-r4')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=run.main_checkout(),worker=WORKER))
@@ -90,7 +102,7 @@ def main():
                     row[label]={'status':status,'result':result,'raw_sha256':sha(raw),'diff':raw_diff(reference,raw,c['depth']) if status=='mismatch' else None}
                 if c['index']%100==0:print('progress',c['index'],row['before']['status'],row['after']['status'],flush=True)
                 return row
-        selected=[c for c in cases(a,args.depth) if not args.single_decay_only or next(p['value'] for p in c['parameters'] if p['slot']==3)<=2]
+        selected=[c for c in (conversion_cases(a,args.depth) if args.conversion_boundaries else cases(a,args.depth)) if not args.single_decay_only or next(p['value'] for p in c['parameters'] if p['slot']==3)<=2]
         if args.source_boundaries:
             import copy
             from verify_blur_small_C10 import boundary_cases

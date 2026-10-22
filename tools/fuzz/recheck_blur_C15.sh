@@ -27,6 +27,10 @@ case "$depth" in
 esac
 python3 tools/fuzz/verify_blur_legacy_C15.py ${matrix_options[@]+"${matrix_options[@]}"} --scratch "$s" --report "$s/matrix-$after.json" \
  --before "$base" --depth "$depth" --require-exact > "$s/matrix-$after.log" 2>&1
+if [ "$depth" -eq 8 ]; then
+ python3 tools/fuzz/verify_blur_legacy_C15.py --scratch "$s" --report "$s/conversion-$after.json" \
+  --before "$base" --depth 8 --conversion-boundaries --require-exact > "$s/conversion-$after.log" 2>&1
+fi
 "$py" tools/emulation/trace_olmblur_legacy_C15.py --source-revision "$base" --scratch "$s" \
  --report "$s/stages-before-$after.json" --indices "${indices[@]}" > "$s/stages-before-$after.log" 2>&1
 "$py" tools/emulation/trace_olmblur_legacy_C15.py --scratch "$s" --report "$s/stages-$after.json" \

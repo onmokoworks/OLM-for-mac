@@ -72,9 +72,17 @@ def main():
     assert report['extended_retained']['status']['status']=='ok'
     assert len(report['extended_retained']['lines'])==80
     assert all('exact=1' in line for line in report['extended_retained']['lines'])
-    for name in ('matrix-off-'+args.after,'coeff-'+args.after):
+    for name in ('matrix-off-'+args.after,'coeff-'+args.after,'conversion-'+args.after,'native-pf16-before','native-pf16-after','native-coeff-pf16'):
         path=s/(name+'.json')
-        if path.exists():report[name]=load(path)
+        if path.exists():
+            report[name]=load(path)
+            if name.startswith('native-'):
+                assert all(r['cached_binding'] for r in report[name]['rows'])
+            if name in ('native-pf16-before','native-pf16-after'):
+                assert all(r['first_difference'] is None for r in report[name]['rows'])
+            if name=='native-coeff-pf16':
+                assert report[name]['rows'][0]['first_difference']['field']=='weights'
+
     report['corpus_updates']=[str(v[0].relative_to(ROOT)) for v in updates]
     if args.rebaseline:
         for path,saved,result in updates:
