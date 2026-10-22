@@ -1,5 +1,6 @@
-F25-self-respawn-guard
+F26-test-pool-cap-and-ellipse
 I02-integration-finish
+F25-self-respawn-guard
 F24-colorkey-hostless-roi-flag
 C17-radial-smart-r3
 C18-dblur-smart-r3

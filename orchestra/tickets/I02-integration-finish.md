@@ -18,3 +18,8 @@ and `orchestra/procguard.py` kills the largest worker group if Python processes 
    (b): tests.test_olm_release_documentation_20260806, test_olmcolorkey_public_source_bound_docs_20260813,
    test_olmkirakira_smart_workspace_dependency_manifest_20260812 fail identically before and after the runner fix.
 4. Report `reports/integration_I02.md`.
+
+## Retry note (orchestrator)
+F26 capped every test pool via OLM_TEST_JOBS (default 2) and closed the remaining ellipse fallbacks. The queue now
+runs this ticket ALONE (no other worker). Export OLM_TEST_JOBS=2 for all gate runs. procguard still active.
+Proceed with the gates; the two-process rule is satisfied by OLM_TEST_JOBS=2 plus exclusivity.
