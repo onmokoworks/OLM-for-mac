@@ -7,6 +7,65 @@ import json
 from pathlib import Path
 
 
+def finite_evidence(read, scratch, root):
+    result = dict(schema='olm-kira-C07-finite/1', campaigns={}, matrices={}, traces={},
+        limitations=['CPU emulation/fake-host evidence, not native AE/UCRT.',
+                     'Negative alpha, nonfinite input and overflowing seeds are not admitted.'])
+    for seed in (1, 5):
+        a, b = (read(f'finite-campaigns/{kind}-seed{seed}') for kind in ('before', 'after'))
+        assert a['status'] == b['status'] == 'complete'
+        assert a['completed'] == b['completed'] == 300
+        old, new = ({r['index']: r for r in report['cases']} for report in (a, b))
+        changes = []
+        for index in range(300):
+            x, y = (r[index]['result'] for r in (old, new))
+            assert x['oracles'] == y['oracles'] and x['routes']['classic'] == y['routes']['classic']
+            x, y = (r['routes']['smart'] for r in (x, y))
+            assert x == y or x['status'] == 'refusal' and y['status'] == 'exact'
+            if x != y:
+                changes.append(dict(index=index, before=x, after=y))
+        result['campaigns'][str(seed)] = dict(before=a['summary'], after=b['summary'],
+                                              changes=changes, provenance=b['provenance'])
+    for name, expected in (('finite-production', {'exact': 263}),
+                           ('finite-lengths-production', {'exact': 263}),
+                           ('finite-negatives', {'refusal': 6})):
+        report = read(name)
+        assert report['status'] == 'complete' and report['counts'] == expected
+        result['matrices'][name] = {k: v for k, v in report.items() if k != 'rows'}
+        result['matrices'][name]['rows'] = [dict(index=r['index'], input_sha256=r['input_sha256'],
+            reference_sha256=r['reference_sha256'], result=r['result']) for r in report['rows']]
+    for name in ('finite-signed-trace', 'finite-overflow-trace', 'finite-seed-trace',
+                 'finite-sliding-trace', 'finite-production-trace', 'finite-length3-trace',
+                 'finite-length5-trace', 'finite-active-row-trace'):
+        result['traces'][name] = read(name)
+        assert result['traces'][name]['rows'][0]['public_bound']
+    for name in ('finite-alpha-gateoff', 'finite-nonnegative-gateoff', 'finite-seed-gateoff'):
+        report = read(name)
+        result[name] = {k: v for k, v in report.items() if k != 'rows'}
+        result[name]['last_row'] = report['rows'][-1]
+    result['sample_audit'] = read('finite-final-sample-audit')
+    assert len(result['sample_audit']['rows']) == 140
+    assert all(not r['changed_not_to_exact'] for r in result['sample_audit']['rows'])
+    result['changed_samples_toward_exact'] = sum(r['changed_samples'] for r in result['sample_audit']['rows'])
+    result['corpus'] = read('finite-production-corpus')
+    assert result['corpus']['status'] == 'passed' and len(result['corpus']['corpus']) == 70
+    result['sanitized_campaigns'] = read('finite-sanitized-campaigns')
+    assert result['sanitized_campaigns']['status'] == 'passed'
+    assert sum(r['sanitized_routes'] for r in result['sanitized_campaigns']['campaigns'].values()) == 600
+    replay = read('finite-replay')
+    result['replay'] = dict(total=replay['completed'], matches=sum(r['matches_saved'] for r in replay['replays']))
+    assert result['replay'] == dict(total=8, matches=8)
+    result['length1'] = {kind: read('retained-length1-' + kind) for kind in ('production', 'gateoff')}
+    assert all(r['status'] == 'passed' for r in result['length1'].values())
+    result['logs'] = {name: (scratch / (name + '.log')).read_text()
+                      for name in ('finite-fast-tests', 'finite-sanitizer-test')}
+    result['source_hashes'] = {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (root / 'mac/OLMKiraKira/OLMKiraKira.cpp',
+                     root / 'tools/emulation/probe_kirakira_smart_C07.py',
+                     root / 'tools/emulation/trace_kirakira_numeric_F09.py')}
+    return result
+
+
 def strength_evidence(read, scratch, root):
     result = dict(schema='olm-kira-C07-strength/1', campaigns={}, matrices={}, traces={},
         limitations=['CPU emulation/fake-host evidence, not native AE/UCRT.',
@@ -66,13 +125,13 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
-    p.add_argument('--cluster', choices=('opacity', 'strength'), default='opacity')
+    p.add_argument('--cluster', choices=('opacity', 'strength', 'finite'), default='opacity')
     args = p.parse_args()
     root = Path(__file__).resolve().parents[2]
     def read(name):
         return json.loads((args.scratch / (name + '.json')).read_text())
-    if args.cluster == 'strength':
-        result = strength_evidence(read, args.scratch, root)
+    if args.cluster in ('strength', 'finite'):
+        result = (strength_evidence if args.cluster == 'strength' else finite_evidence)(read, args.scratch, root)
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
         print('PASS', result['changed_samples_toward_exact'], 'samples toward exact; 600 sanitized campaign routes')

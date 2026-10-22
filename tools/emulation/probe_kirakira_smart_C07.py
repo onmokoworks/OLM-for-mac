@@ -4,8 +4,11 @@
 Uses the original AEX and retained public worker. No corpus is rewritten.
 """
 import argparse
+import copy
 from collections import Counter
 import itertools
+import ctypes
+import math
 import json
 import os
 import random
@@ -24,6 +27,40 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'invalid-input':
+        base = next(cases(adapter, 'finite-seed'))
+        for i, (channel, bits) in enumerate(((0, 0xbf800000), (0, 0x7f800000),
+                (0, 0x7fc00001), (1, 0x7fc00001), (2, 0xff800000), (0, 0x7f7fffff))):
+            case = copy.deepcopy(base)
+            data = bytearray(case['pixels'])
+            struct.pack_into('<I', data, channel * 4, bits)
+            case.update(index=i, pixels=bytes(data))
+            if i == 5:
+                for param in case['parameters']:
+                    if param['slot'] == 6: param['value'] = 1000
+            yield case
+        return
+    if family == 'finite-lengths':
+        for case in cases(adapter, 'finite-seed'):
+            i = case['index']
+            lengths = (1, 2, 3, 4, 5, 6, 7, 15, 50, 1000)
+            for param in case['parameters']:
+                if param['slot'] in (10, 16):
+                    param['value'] = lengths[(i + (param['slot'] == 16)) % len(lengths)]
+            yield case
+        return
+    if family == 'finite-seed':
+        powf = ctypes.CDLL(None).powf
+        powf.argtypes = (ctypes.c_float, ctypes.c_float)
+        powf.restype = ctypes.c_float
+        f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+        for case in cases(adapter, 'finite-nonnegative'):
+            params = {p['slot']: p['value'] for p in case['parameters']}
+            exponent = max(f32(0.001), f32(f32(params[6]) * f32(0.01)))
+            if all(math.isfinite(powf(struct.unpack_from('<f', case['pixels'], i)[0], exponent))
+                   for i in range(0, len(case['pixels']), 16)):
+                yield case
+        return
     if family in ('finite-nonnegative', 'finite-sdr-alpha'):
         for case in cases(adapter, 'finite-alpha'):
             data = bytearray(case['pixels'])
@@ -89,11 +126,12 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha'), default='source-opacity')
+    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'invalid-input'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
     p.add_argument('--require-exact', action='store_true')
+    p.add_argument('--expect-finite-domain', action='store_true')
     args = p.parse_args()
     scratch = args.scratch.resolve()
     assert scratch.is_relative_to(ROOT / 'orchestra/state')
@@ -138,6 +176,7 @@ def main():
             report['rows'].append(row)
             if args.trace_index is not None:
                 original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
+                row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
                 stages = original['stages']
                 row['public_bound'] = oracle['status'] == 'ok' and bytes.fromhex(stages['output']) == reference
                 paired = {}
@@ -146,12 +185,33 @@ def main():
                     actual = (directory / (name + '.raw')).read_bytes()
                     paired[name] = dict(exact=expected == actual, aex_sha256=sha(expected),
                         mac_sha256=sha(actual), diff=None if expected == actual else raw_diff(expected, actual, 32))
+                row['helper_paired'] = {}
+                for name, data in stages.items():
+                    file = directory / (name + '.raw')
+                    if name.startswith('helper') and not name.endswith('_shape') and file.exists():
+                        expected, actual = bytes.fromhex(data), file.read_bytes()
+                        row['helper_paired'][name] = dict(exact=expected == actual,
+                            diff=None if expected == actual else raw_diff(expected, actual, 32))
                 row['paired'] = paired
                 row['first_divergent_stage'] = next((k for k, v in paired.items() if not v['exact']), None)
                 save()
                 assert row['public_bound'], 'unbound trace: no first-stage claim'
             save()
             assert oracle['status'] == 'ok', oracle
+            if args.expect_finite_domain:
+                assert not args.gate_off and case['depth'] == 32
+                params = {p['slot']: p['value'] for p in case['parameters']}
+                powf = ctypes.CDLL(None).powf
+                powf.argtypes = (ctypes.c_float, ctypes.c_float)
+                powf.restype = ctypes.c_float
+                f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+                exponent = max(f32(0.001), f32(f32(params[6]) * f32(0.01)))
+                words = struct.unpack('<' + 'f' * (len(case['pixels']) // 4), case['pixels'])
+                valid = all(math.isfinite(x) for x in words) and all(
+                    a >= 0 and math.isfinite(powf(a, exponent)) for a in words[::4])
+                row['expected_domain_status'] = 'exact' if valid else 'refusal'
+                save()
+                assert result['status'] == row['expected_domain_status'], (case['index'], result)
             if args.require_exact:
                 assert result['status'] == 'exact', (case['index'], result)
             if len(report['rows']) % 24 == 0:

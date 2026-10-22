@@ -28,10 +28,10 @@ from run import default_worker, main_checkout
 def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
-        UC_X86_REG_RSP, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
+        UC_X86_REG_RSP, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
     p = {v['slot']: v['value'] for v in case['parameters']}
     w, h = case['geometry']; n = w*h
-    stages = {}; geometry = []
+    stages = {}; geometry = []; row_filters = {}
     original = base.AexLoader
 
     class Loader(original):
@@ -82,6 +82,15 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 geometry[-1]['sine_cosine_f32_hex'] = (ld.uc.reg_read(UC_X86_REG_XMM0)&((1<<64)-1)).to_bytes(8,'little').hex()
             super().add_code_hook(0x18114f78b,sincos_entry)
             super().add_code_hook(0x18114f790,sincos_return)
+            def row_filter_entry(ld, _addr, _size):
+                obj = ld.uc.reg_read(UC_X86_REG_RCX)
+                kernel = struct.unpack('<i', ld.read_bytes(obj + 8, 4))[0]
+                width = ld.uc.reg_read(UC_X86_REG_R9) & 0xffffffff
+                channels = struct.unpack('<I', ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP) + 0x28, 4))[0]
+                key = f'{_addr:x}/{kernel}/{width}/{channels}'
+                row_filters[key] = row_filters.get(key, 0) + 1
+            for row_entry in (0x18127f3c0, 0x1812d6690):
+                super().add_code_hook(row_entry, row_filter_entry)
             ray_number = [-1]
             op_number = [0]
             def helper_entry(ld, _addr, _size):
@@ -178,7 +187,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
         result = base.run(SimpleNamespace(aex_path=aex,width=w,height=h,length=50,sigma=0,max_instructions=200_000_000))
     finally:
         base.AexLoader = original
-    return dict(stages=stages,geometry=geometry,status=result['status'],error=result.get('error'),
+    return dict(stages=stages,geometry=geometry,row_filters=row_filters,status=result['status'],error=result.get('error'),
                 crt=result.get('manual_crt_initializers_diagnostic'))
 
 

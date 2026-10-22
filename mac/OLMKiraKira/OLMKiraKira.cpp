@@ -450,7 +450,8 @@ static std::vector<float> DirectionBoxBlur(
 	A_long length,
 	A_long dx,
 	A_long dy,
-	A_long passes)
+	A_long passes,
+	bool recovered_scalar_box = false)
 {
 	if (length <= 0) return input;
 	std::vector<float> src = input;
@@ -460,6 +461,35 @@ static std::vector<float> DirectionBoxBlur(
 	for (A_long pass = 0; pass < passes; ++pass) {
 		std::fill(dst.begin(), dst.end(), 0.0f);
 		for (A_long y = 0; y < height; ++y) {
+			// C07: original 18127f3c0 RowSum<float,double> order.
+			if (recovered_scalar_box && dx == 1 && dy == 0) {
+				double sum = 0.0;
+				for (A_long k = -left; k <= right; ++k) {
+					const A_long sx = Reflect101Index((int)k, (int)width);
+					sum += src[(size_t)y * width + sx];
+				}
+				const double scale = 1.0 / (double)length;
+				for (A_long x = 0; x < width; ++x) {
+					// Original RowSum<float,double> uses direct sums at 3/5;
+					// its other scalar kernels use the sliding double sum.
+					if (length == 3 || length == 5) {
+						const A_long first = Reflect101Index((int)(x - left), (int)width);
+						sum = (double)src[(size_t)y * width + first];
+						for (A_long k = -left + 1; k <= right; ++k) {
+							const A_long sx = Reflect101Index((int)(x + k), (int)width);
+							sum += (double)src[(size_t)y * width + sx];
+						}
+					}
+					dst[(size_t)y * width + x] = (float)(sum * scale);
+					if (x + 1 < width && length != 3 && length != 5) {
+						const A_long incoming = Reflect101Index((int)(x + right + 1), (int)width);
+						const A_long outgoing = Reflect101Index((int)(x - left), (int)width);
+						sum += (double)src[(size_t)y * width + incoming] -
+							(double)src[(size_t)y * width + outgoing];
+					}
+				}
+				continue;
+			}
 			for (A_long x = 0; x < width; ++x) {
 				double sum = 0.0;
 				for (A_long k = -left; k <= right; ++k) {
@@ -509,7 +539,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	double angle_deg,
 	A_long passes,
 	A_long blur_mode,
-	bool scalar_unit_alpha = false)
+	bool scalar_unit_alpha = false,
+	bool recovered_scalar_box = false)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
@@ -555,7 +586,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 			return input;
 		}
 	} else {
-		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes);
+		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes, recovered_scalar_box);
 	}
 	temp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);
 	return CopyCenteredRoi(temp_b, rw, rh, width, height);
@@ -744,7 +775,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
 		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0);
+			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0,
+			UsesRecoveredAlphaBoxPipeline(info));
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -1742,6 +1774,27 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
+// Smart's recovered Alpha box pipeline accepts finite floating source
+// colors beyond SDR when its scalar powf seed remains finite and nonnegative.
+// Negative alpha and powf overflow produce NaN/Inf filtering families that
+// remain outside this recovery; no final-output value is used for admission.
+static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
+	PF_PixelFormat format, const OLMKiraKiraInfo &info)
+{
+	if (!input || format != PF_PixelFormat_ARGB128 ||
+		!IsAlphaBoxTuple(info, format, true, true, true)) return false;
+	const float exponent = std::max(0.001f, (float)info.strength_multiplier);
+	for (A_long y = 0; y < input->height; ++y) {
+		for (A_long x = 0; x < input->width; ++x) {
+			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
+			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
+				!std::isfinite(p.green) || !std::isfinite(p.blue) || p.alpha < 0.0f ||
+				!std::isfinite(std::pow(p.alpha, exponent))) return false;
+		}
+	}
+	return true;
+}
+
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
 {
 	if (!in_data || !out) return PF_Err_BAD_CALLBACK_PARAM;
@@ -2576,7 +2629,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsZeroRayTuple(info)) &&
-				GenericBetaInputIsFiniteSDR(input_world, format);
+				(GenericBetaInputIsFiniteSDR(input_world, format) ||
+				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
