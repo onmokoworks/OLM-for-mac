@@ -1,0 +1,20 @@
+--- before.cpp
++++ candidate.cpp
+@@ -674,7 +674,7 @@
+ // pipeline is paired through its source/seed/rays/aggregation/outer writer.
+ static bool UsesRecoveredAlphaBoxPipeline(const OLMKiraKiraInfo &info)
+ {
+-	return info.channel == 1 && (info.blur_mode == 1 || info.blur_mode == 2) &&
++	return info.channel == 1 && (info.blur_mode >= 1 && info.blur_mode <= 3) &&
+ 		!info.approximated_input;
+ }
+ 
+@@ -782,7 +782,7 @@
+ 		const A_long len = scaled_len(raw_len);
+ 		if (raw_len <= 0 || len <= 0) return zero_ray;
+ 		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
+-			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0,
++			info.channel == 1 && info.highlight_radius == 0,
+ 			UsesRecoveredAlphaBoxPipeline(info));
+ 	};
+ 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
