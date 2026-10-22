@@ -130,7 +130,7 @@ def production(cell, expected, exe, directory):
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual = dict(zip(CELLS, pool.map(isolated_capture, CELLS)))
     rows = []
     with tempfile.TemporaryDirectory(prefix="radial_edge_offset_noise_prod_") as raw:

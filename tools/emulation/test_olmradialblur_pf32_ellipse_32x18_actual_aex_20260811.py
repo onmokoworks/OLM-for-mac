@@ -2,6 +2,7 @@
 """PF32 32x18 Zoom/Rotation ellipse geometry closure."""
 from __future__ import annotations
 
+import os
 import hashlib, importlib, json, pickle, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -60,9 +61,9 @@ def sha(raw: bytes) -> str:
 
 
 def compare_effect(effect: str, planes: tuple[str, ...]):
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual = dict(zip(CASES, pool.map(lambda cell: isolated(effect, "actual", *cell)[1], CASES)))
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         produced = dict(zip(CASES, pool.map(lambda cell: isolated(effect, "production", cell[0], cell[1], actual[cell]), CASES)))
     rows, exact = [], True
     for cell in CASES:

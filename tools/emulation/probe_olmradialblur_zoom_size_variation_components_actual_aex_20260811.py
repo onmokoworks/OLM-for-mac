@@ -149,7 +149,7 @@ def production(depth: int, size: float, expected):
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual = dict(zip(CELLS, pool.map(isolated, CELLS)))
 
     rows = []

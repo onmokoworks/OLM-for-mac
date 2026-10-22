@@ -93,7 +93,7 @@ def main(full: bool) -> int:
     controls = sorted({(mode, depth, sv, nv, nt, 1.0)
                        for mode, depth, sv, nv, nt, _gain in requested})
     all_cells = controls + requested
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captures = dict(zip(all_cells, pool.map(isolated, all_cells)))
     rows = []
     for cell in requested:

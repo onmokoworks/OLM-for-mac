@@ -168,7 +168,7 @@ int main(int n,char**q){{constexpr int W=32,H=18,RB={rowbytes},C={cells};std::ve
 
 def main() -> int:
     capture_cells = BASELINES + CELLS
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captures = dict(zip(capture_cells, pool.map(isolated_actual, capture_cells)))
     source_spans = {(nv, noise_type): edge_noise.shared_source_span(nv, noise_type)
                     for nv in (25.0, 100.0) for noise_type in (1, 2)}

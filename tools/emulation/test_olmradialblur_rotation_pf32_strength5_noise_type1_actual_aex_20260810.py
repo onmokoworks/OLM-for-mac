@@ -91,9 +91,9 @@ def rejected_at(strength: int, noise: float, expected: dict[str, bytes]) -> bool
 
 def main() -> int:
     requested = (0.0, *VALUES)
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual = dict(zip(requested, pool.map(lambda value: isolated("actual", value), requested)))
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    with ThreadPoolExecutor(max_workers=min(2, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         production = dict(zip(VALUES, pool.map(lambda value: isolated("production", value, actual[value]), VALUES)))
     rows = []
     exact = True

@@ -78,7 +78,7 @@ def first_difference(a, b):
 def main():
     exact = 0
     rows = []
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actuals = dict(zip(CELLS, pool.map(isolated, CELLS)))
     for cell in CELLS:
         actual = actuals[cell]

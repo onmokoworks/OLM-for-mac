@@ -97,11 +97,11 @@ def isolated_production(size: float, noise: float, expected: dict[str, bytes]) -
 def main() -> int:
     requested = [(0.0, noise) for noise in NOISE_VALUES]
     requested += [(size, noise) for size in SIZE_VALUES for noise in NOISE_VALUES]
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captured = dict(zip(requested, pool.map(lambda pair: isolated_actual(*pair), requested)))
     noise_controls = {noise: captured[(0.0, noise)] for noise in NOISE_VALUES}
     combos = [(size, noise) for size in SIZE_VALUES for noise in NOISE_VALUES]
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         production_results = dict(zip(
             combos,
             pool.map(lambda pair: isolated_production(pair[0], pair[1], captured[pair]), combos),

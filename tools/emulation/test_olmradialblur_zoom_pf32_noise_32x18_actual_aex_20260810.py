@@ -33,7 +33,7 @@ def isolated(mode,n,e=None):
   cmd.append(str(out));subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True);return pickle.loads(out.read_bytes())
 def main():
  vals=(0.,25.,100.)
- with ThreadPoolExecutor(max_workers=3) as pool:a=dict(zip(vals,pool.map(lambda n:isolated("actual",n),vals)))
+ with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:a=dict(zip(vals,pool.map(lambda n:isolated("actual",n),vals)))
  rows=[];ok=True
  for n in vals:
   m=isolated("production",n,a[n]);matches={k:m[k]==a[n][k] for k in ("pre_blur","post_blur","output")};ok&=all(matches.values());rows.append({"noise_variation":n,"matches":matches,"actual_hashes":{k:sha(a[n][k]) for k in ("pre_blur","post_blur","output")},"output_differs_noise0":n==0 or a[n]["output"]!=a[0.]["output"]})

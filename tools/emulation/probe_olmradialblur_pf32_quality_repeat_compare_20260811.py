@@ -92,7 +92,7 @@ def visible_output(raw: bytes, width: int, height: int) -> bytes:
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captured = list(pool.map(isolated, CELLS))
     actuals = {cell: result for cell, (rc, result) in zip(CELLS, captured) if rc == 0 and result}
     rows = []

@@ -72,7 +72,7 @@ def production(cell,expected):
   return {n:p.read_bytes() for n,p in zip(names,paths)} | {"_returncode":0}
 
 def main():
- with ThreadPoolExecutor(max_workers=6) as pool: caps=dict(zip(CELLS,pool.map(isolated,CELLS)))
+ with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool: caps=dict(zip(CELLS,pool.map(isolated,CELLS)))
  rows=[]
  for cell in CELLS:
   cap=caps[cell]; prod=production(cell,cap); planes=("pre_blur","post_blur","output") if cell[0]=="zoom" else ("polar","source_scalar","accum","max_alpha","final_rgba","coordinates","output")

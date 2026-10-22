@@ -7,6 +7,7 @@ source without replacing any newer work.
 Before the candidate is trusted, the rebuilt reference worker is calibrated
 against native output hashes recorded by earlier probes.
 """
+import os
 import argparse
 import contextlib
 from concurrent.futures import ProcessPoolExecutor
@@ -176,7 +177,7 @@ def main():
     retained_counts = Counter()
     # Spawn avoids inheriting temporary fixture overrides. Only two independent
     # case tasks are active with --jobs 2; no shared writable render directory.
-    with ProcessPoolExecutor(max_workers=args.jobs, mp_context=multiprocessing.get_context('spawn')) as pool:
+    with ProcessPoolExecutor(max_workers=min(args.jobs, int(os.environ.get("OLM_TEST_JOBS", "2"))), mp_context=multiprocessing.get_context('spawn')) as pool:
         tasks = [(index, case, args.worker, args.output, binaries, before_binary, recorded)
                  for index, case in enumerate(offset.independent_cases())]
         with (args.output/'independent.jsonl').open('w') as checkpoint:

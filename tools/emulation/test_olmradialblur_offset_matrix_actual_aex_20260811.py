@@ -121,7 +121,7 @@ def main():
     mode2_only = "--mode2" in sys.argv
     if mode2_only:
         cells = [cell for cell in CELLS if cell[0] == "rotation" and cell[4] == 2]
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actuals=dict(zip(cells,pool.map(isolated,cells)))
     rows=[]
     for cell in cells:

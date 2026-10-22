@@ -116,7 +116,7 @@ def firstdiff(a, b):
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actuals = dict(zip(CELLS, pool.map(isolated, CELLS)))
     # With Edge Fade neutral the owner does not export a prepass-alpha plane;
     # source_span is the relevant pre-scatter witness for this intersection.

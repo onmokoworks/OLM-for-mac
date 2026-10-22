@@ -162,7 +162,7 @@ def f32_span(noise, nv, factor):
 def main():
     controls = [(d, 0., 100., nt) for d in (8, 16, 32) for nt in (1, 2)]
     requested = controls + CELLS
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captures = dict(zip(requested, pool.map(isolated, requested)))
     # At NV100/SV0 the owner's source_span is exactly its generated/sampled
     # source-space noise plane.  Use that actual-AEX plane as the formula input;

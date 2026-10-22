@@ -24,9 +24,9 @@ def isolated(mode:str,inner:float,noise:float,expected=None):
   cmd.append(str(out));p=subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800);return (p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None)
 def main():
  cases=[(0.,0.),(0.,25.),(0.,100.),(50.,0.),(100.,0.),(50.,25.),(50.,100.),(100.,25.),(100.,100.)]
- with ThreadPoolExecutor(max_workers=5) as pool:captured=dict(zip(cases,pool.map(lambda p:isolated("actual",*p)[1],cases)))
+ with ThreadPoolExecutor(max_workers=min(5, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:captured=dict(zip(cases,pool.map(lambda p:isolated("actual",*p)[1],cases)))
  supported=[(0.,25.),(0.,100.),(50.,0.),(100.,0.),(50.,25.),(50.,100.),(100.,25.),(100.,100.)]
- with ThreadPoolExecutor(max_workers=6) as pool:produced=dict(zip(supported,pool.map(lambda p:isolated("production",p[0],p[1],captured[p]),supported)))
+ with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:produced=dict(zip(supported,pool.map(lambda p:isolated("production",p[0],p[1],captured[p]),supported)))
  noise_rows=[];exact=True
  for nv in (25.,100.):
   rc,prod=produced[(0.,nv)];matches={k:prod[k]==captured[(0.,nv)][k] for k in ("pre_blur","post_blur","output")} if prod else {}

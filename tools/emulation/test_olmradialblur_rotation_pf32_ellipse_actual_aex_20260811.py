@@ -40,9 +40,9 @@ def sha(raw: bytes) -> str:
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual = dict(zip(CASES, pool.map(lambda cell: isolated("actual", *cell)[1], CASES)))
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         production = dict(zip(CASES, pool.map(lambda cell: isolated("production", cell[0], cell[1], actual[cell]), CASES)))
     rows, exact = [], True
     for cell in CASES:
