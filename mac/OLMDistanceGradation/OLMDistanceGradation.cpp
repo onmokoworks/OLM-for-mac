@@ -359,6 +359,39 @@ static void meijster_edt(const u_char *mask, float *dst, long w, long h)
 // Gaussian blur (separable, matches the legacy cvSmooth replicated border +
 // sigma derived via cv::getGaussianKernel default:  sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8
 // ============================================================================
+static void make_gauss_kernel_smart(std::vector<float> &k, int ksize)
+{
+	// Original getGaussianKernelBitExact (181285230): sigma-zero small tables,
+	// otherwise symmetric double weights, normalized before conversion to float.
+	if ((ksize & 1) == 0) ++ksize;
+	if (ksize < 1) ksize = 1;
+	if (ksize == 1) { k = {1.0f}; return; }
+	if (ksize == 3) { k = {0.25f, 0.5f, 0.25f}; return; }
+	if (ksize == 5) { k = {1.f/16, 4.f/16, 6.f/16, 4.f/16, 1.f/16}; return; }
+	if (ksize == 7) {
+		k = {2.f/64, 7.f/64, 14.f/64, 18.f/64, 14.f/64, 7.f/64, 2.f/64}; return;
+	}
+	if (ksize == 9) {
+		k = {4.f/256, 13.f/256, 30.f/256, 51.f/256, 60.f/256,
+		     51.f/256, 30.f/256, 13.f/256, 4.f/256}; return;
+	}
+	const double sigma = ksize * 0.15 + 0.35;
+	const double factor = -0.125 / (sigma * sigma);
+	const int half = ksize / 2;
+	std::vector<double> weights(half);
+	double sum = 0.0;
+	for (int i = 0; i < half; ++i) {
+		const double x = 1 - ksize + i * 2;
+		weights[i] = std::exp(x * x * factor);
+		sum += weights[i];
+	}
+	sum = sum * 2.0 + 1.0;
+	const double inv = 1.0 / sum;
+	k.resize(ksize);
+	for (int i = 0; i < half; ++i) k[i] = k[ksize-i-1] = (float)(weights[i] * inv);
+	k[half] = (float)inv;
+}
+
 static void make_gauss_kernel(std::vector<float> &k, int ksize)
 {
 	// Odd kernel size required
@@ -395,11 +428,12 @@ static inline long reflect101(long i, long n) {
 	return i;
 }
 
-static void gauss_blur_separable(float *mat, long w, long h, int ksize)
+static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool smart_owner)
 {
 	if (ksize <= 1) return;
 	std::vector<float> k;
-	make_gauss_kernel(k, ksize);
+	if (smart_owner) make_gauss_kernel_smart(k, ksize);
+	else make_gauss_kernel(k, ksize);
 	int half = (int)k.size() / 2;
 
 	std::vector<float> tmp((size_t)w * h);
@@ -429,6 +463,7 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 		const float *row = mat + (size_t)y * w;
 		float       *out = tmp.data() + (size_t)y * w;
 		for (long x = 0; x < w; ++x) {
+			if (smart_owner && w == 1) { out[x] = row[x]; continue; }
 			float acc = 0;
 			for (int i = -half; i <= half; ++i) {
 				long xi = x + i;
@@ -438,6 +473,22 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 			}
 			out[x] = acc;
 		}
+	}
+	if (smart_owner) {
+		// The original replicated-border Gaussian skips singleton axes. Its
+		// symmetric column filter adds the center, then paired neighbors outward.
+		if (h == 1) { std::copy(tmp.begin(), tmp.end(), mat); return; }
+		for (long y = 0; y < h; ++y) {
+			for (long x = 0; x < w; ++x) {
+				float acc = tmp[(size_t)y*w+x] * k[half];
+				for (int i = 1; i <= half; ++i) {
+					const long lo = std::max(0L, y-i), hi = std::min(h-1, y+i);
+					acc += (tmp[(size_t)lo*w+x] + tmp[(size_t)hi*w+x]) * k[half+i];
+				}
+				mat[(size_t)y*w+x] = acc;
+			}
+		}
+		return;
 	}
 	// Vertical
 	for (long x = 0; x < w; ++x) {
@@ -666,7 +717,8 @@ struct DistanceField {
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp, bool smart_pf8_staging = false);
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
+	bool smart_pf8_staging = false, bool smart_pf8_blurred = false);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -778,12 +830,13 @@ static void invert_mask(u_char *mask, long w, long h)
 // or +0xbc. Scaled staging dimensions are separate arguments, so downsample
 // scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp, bool smart_pf8_staging)
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
+	bool smart_pf8_staging, bool smart_pf8_blurred)
 {
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
 		out, (size_t)w * sizeof(float), (float)threshold, constant_interp,
-		smart_pf8_staging ? 255.0f : 1.0f);
+		(smart_pf8_staging || smart_pf8_blurred) ? 255.0f : 1.0f);
 	if (smart_pf8_staging) {
 		// FUN_181174760 normalizes directly to [0,255] before cvConvertScale.
 		// A normalize-to-one followed by *255 introduces an extra rounding:
@@ -820,8 +873,11 @@ static void build_distance_field(
 	float ds = (p.ds_x + p.ds_y) * 0.5f;
 	if (ds <= 0.0f) ds = 1.0f;
 
-	// Packing commutes with the Both maximum on this unblurred path.
-	// Keep the separately witnessed PF16 and blurred staging contracts.
+	// Smart PF8 filters consume the original [0,255] float range. Delaying
+	// that scale until after filtering changes intermediate rounding. The
+	// unblurred lane still packs directly; PF16 retains its own roundtrip.
+	const bool smart_pf8_scaled = p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) &&
+		(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
 	const bool smart_pf8_staging = p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) &&
 		!(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
 	if (p.in_out == IN_OUT_INSIDE) {
@@ -837,27 +893,28 @@ static void build_distance_field(
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
 			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
-			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
+			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
 		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
 	bool blurred = p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0;
 	bool constant_blur = p.interp_mode == INTERP_CONSTANT && blurred;
 	if (constant_blur) {
-		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
+		const float maximum = smart_pf8_scaled ? 255.0f : 1.0f;
+		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= maximum) ? maximum : 0.0f;
 	}
 	if (blurred) df.pre_blur_x = df.x;
 
@@ -875,7 +932,7 @@ static void build_distance_field(
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
 				box_blur_separable(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
-				gauss_blur_separable(df.x.data(), w, h, ksize);
+				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
@@ -905,13 +962,13 @@ static void build_distance_field(
 		// Independent PF8 fieldgen->compose capture proves the corresponding
 		// cvConvertScale nearest-even byte staging before FUN_181170870.
 		for (float &value : df.x) {
-			float scaled = value * 255.0f;
+			float scaled = smart_pf8_scaled ? value : value * 255.0f;
 			int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
 			value = (float)word / 255.0f;
 		}
 		if (p.smart_owner) {
 			for (float &value : df.pre_blur_x) {
-				float scaled = value * 255.0f;
+				float scaled = smart_pf8_scaled ? value : value * 255.0f;
 				int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
 				value = (float)word / 255.0f;
 			}

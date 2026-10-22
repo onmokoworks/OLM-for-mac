@@ -21,6 +21,8 @@ from verify_distancegradation_smart_C08 import variant
 
 
 def gate_source(source, experiment):
+    if experiment == 'bilateral-restored':
+        return bilateral_source(source)
     if experiment in ('finite', 'finite-restored'):
         anchor = 'if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;'
         # Only the input-world loop; the controls guard is independent.
@@ -42,6 +44,44 @@ def gate_source(source, experiment):
                               'p.degenerate_mask = (bounded_alpha || (smart_owner && sizeof(P) == sizeof(PF_PixelFloat))) && (!any_owned || !any_unowned);')
         source = replace_once(source, 'case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; break;',
                               'case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; if (p.smart_owner && d_alpha > 1.0f) d_alpha = 1.0f; break;')
+    return source
+
+
+def bilateral_source(source):
+    """Reproduce the bounded radius-one operation/admission from its base."""
+    source=source.replace('p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0', 'has_effective_blur(p)')
+    anchor='static PF_Err\nFetchParams('
+    helper='''// The original bilateral filter clamps its radius to at least one: Size0
+// is an effective three-tap diameter, just like Size1, on this PF32 Smart lane.
+static bool has_effective_blur(const DGParams &p)
+{
+\treturn p.blur_mode != BLUR_MODE_NONE &&
+\t\t(p.blur_size > 0 || (p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
+\t\t p.blur_mode == BLUR_MODE_BILATERAL));
+}
+
+'''
+    source=replace_once(source,anchor,helper+anchor)
+    source=replace_once(source,'static void build_distance_field(',
+                        'static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p);\n\nstatic void build_distance_field(')
+    predicate='''// Radius-one bilateral is independently paired to the original IPP producer.
+// It retains the SDR source guard; larger radii and Power are not admitted here.
+static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
+{
+\tif (p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 0 || p.blur_size > 1)
+\t\treturn false;
+\tDGParams identity = p;
+\tidentity.blur_mode = BLUR_MODE_NONE;
+\treturn is_admitted_pf32_smart_unblurred_beta(identity);
+}
+
+'''
+    source=replace_once(source,'static bool is_admitted_pf32_smart_blurred_beta(',
+                        predicate+'static bool is_admitted_pf32_smart_blurred_beta(')
+    source=replace_once(source,'if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&',
+                        'if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&\n\t\t    !is_admitted_pf32_smart_bilateral_beta(p) &&')
+    source=replace_once(source,'if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted) {',
+                        'if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||\n\t\t\t\t    is_admitted_pf32_smart_bilateral_beta(p)) {')
     return source
 
 
@@ -101,17 +141,36 @@ def gaussian_matrix(a):
           yield f'depth{depth}/{geometry}/size{size}/inout{inout}',c
 
 
+def bilateral_matrix(a):
+    for geometry in ([7,1],[1,7],[13,7]):
+      w,h=geometry
+      av=[0.,.5,1.,0.,.25,1.,0.]
+      pixels=b''.join(struct.pack('<4f',av[(x+2*y)%7],.25,.5,.75) for y in range(h) for x in range(w))
+      for size in (0,1):
+       for inout in (1,2,3):
+        for invert in (0,1):
+         for mode in (1,2):
+          for bg in (0,1):
+           for interp in (1,2,3):
+            c=dict(geometry=geometry,depth=32,profile='sdr',parameters=a.defaults(w,h),pixels=pixels,input_padding=3,output_padding=5)
+            values={1:invert,2:inout,3:4,4:3,5:mode,6:bg,7:[255,28,53,238],8:[255,16,160,48],9:interp,11:5,12:size}
+            for q in c['parameters']:
+                if q['slot'] in values:q['value']=values[q['slot']]
+            yield f'{geometry}/size{size}/inout{inout}/invert{invert}/mode{mode}/bg{bg}/interp{interp}',c
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--before-ref', default='7d0b64fad8c5e5909404853e0264537352fcb7e0')
-    p.add_argument('--experiment', choices=['none','finite','finite-restored'], default='none')
+    p.add_argument('--experiment', choices=['none','finite','finite-restored','bilateral-restored'], default='none')
     p.add_argument('--candidate-source', type=Path)
     p.add_argument('--campaign', type=Path, action='append', default=[])
     p.add_argument('--matrix', action='store_true')
     p.add_argument('--extended-matrix', action='store_true')
     p.add_argument('--gaussian-matrix', action='store_true')
+    p.add_argument('--bilateral-matrix', action='store_true')
     p.add_argument('--negative', action='store_true')
     p.add_argument('--campaign-pf32-only', action='store_true')
     p.add_argument('--skip-original-rejected-timeouts', action='store_true',
@@ -172,8 +231,8 @@ def main():
             counts=dict(Counter(f"{r['before_exact']}->{r['after_exact']}" for r in rows))
             report['campaigns'].append(dict(seed=data['seed'],pf32_only=args.campaign_pf32_only,counts=counts,rows=rows,skipped=skipped))
             print('CAMPAIGN',data['seed'],counts,flush=True)
-        if args.matrix or args.extended_matrix or args.gaussian_matrix:
-            for label,c in (gaussian_matrix(a) if args.gaussian_matrix else matrix(a,args.extended_matrix)):
+        if args.matrix or args.extended_matrix or args.gaussian_matrix or args.bilateral_matrix:
+            for label,c in (bilateral_matrix(a) if args.bilateral_matrix else gaussian_matrix(a) if args.gaussian_matrix else matrix(a,args.extended_matrix)):
                 oracle,raw=a.oracle(c,wd,deadline,'smart')
                 if args.gaussian_matrix and oracle['status']!='ok':
                     report['matrix'].append(dict(label=label,oracle_failure=oracle,before_exact=False,after_exact=False,
