@@ -82,7 +82,11 @@ static bool pf32_unlisted_exact_lanes_reject() {
   d[DG_INTERP_MODE].u.pd.value=INTERP_POWER;d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_NONE;
   if(RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)==PF_Err_NONE||ob!=untouched)return false;
   d[DG_INTERP_MODE].u.pd.value=INTERP_LINEAR;d[DG_RENDER_MODE].u.pd.value=RENDER_MODE_LAYER;
+  // C14 admits radius one (Size0/1); larger bilateral radii remain guarded.
   d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_BILATERAL;d[DG_BLUR_SIZE].u.sd.value=1;
+  id.downsample_x={2,1};id.downsample_y={2,1};
+  if(RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)==PF_Err_NONE||ob!=untouched)return false;
+  id.downsample_x={1,1};id.downsample_y={1,1};d[DG_BLUR_SIZE].u.sd.value=2;
   return RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)!=PF_Err_NONE&&ob==untouched;
 }
 
@@ -179,7 +183,13 @@ static bool pf32_sphere_general_and_safety(){
   if(!changed)return false;
   auto reject_value=[&](float value){fill<PF_PixelFloat>(ib,rb,w,h);((PF_PixelFloat*)ib.data())[0].red=value;
     std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;return render_pf32_sphere(&iw,&ow)==PF_Err_BAD_CALLBACK_PARAM&&ob==before;};
-  if(!reject_value(-0.01f)||!reject_value(1.01f)||!reject_value(std::numeric_limits<float>::infinity())||
+  // C14 admits finite signed/HDR RGB on the unblurred Smart lane.
+  for(float value : {-0.01f,1.01f}) {
+    fill<PF_PixelFloat>(ib,rb,w,h);((PF_PixelFloat*)ib.data())[0].red=value;
+    const auto finite_input=ib;
+    if(render_pf32_sphere(&iw,&ow)!=PF_Err_NONE||ib!=finite_input)return false;
+  }
+  if(!reject_value(std::numeric_limits<float>::infinity())||
      !reject_value(std::numeric_limits<float>::quiet_NaN()))return false;
   fill<PF_PixelFloat>(ib,rb,w,h);std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;
   iw.rowbytes=rb-1;if(render_pf32_sphere(&iw,&ow)!=PF_Err_BAD_CALLBACK_PARAM||ob!=before)return false;iw.rowbytes=rb;
