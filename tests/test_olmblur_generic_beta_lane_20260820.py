@@ -46,7 +46,7 @@ class GenericBetaLaneTest(unittest.TestCase):
             self.assertIn(contract, body)
 
     def test_exact_small_fixtures_remain_owned_by_exact_lane(self):
-        self.assertIn('if (width <= 24 && height <= 24 && !integer_small && !default_small)', self.source)
+        self.assertIn('if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small)', self.source)
         self.assertIn('(bpc == 8 || bpc == 16) && raw.legacy == 0', self.source)
         self.assertIn('(raw.repeat == 1 || (width == 1 && height == 1))', self.source)
 

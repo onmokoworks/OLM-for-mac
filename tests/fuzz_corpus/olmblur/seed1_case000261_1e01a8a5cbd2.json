@@ -1,4 +1,63 @@
 {
+  "C12_updates": [
+    {
+      "previous_result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "d56975426ed23fcce5721dc776737199c07100ff446b660a31c5585957992b08",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 200,
+              "actual_word_hex": "6e3b",
+              "different_bytes": 21,
+              "different_words": 20,
+              "expected_bytes": 200,
+              "expected_word_hex": "543b",
+              "first_byte": 108,
+              "first_word": 54
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "889ad224430a25fc8107c0b7226b6570a63c84b69f507a11ef0c43958329b99e",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "report": "orchestra/reports/C12-olmblur-smart-r3.md",
+      "stage": "pf16"
+    }
+  ],
   "case": {
     "depth": 16,
     "geometry": [
@@ -193,23 +252,13 @@
         "status": "refusal"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 200,
-          "actual_word_hex": "6e3b",
-          "different_bytes": 21,
-          "different_words": 20,
-          "expected_bytes": 200,
-          "expected_word_hex": "543b",
-          "first_byte": 108,
-          "first_word": 54
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 5 5 0",
           "ERROR": "0"
         },
-        "raw_sha256": "889ad224430a25fc8107c0b7226b6570a63c84b69f507a11ef0c43958329b99e",
-        "status": "mismatch"
+        "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

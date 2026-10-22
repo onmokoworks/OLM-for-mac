@@ -1602,7 +1602,12 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// NaN payload propagation is not established by the finite-input evidence.
 	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
 		raw.amount == 5.0 && raw.repeat == 2;
-	if (width <= 24 && height <= 24 && !integer_small && !default_small) return "generic-small-fixture";
+	// C12: the non-Legacy workers materialize the radius as float before
+	// integer truncation. PF16/PF32 admission stays at Repeat <= 2: higher-repeat
+	// coefficient/import residuals remain outside this new rule.
+	const bool radius_small = raw.legacy == 0 &&
+		(bpc == 8 || ((bpc == 16 || bpc == 32) && raw.repeat <= 2));
+	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;

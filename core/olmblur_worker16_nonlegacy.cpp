@@ -96,11 +96,14 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
         const double radius_value = static_cast<double>(params.blur_amount) *
                                     std::pow(static_cast<double>(decay),
                                              static_cast<double>(iteration));
-        const std::size_t radius = static_cast<std::size_t>(radius_value);
+        // AEX CVTPD2PS precedes CVTTSS2SI: round to binary32 before
+        // truncating the iteration radius (e.g. 2.99999996 becomes 3).
+        const float materialized_radius = static_cast<float>(radius_value);
+        const std::size_t radius = static_cast<std::size_t>(materialized_radius);
         if (radius == 0) {
             break;
         }
-        const float sigma = static_cast<float>(radius_value) / 3.0f;
+        const float sigma = materialized_radius / 3.0f;
         const float denominator = (sigma + sigma) * sigma;
         for (std::size_t k = 0; k <= radius; ++k) {
             const float exponent =
