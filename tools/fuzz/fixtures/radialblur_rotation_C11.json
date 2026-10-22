@@ -1,0 +1,157 @@
+{
+  "case": {
+    "seed": 1,
+    "index": 67,
+    "depth": 8,
+    "geometry": [
+      11,
+      8
+    ],
+    "profile": "sdr",
+    "parameters": [
+      {
+        "slot": 1,
+        "kind": "u",
+        "value": 2
+      },
+      {
+        "slot": 2,
+        "kind": "p",
+        "value": [
+          5.5186920166015625,
+          13.846389770507812
+        ]
+      },
+      {
+        "slot": 4,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 5,
+        "kind": "u",
+        "value": 1
+      },
+      {
+        "slot": 6,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 7,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 10,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 11,
+        "kind": "u",
+        "value": 1
+      },
+      {
+        "slot": 12,
+        "kind": "i",
+        "value": 4
+      },
+      {
+        "slot": 13,
+        "kind": "i",
+        "value": 0
+      },
+      {
+        "slot": 15,
+        "kind": "b",
+        "value": 1
+      },
+      {
+        "slot": 17,
+        "kind": "s",
+        "value": 1.0
+      },
+      {
+        "slot": 18,
+        "kind": "a",
+        "value": 0.0
+      },
+      {
+        "slot": 20,
+        "kind": "s",
+        "value": 5.0
+      },
+      {
+        "slot": 21,
+        "kind": "s",
+        "value": 1.0
+      },
+      {
+        "slot": 22,
+        "kind": "s",
+        "value": 0.0
+      },
+      {
+        "slot": 24,
+        "kind": "s",
+        "value": 0.0
+      },
+      {
+        "slot": 25,
+        "kind": "u",
+        "value": 2
+      },
+      {
+        "slot": 27,
+        "kind": "i",
+        "value": 881
+      },
+      {
+        "slot": 28,
+        "kind": "a",
+        "value": 309.2279968261719
+      },
+      {
+        "slot": 29,
+        "kind": "s",
+        "value": 100.0
+      }
+    ],
+    "input_padding": 7,
+    "output_padding": 11
+  },
+  "input_hex": "00b082c9ffdac2ec0025d39dff31e3c500d9e5b400327cd800498055ffe108150959bdac1d2b3842583ab4a600de5fc972525e252df05cab000a073dff40e82c00e7d1c1002564876db4a89000fecd5c915fa6b60007940eff6608a669427c1eff89ff13a947d5b5ff6d116c00194383ff50238e8ac3950000f8fd10009c110c61a36e40f8a5340f8432b1b9ff37fd13ff01842b0dd610d9ff4ebc3b008ea9dc20fb96b1ff2b601c0ecf63da0080fde82ca37a29ff066eb3ff48237cf40fca27ffac3b3eb42ce6ff00f53cfde85fa16fff0f30d691f5e199ff4756350067541200a591f3ff36607bffb8dc78ff129604007c22b481bae78e007d7a03001ca75c000252cf00435e1928943544976a26d5ff8045bd0034681b005fff19e6b33991a0342ebafffd5158ff46b6d80094103cc186d5778833b2c6ff233f2c00cc0bc227978e2df9e469a70060e21580e20c24ffc891bf002987dc00e131ef00f07401",
+  "result": {
+    "oracle": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "raw_sha256": "e5c33d61f49ea959c7c49bf229f5f95c98832870c83e2ed99c7335d4dabeef79"
+    },
+    "routes": {
+      "smart": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 5"
+        },
+        "raw_sha256": "d939b00f44b22ac9a785368282610277ec81538a6e11e72116f2293d5b1d103d",
+        "diff": {
+          "expected_bytes": 352,
+          "actual_bytes": 352,
+          "different_bytes": 59,
+          "different_words": 59,
+          "first_byte": 66,
+          "first_word": 66,
+          "expected_word_hex": "ae",
+          "actual_word_hex": "af"
+        }
+      }
+    },
+    "first_mismatching_stage": null,
+    "stage_observation": "paired stages unavailable; final raw output only"
+  }
+}

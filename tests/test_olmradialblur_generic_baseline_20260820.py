@@ -76,7 +76,12 @@ template <typename P> int run(short depth, int blur_type) {{
   i.outer_strength=65;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 19;
   i.outer_strength=2000;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 20;
   i.outer_strength=2001;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 7;i.outer_strength=1;
-  i.center_x=-.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 8;i.center_x=1;
+  i.center_x=-1.0/65536.0;
+  const PF_Err outside_expected=(std::is_same<P,PF_Pixel8>::value ||
+    (std::is_same<P,PF_Pixel16>::value && blur_type==1))?PF_Err_NONE:PF_Err_BAD_CALLBACK_PARAM;
+  if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=outside_expected)return 8;
+  i.center_x=-32768.0-1.0/65536.0;
+  if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 8;i.center_x=1;
   i.angle_deg=360.0+1.0/65536.0;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 9;
   i.angle_deg=32768.0;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 9;
 	i.angle_deg=0;i.noise_variation=.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 16;
