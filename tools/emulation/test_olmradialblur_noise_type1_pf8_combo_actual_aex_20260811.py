@@ -2,6 +2,7 @@
 """PF8 RadialBlur Noise Type 1 pairwise actual-AEX/production matrix."""
 from __future__ import annotations
 
+import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -56,7 +57,7 @@ def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_type1_pf8_") as name:
         path = Path(name) / "capture.pkl"
         subprocess.run([sys.executable, str(Path(__file__)), "--capture",
-                        *map(str, cell), str(path)], check=True)
+                        *map(str, cell), str(path)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(path.read_bytes())
 
 def patched_source(td: Path) -> Path:
@@ -121,4 +122,7 @@ if __name__ == "__main__":
         mode,w,h,nv,seed,offset,thickness = sys.argv[2:9]
         cell=(mode,int(w),int(h),float(nv),int(seed),float(offset),float(thickness))
         Path(sys.argv[9]).write_bytes(pickle.dumps(capture(cell))); raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -2,6 +2,7 @@
 """Bounded RadialBlur off-center/Brightness actual-AEX pairwise matrix."""
 from __future__ import annotations
 
+import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -109,7 +110,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_offcenter_") as raw:
         p=Path(raw)/"capture.pkl"
-        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(p)],check=True)
+        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(p)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True)
         return pickle.loads(p.read_bytes())
 
 def patched_source(path: Path):
@@ -153,4 +154,7 @@ def main():
 if __name__=="__main__":
     if len(sys.argv)>2 and sys.argv[1]=="--capture":
         vals=sys.argv[2:-1];cell=(vals[0],int(vals[1]),int(vals[2]),int(vals[3]),float(vals[4]),float(vals[5]),float(vals[6]));Path(sys.argv[-1]).write_bytes(pickle.dumps(capture(cell)));raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

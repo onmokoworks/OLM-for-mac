@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Independent 32x18 PF32 Zoom Type-1 Noise geometry witness."""
 from __future__ import annotations
+import os
 import hashlib,json,pickle,struct,subprocess,sys,tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -29,7 +30,7 @@ def isolated(mode,n,e=None):
  with tempfile.TemporaryDirectory(prefix="radial_zoom32_") as d:
   out=Path(d)/"out.pkl";cmd=[sys.executable,str(Path(__file__)),f"--{mode}",str(n)]
   if e is not None:inp=Path(d)/"in.pkl";inp.write_bytes(pickle.dumps(e));cmd.append(str(inp))
-  cmd.append(str(out));subprocess.run(cmd,check=True);return pickle.loads(out.read_bytes())
+  cmd.append(str(out));subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True);return pickle.loads(out.read_bytes())
 def main():
  vals=(0.,25.,100.)
  with ThreadPoolExecutor(max_workers=3) as pool:a=dict(zip(vals,pool.map(lambda n:isolated("actual",n),vals)))
@@ -40,4 +41,7 @@ def main():
 if __name__=="__main__":
  if len(sys.argv)==4 and sys.argv[1]=="--actual":Path(sys.argv[3]).write_bytes(pickle.dumps(actual(float(sys.argv[2]))));raise SystemExit(0)
  if len(sys.argv)==5 and sys.argv[1]=="--production":Path(sys.argv[4]).write_bytes(pickle.dumps(production(float(sys.argv[2]),pickle.loads(Path(sys.argv[3]).read_bytes()))));raise SystemExit(0)
+ if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+     print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+     raise SystemExit(2)
  raise SystemExit(main())

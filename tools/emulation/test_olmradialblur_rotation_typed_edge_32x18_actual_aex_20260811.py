@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Rotation 32x18 PF8/PF16/PF32 edge-fade actual-owner comparison."""
 from __future__ import annotations
+import os
 import json, pickle, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -38,7 +39,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="rotation_edge_probe_") as raw:
         out=Path(raw)/"a.pkl"
-        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(out)],check=True)
+        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(out)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True)
         return pickle.loads(out.read_bytes())
 
 def production(cell, expected):
@@ -98,4 +99,7 @@ def main():
 if __name__=="__main__":
     if len(sys.argv)>2 and sys.argv[1]=="--capture":
         cell=(int(sys.argv[2]),sys.argv[3],int(sys.argv[4]));Path(sys.argv[5]).write_bytes(pickle.dumps(capture(cell)));raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     main()

@@ -2,6 +2,7 @@
 """Actual-owner PF16 Quality x Repeat matrix (no production admission)."""
 from __future__ import annotations
 
+import os
 import hashlib, json, pickle, struct, subprocess, sys, tempfile, types
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -144,7 +145,7 @@ int main(int argc,char**q){{constexpr int W={w},H={h},RB={rb},C={cells};std::vec
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_quality_repeat_") as raw:
         output = Path(raw) / "out.pkl"
-        process = subprocess.run([sys.executable, __file__, "--cell", *map(str, cell), str(output)])
+        process = subprocess.run([sys.executable, __file__, "--cell", *map(str, cell), str(output)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800)
         return process.returncode, pickle.loads(output.read_bytes()) if output.exists() else None
 
 
@@ -191,4 +192,7 @@ if __name__ == "__main__":
         mode, w, h, rb, quality, repeat, output = sys.argv[2:]
         Path(output).write_bytes(pickle.dumps(run_cell(mode, int(w), int(h), int(rb), float(quality), int(repeat))))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -2,6 +2,7 @@
 """Verify the bounded shared-production Zoom Outer Edge Fade matrix."""
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -48,7 +49,7 @@ def actual(cell, fade=50):
 def isolated(cell, fade=50):
     with tempfile.TemporaryDirectory(prefix="radial_zoom_fade_offset_actual_") as raw:
         output = Path(raw) / "capture.pkl"
-        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(fade), str(output)], check=True)
+        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(fade), str(output)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(output.read_bytes())
 
 
@@ -272,4 +273,7 @@ if __name__ == "__main__":
         fade = int(sys.argv[5])
         Path(sys.argv[6]).write_bytes(pickle.dumps(actual(cell, fade)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

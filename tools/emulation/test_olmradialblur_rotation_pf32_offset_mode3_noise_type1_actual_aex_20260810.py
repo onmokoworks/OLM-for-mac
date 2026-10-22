@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """PF32 Rotation Offset-mode-3 x Type-1 Noise bounded cross-product."""
 from __future__ import annotations
+import os
 import hashlib,json,pickle,subprocess,sys,tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -32,7 +33,7 @@ def isolated(mode:str,offset:int,noise:float,expected:dict[str,bytes]|None=None)
   out=Path(name)/"out.pkl";cmd=[sys.executable,str(Path(__file__)),f"--{mode}",str(offset),str(noise)]
   if expected is not None:
    inp=Path(name)/"in.pkl";inp.write_bytes(pickle.dumps(expected));cmd.append(str(inp))
-  cmd.append(str(out));subprocess.run(cmd,check=True);return pickle.loads(out.read_bytes())
+  cmd.append(str(out));subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True);return pickle.loads(out.read_bytes())
 def rejected(offset:int,noise:float,expected:dict[str,bytes])->bool:
  try:production_at(offset,noise,expected)
  except subprocess.CalledProcessError as exc:return exc.returncode==3
@@ -54,4 +55,7 @@ def main()->int:
 if __name__=="__main__":
  if len(sys.argv)==5 and sys.argv[1]=="--actual":Path(sys.argv[4]).write_bytes(pickle.dumps(actual_at(int(sys.argv[2]),float(sys.argv[3]))));raise SystemExit(0)
  if len(sys.argv)==6 and sys.argv[1]=="--production":Path(sys.argv[5]).write_bytes(pickle.dumps(production_at(int(sys.argv[2]),float(sys.argv[3]),pickle.loads(Path(sys.argv[4]).read_bytes()))));raise SystemExit(0)
+ if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+     print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+     raise SystemExit(2)
  raise SystemExit(main())

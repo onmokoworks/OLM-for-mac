@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only actual-AEX probe: Zoom Size Variation, typed 32x18."""
 from __future__ import annotations
+import os
 import hashlib, json, pickle, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -28,7 +29,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_zoom_size_") as raw:
         out=Path(raw)/"a.pkl"
-        subprocess.run([sys.executable,__file__,"--capture",str(cell[0]),str(cell[1]),str(out)],check=True)
+        subprocess.run([sys.executable,__file__,"--capture",str(cell[0]),str(cell[1]),str(out)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True)
         return pickle.loads(out.read_bytes())
 
 def sha(x): return hashlib.sha256(x).hexdigest()
@@ -71,4 +72,7 @@ def main():
 if __name__=="__main__":
     if len(sys.argv)==5 and sys.argv[1]=="--capture":
         Path(sys.argv[4]).write_bytes(pickle.dumps(capture((int(sys.argv[2]),float(sys.argv[3]))))); raise SystemExit
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     main()

@@ -2,6 +2,7 @@
 """Probe-only PF32 Quality x Repeat owner/typed comparison."""
 from __future__ import annotations
 
+import os
 import hashlib, inspect, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -53,7 +54,7 @@ def isolated(cell):
         return 0, pickle.loads(cache.read_bytes())
     with tempfile.TemporaryDirectory(prefix="radial_pf32_qr_") as raw:
         out = Path(raw) / "capture.pkl"
-        p = subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(out)])
+        p = subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(out)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800)
         result = pickle.loads(out.read_bytes()) if out.exists() else None
         if p.returncode == 0 and result is not None:
             cache.write_bytes(pickle.dumps(result))
@@ -143,4 +144,7 @@ if __name__ == "__main__":
         cell = (values[0], int(values[1]), int(values[2]), int(values[3]), float(values[4]), int(values[5]))
         Path(sys.argv[-1]).write_bytes(pickle.dumps(capture(cell)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

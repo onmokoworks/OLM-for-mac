@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """PF32 Zoom: close Type-1 Noise and retain Inner Strength as an evidence boundary."""
 from __future__ import annotations
+import os
 import hashlib,json,pickle,subprocess,sys,tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -20,7 +21,7 @@ def isolated(mode:str,inner:float,noise:float,expected=None):
  with tempfile.TemporaryDirectory(prefix="radial_zoom_branch_") as d:
   out=Path(d)/"out.pkl";cmd=[sys.executable,str(Path(__file__)),f"--{mode}",str(inner),str(noise)]
   if expected is not None:inp=Path(d)/"in.pkl";inp.write_bytes(pickle.dumps(expected));cmd.append(str(inp))
-  cmd.append(str(out));p=subprocess.run(cmd);return (p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None)
+  cmd.append(str(out));p=subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800);return (p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None)
 def main():
  cases=[(0.,0.),(0.,25.),(0.,100.),(50.,0.),(100.,0.),(50.,25.),(50.,100.),(100.,25.),(100.,100.)]
  with ThreadPoolExecutor(max_workers=5) as pool:captured=dict(zip(cases,pool.map(lambda p:isolated("actual",*p)[1],cases)))
@@ -47,4 +48,7 @@ if __name__=="__main__":
   try:r=production(float(sys.argv[2]),float(sys.argv[3]),pickle.loads(Path(sys.argv[4]).read_bytes()))
   except subprocess.CalledProcessError as e:raise SystemExit(e.returncode)
   Path(sys.argv[5]).write_bytes(pickle.dumps(r));raise SystemExit(0)
+ if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+     print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+     raise SystemExit(2)
  raise SystemExit(main())

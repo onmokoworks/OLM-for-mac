@@ -2,6 +2,7 @@
 """PF16 Zoom/Rotation ellipse comparison at 9x7 and 32x18."""
 from __future__ import annotations
 
+import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -83,7 +84,7 @@ def isolated(effect, mode, cell, expected=None):
         out = Path(raw) / "out.pkl"; cmd = [sys.executable, __file__, f"--{effect}-{mode}", *map(str, cell)]
         if expected is not None:
             exp = Path(raw) / "expected.pkl"; exp.write_bytes(pickle.dumps(expected)); cmd.append(str(exp))
-        cmd.append(str(out)); p = subprocess.run(cmd)
+        cmd.append(str(out)); p = subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800)
         return p.returncode, pickle.loads(out.read_bytes()) if out.exists() else None
 
 
@@ -108,10 +109,14 @@ def main():
 
 if __name__ == "__main__":
     action = sys.argv[1] if len(sys.argv) > 1 else ""
-    if action.startswith("--") and action != "":
+    if ((len(sys.argv) == 8 and action in ("--zoom-actual", "--rotation-actual"))
+            or (len(sys.argv) == 9 and action in ("--zoom-production", "--rotation-production"))):
         effect, mode = action[2:].split("-"); cell = (int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), float(sys.argv[5]), float(sys.argv[6])); configure(*cell)
         if mode == "actual": result = zoom.actual_aex() if effect == "zoom" else rotation.actual_aex(); out = sys.argv[7]
         else:
             expected = pickle.loads(Path(sys.argv[7]).read_bytes()); result = zoom.mac_production(expected) if effect == "zoom" else rotation_production(expected); out = sys.argv[8]
         Path(out).write_bytes(pickle.dumps(result)); raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

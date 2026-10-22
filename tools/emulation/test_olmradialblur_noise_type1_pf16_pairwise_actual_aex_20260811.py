@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """PF16 RadialBlur Type-1 pairwise actual-AEX/production matrix."""
 from __future__ import annotations
+import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -46,7 +47,7 @@ def actual(cell):
 
 def isolated(cell):
  with tempfile.TemporaryDirectory(prefix="radial_type1_pf16_") as d:
-  p=Path(d)/"a.pkl"; subprocess.run([sys.executable,__file__,"--actual",*map(str,cell),str(p)],check=True)
+  p=Path(d)/"a.pkl"; subprocess.run([sys.executable,__file__,"--actual",*map(str,cell),str(p)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True)
   return pickle.loads(p.read_bytes())
 
 def production(cell,expected):
@@ -83,4 +84,8 @@ def main():
 if __name__=="__main__":
  if len(sys.argv)>1 and sys.argv[1]=="--actual":
   raw=sys.argv[2:-1]; cell=(raw[0],int(raw[1]),int(raw[2]),int(raw[3]),float(raw[4]),int(raw[5]),float(raw[6]),float(raw[7])); Path(sys.argv[-1]).write_bytes(pickle.dumps(actual(cell)))
- else: raise SystemExit(main())
+ else:
+  if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+   print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+   raise SystemExit(2)
+  raise SystemExit(main())
