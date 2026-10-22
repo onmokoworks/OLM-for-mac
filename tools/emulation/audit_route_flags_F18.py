@@ -239,7 +239,7 @@ def main():
                         help='Exit nonzero unless all original/Mac resource/runtime flags agree')
     args = parser.parse_args()
     scratch = args.scratch.resolve()
-    assert scratch.is_relative_to(ROOT/'orchestra/state/F18-route-target-per-plugin')
+    assert scratch.is_relative_to(ROOT/'orchestra/state')
     scratch.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch),
                PYTHONDONTWRITEBYTECODE='1')
@@ -270,7 +270,7 @@ def main():
         entry = pe.OPTIONAL_HEADER.ImageBase+entries[0].address
         original = [original_setup(aex, entry, fill) for fill in (0, 0xa5)]
         build = scratch/'build'/plugin
-        command = ['xcodebuild', '-project', f'mac/{plugin}/Mac/{plugin}.xcodeproj',
+        command = ['xcodebuild', '-jobs', '2', '-project', f'mac/{plugin}/Mac/{plugin}.xcodeproj',
                    '-configuration', 'Debug', 'ARCHS=arm64 x86_64', 'ONLY_ACTIVE_ARCH=NO',
                    'GCC_OPTIMIZATION_LEVEL=2', f'OBJROOT={build}/obj', f'SYMROOT={build}/sym',
                    f'SHARED_PRECOMPS_DIR={build}/precomp', f'CONFIGURATION_BUILD_DIR={build}/products', 'build']

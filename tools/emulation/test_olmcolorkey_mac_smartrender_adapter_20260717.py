@@ -74,6 +74,8 @@ static const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_eff
 #define PF_OutFlag2_SUPPORTS_SMART_RENDER 1u
 #define PF_OutFlag2_FLOAT_COLOR_AWARE 2u
 #define PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA 4u
+// SDK bit 27; original GLOBAL_SETUP value verified by the F18 flag audit.
+#define PF_OutFlag2_SUPPORTS_THREADED_RENDERING 0x08000000u
 #define PF_ParamFlag_COLLAPSE_TWIRLY 32u
 #define PF_ParamFlag_SUPERVISE 64u
 #define PF_Precision_TEN_THOUSANDTHS 0
