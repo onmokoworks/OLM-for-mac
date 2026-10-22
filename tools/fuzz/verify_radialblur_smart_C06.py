@@ -28,7 +28,8 @@ WORKER = Path('/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/targe
 
 
 def independent_cases(adapter, matrix='alignment'):
-    for geometry in ((3, 5), (11, 7)):
+    geometries = ((1, 1), (1, 7), (7, 1), (3, 5), (11, 7)) if matrix == 'border' else ((3, 5), (11, 7))
+    for geometry in geometries:
         w, h = geometry
         for depth in ((16, 32) if matrix == 'alignment' else (8, 16, 32)):
             rng = random.Random(61000 + w * 100 + depth)
@@ -39,7 +40,7 @@ def independent_cases(adapter, matrix='alignment'):
                            struct.pack('<4H', *values) if depth == 16 else
                            struct.pack('<4f', *[v / 32768 for v in values]))
             for blur_type in (1, 2):
-                variants = range(3) if matrix == 'alignment' else range(20)
+                variants = range(3) if matrix == 'alignment' else range(10) if matrix == 'border' else range(20)
                 for variant in variants:
                     params = adapter.defaults(w, h)
                     changes = ({1: blur_type, 4: 4},
@@ -50,6 +51,21 @@ def independent_cases(adapter, matrix='alignment'):
                                   -360, 0, 360, 360 + 1/65536, 720, 32768 - 1/65536]
                         changes = {1: blur_type, 4: 7, 10: 3, 17: 1 if variant < 10 else 2.25,
                                    18: angles[variant % 10]}
+                    elif matrix == 'border':
+                        changes = [
+                            {4: 4},
+                            {4: 7, 10: 3, 6: 2, 12: 4},
+                            {4: 4, 7: 25, 13: 50},
+                            {4: 4, 22: 25, 24: 25, 27: 17, 28: 31, 29: 7},
+                            {4: 7, 10: 3, 18: -721, 17: 2.25, 20: 3, 2: [0, 0]},
+                            {4: 4, 7: 25, 13: 50, 22: 25, 24: 100, 25: 2, 27: 89,
+                             2: [w / 4, h * 3 / 4]},
+                            {4: 7, 10: 3, 2: [w // 2, h // 2]},
+                            {4: 7, 10: 3, 2: [w // 2 + 1/65536, h // 2]},
+                            {4: 7, 10: 3, 2: [w // 2, h // 2 + 1/65536]},
+                            {4: 7, 10: 3, 2: [w // 2 + .25, h // 2 + .25]},
+                        ][variant]
+                        changes.update({1: blur_type, 15: 0})
                     for p in params:
                         if p['slot'] in changes:
                             p['value'] = changes[p['slot']]
@@ -64,7 +80,7 @@ def main():
     ap.add_argument('--evidence', type=Path, help='Replay compact C06 comparison evidence')
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--independent', action='store_true')
-    ap.add_argument('--matrix', choices=('alignment', 'angles'), default='alignment')
+    ap.add_argument('--matrix', choices=('alignment', 'angles', 'border'), default='alignment')
     ap.add_argument('--ordinary', action='store_true')
     ap.add_argument('--smoke', action='store_true')
     args = ap.parse_args()

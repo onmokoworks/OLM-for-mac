@@ -915,6 +915,37 @@ static bool CheckedCellProduct(A_long width, A_long height, size_t channels, siz
 	return true;
 }
 
+// Original A8F0 chooses the far axis using integer extent/2, then performs
+// FLOAT32 squares/add/sqrt and truncates before the caller divides the near
+// radius by Ratio. A mathematical max(center, extent-center) differs for an
+// odd extent with a center between floor(extent/2) and extent/2.
+static void ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
+    float ratio, A_long *minimum, A_long *maximum)
+{
+    auto axis = [](A_long extent, float center, float *near, float *far) {
+        const float size = (float)extent;
+        if (center < 0.0f) {
+            *near = -center;
+            *far = RadialF32Sub(size, center);
+        } else if (center >= size) {
+            *near = RadialF32Sub(center, size);
+            *far = center;
+        } else {
+            *near = 0.0f;
+            *far = center > (float)(extent / 2) ? center : RadialF32Sub(size, center);
+        }
+    };
+    float near_x, near_y, far_x, far_y;
+    axis(width, cx, &near_x, &far_x);
+    axis(height, cy, &near_y, &far_y);
+    const A_long near_radius = (A_long)std::sqrt(RadialF32Add(
+        RadialF32Mul(near_x, near_x), RadialF32Mul(near_y, near_y)));
+    const A_long far_radius = (A_long)std::sqrt(RadialF32Add(
+        RadialF32Mul(far_x, far_x), RadialF32Mul(far_y, far_y)));
+    *minimum = std::max<A_long>(0, (A_long)RadialF32Div((float)near_radius, ratio) - 2);
+    *maximum = far_radius + 2;
+}
+
 static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
 	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
@@ -940,7 +971,7 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.outer_edge_fade >= 0 && info.outer_edge_fade <= 100 && outer_offset_supported &&
 		info.inner_strength >= 0 && info.inner_strength <= 2000 &&
 		info.inner_edge_fade >= 0 && info.inner_edge_fade <= 100 && inner_offset_supported &&
-		info.repeat_border != FALSE && std::isfinite(info.ratio) &&
+		std::isfinite(info.ratio) &&
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
 		// The public AD getter supplies signed 16.16 degrees, not a one-turn
 		// slider. The existing fixed-radian transform handles that full domain.
@@ -3146,8 +3177,10 @@ static PF_Err RenderZoomTyped(
 	const double min_dy = (0.0 <= cy && cy < h) ? 0.0 : std::abs(cy < 0.0 ? cy : cy - h);
 	const double max_dx = (0.0 <= cx && cx < w) ? std::max(cx, (double)w - cx) : (cx < 0.0 ? (double)w - cx : cx);
 	const double max_dy = (0.0 <= cy && cy < h) ? std::max(cy, (double)h - cy) : (cy < 0.0 ? (double)h - cy : cy);
-	const A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(min_dx * min_dx + min_dy * min_dy) / ratio) - 2);
-	const A_long max_r = (A_long)std::sqrt(max_dx * max_dx + max_dy * max_dy) + 2;
+	A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(min_dx * min_dx + min_dy * min_dy) / ratio) - 2);
+	A_long max_r = (A_long)std::sqrt(max_dx * max_dx + max_dy * max_dy) + 2;
+	if (use_native_zoom_baseline)
+		ZoomRadiusBoundsAEX(w, h, (float)cx, (float)cy, (float)ratio, &min_r, &max_r);
 	const A_long radius_count = max_r - min_r + 1;
 	size_t polar_rgba_words = 0;
 	if (!CheckedCellProduct(radius_count, angular_count, 4, &polar_rgba_words) ||
@@ -3325,8 +3358,12 @@ static PF_Err RenderZoomTyped(
 			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled.rgba[c];
 			polar_valid[(size_t)ai * radius_count + ri] = sampled.eligible;
 			if (use_aex_outer_only) {
+				// Original 5984..59B6 selects A550 for both scalar fields when
+				// Repeat Border is off, just as it selects the no-repeat color sampler.
 				span_plane[(size_t)ai * radius_count + ri] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+					use_native_zoom_baseline && info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(source_factor_with_guard, w, h, sx, sy)
+						: use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
 						!quality_repeat_noise_tuple
 						? 1.0f
 						: (quality_repeat_noise_tuple
@@ -3335,7 +3372,9 @@ static PF_Err RenderZoomTyped(
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 				if (use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 					fade_factor_plane[(size_t)ai * radius_count + ri] =
-						SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
+						info.repeat_border == FALSE
+							? SampleScalarAEXNoRepeat(fade_factor_with_guard, w, h, sx, sy)
+							: SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
 				}
 			}
 		}
@@ -4622,15 +4661,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			polar_valid[cell] = sampled.eligible;
 			if (use_aex_exact || use_generic_two_stage) {
 				rotation_source_scalar[cell] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+					use_generic_two_stage && info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
+						: use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
 						!rotation_quality_repeat_noise_tuple
 						? (sampled.eligible ? 1.0f : 0.0f)
 						: (rotation_quality_repeat_noise_tuple
 							? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy));
 				if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
-					rotation_fade_factor[cell] = SampleScalarAEXRepeat(
-						rotation_fade_source_with_guard, w, h, sx, sy);
+					rotation_fade_factor[cell] = info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(rotation_fade_source_with_guard, w, h, sx, sy)
+						: SampleScalarAEXRepeat(rotation_fade_source_with_guard, w, h, sx, sy);
 				}
 			}
 		}

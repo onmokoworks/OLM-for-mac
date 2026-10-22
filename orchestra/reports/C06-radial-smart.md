@@ -1,11 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Closed Smart typed-input alignment and the full public signed-16.16 Angle admission domain.
-- Seed 1 Smart exact 108→168→187; fresh seed 3 113→166→176. No lost exact hashes or new mismatches.
-- Angle acceptance: 600 clean sanitized campaign replays, 240 original inputs/720 exact layout renders, eight smoke tests.
-- Corpus remains 35/35 unchanged; no rebaseline is needed.
-- Repeat Border is still experimental: its scalar sampler dispatch requires correction before admission.
+- Closed three Smart clusters: typed-input alignment, full signed-16.16 Angle admission, and Repeat Border scalar-field dispatch (including its discovered Zoom radius boundary).
+- Seed 1 Smart exact 108→168→187→198; mismatch stays 0; refusals 192→102.
+- Fresh seed 3 exact 113→166→176→190; its one pre-existing mismatch is unchanged. Every prior exact hash is preserved.
+- Final acceptance: 600 clean sanitized campaign replays, 300 original inputs/900 exact layout renders, two complete paired traces, eight smoke tests.
+- Corpus 35/35 stays unchanged. Three separate commits close the ticket loop; remaining plugin gaps are explicitly retained.
 
 facts:
 
@@ -43,6 +43,23 @@ All 29 admissions are original-renderable and exact. Seed-3 cases 116, 263 and 2
 
 The Angle evidence uses the same worker and campaign commands, with scratch/report prefixes `angle` and `angle3`. Final verification command was `verify_radialblur_smart_C06.py --campaign orchestra/state/C06-radial-smart/angle.json --campaign orchestra/state/C06-radial-smart/angle3.json --independent --matrix angles --smoke --output orchestra/state/C06-radial-smart/angle-final-verified`, with its output redirected to the matching log. No Angle experiment was promoted until the fresh seed and boundary matrix passed.
 
+Repeat Border milestone (third commit, after `a4cbffd2`): a gate-only experiment completed seed-1/300 with 190 exact / 8 mismatch / 102 refusal. That candidate was **not** promoted. The selected PF8 seed-1 case 163 shrinks to 2×1, Inner Strength 4 and Repeat Border off. The instrumented Mac output is required to equal the production Smart output; the original trace output is required to equal the public Smart oracle and the saved fixture hash.
+
+First divergence: polar RGBA and eligibility agree, but the span plane differs in 5,209/7,200 words. At word 1, original `00000000`, Mac `0000803f`; preaccum/premax still agree, then accum differs in 2,396 words and normalized in 1,339. The final reduced output differs at byte 2: original `44`, Mac `43`. Direct disassembly of the hash-bound original AEX shows `5984..59B6` selecting scalar sampler A550 when Repeat Border is zero, versus A6A0 for repeat. Calls at 5B04 and 5B34 use that same selected sampler for the span and enabled size/fade field. Rotation's `49CC..49FF` similarly selects 1800 versus 1950. The generic Zoom/Rotation path now makes that scalar sampler choice along with its existing color-sampler choice. No final sampling/writer bias is added. All eight paired planes and final output then match; reduced output SHA256 `38c6c77ae3ede82b7bef3424cd2f55527ed8894826a53f92836b4669b078bfc6`.
+
+The first independent matrix found one further input boundary, rather than declaring seed success sufficient: 1×1 PF8 input `ff239014`, center (0.25,0.75), outer Strength 4, fades 25/50, Size 25, Noise 100/Type2/Seed89. Original alpha is `ff`, intermediate candidate `ae`, with all three padding layouts clean but mismatching. The original polar dimensions are 3×1800, Mac 4×1800. Original A8F0 at A94B..A965/A975..A989 chooses the far axis by comparing the center to **integer extent/2**; A98C..A9C2 uses FLOAT32 squares/add/sqrt and integer truncation. The port used a double-precision mathematical maximum. `ZoomRadiusBoundsAEX` restores the actual operation for generic Zoom, including the caller's truncation before Ratio division. It applies to all generic dimensions/centers, with no coordinate/case lookup. The corrected dimensions, all eight paired planes and final output match. The follow-up matrix adds the exact integer-half pivot, its adjacent fixed-point values independently on each axis, and quarter-pixel offsets.
+
+| Campaign | Smart before E/M/R | Smart final E/M/R | retained exact |
+|---|---|---|---:|
+| Seed 1 | 187/0/113 | 198/0/102 | 187 |
+| Seed 3 | 176/1/123 | 190/1/109 | 176 |
+
+All 25 new admissions are exact, with zero newly admitted mismatch. Seed-1 cases 48/235 and seed-3 case 33 remain refused but reach resource budget error 4 instead of profile error 516. The final source was independently compiled and replayed against all 600 saved public-oracle campaign outcomes with ASan/UBSan: 600 unchanged/clean. The final independent matrix is five geometries (1×1, 1×7, 7×1, 3×5, 11×7) × three depths × Zoom/Rotation × ten control/center profiles, each with packed and two odd padding layouts: **300 AEX references, 900 exact sanitized Mac renders**. It includes inner/outer strengths and offsets, fades, Size/Noise, both procedural Noise types, off-center positions, Ratio, multi-turn Angle and Quality. Eight existing tests pass. The final ordinary seed-1 campaign again measures 198/0/102; AEX Smart 279 ok / 20 reject / 1 budget. Fresh-seed campaign references are 281 ok / 18 reject / 1 budget; final-source hash replay preserves its 190/1/109 outcomes.
+
+Corpus before/after: 35/35 `matches_saved`, 35 exact→exact Smart rows, unchanged Classic results, zero rebaseline changes. Final source SHA256 `e65fd8add8bc886365a3e8aebd24fe9d0c1cd710159aabbcc6f5a20b3f11d0a1`. Evidence: `C06-border.evidence.json`, `C06-border-trace.evidence.json` and `tools/fuzz/fixtures/radialblur_border_C06.json`. Trace evidence includes the original instruction bytes, source/binary bindings, reference hashes and all stage comparisons. Both rejected source experiments are reproducible through the committed trace tool's scratch-only `--experiment` options. No retained worker was rebuilt or math-import policy changed.
+
+Final `git diff --check` passes. Final scratch measures 104,116,779 bytes, below 5 GiB; 6 remaining regenerable build directories were removed before handoff (the runners already removed their other builds). This ticket stops after three closed clusters, not at full RadialBlur compatibility.
+
 inference:
 
 The refusal reduction comes from restoring the input storage contract before existing general algorithms, not relaxing numerical comparisons or selecting output values. The retained original worker receives packed input; these experiments establish Mac odd-stride equivalence to that original packed render, not native Windows odd-stride support. This is bounded CPU-emulator evidence, not native AE/UCRT conformance or a claim about arbitrary remaining profiles.
@@ -53,8 +70,12 @@ changed_files:
 - `tests/test_olmradialblur_generic_baseline_20260820.py`
 - `tools/fuzz/verify_radialblur_smart_C06.py`
 - `tools/fuzz/summarize_radialblur_smart_C06.py`
+- `tools/fuzz/trace_radialblur_smart_C06.py`
+- `tools/fuzz/fixtures/radialblur_border_C06.json`
 - `orchestra/reports/C06-alignment.evidence.json`
 - `orchestra/reports/C06-angle.evidence.json`
+- `orchestra/reports/C06-border.evidence.json`
+- `orchestra/reports/C06-border-trace.evidence.json`
 - `orchestra/reports/C06-radial-smart.md`
 
 verify:
@@ -63,10 +84,10 @@ Run at this commit from the worktree root:
 
 ```sh
 py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
-export TMPDIR="$PWD/orchestra/state/C06-radial-smart/recheck-angle"
+export TMPDIR="$PWD/orchestra/state/C06-radial-smart/recheck-border"
 mkdir -p "$TMPDIR"
 PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/verify_radialblur_smart_C06.py \
-  --evidence orchestra/reports/C06-angle.evidence.json --independent --matrix angles --smoke \
+  --evidence orchestra/reports/C06-border.evidence.json --independent --matrix border --smoke \
   --output "$TMPDIR/verify" > "$TMPDIR/verify.log" 2>&1
 PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/run.py --plugin radialblur \
   --n 300 --seed 1 --jobs 2 --case-timeout 30 --budget-minutes 120 \
@@ -77,11 +98,18 @@ PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/run.py --plugin radialblur \
   --replay tests/fuzz_corpus/radialblur --case-timeout 30 --budget-minutes 60 \
   --worker /Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker \
   --scratch "$TMPDIR/replay" --report "$TMPDIR/replay.json" > "$TMPDIR/replay.log" 2>&1
+PYTHONDONTWRITEBYTECODE=1 "$py" -u tools/fuzz/trace_radialblur_smart_C06.py \
+  --cases-from tools/fuzz/fixtures/radialblur_border_C06.json --indices 163,5005 \
+  --output "$TMPDIR/traces" > "$TMPDIR/traces.log" 2>&1
 git diff --check
 ```
 
-Expected: verifier pass, 600 identical/clean Smart outcomes, 720 independent exact renders, 8/8 smoke tests; seed-1 Smart 187 exact / 0 mismatch / 113 refusal (oracle timeouts can vary); corpus 35/35 matching. The fuzz runner's nonzero status for diagnostic Classic mismatches is separate from Smart acceptance.
+Expected: verifier pass, 600 identical/clean Smart outcomes, 900 independent exact renders, 8/8 smoke tests; seed-1 Smart 198 exact / 0 mismatch / 102 refusal (oracle timeouts can vary); corpus 35/35 matching. The fuzz runner's nonzero status for diagnostic Classic mismatches is separate from Smart acceptance.
+
+The trace command should report zero differences for all eight planes on both witnesses and bind both outputs to the saved original Smart hashes. To reproduce the rejected experiments, use the same trace command with `--indices 163 --revision a4cbffd2 --experiment border-gate-only` in a new output directory (5,209 span differences), or `--indices 5005 --experiment legacy-radius` (3×1800 original versus 4×1800 Mac). These switches write only scratch sources.
 
 next:
-- Continue the ticket with the remaining Zoom Repeat Border scalar-field dispatch, preserving this exact set. Alignment is commit `981ef3ac`.
-- Investigate fresh-seed index 46's retained three-word mismatch separately if it becomes the selected cluster.
+- Suggested follow-up: split the 42 original-renderable `generic-world-not-admitted` cases. Twenty-nine have out-of-frame centers; the remaining 13 are PF32 profiles (5 signed, 6 HDR, 2 nonfinite) with centers in frame. Do not lift that gate wholesale.
+- Other seed-1 original-renderable refusals: Zoom profile 26, generic budget 4, Type3 zero noise 5, Rotation profile 3, host 1. Original reject/budget rows are not exactness evidence.
+- Preserve and investigate fresh-seed-3 case 46's three-word pre-existing mismatch in a separate first-divergence ticket. Native AE/UCRT, independent noise-layer worlds, and unmeasured parameter/input intersections remain outside these bounded closures.
+- Milestones: alignment `981ef3ac`; Angle `a4cbffd2`; final Repeat Border/radius correction is the third commit containing this report. No push or MAIN mutation.
