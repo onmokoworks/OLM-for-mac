@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Cluster 1: PF8 generated Noise × Size × Fade with active Strength is admitted through the existing core.
-- Seed1 Smart improves 262 → 269 exact, refusals 35 → 28; the one mismatch and two unavailable references remain.
-- Seed2 improves 269 → 273 exact; fresh seed3 improves 269 → 275. No baseline-exact output changes.
-- 956-case production O2/ASan/UBSan regression passes; the 56 saved corpus results are unchanged.
-- Additional Back Fade clusters are under investigation; general Front Fade admission retains measured expf counterexamples.
+- Two admission clusters closed: active generated Noise×Size×Fade and noise-disabled active Back Fade×Size.
+- Seed1 Smart improves 262 → 273 exact, refusals 35 → 24; the one mismatch and two unavailable references remain.
+- Seed2 improves 269 → 274 exact; fresh seed3 improves 269 → 277. No baseline-exact output changes.
+- Each cluster passes 956-case production O2/ASan/UBSan regression; the 56 saved corpus results are unchanged.
+- Zero-Strength Back Fade is the remaining planned cluster; Front Fade import counterexamples remain excluded.
 
 facts:
 
@@ -97,3 +97,40 @@ At cluster1: production seed1 269/1/28/2; regression PASS956; production matrix1
 next:
 - Complete the independently tested Back Fade/no-Noise active and zero-Strength admission clusters in separate commits with before/after tables.
 - Preserve Front Fade/noise-disabled and zero-Strength Front Fade guards; the new imported-function counterexamples need native UCRT contract work.
+
+## Cluster 2 — active Back Fade, Noise disabled
+
+facts:
+- Baseline `b44aa275` (cluster1). The PF8 fallback now permits Size×Back Fade when Front Fade and Noise are zero and at least one Strength is positive. Other profile, world, budget and core checks remain; no numerical operation changed.
+- Original prepass `FUN_180001000` has distinct forward/backward gathers: Front Fade count0 skips its forward loop; Back Fade clamps its extent against the current column. The existing core follows those branches. Seed1:152 has exact captured rotated plane, map/divisor, counts11/4 weights, row output, denominator and alpha against original AEX/native-f32; final bytes are exact. Seed1:168 also has exact image/map/row/final stages, despite nine imported weight words differing (eight of1418 Strength weights and one of83 Back Fade weights). Those differences are retained as dependency data, not corrected or called exact tables.
+- The independent `back-fade` matrix tests128 active-Strength inputs, including Front-only, Back-only and both Strengths, both Sharp Tails, Back Fade1–100, nonzero angles and nonopaque groups. All128 public production results equal original Smart AEX on both Mac routes, with O2/ASan/UBSan equality and no sanitizer findings.
+- Regression passes956 cases on both public routes. All baseline-exact Smart hashes are unchanged; only refusal→exact changes occur. The required seed1 campaign exits0. All56 saved corpus result dictionaries remain unchanged, including Classic metadata, so there is no corpus rebaseline.
+
+| Smart set | Cluster1 E/M/R/U | Cluster2 E/M/R/U | New exact indices |
+|---|---|---|---|
+| Seed1 | 269/1/28/2 | 273/1/24/2 | 88,152,168,169 |
+| Seed2 | 273/1/24/2 | 274/1/23/2 | 136 |
+| Fresh seed3 | 275/0/24/1 | 277/0/22/1 | 195,297 |
+| Corpus56 | 54/2/0/0 | 54/2/0/0 | none |
+
+inference:
+- This is a separately validated backward-gather family, not general Front Fade admission. Finite evidence supports this rule; it does not establish that Windows expf equals either substitute for arbitrary inputs.
+- The zero-Strength prepass-only branch is validated next as its own admission cluster, rather than relying on active-scatter tests alone.
+
+changed_files (cluster2):
+- mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
+- tools/fuzz/verify_directionalblur_c09_evidence.py (fast audit of committed acceptance and source bindings)
+- reports/fuzz/c09_dblur_smart/{back-after,back-verify,matrix-back-production}.json
+- orchestra/reports/C09-dblur-smart-r2.md
+
+verify (same S/W/P environment as above):
+
+```sh
+python3 tools/fuzz/verify_directionalblur_c09_evidence.py
+python3 tools/fuzz/verify_directionalblur_c02.py --baseline b44aa275 --seeds 1 2 3 --corpus --scratch "$S" --worker "$W" --report "$S/back-verify-recheck.json" > "$S/back-verify-recheck.log" 2>&1
+python3 tools/fuzz/verify_directionalblur_c09_matrix.py --baseline b44aa275 --scratch "$S" --worker "$W" --families back-fade --active-only --production --report "$S/matrix-back-recheck.json" > "$S/matrix-back-recheck.log" 2>&1
+```
+
+Expected at cluster2: audit PASS; regression PASS956; matrix128 exact; current seed1 campaign273/1/24/2. The audit deliberately checks the current production source against the last committed regression: its initial in-progress invocation rejected the new Back Fade source while only cluster1 evidence was staged; it passes after binding the completed cluster2 evidence.
+
+next: complete the zero-Strength Back Fade cluster, then retain the measured Front Fade, negative-index and nonfinite boundaries for follow-up.
