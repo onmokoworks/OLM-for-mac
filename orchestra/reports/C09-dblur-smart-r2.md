@@ -1,11 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Two admission clusters closed: active generated Noise×Size×Fade and noise-disabled active Back Fade×Size.
-- Seed1 Smart improves 262 → 273 exact, refusals 35 → 24; the one mismatch and two unavailable references remain.
-- Seed2 improves 269 → 274 exact; fresh seed3 improves 269 → 277. No baseline-exact output changes.
-- Each cluster passes 956-case production O2/ASan/UBSan regression; the 56 saved corpus results are unchanged.
-- Zero-Strength Back Fade is the remaining planned cluster; Front Fade import counterexamples remain excluded.
+- Three PF8 admission clusters closed in separate commits: active generated Noise×Size×Fade, active Back Fade×Size without Noise, and zero-Strength Back Fade×Size without Noise.
+- Seed1 Smart improves 262 → 275 exact, refusals 35 → 22; one mismatch and two unavailable references remain unchanged.
+- Seed2 improves 269 → 275 exact; fresh seed3 improves 269 → 279. No baseline-exact output changes.
+- Each commit passes 956-case O2/ASan/UBSan regression; independent production matrices total448 cases; corpus remains56/56 matches_saved.
+- New paired expf boundaries explain the unshrunk neutral residual and two Front Fade counterexamples; Gaussian, writer and unsafe-Noise/nonfinite policy are unchanged.
 
 facts:
 
@@ -134,3 +134,90 @@ python3 tools/fuzz/verify_directionalblur_c09_matrix.py --baseline b44aa275 --sc
 Expected at cluster2: audit PASS; regression PASS956; matrix128 exact; current seed1 campaign273/1/24/2. The audit deliberately checks the current production source against the last committed regression: its initial in-progress invocation rejected the new Back Fade source while only cluster1 evidence was staged; it passes after binding the completed cluster2 evidence.
 
 next: complete the zero-Strength Back Fade cluster, then retain the measured Front Fade, negative-index and nonfinite boundaries for follow-up.
+
+## Cluster 3 — Back Fade prepass with zero Strengths
+
+facts:
+- Baseline `a7837828` (cluster2). The same noise-disabled/Front-Fade-disabled Back Fade rule now includes both Strengths zero. The existing renderer still executes alpha prepass, normalization, inverse rotation and typed output; it does not return a special copy or zero image. The three separately committed clusters distinguish active Noise scatter, ordinary active scatter, and prepass-only work.
+- Seed1:160/241 are the original unshrunk inputs. Original AEX builder and rowdriver counts are respectively `(Front Strength,Front Fade,Back Strength,Back Fade)=(0,0,0,74)` and `(0,0,0,21)`. The two original fixtures match the cached Smart reference. Captured rotated planes, component maps, divisors, Fade tables, row output, denominator, alpha and final bytes all match the Mac. Final hashes:160 `2297cfef1515ce05c91bb36bdecdbb079f3c5f955049ca61a8eaa2310d7d4ac3`;241 `eff425870db851dc65e3c77740210f8a62e327577b416b1f638c4ab1414d79e7`.
+- The independent `back-fade-zero` matrix passes128 cases on both public routes at O2 and ASan/UBSan. These all have both Strengths zero, Noise zero, Front Fade zero, with Back Fade1–100, Size, angles, tails, gain and independently generated alpha groups varied.
+- Regression passes956 cases; all baseline-exact Smart outputs are unchanged, all changed outputs are refusal→exact. The required seed1 campaign exits0 with275/1/22/2. Final corpus replay exits0,56/56 matches_saved. Final source also passes the same three existing tests listed above; `tests-final.txt` retains the output.
+- Four explicit counterexamples (seed1:200, seed2:152, independent `fade-only:19/51`) still refuse on both public routes, in O2 and sanitizer builds:16 clean refusals. The source/padding and public lifecycle checks in the existing host remain active.
+
+| Smart set | Cluster2 E/M/R/U | Cluster3/final E/M/R/U | New exact indices |
+|---|---|---|---|
+| Seed1 | 273/1/24/2 | 275/1/22/2 | 160,241 |
+| Seed2 | 274/1/23/2 | 275/1/22/2 | 120 |
+| Fresh seed3 | 277/0/22/1 | 279/0/20/1 | 159,269 |
+| Corpus56 | 54/2/0/0 | 54/2/0/0 | none |
+
+**Final first mismatch, unshrunk input.** Seed1:84 remains identical to both the C09 baseline and C02's committed `noise-after.json`: two differing bytes / two PF16 words, first byte2508 (pixel9,16, green), AEX LE `6841` → Mac `6941`. Original Smart hash `84f247da752879fbfb885f5d5cdc31e8a6697e3fd82506f06f9fe299fdaadb9a`; Mac `64c7de64654ae40b341419308739d75f3210b5afaf33ee2b1b0fcc54535666cf`. This is not C02's reduced C15 witness, whose source and one-byte residual differ despite the same19×36 geometry.
+
+The newly executed unshrunk trace has exact incoming plane and all752 weights with double-round expf, and its final frame equals the Mac. Switching only expf to native-f32 makes the fixture exactly equal the worker, with eight changed weight words. First differing table word is index3: native `4efb7f3f`, double-round/Mac `4ffb7f3f`. The remaining campaign mismatch therefore has its own direct import-boundary evidence; it is not inferred from the reduced case.
+
+**Retained boundaries and completion scope.** The final22 seed1 refusals comprise12 core failures associated with negative Noise Offset, eight PF8 profile guards (four negative-Offset cases167/183/222/246 and four unresolved Front Fade cases73/78/175/200), and two nonfinite PF32 cases109/299. Prior F05/F16 traces prove actual out-of-allocation reads for127 and167/183/222/246; this ticket does not assert new allocator traces for every negative-Offset case. The large negative-Offset/core group was retained as the documented unsafe/oracle boundary while the independently testable Back Fade groups were completed. C02's NaN instruction-model boundary remains unresolved. No third-party allocator contents or Unicorn-specific NaN selection were encoded.
+
+The loop ends after the three bounded admission clusters are closed. Neither the blanket Size×Fade hypothesis nor broader zero-Strength Front Fade was promoted: each refutation produced new byte/import boundaries. The two-refuted-hypotheses-without-new-boundary stop condition was not reached. The remaining residual is explicit, not tolerance or an all-input completion claim.
+
+inference:
+- Paired original counts/stages and128 independent prepass-only inputs support reuse of the existing core for zero-Strength Back Fade. This is an admission correction, with the F05 four-control work predicate preserved.
+- The final13 recovered seed1 cases are supported by general control predicates and independently generated cases. The evidence remains bounded CPU emulation/fake-host evidence; it does not establish arbitrary inputs or native UCRT/AE equivalence.
+
+changed_files (cluster3):
+- mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
+- tools/fuzz/verify_directionalblur_c09_evidence.py (final corpus/refusal/unshrunk-import evidence checks)
+- reports/fuzz/c09_dblur_smart/{zero-after,zero-verify,matrix-zero-production,back-zero-stages,final-replay,refusals,seed1-84-double-round,seed1-84-native-f32}.json and tests-final.txt
+- orchestra/reports/C09-dblur-smart-r2.md
+
+verify (same S/W/P environment; final source):
+
+```sh
+python3 tools/fuzz/verify_directionalblur_c09_evidence.py
+python3 tools/fuzz/verify_directionalblur_c02.py --baseline a7837828 --seeds 1 2 3 --corpus --scratch "$S" --worker "$W" --report "$S/zero-verify-recheck.json" > "$S/zero-verify-recheck.log" 2>&1
+python3 tools/fuzz/verify_directionalblur_c09_matrix.py --baseline a7837828 --scratch "$S" --worker "$W" --families back-fade-zero --production --report "$S/matrix-zero-recheck.json" > "$S/matrix-zero-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --scratch "$S" --worker "$W" --seed 1 --indices 160 241 --expf-leaf native-f32 --report "$S/back-zero-stages-recheck.json" > "$S/back-zero-stages-recheck.log" 2>&1
+for M in double-round native-f32; do
+  "$P" tools/emulation/probe_directionalblur_c02_stages.py --scratch "$S" --worker "$W" --seed 1 --indices 84 --expf-leaf "$M" --allow-fixture-difference --report "$S/seed1-84-$M-recheck.json" > "$S/seed1-84-$M-recheck.log" 2>&1
+done
+```
+
+The required campaign, full baseline regression, final saved replay and existing test commands are also in the first verify block. Final expected results: seed1 **275/1/22/2**, seed2 **275/1/22/2**, seed3 **279/0/20/1**; PASS956 per regression;448 independent production cases (192+128+128), both routes, ordinary/sanitized exact to Smart AEX;56/56 saved replay; three existing tests pass. All56 corpus result dictionaries and files are unchanged, so the complete corpus before/after table is54 exact→exact and2 mismatch→identical mismatch.
+
+Reproduce the explicit retained-refusal check:
+
+```sh
+python3 - <<'PY' > "$S/refusals-recheck.log" 2>&1
+import argparse,json,os,sys,tempfile,time
+from pathlib import Path
+sys.path.insert(0,'tools/fuzz')
+from verify_directionalblur_c02 import Build
+from verify_directionalblur_c09_matrix import cases
+from core import sha
+root=Path.cwd();scratch=Path(os.environ['TMPDIR']);deadline=time.monotonic()+180
+args=argparse.Namespace(main=root.parent.parent,max_size=256,case_timeout=10,baseline='a7837828',worker=Path('/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker'))
+report={'builds':[],'cases':[]}
+with tempfile.TemporaryDirectory(dir=scratch,prefix='refusals_') as d:
+ d=Path(d);adapters=[Build(args),Build(args,sanitizer=True)]
+ for i,a in enumerate(adapters):
+  dest=d/str(i);dest.mkdir();report['builds'].append(a.prepare(dest,deadline))
+ matrix=dict(cases(adapters[0]))
+ selected=[(n,matrix[n]) for n in ['fade-only:19','fade-only:51']]+[(f'seed{s}:{i}',adapters[0].generate(s,i)) for s,i in [(1,200),(2,152)]]
+ for name,case in selected:
+  item={'name':name,'input_sha256':sha(case['pixels']),'routes':{}}
+  for route in ('classic','smart'):
+   observations=[a.candidate(case,d,route,deadline)[0] for a in adapters]
+   assert observations[0]==observations[1] and observations[0]['status']=='refusal',(name,observations)
+   item['routes'][route]=observations[0]
+  report['cases'].append(item)
+ report['commands']=[a.commands for a in adapters]
+(scratch/'refusals.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+print('PASS 4 counterexamples, both routes, O2/sanitizer: 16 clean refusals')
+PY
+```
+
+next:
+- Native UCRT/expf contract work for neutral and Front Fade, preserving the established Gaussian model until a native witness demands otherwise. Use the unshrunk84, seed2:152 and independent Fade53 import words above.
+- Separate safe demand-driven Noise sampling investigation for invalid-but-unused generated cells, if desired; retain all negative-index safety checks until actual used-cell bounds are proven.
+- Separate PF32 nonfinite native-ISA/oracle contract work; no emulator NaN payload policy is promoted here.
+
+Final scratch after removing regenerable campaign corpora: **23,118,727 bytes**. Temporary build directories were removed by their contexts. `git diff --check` and the committed-evidence audit pass.

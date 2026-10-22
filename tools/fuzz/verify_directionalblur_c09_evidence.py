@@ -78,6 +78,20 @@ def main():
         if not (DATA/f'{name}.json').exists(): continue
         for row in read(name)['cases']:
             assert row['fixture_session']['different_units']==row['final']['different_units']==0
+    if (DATA/'seed1-84-native-f32.json').exists():
+        double=read('seed1-84-double-round')['cases'][0]
+        native=read('seed1-84-native-f32')['cases'][0]
+        assert double['fixture_session']['different_units']==2
+        assert native['fixture_session']['different_units']==0
+        assert double['stages']['weights-752']['different_units']==0
+        assert native['stages']['weights-752']['different_units']==8
+    if (DATA/'refusals.json').exists():
+        refusals=read('refusals')['cases']
+        assert len(refusals)==4
+        assert all(r['status']=='refusal' for case in refusals for r in case['routes'].values())
+    if (DATA/'final-replay.json').exists():
+        replay=read('final-replay')
+        assert replay['completed']==56 and replay['replay_matches_saved']
     print('PASS: current source bindings, measured admission, sanitizer equality, corpus preservation and import boundaries')
 
 
