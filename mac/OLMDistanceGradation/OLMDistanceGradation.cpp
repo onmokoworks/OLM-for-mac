@@ -666,7 +666,7 @@ struct DistanceField {
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp);
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp, bool smart_pf8_staging = false);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -778,11 +778,22 @@ static void invert_mask(u_char *mask, long w, long h)
 // or +0xbc. Scaled staging dimensions are separate arguments, so downsample
 // scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp)
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp, bool smart_pf8_staging)
 {
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
-		out, (size_t)w * sizeof(float), (float)threshold, constant_interp);
+		out, (size_t)w * sizeof(float), (float)threshold, constant_interp,
+		smart_pf8_staging ? 255.0f : 1.0f);
+	if (smart_pf8_staging) {
+		// FUN_181174760 normalizes directly to [0,255] before cvConvertScale.
+		// A normalize-to-one followed by *255 introduces an extra rounding:
+		// distance 5 / maximum 6 must reach the exact 212.5 packing tie.
+		for (long i = 0; i < w * h; ++i) {
+			const float value = out[i];
+			const int word = value < 0.0f ? 0 : (value > 255.0f ? 255 : (int)lrintf(value));
+			out[i] = (float)word / 255.0f;
+		}
+	}
 }
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y)
@@ -809,6 +820,10 @@ static void build_distance_field(
 	float ds = (p.ds_x + p.ds_y) * 0.5f;
 	if (ds <= 0.0f) ds = 1.0f;
 
+	// Packing commutes with the Both maximum on this unblurred path.
+	// Keep the separately witnessed PF16 and blurred staging contracts.
+	const bool smart_pf8_staging = p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) &&
+		!(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
 	if (p.in_out == IN_OUT_INSIDE) {
 		bool has_source = false;
 		for (long i = 0; i < w * h; ++i) {
@@ -822,20 +837,20 @@ static void build_distance_field(
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
 			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
-			                 p.interp_mode == INTERP_CONSTANT);
+			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
 		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 

@@ -89,7 +89,8 @@ bool distance_to_normalized_u8(
     float* output,
     std::size_t output_rowbytes,
     float threshold,
-    bool constant_interpolation) {
+    bool constant_interpolation,
+    float output_max) {
     if (!mask || !output || width == 0 || height == 0 || input_rowbytes < width ||
         output_rowbytes < width * sizeof(float)) {
         return false;
@@ -104,7 +105,7 @@ bool distance_to_normalized_u8(
     precise_l2_edt(packed_mask.data(), width, height, field.data());
     if (constant_interpolation) {
         for (float& value : field) {
-            value = value > threshold ? 1.0f : 0.0f;
+            value = value > threshold ? output_max : 0.0f;
         }
     } else {
         threshold = std::max(threshold, 1.0f);
@@ -114,9 +115,11 @@ bool distance_to_normalized_u8(
             raw_max = std::max(raw_max, value);
         }
         // OpenCV 4.5.5 NORM_MINMAX computes one float32 scale, then applies
-        // multiplication. Dividing every sample separately differs by one ULP
+        // multiplication. The original typed owner supplies 255/32768/1 as
+        // its range maximum; callers retaining normalized floats use 1.
+        // Dividing every sample separately differs by one ULP
         // at the PF16 half-integer boundaries used by the 0010/0011 witnesses.
-        const float scale = raw_max > 0.0f ? (1.0f / raw_max) : 0.0f;
+        const float scale = raw_max > 0.0f ? (output_max / raw_max) : 0.0f;
         for (float& value : field) {
             value *= scale;
         }

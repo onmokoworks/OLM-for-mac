@@ -41,7 +41,8 @@ bool distance_to_normalized_u8(
     float* output,
     std::size_t output_rowbytes,
     float threshold,
-    bool constant_interpolation);
+    bool constant_interpolation,
+    float output_max = 1.0f);
 
 // Portable subset of DistanceGradation.aex FUN_181174760 used by the first
 // function-level fixture. Input is one uint8 mask plane; output is float32.

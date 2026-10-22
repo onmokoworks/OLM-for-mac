@@ -112,12 +112,12 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
     "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
     "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
-    "candidate_sha256": "cf15b1af0cbbcaf4d8e7754d2523c7900a9f4d38cb4e01a1e749fb3bc54523af",
+    "candidate_sha256": "f96372f7755e6dcf23cd327e160167773f6c5afb154f2c904b2ecf888708b27e",
     "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
     "dependencies_sha256": {
-      "core/olmdistancegradation_fieldgen.cpp": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
-      "core/olmdistancegradation_fieldgen.h": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
-      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "59825c5a0c2531c50c89856d67847cc6a55c258eb419b432aef8b1b52bb26d4a",
+      "core/olmdistancegradation_fieldgen.cpp": "c4daf41e1aed3653cc5645345c2d4f8c5be3bed3c2e28c37de9a47f10df76510",
+      "core/olmdistancegradation_fieldgen.h": "04957938492a046e638f2bf54f9ae346b1fd7bbd8abd675da13372267ed6608b",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "8746aa37536267c7133d29949251bdebe78e6108bf677feb898a6ba1c405b3ef",
       "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
       "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
       "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
@@ -164,8 +164,8 @@
       "total": 1,
       "value": 0
     },
-    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
-    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -239,23 +239,13 @@
         "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 280,
-          "actual_word_hex": "29",
-          "different_bytes": 1,
-          "different_words": 1,
-          "expected_bytes": 280,
-          "expected_word_hex": "2a",
-          "first_byte": 212,
-          "first_word": 212
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 1 12 12",
           "ERROR": "0"
         },
-        "raw_sha256": "5832287e608ff319a3d2d04808d8693479d1d65d94c127060db4f770f50c41d7",
-        "status": "mismatch"
+        "raw_sha256": "76e3b8146375dd2ae3ad6b75971ea687c3cfef82a2da89ae1767bf8d27446806",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

@@ -94,10 +94,28 @@ def blur_matrix(a):
             yield f'{depth}/{geometry}/blur{blur}/inout{inout}/interp{interp}/mode{mode}/bg{bg}',c
 
 
+def field_matrix(a):
+    # Long runs include half-byte ties; 2D islands also exercise irrational EDTs.
+    for geometry in ([17,1],[13,7]):
+     w,h=geometry
+     pixels=bytes(v for y in range(h) for x in range(w)
+                  for v in (0 if (x==0 or (x==8 and y==0)) else (128 if (x+y)%3 else 255),37,113,221))
+     for threshold in (3,6,13):
+      for inout in (1,2,3):
+       for invert in (0,1):
+        for interp in (1,2,3):
+         for mode in (1,2):
+          c=dict(geometry=geometry,depth=8,profile='sdr',parameters=a.defaults(w,h),pixels=pixels,input_padding=3,output_padding=5)
+          values={1:invert,2:inout,3:threshold,4:threshold,5:mode,6:int(mode==1),7:[255,28,53,238],8:[255,16,160,48],9:interp,11:1,12:0}
+          for q in c['parameters']:
+           if q['slot'] in values:q['value']=values[q['slot']]
+          yield f'{geometry}/threshold{threshold}/inout{inout}/invert{invert}/interp{interp}/mode{mode}',c
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--before-ref',default='b4350d648947640ebdc3459c5e0451cbef54c64f');p.add_argument('--campaign',type=Path,action='append',default=[])
-    p.add_argument('--blur-matrix',action='store_true');p.add_argument('--matrix',action='store_true');p.add_argument('--cutoff-matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
+    p.add_argument('--field-matrix',action='store_true');p.add_argument('--blur-matrix',action='store_true');p.add_argument('--matrix',action='store_true');p.add_argument('--cutoff-matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
     args=p.parse_args();args.scratch=args.scratch.resolve();assert args.scratch.is_relative_to(ROOT/'orchestra/state/C08-dg-smart-r2')
     args.scratch.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch));tempfile.tempdir=str(args.scratch)
     before_source=subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
@@ -127,8 +145,8 @@ def main():
           rows.append(result)
         counts=dict(Counter(f"{r['before_exact']}->{r['after_exact']}" for r in rows))
         report['campaigns'].append(dict(seed=data['seed'],campaign_sha256=sha(campaign.read_bytes()),counts=counts,rows=rows));print('CAMPAIGN',data['seed'],counts,flush=True)
-      if args.matrix or args.cutoff_matrix or args.blur_matrix:
-        for label,c in (blur_matrix(a) if args.blur_matrix else cutoff_matrix(a) if args.cutoff_matrix else matrix(a)):
+      if args.matrix or args.cutoff_matrix or args.blur_matrix or args.field_matrix:
+        for label,c in (field_matrix(a) if args.field_matrix else blur_matrix(a) if args.blur_matrix else cutoff_matrix(a) if args.cutoff_matrix else matrix(a)):
           oracle,reference=a.oracle(c,wd,deadline,'smart');assert oracle['status']=='ok',(label,oracle)
           result,_,raw=compare(c,sha(reference));result.update(label=label,input_sha256=sha(c['pixels']),oracle_sha256=sha(reference))
           if not result['after_exact']:result['diff']=raw_diff(reference,raw,c['depth'])
