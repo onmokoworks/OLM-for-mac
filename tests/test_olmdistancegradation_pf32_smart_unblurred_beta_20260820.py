@@ -14,7 +14,7 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
     def test_beta_lane_is_limited_to_unblurred_constant_linear_or_sphere(self):
         body = self.source.split(
             "static bool is_admitted_pf32_smart_unblurred_beta", 1
-        )[1].split("static bool is_admitted_pf32_smart_oracle_profile", 1)[0]
+        )[1].split("\n}", 1)[0]
         self.assertIn("p.blur_mode == BLUR_MODE_NONE", body)
         self.assertIn("p.interp_mode == INTERP_CONSTANT", body)
         self.assertIn("p.interp_mode == INTERP_LINEAR", body)

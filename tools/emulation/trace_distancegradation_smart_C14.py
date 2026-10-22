@@ -36,6 +36,7 @@ def main():
     p.add_argument('--source-ref')
     p.add_argument('--source',type=Path)
     p.add_argument('--case-index',type=int)
+    p.add_argument('--seed',type=int,default=1)
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state/C14-dg-smart-r3')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -59,7 +60,7 @@ def main():
       def hook(loader,rip,size):
           ownership.append(loader.uc.reg_read(UC_X86_REG_XMM7).to_bytes(16,'little')[:4].hex())
       ld.add_code_hook(0x181170e1e,hook)
-      for label,c in ([(f'campaign/seed1/case{args.case_index}',a.generate(1,args.case_index))] if args.case_index is not None else matrix(a)):
+      for label,c in ([(f'campaign/seed{args.seed}/case{args.case_index}',a.generate(args.seed,args.case_index))] if args.case_index is not None else matrix(a)):
         if args.case_index is None:
             if c['geometry']!=[7,1] or not label.endswith('mode2/bg0'):continue
             if c['profile'] not in ('alpha-signed','uniform-hdr','uniform-negative'):continue
@@ -72,7 +73,7 @@ def main():
             params.append(name+'='+(','.join(map(str,q['value'])) if isinstance(q['value'],list) else str(q['value'])))
         watches=['function=0x1172a10,arg=stack6,size=224',f'rva=0x1173642,arg=rdx,deref=88,size={len(c["pixels"])}']
         if args.case_index is not None:
-            watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={w*h*4}',f'rva=0x1173611,arg=rdx,deref=88,size={w*h*4}']
+            watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={w*h*4}',f'rva=0x1173611,arg=rdx,deref=88,size={w*h*4}', f'rva=0x12c97d3,arg=rcx,deref=16,size={w*h*4}', f'rva=0x12c97d3,arg=rdx,deref=16,size={w*h*4}', 'function=0x12c9930,arg=rcx,size=96']
         cmd=[str(a.worker),'render-trace-png',str(a.aex),str(td/'proxy.png'),str(td/'out.png'),'--pixel-format','argb32f']
         for watch in watches:cmd+=['--watch',watch]
         proc=subprocess.run(cmd+params,capture_output=True,check=True,timeout=30,env=a.env)
@@ -113,6 +114,7 @@ def main():
         if args.case_index is not None:
             planes=blurpath.read_bytes();assert len(planes)==w*h*8
             pre=bytes.fromhex(ws['watch-3']['before']['hex']);post=bytes.fromhex(ws['watch-4']['after']['hex'])
+            row['backend_witnesses']={k:v for k,v in ws.items() if int(k.split('-')[1])>=5}
             row.update(aex_pre_hex=pre.hex(),aex_post_hex=post.hex(),mac_pre_hex=planes[:w*h*4].hex(),mac_post_hex=planes[w*h*4:].hex(),
                        pre_diff=raw_diff(pre,planes[:w*h*4],32),post_diff=raw_diff(post,planes[w*h*4:],32))
         report['rows'].append(row)

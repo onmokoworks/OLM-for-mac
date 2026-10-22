@@ -82,7 +82,11 @@ static bool pf32_unlisted_exact_lanes_reject() {
   d[DG_INTERP_MODE].u.pd.value=INTERP_POWER;d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_NONE;
   if(RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)==PF_Err_NONE||ob!=untouched)return false;
   d[DG_INTERP_MODE].u.pd.value=INTERP_LINEAR;d[DG_RENDER_MODE].u.pd.value=RENDER_MODE_LAYER;
+  // C14 admits radius one (Size0/1); larger bilateral radii remain guarded.
   d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_BILATERAL;d[DG_BLUR_SIZE].u.sd.value=1;
+  id.downsample_x={2,1};id.downsample_y={2,1};
+  if(RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)==PF_Err_NONE||ob!=untouched)return false;
+  id.downsample_x={1,1};id.downsample_y={1,1};d[DG_BLUR_SIZE].u.sd.value=2;
   return RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)!=PF_Err_NONE&&ob==untouched;
 }
 

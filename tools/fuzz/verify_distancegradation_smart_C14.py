@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C14 Smart finite-domain experiments and before/after public verification."""
+"""C14 Smart finite-domain, Gaussian and Bilateral public verification."""
 from __future__ import annotations
 import argparse
 from collections import Counter
@@ -68,7 +68,8 @@ static bool has_effective_blur(const DGParams &p)
 // It retains the SDR source guard; larger radii and Power are not admitted here.
 static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 {
-\tif (p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 0 || p.blur_size > 1)
+\tif (p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 0 || p.blur_size > 1 ||
+\t    (float)p.blur_size * std::min(p.ds_x, p.ds_y) >= 1.5f)
 \t\treturn false;
 \tDGParams identity = p;
 \tidentity.blur_mode = BLUR_MODE_NONE;
@@ -171,6 +172,7 @@ def main():
     p.add_argument('--extended-matrix', action='store_true')
     p.add_argument('--gaussian-matrix', action='store_true')
     p.add_argument('--bilateral-matrix', action='store_true')
+    p.add_argument('--bilateral-negative', action='store_true')
     p.add_argument('--negative', action='store_true')
     p.add_argument('--campaign-pf32-only', action='store_true')
     p.add_argument('--skip-original-rejected-timeouts', action='store_true',
@@ -269,6 +271,24 @@ def main():
                 assert oracle['status']==('ok' if size<3 else 'reject') and row['after_status']=='refusal',row
                 report['negative'].append(row)
             print('NEGATIVE',len(report['negative']),flush=True)
+        if args.bilateral_negative:
+            report['bilateral_negative']=[]
+            c0=next(bilateral_matrix(a))[1]
+            for label,slot,value,word in [('power',9,4,None),('larger-radius',12,2,None),
+                    ('alpha-above-one',None,None,(0,0x3f800001)),
+                    ('rgb-above-one',None,None,(1,0x3f800001)),
+                    ('negative-rgb',None,None,(1,0x80000001)),
+                    ('infinity',None,None,(1,0x7f800000)),
+                    ('nan',None,None,(1,0x7fc12345))]:
+                c=copy.deepcopy(c0)
+                for q in c['parameters']:
+                    if q['slot']==slot:q['value']=value
+                if word:
+                    raw=bytearray(c['pixels']);struct.pack_into('<I',raw,word[0]*4,word[1]);c['pixels']=bytes(raw)
+                row=compare(c,None);row['label']=label
+                assert row['before_status']==row['after_status']=='refusal' and not row['changed'],row
+                report['bilateral_negative'].append(row)
+            print('BILATERAL_NEGATIVE',len(report['bilateral_negative']),flush=True)
         if args.corpus:
             for path in sorted((ROOT/'tests/fuzz_corpus/olmdistancegradation').glob('*.json')):
                 c,saved=load_corpus(path,a)
