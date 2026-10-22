@@ -1057,13 +1057,18 @@ static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
 {
     // F06: the AEX PF8 work predicate at 0x180004b50 includes both Fades.
     // The component-map row bounds now match the AEX, including single-row
-    // groups, so generated Noise can use this same core. Keep negative Offset
-    // (native out-of-allocation reads), Layer, and the still-unproven Size x
-    // Fade cross outside this fallback. Earlier retained routes keep precedence.
+    // groups, so generated Noise can use this same core. C09 also validates
+    // Size x Fade with generated Noise and active scatter counts. Keep the
+    // independently failing fade-only / noise-disabled crosses excluded, as
+    // well as negative Offset (native out-of-allocation reads) and Layer.
+    // Earlier retained routes keep precedence.
+    const bool generated_noise_scatter = info.noise_variation > 0.0 &&
+        info.noise_type != 3 && (info.front_strength > 0 || info.back_strength > 0);
     if ((info.noise_variation != 0.0 &&
             (info.noise_type == 3 || info.noise_offset < 0)) ||
         (info.size_variation != 0.0 &&
-            (info.front_alpha_fade != 0 || info.back_alpha_fade != 0))) return false;
+            (info.front_alpha_fade != 0 || info.back_alpha_fade != 0) &&
+            !generated_noise_scatter)) return false;
     olm::dblur::generic::RenderEstimate estimate = {};
     // PF8 uses the same float workspace and tables as deep rendering. The PF16
     // estimate conservatively overcounts its packed source/destination bytes.

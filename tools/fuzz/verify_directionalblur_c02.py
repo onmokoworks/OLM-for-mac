@@ -47,6 +47,7 @@ class Build(Adapter):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--baseline',required=True)
+    p.add_argument('--scratch',type=Path,default=ROOT/'orchestra/state/C02-dblur-smart')
     p.add_argument('--worker',type=Path,required=True)
     p.add_argument('--report',type=Path,required=True)
     p.add_argument('--seeds',type=int,nargs='*',default=[1,2])
@@ -55,7 +56,7 @@ def main():
     p.add_argument('--rebaseline',action='store_true')
     args=p.parse_args()
     args.main,args.max_size,args.case_timeout=ROOT.parent.parent,256,10
-    scratch=ROOT/'orchestra/state/C02-dblur-smart';scratch.mkdir(parents=True,exist_ok=True)
+    scratch=args.scratch.resolve();scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),PYTHONDONTWRITEBYTECODE='1')
     tempfile.tempdir=str(scratch)
     report={'baseline':args.baseline,'cases':[],'builds':[]}

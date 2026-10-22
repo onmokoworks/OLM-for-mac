@@ -189,7 +189,9 @@ def run_fixture(case, directory, aex, expf_leaf='double-round',powf_leaf='double
 
 
 def main():
+    global SCRATCH
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--scratch',type=Path,default=SCRATCH)
     p.add_argument('--worker',type=Path,required=True)
     p.add_argument('--report',type=Path,required=True)
     p.add_argument('--clusters',type=int,nargs='+',default=[2,3,8,9,10,11,12,13,14,18])
@@ -197,11 +199,13 @@ def main():
     p.add_argument('--allow-fixture-difference',action='store_true')
     p.add_argument('--core-ref',help='Read the traced core from this git revision (no checkout)')
     p.add_argument('--indices',type=int,nargs='+',help='Trace generated cases instead of saved clusters')
+    p.add_argument('--matrix-case',help='C09 independent matrix case, e.g. fade-only:19')
     p.add_argument('--seed',type=int,default=1)
     p.add_argument('--gate-off',action='store_true',help='Scratch-only PF8 fallback admission')
     p.add_argument('--powf-leaf',choices=['double-round','native-f32'],default='double-round')
     p.add_argument('--nonfinite-off',action='store_true',help='Scratch-only PF32 nonfinite gate bypass')
     args=p.parse_args()
+    SCRATCH=args.scratch.resolve()
     args.main,args.max_size,args.case_timeout=ROOT.parent.parent,256,30
     SCRATCH.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(SCRATCH),TMP=str(SCRATCH),TEMP=str(SCRATCH))
@@ -213,9 +217,13 @@ def main():
         report['provenance']=adapter.prepare(tmp,time.monotonic()+180)
         targets=([{'cluster':i,'generated':True} for i in args.indices] if args.indices else
                  [t for t in triage['clusters'] if t['cluster'] in args.clusters])
+        if args.matrix_case:
+            from verify_directionalblur_c09_matrix import cases
+            selected=dict(cases(adapter))[args.matrix_case]
+            targets=[{'cluster':args.matrix_case,'case':selected}]
         for target in targets:
             directory=tmp/str(target['cluster']);directory.mkdir()
-            case=(adapter.generate(args.seed,target['cluster']) if target.get('generated') else
+            case=target.get('case') or (adapter.generate(args.seed,target['cluster']) if target.get('generated') else
                   load_corpus(ROOT/target['corpus'],adapter)[0])
             trace,stages,native=run_fixture(case,directory,adapter.aex,args.expf_leaf,args.powf_leaf)
             oracle,reference=adapter.oracle(case,directory,time.monotonic()+60)
