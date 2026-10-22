@@ -200,3 +200,12 @@ commit for controlled before/after measurements only. `rebaseline_corpus.py
 hashes and explicit matching-route provenance, validates all entries before
 writing, and retains the complete prior result. It rejects changed Smart results,
 changed candidate bytes, transient oracle budgets and invalid oracle invariants.
+
+`rebaseline_corpus.py --production-rebaseline TICKET` applies the production
+transition policy: allow changes to exact, mismatch to mismatch/refusal, and
+refusal metadata changes. Reject exact to non-exact, changed exact hashes,
+refusal to mismatch, oracle drift, and changed route sets. The complete report
+is checked before any writes. Updated cases append their previous result and
+provenance to `rebaseline_history` and adopt their replay group's provenance.
+Review every corpus belonging to a plugin before using this option; a forbidden
+transition in one corpus blocks rebaselining that plugin's other corpora too.
