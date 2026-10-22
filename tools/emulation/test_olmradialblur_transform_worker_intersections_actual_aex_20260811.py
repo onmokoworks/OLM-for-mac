@@ -68,7 +68,7 @@ def production(cell,expected):
  finally:base.configure=oldc;Path.write_text=oldw
 
 def main():
- with ThreadPoolExecutor(max_workers=6) as p:actual=dict(zip(CELLS,p.map(isolated,CELLS)))
+ with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as p:actual=dict(zip(CELLS,p.map(isolated,CELLS)))
  rows=[]
  for c in CELLS:
   try:prod=production(c,actual[c]);error=None

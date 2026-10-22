@@ -23,8 +23,8 @@ def isolated(mode,kind,variation,e=None):
   if e is not None:inp=Path(d)/"in.pkl";inp.write_bytes(pickle.dumps(e));cmd.append(str(inp))
   cmd.append(str(out));p=subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,capture_output=True);return p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None
 def main():
- with ThreadPoolExecutor(max_workers=4) as pool:a=dict(zip(CASES,pool.map(lambda q:isolated("actual",*q)[1],CASES)))
- with ThreadPoolExecutor(max_workers=4) as pool:p=dict(zip(CASES,pool.map(lambda q:isolated("production",q[0],q[1],a[q]),CASES)))
+ with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:a=dict(zip(CASES,pool.map(lambda q:isolated("actual",*q)[1],CASES)))
+ with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:p=dict(zip(CASES,pool.map(lambda q:isolated("production",q[0],q[1],a[q]),CASES)))
  names=("polar","source_scalar","prepass_alpha","accum","max_alpha","final_rgba","coordinates","output");rows=[];exact=True
  for case in CASES:
   rc,m=p[case];actual_case=a[case]

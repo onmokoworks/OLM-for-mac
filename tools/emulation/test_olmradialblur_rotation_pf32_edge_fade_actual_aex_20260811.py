@@ -20,8 +20,8 @@ def isolated(mode,kind,value,e=None):
   cmd.append(str(out));p=subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,capture_output=True);return p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None
 def main():
  cases=[(k,v) for k in ("outer","inner") for v in (50,100)]
- with ThreadPoolExecutor(max_workers=4) as pool:a=dict(zip(cases,pool.map(lambda p:isolated("actual",*p)[1],cases)))
- with ThreadPoolExecutor(max_workers=4) as pool:p=dict(zip(cases,pool.map(lambda q:isolated("production",q[0],q[1],a[q]),cases)))
+ with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:a=dict(zip(cases,pool.map(lambda p:isolated("actual",*p)[1],cases)))
+ with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:p=dict(zip(cases,pool.map(lambda q:isolated("production",q[0],q[1],a[q]),cases)))
  rows=[];captured=True;exact=True
  for kind,value in cases:
   rc,m=p[(kind,value)]

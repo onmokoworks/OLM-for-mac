@@ -52,7 +52,7 @@ def firstdiff(a,b):
     return None
 
 def main():
-    with ThreadPoolExecutor(max_workers=6) as pool: actuals=dict(zip(CELLS,pool.map(isolated,CELLS)))
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool: actuals=dict(zip(CELLS,pool.map(isolated,CELLS)))
     rows=[]
     for cell in CELLS:
         actual=actuals[cell]; prod=production(cell,actual)

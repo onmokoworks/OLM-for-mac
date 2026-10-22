@@ -164,11 +164,11 @@ int main(int n,char**q){{constexpr int W=32,H=18,RB={rowbytes},C={cells};std::ve
 def main():
     baseline_cells = [(depth, 1, 0) for depth in (8, 16, 32)]
     capture_cells = CASES + baseline_cells
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actuals = dict(zip(capture_cells, pool.map(isolated, capture_cells)))
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual_zero = dict(zip(baseline_cells, pool.map(lambda cell: isolated(cell, 0), baseline_cells)))
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=min(3, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actual_hundred = dict(zip(baseline_cells, pool.map(lambda cell: isolated(cell, 100), baseline_cells)))
     production_zero = {cell: production(cell, actual_zero[cell], 0) for cell in baseline_cells}
     production_fifty = {cell: production(cell, actuals[cell], 50) for cell in baseline_cells}

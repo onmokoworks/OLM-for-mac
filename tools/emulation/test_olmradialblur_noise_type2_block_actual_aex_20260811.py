@@ -119,7 +119,7 @@ def production(cell, expected):
         return {n:p.read_bytes() for n,p in zip(names,paths)}
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captures = dict(zip(CELLS, pool.map(isolated, CELLS)))
     Path("/tmp/olm_radial_type2_actual.pkl").write_bytes(pickle.dumps(captures))
     rows = []

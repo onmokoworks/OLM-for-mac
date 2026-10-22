@@ -91,7 +91,7 @@ def main() -> int:
     cache = Path("/tmp/olm_radial_type1_pf8_actual.pkl")
     if cache.exists(): captures = pickle.loads(cache.read_bytes())
     else:
-        with ThreadPoolExecutor(max_workers=6) as pool: captures = dict(zip(CELLS, pool.map(isolated, CELLS)))
+        with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool: captures = dict(zip(CELLS, pool.map(isolated, CELLS)))
         cache.write_bytes(pickle.dumps(captures))
     rows = []
     for cell in CELLS:

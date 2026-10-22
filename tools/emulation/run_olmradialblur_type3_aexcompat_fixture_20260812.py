@@ -262,7 +262,7 @@ def main() -> int:
     base = setup_parameters(guest, aex, repo)
     write_fixtures(work, base, args.render_path)
     jobs = [(case_id, repeat) for case_id, _, _ in CASES for repeat in REPEATS]
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=min(8, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         rows = list(pool.map(lambda job: render_one(harness, aex, work, *job), jobs))
     probe = compile_production_probe(work)
     production = production_rows(probe, work, rows)

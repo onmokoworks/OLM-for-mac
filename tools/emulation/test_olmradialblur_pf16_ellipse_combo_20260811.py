@@ -91,9 +91,9 @@ def isolated(effect, mode, cell, expected=None):
 def main():
     report = {"status": "exact", "cells": []}
     for effect, planes in (("zoom", ZPLANES), ("rotation", RPLANES)):
-        with ThreadPoolExecutor(max_workers=4) as pool:
+        with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
             actuals = list(pool.map(lambda c: isolated(effect, "actual", c)[1], CASES))
-        with ThreadPoolExecutor(max_workers=4) as pool:
+        with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
             products = list(pool.map(lambda z: isolated(effect, "production", z[0], z[1]), zip(CASES, actuals)))
         for cell, actual, (rc, prod) in zip(CASES, actuals, products):
             matches = {p: bool(prod) and prod[p] == actual[p] for p in planes}

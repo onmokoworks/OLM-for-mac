@@ -109,10 +109,10 @@ def main() -> int:
     if CACHE.exists():
         captures = pickle.loads(CACHE.read_bytes())
     else:
-        with ThreadPoolExecutor(max_workers=6) as pool:
+        with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
             captures = dict(zip(CELLS, pool.map(isolated_actual, CELLS)))
         CACHE.write_bytes(pickle.dumps(captures))
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         produced = dict(zip(CELLS, pool.map(lambda cell: isolated_production(cell, captures[cell]), CELLS)))
     rows = []
     for cell in CELLS:

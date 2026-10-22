@@ -150,7 +150,7 @@ def isolated(cell):
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=min(4, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         results = list(pool.map(isolated, CASES))
     rows = [row for rc, row in results if rc == 0 and row]
     status = "exact" if len(rows) == len(CASES) and all(row["exact"] for row in rows) else "mismatch"

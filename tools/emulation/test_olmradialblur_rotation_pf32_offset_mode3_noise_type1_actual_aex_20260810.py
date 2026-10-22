@@ -40,9 +40,9 @@ def rejected(offset:int,noise:float,expected:dict[str,bytes])->bool:
  return False
 def main()->int:
  requested=[(o,n) for o in OFFSETS for n in NOISES]
- with ThreadPoolExecutor(max_workers=6) as pool:actual=dict(zip(requested,pool.map(lambda p:isolated("actual",*p),requested)))
+ with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:actual=dict(zip(requested,pool.map(lambda p:isolated("actual",*p),requested)))
  combos=[(o,n) for o in OFFSETS for n in NOISES]
- with ThreadPoolExecutor(max_workers=6) as pool:production=dict(zip(combos,pool.map(lambda p:isolated("production",p[0],p[1],actual[p]),combos)))
+ with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:production=dict(zip(combos,pool.map(lambda p:isolated("production",p[0],p[1],actual[p]),combos)))
  rows=[];exact=True
  for p in combos:
   a=actual[p];m=production[p];matches={k:m[k]==a[k] for k in ("source_scalar","polar","accum","max_alpha","final_rgba","coordinates","output")}

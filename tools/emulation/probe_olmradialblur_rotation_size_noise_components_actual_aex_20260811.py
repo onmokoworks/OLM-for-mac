@@ -98,7 +98,7 @@ def main() -> int:
     controls = [(d, 0.0, nv, nt) for d in (8, 16, 32) for nv in NVS for nt in TYPES]
     size_controls = [(d, sv, 0.0, 1) for d in (8, 16, 32) for sv in SVS]
     requested = controls + size_controls + CELLS
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         captures = dict(zip(requested, pool.map(isolated, requested)))
     rows = []
     semantic = ("polar", "accum", "max_alpha", "final_rgba", "coordinates", "output")

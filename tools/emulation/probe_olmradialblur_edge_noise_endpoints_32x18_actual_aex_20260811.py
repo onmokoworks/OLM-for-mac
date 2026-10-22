@@ -218,7 +218,7 @@ std::ofstream(q[1],std::ios::binary).write((char*)out,sizeof(out));}''')
 
 
 def main() -> int:
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=min(6, int(os.environ.get("OLM_TEST_JOBS", "2")))) as pool:
         actuals = dict(zip(CELLS, pool.map(isolated, CELLS)))
     spans = {(nv, nt): shared_source_span(nv, nt) for nv in (25.0, 100.0) for nt in (1, 2)}
     rows = []
