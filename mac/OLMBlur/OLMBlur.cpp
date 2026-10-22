@@ -1607,7 +1607,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// coefficient/import residuals remain outside this new rule.
 	const bool radius_small = raw.legacy == 0 &&
 		(bpc == 8 || ((bpc == 16 || bpc == 32) && raw.repeat <= 2));
-	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small) return "generic-small-fixture";
+	// C15: the Legacy PF16 writer preserves the AEX low-word conversion.
+	// Independently verified one/two-pass small frames use the same worker.
+	const bool legacy_small = bpc == 16 && raw.legacy == 1 && raw.repeat <= 2;
+	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
