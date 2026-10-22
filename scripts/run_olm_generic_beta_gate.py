@@ -383,6 +383,8 @@ def run_captured_process_group(
     popen_options: dict[str, object] = {}
     if os.name == "posix":
         popen_options["start_new_session"] = True
+    if len(command) > 1 and command[1] == str(Path(__file__).resolve()):
+        popen_options["env"] = dict(os.environ, OLM_SELF_SPAWN_CHILD="1")
     process = subprocess.Popen(
         command,
         cwd=cwd,
@@ -580,6 +582,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.run_test_file:
         return run_test_file(args.run_test_file)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD"):
+        parser.error("refusing child invocation without --run-test-file")
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
     started_at = datetime.now(timezone.utc).isoformat()

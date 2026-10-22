@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Read-only 32x18 Zoom Outer4 + Inner2/4 actual-AEX comparison."""
+import os
 import hashlib, inspect, json, pickle, subprocess, sys, tempfile
 from pathlib import Path
 
@@ -29,7 +30,7 @@ ns=dict(base.__dict__);ns["patched_source"]=patched_source;exec(src,ns);producti
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_dual_zoom_") as raw:
         p=Path(raw)/"capture.pkl"
-        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(p)],check=True)
+        subprocess.run([sys.executable,__file__,"--capture",*map(str,cell),str(p)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True)
         return pickle.loads(p.read_bytes())
 
 def first_diff(a,b):
@@ -52,4 +53,7 @@ def main():
 if __name__=="__main__":
     if len(sys.argv)>2 and sys.argv[1]=="--capture":
         v=sys.argv[2:-1];cell=(v[0],int(v[1]),int(v[2]),int(v[3]),float(v[4]),float(v[5]),float(v[6]),int(v[7]));Path(sys.argv[-1]).write_bytes(pickle.dumps(capture(cell)));raise SystemExit
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -2,6 +2,7 @@
 """Bounded actual-AEX Dual Strength x Size x Noise covering matrix."""
 from __future__ import annotations
 
+import os
 import hashlib, json, pickle, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -57,7 +58,7 @@ def isolated(cell):
     out = CACHE / ("_".join(map(str, cell)) + ".pkl")
     if not out.exists():
         temporary = out.with_suffix(".tmp")
-        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(temporary)], check=True)
+        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(temporary)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         temporary.replace(out)
     return pickle.loads(out.read_bytes())
 
@@ -158,4 +159,7 @@ if __name__ == "__main__":
                 float(sys.argv[6]), int(sys.argv[7]))
         Path(sys.argv[8]).write_bytes(pickle.dumps(capture(cell)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

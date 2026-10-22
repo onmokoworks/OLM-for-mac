@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Bounded PF32 Rotation Edge Fade x Size/Noise intersections."""
 from __future__ import annotations
+import os
 import hashlib,json,pickle,subprocess,sys,tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -20,7 +21,7 @@ def isolated(mode,kind,variation,e=None):
  with tempfile.TemporaryDirectory(prefix="radial_edge_intersection_") as d:
   out=Path(d)/"out.pkl";cmd=[sys.executable,str(Path(__file__)),f"--{mode}",kind,variation]
   if e is not None:inp=Path(d)/"in.pkl";inp.write_bytes(pickle.dumps(e));cmd.append(str(inp))
-  cmd.append(str(out));p=subprocess.run(cmd,capture_output=True);return p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None
+  cmd.append(str(out));p=subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,capture_output=True);return p.returncode,pickle.loads(out.read_bytes()) if out.exists() else None
 def main():
  with ThreadPoolExecutor(max_workers=4) as pool:a=dict(zip(CASES,pool.map(lambda q:isolated("actual",*q)[1],CASES)))
  with ThreadPoolExecutor(max_workers=4) as pool:p=dict(zip(CASES,pool.map(lambda q:isolated("production",q[0],q[1],a[q]),CASES)))
@@ -34,4 +35,7 @@ def main():
 if __name__=="__main__":
  if len(sys.argv)==5 and sys.argv[1]=="--actual":Path(sys.argv[4]).write_bytes(pickle.dumps(actual(sys.argv[2],sys.argv[3])));raise SystemExit(0)
  if len(sys.argv)==6 and sys.argv[1]=="--production":Path(sys.argv[5]).write_bytes(pickle.dumps(production(sys.argv[2],sys.argv[3],pickle.loads(Path(sys.argv[4]).read_bytes()))));raise SystemExit(0)
+ if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+     print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+     raise SystemExit(2)
  raise SystemExit(main())

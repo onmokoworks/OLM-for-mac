@@ -2,6 +2,7 @@
 """Bounded RadialBlur outer-offset matrix against the actual Windows AEX owner."""
 from __future__ import annotations
 
+import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -40,7 +41,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_offset_actual_") as raw:
         out = Path(raw) / "capture.pkl"
-        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(out)], check=True)
+        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(out)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(out.read_bytes())
 
 
@@ -155,4 +156,7 @@ if __name__ == "__main__":
     if len(sys.argv)>2 and sys.argv[1]=="--capture":
         v=sys.argv[2:-1]; cell=(v[0],int(v[1]),int(v[2]),int(v[3]),int(v[4]),int(v[5]))
         Path(sys.argv[-1]).write_bytes(pickle.dumps(capture(cell))); raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

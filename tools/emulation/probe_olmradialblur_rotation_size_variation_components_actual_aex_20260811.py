@@ -6,6 +6,7 @@ owner's component prepass and its Rotation consumer for a transparent 32x18 sour
 """
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -78,7 +79,7 @@ def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_rotation_sv_components_") as raw:
         out = Path(raw) / "capture.pkl"
         subprocess.run([sys.executable, __file__, "--capture", str(cell[0]),
-                        str(cell[1]), str(out)], check=True)
+                        str(cell[1]), str(out)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(out.read_bytes())
 
 
@@ -189,4 +190,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 5 and sys.argv[1] == "--capture":
         Path(sys.argv[4]).write_bytes(pickle.dumps(capture((int(sys.argv[2]), float(sys.argv[3])))))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

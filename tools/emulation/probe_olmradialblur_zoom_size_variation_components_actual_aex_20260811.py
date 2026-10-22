@@ -7,6 +7,7 @@ transparent background, which makes the Size Variation prepass observable.
 """
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -122,7 +123,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_zoom_size_components_") as raw:
         result = Path(raw) / "actual.pkl"
-        subprocess.run([sys.executable, __file__, "--capture", str(cell[0]), str(cell[1]), str(result)], check=True)
+        subprocess.run([sys.executable, __file__, "--capture", str(cell[0]), str(cell[1]), str(result)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(result.read_bytes())
 
 
@@ -205,4 +206,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 5 and sys.argv[1] == "--capture":
         Path(sys.argv[4]).write_bytes(pickle.dumps(capture((int(sys.argv[2]), float(sys.argv[3])))))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

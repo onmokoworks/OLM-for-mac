@@ -645,7 +645,7 @@ def verify_report() -> int:
 
 
 def parent_main(timeout: int) -> int:
-    process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--worker"], start_new_session=True)
+    process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--worker"], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), start_new_session=True)
     try:
         return process.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
@@ -672,4 +672,11 @@ if __name__ == "__main__":
     parser.add_argument("--verify-report", action="store_true")
     parser.add_argument("--timeout", type=int, default=1200)
     args = parser.parse_args()
-    raise SystemExit(verify_report() if args.verify_report else worker_main() if args.worker else parent_main(args.timeout))
+    if args.verify_report:
+        raise SystemExit(verify_report())
+    if args.worker:
+        raise SystemExit(worker_main())
+    if os.environ.get("OLM_SELF_SPAWN_CHILD"):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
+    raise SystemExit(parent_main(args.timeout))

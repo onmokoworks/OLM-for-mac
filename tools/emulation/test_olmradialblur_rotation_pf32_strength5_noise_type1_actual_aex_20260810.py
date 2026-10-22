@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -71,7 +72,7 @@ def isolated(mode: str, noise: float, expected: dict[str, bytes] | None = None) 
             inp.write_bytes(pickle.dumps(expected))
             command.append(str(inp))
         command.append(str(out))
-        subprocess.run(command, check=True)
+        subprocess.run(command, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(out.read_bytes())
 
 
@@ -151,4 +152,7 @@ if __name__ == "__main__":
         expected = pickle.loads(Path(sys.argv[3]).read_bytes())
         Path(sys.argv[4]).write_bytes(pickle.dumps(production_at(float(sys.argv[2]), expected)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -8,6 +8,7 @@ directly for comparison and may fail closed until the bounded family is added.
 """
 from __future__ import annotations
 
+import os
 import hashlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -97,7 +98,7 @@ def actual(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_zoom_sv_noise_") as d:
         p = Path(d) / "a.pkl"
-        subprocess.run([sys.executable, __file__, "--actual", *map(str, cell), str(p)], check=True)
+        subprocess.run([sys.executable, __file__, "--actual", *map(str, cell), str(p)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(p.read_bytes())
 
 
@@ -238,4 +239,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 7 and sys.argv[1] == "--actual":
         cell = (int(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), int(sys.argv[5]))
         Path(sys.argv[6]).write_bytes(pickle.dumps(actual(cell))); raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -2,6 +2,7 @@
 """Actual-AEX Zoom Edge Fade x ignored Offset x procedural Noise matrix."""
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -116,7 +117,7 @@ def isolated_actual(cell):
     output = CACHE / ("_".join(map(str, cell)) + ".pkl")
     if not output.exists():
         temporary = output.with_suffix(".tmp")
-        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(temporary)],
+        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(temporary)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,
                        check=True)
         temporary.replace(output)
     return pickle.loads(output.read_bytes())
@@ -226,4 +227,7 @@ if __name__ == "__main__":
                 float(sys.argv[6]), int(sys.argv[7]))
         Path(sys.argv[8]).write_bytes(pickle.dumps(actual(cell)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

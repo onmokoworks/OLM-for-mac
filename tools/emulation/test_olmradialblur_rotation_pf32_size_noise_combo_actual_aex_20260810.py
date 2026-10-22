@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import os
 import hashlib
 import json
 import pickle
@@ -74,7 +75,7 @@ def isolated_actual(size: float, noise: float) -> dict[str, bytes]:
     with tempfile.TemporaryDirectory(prefix="radial_size_noise_") as name:
         path = Path(name) / "capture.pkl"
         subprocess.run(
-            [sys.executable, str(Path(__file__)), "--capture", str(size), str(noise), str(path)],
+            [sys.executable, str(Path(__file__)), "--capture", str(size), str(noise), str(path)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,
             check=True,
         )
         return pickle.loads(path.read_bytes())
@@ -87,7 +88,7 @@ def isolated_production(size: float, noise: float, expected: dict[str, bytes]) -
         expected_path.write_bytes(pickle.dumps(expected))
         subprocess.run(
             [sys.executable, str(Path(__file__)), "--production", str(size), str(noise),
-             str(expected_path), str(output_path)],
+             str(expected_path), str(output_path)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,
             check=True,
         )
         return pickle.loads(output_path.read_bytes())
@@ -170,4 +171,7 @@ if __name__ == "__main__":
         expected = pickle.loads(Path(sys.argv[4]).read_bytes())
         Path(sys.argv[5]).write_bytes(pickle.dumps(production_at(float(sys.argv[2]), float(sys.argv[3]), expected)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

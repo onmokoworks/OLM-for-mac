@@ -2,6 +2,7 @@
 """Actual-AEX differential for centered Inner Offset pairwise cells."""
 from __future__ import annotations
 
+import os
 import hashlib, inspect, json, pickle, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -45,7 +46,7 @@ def capture(cell):
 def isolated(cell):
     with tempfile.TemporaryDirectory(prefix="radial_inner_offset_") as raw:
         p = Path(raw) / "capture.pkl"
-        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(p)], check=True)
+        subprocess.run([sys.executable, __file__, "--capture", *map(str, cell), str(p)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800, check=True)
         return pickle.loads(p.read_bytes())
 
 
@@ -115,4 +116,7 @@ if __name__ == "__main__":
         cell = (v[0], int(v[1]), int(v[2]), int(v[3]), int(v[4]), int(v[5]))
         Path(sys.argv[-1]).write_bytes(pickle.dumps(capture(cell)))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

@@ -2,6 +2,7 @@
 """PF32 Rotation ellipse Ratio x Angle actual-AEX closure."""
 from __future__ import annotations
 
+import os
 import hashlib, json, pickle, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -30,7 +31,7 @@ def isolated(mode: str, ratio: float, angle: float, expected=None):
             inp.write_bytes(pickle.dumps(expected))
             cmd.append(str(inp))
         cmd.append(str(out))
-        process = subprocess.run(cmd)
+        process = subprocess.run(cmd, env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800)
         return process.returncode, pickle.loads(out.read_bytes()) if out.exists() else None
 
 
@@ -82,4 +83,7 @@ if __name__ == "__main__":
             raise SystemExit(error.returncode)
         Path(sys.argv[5]).write_bytes(pickle.dumps(result))
         raise SystemExit(0)
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+        print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+        raise SystemExit(2)
     raise SystemExit(main())

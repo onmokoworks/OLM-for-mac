@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Bounded transform-axis x non-neutral worker intersections."""
 from __future__ import annotations
+import os
 import hashlib, json, pickle, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -45,7 +46,7 @@ def capture(cell):return configure(cell)[0].actual_aex()
 def isolated(cell):
  CACHE.mkdir(parents=True,exist_ok=True);p=CACHE/('_'.join(map(str,cell))+'.pkl')
  if not p.exists():
-  x=p.with_suffix('.tmp');subprocess.run([sys.executable,__file__,'--capture',*map(str,cell),str(x)],check=True);x.replace(p)
+  x=p.with_suffix('.tmp');subprocess.run([sys.executable,__file__,'--capture',*map(str,cell),str(x)], env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1"), timeout=1800,check=True);x.replace(p)
  return pickle.loads(p.read_bytes())
 
 def production(cell,expected):
@@ -87,4 +88,7 @@ def main():
 if __name__=='__main__':
  if len(sys.argv)==6 and sys.argv[1]=='--capture':
   c=(sys.argv[2],int(sys.argv[3]),sys.argv[4]);Path(sys.argv[5]).write_bytes(pickle.dumps(capture(c)));raise SystemExit(0)
+ if os.environ.get("OLM_SELF_SPAWN_CHILD") or any(arg.startswith("--") for arg in sys.argv[1:]):
+     print(f"refusing child invocation: {sys.argv[1:]}", file=sys.stderr)
+     raise SystemExit(2)
  raise SystemExit(main())
