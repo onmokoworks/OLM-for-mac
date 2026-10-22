@@ -450,7 +450,8 @@ static std::vector<float> DirectionBoxBlur(
 	A_long length,
 	A_long dx,
 	A_long dy,
-	A_long passes)
+	A_long passes,
+	bool recovered_scalar_box = false)
 {
 	if (length <= 0) return input;
 	std::vector<float> src = input;
@@ -460,6 +461,35 @@ static std::vector<float> DirectionBoxBlur(
 	for (A_long pass = 0; pass < passes; ++pass) {
 		std::fill(dst.begin(), dst.end(), 0.0f);
 		for (A_long y = 0; y < height; ++y) {
+			// C07: original 18127f3c0 RowSum<float,double> order.
+			if (recovered_scalar_box && dx == 1 && dy == 0) {
+				double sum = 0.0;
+				for (A_long k = -left; k <= right; ++k) {
+					const A_long sx = Reflect101Index((int)k, (int)width);
+					sum += src[(size_t)y * width + sx];
+				}
+				const double scale = 1.0 / (double)length;
+				for (A_long x = 0; x < width; ++x) {
+					// Original RowSum<float,double> uses direct sums at 3/5;
+					// its other scalar kernels use the sliding double sum.
+					if (length == 3 || length == 5) {
+						const A_long first = Reflect101Index((int)(x - left), (int)width);
+						sum = (double)src[(size_t)y * width + first];
+						for (A_long k = -left + 1; k <= right; ++k) {
+							const A_long sx = Reflect101Index((int)(x + k), (int)width);
+							sum += (double)src[(size_t)y * width + sx];
+						}
+					}
+					dst[(size_t)y * width + x] = (float)(sum * scale);
+					if (x + 1 < width && length != 3 && length != 5) {
+						const A_long incoming = Reflect101Index((int)(x + right + 1), (int)width);
+						const A_long outgoing = Reflect101Index((int)(x - left), (int)width);
+						sum += (double)src[(size_t)y * width + incoming] -
+							(double)src[(size_t)y * width + outgoing];
+					}
+				}
+				continue;
+			}
 			for (A_long x = 0; x < width; ++x) {
 				double sum = 0.0;
 				for (A_long k = -left; k <= right; ++k) {
@@ -509,7 +539,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	double angle_deg,
 	A_long passes,
 	A_long blur_mode,
-	bool scalar_unit_alpha = false)
+	bool scalar_unit_alpha = false,
+	bool recovered_scalar_box = false)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
@@ -555,7 +586,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 			return input;
 		}
 	} else {
-		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes);
+		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes, recovered_scalar_box);
 	}
 	temp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);
 	return CopyCenteredRoi(temp_b, rw, rh, width, height);
@@ -639,6 +670,14 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 	return pixels;
 }
 
+// Original Alpha constructor 18114edf0 owns a scalar powf seed. The box
+// pipeline is paired through its source/seed/rays/aggregation/outer writer.
+static bool UsesRecoveredAlphaBoxPipeline(const OLMKiraKiraInfo &info)
+{
+	return info.channel == 1 && (info.blur_mode == 1 || info.blur_mode == 2) &&
+		!info.approximated_input;
+}
+
 static std::vector<float> MakeSeed(
 	const std::vector<FloatRGBA> &pixels,
 	A_long w,
@@ -646,7 +685,11 @@ static std::vector<float> MakeSeed(
 	const OLMKiraKiraInfo &info)
 {
 	std::vector<float> seed((size_t)w * h);
-	const double exponent = std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
+	// Original double threshold 0.001 selects float replacement 0x3a83126f.
+	const bool scalar_alpha_box = UsesRecoveredAlphaBoxPipeline(info);
+	const double exponent = scalar_alpha_box
+		? (double)std::max(0.001f, (float)info.strength_multiplier)
+		: std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
 	const float fade_threshold = (float)info.fade_out;
 	auto apply_fade = [&](float value) -> float {
 		if (value == 0.0f) return 0.0f;
@@ -659,7 +702,8 @@ static std::vector<float> MakeSeed(
 			const FloatRGBA &p = pixels[(size_t)y * w + x];
 			float v = 0.0f;
 			if (info.channel == 1) {
-				v = (float)std::pow(p.a, exponent);
+				v = scalar_alpha_box ? std::pow(p.a, (float)exponent)
+					: (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
 				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
 				v = apply_fade(luma) * p.a;
@@ -731,7 +775,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
 		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0);
+			info.channel == 1 && info.strength_multiplier == 1.0 && info.highlight_radius == 0,
+			UsesRecoveredAlphaBoxPipeline(info));
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -758,7 +803,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	// historical 0.62 PNG-fit scaffold is not part of the AEX owner path.
 	float scale = (float)info.brightness_gain;
 	const float highlight_scale = (float)info.brightness_gain;
-	if (info.strength_multiplier <= 1.0e-6) {
+	if (info.strength_multiplier <= 1.0e-6 && !UsesRecoveredAlphaBoxPipeline(info)) {
 		scale = 127.0 / 255.0;
 	}
 	std::vector<FloatRGBA> glow((size_t)work_width * work_height);
@@ -776,12 +821,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
 			// FUN_18114fd90 uses one reciprocal and three multiplies.
-			// F09 proves PF16/32; C04 proves the PF8 unit-exponent Alpha
-			// scalar branch through source, seed and every ray. Restore its
-			// first differing operation here. Other PF8 seed branches retain
-			// their prior boundary until their upstream arithmetic is closed.
+			// F09 proves PF16/32; C04 proves unit-exponent PF8 Alpha. C07
+			// closes the remaining scalar Alpha box seed operations, allowing
+			// the same original normalization for non-unit strengths too.
+			// Other PF8 seed branches retain their unresolved boundary.
 			if (bitdepth != 8 ||
-				(info.channel == 1 && info.strength_multiplier == 1.0)) {
+				(info.channel == 1 && info.strength_multiplier == 1.0) ||
+				UsesRecoveredAlphaBoxPipeline(info)) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
@@ -878,6 +924,15 @@ static void KiraDiagnosticInfo(const char *label, const OLMKiraKiraInfo &info)
 		(double)info.comp_width);
 }
 
+// FUN_18114e860 uses CVTDQ2PS/MULSS with float constant 0x3c23d70a
+// for Strength and both Opacity controls. Keep unresolved color/resize/Gaussian
+// pipelines outside this recovery until their upstream boundaries are closed.
+static PF_FpLong ReadAlphaBoxPercent(A_long value, const OLMKiraKiraInfo &info)
+{
+	if (UsesRecoveredAlphaBoxPipeline(info)) return (float)value * 0.01f;
+	return value / 100.0;
+}
+
 static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKiraInfo *info)
 {
 	AEFX_CLR_STRUCT(*info);
@@ -889,13 +944,13 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	info->diagonal_length = params[OLMKIRAKIRA_DIAGONAL_LENGTH]->u.sd.value;
 	info->diagonal2_length = params[OLMKIRAKIRA_DIAGONAL2_LENGTH]->u.sd.value;
 	info->highlight_radius = params[OLMKIRAKIRA_HIGHLIGHT_RADIUS]->u.sd.value;
-	info->glow_opacity = params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value / 100.0;
 	info->channel = params[OLMKIRAKIRA_CHANNEL]->u.pd.value;
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
 	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
 	info->approximated_input = params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value;
-	info->strength_multiplier = params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value / 100.0;
-	info->source_opacity = params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value / 100.0;
+	info->strength_multiplier = ReadAlphaBoxPercent(params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value, *info);
+	info->glow_opacity = ReadAlphaBoxPercent(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
+	info->source_opacity = ReadAlphaBoxPercent(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
 	PF_Err err = CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color);
@@ -993,7 +1048,8 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_ROTATION, info->glow_rotation = param->u.fs_d.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_BRIGHTNESS_GAIN, info->brightness_gain = param->u.fs_d.value);
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_STRENGTH_MULTIPLIER, info->strength_multiplier = param->u.sd.value / 100.0);
+	A_long raw_strength = 0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_STRENGTH_MULTIPLIER, raw_strength = param->u.sd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_FADE_OUT, info->fade_out = param->u.fs_d.value * 0.2);
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_VERTICAL_LENGTH, info->vertical_length = param->u.sd.value);
@@ -1041,13 +1097,18 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 			return ReadRampHandle(in_data, param->u.arb_d.value, &info->highlight_ramp));
 	}
 
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_OPACITY, info->glow_opacity = param->u.sd.value / 100.0);
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_SOURCE_OPACITY, info->source_opacity = param->u.sd.value / 100.0);
+	A_long raw_glow_opacity = 0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_OPACITY, raw_glow_opacity = param->u.sd.value);
+	A_long raw_source_opacity = 0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_SOURCE_OPACITY, raw_source_opacity = param->u.sd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_CHANNEL, info->channel = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_BLUR_MODE, info->blur_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_MERGE_MODE, info->merge_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_APPROX_INPUT, info->approximated_input = param->u.bd.value);
 
+	info->strength_multiplier = ReadAlphaBoxPercent(raw_strength, *info);
+	info->glow_opacity = ReadAlphaBoxPercent(raw_glow_opacity, *info);
+	info->source_opacity = ReadAlphaBoxPercent(raw_source_opacity, *info);
 #undef CHECKOUT_SMART_DECODE
 #undef CHECKOUT_SMART_VALUE
 	return PF_Err_NONE;
@@ -1427,7 +1488,7 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 }
 
 static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
-	bool admit_pf8 = false)
+	bool admit_pf8 = false, bool admit_opacity = false, bool admit_strength = false)
 {
 	// F12: the Alpha constructor (18114edf0) produces one scalar channel.
 	// Strength 100% makes its powf exponent exactly one; Fade Out is unused.
@@ -1435,15 +1496,21 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 	// branch in 18114f4a0 uses the corresponding isotropic box passes. F11
 	// recovers their shared float sin/cos and workspace extent arithmetic.
 	// C04 additionally proves PF8 on Smart after scalar normalization recovery.
-	// Keep color seed constructors, Gaussian, resizing and opacity materialization
-	// outside this admission. The caller
+	// C07 additionally proves scalar powf, exponent materialization/clamp and
+	// both opacity controls across their declared ranges on Smart.
+	// Keep color seed constructors, Gaussian and resizing outside this admission. The caller
 	// still requires finite SDR pixels and the existing full-frame/layout caps.
 	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128 &&
 		 !(admit_pf8 && format == PF_PixelFormat_ARGB32)) ||
 		info.channel != 1 || (info.blur_mode != 1 && info.blur_mode != 2) ||
 		(info.merge_mode != 1 && info.merge_mode != 2) ||
-		info.approximated_input || info.strength_multiplier != 1.0 ||
-		info.glow_opacity != 1.0 || info.source_opacity != 1.0 ||
+		info.approximated_input ||
+		(admit_strength ? !(info.strength_multiplier >= 0.0 && info.strength_multiplier <= 10.0)
+		                : info.strength_multiplier != 1.0) ||
+		(admit_opacity
+		 ? !(info.glow_opacity >= 0.0 && info.glow_opacity <= 100.0 &&
+		     info.source_opacity >= 0.0 && info.source_opacity <= 1.0)
+		 : (info.glow_opacity != 1.0 || info.source_opacity != 1.0)) ||
 		!(info.brightness_gain >= 1.0 && info.brightness_gain <= 100.0) ||
 		// The AEX adds ray offsets and negates the inverse-warp angle as
 		// signed 32-bit integers. Require both operations to be representable.
@@ -1702,6 +1769,27 @@ static bool GenericBetaInputIsFiniteSDR(
 			} else {
 				return false;
 			}
+		}
+	}
+	return true;
+}
+
+// Smart's recovered Alpha box pipeline accepts finite floating source
+// colors beyond SDR when its scalar powf seed remains finite and nonnegative.
+// Negative alpha and powf overflow produce NaN/Inf filtering families that
+// remain outside this recovery; no final-output value is used for admission.
+static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
+	PF_PixelFormat format, const OLMKiraKiraInfo &info)
+{
+	if (!input || format != PF_PixelFormat_ARGB128 ||
+		!IsAlphaBoxTuple(info, format, true, true, true)) return false;
+	const float exponent = std::max(0.001f, (float)info.strength_multiplier);
+	for (A_long y = 0; y < input->height; ++y) {
+		for (A_long x = 0; x < input->width; ++x) {
+			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
+			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
+				!std::isfinite(p.green) || !std::isfinite(p.blue) || p.alpha < 0.0f ||
+				!std::isfinite(std::pow(p.alpha, exponent))) return false;
 		}
 	}
 	return true;
@@ -2538,10 +2626,11 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				generic_world_layout && pre_is_generic_beta &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
-				 IsAlphaBoxTuple(info, format, true) ||
+				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsZeroRayTuple(info)) &&
-				GenericBetaInputIsFiniteSDR(input_world, format);
+				(GenericBetaInputIsFiniteSDR(input_world, format) ||
+				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
