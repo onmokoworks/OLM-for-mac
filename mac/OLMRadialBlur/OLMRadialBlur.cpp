@@ -950,9 +950,10 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
 	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
 	if (!std::isfinite(info.noise_variation) || info.noise_variation < 0.0 || info.noise_variation > 100.0) return false;
-	// Nonnegative phases from the full signed AD range keep table indices valid.
-	// Negative phases can address before the native random table; still unverified.
-	if (!std::isfinite(info.noise_offset) || info.noise_offset < 0.0f ||
+	// Negative phases are valid only while all generated table indices remain
+	// in range. The noise builder checks each index before either table read.
+	if (!std::isfinite(info.noise_offset) ||
+		info.noise_offset < RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::min()) ||
 		info.noise_offset > RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::max())) return false;
 	return info.seed >= 1 && info.seed <= 1000 &&
         std::isfinite(info.thickness) && info.thickness >= 1.0 && info.thickness <= 100.0 &&
@@ -1025,13 +1026,28 @@ static bool IsGenericBaselineWorldPair(
 	const size_t last_row = (size_t)input->height - 1;
 	if ((last_row != 0 && input_rowbytes > std::numeric_limits<size_t>::max() / last_row) ||
 		(last_row != 0 && output_rowbytes > std::numeric_limits<size_t>::max() / last_row)) return false;
+	// Negative-phase PF32 reveals a separate Gaussian/import residual. Keep
+	// that admission closed while allowing proven integer-depth noise planes.
+	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+		if (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;
+	}
 	size_t rgba_words = 0;
 	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
 		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;
+	// C11: off-frame centers exercise the same original radius builder.
+	// PF32 and typed Rotation still have observed numerical residuals; keep
+	// their in-frame boundary until separately proven against the original.
+	const bool outside_center_supported =
+		std::is_same<PixelT, PF_Pixel8>::value ||
+		(std::is_same<PixelT, PF_Pixel16>::value && info.blur_type == 1);
+	const bool center_supported =
+		(info.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&
+		 info.center_y >= 0.0 && info.center_y <= (PF_FpLong)input->height) ||
+		(outside_center_supported && info.center_x >= -32768.0 && info.center_x < 32768.0 &&
+		 info.center_y >= -32768.0 && info.center_y < 32768.0);
 	return info.comp_width == (PF_FpLong)input->width &&
 		info.comp_height == (PF_FpLong)input->height &&
-		info.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&
-		info.center_y >= 0.0 && info.center_y <= (PF_FpLong)input->height &&
+		center_supported &&
 		IsGenericBaselineControlProfile(info);
 }
 
@@ -4518,10 +4534,14 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const double right = std::max({0.0, cx - (double)w, cx <= (double)w / 2.0 ? (double)w - cx : cx});
 	const double top = std::max(0.0, -cy);
 	const double bottom = std::max({0.0, cy - (double)h, cy <= (double)h / 2.0 ? (double)h - cy : cy});
-	const A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(left * left + top * top) / ratio) - 2);
+	A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(left * left + top * top) / ratio) - 2);
 	const double max_x = std::max(left, right);
 	const double max_y = std::max(top, bottom);
-	const A_long max_r = (A_long)std::sqrt(max_x * max_x + max_y * max_y) + 2;
+	A_long max_r = (A_long)std::sqrt(max_x * max_x + max_y * max_y) + 2;
+	// Original Rotation 1BB0 and Zoom A8F0 perform the same FLOAT32 axis
+	// bounds and integer-radius truncation; 481B..4849 divides after truncation.
+	if (use_generic_baseline)
+		ZoomRadiusBoundsAEX(w, h, (float)cx, (float)cy, (float)ratio, &min_r, &max_r);
 	const A_long radius_count = max_r - min_r + 1;
 	size_t polar_rgba_words = 0;
 	if (!CheckedCellProduct(radius_count, angular_count, 4, &polar_rgba_words) ||
@@ -5427,7 +5447,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
-			GenericRadialInputIsSDR<PF_PixelFloat>(input);
+			// Match typed Zoom's finite-input contract. Its FLOAT32 path retains
+			// signed/HDR values; Rotation has independent HDR/subnormal residuals.
+			(info.blur_type == 1 ? GenericRadialInputIsFinite<PF_PixelFloat>(input) :
+			 GenericRadialInputIsSDR<PF_PixelFloat>(input));
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached

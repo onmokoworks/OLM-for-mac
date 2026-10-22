@@ -85,7 +85,7 @@ def main():
     ap.add_argument('--smoke', action='store_true')
     args = ap.parse_args()
     out = args.output.resolve()
-    assert out.is_relative_to(ROOT / 'orchestra/state/C06-radial-smart')
+    assert out.is_relative_to(ROOT / 'orchestra/state')
     out.mkdir(parents=True, exist_ok=True)
     public.SOURCE = args.source.resolve()
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out),

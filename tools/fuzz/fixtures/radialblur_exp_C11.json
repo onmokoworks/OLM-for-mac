@@ -1,0 +1,131 @@
+{
+  "rows": [
+    {
+      "index": 31,
+      "case": {
+        "seed": 5,
+        "index": 31,
+        "depth": 32,
+        "geometry": [
+          12,
+          1
+        ],
+        "profile": "sdr",
+        "parameters": [
+          {
+            "slot": 1,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 2,
+            "kind": "p",
+            "value": [
+              -7.1840667724609375,
+              -0.201995849609375
+            ]
+          },
+          {
+            "slot": 4,
+            "kind": "i",
+            "value": 10
+          },
+          {
+            "slot": 5,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 6,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 7,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 10,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 11,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 12,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 13,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 15,
+            "kind": "b",
+            "value": 1
+          },
+          {
+            "slot": 17,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 18,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 20,
+            "kind": "s",
+            "value": 5.0
+          },
+          {
+            "slot": 21,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 22,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 24,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 25,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 27,
+            "kind": "i",
+            "value": 1
+          },
+          {
+            "slot": 28,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 29,
+            "kind": "s",
+            "value": 10.0
+          }
+        ],
+        "input_padding": 16,
+        "output_padding": 5
+      },
+      "input_hex": "8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f8180003fa1a0a03ce3e2e23ee2e1613f",
+      "expected_smart_sha256": "1176de1952e62259eb8694d18820dc3a3264e78237d9718c880fb65c7c570216"
+    }
+  ]
+}
