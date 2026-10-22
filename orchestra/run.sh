@@ -51,12 +51,12 @@ case $engine in
       oc "--continue" "You stopped without the required report (or the session stalled). If work remains and you are not blocked, continue the ticket now. In any case, finish by writing and committing orchestra/reports/$id.md in the exact format from the brief."; rc=$?
     done ;;
   codex)
-    codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-high} "${marg[@]}" "$prompt" < /dev/null > "$log" 2>&1; rc=$?
+    codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-medium} "${marg[@]}" "$prompt" < /dev/null > "$log" 2>&1; rc=$?
     for attempt in 1 2 3; do
       [[ -f "$wt/orchestra/reports/$id.md" ]] && break
       grep -qE 'routing discovery timed out|Reconnecting\.\.\. 5/5|at capacity|stream disconnected|request timed out' "$log" || break
       echo "[run.sh] codex transient failure, retry $attempt after 120s" >> "$log"; sleep 120
-      codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-high} "${marg[@]}" "$prompt
+      codex exec --dangerously-bypass-approvals-and-sandbox -C "$wt" -c model_reasoning_effort=${EFFORT:-medium} "${marg[@]}" "$prompt
 
 ## Resume
 A previous attempt of this ticket was cut off by a network/capacity error. Inspect git status/diff and
