@@ -112,10 +112,32 @@ def field_matrix(a):
           yield f'{geometry}/threshold{threshold}/inout{inout}/invert{invert}/interp{interp}/mode{mode}',c
 
 
+def inactive_matrix(a):
+    # The three cvSmooth modes have a 1x1 kernel at Size=0. Mode5 is excluded.
+    below=struct.unpack('<f',struct.pack('<I',0x38d1b716))[0]
+    at=struct.unpack('<f',struct.pack('<I',0x38d1b717))[0]
+    for geometry in ([7,1],[1,7],[7,5]):
+     w,h=geometry
+     av=[0.,below,at,.0058823530562222,.5,1.,.25]
+     pixels=b''.join(struct.pack('<4f',av[(x+y)%7],.125*(x%7),.0625*(y%7),.75) for y in range(h) for x in range(w))
+     for blur in (2,3,4):
+      for inout in (1,2,3):
+       for invert in (0,1):
+        for interp in (1,2,3):
+         for mode in (1,2):
+          for bg in (0,1):
+           c=dict(geometry=geometry,depth=32,profile='sdr',parameters=a.defaults(w,h),pixels=pixels,input_padding=3,output_padding=5)
+           values={1:invert,2:inout,3:4,4:3,5:mode,6:bg,7:[255,28,53,238],8:[255,16,160,48],9:interp,11:blur,12:0}
+           for q in c['parameters']:
+            if q['slot'] in values:q['value']=values[q['slot']]
+           yield f'{geometry}/blur{blur}/inout{inout}/invert{invert}/interp{interp}/mode{mode}/bg{bg}',c
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--inactive-gate-off',action='store_true');p.add_argument('--candidate-source',type=Path);p.add_argument('--strict-admission',action='store_true')
     p.add_argument('--before-ref',default='b4350d648947640ebdc3459c5e0451cbef54c64f');p.add_argument('--campaign',type=Path,action='append',default=[])
-    p.add_argument('--field-matrix',action='store_true');p.add_argument('--blur-matrix',action='store_true');p.add_argument('--matrix',action='store_true');p.add_argument('--cutoff-matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
+    p.add_argument('--inactive-negatives',action='store_true');p.add_argument('--inactive-matrix',action='store_true');p.add_argument('--field-matrix',action='store_true');p.add_argument('--blur-matrix',action='store_true');p.add_argument('--matrix',action='store_true');p.add_argument('--cutoff-matrix',action='store_true');p.add_argument('--corpus',action='store_true');p.add_argument('--update-corpus',action='store_true')
     args=p.parse_args();args.scratch=args.scratch.resolve();assert args.scratch.is_relative_to(ROOT/'orchestra/state/C08-dg-smart-r2')
     args.scratch.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch));tempfile.tempdir=str(args.scratch)
     before_source=subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
@@ -124,7 +146,17 @@ def main():
     deadline=time.monotonic()+1800
     with tempfile.TemporaryDirectory(dir=args.scratch) as td:
       td=Path(td);prod=td/'prod';prod.mkdir();report['provenance']=a.prepare(prod,deadline)
-      old=variant(a,td/'before',deadline,before_source);san=variant(a,td/'san',deadline,sanitized=True)
+      candidate_source=args.candidate_source.read_text() if args.candidate_source else None
+      if args.inactive_gate_off:
+        assert candidate_source is None
+        candidate_source=replace_once(before_source,
+            'p.blur_mode == BLUR_MODE_NONE &&\n\t       (p.interp_mode',
+            '(p.blur_mode == BLUR_MODE_NONE ||\n\t        (p.blur_size == 0 && p.blur_mode >= BLUR_MODE_NO_SCALE &&\n\t         p.blur_mode <= BLUR_MODE_MEDIAN)) &&\n\t       (p.interp_mode')
+        report['experiment']='inactive mode guard only'
+      if candidate_source is not None:
+        a=variant(a,td/'experiment',deadline,candidate_source)
+        report.update(candidate_source_sha256=sha(candidate_source.encode()),candidate_sha256=sha(a.binary.read_bytes()))
+      old=variant(a,td/'before',deadline,before_source);san=variant(a,td/'san',deadline,source=candidate_source,sanitized=True)
       wd=td/'case';wd.mkdir()
       def compare(c,reference_hash):
         bs,br,_=old.candidate(c,wd,'smart',deadline);ns,nr,_=a.candidate(c,wd,'smart',deadline);ss,sr,_=san.candidate(c,wd,'smart',deadline)
@@ -133,6 +165,8 @@ def main():
         before_exact=bs['status']=='ok' and sha(br)==reference_hash
         after_exact=ns['status']=='ok' and sha(nr)==reference_hash
         if before_exact:assert after_exact and br==nr,('base exact regression',c)
+        if args.strict_admission and (br!=nr or bs['status']!=ns['status']):
+          assert bs['status']=='refusal' and after_exact,('admission is not refusal->exact',bs,ns,c)
         return dict(before_status=bs['status'],after_status=ns['status'],before_sha256=sha(br),after_sha256=sha(nr),
                     before_exact=before_exact,after_exact=after_exact,changed=br!=nr or bs['status']!=ns['status'],sanitized_equal=True),ns,nr
       for campaign in args.campaign:
@@ -145,14 +179,32 @@ def main():
           rows.append(result)
         counts=dict(Counter(f"{r['before_exact']}->{r['after_exact']}" for r in rows))
         report['campaigns'].append(dict(seed=data['seed'],campaign_sha256=sha(campaign.read_bytes()),counts=counts,rows=rows));print('CAMPAIGN',data['seed'],counts,flush=True)
-      if args.matrix or args.cutoff_matrix or args.blur_matrix or args.field_matrix:
-        for label,c in (field_matrix(a) if args.field_matrix else blur_matrix(a) if args.blur_matrix else cutoff_matrix(a) if args.cutoff_matrix else matrix(a)):
+      if args.matrix or args.cutoff_matrix or args.blur_matrix or args.field_matrix or args.inactive_matrix:
+        for label,c in (inactive_matrix(a) if args.inactive_matrix else field_matrix(a) if args.field_matrix else blur_matrix(a) if args.blur_matrix else cutoff_matrix(a) if args.cutoff_matrix else matrix(a)):
           oracle,reference=a.oracle(c,wd,deadline,'smart');assert oracle['status']=='ok',(label,oracle)
           result,_,raw=compare(c,sha(reference));result.update(label=label,input_sha256=sha(c['pixels']),oracle_sha256=sha(reference))
+          if args.inactive_matrix:assert result['after_exact'],(label,result)
           if not result['after_exact']:result['diff']=raw_diff(reference,raw,c['depth'])
           report['matrix'].append(result)
           if len(report['matrix'])%72==0:print('MATRIX_PROGRESS',len(report['matrix']),flush=True)
         print('MATRIX',dict(Counter(f"{r['before_exact']}->{r['after_exact']}" for r in report['matrix'])),flush=True)
+      if args.inactive_matrix or args.inactive_negatives:
+        c0=next(inactive_matrix(a))[1]
+        report['negative']=[]
+        for label,slot,value,word in [('bilateral',11,5,None),('power',9,4,None),
+              ('alpha-above-one',None,None,(0,0x3f800001)),('rgb-above-one',None,None,(1,0x3f800001)),
+              ('rgb-negative-subnormal',None,None,(1,0x80000001)),('rgb-infinity',None,None,(1,0x7f800000)),
+              ('rgb-nan',None,None,(1,0x7fc12345))]:
+          c=copy.deepcopy(c0)
+          if slot is not None:
+            for q in c['parameters']:
+              if q['slot']==slot:q['value']=value
+          if word is not None:
+            raw=bytearray(c['pixels']);struct.pack_into('<I',raw,word[0]*4,word[1]);c['pixels']=bytes(raw)
+          result,ns,_=compare(c,None)
+          assert result['before_status']==ns['status']=='refusal' and not result['changed'],(label,result)
+          report['negative'].append(dict(label=label,**result))
+        print('NEGATIVE',len(report['negative']),'unchanged clean refusals',flush=True)
       if args.corpus or args.update_corpus:
         for path in sorted((ROOT/'tests/fuzz_corpus/olmdistancegradation').glob('*.json')):
           c,saved=load_corpus(path,a);oracle=saved['result'].get('oracles',{}).get('smart',saved['result']['oracle'])

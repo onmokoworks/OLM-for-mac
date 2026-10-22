@@ -1420,14 +1420,16 @@ static bool is_admitted_pf32_power_source(
 	return true;
 }
 
-// Practical PF32 Smart beta lane.  Unlike the exact Windows-owner matrix
-// above, this lane intentionally promises useful rendering rather than
-// bit-for-bit UCRT/IPP identity.  Keep it restricted to the two interpolation
-// modes that need neither platform powf compatibility nor blur staging.
+// PF32 Smart unblurred lane: Constant/Linear/Sphere avoid platform powf.
+// At Size=0, the original owner calls Box/Gaussian/Median with a 1x1 kernel;
+// C08 public-AEX campaigns and 648 independent cases prove the identity path.
+// Mode 5 has different semantics even at zero size and remains separate.
 static bool is_admitted_pf32_smart_unblurred_beta(const DGParams &p)
 {
 	return p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
-	       p.blur_mode == BLUR_MODE_NONE &&
+	       (p.blur_mode == BLUR_MODE_NONE ||
+	        (p.blur_size == 0 && p.blur_mode >= BLUR_MODE_NO_SCALE &&
+	         p.blur_mode <= BLUR_MODE_MEDIAN)) &&
 	       (p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR ||
 	        p.interp_mode == INTERP_SPHERE) &&
 	       p.in_out >= IN_OUT_INSIDE && p.in_out <= IN_OUT_BOTH &&

@@ -32,6 +32,7 @@ def reg(ld,r):return ld.uc.reg_read(r).to_bytes(16,'little')[:4].hex()
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--source-ref')
     p.add_argument('--blur-mode',type=int,default=1)
     p.add_argument('--blur-size',type=int,default=0)
     p.add_argument('--family',choices=['layer','mask'],default='layer')
@@ -43,7 +44,9 @@ def main():
     report={'schema':'olm.dg-smart-stage-C08/1','rows':[]}
     with tempfile.TemporaryDirectory(dir=args.scratch) as td:
         td=Path(td);deadline=time.monotonic()+300;report['provenance']=a.prepare(td,deadline)
-        diagnostic=SOURCE.read_text().replace('// d_alpha: source ownership follows', 'if (const char *mp = getenv("OLM_DG_C08_MASK_PATH")) { FILE *mf = fopen(mp, "wb"); if (mf) { fwrite(mask.data(), 1, mask.size(), mf); fclose(mf); } }\n\t// d_alpha: source ownership follows',1)
+        target_source=(subprocess.check_output(['git','show',args.source_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode() if args.source_ref else SOURCE.read_text())
+        report.update(mac_source_ref=args.source_ref,mac_source_sha256=sha(target_source.encode()))
+        diagnostic=target_source.replace('// d_alpha: source ownership follows', 'if (const char *mp = getenv("OLM_DG_C08_MASK_PATH")) { FILE *mf = fopen(mp, "wb"); if (mf) { fwrite(mask.data(), 1, mask.size(), mf); fclose(mf); } }\n\t// d_alpha: source ownership follows',1)
         a=variant(a,td/'mask-build',deadline,diagnostic)
         report.update(family=args.family,blur_mode=args.blur_mode,blur_size=args.blur_size)
         for mode in (1,2):
@@ -102,6 +105,8 @@ def main():
                 stages[x]['mac_source_argb_bits']=[bits(float(s['src_'+ch])) for ch in 'argb']
                 stages[x]['mac_composed_argb_bits']=[bits(float(s['out_'+ch])) for ch in 'argb']
                 stages[x]['mac_field_bits']=bits(float(s['field_x']))
+                stages[x]['mac_aux_bits']=bits(float(s['d_alpha']))
+                stages[x]['aex_blue_field_bits']=bits(field[x*4+3]/255)
                 stages[x]['aex_field_bits']=bits(field[x*4+1]/255)
                 assert stages[x]['source_argb_bits']==stages[x]['mac_source_argb_bits']
                 # Field equality is evidence to report, not an input assumption.
