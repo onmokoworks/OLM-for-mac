@@ -6,6 +6,7 @@ import math
 import os
 from pathlib import Path
 import struct
+import subprocess
 import sys
 import tempfile
 import time
@@ -18,7 +19,7 @@ from core import (apply_operation, command, evaluate, load_corpus, mismatch_rout
                   raw_diff, save_corpus, sha, shrink)
 from adapters.radialblur import Adapter, ROOT
 
-SCRATCH = ROOT/'orchestra/state/T02-fuzz-framework-radialblur'
+SCRATCH = Path(os.environ.get('OLM_FUZZ_TEST_SCRATCH', ROOT/'orchestra/state/T02-fuzz-framework-radialblur'))
 
 
 def make_adapter():
@@ -184,6 +185,146 @@ class FrameworkTests(unittest.TestCase):
         self.assertLess(time.monotonic()-start,1)
         result, _, _ = command(['executable-must-not-launch'],timeout=1,deadline=start-1)
         self.assertEqual(result['status'],'budget')
+
+
+class ReplayProvenanceTests(unittest.TestCase):
+    def setUp(self):
+        SCRATCH.mkdir(parents=True, exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix='replay_unit_', dir=SCRATCH)
+        self.directory = Path(self.temp.name).resolve()
+        self.corpus = self.directory/'corpus'
+        self.corpus.mkdir()
+        self.worker = self.directory/'worker'
+        self.worker.write_bytes(b'\x00')
+        self.args = argparse.Namespace(replay=self.corpus, worker=None, case_timeout=None)
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def save(self, name, worker=None, **provenance):
+        worker = worker or self.worker
+        path = self.corpus/(name+'.json')
+        path.write_text(json.dumps({'provenance':{
+            'worker_path':str(worker), 'worker_sha256':sha(worker.read_bytes()), **provenance}}))
+        return path
+
+    def test_mixed_worker_and_timeout_replay(self):
+        from run import replay
+        prepared = []
+
+        class WorkerSensitive(Synthetic):
+            def __init__(self, args):
+                self.worker, self.timeout = args.worker, args.case_timeout
+
+            def prepare(self, scratch, deadline):
+                prepared.append((self.worker, self.timeout))
+                return {'worker_path':str(self.worker), 'worker_sha256':sha(self.worker.read_bytes())}
+
+            def oracle(self, case, directory, deadline):
+                return {'status':'ok'}, self.worker.read_bytes()*len(case['pixels'])
+
+        other = self.directory/'other-worker'
+        other.write_bytes(b'\x01')
+        # Interleave workers, including two timeouts for the same worker.
+        settings = [(self.worker, 3), (other, 7), (self.worker, 3), (self.worker, 10)]
+        deadline = time.monotonic()+10
+        for index, (worker, timeout) in enumerate(settings):
+            adapter = WorkerSensitive(argparse.Namespace(worker=worker, case_timeout=timeout))
+            case = adapter.generate(1, index)
+            result = evaluate(adapter, case, self.directory, deadline)
+            provenance = {'worker_path':str(worker), 'worker_sha256':sha(worker.read_bytes())}
+            if index != 3:  # Old corpora retain the ten-second fallback.
+                provenance['case_timeout_seconds'] = timeout
+            save_corpus(self.corpus/f'{index}.json', adapter, case, case, result, {'accepted':[]}, provenance)
+        report = {}
+        self.assertEqual(replay(WorkerSensitive, self.args, self.directory, deadline, report), 0)
+        self.assertEqual(prepared, [settings[0], settings[1], settings[3]])
+        self.assertEqual(report['completed'], 4)
+        self.assertTrue(report['replay_matches_saved'])
+        self.assertEqual([r['group'] for r in report['replays']], [0, 1, 0, 2])
+        self.assertIsNone(report['provenance'])
+        self.assertIsNone(report['case_timeout_seconds'])
+        self.assertEqual([g['provenance']['case_timeout_seconds'] for g in report['replay_groups']], [3, 7, 10])
+        self.args.worker, self.args.case_timeout = other, 2
+        report = {}
+        self.assertEqual(replay(WorkerSensitive, self.args, self.directory, deadline, report), 1)
+        self.assertFalse(report['replay_matches_saved'])
+        self.assertEqual(report['provenance']['worker_path'], str(other))
+        self.assertEqual(report['case_timeout_seconds'], 2)
+
+    def test_invalid_binding_fails_before_adapter_setup_and_names_corpus(self):
+        from run import replay
+        self.save('0-valid')
+        path = self.corpus/'1-invalid.json'
+        valid = {'worker_path':str(self.worker), 'worker_sha256':sha(self.worker.read_bytes())}
+        for provenance in ({}, None, {'worker_path':str(self.worker)},
+                           {'worker_sha256':valid['worker_sha256']},
+                           dict(valid, worker_path=str(self.directory/'missing-worker')),
+                           dict(valid, worker_sha256='0'*64)):
+            with self.subTest(provenance=provenance):
+                path.write_text(json.dumps({'provenance':provenance}))
+                with patch('run.prepare') as prepare:
+                    with self.assertRaises(ValueError) as error:
+                        replay(Synthetic, self.args, self.directory, time.monotonic()+5, {})
+                    self.assertIn(str(path), str(error.exception))
+                    self.assertIn('--worker', str(error.exception))
+                    prepare.assert_not_called()
+
+    def test_explicit_overrides_bypass_recorded_binding_and_timeout(self):
+        from run import replay_groups
+        path = self.save('case', worker_path='/missing/worker', worker_sha256='wrong',
+                         case_timeout_seconds=-1)
+        self.args.worker, self.args.case_timeout = self.worker, 2.5
+        self.assertEqual(replay_groups(self.args), {(self.worker, 2.5):[path]})
+        path.write_text(json.dumps({'provenance':None}))
+        self.assertEqual(replay_groups(self.args), {(self.worker, 2.5):[path]})
+
+    def test_timeout_validation_and_independent_override(self):
+        from run import replay_groups
+        for timeout in (0, -1, True, '10', None, float('inf'), float('nan')):
+            with self.subTest(timeout=timeout):
+                path = self.save('case', case_timeout_seconds=timeout)
+                with self.assertRaises(ValueError) as error:
+                    replay_groups(self.args)
+                self.assertIn(str(path), str(error.exception))
+                self.assertIn('--case-timeout', str(error.exception))
+        self.args.case_timeout = 4
+        self.assertEqual(replay_groups(self.args), {(self.worker, 4):[path]})
+        self.args.case_timeout = None
+        self.args.worker = self.worker
+        self.save('case', case_timeout_seconds=8)
+        self.assertEqual(replay_groups(self.args), {(self.worker, 8):[path]})
+
+    def test_cli_defaults_do_not_override_corpus(self):
+        from run import options
+        argv = ['run.py', '--plugin', 'radialblur', '--scratch', str(self.directory)]
+        with patch('run.default_worker', return_value=self.worker) as default:
+            with patch.object(sys, 'argv', argv+['--replay', str(self.corpus)]):
+                args = options()
+            self.assertIsNone(args.worker)
+            self.assertIsNone(args.case_timeout)
+            default.assert_not_called()
+            with patch.object(sys, 'argv', argv):
+                args = options()
+            self.assertEqual(args.worker, self.worker)
+            self.assertEqual(args.case_timeout, 10)
+            with patch.object(sys, 'argv', argv+['--replay', str(self.corpus),
+                                               '--worker', str(self.worker), '--case-timeout', '6']):
+                args = options()
+            self.assertEqual(args.worker, self.worker)
+            self.assertEqual(args.case_timeout, 6)
+
+    def test_cli_bad_hash_exits_nonzero_with_filename(self):
+        path = self.save('bad-hash', worker_sha256='0'*64)
+        report = self.directory/'report.json'
+        result = subprocess.run([sys.executable, '-B', str(ROOT/'tools/fuzz/run.py'),
+            '--plugin', 'radialblur', '--replay', str(path), '--jobs', '2',
+            '--scratch', str(self.directory), '--report', str(report)],
+            capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 2, result.stderr)
+        self.assertIn(str(path), result.stderr)
+        self.assertIn('SHA-256 mismatch', result.stderr)
+        self.assertEqual(json.loads(report.read_text())['status'], 'setup_error')
 
 
 if __name__ == '__main__':
