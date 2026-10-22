@@ -915,6 +915,37 @@ static bool CheckedCellProduct(A_long width, A_long height, size_t channels, siz
 	return true;
 }
 
+// Original A8F0 chooses the far axis using integer extent/2, then performs
+// FLOAT32 squares/add/sqrt and truncates before the caller divides the near
+// radius by Ratio. A mathematical max(center, extent-center) differs for an
+// odd extent with a center between floor(extent/2) and extent/2.
+static void ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
+    float ratio, A_long *minimum, A_long *maximum)
+{
+    auto axis = [](A_long extent, float center, float *near, float *far) {
+        const float size = (float)extent;
+        if (center < 0.0f) {
+            *near = -center;
+            *far = RadialF32Sub(size, center);
+        } else if (center >= size) {
+            *near = RadialF32Sub(center, size);
+            *far = center;
+        } else {
+            *near = 0.0f;
+            *far = center > (float)(extent / 2) ? center : RadialF32Sub(size, center);
+        }
+    };
+    float near_x, near_y, far_x, far_y;
+    axis(width, cx, &near_x, &far_x);
+    axis(height, cy, &near_y, &far_y);
+    const A_long near_radius = (A_long)std::sqrt(RadialF32Add(
+        RadialF32Mul(near_x, near_x), RadialF32Mul(near_y, near_y)));
+    const A_long far_radius = (A_long)std::sqrt(RadialF32Add(
+        RadialF32Mul(far_x, far_x), RadialF32Mul(far_y, far_y)));
+    *minimum = std::max<A_long>(0, (A_long)RadialF32Div((float)near_radius, ratio) - 2);
+    *maximum = far_radius + 2;
+}
+
 static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
 	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
@@ -940,9 +971,11 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.outer_edge_fade >= 0 && info.outer_edge_fade <= 100 && outer_offset_supported &&
 		info.inner_strength >= 0 && info.inner_strength <= 2000 &&
 		info.inner_edge_fade >= 0 && info.inner_edge_fade <= 100 && inner_offset_supported &&
-		info.repeat_border != FALSE && std::isfinite(info.ratio) &&
+		std::isfinite(info.ratio) &&
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
-		info.angle_deg >= -360.0 && info.angle_deg <= 360.0 &&
+		// The public AD getter supplies signed 16.16 degrees, not a one-turn
+		// slider. The existing fixed-radian transform handles that full domain.
+		info.angle_deg >= -32768.0 && info.angle_deg < 32768.0 &&
 		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 50.0 &&
 		std::isfinite(info.brightness_gain) && info.brightness_gain >= 0.0 && info.brightness_gain <= 10.0 &&
 		(std::isfinite(info.size_variation) && info.size_variation >= 0.0 && info.size_variation <= 100.0) &&
@@ -1026,7 +1059,8 @@ static bool CheckedRadialGenericBudget(
 	const OLMRadialBlurInfo &info,
 	bool smart_render,
 	size_t *estimated_bytes = nullptr,
-	uint64_t *estimated_work = nullptr)
+	uint64_t *estimated_work = nullptr,
+	bool stage_input = false)
 {
 	static constexpr uint64_t kMaxPixels = UINT64_C(4096) * UINT64_C(2160);
 	static constexpr uint64_t kMaxBytes = UINT64_C(1) << 30;
@@ -1078,7 +1112,7 @@ static bool CheckedRadialGenericBudget(
 	const uint64_t polar = angular * radius;
 
 	// Conservative peak for the generic Size/Noise topology: source/factor
-	// planes, polar transform/accumulators, one tight Smart destination, and a
+	// planes, polar transform/accumulators, tight Smart destination/input, and a
 	// fixed reserve for vectors, weights, thread state, and allocator overhead.
 	if (pixels > (UINT64_MAX - kReserveBytes) / 40 || polar > UINT64_MAX / 52)
 		return false;
@@ -1086,6 +1120,10 @@ static bool CheckedRadialGenericBudget(
 	if (smart_render) {
 		if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
 		bytes += pixels * pixel_bytes;
+		if (stage_input) {
+			if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
+			bytes += pixels * pixel_bytes;
+		}
 	}
 	const uint64_t raw_strength = (uint64_t)info.outer_strength + (uint64_t)info.inner_strength;
 	const double budget_quality_scale = 0.2 / (double)budget_quality_step;
@@ -3139,8 +3177,10 @@ static PF_Err RenderZoomTyped(
 	const double min_dy = (0.0 <= cy && cy < h) ? 0.0 : std::abs(cy < 0.0 ? cy : cy - h);
 	const double max_dx = (0.0 <= cx && cx < w) ? std::max(cx, (double)w - cx) : (cx < 0.0 ? (double)w - cx : cx);
 	const double max_dy = (0.0 <= cy && cy < h) ? std::max(cy, (double)h - cy) : (cy < 0.0 ? (double)h - cy : cy);
-	const A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(min_dx * min_dx + min_dy * min_dy) / ratio) - 2);
-	const A_long max_r = (A_long)std::sqrt(max_dx * max_dx + max_dy * max_dy) + 2;
+	A_long min_r = std::max<A_long>(0, (A_long)(std::sqrt(min_dx * min_dx + min_dy * min_dy) / ratio) - 2);
+	A_long max_r = (A_long)std::sqrt(max_dx * max_dx + max_dy * max_dy) + 2;
+	if (use_native_zoom_baseline)
+		ZoomRadiusBoundsAEX(w, h, (float)cx, (float)cy, (float)ratio, &min_r, &max_r);
 	const A_long radius_count = max_r - min_r + 1;
 	size_t polar_rgba_words = 0;
 	if (!CheckedCellProduct(radius_count, angular_count, 4, &polar_rgba_words) ||
@@ -3318,8 +3358,12 @@ static PF_Err RenderZoomTyped(
 			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled.rgba[c];
 			polar_valid[(size_t)ai * radius_count + ri] = sampled.eligible;
 			if (use_aex_outer_only) {
+				// Original 5984..59B6 selects A550 for both scalar fields when
+				// Repeat Border is off, just as it selects the no-repeat color sampler.
 				span_plane[(size_t)ai * radius_count + ri] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+					use_native_zoom_baseline && info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(source_factor_with_guard, w, h, sx, sy)
+						: use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
 						!quality_repeat_noise_tuple
 						? 1.0f
 						: (quality_repeat_noise_tuple
@@ -3328,7 +3372,9 @@ static PF_Err RenderZoomTyped(
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 				if (use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 					fade_factor_plane[(size_t)ai * radius_count + ri] =
-						SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
+						info.repeat_border == FALSE
+							? SampleScalarAEXNoRepeat(fade_factor_with_guard, w, h, sx, sy)
+							: SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
 				}
 			}
 		}
@@ -4615,15 +4661,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			polar_valid[cell] = sampled.eligible;
 			if (use_aex_exact || use_generic_two_stage) {
 				rotation_source_scalar[cell] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+					use_generic_two_stage && info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
+						: use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
 						!rotation_quality_repeat_noise_tuple
 						? (sampled.eligible ? 1.0f : 0.0f)
 						: (rotation_quality_repeat_noise_tuple
 							? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy));
 				if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
-					rotation_fade_factor[cell] = SampleScalarAEXRepeat(
-						rotation_fade_source_with_guard, w, h, sx, sy);
+					rotation_fade_factor[cell] = info.repeat_border == FALSE
+						? SampleScalarAEXNoRepeat(rotation_fade_source_with_guard, w, h, sx, sy)
+						: SampleScalarAEXRepeat(rotation_fade_source_with_guard, w, h, sx, sy);
 				}
 			}
 		}
@@ -6126,6 +6175,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_ParamDef *param_ptrs[OLMRADIALBLUR_NUM_PARAMS] = {};
 	bool param_checked_out[OLMRADIALBLUR_NUM_PARAMS] = {};
 	std::vector<std::uint8_t> staged_output;
+	std::vector<PF_Pixel16> aligned_input16;
+	std::vector<PF_PixelFloat> aligned_input32;
+	PF_EffectWorld aligned_input_world = {};
 	PF_EffectWorld staged_world = {};
 	std::size_t active_row_bytes = 0;
 	bool render_complete = false;
@@ -6197,9 +6249,14 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 					input_format != expected_format || output_format != expected_format ||
 					(noise_world && noise_format != expected_format))) err = OLM_RADIAL_REFUSAL("smartrender-format");
 			}
+			const std::size_t input_alignment = extra->input->bitdepth == 16 ? alignof(PF_Pixel16) :
+				extra->input->bitdepth == 32 ? alignof(PF_PixelFloat) : 1;
+			const bool stage_input = !IsRadialNoOpControlProfile(info) &&
+				((reinterpret_cast<std::uintptr_t>(input_world->data) % input_alignment) != 0 ||
+				 (static_cast<std::size_t>(input_world->rowbytes) % input_alignment) != 0);
 			if (!err && !IsRadialNoOpControlProfile(info) && IsGenericRadialControlProfile(info) &&
 				!CheckedRadialGenericBudget(input_world->width, input_world->height,
-					extra->input->bitdepth, info, true)) {
+					extra->input->bitdepth, info, true, nullptr, nullptr, stage_input)) {
 				err = OLM_RADIAL_ERROR("smartrender-generic-budget", PF_Err_OUT_OF_MEMORY);
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
@@ -6225,7 +6282,36 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
 				ERR(CaptureDiagnosticPF32World("input", input_world, info, extra->input->bitdepth));
 				#endif
-				if (!err) err = RenderWorld(input_world, &staged_world, noise_world, info,
+				PF_EffectWorld *render_input = input_world;
+				// AE worlds are byte-strided. Preserve every active input byte while
+				// giving the typed workers (including admission probes) aligned rows.
+				// The original checked-out world remains owned by the host; no-op
+				// copies retain their byte-only path. Output publication stays atomic.
+				if (!err && stage_input) {
+					if (active_row_bytes > static_cast<std::size_t>(input_world->rowbytes)) {
+						err = OLM_RADIAL_REFUSAL("smartrender-input-rowbytes");
+					} else {
+						const std::size_t bytes = active_row_bytes * static_cast<std::size_t>(input_world->height);
+						void *aligned_data = nullptr;
+						if (extra->input->bitdepth == 16) {
+							aligned_input16.resize(bytes / sizeof(PF_Pixel16));
+							aligned_data = aligned_input16.data();
+						} else {
+							aligned_input32.resize(bytes / sizeof(PF_PixelFloat));
+							aligned_data = aligned_input32.data();
+						}
+						for (A_long y = 0; y < input_world->height; ++y)
+							std::memcpy(reinterpret_cast<std::uint8_t *>(aligned_data) +
+								static_cast<std::size_t>(y) * active_row_bytes,
+								reinterpret_cast<const std::uint8_t *>(input_world->data) +
+								static_cast<std::size_t>(y) * input_world->rowbytes, active_row_bytes);
+						aligned_input_world = *input_world;
+						aligned_input_world.data = reinterpret_cast<PF_PixelPtr>(aligned_data);
+						aligned_input_world.rowbytes = static_cast<A_long>(active_row_bytes);
+						render_input = &aligned_input_world;
+					}
+				}
+				if (!err) err = RenderWorld(render_input, &staged_world, noise_world, info,
 				                            extra->input->bitdepth);
 				render_complete = err == PF_Err_NONE;
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)

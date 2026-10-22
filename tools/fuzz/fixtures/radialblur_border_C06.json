@@ -1,0 +1,258 @@
+{
+  "schema": "C06-reduced-Smart-Zoom-border-witness/1",
+  "rows": [
+    {
+      "index": 163,
+      "case": {
+        "seed": 1,
+        "index": 163,
+        "depth": 8,
+        "geometry": [
+          2,
+          1
+        ],
+        "profile": "sdr",
+        "parameters": [
+          {
+            "slot": 1,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 2,
+            "kind": "p",
+            "value": [
+              1.0,
+              0.5
+            ]
+          },
+          {
+            "slot": 4,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 5,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 6,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 7,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 10,
+            "kind": "i",
+            "value": 4
+          },
+          {
+            "slot": 11,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 12,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 13,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 15,
+            "kind": "b",
+            "value": 0
+          },
+          {
+            "slot": 17,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 18,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 20,
+            "kind": "s",
+            "value": 5.0
+          },
+          {
+            "slot": 21,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 22,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 24,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 25,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 27,
+            "kind": "i",
+            "value": 1
+          },
+          {
+            "slot": 28,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 29,
+            "kind": "s",
+            "value": 10.0
+          }
+        ],
+        "input_padding": 7,
+        "output_padding": 1
+      },
+      "input_hex": "ff0244f0ff0244f0",
+      "expected_smart_sha256": "38c6c77ae3ede82b7bef3424cd2f55527ed8894826a53f92836b4669b078bfc6"
+    },
+    {
+      "index": 5005,
+      "case": {
+        "geometry": [
+          1,
+          1
+        ],
+        "depth": 8,
+        "profile": "sdr",
+        "parameters": [
+          {
+            "slot": 1,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 2,
+            "kind": "p",
+            "value": [
+              0.25,
+              0.75
+            ]
+          },
+          {
+            "slot": 4,
+            "kind": "i",
+            "value": 4
+          },
+          {
+            "slot": 5,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 6,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 7,
+            "kind": "i",
+            "value": 25
+          },
+          {
+            "slot": 10,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 11,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 12,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 13,
+            "kind": "i",
+            "value": 50
+          },
+          {
+            "slot": 15,
+            "kind": "b",
+            "value": 0
+          },
+          {
+            "slot": 17,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 18,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 20,
+            "kind": "s",
+            "value": 5.0
+          },
+          {
+            "slot": 21,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 22,
+            "kind": "s",
+            "value": 25
+          },
+          {
+            "slot": 24,
+            "kind": "s",
+            "value": 100
+          },
+          {
+            "slot": 25,
+            "kind": "u",
+            "value": 2
+          },
+          {
+            "slot": 27,
+            "kind": "i",
+            "value": 89
+          },
+          {
+            "slot": 28,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 29,
+            "kind": "s",
+            "value": 10.0
+          }
+        ],
+        "input_padding": 0,
+        "output_padding": 0,
+        "variant": 5
+      },
+      "input_hex": "ff239014",
+      "expected_smart_sha256": "b8445a33140c13b91f08fc35ee52b0dba0f978d15b855aabc289fcfdd8ee7c84"
+    }
+  ]
+}

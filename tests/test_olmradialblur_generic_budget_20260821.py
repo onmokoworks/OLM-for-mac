@@ -51,6 +51,12 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  size_t strength_bytes=0;uint64_t strength_work=0;
  if(CheckedRadialGenericBudget(9,7,32,q,true,&strength_bytes,&strength_work))return 15;
  if(!(strength_bytes<(UINT64_C(1)<<30)&&strength_work>UINT64_C(350000000)))return 16;
+ // Odd-stride Smart input needs an additional aligned copy, independently
+ // of the existing atomic output staging. Account for both allocations.
+ q=profile(17,11,4);size_t aligned_bytes=0,unaligned_bytes=0;
+ if(!CheckedRadialGenericBudget(17,11,32,q,true,&aligned_bytes,nullptr))return 17;
+ if(!CheckedRadialGenericBudget(17,11,32,q,true,&unaligned_bytes,nullptr,true))return 18;
+ if(unaligned_bytes-aligned_bytes!=17*11*sizeof(PF_PixelFloat))return 19;
  std::printf("dci_classic=%zu dci_smart=%zu work=%llu\\n",classic,smart,(unsigned long long)work);
  return 0;}}
 ''')
