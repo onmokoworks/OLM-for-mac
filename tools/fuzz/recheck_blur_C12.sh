@@ -20,7 +20,7 @@ for seed in 1 5; do
   campaign "$after" "$seed"
   campaign "$after-san" "$seed" --blur-sanitize
 done
-matrix_options=(); if [ "$depth" -eq 16 ]; then matrix_options=(--single-decay-only); fi
+matrix_options=(); if [ "$depth" -ne 8 ]; then matrix_options=(--single-decay-only); fi
 python3 tools/fuzz/verify_blur_radius_C12.py "${matrix_options[@]}" --scratch "$s" --report "$s/matrix-$after.json" \
   --before "$base" --depth "$depth" --require-exact > "$s/matrix-$after.log" 2>&1
 "$py" tools/emulation/trace_olmblur_stages_C12.py --source-revision 044f9b0a884e618d3750f2d293e8ff6437193b0a \
@@ -36,10 +36,22 @@ if [ "$depth" -eq 16 ]; then
   set -e
   [ "$code" -eq 1 ]
 fi
+if [ "$depth" -eq 32 ]; then
+  python3 tools/fuzz/verify_blur_radius_C12.py --scratch "$s" --report "$s/matrix-off-pf32.json" \
+    --before "$base" --depth 32 --diagnostic-after > "$s/matrix-off-pf32.log" 2>&1
+  python3 tools/fuzz/verify_blur_radius_C12.py --scratch "$s" --report "$s/boundaries-pf32.json" \
+    --before "$base" --depth 32 --source-boundaries > "$s/boundaries-pf32.log" 2>&1
+  set +e
+  "$py" tools/emulation/trace_olmblur_stages_C12.py --scratch "$s" --indices 66 71 116 182 258 262 290 \
+    --report "$s/residual-stages-pf32.json" > "$s/residual-stages-pf32.log" 2>&1
+  code=$?
+  set -e
+  [ "$code" -eq 1 ]
+fi
 case "$depth" in
   8) indices=(19 0 91 175 195 204 226 256 285);;
   16) indices=(13 70 158 207 212 243 196);;
-  32) indices=(66 71 116 182 258 262 290);;
+  32) indices=(66 262 270);;
 esac
 "$py" tools/emulation/trace_olmblur_stages_C12.py --scratch "$s" --indices "${indices[@]}" \
   --report "$s/stages-$after.json" > "$s/stages-$after.log" 2>&1

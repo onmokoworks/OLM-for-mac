@@ -36,7 +36,14 @@ def main():
             assert ar['status'] in ('exact','mismatch','refusal')
             if br['status']=='exact':assert br==ar;preserved+=1
             if br!=ar:
-                assert br['status'] in ('refusal','mismatch') and ar['status']=='exact',(seed,a['index'],br,ar)
+                assert br['status'] in ('refusal','mismatch'),(seed,a['index'],br,ar)
+                if ar['status']=='mismatch':
+                    # Numerical repairs may reduce an already admitted residual;
+                    # never promote a refusal to mismatch or rebaseline partials.
+                    assert br['status']=='mismatch'
+                    assert all(ar['diff'][key]<br['diff'][key] for key in ('different_bytes','different_words'))
+                else:
+                    assert ar['status']=='exact',(seed,a['index'],br,ar)
                 assert ar==g['result']['routes']['smart']
                 changes.append({k:a[k] for k in ('index','geometry','depth','parameters','input_sha256')}|{'before':br,'after':ar,'oracle':a['result']['oracles']['smart']})
         report['seeds'][str(seed)]={'counts':{k:d['summary'] for k,d in data.items()},'provenance':{k:d['provenance'] for k,d in data.items()},'transitions':dict(transitions),'base_exact_preserved':preserved,'changed_cases':changes,'sanitized_routes':600}
@@ -55,6 +62,7 @@ def main():
         corpus.append({'path':str(path.relative_to(ROOT)),'before':old['result'],'after':new['result']})
     report['corpus']=corpus;report['corpus_transitions']=dict(Counter(r['before']['routes']['smart']['status']+' -> '+r['after']['routes']['smart']['status'] for r in corpus))
     matrix=load(s/f'matrix-{args.after}.json');assert matrix['depth']==args.depth
+    assert matrix['provenance']['after']['compiled_source_sha256']==report['source_sha256']
     assert all(r['after']['status']=='exact' for r in matrix['rows'])
     report['matrix']=matrix
     # Original trace evidence includes full output binding before stage interpretation.
@@ -68,9 +76,19 @@ def main():
     assert report['extended_retained']['status']['status']=='ok'
     assert len(report['extended_retained']['lines'])==80
     assert all('exact=1' in line for line in report['extended_retained']['lines'])
-    for name in ('matrix-off-'+args.after,'coeff-'+args.after):
+    for name in ('matrix-off-'+args.after,'coeff-'+args.after,'residual-stages-'+args.after,'boundaries-'+args.after):
         path=s/(name+'.json')
-        if path.exists():report[name]=load(path)
+        if path.exists():
+            report[name]=load(path)
+            if name.startswith('coeff-'):
+                assert len(report[name]['rows'])==1
+                row=report[name]['rows'][0]
+                assert not row['cached_binding'] and row['first_difference'] is None
+                assert row['candidate_sha256']==row['trace_output']['active_sha256']
+            if name.startswith('residual-stages-'):
+                assert {r['index'] for r in report[name]['rows'] if not r['cached_binding']}=={71,182,258}
+            if name.startswith('boundaries-'):
+                assert all(r['before']['status']==r['after']['status']=='refusal' for r in report[name]['rows'])
     report['corpus_updates']=[str(v[0].relative_to(ROOT)) for v in updates]
     if args.rebaseline:
         for path,saved,result in updates:
