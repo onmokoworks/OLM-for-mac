@@ -5441,7 +5441,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
-			GenericRadialInputIsSDR<PF_PixelFloat>(input);
+			// Match typed Zoom's finite-input contract. Its FLOAT32 path retains
+			// signed/HDR values; Rotation has independent HDR/subnormal residuals.
+			(info.blur_type == 1 ? GenericRadialInputIsFinite<PF_PixelFloat>(input) :
+			 GenericRadialInputIsSDR<PF_PixelFloat>(input));
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached

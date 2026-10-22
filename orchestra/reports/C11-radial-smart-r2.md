@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Closed the off-frame Center admission cluster for PF8 Zoom/Rotation and PF16 Zoom.
-- Seed 1 Smart 198/0/102 -> 229/0/71 exact/mismatch/refusal; seed 5 197/0/103 -> 219/0/81.
-- All 395 baseline-exact campaign hashes and all 35 exact corpus hashes are retained.
-- 600 sanitized campaign replays and 324 independent padded-layout renders are clean; eight existing tests pass.
-- Continuing the ticket loop; broad PF32 finite-input admission is experimental and is not promoted.
+- Closed off-frame Center admission for PF8 Zoom/Rotation and PF16 Zoom, then finite signed/HDR PF32 Zoom admission.
+- Seed 1 Smart 198/0/102 -> 229/0/71 -> 239/0/61; seed 5 197/0/103 -> 219/0/81 -> 231/0/69.
+- Every baseline-exact hash and all 35 corpus Smart hashes are retained, with zero newly admitted mismatch.
+- Both milestones pass 600 sanitized campaign replays and eight existing tests; independent Center/finite matrices pass 324/108 exact clean renders.
+- Continuing the third cluster experiment; negative Noise Offset admission is not yet promoted.
 
 facts:
 
@@ -104,3 +104,46 @@ next:
   residuals, so it is not promoted.
 - PF32 off-frame Zoom has an observed Gaussian table import boundary; preserve its refusal
   and document the external math dependency separately before any admission.
+
+Second milestone — finite signed/HDR Zoom input:
+
+FACT: The broad finite-input scratch experiment measured 240/0/60 on seed 1 and
+231/0/69 on seed 5, but the independent all-family matrix found four mismatching
+Rotation references (12 padded-layout renders). Three are 3x5 subnormal inputs:
+first word 25, AEX `0000803f`, Mac `00000000`; the other is 11x7 HDR with Fade,
+first word 28, AEX `514b2846`, Mac `4f4b2846`. This is a rejected hypothesis with
+new input boundary values. Those Rotation admissions were not promoted.
+
+FACT: The accepted general rule makes RenderWorld's PF32 Zoom input check agree
+with RenderZoomTyped's existing finite-only check. Rotation retains its SDR check;
+NaN/Inf stay refused. No pixel arithmetic, sampler, writer, dimensions, budget or
+callback lifecycle changes. Seed 1 229/0/71 -> 239/0/61; seed 5 219/0/81 -> 231/0/69.
+All 448 previously exact campaign hashes are preserved, and all 22 new admissions
+are exact. Current-source sanitized replay is 600 same / 600 clean. The independent
+matrix has 3 geometries x 3 signed/HDR/subnormal sample families x 4 control profiles,
+36 AEX references and 108 exact clean padded-layout renders. Eight smoke tests pass;
+updated input-boundary assertions retain nonfinite and Rotation refusal checks.
+Corpus 35/35 matches saved: 35 exact->exact, zero changed rows; no rebaseline mutation.
+
+FACT: Commands use the common campaign flags above with the scratch wrapper
+`probe_radialblur_smart_C11.py --experiment finite-zoom --experiment-directory ...`
+and seeds 1/5. Verification ran `verify_radialblur_smart_C11.py --campaign
+orchestra/state/C11-radial-smart-r2/finite-zoom1.json --campaign
+orchestra/state/C11-radial-smart-r2/finite-zoom5.json --finite-inputs --independent
+--smoke --output orchestra/state/C11-radial-smart-r2/finite-zoom-verified`.
+All long outputs were redirected to the corresponding scratch `.log`. Corpus
+replay used `finite-zoom-replay` as the scratch/report prefix. Evidence is
+`C11-finite-zoom.evidence.json`; it binds the scratch campaign source and the final
+commented production source independently through the 600-result sanitizer replay.
+
+INFERENCE: The generic PF32 SDR requirement was inconsistent with the existing
+finite Zoom operation and unnecessarily refused signed/HDR samples. The observed
+Rotation counterexamples require separate first-divergence work, so their older
+admission boundary remains intact.
+
+Current-tip verification (supersedes the milestone-1 exact counts in the block above):
+use `--evidence orchestra/reports/C11-finite-zoom.evidence.json --finite-inputs
+--independent --smoke` with the same verifier; expected 600 same/clean, 108 exact/clean,
+8 tests pass. A separate `--independent` invocation retains the Center matrix check
+(324 exact/clean). Current campaign expectations are seed 1 239/0/61 and seed 5
+231/0/69; corpus remains 35/35 unchanged. Source hash: `427d779b7b698586c5ffa7ae19388616abdd9f8a4587612613e4fde42bfde776`.

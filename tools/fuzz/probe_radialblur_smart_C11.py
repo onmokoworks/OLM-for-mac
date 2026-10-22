@@ -4,6 +4,8 @@
 Remaining arguments are forwarded to run.py. The oracle is never modified.
 """
 import argparse
+import hashlib
+import json
 from pathlib import Path
 import sys
 import subprocess
@@ -17,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--experiment', choices=('centers', 'centers-radius', 'finite', 'finite-zoom'), required=True)
+    parser.add_argument('--experiment', choices=('centers', 'centers-radius', 'finite', 'finite-zoom', 'negative-noise'), required=True)
     parser.add_argument('--experiment-directory', type=Path, required=True)
     parser.add_argument('--revision', help='Read source at a revision without modifying the checkout')
     parser.add_argument('--snapshot-only', action='store_true')
@@ -31,6 +33,21 @@ def main():
         old = ('\t\tinfo.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&\n'
                '\t\tinfo.center_y >= 0.0 && info.center_y <= (PF_FpLong)input->height &&\n')
         new = ''
+    elif args.experiment == 'negative-noise':
+        old = 'info.noise_offset < 0.0f ||'
+        new = 'info.noise_offset < RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::min()) ||'
+        core = (ROOT/'core/dblur_noise.h').read_text()
+        pos = core.index('inline bool generate_radial_noise_plane(')
+        prefix, radial = core[:pos], core[pos:]
+        marker = '        const int table_index = static_cast<int>(table_position);'
+        assert radial.count(marker) == 1
+        radial = radial.replace(marker, marker+'\n        if (table_index < 0 || table_index >= 100) return false;')
+        header = out/'dblur_noise.h'
+        header.write_text(prefix+radial)
+        source = source.replace('#include "../../core/dblur_noise.h"', '#include "'+str(header)+'"')
+        (out/'core-binding.json').write_text(json.dumps(dict(
+            original_sha256=hashlib.sha256(core.encode()).hexdigest(),
+            candidate_sha256=hashlib.sha256(header.read_bytes()).hexdigest()), indent=2)+'\n')
     else:
         old = 'GenericRadialInputIsSDR<PF_PixelFloat>(input);'
         new = ('(info.blur_type == 1 ? GenericRadialInputIsFinite<PF_PixelFloat>(input) : '

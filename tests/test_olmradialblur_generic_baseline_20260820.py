@@ -114,7 +114,14 @@ template <typename P> int malformed(short depth) {{
   if constexpr(std::is_same<P,PF_Pixel16>::value){{
     ((P*)a.data())->red=32769;if(OLMRadialBlurTestRenderWorld(&x,&y,&q,depth)!=PF_Err_BAD_CALLBACK_PARAM||b!=before)return 5;
   }} else if constexpr(std::is_same<P,PF_PixelFloat>::value){{
-    const float bad[]={{-0.01f,1.01f,NAN,INFINITY,-INFINITY}};
+    for(float value:{{-0.01f,1.01f}}){{
+      ((P*)a.data())->red=value;
+      if(OLMRadialBlurTestRenderWorld(&x,&y,&q,depth)!=PF_Err_NONE)return 7;
+      b=before;q.blur_type=2;
+      if(OLMRadialBlurTestRenderWorld(&x,&y,&q,depth)!=PF_Err_BAD_CALLBACK_PARAM||b!=before)return 8;
+      q.blur_type=1;
+    }}
+    const float bad[]={{NAN,INFINITY,-INFINITY}};
     for(float value:bad){{((P*)a.data())->red=value;if(OLMRadialBlurTestRenderWorld(&x,&y,&q,depth)!=PF_Err_BAD_CALLBACK_PARAM||b!=before)return 6;}}
   }}
   return 0;

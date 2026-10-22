@@ -52,7 +52,7 @@ def finite_cases(adapter):
             rng = random.Random(11200 + w*100 + h)
             pixels = b''.join(struct.pack('<4f', *[rng.choice(values) for _ in range(4)])
                               for _ in range(w*h))
-            for family in (1, 2):
+            for family in ((1, 2) if ALL_DEPTHS else (1,)):
                 for index, controls in enumerate((
                         {4: 4}, {4: 7, 10: 3, 6: 2, 12: 4},
                         {4: 4, 7: 25, 13: 50},
