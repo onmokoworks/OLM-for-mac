@@ -4,6 +4,7 @@ MAIN="/Users/onmk/Documents/Projects/Personal/OLM as"
 for meta in "$MAIN"/orchestra/state/*.meta(N); do
   id=${meta:t:r}; wt="$MAIN/worktrees/$id"; log="$MAIN/orchestra/logs/$id.log"
   [[ -f $log ]] || continue
+  grep -q "^exit" "$meta" && continue  # only running workers
   hits=()
   grep -qE '(>|cp |mv |mkdir[^\n]*|write_text\(|open\()[^\n]*/tmp/' "$log" && hits+=("writes-/tmp")
   grep -qE '(-lc|\$ ).*git (push|reset --hard|rebase|commit --amend|stash)' "$log" && hits+=("git-history/push")
