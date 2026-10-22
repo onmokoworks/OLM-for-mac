@@ -950,9 +950,10 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
 	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
 	if (!std::isfinite(info.noise_variation) || info.noise_variation < 0.0 || info.noise_variation > 100.0) return false;
-	// Nonnegative phases from the full signed AD range keep table indices valid.
-	// Negative phases can address before the native random table; still unverified.
-	if (!std::isfinite(info.noise_offset) || info.noise_offset < 0.0f ||
+	// Negative phases are valid only while all generated table indices remain
+	// in range. The noise builder checks each index before either table read.
+	if (!std::isfinite(info.noise_offset) ||
+		info.noise_offset < RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::min()) ||
 		info.noise_offset > RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::max())) return false;
 	return info.seed >= 1 && info.seed <= 1000 &&
         std::isfinite(info.thickness) && info.thickness >= 1.0 && info.thickness <= 100.0 &&
@@ -1025,6 +1026,11 @@ static bool IsGenericBaselineWorldPair(
 	const size_t last_row = (size_t)input->height - 1;
 	if ((last_row != 0 && input_rowbytes > std::numeric_limits<size_t>::max() / last_row) ||
 		(last_row != 0 && output_rowbytes > std::numeric_limits<size_t>::max() / last_row)) return false;
+	// Negative-phase PF32 reveals a separate Gaussian/import residual. Keep
+	// that admission closed while allowing proven integer-depth noise planes.
+	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+		if (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;
+	}
 	size_t rgba_words = 0;
 	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
 		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;

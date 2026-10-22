@@ -175,6 +175,12 @@ inline bool generate_radial_noise_plane(int source_width, int source_height,
             table_position -= 100.0f;
         }
         const int table_index = static_cast<int>(table_position);
+        // RadialBlur 9590..95D8 folds only the upper bound, then truncates
+        // toward zero and reads table[index] and table[index+1]. A negative
+        // phase can still produce valid indices (including a negative
+        // fraction at index zero). Refuse an out-of-allocation read rather
+        // than inventing a lower-bound wrap or clamp.
+        if (table_index < 0 || table_index >= 100) return false;
         const float fraction = table_position - static_cast<float>(table_index);
         const float square = fraction * fraction;
         const float smooth = (3.0f - (fraction + fraction)) * square;

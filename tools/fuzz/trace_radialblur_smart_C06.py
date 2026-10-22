@@ -47,7 +47,7 @@ def main():
     if args.regenerate:
         args.cases_from = None
     out = args.output.resolve()
-    assert out.is_relative_to(ROOT/'orchestra/state/C06-radial-smart')
+    assert out.is_relative_to(ROOT/'orchestra/state')
     out.mkdir(parents=True, exist_ok=False)
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out))
     main = ROOT.parent.parent if ROOT.parent.name == 'worktrees' else ROOT
@@ -95,9 +95,18 @@ def main():
     public.initial.AEX = adapter.aex
     if not args.measure_only:
         source = public.SOURCE.read_text()
-        hp=out/'planes.cpp'; hp.write_text(zoom.plane_harness())
+        hp=out/'planes.cpp'
+        body=zoom.plane_harness()
+        marker='dump("polar.f32",probe_polar.data(),probe_polar.size()*4);'
+        assert body.count(marker)==1
+        hp.write_text(body.replace(marker,marker+'dump("weights.f32",probe_weights.data(),probe_weights.size()*4);'))
         old=public.initial.HARNESS; public.initial.HARNESS=hp
         passive = zoom.passive_source(source)
+        marker='static FloatImage BuildZoomAEXOuterOnlyPolar('
+        start=passive.index(marker)
+        pos=passive.index('const A_long radius_count = polar.width;',start)
+        passive=passive[:pos]+'probe_weights=weights;\n\t'+passive[pos:]
+        passive=passive[:start]+'static std::vector<float> probe_weights;\n'+passive[start:]
         binary=public.build(out/'planes_build',passive)
         provenance['passive_source_sha256'] = sha(passive.encode())
         provenance['passive_binary_sha256'] = sha(binary.read_bytes())
@@ -134,9 +143,19 @@ def main():
         assert b'ERROR 0\n' in run.stderr,run.stderr
         row=dict(index=index,case={k:v for k,v in case.items() if k!='pixels'},input_hex=case['pixels'].hex(),original=result,reduced=reduced,reduction=reduction,mac_sha256=sha(run.stdout))
         assert row['mac_sha256'] == reduced['routes']['smart']['raw_sha256'], 'Instrumentation changed Smart output'
-        assert case['depth']==8
-        w,h=case['geometry'];image=Image.new('RGBA',(w,h));image.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',case['pixels'])]);image.save(directory/'input.png')
-        command=[str(tracer),'render-trace-png',str(adapter.aex),str(directory/'input.png'),str(directory/'trace.png'),'--pixel-format','argb8']
+        w,h=case['geometry'];image=Image.new('RGBA',(w,h))
+        if case['depth'] == 8:
+            packed = case['pixels']
+        else:
+            # The retained trace CLI accepts PNG, not raw typed input. Only
+            # trace inputs whose conversion reproduces every original byte.
+            fmt, scale = ('H',32768) if case['depth']==16 else ('f',1)
+            values=[v for (v,) in struct.iter_unpack('<'+fmt,case['pixels'])]
+            packed=bytes(round(v/scale*255) for v in values)
+            restored=b''.join(struct.pack('<'+fmt, int(v/255*32768) if fmt=='H' else v/255) for v in packed)
+            assert restored==case['pixels'], 'Typed input is not losslessly representable through PNG trace transport'
+        image.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',packed)]);image.save(directory/'input.png')
+        command=[str(tracer),'render-trace-png',str(adapter.aex),str(directory/'input.png'),str(directory/'trace.png'),'--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']]]
         assignments=zoom.assignments(case)
         if args.legacy_trace_angles:
             assert all(p['value']==0 for p in case['parameters'] if p['kind']=='a')
@@ -159,6 +178,11 @@ def main():
         minimum,maximum=struct.unpack_from('<2i',config,24);radial=maximum-minimum+1
         angular=int(zoom.fields.f32(360/struct.unpack_from('<f',config,16)[0]));cells=radial*angular
         row['native_dimensions']=[radial,angular];row['mac_dimensions']=list(struct.unpack('<2i',(planes/'dimensions.i32').read_bytes()))
+        weight_size=(planes/'weights.f32').stat().st_size
+        data,weight_watches=trace(['--watch',f'function=0xb680,arg=rcx,size={weight_size},occurrence=1'],'weight_trace.json')
+        native_weights=bytes.fromhex(weight_watches['watch-1']['after']['hex'])
+        (directory/'native_weights.f32').write_bytes(native_weights)
+        row['weights']=zoom.fields.compare_words(native_weights,(planes/'weights.f32').read_bytes())
         specs=[('polar',0xb150,'rdx',None,cells*16,'before'),('eligible',0xa9d0,'stack5',None,cells,'before'),('span',0xa9d0,'r9',None,cells*4,'before'),('preaccum',0xb150,'rcx',0x4210,cells*16,'after'),('premax',0xb150,'rcx',0x4218,cells*4,'after'),('accum',0xa9d0,'rcx',0x4210,cells*16,'after'),('max',0xa9d0,'rcx',0x4218,cells*4,'after'),('normalized',0x9d80,'rcx',None,cells*16,'before')]
         row['planes']={}
         if args.sampler_only:
@@ -183,17 +207,21 @@ def main():
                                            mac_bytes=len(mac), native_sha256=sha(native), mac_sha256=sha(mac))
                 continue
             row['planes'][name]=zoom.fields.compare_words(native,mac) if name!='eligible' else dict(different_bytes=sum(a!=b for a,b in zip(native,mac)))
-        sample_options=[]
-        for occurrence in range(1,w*h+1):
-            sample_options+=['--watch',f'function=0x9d80,arg=rdx,size=16,occurrence={occurrence}']
-        data,watches=trace(sample_options,'sampler_trace.json')
-        row['sampler_rgba_hex']=[watches[f'watch-{i+1}']['after']['hex'] for i in range(w*h)]
-        coordinates=[]
-        for occurrence in range(1,w*h+1):
-            coordinates+=['--watch',f'function=0xa850,arg=r9,size=4,occurrence={occurrence}',
-                          '--watch',f'function=0xa850,arg=stack5,size=4,occurrence={occurrence}']
-        data,watches=trace(coordinates,'coordinate_trace.json')
-        row['coordinate_radius_angle_hex']=[watches[f'watch-{i+1}']['after']['hex'] for i in range(w*h*2)]
+        row['sampler_rgba_hex']=[]
+        row['coordinate_radius_angle_hex']=[]
+        # Keep large unshrunk witnesses below the retained worker's watch cap.
+        for start in range(0,w*h,128):
+            count=min(128,w*h-start)
+            sample_options=[]
+            coordinates=[]
+            for occurrence in range(start+1,start+count+1):
+                sample_options+=['--watch',f'function=0x9d80,arg=rdx,size=16,occurrence={occurrence}']
+                coordinates+=['--watch',f'function=0xa850,arg=r9,size=4,occurrence={occurrence}',
+                              '--watch',f'function=0xa850,arg=stack5,size=4,occurrence={occurrence}']
+            data,watches=trace(sample_options,f'sampler_trace_{start}.json')
+            row['sampler_rgba_hex'] += [watches[f'watch-{i+1}']['after']['hex'] for i in range(count)]
+            data,watches=trace(coordinates,f'coordinate_trace_{start}.json')
+            row['coordinate_radius_angle_hex'] += [watches[f'watch-{i+1}']['after']['hex'] for i in range(count*2)]
         rows.append(row)
         (out/'report.json').write_text(json.dumps(dict(provenance=provenance,tracer_sha256=sha(tracer.read_bytes()),aex_static=aex_static,rows=rows),indent=2)+'\n')
         print(index,case['geometry'],row['trace_raw_sha256']==reduced['oracle']['raw_sha256'],{k:v.get('different_words',v.get('different_bytes')) for k,v in row['planes'].items()},flush=True)
