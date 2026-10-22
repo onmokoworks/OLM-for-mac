@@ -40,8 +40,8 @@ def cases(adapter, family):
                     if param['slot'] == 6: param['value'] = 1000
             yield case
         return
-    if family == 'finite-lengths':
-        for case in cases(adapter, 'finite-seed'):
+    if family in ('finite-lengths', 'signed-finite-lengths'):
+        for case in cases(adapter, 'signed-finite-seed' if family.startswith('signed-') else 'finite-seed'):
             i = case['index']
             lengths = (1, 2, 3, 4, 5, 6, 7, 15, 50, 1000)
             for param in case['parameters']:
@@ -49,12 +49,12 @@ def cases(adapter, family):
                     param['value'] = lengths[(i + (param['slot'] == 16)) % len(lengths)]
             yield case
         return
-    if family == 'finite-seed':
+    if family in ('finite-seed', 'signed-finite-seed'):
         powf = ctypes.CDLL(None).powf
         powf.argtypes = (ctypes.c_float, ctypes.c_float)
         powf.restype = ctypes.c_float
         f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
-        for case in cases(adapter, 'finite-nonnegative'):
+        for case in cases(adapter, 'finite-alpha' if family.startswith('signed-') else 'finite-nonnegative'):
             params = {p['slot']: p['value'] for p in case['parameters']}
             exponent = max(f32(0.001), f32(f32(params[6]) * f32(0.01)))
             if all(math.isfinite(powf(struct.unpack_from('<f', case['pixels'], i)[0], exponent))
@@ -126,7 +126,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'invalid-input'), default='source-opacity')
+    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

@@ -1775,9 +1775,11 @@ static bool GenericBetaInputIsFiniteSDR(
 }
 
 // Smart's recovered Alpha box pipeline accepts finite floating source
-// colors beyond SDR when its scalar powf seed remains finite and nonnegative.
-// Negative alpha and powf overflow produce NaN/Inf filtering families that
-// remain outside this recovery; no final-output value is used for admission.
+// colors beyond SDR when its scalar powf seed remains finite. C13 also pairs
+// signed seeds through the original warp/RowSum/aggregation operations.
+// Negative alpha with a fractional exponent and powf overflow still produce
+// NaN/Inf filtering families outside this recovery. Admission tests the
+// constructor's domain, never a final-output value.
 static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
 	PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
@@ -1788,7 +1790,7 @@ static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
 		for (A_long x = 0; x < input->width; ++x) {
 			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
 			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
-				!std::isfinite(p.green) || !std::isfinite(p.blue) || p.alpha < 0.0f ||
+				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
 				!std::isfinite(std::pow(p.alpha, exponent))) return false;
 		}
 	}
