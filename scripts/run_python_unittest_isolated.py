@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import json
+import os
+import signal
 import subprocess
 import sys
 import time
@@ -17,7 +19,7 @@ def main() -> int:
     parser.add_argument("--tests-dir", type=Path, default=Path("tests"))
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--timeout", type=int, default=300)
-    parser.add_argument("--jobs", type=int, default=8)
+    parser.add_argument("--jobs", type=int, default=2)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     tests_dir = (root / args.tests_dir).resolve() if not args.tests_dir.is_absolute() else args.tests_dir
@@ -27,11 +29,23 @@ def main() -> int:
     def run_one(path: Path) -> dict[str, object]:
         case_started = time.monotonic()
         try:
-            proc = subprocess.run(
+            proc = subprocess.Popen(
                 [sys.executable, "-m", "unittest", str(path)], cwd=root,
                 text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                timeout=args.timeout,
+                start_new_session=True,
             )
+            try:
+                out, err = proc.communicate(timeout=args.timeout)
+            except subprocess.TimeoutExpired:
+                os.killpg(proc.pid, signal.SIGKILL)
+                out, err = proc.communicate()
+                raise subprocess.TimeoutExpired(proc.args, args.timeout, out, err)
+            finally:
+                try:
+                    os.killpg(proc.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            proc = subprocess.CompletedProcess(proc.args, proc.returncode, out, err)
             status = "pass" if proc.returncode == 0 else "fail"
             return {"file": str(path.relative_to(root)), "status": status,
                     "returncode": proc.returncode,

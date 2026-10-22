@@ -22,6 +22,8 @@ $(cat "$ticket")"
 log="$MAIN/orchestra/logs/$id.log"
 echo "$engine ${model:-default} $(date +%s)" > "$MAIN/orchestra/state/$id.meta"
 cd "$wt"
+# limit runaway process creation: allow ~400 more processes than the user has now
+ulimit -u $(( $(ps -axo user= | grep -c "^$(whoami)") + 400 )) 2>/dev/null
 marg=(); [[ -n $model ]] && marg=(-m "$model")
 case $engine in
   opencode)
@@ -65,3 +67,5 @@ orchestra/state/$id/ in this worktree, keep what you can verify, and continue." 
   *) echo "unknown engine $engine"; exit 1 ;;
 esac
 echo "exit $rc $(date +%s)" >> "$MAIN/orchestra/state/$id.meta"
+# reap anything left in this worker's process group (MCP helpers, timed-out test descendants)
+pg=$(ps -o pgid= -p $$ | tr -d " "); [[ -n $pg && $pg -gt 1 ]] && { for p in $(pgrep -g $pg); do [[ $p != $$ ]] && kill -TERM $p 2>/dev/null; done; }

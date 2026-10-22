@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import signal
 import subprocess
 import sys
 import time
@@ -450,9 +452,29 @@ LANES = (
 )
 
 
+COMMAND_TIMEOUT = int(os.environ.get("OLM_REGRESSION_CMD_TIMEOUT", "1800"))
+
+
 def run(command: tuple[str, ...]) -> float:
+    """Run one regression command in its own process group.
+
+    On timeout the whole group is killed, so emulator/test descendants cannot outlive it.
+    """
     started = time.monotonic()
-    subprocess.run(command, cwd=ROOT, check=True)
+    proc = subprocess.Popen(command, cwd=ROOT, start_new_session=True)
+    try:
+        returncode = proc.wait(timeout=COMMAND_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        os.killpg(proc.pid, signal.SIGKILL)
+        proc.wait()
+        raise subprocess.CalledProcessError(124, command)
+    finally:
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)  # reap leftover descendants
+        except ProcessLookupError:
+            pass
+    if returncode:
+        raise subprocess.CalledProcessError(returncode, command)
     return time.monotonic() - started
 
 

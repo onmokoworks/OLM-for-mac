@@ -20,6 +20,7 @@ while true; do
   done < "$q"
   [[ -z $next ]] && { sleep 120; continue; }
   echo "$engine ${model:-default} $(date +%s)" > "$MAIN/orchestra/state/$next.meta"  # claim before launch (avoid double start)
-  "$MAIN/orchestra/run.sh" "$next" "$engine" $model &
+  # own process group per worker so procguard/run.sh can kill the whole subtree; cap user processes
+  python3 -c 'import os,sys; os.setsid(); os.execvp(sys.argv[1], sys.argv[1:])' "$MAIN/orchestra/run.sh" "$next" "$engine" $model &
   sleep 20
 done
