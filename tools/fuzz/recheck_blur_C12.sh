@@ -20,10 +20,22 @@ for seed in 1 5; do
   campaign "$after" "$seed"
   campaign "$after-san" "$seed" --blur-sanitize
 done
-python3 tools/fuzz/verify_blur_radius_C12.py --scratch "$s" --report "$s/matrix-$after.json" \
+matrix_options=(); if [ "$depth" -eq 16 ]; then matrix_options=(--single-decay-only); fi
+python3 tools/fuzz/verify_blur_radius_C12.py "${matrix_options[@]}" --scratch "$s" --report "$s/matrix-$after.json" \
   --before "$base" --depth "$depth" --require-exact > "$s/matrix-$after.log" 2>&1
 "$py" tools/emulation/trace_olmblur_stages_C12.py --source-revision 044f9b0a884e618d3750f2d293e8ff6437193b0a \
   --scratch "$s" --report "$s/stages.json" > "$s/stages.log" 2>&1
+if [ "$depth" -eq 16 ]; then
+  python3 tools/fuzz/verify_blur_radius_C12.py --scratch "$s" --report "$s/matrix-off-pf16.json" \
+    --before "$base" --depth 16 --diagnostic-after > "$s/matrix-off-pf16.log" 2>&1
+  # This diagnostic intentionally demonstrates a direct/cached-oracle mismatch.
+  set +e
+  "$py" tools/emulation/trace_olmblur_stages_C12.py --scratch "$s" --matrix-depth 16 --indices 225 \
+    --report "$s/coeff-pf16.json" > "$s/coeff-pf16.log" 2>&1
+  code=$?
+  set -e
+  [ "$code" -eq 1 ]
+fi
 case "$depth" in
   8) indices=(19 0 91 175 195 204 226 256 285);;
   16) indices=(13 70 158 207 212 243 196);;

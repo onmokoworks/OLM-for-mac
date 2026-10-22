@@ -63,6 +63,14 @@ def main():
     assert all(r['cached_binding'] for r in report['trace_before']['rows']+report['trace_after']['rows'])
     assert all(r['output_exact'] for r in report['trace_after']['rows'])
     report['retained']=retained(s)
+    from verify_blur_retained_C12 import verify
+    report['extended_retained']=verify(s)
+    assert report['extended_retained']['status']['status']=='ok'
+    assert len(report['extended_retained']['lines'])==80
+    assert all('exact=1' in line for line in report['extended_retained']['lines'])
+    for name in ('matrix-off-'+args.after,'coeff-'+args.after):
+        path=s/(name+'.json')
+        if path.exists():report[name]=load(path)
     report['corpus_updates']=[str(v[0].relative_to(ROOT)) for v in updates]
     if args.rebaseline:
         for path,saved,result in updates:

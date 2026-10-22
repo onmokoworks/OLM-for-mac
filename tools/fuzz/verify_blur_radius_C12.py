@@ -69,13 +69,13 @@ def build(a,work,revision,diagnostic=True):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
-    p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true')
+    p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true')
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state/C12-olmblur-smart-r3')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=60,main=run.main_checkout(),worker=WORKER))
     a.env.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s),ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
     with tempfile.TemporaryDirectory(prefix='radius_',dir=s) as td:
-        work=Path(td);old,op=build(a,work/'before',args.before);new,np=build(a,work/'after',None,diagnostic=False)
+        work=Path(td);old,op=build(a,work/'before',args.before);new,np=build(a,work/'after',None,diagnostic=args.diagnostic_after)
         # Each thread has independent adapters/env and directories; binaries are read-only.
         def one(c):
             adapter=olmblur.Adapter(a.args) if hasattr(a,'args') else olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=60,main=run.main_checkout(),worker=WORKER))
@@ -89,7 +89,7 @@ def main():
                     status=('exact' if raw==reference else 'mismatch') if result['status']=='ok' else result['status']
                     row[label]={'status':status,'result':result,'raw_sha256':sha(raw),'diff':raw_diff(reference,raw,c['depth']) if status=='mismatch' else None}
                 return row
-        with ThreadPoolExecutor(max_workers=2) as pool:rows=list(pool.map(one,cases(a,args.depth)))
+        with ThreadPoolExecutor(max_workers=2) as pool:rows=list(pool.map(one,(c for c in cases(a,args.depth) if not args.single_decay_only or next(p['value'] for p in c['parameters'] if p['slot']==3)<=2)))
     transitions=dict(Counter(r['before']['status']+' -> '+r['after']['status'] for r in rows))
     report={'schema':'olmblur-radius-matrix-C12/1','depth':args.depth,'provenance':{'before':op,'after':np,'aex_sha256':sha(a.aex.read_bytes()),'worker_sha256':sha(WORKER.read_bytes())},'transitions':transitions,'rows':rows}
     args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(transitions)

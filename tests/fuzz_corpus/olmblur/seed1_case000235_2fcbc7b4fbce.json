@@ -1,4 +1,62 @@
 {
+  "C12_updates": [
+    {
+      "previous_result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744067113643016 bytes: handle allocation exceeds 2147483648 bytes: 18446744067113643016\n",
+            "returncode": 1,
+            "status": "reject"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 232,
+              "actual_word_hex": "fc4e",
+              "different_bytes": 2,
+              "different_words": 2,
+              "expected_bytes": 232,
+              "expected_word_hex": "fd4e",
+              "first_byte": 138,
+              "first_word": 69
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "1d610bb2cdd847ff8d6d29d5c6dc906dd9bc01b4f7ee73d33afaf81647be044a",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "report": "orchestra/reports/C12-olmblur-smart-r3.md",
+      "stage": "pf16"
+    }
+  ],
   "case": {
     "depth": 16,
     "geometry": [
@@ -162,23 +220,13 @@
         "status": "refusal"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 232,
-          "actual_word_hex": "fc4e",
-          "different_bytes": 2,
-          "different_words": 2,
-          "expected_bytes": 232,
-          "expected_word_hex": "fd4e",
-          "first_byte": 138,
-          "first_word": 69
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 5 5 0",
           "ERROR": "0"
         },
-        "raw_sha256": "1d610bb2cdd847ff8d6d29d5c6dc906dd9bc01b4f7ee73d33afaf81647be044a",
-        "status": "mismatch"
+        "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

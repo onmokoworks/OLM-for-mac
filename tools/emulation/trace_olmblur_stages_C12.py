@@ -46,6 +46,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source-revision')
+    p.add_argument('--matrix-depth',type=int,choices=(8,16,32))
     p.add_argument('--seed',type=int,default=1);p.add_argument('--indices',type=int,nargs='+',default=[19,13,66,196])
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state/C12-olmblur-smart-r3')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
@@ -84,8 +85,12 @@ def main():
         olmblur.SOURCE=target/'OLMBlur.cpp';olmblur.SOURCE.write_text(body);olmblur.CORES=[cr/f.name for f in cores]
         a.binary=triage.build_binary(a,work);a.env['OLM_BLUR_STAGES_C12']=str(work/'mac-trace.bin')
         provenance={'source_sha256':sha(subprocess.check_output(['git','show',args.source_revision+':mac/OLMBlur/OLMBlur.cpp']) if args.source_revision else source.read_bytes()),'core_sha256':{f.name:sha((subprocess.check_output(['git','show',args.source_revision+':core/'+f.name]) if args.source_revision else f.read_bytes())) for f in cores},'source_revision':args.source_revision,'aex_sha256':sha(a.aex.read_bytes()),'worker_sha256':sha(WORKER.read_bytes()),'candidate_sha256':sha(a.binary.read_bytes())}
+        matrix=None
+        if args.matrix_depth:
+            from verify_blur_radius_C12 import cases
+            matrix=list(cases(a,args.matrix_depth))
         for index in args.indices:
-            c=a.generate(args.seed,index);v={p['slot']:p['value'] for p in c['parameters']};assert v[5]==0
+            c=matrix[index] if matrix is not None else a.generate(args.seed,index);v={p['slot']:p['value'] for p in c['parameters']};assert v[5]==0
             oracle,reference=a.oracle(c,work,time.monotonic()+90,'smart');assert oracle['status']=='ok',oracle
             (work/'input.bin').write_bytes(c['pixels']);(work/'expected.bin').write_bytes(reference)
             stages=[];imports=[]
@@ -129,7 +134,7 @@ def main():
                         record['original'][key]=orig[key];record['mac'][key]=port[key]
                         if orig[key]!=port[key] and first is None:first={'stage':j,'field':key,'original':orig[key],'mac':port[key]}
                 comparison.append(record)
-            rows.append(dict(seed=args.seed,index=index,case={k:v for k,v in c.items() if k!='pixels'},input_sha256=sha(c['pixels']),trace_output=actual,cached_binding=actual['active_sha256']==sha(reference),output_exact=raw==reference,output_diff=None if raw==reference else raw_diff(reference,raw,c['depth']),first_difference=first,stages=comparison,imports=imports))
+            rows.append(dict(seed=args.seed,index=index,case={k:v for k,v in c.items() if k!='pixels'},input_sha256=sha(c['pixels']),trace_output=actual,cached_binding=actual['active_sha256']==sha(reference),candidate_sha256=sha(raw),output_exact=raw==reference,output_diff=None if raw==reference else raw_diff(reference,raw,c['depth']),first_difference=first,stages=comparison,imports=imports))
             print(index,'binding',rows[-1]['cached_binding'],'first',first,flush=True)
     fixture.AexLoader=original_loader;olmblur.SOURCE=source;olmblur.CORES=cores
     args.report.write_text(json.dumps(dict(schema='olmblur-stages-C12/1',provenance=provenance,rows=rows),indent=2,sort_keys=True)+'\n')
