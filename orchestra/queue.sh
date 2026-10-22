@@ -19,6 +19,7 @@ while true; do
     next=$t; break
   done < "$q"
   [[ -z $next ]] && { sleep 120; continue; }
+  echo "$engine ${model:-default} $(date +%s)" > "$MAIN/orchestra/state/$next.meta"  # claim before launch (avoid double start)
   "$MAIN/orchestra/run.sh" "$next" "$engine" $model &
   sleep 20
 done
