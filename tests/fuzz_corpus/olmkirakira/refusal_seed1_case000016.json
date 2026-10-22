@@ -45,6 +45,52 @@
     "reason": "Smart tiny full-frame ownership; case 1 refusal to exact; cases 8/16 remain refusals with balanced parameter callbacks after geometry validation.",
     "report": "orchestra/reports/C04-kira-smart.md"
   },
+  "C07_opacity_expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "bffeeb2d12ba6108806a508082dee2f5ce23d1edeaf81acd4feb8c0d08038978",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 25 25",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "reason": "Smart refusal becomes original-AEX exact after scalar Alpha opacity recovery.",
+    "report": "orchestra/reports/C07-kira-smart-r2-opacity.md"
+  },
   "case": {
     "depth": 32,
     "geometry": [
@@ -299,12 +345,13 @@
         "status": "refusal"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 25 25",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

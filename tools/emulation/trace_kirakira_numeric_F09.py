@@ -25,7 +25,7 @@ from core import load_corpus, sha, raw_diff
 from run import default_worker, main_checkout
 
 
-def original_trace(case, aex):
+def original_trace(case, aex, *, aex_percent_materialization=False):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
         UC_X86_REG_RSP, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
@@ -127,12 +127,21 @@ def original_trace(case, aex):
             colors = alloc(struct.pack('<20f',*[v/255 for s in (11,17,23,29,35) for v in p[s]]))
             ramps = alloc(bytes(5*0x144)); flags = alloc(bytes(5)); glow = alloc(bytes(n*16))
             bits = lambda f: struct.unpack('<I',struct.pack('<f',f))[0]
+            def percent(value):
+                if not aex_percent_materialization:
+                    return value / 100
+                # FUN_18114e860: CVTDQ2PS followed by MULSS with the
+                # original binary constant. Keep legacy F09 traces reproducible.
+                f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+                scale = struct.unpack('<f', self.read_bytes(0x181486c10, 4))[0]
+                assert struct.pack('<f', scale).hex() == '0ad7233c'
+                return f32(f32(value) * scale)
             result = super().call_function(0x18114f4a0,
-                int_args=[obj,host,pixels,glow,angles,lengths,colors,ramps,flags,p[2],w,h,bits(p[6]/100),bits(p[7]),1,bits(p[5])],
+                int_args=[obj,host,pixels,glow,angles,lengths,colors,ramps,flags,p[2],w,h,bits(percent(p[6])),bits(p[7]),1,bits(p[5])],
                 max_instructions=200_000_000)
             stages['glow'] = words(glow,n*4)
             owner = alloc(bytes(0x200))
-            for off,data in ((0x38,struct.pack('<f',p[8]/100)),(0x3c,struct.pack('<f',p[9]/100)),
+            for off,data in ((0x38,struct.pack('<f',percent(p[8]))),(0x3c,struct.pack('<f',percent(p[9]))),
                 (0x44,struct.pack('<i',p[3])),(0x58,struct.pack('<i',n)),
                 (0x128,struct.pack('<Q',pixels)),(0x190,struct.pack('<Q',glow))):
                 self.write_bytes(owner+off,data)

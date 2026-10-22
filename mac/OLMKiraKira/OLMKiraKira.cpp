@@ -878,6 +878,18 @@ static void KiraDiagnosticInfo(const char *label, const OLMKiraKiraInfo &info)
 		(double)info.comp_width);
 }
 
+// C07: FUN_18114e860 materializes integer percentages with CVTDQ2PS
+// and MULSS (binary constant 0x3c23d70a). Recover the proven scalar Alpha
+// box pipeline; non-unit/color/resize pipelines retain their separate boundary.
+static PF_FpLong ReadAlphaBoxOpacity(A_long value, const OLMKiraKiraInfo &info)
+{
+	if (info.channel == 1 && info.strength_multiplier == 1.0 &&
+		(info.blur_mode == 1 || info.blur_mode == 2) && !info.approximated_input) {
+		return (float)value * 0.01f;
+	}
+	return value / 100.0;
+}
+
 static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKiraInfo *info)
 {
 	AEFX_CLR_STRUCT(*info);
@@ -889,13 +901,13 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	info->diagonal_length = params[OLMKIRAKIRA_DIAGONAL_LENGTH]->u.sd.value;
 	info->diagonal2_length = params[OLMKIRAKIRA_DIAGONAL2_LENGTH]->u.sd.value;
 	info->highlight_radius = params[OLMKIRAKIRA_HIGHLIGHT_RADIUS]->u.sd.value;
-	info->glow_opacity = params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value / 100.0;
 	info->channel = params[OLMKIRAKIRA_CHANNEL]->u.pd.value;
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
 	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
 	info->approximated_input = params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value;
 	info->strength_multiplier = params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value / 100.0;
-	info->source_opacity = params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value / 100.0;
+	info->glow_opacity = ReadAlphaBoxOpacity(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
+	info->source_opacity = ReadAlphaBoxOpacity(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
 	PF_Err err = CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color);
 	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color);
@@ -1041,13 +1053,17 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 			return ReadRampHandle(in_data, param->u.arb_d.value, &info->highlight_ramp));
 	}
 
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_OPACITY, info->glow_opacity = param->u.sd.value / 100.0);
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_SOURCE_OPACITY, info->source_opacity = param->u.sd.value / 100.0);
+	A_long raw_glow_opacity = 0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_OPACITY, raw_glow_opacity = param->u.sd.value);
+	A_long raw_source_opacity = 0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_SOURCE_OPACITY, raw_source_opacity = param->u.sd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_CHANNEL, info->channel = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_BLUR_MODE, info->blur_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_MERGE_MODE, info->merge_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_APPROX_INPUT, info->approximated_input = param->u.bd.value);
 
+	info->glow_opacity = ReadAlphaBoxOpacity(raw_glow_opacity, *info);
+	info->source_opacity = ReadAlphaBoxOpacity(raw_source_opacity, *info);
 #undef CHECKOUT_SMART_DECODE
 #undef CHECKOUT_SMART_VALUE
 	return PF_Err_NONE;
@@ -1427,7 +1443,7 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 }
 
 static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
-	bool admit_pf8 = false)
+	bool admit_pf8 = false, bool admit_opacity = false)
 {
 	// F12: the Alpha constructor (18114edf0) produces one scalar channel.
 	// Strength 100% makes its powf exponent exactly one; Fade Out is unused.
@@ -1435,15 +1451,18 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 	// branch in 18114f4a0 uses the corresponding isotropic box passes. F11
 	// recovers their shared float sin/cos and workspace extent arithmetic.
 	// C04 additionally proves PF8 on Smart after scalar normalization recovery.
-	// Keep color seed constructors, Gaussian, resizing and opacity materialization
-	// outside this admission. The caller
+	// C07 additionally admits recovered opacity materialization on Smart.
+	// Keep color seed constructors, Gaussian and resizing outside this admission. The caller
 	// still requires finite SDR pixels and the existing full-frame/layout caps.
 	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128 &&
 		 !(admit_pf8 && format == PF_PixelFormat_ARGB32)) ||
 		info.channel != 1 || (info.blur_mode != 1 && info.blur_mode != 2) ||
 		(info.merge_mode != 1 && info.merge_mode != 2) ||
 		info.approximated_input || info.strength_multiplier != 1.0 ||
-		info.glow_opacity != 1.0 || info.source_opacity != 1.0 ||
+		(admit_opacity
+		 ? !(info.glow_opacity >= 0.0 && info.glow_opacity <= 100.0 &&
+		     info.source_opacity >= 0.0 && info.source_opacity <= 1.0)
+		 : (info.glow_opacity != 1.0 || info.source_opacity != 1.0)) ||
 		!(info.brightness_gain >= 1.0 && info.brightness_gain <= 100.0) ||
 		// The AEX adds ray offsets and negates the inverse-warp angle as
 		// signed 32-bit integers. Require both operations to be representable.
@@ -2538,7 +2557,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				generic_world_layout && pre_is_generic_beta &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
-				 IsAlphaBoxTuple(info, format, true) ||
+				 IsAlphaBoxTuple(info, format, true, true) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsZeroRayTuple(info)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
