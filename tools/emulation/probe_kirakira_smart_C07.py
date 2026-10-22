@@ -8,6 +8,8 @@ from collections import Counter
 import itertools
 import json
 import os
+import random
+import struct
 from pathlib import Path
 import shutil
 import sys
@@ -22,8 +24,43 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family in ('finite-nonnegative', 'finite-sdr-alpha'):
+        for case in cases(adapter, 'finite-alpha'):
+            data = bytearray(case['pixels'])
+            for offset in range(0, len(data), 16):
+                word = struct.unpack_from('<I', data, offset)[0] & 0x7fffffff
+                if family == 'finite-sdr-alpha':
+                    word = min(word, 0x3f800000)
+                struct.pack_into('<I', data, offset, word)
+            case['pixels'] = bytes(data)
+            yield case
+        return
+    if family == 'finite-alpha':
+        for i, (geometry, mode, merge, strength, profile) in enumerate(itertools.product(
+                ((1, 1), (1, 9), (7, 11), (9, 7)), (1, 2), (1, 2),
+                (0, 1, 97, 100, 537, 1000), ('hdr', 'signed', 'extreme'))):
+            case = matrix_case(adapter, i, geometry, 32, merge, mode, 1)
+            controls = {5: (1, 1.25, 100)[i % 3], 6: strength, 8: 100, 9: 100,
+                        40: 22 / 65536, 10: 7, 16: 2, 22: 0, 28: 0, 34: 3}
+            controls.update({s: 0 for s in (13, 19, 25, 31, 37)})
+            for param in case['parameters']:
+                if param['slot'] in controls:
+                    param['value'] = controls[param['slot']]
+            rng = random.Random(2026070000 + i)
+            pixels = bytearray()
+            for word in range(geometry[0] * geometry[1] * 4):
+                if profile == 'extreme':
+                    value = rng.choice((0, 0x80000000, 1, 0x80000001, 0x00800000,
+                        0x80800000, 0x3f800000, 0xbf800000, 0x7f7fffff, 0xff7fffff))
+                    pixels.extend(struct.pack('<I', value))
+                else:
+                    pixels.extend(struct.pack('<f', rng.uniform(-4 if profile == 'signed' else 0,
+                                                               4 if profile == 'signed' else 8)))
+            case.update(pixels=bytes(pixels), profile=profile)
+            yield case
+        return
     values = (0, 1, 40, 97, 100, 101, 1703, 10000)
-    if family == 'strength':
+    if family.startswith('strength'):
         values = (0, 1, 40, 97, 100, 101, 537, 1000)
     for i, (geometry, depth, mode, merge, value) in enumerate(itertools.product(
             ((1, 1), (7, 11), (9, 7)), (8, 16, 32), (1, 2), (1, 2), values)):
@@ -31,7 +68,11 @@ def cases(adapter, family):
         controls = {5: 1.25, 6: 100, 8: 100, 9: 100, 40: 22 / 65536,
                     10: 7, 16: 2, 22: 0, 28: 0, 34: 3}
         controls.update({s: 0 for s in (13, 19, 25, 31, 37)})
-        controls[{'source-opacity': 9, 'glow-opacity': 8, 'strength': 6, 'opacity-combined': 8}[family]] = value
+        controls[{'source-opacity': 9, 'glow-opacity': 8, 'strength': 6, 'strength-combined': 6, 'opacity-combined': 8}[family]] = value
+        if family == 'strength-combined':
+            controls[8] = (0, 1, 40, 97, 100, 101, 1703, 10000)[(i // 8) % 8]
+            controls[9] = (0, 1, 40, 97, 100)[i % 5]
+            controls.update({s: (i + s) % 2 for s in (13, 19, 25, 31, 37)})
         if family == 'opacity-combined':
             controls[9] = (0, 1, 40, 97, 100)[i % 5]
             controls.update({s: (i + s) % 2 for s in (13, 19, 25, 31, 37)})
@@ -48,7 +89,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength'), default='source-opacity')
+    p.add_argument('--family', choices=('source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -64,7 +105,7 @@ def main():
                               main=main_checkout(), worker=default_worker())
     deadline = time.monotonic() + 7200
     report = dict(schema='olm-kira-C07/1', family=args.family, rows=[], status='running',
-                  gate_off=args.gate_off, source_sha256=sha(args.source.read_bytes()),
+                  gate_off=args.gate_off, trace_powf='host float powf, matching retained worker; not native UCRT', source_sha256=sha(args.source.read_bytes()),
                   worker_sha256=sha(options.worker.read_bytes()),
                   aex_sha256=sha((options.main / 'plugins_2025/OLMKiraKira.aex').read_bytes()))
     def save():
@@ -96,7 +137,7 @@ def main():
                        reference_sha256=sha(reference))
             report['rows'].append(row)
             if args.trace_index is not None:
-                original = original_trace(case, adapter.aex, aex_percent_materialization=True)
+                original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
                 stages = original['stages']
                 row['public_bound'] = oracle['status'] == 'ok' and bytes.fromhex(stages['output']) == reference
                 paired = {}

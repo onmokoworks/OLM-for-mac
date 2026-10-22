@@ -25,7 +25,7 @@ from core import load_corpus, sha, raw_diff
 from run import default_worker, main_checkout
 
 
-def original_trace(case, aex, *, aex_percent_materialization=False):
+def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
         UC_X86_REG_RSP, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
@@ -35,6 +35,20 @@ def original_trace(case, aex, *, aex_percent_materialization=False):
     original = base.AexLoader
 
     class Loader(original):
+        def register_libm_impls(self, max_threads=1):
+            super().register_libm_impls(max_threads)
+            if host_powf:
+                # Match the retained worker's f32::powf import, not the
+                # historical Python double-pow substitute. Not native UCRT.
+                import ctypes
+                powf = ctypes.CDLL(None).powf
+                powf.argtypes = (ctypes.c_float, ctypes.c_float)
+                powf.restype = ctypes.c_float
+                def imported_powf(uc, args):
+                    self.write_xmm_f32(0, powf(self.read_xmm_f32(0), self.read_xmm_f32(1)))
+                    return 0
+                self.import_impls['powf'] = imported_powf
+
         def add_code_hook(self, address, callback):
             # The base probe normally stops at Gaussian entry. Here execute
             # the actual Gaussian body, after the original CRT initializers.
