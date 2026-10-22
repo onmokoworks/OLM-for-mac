@@ -1,0 +1,260 @@
+{
+  "builds": [
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "candidate_sha256": "b4c1756122a22c039c6f2ca0cb709b36f269b118e4fe90d36fd41d5e69f44dde",
+      "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+      "dependencies_sha256": {
+        "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+        "core/dblur_frontonly.cpp": "08e9b0befaac1c736eec8dbb3b8608e5536d8e94e37c7a5759e230943fcc814b",
+        "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+        "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "020b152cc4b6ddb56196b78e68411d2d610f24eb4ac5c87b0f0fd8974dbf9f85",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+        "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "candidate_sha256": "cf60af21987b401c6db1dfc82733c61a9eb56c409305002b51a7a3cab76fd28f",
+      "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+      "dependencies_sha256": {
+        "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+        "core/dblur_frontonly.cpp": "08e9b0befaac1c736eec8dbb3b8608e5536d8e94e37c7a5759e230943fcc814b",
+        "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+        "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "020b152cc4b6ddb56196b78e68411d2d610f24eb4ac5c87b0f0fd8974dbf9f85",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+        "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker",
+      "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    }
+  ],
+  "cases": [
+    {
+      "input_sha256": "ca43ca3d767352db71026752c02596efcdf0ffd5011d70f018ac446f58653440",
+      "name": "fade-only:19",
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      }
+    },
+    {
+      "input_sha256": "12e8e2516938e4e6506d321a7688a20b1a2289bd99760e1cb47dd19a301c08f8",
+      "name": "fade-only:51",
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      }
+    },
+    {
+      "input_sha256": "0ed2a15d4fdc0c37d4641a2e0c205fd0e60288c18953dd54b2c7e19d35e2f1aa",
+      "name": "seed1:200",
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      }
+    },
+    {
+      "input_sha256": "72219ee71c60d9ce93a013f0d764cce3673ffa926e52a614f856431d2b7bb70d",
+      "name": "seed2:152",
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      }
+    }
+  ],
+  "commands": [
+    [
+      [
+        "xcrun",
+        "--show-sdk-path"
+      ],
+      [
+        "clang++",
+        "-std=c++17",
+        "-arch",
+        "arm64",
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-Wno-deprecated-declarations",
+        "-Wno-pragma-pack",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/orchestra/state/C09-dblur-smart-r2/refusals_pxgszqoo/0/host.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_frontonly.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_rotate.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_rowdriver.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_field.cpp",
+        "-Wl,-dead_strip",
+        "-framework",
+        "Cocoa",
+        "-o",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/orchestra/state/C09-dblur-smart-r2/refusals_pxgszqoo/0/mac"
+      ]
+    ],
+    [
+      [
+        "xcrun",
+        "--show-sdk-path"
+      ],
+      [
+        "clang++",
+        "-std=c++17",
+        "-arch",
+        "arm64",
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-Wno-deprecated-declarations",
+        "-Wno-pragma-pack",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+        "-I",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/orchestra/state/C09-dblur-smart-r2/refusals_pxgszqoo/1/host.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_frontonly.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_rotate.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_rowdriver.cpp",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/core/dblur_field.cpp",
+        "-Wl,-dead_strip",
+        "-framework",
+        "Cocoa",
+        "-o",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C09-dblur-smart-r2/orchestra/state/C09-dblur-smart-r2/refusals_pxgszqoo/1/mac",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "-g"
+      ]
+    ]
+  ]
+}
