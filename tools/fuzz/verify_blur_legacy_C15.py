@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent typed Legacy public-route matrix, with both revisions.
+"""Independent typed Legacy and bounded-HDR public-route matrices.
 
 All arithmetic uses actual production workers. The small-frame gate is bypassed
 in both diagnostic builds, so each row compares the general operation itself.
@@ -60,6 +60,37 @@ def conversion_cases(adapter, depth):
         yield dict(index=i,geometry=list(geometry),depth=depth,parameters=params,pixels=pixels,input_padding=3,output_padding=9,profile='sparse-alpha-independent')
 
 
+def hdr_cases(adapter):
+    rng=random.Random(15321026)
+    for c in cases(adapter,32):
+        p={v['slot']:v['value'] for v in c['parameters']}
+        if p[3]>2:continue
+        for v in c['parameters']:
+            if v['slot']==5:v['value']=0
+        w,h=c['geometry'];data=bytearray()
+        edges=(-16.,-1.,-2**-126,-2**-149,-0.,0.,2**-149,2**-126,1.,16.)
+        for i in range(w*h):
+            values=[rng.choice(edges) if c['profile']=='edge' else rng.uniform(-16,16) for _ in range(4)]
+            if c['profile']=='transparent':values[0]=0.
+            if c['profile']=='opaque':values[0]=1.
+            data.extend(struct.pack('<4f',*values))
+        c['pixels']=bytes(data);c['profile']='finite-HDR-'+c['profile'];yield c
+
+
+def hdr_boundaries(adapter):
+    import copy
+    template=next(hdr_cases(adapter));template['geometry']=[3,5]
+    for repeat in (1,2):
+        for channel in range(4):
+            for bits in (0x41800001,0xc1800001,0x7f7fffff,0xff7fffff,0x7f800000,0xff800000,0x7fc12345,0x7fa12345):
+                c=copy.deepcopy(template);c['pixels']=struct.pack('<4f',1.,.25,.5,.75)*15
+                data=bytearray(c['pixels']);struct.pack_into('<I',data,4*channel,bits);c['pixels']=bytes(data)
+                for p in c['parameters']:
+                    if p['slot']==3:p['value']=repeat
+                    if p['slot']==1:p['value']=5.
+                c['profile']=f'outside-HDR-channel{channel}-{bits:08x}';yield c
+
+
 def build(a,work,revision,diagnostic=True):
     original=olmblur.SOURCE;cores=olmblur.CORES
     target=work/'variant/mac/OLMBlur';target.mkdir(parents=True);cr=work/'variant/core';cr.mkdir()
@@ -81,7 +112,7 @@ def build(a,work,revision,diagnostic=True):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
-    p.add_argument('--conversion-boundaries',action='store_true');p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true');p.add_argument('--source-boundaries',action='store_true')
+    p.add_argument('--hdr-admission',action='store_true');p.add_argument('--conversion-boundaries',action='store_true');p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true');p.add_argument('--source-boundaries',action='store_true')
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state/C15-olmblur-smart-r4')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=run.main_checkout(),worker=WORKER))
@@ -102,19 +133,10 @@ def main():
                     row[label]={'status':status,'result':result,'raw_sha256':sha(raw),'diff':raw_diff(reference,raw,c['depth']) if status=='mismatch' else None}
                 if c['index']%100==0:print('progress',c['index'],row['before']['status'],row['after']['status'],flush=True)
                 return row
-        selected=[c for c in (conversion_cases(a,args.depth) if args.conversion_boundaries else cases(a,args.depth)) if not args.single_decay_only or next(p['value'] for p in c['parameters'] if p['slot']==3)<=2]
+        selected=[c for c in (hdr_cases(a) if args.hdr_admission else conversion_cases(a,args.depth) if args.conversion_boundaries else cases(a,args.depth)) if not args.single_decay_only or next(p['value'] for p in c['parameters'] if p['slot']==3)<=2]
         if args.source_boundaries:
-            import copy
-            from verify_blur_small_C10 import boundary_cases
-            selected=[]
-            for c in boundary_cases(a):
-                if c['profile']!='source-neighbour':continue
-                for repeat in (1,2):
-                    c=copy.deepcopy(c)
-                    for param in c['parameters']:
-                        if param['slot']==1:param['value']=9.406514031388419
-                        if param['slot']==3:param['value']=repeat
-                    c['index']=len(selected);selected.append(c)
+            selected=list(hdr_boundaries(a))
+            for i,c in enumerate(selected):c['index']=i
         with ThreadPoolExecutor(max_workers=2) as pool:rows=list(pool.map(one,selected))
     transitions=dict(Counter(r['before']['status']+' -> '+r['after']['status'] for r in rows))
     report={'schema':'olmblur-radius-matrix-C15/1','depth':args.depth,'provenance':{'before':op,'after':np,'aex_sha256':sha(a.aex.read_bytes()),'worker_sha256':sha(WORKER.read_bytes())},'transitions':transitions,'rows':rows}

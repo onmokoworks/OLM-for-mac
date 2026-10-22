@@ -1,11 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Closed two clusters: PF16 Legacy CVTTSS2SI/low-word storage and PF8 Legacy's undefined exceptional integer conversion, with bounded small-frame admissions.
-- Seed 1 Smart 180/4/116 -> 211/3/86; fresh seed 6 189/13/98 -> 217/13/70 (exact/mismatch/refusal).
-- All original exact cases and Classic results preserved; corpus 39/39 unchanged, 37 exact / 2 mismatch.
-- Each commit passes sanitizer campaigns, independent matrices and 92 retained controls; PF8's additional 216-row matrix fixes 55 sanitizer errors.
-- Corrected native-expf trace registration; PF16 writer conclusions survive, and the previously unbound coefficient residual is now located. Third cluster remains in progress.
+- Closed three clusters in separate commits: PF16 Legacy writer/one-two-pass admission, PF8 Legacy defined conversion/full admission, and bounded signed-HDR PF32 non-Legacy admission.
+- Seed 1 Smart 180/4/116 -> 220/3/77; fresh seed 6 189/13/98 -> 226/13/61 (exact/mismatch/refusal).
+- All 369 original exact campaign cases and Classic results preserved; corpus remains 39/39, 37 exact / 2 mismatch, with no expectation edits.
+- Each commit passes sanitizer campaigns, independent matrices, 92 retained controls and seven unit checks; no newly admitted mismatch.
+- Rejected PF32 Legacy native-expf substitution because it changes a frozen fixture; corrected tracing records the math-contract split. Stop at three closed clusters.
 
 facts:
 
@@ -53,9 +53,38 @@ The broad typed matrix is 720/720 exact before and after under sanitizers. An ad
 
 Corrected native-import traces of 31/115/141 still bind to the cached oracle, have all helper stages identical and confirm the writer boundary. The original first-cluster correction stands. Matrix 292 now also binds: its **first** differing helper input is weights at event 0, word 1 (byte 4), AEX `3d9b0f3f`, Mac `3c9b0f3f`. Two symmetric coefficient words differ. Native expf import records are captured; the Mac PF16 Legacy worker computes binary64 exp and rounds it to float. That remaining operation is not changed by the PF8 commit. The older direct/cached discrepancy is retained as historical diagnostic evidence, with this measured explanation rather than a claim of an unexplained Windows/native dependency. `native-pf16-before`, `native-pf16-after` and `native-coeff-pf16` are included in second-commit machine evidence.
 
+**Third cluster — bounded signed HDR PF32 non-Legacy (`293f9947` predecessor).** Machine evidence: `reports/fuzz/olmblur_C15_hdr.json`. No numerical core changes. The existing small-source range scan now accepts every active ARGB component in [-16,16], including negative zero/subnormals; unordered, infinite and larger finite components still refuse. The existing PF32 generic small-frame tuple remains non-Legacy, Repeat <= 2, with all prior legal parameter/storage/geometry/work/lifecycle checks. This widens the source domain without clamping, rescaling, changing arithmetic, copying a reference, or unlocking higher repeats/Legacy.
+
+| Campaign | PF8 predecessor E/M/R | Final E/M/R | Newly admitted exact |
+|---|---|---|---:|
+| Seed 1 | 211/3/86 | 220/3/77 | 9 |
+| Seed 6 | 217/13/70 | 226/13/61 | 9 |
+
+All 428 predecessor exact cases and both Classic result sets remain byte-identical. O2/sanitized full result objects match for 600 cases (1,200 sanitized routes); zero findings. Every newly admitted result equals both original Smart AEX and gate-off. Transitive preservation covers all 369 ticket-baseline exact cases. Total seed-1 gain is 39 refusal->exact plus one mismatch->exact; seed-6 gain is 37 refusal->exact.
+
+Independent bounded-HDR matrix: seed 15321026, six geometries, ten Amount boundaries including float neighbours and 1000, Repeat 1/2, both Bias values, three Smoothness values, random/edge/opaque/transparent inputs. Every ARGB channel includes independently generated signed/HDR values; edge values include ±16, ±1, signed zeros, both-sign smallest subnormal and normal floats. All 240 gate-off and all 240 final production rows are exact with sanitizers. Odd strides and source/destination guards are retained. All 64 one-away boundary rows (each channel x Repeat 1/2 x ±16's outward float neighbour, ±largest finite, ±infinity, quiet/signaling NaN) remain clean refusals at both revisions. This conservative range deliberately does not admit arbitrary finite float magnitudes.
+
+Final corpus table:
+
+| Saved Smart status | Baseline | PF16 | PF8 | Bounded HDR final |
+|---|---:|---:|---:|---:|
+| Exact | 37 | 37 | 37 | 37 |
+| Mismatch | 2 | 2 | 2 | 2 |
+| Refusal | 0 | 0 | 0 | 0 |
+
+Every corpus result object and all original input/parameter/reduction/history data remain unchanged; no rebaseline was needed. Final sanitized replay is 39/39 against the explicit cached-worker hash. Remaining saved mismatches are indices 40 (PF16 non-Legacy Repeat 9) and 99 (PF32 nonfinite). The unshrunk seed-1 campaign also retains Legacy PF32 index 272. Final retained controls are 12/12 plus 80/80 with sanitizers. Seven unit checks and `git diff --check` pass.
+
+**Rejected experiment, recorded before moving to the HDR cluster.** Native-import tracing of PF32 Legacy indices 220/272 binds to the cached worker and first differs in weights at events 0/48 respectively: 220 AEX `e6507f3f` vs Mac `e5507f3f` (word 16), 272 AEX `dca97d3f` vs Mac `dba97d3f` (word 17), two symmetric coefficient words each. The original builder `0x180009e10` calls expf; the production PF32 Legacy implementation currently evaluates binary64 exp then converts to float.
+
+A scratch candidate substituting native expf was **rejected**, not promoted: retained controls fall from 80/80 to 78/80. Both failing checks are optional-checkin variants of `legacy_24x24_smooth37_5` (24x24, Amount 11, Smoothness 37.5, Repeat 3, Bias 2, Legacy on). Baseline output SHA256 is `fb2b0d121cf6ee7c789ed8be03635f5a92942779574ed99475b9a9dea0bfaf33`; candidate is `d4ae8a9620d6745054d4fcdd28c0419d2b33bf8d505f4082cd31025731acd19e`. There are 473 differing bytes / 469 float words; first byte 24, original retained word `69b87dbe` versus candidate `66b87dbe`. Both public calls return zero and preserve source/guards; this is a numeric regression, not a sanitizer failure. The initial production experiment was immediately reverted; the committed `probe_blur_expf_C15.py` reproduces the experiment entirely in scratch. Final `core/olmblur_worker32_legacy.cpp` is unchanged from the ticket baseline.
+
+This establishes a new frozen-fixture boundary and prevents replacing one reference contract with another. The stored fixture is not rebaselined and no per-case coefficient selection is introduced. Native Windows UCRT behavior is not established by changing the host libm callback. The coefficient investigation is left for a separate ticket.
+
+Final execution note: the HDR driver initially stopped in the diagnostic output collector because the adapter intentionally strips environment variables prefixed `OLM`; the observer variable was renamed, the probe and remaining validation steps reran successfully with explicit worker binding. No failing collector output is accepted as numerical evidence. All final fuzz/regression commands are serial campaigns with jobs=2. Scratch build directories/objects were removed; remaining scratch is 38,086,859 bytes of logs/reports/corpora, below 5 GiB. No task build/emulator process remains.
+
 inference:
 - The three paired witnesses locate the output mismatch at the PF16 Legacy conversion, after exact intermediate planes. The saturation is a port bug.
-- The general PF16 one/two-pass and PF8 all-schedule admissions are supported by two seeds and independent matrices. Broader PF16 schedules remain unproven; corrected tracing locates a native expf versus binary64-exp coefficient boundary.
+- The PF16 one/two-pass, PF8 all-schedule and bounded-HDR PF32 one/two-pass admissions are supported by two seeds and independent matrices. Broader schedules/source magnitudes remain unproven. Native-expf substitution conflicts with an existing exact fixture and is not an acceptable global fix.
 - Results are original CPU AEX emulation versus public Mac fake-host renders. They do not establish native Windows UCRT, installed/native AE, GPU, arbitrary ROI/downsample or full-domain compatibility.
 
 changed_files:
@@ -65,8 +94,10 @@ changed_files:
 - `tests/test_olmblur_generic_beta_lane_20260820.py`
 - `tools/emulation/trace_olmblur_legacy_C15.py`
 - `tools/fuzz/verify_blur_legacy_C15.py`
+- `tools/fuzz/probe_blur_expf_C15.py`
 - `tools/fuzz/verify_blur_C15.py`
 - `tools/fuzz/recheck_blur_C15.sh`
+- `reports/fuzz/olmblur_C15_hdr.json`
 - `reports/fuzz/olmblur_C15_pf8.json`
 - `reports/fuzz/olmblur_C15_pf16.json`
 - `orchestra/reports/C15-olmblur-smart-r4.md`
@@ -79,13 +110,19 @@ bash tools/fuzz/recheck_blur_C15.sh 8567a0d base pf16 16
 ```
 Expected: the campaign table above; 369 original exact cases preserved; matrix 71 exact->exact / 169 mismatch->exact; corpus 39/39 unchanged; retained 12+80 and seven unit checks pass. Driver writes only ticket scratch and does not rebaseline unless `C15_REBASELINE` is explicitly set.
 
-At the PF8 commit:
+At PF8 commit `293f9947`:
 ```sh
 bash tools/fuzz/recheck_blur_C15.sh ae8e3030 pf16 pf8 8
 ```
 Expected PF8 campaign table, 397 predecessor exact preserved; matrix 720 exact->exact; conversion matrix 161 exact->exact / 55 error->exact; strict replay 39/39 unchanged; retained 12+80 and seven unit checks pass. The complete PF8 driver runs sequentially with jobs=2.
 
-Additional diagnostic reproduction at this revision (the corrected tracer now exits 0):
+At the final bounded-HDR commit:
+```sh
+bash tools/fuzz/recheck_blur_C15.sh 293f9947 pf8 hdr 32
+```
+Expected final 220/3/77 and 226/13/61; 428 predecessor exact cases unchanged; 240/240 signed-HDR matrix exact; 64/64 clean boundary refusals; corpus 39/39 unchanged; retained 12+80 and seven unit checks pass. The diagnostic expf candidate intentionally fails two retained checks; its probe exits 0 only when that known rejection is reproduced. No source edit or corpus rebaseline is performed by the driver.
+
+Additional diagnostic reproduction at the final revision (the corrected tracer exits 0):
 ```sh
 s="$PWD/orchestra/state/C15-olmblur-smart-r4"
 export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
@@ -95,5 +132,7 @@ python3 tools/fuzz/verify_blur_legacy_C15.py --scratch "$s" --report "$s/matrix-
 Expected matrix 207/509/4; tracer cached_binding=true, first_difference=event 0 weights, two words, AEX `3d9b0f3f` vs Mac `3c9b0f3f`.
 
 next:
-- Continue the remaining Smart coefficient/refusal cluster using the corrected native-import tracer.
-- PF16 Legacy broader schedules remain gated; its measured expf/binary64-exp boundary is not repaired here. Audit the analogous expf registration pattern in the earlier C12 non-Legacy tracer before relying on its unbound-oracle interpretation.
+- Three clusters closed; stop under the ticket threshold. Final seed-1 residual is 3 mismatches / 77 refusals, not full compatibility.
+- Reconcile the frozen PF32 Legacy fixture's binary64-exp behavior with the cached oracle's native expf before changing coefficients; retain the measured 473-byte regression as a negative control.
+- Investigate PF16 higher-repeat coefficient domains and remaining PF32 nonfinite NaN propagation; audit the analogous expf registration pattern in the older C12 tracer before using its unbound-oracle interpretation.
+- Larger finite float magnitudes, higher-repeat small PF32/PF16 and other remaining refusal families require new bounded evidence. No release-gate or native AE promotion is requested.

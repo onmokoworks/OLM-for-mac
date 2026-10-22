@@ -62,10 +62,20 @@ def main():
     assert all(r['after']['status']=='exact' for r in matrix['rows'])
     report['matrix']=matrix
     # Original trace evidence includes full output binding before stage interpretation.
-    report['trace_before']=load(s/f'stages-before-{args.after}.json')
-    report['trace_after']=load(s/f'stages-{args.after}.json')
-    assert all(r['cached_binding'] for r in report['trace_before']['rows']+report['trace_after']['rows'])
-    assert all(r['output_exact'] for r in report['trace_after']['rows'])
+    if args.depth!=32:
+        report['trace_before']=load(s/f'stages-before-{args.after}.json')
+        report['trace_after']=load(s/f'stages-{args.after}.json')
+        assert all(r['cached_binding'] for r in report['trace_before']['rows']+report['trace_after']['rows'])
+        assert all(r['output_exact'] for r in report['trace_after']['rows'])
+    else:
+        report['boundaries']=load(s/f'boundaries-{args.after}.json')
+        assert len(report['boundaries']['rows'])==64
+        assert all(r['before']['status']==r['after']['status']=='refusal' for r in report['boundaries']['rows'])
+        report['rejected_expf']=load(s/'expf-rejected.json')
+        assert report['rejected_expf']['before']['status']['status']=='ok'
+        assert report['rejected_expf']['after']['status']['status']=='error'
+        report['coefficient_trace']=load(s/'stages-before-pf32.json')
+        assert all(r['cached_binding'] and r['first_difference']['field']=='weights' for r in report['coefficient_trace']['rows'])
     report['retained']=retained(s)
     from verify_blur_retained_C12 import verify
     report['extended_retained']=verify(s)

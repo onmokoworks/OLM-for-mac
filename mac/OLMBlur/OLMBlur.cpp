@@ -1635,12 +1635,14 @@ static bool
 SmallDefaultPF32Source(const PF_EffectWorld *world)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
+	// C15: small non-Legacy one/two-pass sources include bounded signed HDR.
+	// Keep nonfinite and larger finite values outside the verified domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
 		for (A_long x=0; x<world->width; ++x) {
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
 			for (int c=0;c<4;++c)
-				if (!(argb[c]>=0.0f && argb[c]<=1.0f)) return false;
+				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
 		}
 	}
 	return true;

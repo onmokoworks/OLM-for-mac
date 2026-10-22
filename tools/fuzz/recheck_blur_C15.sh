@@ -23,7 +23,7 @@ matrix_options=(--single-decay-only)
 case "$depth" in
  16) indices=(31 115 141);;
  8) indices=(77 112); matrix_options=();;
- 32) indices=(220 272);;
+ 32) indices=(); matrix_options=(--hdr-admission);;
 esac
 python3 tools/fuzz/verify_blur_legacy_C15.py ${matrix_options[@]+"${matrix_options[@]}"} --scratch "$s" --report "$s/matrix-$after.json" \
  --before "$base" --depth "$depth" --require-exact > "$s/matrix-$after.log" 2>&1
@@ -31,10 +31,18 @@ if [ "$depth" -eq 8 ]; then
  python3 tools/fuzz/verify_blur_legacy_C15.py --scratch "$s" --report "$s/conversion-$after.json" \
   --before "$base" --depth 8 --conversion-boundaries --require-exact > "$s/conversion-$after.log" 2>&1
 fi
+if [ "$depth" -ne 32 ]; then
 "$py" tools/emulation/trace_olmblur_legacy_C15.py --source-revision "$base" --scratch "$s" \
  --report "$s/stages-before-$after.json" --indices "${indices[@]}" > "$s/stages-before-$after.log" 2>&1
 "$py" tools/emulation/trace_olmblur_legacy_C15.py --scratch "$s" --report "$s/stages-$after.json" \
  --indices "${indices[@]}" > "$s/stages-$after.log" 2>&1
+else
+ python3 tools/fuzz/verify_blur_legacy_C15.py --scratch "$s" --report "$s/boundaries-$after.json" \
+  --before "$base" --depth 32 --source-boundaries > "$s/boundaries-$after.log" 2>&1
+ python3 tools/fuzz/probe_blur_expf_C15.py --scratch "$s" --report "$s/expf-rejected.json" > "$s/expf-rejected.log" 2>&1
+ "$py" tools/emulation/trace_olmblur_legacy_C15.py --scratch "$s" --report "$s/stages-before-pf32.json" \
+  --indices 220 272 > "$s/stages-before-pf32.log" 2>&1
+fi
 for label in "$before" "$after"; do
  options=(); if [ "$label" = "$before" ]; then options=(--blur-source-revision "$base"); fi
  set +e
