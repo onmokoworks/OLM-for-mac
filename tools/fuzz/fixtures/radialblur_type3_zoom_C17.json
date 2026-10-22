@@ -1,0 +1,131 @@
+{
+  "rows": [
+    {
+      "index": 93,
+      "case": {
+        "seed": 1,
+        "index": 93,
+        "depth": 16,
+        "geometry": [
+          72,
+          1
+        ],
+        "profile": "sdr",
+        "parameters": [
+          {
+            "slot": 1,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 2,
+            "kind": "p",
+            "value": [
+              -44.30778503417969,
+              1.762115478515625
+            ]
+          },
+          {
+            "slot": 4,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 5,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 6,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 7,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 10,
+            "kind": "i",
+            "value": 16
+          },
+          {
+            "slot": 11,
+            "kind": "u",
+            "value": 1
+          },
+          {
+            "slot": 12,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 13,
+            "kind": "i",
+            "value": 0
+          },
+          {
+            "slot": 15,
+            "kind": "b",
+            "value": 1
+          },
+          {
+            "slot": 17,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 18,
+            "kind": "a",
+            "value": -127.95547485351562
+          },
+          {
+            "slot": 20,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 21,
+            "kind": "s",
+            "value": 1.0
+          },
+          {
+            "slot": 22,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 24,
+            "kind": "s",
+            "value": 0.0
+          },
+          {
+            "slot": 25,
+            "kind": "u",
+            "value": 3
+          },
+          {
+            "slot": 27,
+            "kind": "i",
+            "value": 123
+          },
+          {
+            "slot": 28,
+            "kind": "a",
+            "value": 0.0
+          },
+          {
+            "slot": 29,
+            "kind": "s",
+            "value": 10.0
+          }
+        ],
+        "input_padding": 7,
+        "output_padding": 11
+      },
+      "input_hex": "008072721e1e7070707015153a3a707000809c1b8a091818008070702f2f707094137c7ca9282b2b00809e1dc1403a3a8c0b52526a6a252500005858c03fe6650080e6656a6a99184d4d83024545232306065d5ded6c40407c7cff7e3e3eb736008037375d5dc8473c3c6f6f9f1e900f0080f4737777ac2b00807f7f3d3d3c3c0080cf4e1c1c242400801a1a5a5a1515000099181717fa79000044449a19333300005f5fca49da59008088073636545400009c1bfa799514d150fa799a1929290000cb4aef6eb02f8c0b9b1ad04f6f6f3030f1708e0d5b5b000045459615f37200804e4e454524243636fc7b9413ef6ecf4e69693f3f5d5d171773739a19bf3e474722223b3b464600008403890812120000484896155f5f0080c8473e3e0909d04faf2e8e0dd35216166464d453eb6a5e5e3d3d74742d2d00008c0b565689080080f6755454f17058582a2abf3e50500080b23195142c2c00004141b73616160080ae2d4646e46300806c6cd7563a3a94130c0c171713130000b837b130d95800001a1af27141415f5f72721a1a8d0c0000d958ce4d676700800101a2214747a3220404fd7c66660000cd4c8403111100808201db5af473f170b4333b3ba423820162626c6c1a1a0080eb6ae968020200800505fd7cb83700002e2e60606e6e0000e9681c1cd1500000db5a01016c6c3e3e4a4aa01fa62500000303c7468c0b00005959a120f06f2626f4738908fd7c0000dc5b8b0a06063c3c0c0c8f0ef170000047475656bc3b00006969df5e8e0d0080da597b7b505000809b1a1f1ffb7a",
+      "expected_smart_sha256": "5b0f9363551675c0c4f5d1871429aab26aa6c206ee088ef3831fa0511bc6812c"
+    }
+  ]
+}

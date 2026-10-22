@@ -33,7 +33,7 @@ def main():
     ap.add_argument('--fixture', type=Path)
     args = ap.parse_args()
     out = args.output.resolve()
-    assert out.is_relative_to(ROOT/'orchestra/state/C11-radial-smart-r2')
+    assert out.is_relative_to(ROOT/'orchestra/state')
     out.mkdir(parents=True, exist_ok=False)
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out))
     public.SOURCE = args.source.resolve()
@@ -55,22 +55,46 @@ def main():
     report = dict(provenance=provenance, case={k:v for k,v in case.items() if k!='pixels'},
                   input_hex=case['pixels'].hex(), result=result, reduction=reduction)
     (out/'report.json').write_text(json.dumps(report, indent=2)+'\n')
-    assert case['depth'] == 8 and next(p['value'] for p in case['parameters'] if p['slot']==1) == 2
+    assert case['depth'] in (8,16,32) and next(p['value'] for p in case['parameters'] if p['slot']==1) == 2
     public.initial.ROOT = main
     public.initial.AEX = adapter.aex
     hp = out/'planes.cpp'; hp.write_text(fields.plane_harness())
     old = public.initial.HARNESS; public.initial.HARNESS = hp
-    binary = public.build(out/'planes_build', public.SOURCE.read_text())
+    source = public.SOURCE.read_text()
+    marker = '\t\tauto polar_alpha_linear = [&](long long linear_cell) -> float {'
+    dump = r'''        auto c17_dump = [](const char *name, const std::vector<float>& values) {
+            const char *directory = std::getenv("ROTATION_PLANES_DIRECTORY");
+            if (!directory) return;
+            const std::string path = std::string(directory) + "/" + name;
+            FILE *file = std::fopen(path.c_str(), "wb");
+            if (file) { std::fwrite(values.data(), sizeof(float), values.size(), file); std::fclose(file); }
+        };
+        c17_dump("outer_fade.f32", outer_fade_weights);
+        c17_dump("inner_fade.f32", inner_fade_weights);
+'''
+    assert source.count(marker) == 1
+    source = source.replace(marker, dump + marker)
+    marker = '\t\tstd::map<A_long, std::vector<float>> weight_cache;'
+    assert source.count(marker) == 2
+    source = source.replace(marker, '\t\tc17_dump("preaccum.f32", accum.rgba);\n\t\tc17_dump("premax.f32", max_alpha);\n'+marker, 1)
+    binary = public.build(out/'planes_build', source)
     public.initial.HARNESS = old
     planes = out/'mac'; planes.mkdir()
     config = out/'parameters.txt'; config.write_text(public.initial.config_text(case))
-    run = subprocess.run([str(binary), *map(str,case['geometry']), '8', 'smart', str(config)],
+    run = subprocess.run([str(binary), *map(str,case['geometry']), str(case['depth']), 'smart', str(config)],
                          input=case['pixels'], capture_output=True, check=True, timeout=120,
                          env=dict(os.environ, ROTATION_PLANES_DIRECTORY=str(planes)))
     assert b'ERROR 0\n' in run.stderr and sha(run.stdout)==result['routes']['smart']['raw_sha256']
     w,h = case['geometry']; im = Image.new('RGBA',(w,h))
-    im.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',case['pixels'])]); im.save(out/'input.png')
-    command = [str(WORKER),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),'--pixel-format','argb8']
+    packed = case['pixels']
+    if case['depth'] != 8:
+        fmt, scale = ('H',32768) if case['depth']==16 else ('f',1)
+        values = [v for (v,) in struct.iter_unpack('<'+fmt,packed)]
+        packed = bytes(round(v/scale*255) for v in values)
+        restored = b''.join(struct.pack('<'+fmt,(v*32768+127)//255 if fmt=='H' else v/255) for v in packed)
+        assert restored == case['pixels'], 'Trace PNG must reproduce every typed input byte'
+    im.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',packed)]); im.save(out/'input.png')
+    command = [str(WORKER),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),'--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']]]
     def trace(options, name):
         run = subprocess.run(command+options+zoom.assignments(case), capture_output=True, check=True, timeout=120)
         (out/(name+'.json')).write_bytes(run.stdout)
@@ -89,7 +113,15 @@ def main():
     angular = int(fields.f32(360/step)); radial = maximum-minimum+1; cells=angular*radial
     report.update(native_dimensions=[angular,radial], native_min_radius=minimum,
                   mac_dimensions=list(struct.unpack('<2i',(planes/'dimensions.i32').read_bytes())), planes={})
-    specs = [('polar',0x2780,'rdx',None,cells*16),('scalar',0x2780,'rcx',0x40,cells*4),
+    report['weights'] = {}
+    for name, occurrence in [('outer_fade',3),('inner_fade',4)]:
+        mac = (planes/(name+'.f32')).read_bytes()
+        if len(mac) <= 4: continue  # Omit one-word identity tables.
+        watches = trace(['--watch',f'function=0xb680,arg=rcx,size={len(mac)},occurrence={occurrence}'],name+'_trace')
+        native = bytes.fromhex(watches['watch-1']['after']['hex'])
+        (out/('native_'+name+'.f32')).write_bytes(native)
+        report['weights'][name] = fields.compare_words(native, mac)
+    specs = [('preaccum',0x2780,'rcx',0x3c940,cells*16),('premax',0x2780,'rcx',0x3c948,cells*4),('polar',0x2780,'rdx',None,cells*16),('scalar',0x2780,'rcx',0x40,cells*4),
              ('span',0x4640,'rdx',0x90,w*h*4),('accum',0x1b10,'rcx',0x3c940,cells*16),
              ('max',0x1b10,'rcx',0x3c948,cells*4),('normalized',0x1000,'rcx',None,cells*16)]
     for name,rva,arg,deref,size in specs:
@@ -99,7 +131,8 @@ def main():
             if deref is not None: spec+=f',deref={hex(deref)}'
             options+=['--watch',spec]
         watches=trace(options,name+'_trace')
-        native=b''.join(bytes.fromhex(watches[f'watch-{i+1}']['before']['hex']) for i in range(len(options)//2))
+        when = 'after' if name in ('preaccum','premax') else 'before'
+        native=b''.join(bytes.fromhex(watches[f'watch-{i+1}'][when]['hex']) for i in range(len(options)//2))
         (out/('native_'+name+'.f32')).write_bytes(native)
         mac=(planes/(name+'.f32')).read_bytes()
         report['planes'][name]=(fields.compare_words(native,mac) if len(native)==len(mac) else
