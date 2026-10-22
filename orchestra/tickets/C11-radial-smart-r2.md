@@ -16,3 +16,8 @@ Read first: the plugin's triage and fix reports in orchestra/reports/ (grep the 
 No base-exact Smart case may change. Smart exact must not decrease. Corpus replay changes only
 toward exact (rebaseline with a before/after table). Sanitizer clean. Cause outside the port
 (Windows dependency/host/oracle) -> document and move to the next cluster.
+
+## Resume note (orchestrator)
+A previous run of this ticket was cut off by "Selected model is at capacity" with uncommitted work in
+this worktree (see `orchestra/state/C11-radial-smart-r2/`). Inspect `git status`/`git diff`, keep only
+what you can verify, and continue the loop.
