@@ -844,7 +844,7 @@ static void build_distance_field(
 	if (constant_blur) {
 		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
 	}
-	if (blurred && (!p.smart_owner || constant_blur)) df.pre_blur_x = df.x;
+	if (blurred) df.pre_blur_x = df.x;
 
 	// Blur: the Windows owner always converts the full-resolution Blur Size to
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
@@ -882,6 +882,10 @@ static void build_distance_field(
 		for (float &value : df.x) {
 			value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
 		}
+		if (p.smart_owner) {
+			for (float &value : df.pre_blur_x)
+				value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
+		}
 	} else if (p.pixel_size == sizeof(PF_Pixel8)) {
 		// Independent PF8 fieldgen->compose capture proves the corresponding
 		// cvConvertScale nearest-even byte staging before FUN_181170870.
@@ -889,6 +893,13 @@ static void build_distance_field(
 			float scaled = value * 255.0f;
 			int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
 			value = (float)word / 255.0f;
+		}
+		if (p.smart_owner) {
+			for (float &value : df.pre_blur_x) {
+				float scaled = value * 255.0f;
+				int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
+				value = (float)word / 255.0f;
+			}
 		}
 		for (float &value : df.d_alpha) {
 			float scaled = value * 255.0f;
@@ -923,14 +934,16 @@ static inline void compose_pixel(
 	// FUN_181170480/870/c90 test source ownership before interpolation and
 	// color selection. A rejected pixel keeps the staged field RGB and zero
 	// alpha, even with background enabled. Unblurred staging has X in all
-	// three color lanes; blurred staging remains a separate owner contract.
-	if (p.smart_owner && !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
+	// three color lanes. The blurred owner merges the post-blur scalar into
+	// R/G and the pre-blur scalar into B (181172906..18117291b).
+	if (p.smart_owner) {
 		float ownership = 1.0f;
 		if (p.in_out == IN_OUT_INSIDE) ownership = src_a;
 		else if (p.in_out == IN_OUT_OUTSIDE) ownership = 1.0f - src_a;
 		if (ownership < 0.0001f) {
 			out_a = 0.0f;
-			out_r = out_g = out_b = X;
+			out_r = out_g = X;
+			out_b = (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) ? field_aux : X;
 			return;
 		}
 	}
@@ -942,7 +955,7 @@ static inline void compose_pixel(
 		out_a = out_r = out_g = out_b = X;
 		return;
 	}
-	if ((!p.smart_owner || (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) &&
+	if (!p.smart_owner &&
 	    p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_BOTH && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
 		out_a = out_r = out_g = out_b = X;
@@ -1004,9 +1017,8 @@ static inline void compose_pixel(
 	// The public Smart typed callbacks consume the source RGB directly for
 	// Layer/no-background. They do not unpremultiply it or multiply RGB by
 	// the new alpha. The early ownership exit above already handled unowned
-	// pixels. Keep Classic and blurred staging on their existing contracts.
-	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
-	    !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
+	// pixels. The Smart callback uses the same selection with or without blur.
+	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
 		out_a = d_alpha * X;
 		out_r = src_r; out_g = src_g; out_b = src_b;
 		return;
@@ -1235,7 +1247,7 @@ template<> void shade_scanline<PF_Pixel16>(
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
-		if ((!p.smart_owner || (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) &&
+		if (!p.smart_owner &&
 		    p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
 		    src[i].alpha > 0 && src[i].alpha <= 193 &&
 		    src[i].red == 0 && src[i].green == 0 && src[i].blue == 0) {
