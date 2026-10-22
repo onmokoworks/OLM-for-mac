@@ -39,3 +39,4 @@ C11-radial-smart-r2
 C12-olmblur-smart-r3
 C13-kira-smart-r3
 C14-dg-smart-r3
+I01-integration-check
