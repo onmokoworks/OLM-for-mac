@@ -35,3 +35,4 @@ C07-kira-smart-r2
 C08-dg-smart-r2
 C09-dblur-smart-r2
 C10-olmblur-smart-r2
+C11-radial-smart-r2
