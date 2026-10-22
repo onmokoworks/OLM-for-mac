@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timezone
 import importlib
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -23,6 +25,7 @@ from core import evaluate, load_corpus, mismatch_routes, save_corpus, sha, shrin
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SCRATCH = ROOT/'orchestra/state/T02-fuzz-framework-radialblur'
 CORPUS_LOCK = threading.Lock()
+DEFAULT_CASE_TIMEOUT = 10
 
 
 def main_checkout():
@@ -47,11 +50,13 @@ def options():
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--jobs', type=int, default=4)
     p.add_argument('--budget-minutes', type=float, default=30)
-    p.add_argument('--case-timeout', type=float, default=10)
+    p.add_argument('--case-timeout', type=float,
+                   help='Override corpus timeout on replay; otherwise default to 10 seconds')
     p.add_argument('--shrink-attempts', type=int, default=32)
     p.add_argument('--shrink-seconds', type=float, default=10)
     p.add_argument('--max-size', type=int, default=256)
-    p.add_argument('--worker', type=Path, default=default_worker())
+    p.add_argument('--worker', type=Path,
+                   help='Override the hash-bound corpus worker on replay')
     p.add_argument('--main', type=Path, default=main_checkout())
     p.add_argument('--scratch', type=Path, default=DEFAULT_SCRATCH)
     p.add_argument('--report', type=Path)
@@ -61,10 +66,14 @@ def options():
     args = p.parse_args()
     if not args.plugin.isidentifier():
         p.error('plugin must be an adapter module name')
-    if not (args.n > 0 and 1 <= args.jobs <= 32 and args.budget_minutes > 0 and args.case_timeout > 0
+    if not (args.n > 0 and 1 <= args.jobs <= 32 and args.budget_minutes > 0
+            and (args.case_timeout is None or (math.isfinite(args.case_timeout) and args.case_timeout > 0))
             and args.corpus_max_bytes >= 0 and 1 <= args.max_size <= 256 and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
         p.error('invalid count, jobs, time budget, shrink budget or size')
-    if args.worker is None or not args.worker.is_file():
+    if not args.replay:
+        args.worker = args.worker or default_worker()
+        args.case_timeout = args.case_timeout if args.case_timeout is not None else DEFAULT_CASE_TIMEOUT
+    if (args.worker is None and not args.replay) or (args.worker is not None and not args.worker.is_file()):
         p.error('set --worker or OLM_AEX_WORKER to the retained AEXCompat executable')
     args.scratch = args.scratch.resolve()
     if not args.scratch.is_relative_to(ROOT/'orchestra/state'):
@@ -81,6 +90,88 @@ def options():
 
 def disk_bytes(path):
     return sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and not p.is_symlink())
+
+
+def replay_groups(args):
+    """Validate every corpus binding before building or running any replay."""
+    paths = sorted(args.replay.glob('*.json')) if args.replay.is_dir() else [args.replay]
+    if not paths:
+        raise ValueError(f'Replay corpus is empty: {args.replay}')
+    groups, hashes = {}, {}
+    for path in paths:
+        saved = json.loads(path.read_text())
+        provenance = saved.get('provenance', {})
+        if not isinstance(provenance, dict):
+            provenance = {}
+        if args.worker is not None:
+            worker = args.worker.resolve()
+        else:
+            recorded = provenance.get('worker_path')
+            expected = provenance.get('worker_sha256')
+            if not isinstance(recorded, str) or not recorded or not isinstance(expected, str) or not expected:
+                raise ValueError(f'{path}: missing provenance worker_path or worker_sha256; use --worker to override')
+            worker = Path(recorded).resolve()
+            if worker not in hashes:
+                try:
+                    with worker.open('rb') as stream:
+                        hashes[worker] = hashlib.file_digest(stream, 'sha256').hexdigest()
+                except OSError as exc:
+                    raise ValueError(f'{path}: recorded worker unavailable: {worker}; use --worker to override') from exc
+            if hashes[worker] != expected:
+                raise ValueError(f'{path}: worker SHA-256 mismatch for {worker}: expected {expected}, '
+                                 f'got {hashes[worker]}; use --worker to override')
+        timeout = args.case_timeout
+        if timeout is None:
+            timeout = provenance.get('case_timeout_seconds', DEFAULT_CASE_TIMEOUT)
+        if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or timeout <= 0:
+            raise ValueError(f'{path}: invalid case_timeout_seconds: {timeout!r}; use --case-timeout to override')
+        groups.setdefault((worker, timeout), []).append(path)
+    return groups
+
+
+def prepare(adapter, scratch, deadline, timeout):
+    provenance = adapter.prepare(scratch, deadline)
+    provenance['case_timeout_seconds'] = timeout
+    print('PREPARED', json.dumps({'calibration_matches':sum(c['matches_retained'] for c in provenance.get('calibration', [])),
+                                  'worker':provenance.get('worker_sha256'),
+                                  'case_timeout_seconds':timeout}), flush=True)
+    return provenance
+
+
+def replay(adapter_type, args, scratch, deadline, report):
+    groups = replay_groups(args)
+    report.update(replay=str(args.replay), replays=[], replay_groups=[],
+                  requested=sum(len(paths) for paths in groups.values()))
+    timeouts = {timeout for _, timeout in groups}
+    report['case_timeout_seconds'] = next(iter(timeouts)) if len(timeouts) == 1 else None
+    for (worker, timeout), paths in groups.items():
+        if time.monotonic() >= deadline:
+            break
+        group_args = argparse.Namespace(**vars(args))
+        group_args.worker, group_args.case_timeout = worker, timeout
+        adapter = adapter_type(group_args)
+        with tempfile.TemporaryDirectory(prefix='group_', dir=scratch) as name:
+            directory = Path(name)
+            provenance = prepare(adapter, directory, deadline, timeout)
+            group_index = len(report['replay_groups'])
+            report['replay_groups'].append({'provenance':provenance, 'paths':list(map(str, paths))})
+            # Preserve the existing single-worker report interface without
+            # claiming one group's provenance applies to a mixed replay.
+            report['provenance'] = provenance if len(groups) == 1 else None
+            for path in paths:
+                if time.monotonic() >= deadline:
+                    break
+                case, saved = load_corpus(path, adapter)
+                with tempfile.TemporaryDirectory(prefix='replay_', dir=directory) as name:
+                    observed = evaluate(adapter, case, Path(name), deadline)
+                report['replays'].append({'path':str(path), 'result':observed, 'group':group_index,
+                                          'matches_saved':observed == saved['result']})
+    report['replays'].sort(key=lambda row:row['path'])
+    complete = len(report['replays']) == report['requested']
+    matches = complete and all(row['matches_saved'] for row in report['replays'])
+    report.update(replay_matches_saved=matches, completed=len(report['replays']),
+                  status='replay_complete' if complete else 'budget_exhausted')
+    return 0 if matches else 1
 
 
 def run_one(adapter, seed, index, scratch, deadline, args, provenance):
@@ -151,8 +242,8 @@ def main():
     os.environ.update(TMPDIR=str(args.scratch), TMP=str(args.scratch), TEMP=str(args.scratch),
                       PYTHONDONTWRITEBYTECODE='1')
     tempfile.tempdir = str(args.scratch)
-    adapter = importlib.import_module('adapters.'+args.plugin).Adapter(args)
-    report = {'schema':'olm-fuzz-report/1', 'plugin':args.plugin, 'generator_version':adapter.generator_version,
+    adapter_type = importlib.import_module('adapters.'+args.plugin).Adapter
+    report = {'schema':'olm-fuzz-report/1', 'plugin':args.plugin, 'generator_version':adapter_type.generator_version,
               'started_utc':datetime.now(timezone.utc).isoformat(),
               'seed':args.seed, 'requested':args.n, 'jobs':args.jobs,
               'budget_minutes':args.budget_minutes, 'case_timeout_seconds':args.case_timeout,
@@ -166,28 +257,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix='run_', dir=args.scratch) as name:
         scratch = Path(name)
         try:
-            report['provenance'] = adapter.prepare(scratch, deadline)
-            print('PREPARED', json.dumps({'calibration_matches':sum(c['matches_retained'] for c in report['provenance'].get('calibration', [])),
-                                          'worker':report['provenance'].get('worker_sha256')}), flush=True)
             if args.replay:
-                paths = sorted(args.replay.glob('*.json')) if args.replay.is_dir() else [args.replay]
-                if not paths:
-                    raise ValueError('Replay corpus is empty')
-                replays = []
-                for path in paths:
-                    if time.monotonic() >= deadline:
-                        break
-                    case, saved = load_corpus(path, adapter)
-                    with tempfile.TemporaryDirectory(prefix='replay_',dir=scratch) as directory:
-                        observed = evaluate(adapter, case, Path(directory), deadline)
-                    replays.append({'path':str(path), 'result':observed,
-                                    'matches_saved':observed == saved['result']})
-                matches = len(replays)==len(paths) and all(row['matches_saved'] for row in replays)
-                report.update(replay=str(args.replay), replays=replays, replay_matches_saved=matches,
-                              completed=len(replays), requested=len(paths),
-                              status='replay_complete' if len(replays)==len(paths) else 'budget_exhausted')
-                exitcode = 0 if matches else 1
+                exitcode = replay(adapter_type, args, scratch, deadline, report)
             else:
+                adapter = adapter_type(args)
+                report['provenance'] = prepare(adapter, scratch, deadline, args.case_timeout)
                 next_index = 0
                 with ThreadPoolExecutor(max_workers=args.jobs) as pool:
                     pending = {}
@@ -216,8 +290,9 @@ def main():
                 report['summary'], report['clusters'] = summarize(report['cases'])
                 report['cluster_count'] = len(report['clusters'])
                 report['status'] = 'complete' if len(report['cases']) == args.n else 'budget_exhausted'
-        except Exception:
+        except Exception as exc:
             report.update(status='setup_error', error=traceback.format_exc()[-6000:])
+            print(f'ERROR: {exc}', file=sys.stderr, flush=True)
             exitcode = 2
         report['elapsed_seconds'] = round(time.monotonic()-started, 4)
         report['deadline_reached'] = time.monotonic() >= deadline

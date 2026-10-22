@@ -47,7 +47,14 @@ python3 tools/fuzz/run.py --plugin radialblur --replay tests/fuzz_corpus/radialb
 OLM_FUZZ_INTEGRATION=1 python3 tools/fuzz/test_framework.py
 ```
 
-Pass a directory to `--replay` to verify every corpus JSON with one build.
+Pass a directory to `--replay` to verify every corpus JSON. Replay uses each file's
+provenance `worker_path` after validating `worker_sha256`, and inherits its
+`case_timeout_seconds` (10 seconds when absent). Missing workers or bindings and
+hash mismatches fail before any build, naming the corpus file. An explicit
+`--worker` overrides the recorded worker and hash check; `--case-timeout` overrides
+the recorded timeout independently. Environment/default workers apply only to new
+campaigns. Mixed corpora are grouped by worker and timeout, with one build per group;
+reports record each group's provenance and each replay's group index.
 Replay exits nonzero if raw hashes/statuses differ. Tests without the environment
 flag skip the real worker integration test. Seed+index determine cases independently
 of job completion order. Wall budgets can change which cases finish or how far
