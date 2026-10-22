@@ -28,7 +28,7 @@ reviews your diff, and merges it. Stay inside the ticket.
 4. Fact vs inference: label them. Never invent numbers. A mismatch is data.
 5. Do not touch the release gate files, the ledger's forbidden-action lists, or
    other plugins' code unless the ticket says so.
-6. Do not push. Do not modify MAIN. Do not rewrite git history.
+6. Do not push. Do not modify MAIN. Do not rewrite git history. Do not use `git stash` (the stash is shared by all worktrees); use a WIP commit instead.
 7. Long commands: run them with output redirected to a log in your scratch dir and
    read only the tail / a summary. Do not dump huge JSON into your context.
 8. Stop condition: if two distinct hypotheses are refuted without a new boundary

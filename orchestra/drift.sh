@@ -6,7 +6,7 @@ for meta in "$MAIN"/orchestra/state/*.meta(N); do
   [[ -f $log ]] || continue
   hits=()
   grep -qE '(>|cp |mv |mkdir[^\n]*|write_text\(|open\()[^\n]*/tmp/' "$log" && hits+=("writes-/tmp")
-  grep -qE 'git (push|reset --hard|rebase|commit --amend)' "$log" && hits+=("git-history/push")
+  grep -qE '(-lc|\$ ).*git (push|reset --hard|rebase|commit --amend|stash)' "$log" && hits+=("git-history/push")
   git -C "$MAIN" status --porcelain | grep -vqE '^\?\? (orchestra/(logs|state)|worktrees)/' && hits+=("MAIN-dirty")
   changed=$(git -C "$wt" diff --name-only codex/public-beta-roi 2>/dev/null; git -C "$wt" status --porcelain 2>/dev/null | cut -c4-)
   echo "$changed" | grep -qE 'run_olm_release_gate|olm_release_gate_|CONFORMANCE_LEDGER' && hits+=("touches-gate/ledger")
