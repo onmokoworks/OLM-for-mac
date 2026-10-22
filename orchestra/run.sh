@@ -44,6 +44,9 @@ case $engine in
         echo "[run.sh] transient failure, retry" >> "$log"; sleep 30; oc "" "$prompt"; rc=$?; continue
       fi
       [[ -f "$wt/orchestra/reports/$id.md" ]] && break
+      if [[ $rc -eq 124 && -n ${FALLBACK_MODELS:-} ]]; then  # stalled: rotate to the next free model
+        fb=(${=FALLBACK_MODELS}); nm=${fb[$attempt]:-}; [[ -n $nm ]] && { marg=(-m "$nm"); echo "[run.sh] switching model to $nm" >> "$log"; }
+      fi
       echo "[run.sh] no report (rc=$rc), continue $attempt" >> "$log"
       oc "--continue" "You stopped without the required report (or the session stalled). If work remains and you are not blocked, continue the ticket now. In any case, finish by writing and committing orchestra/reports/$id.md in the exact format from the brief."; rc=$?
     done ;;

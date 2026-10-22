@@ -17,3 +17,8 @@ interaction regression between merged changes. Do not fix numerics here; report.
    bisected merge commit, stale bindings needing re-evidence.
 For class (b) only: you MAY refresh the binding/evidence via the gate's own documented refresh path
 if one exists; otherwise list them. For class (a): stop and report the bisect result.
+
+## Resume note (orchestrator)
+A previous run was cut off (network) before writing a report. Its uncommitted work in this worktree
+includes `scripts/check_integration_I01.py`; inspect it, reuse what is sound, and finish the ticket.
+The branch has not moved since (base is still 4800f406).
