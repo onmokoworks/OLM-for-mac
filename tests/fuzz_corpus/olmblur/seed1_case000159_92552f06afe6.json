@@ -1,4 +1,53 @@
 {
+  "C10_updates": [
+    {
+      "previous_result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "f576e928bb5465342a1515b6095adbfe38269f95be09f418ede23155d4481c8c",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "f576e928bb5465342a1515b6095adbfe38269f95be09f418ede23155d4481c8c",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 5 5 0",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "report": "orchestra/reports/C10-olmblur-smart-r2.md",
+      "stage": "pf8"
+    }
+  ],
   "case": {
     "depth": 8,
     "geometry": [
@@ -172,12 +221,13 @@
         "status": "exact"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 5 5 0",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
