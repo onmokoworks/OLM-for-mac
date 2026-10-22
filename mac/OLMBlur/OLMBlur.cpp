@@ -1607,7 +1607,11 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// coefficient/import residuals remain outside this new rule.
 	const bool radius_small = raw.legacy == 0 &&
 		(bpc == 8 || ((bpc == 16 || bpc == 32) && raw.repeat <= 2));
-	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small) return "generic-small-fixture";
+	// C15: Legacy integer writers preserve the AEX low-word/byte conversion.
+	// PF8 uses all legal schedules; PF16 stays at one/two passes.
+	const bool legacy_small = raw.legacy == 1 &&
+		(bpc == 8 || (bpc == 16 && raw.repeat <= 2));
+	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
@@ -1631,12 +1635,14 @@ static bool
 SmallDefaultPF32Source(const PF_EffectWorld *world)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
+	// C15: small non-Legacy one/two-pass sources include bounded signed HDR.
+	// Keep nonfinite and larger finite values outside the verified domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
 		for (A_long x=0; x<world->width; ++x) {
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
 			for (int c=0;c<4;++c)
-				if (!(argb[c]>=0.0f && argb[c]<=1.0f)) return false;
+				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
 		}
 	}
 	return true;
