@@ -1404,10 +1404,11 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
     "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
-    "candidate_sha256": "2633a2398fc53789723cc81a010ecefff2a158ce04e6d6b882c38ea9731537a3",
+    "candidate_sha256": "e50c691cb63650a20606f35deb450d6c9f03d17cecf549e4da1f894933c9dc68",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
     "dependencies_sha256": {
-      "mac/OLMColorKey/OLMColorKey.cpp": "4ec2b89db41ce06d7ba3fb998f32e40a5967aed3996f09f1d5a94fd63ef40700",
+      "mac/OLMColorKey/OLMColorKey.cpp": "a7a177101066c8939a9716b079af22aed51430578856fe14b7474b544b2794ed",
       "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
       "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
       "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66"
@@ -1434,10 +1435,120 @@
       "total": 1,
       "value": 0
     },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
     "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
     "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
+  "rebaseline_history": [
+    {
+      "previous_provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+        "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+        "candidate_sha256": "2633a2398fc53789723cc81a010ecefff2a158ce04e6d6b882c38ea9731537a3",
+        "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+        "dependencies_sha256": {
+          "mac/OLMColorKey/OLMColorKey.cpp": "4ec2b89db41ce06d7ba3fb998f32e40a5967aed3996f09f1d5a94fd63ef40700",
+          "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+          "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+          "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+        "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "previous_result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "e28708d6a20e69602f72bf9181c731566e16082a594de7d389dbf5ec36d3bbbf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "882993b55cc0c527f0a6059b69b3faf4ef3ccb9cecd3d8847ca0e49a1444debe",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e28708d6a20e69602f72bf9181c731566e16082a594de7d389dbf5ec36d3bbbf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 496,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 427,
+              "different_words": 120,
+              "expected_bytes": 496,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "f05901e88dfe99ad17182000d29233bbe889b077428214c43b3ead9a6bd57758",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 496,
+              "actual_word_hex": "462381ff",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 496,
+              "expected_word_hex": "4623c1ff",
+              "first_byte": 274,
+              "first_word": 68
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "f05901e88dfe99ad17182000d29233bbe889b077428214c43b3ead9a6bd57758",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "ticket": "F23-corpus-rebaseline-all"
+    }
+  ],
   "reduction": {
     "accepted": [
       {
@@ -1532,26 +1643,16 @@
         "metadata": {
           "ERROR": "0"
         },
-        "raw_sha256": "f05901e88dfe99ad17182000d29233bbe889b077428214c43b3ead9a6bd57758",
+        "raw_sha256": "e28708d6a20e69602f72bf9181c731566e16082a594de7d389dbf5ec36d3bbbf",
         "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 496,
-          "actual_word_hex": "462381ff",
-          "different_bytes": 1,
-          "different_words": 1,
-          "expected_bytes": 496,
-          "expected_word_hex": "4623c1ff",
-          "first_byte": 274,
-          "first_word": 68
-        },
         "error": 0,
         "metadata": {
           "ERROR": "0"
         },
-        "raw_sha256": "f05901e88dfe99ad17182000d29233bbe889b077428214c43b3ead9a6bd57758",
-        "status": "mismatch"
+        "raw_sha256": "e28708d6a20e69602f72bf9181c731566e16082a594de7d389dbf5ec36d3bbbf",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
