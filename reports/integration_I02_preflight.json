@@ -1,0 +1,188 @@
+{
+  "head": "fe69053af992fae06864d75de83faadcb18d6cc3",
+  "runner_sha256": "2644d8710434ef8b74a29fcb387cc381307a2127fc4ec2fcfed76e53b6b79b74",
+  "target_sha256": "1250f03e1e6740f51231d0373dd13e5c924d4a613aae018116fc0b33f3a261b9",
+  "enumerated_commands": 302,
+  "over_limit_sites": 18,
+  "over_limit_files": 10,
+  "findings": [
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_size_noise_combo_actual_aex_20260810.py",
+      "line": 99,
+      "max_workers": 4,
+      "sha256": "33392d30fac364c58800e8d02a1c1596a001a90fb1312df8409e8ee711b82086"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_size_noise_combo_actual_aex_20260810.py",
+      "line": 103,
+      "max_workers": 4,
+      "sha256": "33392d30fac364c58800e8d02a1c1596a001a90fb1312df8409e8ee711b82086"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py",
+      "line": 42,
+      "max_workers": 6,
+      "sha256": "78f916b02b30d64162e249605a7184513c197b5a38cbf6b6e80d14752e500ff0"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py",
+      "line": 44,
+      "max_workers": 6,
+      "sha256": "78f916b02b30d64162e249605a7184513c197b5a38cbf6b6e80d14752e500ff0"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_pf32_ellipse_32x18_actual_aex_20260811.py",
+      "line": 63,
+      "max_workers": 3,
+      "sha256": "1250f03e1e6740f51231d0373dd13e5c924d4a613aae018116fc0b33f3a261b9"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_pf32_ellipse_32x18_actual_aex_20260811.py",
+      "line": 65,
+      "max_workers": 3,
+      "sha256": "1250f03e1e6740f51231d0373dd13e5c924d4a613aae018116fc0b33f3a261b9"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_strength5_noise_type1_actual_aex_20260810.py",
+      "line": 93,
+      "max_workers": 3,
+      "sha256": "e5ff1f6a9995676309d8f7bb4d4ad71ed839a81b4108567647dbe5d0613bdc80"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_noise_type1_actual_aex_20260810.py",
+      "line": 42,
+      "max_workers": 6,
+      "sha256": "75be5a26d9870f15697d4e3597a8947f97885d16bc16222ab52ea20b473046b6"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_noise_type1_actual_aex_20260810.py",
+      "line": 44,
+      "max_workers": 6,
+      "sha256": "75be5a26d9870f15697d4e3597a8947f97885d16bc16222ab52ea20b473046b6"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_noise_inner_actual_aex_20260810.py",
+      "line": 26,
+      "max_workers": 5,
+      "sha256": "137de0553b68f978038af8275b7e326fac036beb0390e8e4107a21ea4c7eaa1a"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_noise_inner_actual_aex_20260810.py",
+      "line": 28,
+      "max_workers": 6,
+      "sha256": "137de0553b68f978038af8275b7e326fac036beb0390e8e4107a21ea4c7eaa1a"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_noise_32x18_actual_aex_20260810.py",
+      "line": 35,
+      "max_workers": 3,
+      "sha256": "a9ff979a4c4a4c33d9830917ae0a71be6c3e67abf861775557c5aca5acb09f3d"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_ellipse_actual_aex_20260811.py",
+      "line": 55,
+      "max_workers": 6,
+      "sha256": "35000381506feac1eefe3ce3fec36259e46b887089b4183143e4ea4b154a0cf7"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_ellipse_actual_aex_20260811.py",
+      "line": 57,
+      "max_workers": 6,
+      "sha256": "35000381506feac1eefe3ce3fec36259e46b887089b4183143e4ea4b154a0cf7"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py",
+      "line": 22,
+      "max_workers": 4,
+      "sha256": "c5ce524833ad669fb1fd488dd3dc3f90d4ba4bdf3dd49131ae00a763c9954888"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py",
+      "line": 23,
+      "max_workers": 4,
+      "sha256": "c5ce524833ad669fb1fd488dd3dc3f90d4ba4bdf3dd49131ae00a763c9954888"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811.py",
+      "line": 25,
+      "max_workers": 4,
+      "sha256": "7b0704fc0b81f773cf9573f3b2800dbc7393edde34844a8db0123e5b4fcf7af7"
+    },
+    {
+      "lane": "radialblur",
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811.py",
+      "line": 26,
+      "max_workers": 4,
+      "sha256": "7b0704fc0b81f773cf9573f3b2800dbc7393edde34844a8db0123e5b4fcf7af7"
+    }
+  ],
+  "dispatch_experiments": [
+    {
+      "action": "--zoom-production",
+      "before_fix": {
+        "exit": 99,
+        "campaign_main_calls": 1,
+        "stderr": ""
+      },
+      "current": {
+        "exit": 2,
+        "campaign_main_calls": 0,
+        "stderr": "refusing child invocation: ['--zoom-production', '2.0', '30.0', 'unused-output.pkl']"
+      }
+    },
+    {
+      "action": "--rotation-production",
+      "before_fix": {
+        "exit": 99,
+        "campaign_main_calls": 1,
+        "stderr": ""
+      },
+      "current": {
+        "exit": 2,
+        "campaign_main_calls": 0,
+        "stderr": "refusing child invocation: ['--rotation-production', '2.0', '30.0', 'unused-output.pkl']"
+      }
+    }
+  ],
+  "unprotected_sibling_dispatch": [
+    {
+      "script": "tools/emulation/test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py",
+      "action": "--production",
+      "current": {
+        "exit": 99,
+        "campaign_main_calls": 1,
+        "stderr": ""
+      },
+      "sha256": "78f916b02b30d64162e249605a7184513c197b5a38cbf6b6e80d14752e500ff0"
+    },
+    {
+      "script": "tools/emulation/test_olmradialblur_zoom_pf32_ellipse_actual_aex_20260811.py",
+      "action": "--production",
+      "current": {
+        "exit": 99,
+        "campaign_main_calls": 1,
+        "stderr": ""
+      },
+      "sha256": "35000381506feac1eefe3ce3fec36259e46b887089b4183143e4ea4b154a0cf7"
+    }
+  ],
+  "status": "blocked_before_gate_launch",
+  "measurement_boundary": "Static literal pool sizes; no runtime descendant or RSS measurements."
+}
