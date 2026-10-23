@@ -103,7 +103,9 @@ def build(a,work,revision,diagnostic=True,native_expf_depth=None):
     for name in ('OLMBlur.h','OLMBlur_Strings.cpp','OLMBlur_Strings.h'):shutil.copyfile(original.with_name(name),target/name)
     source=(subprocess.check_output(['git','show',revision+':mac/OLMBlur/OLMBlur.cpp']).decode() if revision else original.read_text())
     anchor=next(l for l in source.splitlines() if 'return "generic-small-fixture";' in l)
-    if diagnostic:source=source.replace(anchor,'\t// C15 diagnostic gate bypass.').replace('!SmallDefaultPF32Source(input_world)','false')
+    if diagnostic:
+        source=source.replace(anchor,'\t// C15 diagnostic gate bypass.')
+        source=re.sub(r'!SmallDefaultPF32Source\(input_world(?:,[^)]*)?\)', 'false', source)
     olmblur.SOURCE=target/'OLMBlur.cpp';olmblur.SOURCE.write_text(source);olmblur.CORES=[cr/f.name for f in cores]
     if native_expf_depth:
         path=cr/f'olmblur_worker{native_expf_depth}_legacy.cpp'

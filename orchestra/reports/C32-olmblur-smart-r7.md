@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Finite PF32 Legacy admission closes the first cluster, without numerical changes.
-- Seed 1 Smart 283/0/17 -> 296/0/4; fresh seed 43 281/0/19 -> 296/0/4 (exact/mismatch/refusal).
-- Independent finite Legacy matrix 720/720 exact; nonfinite gate-off matrix 384/384 exact.
-- Preserves all 564 baseline exact campaign cases; sanitizer campaigns and retained controls pass.
-- Nonfinite Legacy and non-Legacy admissions remain for subsequent commits.
+- Closed finite and nonfinite PF32 Legacy admission clusters without numerical changes.
+- Seed 1 Smart 283/0/17 -> 298/0/2; fresh seed 43 281/0/19 -> 297/0/3 (exact/mismatch/refusal).
+- Finite matrix720/720, nonfinite gate-off384/384, production Legacy192/192 and retained80/80 pass.
+- All prior exact campaign cases are preserved; sanitizer campaigns pass and finite-domain exclusions remain.
+- Nonfinite non-Legacy admission remains for the third commit.
 
 facts:
 Base `c1d1f1943e2e3c9ab6e62e1094ba279643f73385`, branch `orch/C32-olmblur-smart-r7`. Read AGENT_GUIDE, OLMBlur ledger restrictions, compatibility plan, GOTCHAS, T09/C05/C10/C12/C15/C21/C24 and F10/F12/F31/F38 reports. No changes to MAIN, emulator, cached workers, release gates, ledger, other plugins, numeric core or work budget. All campaigns use jobs=1; at most two build/emulator workloads. Scratch and compiler temporary files are ticket-local.
@@ -56,3 +56,30 @@ Expected campaigns 296/0/4 each; strict corpus replay 39/39 unchanged; finite ma
 
 next:
 Promote nonfinite Legacy, then nonfinite non-Legacy as separate clusters, retaining the finite magnitude boundary and all work/storage guards.
+
+Second cluster — nonfinite Legacy (predecessor `705558c9`):
+
+facts:
+The source predicate now accepts exponent-all-ones PF32 words for Legacy, preserving their bits, while retaining [-16,16] for finite words. Quiet/signaling NaNs and infinities take the normal renderer; no canonicalization or output patch is introduced. Non-Legacy retains its previous finite-only gate. Existing diagnostic bypasses accept the additional source-policy argument.
+
+Independent production Legacy-only matrix: 192/192 exact, 99 prior exact unchanged and 93 refusal->exact; retained80/80, empty sanitizer stderr. Unlike the earlier gate-off matrix, this uses the actual production admission. Larger finite inputs are tested separately; the bound is unchanged. Seven static source-contract tests remain applicable.
+
+changed_files (second cluster):
+- mac/OLMBlur/OLMBlur.cpp — Legacy-only nonfinite source admission using raw exponent classification.
+- tools/fuzz/blur_campaign_C12.py and tools/fuzz/verify_blur_legacy_C15.py — diagnostic source-scan bypass accommodates the policy argument.
+- tools/fuzz/verify_blur_C32.py — per-Legacy-mode production matrix and out-of-domain probes.
+- orchestra/reports/C32-evidence/legacy*.json and this report.
+
+verify (second-cluster commit):
+```sh
+bash tools/fuzz/recheck_blur_C32.sh legacy
+s="$PWD/orchestra/state/C32-olmblur-smart-r7"
+export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
+python3 tools/fuzz/verify_blur_C32.py --scratch "$s" --report "$s/legacy-production-recheck.json" --before 705558c9 --mode nonfinite --legacy-value 1 --require-exact
+```
+Expected matrix192/192 and retained80/80; corpus39/39 unchanged. Campaign counts below are recorded after completion.
+
+Additional second-cluster verification: 32 independent out-of-domain source cases (next FLOAT32 above +16, below -16, positive/negative maximum finite, each ARGB channel and both Legacy modes) remain refusal->refusal, with successful AEX renders. Retained80/80 passes again. Seven source-contract unit tests pass. First-cluster corpus table is 39 exact->exact, zero other changes; no rebaseline was performed.
+
+Second-cluster campaign results: seed1 296/0/4 -> 298/0/2 (two admissions); seed43 296/0/4 -> 297/0/3 (one admission). All 592 predecessor exact cases are preserved; original-route oracles and Classic results unchanged. These are sanitized production campaigns, not gate-off totals.
+Second-cluster strict replay: 39/39 matches_saved, 39 exact->exact, zero expectation changes. `summarize_blur_C32.py --phase legacy --previous finite` passes all preservation assertions. No production sanitizer finding.

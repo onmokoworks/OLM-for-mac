@@ -21,6 +21,15 @@ from verify_blur_retained_C12 import verify as retained
 
 def cases(a, mode):
     rng = random.Random(32431026)
+    if mode == 'outside':
+        for i,(bits,channel,old) in enumerate(itertools.product((0x41800001,0xc1800001,0x7f7fffff,0xff7fffff),range(4),(0,1))):
+            params=a.defaults(3,5)
+            for p in params:
+                if p['slot']==5:p['value']=old
+            data=bytearray(struct.pack('<4f',1.,.25,.5,.75)*15)
+            struct.pack_into('<I',data,channel*4,bits)
+            yield dict(index=i,geometry=[3,5],depth=32,parameters=params,pixels=bytes(data),input_padding=7,output_padding=11,profile='outside-finite-domain')
+        return
     if mode == 'legacy':
         for c in legacy.cases(a, 32):
             edges = (-16., -1., -2**-126, -2**-149, -0., 0., 2**-149, 2**-126, 1., 16.)
@@ -41,8 +50,9 @@ def cases(a, mode):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
-    p.add_argument('--before',required=True);p.add_argument('--mode',choices=('legacy','nonfinite'),required=True)
+    p.add_argument('--before',required=True);p.add_argument('--mode',choices=('legacy','nonfinite','outside'),required=True)
     p.add_argument('--gate-off',action='store_true');p.add_argument('--require-exact',action='store_true')
+    p.add_argument('--legacy-value',type=int,choices=(0,1))
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     worker=run.default_worker()
@@ -57,6 +67,8 @@ def main():
         old,op=legacy.build(a,work/'before',args.before,diagnostic=False)
         new,np=legacy.build(a,work/'after',None,diagnostic=args.gate_off)
         for c in cases(a,args.mode):
+            if args.legacy_value is not None and next(v['value'] for v in c['parameters'] if v['slot']==5)!=args.legacy_value:
+                continue
             with tempfile.TemporaryDirectory(prefix='case_',dir=work) as cd:
                 d=Path(cd);deadline=time.monotonic()+360
                 oracle,reference=a.oracle(c,d,deadline,'smart');assert oracle['status']=='ok',oracle
@@ -69,7 +81,10 @@ def main():
                 if c['index']%100==0:print('progress',c['index'],row['after']['status'],flush=True)
     report={'mode':args.mode,'gate_off':args.gate_off,'provenance':{'before':op,'after':np,'worker_sha256':sha(worker.read_bytes()),'aex_sha256':sha(a.aex.read_bytes())},'transitions':dict(Counter(r['before']['status']+' -> '+r['after']['status'] for r in rows)),'rows':rows,'retained':retained(s)}
     args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(report['transitions'],flush=True)
-    assert all(r['after']['status'] in ('exact','mismatch') for r in rows)
+    if args.mode=='outside':
+        assert all(r['before']['status']==r['after']['status']=='refusal' for r in rows)
+    else:
+        assert all(r['after']['status'] in ('exact','mismatch') for r in rows)
     assert all(r['before']['raw_sha256']==r['after']['raw_sha256'] for r in rows if r['before']['status']=='exact')
     assert report['retained']['status']['status']=='ok' and not report['retained']['stderr']
     assert len(report['retained']['lines'])==80 and all('exact=1' in x for x in report['retained']['lines'])

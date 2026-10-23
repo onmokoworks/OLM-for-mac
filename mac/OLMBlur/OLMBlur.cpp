@@ -1634,17 +1634,20 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 }
 
 static bool
-SmallDefaultPF32Source(const PF_EffectWorld *world)
+SmallDefaultPF32Source(const PF_EffectWorld *world, bool allow_nonfinite = false)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
-	// Small non-Legacy sources include bounded signed HDR.
-	// Keep nonfinite and larger finite values outside the verified domain.
+	// C32: Legacy also preserves signed infinities and NaN payloads under
+	// the SSE helper semantics. Keep larger finite values outside this domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
 		for (A_long x=0; x<world->width; ++x) {
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
-			for (int c=0;c<4;++c)
+			for (int c=0;c<4;++c) {
+				uint32_t bits; memcpy(&bits, &argb[c], sizeof(bits));
+				if (allow_nonfinite && (bits & 0x7f800000u) == 0x7f800000u) continue;
 				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
+			}
 		}
 	}
 	return true;
@@ -1927,7 +1930,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height);
 	if (!generic_tuple_refusal && generic_input_ok && bpc==32 &&
 		input_world->width<=24 && input_world->height<=24 &&
-		!SmallDefaultPF32Source(input_world))
+		!SmallDefaultPF32Source(input_world, raw.legacy != 0))
 		generic_tuple_refusal="generic-small-pf32-domain";
 	const bool generic_downsample =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
