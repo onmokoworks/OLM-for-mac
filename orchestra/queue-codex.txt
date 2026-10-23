@@ -18,4 +18,5 @@ C23-smoother2-colorkeep-toondilate-fresh
 C24-olmblur-smart-r6
 C25-dblur-smart-r4
 C26-radial-smart-r4
+C27-dg-smart-r5
 I02-integration-finish
