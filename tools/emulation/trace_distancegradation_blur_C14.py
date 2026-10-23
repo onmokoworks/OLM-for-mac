@@ -27,6 +27,7 @@ from aex_loader import AexLoader
 def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source',type=Path);p.add_argument('--index',type=int,action='append',default=[])
+    p.add_argument('--seed',type=int,default=1)
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -42,7 +43,7 @@ def main():
     with tempfile.TemporaryDirectory(dir=args.scratch) as td:
       td=Path(td);prod=td/'prod';prod.mkdir();report['provenance']=a.prepare(prod,deadline);a=variant(a,td/'candidate',deadline,source)
       for index in args.index or [45,200]:
-        c=a.generate(1,index);assert c['depth'] in (8,16)
+        c=a.generate(args.seed,index);assert c['depth'] in (8,16)
         w,h=c['geometry'];n=w*h*4;depth=c['depth']
         im=Image.new('RGBA',(w,h))
         im.putdata([(r,g,b,al) for al,r,g,b in struct.iter_unpack('<4B',c['pixels'])] if depth==8 else
