@@ -1,0 +1,187 @@
+{
+  "schema": "olm.dg.public-smart-fixture/1",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 orchestra/reports/F35-generate-fixtures.py",
+  "route": "public EffectMain Smart PreRender + Smart Render",
+  "geometry": [
+    17,
+    11
+  ],
+  "depth": 32,
+  "format": "little-endian ARGB FLOAT32",
+  "rowbytes": 272,
+  "origin": [
+    0,
+    0
+  ],
+  "downsample": [
+    1,
+    1
+  ],
+  "controls": [
+    {
+      "slot": 1,
+      "kind": "b",
+      "value": 1
+    },
+    {
+      "slot": 2,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 3,
+      "kind": "i",
+      "value": 4
+    },
+    {
+      "slot": 4,
+      "kind": "i",
+      "value": 4
+    },
+    {
+      "slot": 5,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 6,
+      "kind": "b",
+      "value": 1
+    },
+    {
+      "slot": 7,
+      "kind": "c",
+      "value": [
+        255,
+        28,
+        0,
+        238
+      ]
+    },
+    {
+      "slot": 8,
+      "kind": "c",
+      "value": [
+        255,
+        255,
+        0,
+        0
+      ]
+    },
+    {
+      "slot": 9,
+      "kind": "u",
+      "value": 2
+    },
+    {
+      "slot": 10,
+      "kind": "s",
+      "value": 1
+    },
+    {
+      "slot": 11,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 12,
+      "kind": "i",
+      "value": 0
+    }
+  ],
+  "source_sha256": "cda258b2a722a9336224ca9bb3997f0761213a8dac68d24b5fed88d80f18e2a3",
+  "output_sha256": "a793be73e5af89ff7572bcd6750c102ad3ccf6fa8c7a055c5f8cef4574947679",
+  "output_bytes": 2992,
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "workers": {
+    "default": {
+      "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+      "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "a793be73e5af89ff7572bcd6750c102ad3ccf6fa8c7a055c5f8cef4574947679",
+      "vs_expected": {
+        "byte_mismatches": 748,
+        "first": {
+          "offset": 2,
+          "pixel": 0,
+          "xy": [
+            0,
+            0
+          ],
+          "channel": "A",
+          "byte_values": [
+            128,
+            0
+          ],
+          "words": [
+            "0x3f800000",
+            "0x00000000"
+          ],
+          "float_values": [
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "vs_mac_classic": {
+        "byte_mismatches": 0,
+        "first": null
+      },
+      "vs_mac_smart": {
+        "byte_mismatches": 0,
+        "first": null
+      }
+    },
+    "F30": {
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F30-ucrtmath/aex-guest-worker",
+      "worker_sha256": "8b51d0456ff55aa2034a0bbb00b822bd2339cbe27247021c289170a78a3fb53b",
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "a793be73e5af89ff7572bcd6750c102ad3ccf6fa8c7a055c5f8cef4574947679",
+      "vs_expected": {
+        "byte_mismatches": 748,
+        "first": {
+          "offset": 2,
+          "pixel": 0,
+          "xy": [
+            0,
+            0
+          ],
+          "channel": "A",
+          "byte_values": [
+            128,
+            0
+          ],
+          "words": [
+            "0x3f800000",
+            "0x00000000"
+          ],
+          "float_values": [
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "vs_mac_classic": {
+        "byte_mismatches": 0,
+        "first": null
+      },
+      "vs_mac_smart": {
+        "byte_mismatches": 0,
+        "first": null
+      }
+    }
+  },
+  "supersedes": "refs/fixtures/olmdistancegradation_pf32_owner_17x11_20260805",
+  "harness": "orchestra/reports/F34-compare-fixtures.py",
+  "harness_sha256": "f5bd782570e9119a76e514c977d8cb06add9743e9302e36ca839e77c2d600c41",
+  "scope": "Original AEX under Unicorn with host callbacks; not native AE execution"
+}
