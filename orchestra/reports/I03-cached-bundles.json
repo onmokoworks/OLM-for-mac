@@ -1,0 +1,20 @@
+{
+  "name": "I03-bundles-545f06bd924497e5",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F51-x86host/plugin-host",
+  "worker_sha256": "7a5bc8c328503b6cd3918ae1db9b29ef9b0d0e3f274ae31904de0354aa3f0f28",
+  "capability": "existing F51 plugin-only host plus I03 verified Universal bundles; no new AEX worker",
+  "build_json": "/Users/onmk/.cache/olm-emu/I03-bundles-545f06bd924497e5/build.json",
+  "bundles_path": "/Users/onmk/.cache/olm-emu/I03-bundles-545f06bd924497e5/bundles",
+  "bundle_sha256": {
+    "OLMBlur": "4f1d1472c2ead6f39f3bf6fcf9622e967de2aa403be3c1cd3a5d3e76b2fc8660",
+    "ColorKeep": "ebb946cf306e18f79074ef4cd55fb76daf7ab28d8694b31d40eba4bf9ee29a10",
+    "OLMColorKey": "9eac35dd2e956cebb17a04873fd786c880ebbe70eb35f3676190a88331f29512",
+    "OLMDirectionalBlur": "fb84e8fb3ed5f037e7b77c704a0c20660ee420a1df25ce8e5aad0fc489d71c1b",
+    "OLMDistanceGradation": "76b3a59df1c96f476f588534c45ae63a9ff14692b7602f5a82cf53cdbef1f45e",
+    "OLMKiraKira": "fee71cfd794547327ff47098f862c2d7b5967c18805791eacd53749abbd32194",
+    "OLMSmoother2": "76622af24a79159ea7312104857188756d1014b6ee5c8091290aa21b630dc9e4",
+    "OLMToonDilate": "966513d3bae84e15f53859181b434ee826667083570c9b3a3534de5a0287eb80",
+    "OLMRadialBlur": "0a53d54acb4581b90f228e08c488fa3b73fd5d8b8954dbaddc2ef364f842da08",
+    "OLMSmoother": "f2cc4ee2c5644705902525b1afd231d39f21bee0e6eca617de96ffe1c26e4830"
+  }
+}
