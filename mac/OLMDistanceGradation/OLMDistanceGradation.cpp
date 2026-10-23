@@ -568,7 +568,7 @@ static void median_blur(float *mat, long w, long h, int ksize)
 }
 
 // Original IPP scalar expf, FUN_18144ee30, restricted to bilateral's
-// finite [-0.5, 0] exponent interval. The 2^(j/256) table and polynomial
+// finite [-25, 0] exponent interval. The 2^(j/256) table and polynomial
 // constants are read-only coefficients at 18144f000..18144f817.
 // Keep each double operation rounded separately, as in the SSE2 body.
 static float bilateral_ipp_exp(float x)
@@ -664,6 +664,79 @@ static inline float bilateral_noncontracting_product(float left, float right)
 	return product;
 }
 
+// The original generic scalar IPP body (1806be1e0) scans a circular
+// kernel in row-major order, including the center. Its spatial and color
+// exponent cutoffs are strictly greater than -25 (1815bd7c4/1815dce38).
+static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	struct Offset { int x, y; float spatial; };
+	std::vector<Offset> offsets;
+	for (int y = -radius; y <= radius; ++y) {
+		for (int x = -radius; x <= radius; ++x) {
+			const int squared = x*x + y*y;
+			if (squared > radius*radius) continue;
+			const float exponent = -0.5f * (float)squared;
+			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+		}
+	}
+	const std::vector<float> source(mat, mat + (size_t)w*h);
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			const float center = source[(size_t)y*w+x];
+			float sum = 0.0f, weight_sum = 0.0f;
+			for (const Offset &offset : offsets) {
+				const long sx = std::max(0L, std::min(w-1, x+offset.x));
+				const long sy = std::max(0L, std::min(h-1, y+offset.y));
+				const float sample = source[(size_t)sy*w+sx];
+				const float difference = sample-center;
+				const float exponent = (-0.5f*difference)*difference;
+				const float color = exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				const float weight = bilateral_noncontracting_product(color, offset.spatial);
+				weight_sum += weight;
+				sum += bilateral_noncontracting_product(sample, weight);
+			}
+			mat[(size_t)y*w+x] = sum / weight_sum;
+		}
+	}
+}
+
+static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
+{
+	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
+	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
+	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
+	return radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
+}
+
+// Bounded lane of the original IPP vector exponential (180ba5780).
+// Coefficients at 1815f0600..1815f0880; preserve MULPS/ADDPS rounding.
+static float bilateral_ipp_vector_exp(float x)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	const float scaled = bilateral_noncontracting_product(x, 0x1.715476p+0f);
+	const float biased = scaled + 0x1.8p23f;
+	const float n = biased - 0x1.8p23f;
+	const float hi = bilateral_noncontracting_product(n, 0x1.62e4p-1f);
+	const float lo = bilateral_noncontracting_product(n, 0x1.7f7d1cp-20f);
+	const float residual = (x - hi) - lo;
+	float poly = bilateral_noncontracting_product(0x1.0fb3fcp-7f, residual) + 0x1.570724p-5f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.555958p-3f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffe68p-2f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffffcp-1f;
+	poly = bilateral_noncontracting_product(poly, residual) + 1.0f;
+	std::uint32_t scale_bits, result_bits;
+	std::memcpy(&scale_bits, &biased, 4);
+	std::memcpy(&result_bits, &poly, 4);
+	result_bits += scale_bits << 23;
+	std::memcpy(&poly, &result_bits, 4);
+	return poly;
+}
+
 // PF32 Smart reproduction of the retained radius-one IPP bilateral body.
 // cvSmooth(CV_BILATERAL, diameter 1 or 3, ..., 0, 0) selects radius one and
 // unit sigmas (1812ca750). Larger radii and PF8/PF16 remain separate lanes.
@@ -684,12 +757,17 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 			const float center = source[(size_t)y * w + x];
 			const float values[4] = {source[(size_t)y * w + left], source[(size_t)top * w + x],
 			                         source[(size_t)y * w + right], source[(size_t)bottom * w + x]};
+			// 1802a1640 uses the scalar padded body below 3 pixels in either
+			// dimension. At width16+, top/bottom and interior tiles use the
+			// vector body; the one-column side tiles keep the scalar body.
+			const bool vector_dispatch = w >= 16 && h >= 3 &&
+				(y == 0 || y == h-1 || (x > 0 && x < w-1));
 			float sum = 0.0f;
 			float weight_sum = 0.0f;
 			for (int k = 0; k < 4; ++k) {
 				const float difference = values[k] - center;
-				const float exponent = (-0.5f * difference) * difference;
-				const float color_weight = bilateral_ipp_exp(exponent);
+				const float exponent = vector_dispatch ? (difference * difference) * -0.5f : (-0.5f * difference) * difference;
+				const float color_weight = vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent);
 				weight_sum += color_weight;
 				sum += bilateral_noncontracting_product(values[k], color_weight);
 			}
@@ -1042,7 +1120,9 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
-				if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
+				if (is_scalar_bilateral_shape(p, w, h)) {
+					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
+				} else if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
 				    is_admitted_pf32_smart_bilateral_beta(p)) {
 					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
 				}
@@ -1635,6 +1715,14 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
+static bool is_admitted_pf32_smart_bilateral_scalar_beta(const DGParams &p, long w, long h)
+{
+	if (p.pixel_size != sizeof(PF_PixelFloat) || !is_scalar_bilateral_shape(p, w, h)) return false;
+	DGParams identity = p;
+	identity.blur_mode = BLUR_MODE_NONE;
+	return is_admitted_pf32_smart_unblurred_beta(identity);
+}
+
 static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long h)
 {
 	if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
@@ -1695,17 +1783,18 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 		for (size_t x = 0; x < width; ++x) {
 			const PF_PixelFloat &pixel = row[x];
 			// C19 restores the original signed-int32 mask conversion and invalid
-			// weighted-sample arithmetic. Extended/nonfinite inputs are admitted
-			// only on the witnessed identity-filter lane.
+			// weighted-sample arithmetic. Nonfinite inputs retain the witnessed
+			// identity-filter boundary; finite extended samples also use Box/Gaussian.
 			if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
 				if (!std::isfinite(value) && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
-				// Extended samples use only the witnessed identity-filter lane.
-				// Effective filters retain their SDR boundary (Gaussian rounding
-				// and the original large-kernel PF32 Median rejection are separate).
+				// C27 pairs finite extended samples through the existing Box/Gaussian
+				// field and callback. Median and Bilateral retain their SDR boundary;
+				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
 				if ((value < 0.0f || value > 1.0f) &&
-				    !is_admitted_pf32_smart_unblurred_beta(p)) return false;
+				    !is_admitted_pf32_smart_unblurred_beta(p) &&
+				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height))) return false;
 			}
 		}
 	}
@@ -1815,6 +1904,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !is_admitted_pf32_smart_bilateral_beta(p) &&
+		    !is_admitted_pf32_smart_bilateral_scalar_beta(p, w, h) &&
 		    !p.pf32_smart_oracle_profile_admitted) {
 			return OLM_DG_REFUSAL("pf32-smart-profile");
 		}

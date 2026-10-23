@@ -42,7 +42,7 @@ def main():
     p.add_argument('--seed',type=int,default=1)
     p.add_argument('--label',action='append',default=[])
     args=p.parse_args();args.scratch=args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/C19-dg-smart-r4')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch))
     tempfile.tempdir=str(args.scratch)
