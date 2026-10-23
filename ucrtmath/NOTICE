@@ -12,8 +12,10 @@ src/optimized/data/_exp_j_by_64.c and src/optimized/log_tables.c.
 Local modifications (F28, 2026-10-23): standalone scalar portability helpers,
 explicit mode/API names and fused operations, bit-preserving table access,
 expf signaling-NaN quieting, powf rounded log index/underflow threshold/NaN sign
-handling, and atan2f NaN priority and exponent classification after widening.
+handling (including identity paths and operand priority), and atan2f NaN
+priority, exponent classification after widening and unsigned-index conversion.
 No Microsoft implementation or binary is included. Compatibility observations
 are recorded separately from the AMD-derived implementation.
 
-This is an incomplete compatibility candidate. See README.md and the F28 report.
+Validation scope and remaining import work are described in README.md and the
+F28 report.

@@ -1,0 +1,61 @@
+{
+  "observations": [
+    {
+      "stage": "unsigned-index fixed",
+      "function": "atan2f",
+      "inputs": 9178,
+      "mismatches_per_mode": 0
+    },
+    {
+      "stage": "first pow targeted",
+      "inputs": 75095,
+      "mismatches_per_mode": 13,
+      "first": [
+        "00000001",
+        "3f800001",
+        "00000000",
+        "00000001"
+      ]
+    },
+    {
+      "stage": "broad exponent guard >= trial",
+      "inputs": 75095,
+      "mismatches_per_mode": 13,
+      "new_overflow_witness": [
+        "7f7fffff",
+        "3f800000",
+        "7f7fffff",
+        "7f800000"
+      ],
+      "disposition": "rejected; underflow comparison moved outside existing guard"
+    },
+    {
+      "stage": "underflow separated and explicit NaN handling",
+      "inputs": 75095,
+      "mismatches_per_mode": 0
+    },
+    {
+      "stage": "expanded corpus with unconditional base NaN priority",
+      "inputs": 79201,
+      "mismatches_per_mode": 17,
+      "first": [
+        "ffc00000",
+        "7f800001",
+        "7fc00001",
+        "ffc00000"
+      ]
+    },
+    {
+      "stage": "default negative NaN yields to exponent NaN",
+      "inputs": 79201,
+      "mismatches_per_mode": 0
+    }
+  ],
+  "witness_order": [
+    "base",
+    "exponent",
+    "ucrt",
+    "candidate"
+  ],
+  "notes": "Actual observed development results; final evidence is in targeted/full JSON files."
+}

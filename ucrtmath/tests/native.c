@@ -24,5 +24,5 @@ int main(int argc,char **argv){
   i++;if(++n==4096){if(fwrite(rows,16,n,stdout)!=n)return 2;n=0;}
  }
  if(n&&fwrite(rows,16,n,stdout)!=n)return 2;
- return ferror(stdin)||ferror(stdout)?2:0;
+ return ferror(stdin)||fflush(stdout)||ferror(stdout)?2:0;
 }

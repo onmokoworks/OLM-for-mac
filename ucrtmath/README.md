@@ -1,8 +1,9 @@
-# ucrtmath — incomplete F28 candidate
+# ucrtmath
 
-**Not qualified for integration.** The first targeted run found 650 atan2f
-mismatches in each mode. Work stopped under the ticket's zero-mismatch rule.
-No exhaustive sweep, random sweep, or remaining-import survey was performed.
+The requested expf exhaustive and atan2f/powf random campaigns pass in both
+modes. Targeted results and the remaining-import survey are recorded in
+`tests/results/` and the F28 report. Binary-function sampling is not a proof
+over all 2^64 input pairs; integration is reserved for a separate ticket.
 
 The standalone library has no OLM includes. It exports `ucrt_expf(x, mode)`,
 `ucrt_atan2f(y, x, mode)`, and `ucrt_powf(x, y, mode)`, with `UCRT_NOFMA` and
@@ -21,33 +22,51 @@ sh ucrtmath/build.sh orchestra/state/F28-ucrtmath-lib-amd/build
 The build creates `libucrtmath.a`; callers include `ucrtmath/include/ucrtmath.h`.
 For a standalone checkout, any explicit output directory can replace that path.
 The test harness has an OLM test-only dependency on the existing qualified F27c
-loader and paper inputs, neither of which is linked into the library.
+loader, retained witnesses and paper inputs, none of which is linked into the
+library. No loader, plugin or release-gate files are changed.
 
-Reproduce the current failure:
+Run targeted validation, including all retained F27c witnesses and paper pairs:
 
 ```sh
 sh ucrtmath/tests/reproduce.sh
 ```
 
-Expected exit 1 at atan2f. Results are written under the ticket scratch directory:
-expf: 4,129 inputs, 0 mismatches per mode; atan2f: 9,178 inputs, 650 mismatches
-per mode. First atan2f input `00000001 00000001`: oracle `3f490fdb`, candidate
-`e12aaaab`. Retained result JSON is under `tests/results/`.
+Run the complete campaigns (serial; two worker processes at most):
 
-The arithmetic at `src/atan2f.c`'s table reduction currently includes `-index*u`
-where `index` is unsigned. Inference: unsigned negation wraps before conversion
-to double. This is a concrete candidate for the next ticket to fix and verify;
-it was not corrected after the mandatory mismatch stop. Do not treat any
-unexecuted function or input domain as passing.
+```sh
+python3 ucrtmath/tests/full.py
+```
 
-`tests/native.c` can generate exhaustive expf words (`expf sweep 4294967296`)
-or deterministic SplitMix64 pairs (`atan2f sweep 100000000` or
-`powf sweep 100000000`), and streams 4,096 records per block. Each record is
-four little-endian uint32 words: arguments a/b and candidate mode 0/1 results.
-The x86_64 comparator loads two independent oracle images and compares raw bits
-for each mode, retaining counts and one witness. At most two processes run.
-These full runs have **not** been executed; resume/checkpoint support and full
-stream-length validation remain to be added before a long campaign.
+This compares every expf input word and 100,000,000 SplitMix64 pairs each for
+atan2f and powf, in both modes, against the unmodified qualified PE loader.
+Each stream is bounded to 4,096 records; both process exits, exact input count,
+and truncated records are checked. No complete output arrays are retained.
+Runs restart from the beginning; they do not reuse unchecked checkpoints.
+The required DLL is loaded from the existing cache, never distributed here.
+
+For the survey only, clone AMD into the ticket scratch directory as `amd-source`,
+check out the pinned commit in `upstream.json`, then run:
+
+```sh
+python3 ucrtmath/tests/build_survey.py
+python3 ucrtmath/tests/survey.py
+```
+
+Survey engines are UCRT non-FMA/FMA, native Apple arm64, and unmodified AMD
+x86_64 contraction-off/fast (explicit upstream FMA remains in either build).
+The survey does not add log2f or double functions to this library. It retains
+all ten pair counts, finite-input mismatch counts and first witnesses.
+Double sampling uses two deterministic SplitMix64 words per index (seeds
+`0xf28` and `0xf28 ^ 0x123456789abcdef0`). The range corpus covers angles
+[-8*pi,8*pi], negative exponential arguments [-128,0], pow bases [0,1]/[0,4]
+and exponents [0,16] plus integers/half-integers [-16,16], and 256 special pairs.
+These are representative domains suggested by Gaussian coefficients,
+angle transforms, normalized/HDR channels and repeat-decay powers in the Mac
+sources; they are not a complete AEX reachability or UI-range proof.
+
+`python3 ucrtmath/tests/manifest.py` records source, binary, DLL and corpus hashes
+before deleting regenerable scratch builds. All numerical comparisons use raw
+bits, including NaN payloads and signed zeros, with no tolerance.
 
 ## Source and operation provenance
 
@@ -71,3 +90,19 @@ Read-only UCRT observations checked the intended fused-operation boundaries:
 
 These are operation observations, not a proof of equivalence. No Microsoft
 machine code, disassembly listing, or extracted constants are vendored.
+
+## Resume corrections
+
+The resumed atan2f reduction converts its unsigned table index to double before
+negation. Powf checks the observed underflow threshold outside the original
+exponent-only overflow guard. It also implements explicit NaN bit selection:
+base priority except that the default negative NaN yields to a NaN exponent,
+and the observed signaling-NaN identity-path quieting. This avoids depending
+on Apple arm64 NaN operand propagation. The latter includes UCRT's unusual
+`powf(1, sNaN)` result: quieting the base bits yields `3fc00000`.
+These are compatibility behaviors, not correctly-rounded-math claims.
+
+The expanded targeted corpus includes every retained F27c mismatch input,
+all 26 published paper rows (deduplicated as inputs), NaN sign/payload pairs,
+near-one and normal/subnormal windows, underflow/overflow witnesses,
+integer/half-integer powers, and atan exponent-gap transitions.

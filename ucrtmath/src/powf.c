@@ -261,17 +261,16 @@ static inline float calculate_exp(double_t x, uint64_t sign_bias, ucrt_mode mode
     double_t poly, dn, r, z;
     uint64_t n, j;
 
-    if (unlikely ((top12(x) & 0x7ff)  > top12(88.0))) {
+    if (unlikely ((top12(x) & 0x7ff) > top12(88.0))) {
 
         if (x > (double)EXPF_FARG_MAX) {
             return alm_expf_special(asfloat(((uint32_t)(sign_bias >> 32) | PINFBITPATT_SP32)), ALM_E_IN_X_INF);
         }
 
-        if (x <= -0x1.9d1da00000000p+6) {
-            return alm_expf_special(asfloat((uint32_t)(sign_bias >> 32)), ALM_E_IN_X_ZERO);
-        }
-
     }
+    /* The UCRT underflow boundary is within the exponent bin containing 88. */
+    if (x <= -0x1.9d1da00000000p+6)
+        return asfloat((uint32_t)(sign_bias >> 32));
 
     z = x *  EXPF_TBLSZ_BY_LN2;
 
@@ -331,15 +330,21 @@ float ucrt_powf(float x, float y, ucrt_mode mode)
          *  Either (x < 0x1p-126 or inf or nan) or (y is 0 or inf or nan).
          *
          */
+        /* Preserve observed identity-path quieting and x-first NaN payloads;
+         * native ARM arithmetic prioritizes signaling operands differently. */
         if (unlikely (zeroinfnan (uy))) {
             if (2 * uy == 0)
-                return isSignalingNaN (x) ? x + y : 1.0f;
+                return isSignalingNaN (x) ? asfloat((ux & 0x7fffffffu) | 0x00400000u) : 1.0f;
 
             if (ux == 0x3f800000)
-                return isSignalingNaN (y) ? x + y : 1.0f;
+                return isSignalingNaN (y) ? asfloat(ux | 0x00400000u) : 1.0f;
 
             if (2 * ux > 2u * 0x7f800000 || 2 * uy > 2u * 0x7f800000)
-                return x + y;
+                /* The default negative NaN carries no operand payload. Prefer
+                 * a NaN exponent over that default, otherwise prefer the base. */
+                return asfloat(((ux & 0x7fffffffu) > 0x7f800000u &&
+                                (ux != 0xffc00000u || (uy & 0x7fffffffu) <= 0x7f800000u)
+                                ? ux : uy) | 0x00400000u);
 
             if (2 * ux == 2 * 0x3f800000)
                 return 1.0f;

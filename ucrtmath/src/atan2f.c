@@ -427,7 +427,8 @@ return asfloat((xnan ? ufx : ufy) | 0x00400000u);
          table and series expansion. */
 
       index = (unsigned int)(madd(mode, 256, vbyu, 0.5));
-      r = madd(mode, 256, v, -index*u)/madd(mode, index, v, 256*u);
+      /* Convert before negation: index is unsigned. */
+      r = madd(mode, 256, v, -(double)index*u)/madd(mode, index, v, 256*u);
 
       /* Polynomial approximation to atan(vbyu) */
 

@@ -1,0 +1,58 @@
+[
+  {
+    "a": "3f800000",
+    "b": "7f800001",
+    "candidate": "3fc00000",
+    "unicorn": "3fc00000",
+    "match": true
+  },
+  {
+    "a": "3f800000",
+    "b": "ffbfffff",
+    "candidate": "3fc00000",
+    "unicorn": "3fc00000",
+    "match": true
+  },
+  {
+    "a": "ff800001",
+    "b": "00000000",
+    "candidate": "7fc00001",
+    "unicorn": "7fc00001",
+    "match": true
+  },
+  {
+    "a": "ffbfffff",
+    "b": "80000000",
+    "candidate": "7fffffff",
+    "unicorn": "7fffffff",
+    "match": true
+  },
+  {
+    "a": "ffc00000",
+    "b": "7f800001",
+    "candidate": "7fc00001",
+    "unicorn": "7fc00001",
+    "match": true
+  },
+  {
+    "a": "7fc00000",
+    "b": "7f800001",
+    "candidate": "7fc00000",
+    "unicorn": "7fc00000",
+    "match": true
+  },
+  {
+    "a": "7fc00001",
+    "b": "ff800001",
+    "candidate": "7fc00001",
+    "unicorn": "7fc00001",
+    "match": true
+  },
+  {
+    "a": "ffc00000",
+    "b": "7fffffff",
+    "candidate": "7fffffff",
+    "unicorn": "7fffffff",
+    "match": true
+  }
+]

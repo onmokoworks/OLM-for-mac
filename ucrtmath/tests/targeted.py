@@ -17,6 +17,16 @@ for a in special:
  sets['expf'].add((a,0))
  for b in special:
   for fn in ('atan2f','powf'):sets[fn].add((a,b))
+# Replay every retained F27c mismatch operand pair, across all engine pairs.
+for fn in sets:
+ with gzip.open(root/f'tools/ucrt_math_probe/rosetta/results-f27c/{fn}-first.csv.gz','rt') as f:
+  for row in csv.DictReader(f):sets[fn].add((int(row['a'],16),int(row['b'],16)))
+# NaN payload/sign/quiet-priority cross product, including pow identity paths.
+nans=[sign | 0x7f800000 | payload for sign in [0,0x80000000]
+      for payload in [1,2,3,0x12345,0x3fffff,0x400000,0x400001,0x412345,0x7fffff]]
+for a in nans+special:
+ for b in nans+special:
+  sets['powf'].add((a,b));sets['atan2f'].add((a,b))
 # Dense windows around 1, the normal/subnormal transition, and exp cutoffs.
 for center in [0x3f800000,0x00800000,0x42b17218,0xc2cff1b4,0xc2ce8ed0]:
  for a in range(center-256,center+257):
