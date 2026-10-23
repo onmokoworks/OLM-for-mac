@@ -33,6 +33,10 @@ def candidate_source(experiment, source=None):
 \t\tp.interp_mode = INTERP_LINEAR;''')
     if experiment == 'bilateral-scalar':
         return bilateral_scalar_source(source)
+    if experiment == 'vector-one':
+        return vector_one_source(source)
+    if experiment == 'vector-one-v1':
+        return vector_one_v1_source(source)
     if experiment in ('finite-filter', 'finite-separable'):
         predicate = 'is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)'
         if experiment == 'finite-separable':
@@ -149,6 +153,72 @@ static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
     return source
 
 
+def vector_one_v1_source(source):
+    helper='''// Bounded lane of the original IPP vector exponential (180ba5780).
+// Coefficients at 1815f0600..1815f0880; preserve MULPS/ADDPS rounding.
+static float bilateral_ipp_vector_exp(float x)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+\tconst float scaled = x * 0x1.715476p+0f;
+\tconst float biased = scaled + 0x1.8p23f;
+\tconst float n = biased - 0x1.8p23f;
+\tconst float hi = n * 0x1.62e4p-1f;
+\tconst float lo = n * 0x1.7f7d1cp-20f;
+\tconst float residual = (x - hi) - lo;
+\tfloat poly = 0x1.0fb3fcp-7f * residual + 0x1.570724p-5f;
+\tpoly = poly * residual + 0x1.555958p-3f;
+\tpoly = poly * residual + 0x1.fffe68p-2f;
+\tpoly = poly * residual + 0x1.fffffcp-1f;
+\tpoly = poly * residual + 1.0f;
+\tstd::uint32_t scale_bits, result_bits;
+\tstd::memcpy(&scale_bits, &biased, 4);
+\tstd::memcpy(&result_bits, &poly, 4);
+\tresult_bits += scale_bits << 23;
+\tstd::memcpy(&poly, &result_bits, 4);
+\treturn poly;
+}
+
+'''
+    source=replace_once(source,'// PF32 Smart reproduction of the retained radius-one IPP bilateral body.',helper+'// PF32 Smart reproduction of the retained radius-one IPP bilateral body.')
+    start=source.index('static void bilateral_blur_opencv455_f32x4(')
+    end=source.index('// ============================================================================',start)
+    body=source[start:end]
+    body=replace_once(body,'float sum = 0.0f;', '''// 1802a1640 uses the scalar padded body below 3 pixels in either
+\t\t\t// dimension. At width16+, top/bottom and interior tiles use the
+\t\t\t// vector body; the one-column side tiles keep the scalar body.
+\t\t\tconst bool vector_dispatch = w >= 16 && h >= 3 &&
+\t\t\t\t(y == 0 || y == h-1 || (x > 0 && x < w-1));
+\t\t\tfloat weights[4];
+\t\t\tfloat sum = 0.0f;''')
+    body=replace_once(body,'const float exponent = (-0.5f * difference) * difference;\n\t\t\t\tconst float color_weight = bilateral_ipp_exp(exponent);',
+        '''const float exponent = vector_dispatch ? (difference * difference) * -0.5f : (-0.5f * difference) * difference;
+\t\t\t\tconst float color_weight = vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent);
+\t\t\t\tweights[k] = color_weight;''')
+    body=replace_once(body,'weight_sum = bilateral_noncontracting_product(weight_sum, spatial_weight);',
+        '''// Vector denominator accumulates bottom/top/left/right.
+\t\t\tif (vector_dispatch) weight_sum = ((weights[3] + weights[1]) + weights[0]) + weights[2];
+\t\t\tweight_sum = bilateral_noncontracting_product(weight_sum, spatial_weight);''')
+    return source[:start]+body+source[end:]
+
+
+def vector_one_source(source):
+    source = vector_one_v1_source(source)
+    # The decompiler flattens the denominator expression. The instructions
+    # instead finish top/left/right before adding bottom (1806b7020).
+    source = source.replace('if (vector_dispatch) weight_sum = ((weights[3] + weights[1]) + weights[0]) + weights[2];', '')
+    source = source.replace('// Vector denominator accumulates bottom/top/left/right.\n\t\t\t\n\t\t\t', '')
+    source = source.replace('\n\t\t\tfloat weights[4];', '').replace('\n\t\t\t\tweights[k] = color_weight;', '')
+    start = source.index('static float bilateral_ipp_vector_exp(')
+    end = source.index('// PF32 Smart reproduction', start)
+    body = source[start:end]
+    for left, right in [('x','0x1.715476p+0f'), ('n','0x1.62e4p-1f'), ('n','0x1.7f7d1cp-20f'),
+                        ('0x1.0fb3fcp-7f','residual'), ('poly','residual')]:
+        body = body.replace(left+' * '+right, 'bilateral_noncontracting_product('+left+', '+right+')')
+    return source[:start]+body+source[end:]
+
+
 def matrix(a):
     profiles = {
         'alpha-infinity': [0,0x7f800000,0x3f800000,0xff800000,0x3f000000,0,0x3f800000],
@@ -254,6 +324,24 @@ def separable_matrix(a):
         yield label+f'/effective-interp{interp}-size{size}',c
 
 
+def vector_one_matrix(a):
+    for w,h in ((15,3),(16,3),(17,3),(16,2),(17,1),(21,23),(1,17),(31,5),(32,7),(33,7)):
+      for pattern in (0,1):
+       av = [0.,0.,0.,0.,1.,.5,1.] if pattern==0 else [0.,1.,0.,.25,0.,0.,1.]
+       pixels=b''.join(struct.pack('<4f',av[(x+2*y)%7],.25,.5,.75) for y in range(h) for x in range(w))
+       for size in (0,1):
+        for owner in (1,2,3):
+         for interp in (1,2,3):
+            c=dict(geometry=[w,h],depth=32,profile='sdr',pixels=pixels,
+                   parameters=a.defaults(w,h),input_padding=3,output_padding=5)
+            values={1:pattern,2:owner,3:4 if pattern==0 else 128,4:7,
+                    5:1+(owner+pattern)%2,6:(interp+size)%2,
+                    7:[255,28,53,238],8:[255,16,160,48],9:interp,11:5,12:size}
+            for q in c['parameters']:
+                if q['slot'] in values:q['value']=values[q['slot']]
+            yield f'{w}x{h}/pattern{pattern}/size{size}/owner{owner}/interp{interp}',c
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--scratch', type=Path, required=True)
@@ -261,9 +349,9 @@ def main():
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--before-ref', default='0e3481cb')
     p.add_argument('--index', type=int, action='append', default=[])
-    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable'], default='gate-off')
+    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable','vector-one','vector-one-v1'], default='gate-off')
     p.add_argument('--matrix', action='store_true')
-    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable'],default='nonfinite')
+    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable','vector-one'],default='nonfinite')
     p.add_argument('--write-source', type=Path)
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
@@ -291,7 +379,7 @@ def main():
         current = variant(a, td/'candidate', deadline, source)
         san = variant(a, td/'san', deadline, source, sanitized=True)
         wd = td/'case'; wd.mkdir()
-        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix}
+        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix,'vector-one':vector_one_matrix}
         cases = families[args.matrix_family](a) if args.matrix else ((index,a.generate(args.seed,index)) for index in args.index or [94,116,126,223,255,263,283,299])
         for index,c in cases:
             oracle, reference = a.oracle(c, wd, deadline, 'smart')

@@ -711,6 +711,32 @@ static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 	return radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
 }
 
+// Bounded lane of the original IPP vector exponential (180ba5780).
+// Coefficients at 1815f0600..1815f0880; preserve MULPS/ADDPS rounding.
+static float bilateral_ipp_vector_exp(float x)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	const float scaled = bilateral_noncontracting_product(x, 0x1.715476p+0f);
+	const float biased = scaled + 0x1.8p23f;
+	const float n = biased - 0x1.8p23f;
+	const float hi = bilateral_noncontracting_product(n, 0x1.62e4p-1f);
+	const float lo = bilateral_noncontracting_product(n, 0x1.7f7d1cp-20f);
+	const float residual = (x - hi) - lo;
+	float poly = bilateral_noncontracting_product(0x1.0fb3fcp-7f, residual) + 0x1.570724p-5f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.555958p-3f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffe68p-2f;
+	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffffcp-1f;
+	poly = bilateral_noncontracting_product(poly, residual) + 1.0f;
+	std::uint32_t scale_bits, result_bits;
+	std::memcpy(&scale_bits, &biased, 4);
+	std::memcpy(&result_bits, &poly, 4);
+	result_bits += scale_bits << 23;
+	std::memcpy(&poly, &result_bits, 4);
+	return poly;
+}
+
 // PF32 Smart reproduction of the retained radius-one IPP bilateral body.
 // cvSmooth(CV_BILATERAL, diameter 1 or 3, ..., 0, 0) selects radius one and
 // unit sigmas (1812ca750). Larger radii and PF8/PF16 remain separate lanes.
@@ -731,12 +757,17 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 			const float center = source[(size_t)y * w + x];
 			const float values[4] = {source[(size_t)y * w + left], source[(size_t)top * w + x],
 			                         source[(size_t)y * w + right], source[(size_t)bottom * w + x]};
+			// 1802a1640 uses the scalar padded body below 3 pixels in either
+			// dimension. At width16+, top/bottom and interior tiles use the
+			// vector body; the one-column side tiles keep the scalar body.
+			const bool vector_dispatch = w >= 16 && h >= 3 &&
+				(y == 0 || y == h-1 || (x > 0 && x < w-1));
 			float sum = 0.0f;
 			float weight_sum = 0.0f;
 			for (int k = 0; k < 4; ++k) {
 				const float difference = values[k] - center;
-				const float exponent = (-0.5f * difference) * difference;
-				const float color_weight = bilateral_ipp_exp(exponent);
+				const float exponent = vector_dispatch ? (difference * difference) * -0.5f : (-0.5f * difference) * difference;
+				const float color_weight = vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent);
 				weight_sum += color_weight;
 				sum += bilateral_noncontracting_product(values[k], color_weight);
 			}
