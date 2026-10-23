@@ -1,0 +1,26 @@
+{
+  "function": "atan2f",
+  "count": 13779,
+  "modes": [
+    {
+      "mode": 0,
+      "mismatches": 0,
+      "first_a_b_oracle_native": [
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000"
+      ]
+    },
+    {
+      "mode": 1,
+      "mismatches": 0,
+      "first_a_b_oracle_native": [
+        "00000000",
+        "00000000",
+        "00000000",
+        "00000000"
+      ]
+    }
+  ]
+}

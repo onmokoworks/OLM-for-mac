@@ -2,7 +2,9 @@
 
 The `ms/` additions are **OLM-internal**, derived from UCRT behavior/disassembly,
 and **must not be published standalone**. They provide `ucrt_sinf`, `ucrt_cosf`,
-and `ucrt_log2f`; see [their provenance and validation](ms/README.md). This
+and `ucrt_log2f`; see [their provenance and validation](ms/README.md).
+They also provide binary64 `ucrt_sin`, `ucrt_cos`, and `ucrt_exp`; see
+[double provenance and validation](ms/README-double.md). This
 restriction applies to the combined library built by `build.sh`. The AMD-derived
 sources retain their separate attribution in `NOTICE`.
 

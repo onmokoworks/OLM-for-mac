@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "ucrtmath/build.sh": "6352a4a11c4d618a289694a025365dd374b149b80bad7b50c7b2164495efa948",
+    "ucrtmath/include/ucrtmath.h": "49f33f629013da62c65162b2026256c45a11a4b9be77e1959124ce3403b9fc5c",
+    "ucrtmath/ms/double.c": "f3723a4f13c8196e82961e775af6f101759b13f0197f633f747817050c4566ab",
+    "ucrtmath/ms/double_tables.h": "83e6edb40d1c252daeebdf188f27604a92c2ba8394428a370a2e1faad54c9d61",
+    "ucrtmath/ms/double_native.c": "5eed1aeaac6fdb0c7d85d7b8668ef54d3ceaae659e3ef4251bdfaef59a7f7d7a",
+    "ucrtmath/ms/double_compare.c": "9a5236ceadc6765f1fb9d17a965a535cc5bfd1f4688893ee8309418c02a71df8",
+    "ucrtmath/ms/check_double.py": "c564635fc6183eda0d197bd0448239bcb8dea343cd96d65bf422b792c8260497",
+    "ucrtmath/ms/check_double_harness.py": "e9b6ae9fa0100121ce83e0634313c94c644ca6ba744531a449c05826ba11e546",
+    "ucrtmath/ms/inspect_double.py": "e3d2bbbd4baf88c8520d1f714d23496cd4966edc952d0dfb4d3fcac4a40f3e7e",
+    "ucrtmath/ms/retain_double.py": "e3eb5f40e776cb37caa25ee4e43d634722532d53103c26113139044fb1c21831",
+    "tools/ucrt_math_probe/rosetta/oracle.c": "6f7abbc223a2df9fa40c7d9b1f9c5f6b4ca00964050df57ac6a836f9f2513035"
+  },
+  "builds": {
+    "double_native": "34919ecfcc2c0ce068ffc2dc2bbcbf0b1e00b83feedbfc6e944460044b2766fe",
+    "double_compare": "773b76534d48ee392004cceedd882f01d32f8f13a6faf3c83ac567747a18e1ba",
+    "libucrtmath.a": "f8bc2a5ec23c710ddf720cb85bc5a3a98c11654c22f54d65aa798aa8628411ae"
+  },
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n"
+}

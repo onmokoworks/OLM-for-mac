@@ -1,0 +1,77 @@
+[
+  {
+    "function": "sin",
+    "case": "valid",
+    "exit": 0
+  },
+  {
+    "function": "sin",
+    "case": "mismatch",
+    "exit": 1
+  },
+  {
+    "function": "sin",
+    "case": "short",
+    "exit": 2
+  },
+  {
+    "function": "sin",
+    "case": "truncated",
+    "exit": 2
+  },
+  {
+    "function": "sin",
+    "case": "empty",
+    "exit": 2
+  },
+  {
+    "function": "cos",
+    "case": "valid",
+    "exit": 0
+  },
+  {
+    "function": "cos",
+    "case": "mismatch",
+    "exit": 1
+  },
+  {
+    "function": "cos",
+    "case": "short",
+    "exit": 2
+  },
+  {
+    "function": "cos",
+    "case": "truncated",
+    "exit": 2
+  },
+  {
+    "function": "cos",
+    "case": "empty",
+    "exit": 2
+  },
+  {
+    "function": "exp",
+    "case": "valid",
+    "exit": 0
+  },
+  {
+    "function": "exp",
+    "case": "mismatch",
+    "exit": 1
+  },
+  {
+    "function": "exp",
+    "case": "short",
+    "exit": 2
+  },
+  {
+    "function": "exp",
+    "case": "truncated",
+    "exit": 2
+  },
+  {
+    "function": "exp",
+    "case": "empty",
+    "exit": 2
+  }
+]
