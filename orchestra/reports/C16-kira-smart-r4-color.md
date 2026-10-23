@@ -47,7 +47,7 @@ changed_files:
 
 verify:
 
-Use the luminance report's shell setup, a new scratch subdirectory, and base `bd1f5ece` to reproduce before/after seed 1/8 campaigns and the sanitizer/corpus auditors. Use `--jobs 1` throughout. Replace the independent family with `color-controls` and `color-lengths`; expected 288 and 48 exact respectively. Public trace:
+At cluster commit `5440e2cb`, use the luminance report's shell setup, a new scratch subdirectory, and base `bd1f5ece` to reproduce before/after seed 1/8 campaigns and the sanitizer/corpus auditors. Use `--jobs 1` throughout. Replace the independent family with `color-controls` and `color-lengths`; expected 288 and 48 exact respectively. Public trace:
 
 ```sh
 "$py" tools/emulation/probe_kirakira_smart_C07.py --campaign-seed 1 --trace-index 41 --require-exact --scratch "$s/trace41" --report "$s/trace41.json" > "$s/trace41.log" 2>&1

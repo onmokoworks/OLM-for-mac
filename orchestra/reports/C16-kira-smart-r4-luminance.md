@@ -43,7 +43,7 @@ changed_files:
 
 verify:
 
-Run from this worktree (all scratch/build outputs are ticket-local). Commands are sequential and use one campaign job.
+Run at cluster commit `bd1f5ece` (later cluster commits deliberately admit more cases; all scratch/build outputs are ticket-local). Commands are sequential and use one campaign job.
 
 ```sh
 s="$PWD/orchestra/state/C16-kira-smart-r4/recheck-luminance"
@@ -67,3 +67,8 @@ Expected: campaign counts above; matrix 288 exact; audit PASS 70 corpus/2 campai
 
 next:
 - Continue the largest Channel 6/four-plane group. Three-cluster ticket stopping criterion is not yet met.
+
+Candidate preservation (added with the final ticket report): apply
+`tools/emulation/fixtures/kirakira_luminance_C16.patch` to the `0e3acb0f`
+source in scratch using `patch -o "$s/candidate.cpp" "$s/before.cpp" < tools/emulation/fixtures/kirakira_luminance_C16.patch`.
+Run `probe_kirakira_smart_C07.py --source "$s/candidate.cpp" --gate-off --family luminance-controls --trace-index 272` with scratch/report arguments as above. Expected public-bound seed difference word 30 and one final differing word; the final recovered Fade operation resolves it.

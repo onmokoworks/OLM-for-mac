@@ -1,0 +1,35 @@
+--- a/mac/OLMKiraKira/OLMKiraKira.cpp
++++ b/mac/OLMKiraKira/OLMKiraKira.cpp
+@@ -679,7 +679,7 @@
+ 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
+ 		info.vertical_length != 1 && info.horizontal_length != 1 &&
+ 		info.diagonal_length != 1 && info.diagonal2_length != 1;
+-	return info.channel == 1 && !info.approximated_input &&
++	return (info.channel == 1 || (info.channel == 2 && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
+ 		(info.blur_mode == 1 || info.blur_mode == 2 || directional_gaussian);
+ }
+ 
+@@ -698,9 +698,10 @@
+ 	const float fade_threshold = (float)info.fade_out;
+ 	auto apply_fade = [&](float value) -> float {
+ 		if (value == 0.0f) return 0.0f;
+-		if (fade_threshold < value) return (float)std::pow(value, exponent);
++		if (fade_threshold < value) return recovered_scalar_alpha ? std::pow(value, (float)exponent) : (float)std::pow(value, exponent);
+ 		const float normalized = value / fade_threshold;
+-		return normalized * normalized * (float)std::pow(fade_threshold, exponent);
++		return recovered_scalar_alpha ? std::pow(normalized, 2.0f) * std::pow(fade_threshold, (float)exponent)
++			: normalized * normalized * (float)std::pow(fade_threshold, exponent);
+ 	};
+ 	for (A_long y = 0; y < h; ++y) {
+ 		for (A_long x = 0; x < w; ++x) {
+@@ -710,7 +711,9 @@
+ 				v = recovered_scalar_alpha ? std::pow(p.a, (float)exponent)
+ 					: (float)std::pow(p.a, exponent);
+ 			} else if (info.channel == 2) {
+-				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
++				float luma = recovered_scalar_alpha
++					? (float)((double)p.g * 0.7152 + (double)p.r * 0.2126 + (double)p.b * 0.0722)
++					: p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
+ 				v = apply_fade(luma) * p.a;
+ 			} else if (info.channel == 4) {
+ 				v = apply_fade(std::max({p.r, p.g, p.b})) * p.a;
