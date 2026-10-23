@@ -27,10 +27,20 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
-    if family in ('luminance-controls', 'color-controls'):
+    if family == 'color-lengths':
+        for i, (depth, mode, length) in enumerate(itertools.product(
+                (8,16,32), (1,2), (1,2,3,5,7,15,50,1000))):
+            case = matrix_case(adapter, i, (1,1) if length >= 50 else (9,7), depth, 1+i%2, mode, (3,5,6)[i%3])
+            values = {6:(0,97,537,1000)[i%4],8:97,9:40,10:length,16:0,22:0,28:0,
+                      34:min(length,500),40:(-31,0,22,359)[i%4]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family in ('luminance-controls', 'color-controls', 'max-controls'):
         for case in cases(adapter, 'strength-combined'):
             i = case['index']
-            values = {1: 6 if family == 'color-controls' else 2,
+            values = {1: {'color-controls':6, 'max-controls':4, 'luminance-controls':2}[family],
                       7: (0.0, 0.001, 0.1, 0.5, 1.0)[i % 5]}
             for param in case['parameters']:
                 if param['slot'] in values: param['value'] = values[param['slot']]
@@ -216,7 +226,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -275,6 +285,7 @@ def main():
                     raise RuntimeError('Original trace has no output: ' + str(original.get('error')))
                 row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
                 row['aex_resize_writers'] = original.get('resize_writers', [])
+                row['aex_normalizers_f32_hex'] = original['stages'].get('normalizers')
                 stages = original['stages']
                 if args.keep_trace:
                     for name, data in stages.items():

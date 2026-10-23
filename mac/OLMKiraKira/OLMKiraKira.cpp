@@ -451,7 +451,7 @@ static std::vector<float> DirectionBoxBlur(
 	A_long dx,
 	A_long dy,
 	A_long passes,
-	bool recovered_scalar_box = false)
+	bool recovered_scalar_box = false, bool normalize = true)
 {
 	if (length <= 0) return input;
 	std::vector<float> src = input;
@@ -468,7 +468,7 @@ static std::vector<float> DirectionBoxBlur(
 					const A_long sx = Reflect101Index((int)k, (int)width);
 					sum += src[(size_t)y * width + sx];
 				}
-				const double scale = 1.0 / (double)length;
+				const double scale = normalize ? 1.0 / (double)length : 1.0;
 				for (A_long x = 0; x < width; ++x) {
 					// Original RowSum<float,double> uses direct sums at 3/5;
 					// its other scalar kernels use the sliding double sum.
@@ -540,7 +540,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long passes,
 	A_long blur_mode,
 	bool scalar_alpha_gaussian = false,
-	bool recovered_scalar_box = false)
+	bool recovered_scalar_box = false, bool normalize = true)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
@@ -586,7 +586,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 			return input;
 		}
 	} else {
-		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes, recovered_scalar_box);
+		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes, recovered_scalar_box, normalize);
 	}
 	temp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);
 	return CopyCenteredRoi(temp_b, rw, rh, width, height);
@@ -681,8 +681,14 @@ static bool UsesRecoveredScalarAlphaPipeline(const OLMKiraKiraInfo &info)
 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
 		info.vertical_length != 1 && info.horizontal_length != 1 &&
 		info.diagonal_length != 1 && info.diagonal2_length != 1;
-	return (info.channel == 1 || (info.channel == 2 && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
+	return (info.channel == 1 || ((info.channel == 2 || info.channel == 3 || info.channel == 5 || info.channel == 6) && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
 		(info.blur_mode == 1 || info.blur_mode == 2 || directional_gaussian);
+}
+
+static bool UsesRecoveredColorBoxPipeline(const OLMKiraKiraInfo &info)
+{
+    return !info.approximated_input && (info.blur_mode == 1 || info.blur_mode == 2) &&
+        (info.channel == 3 || info.channel == 5 || info.channel == 6);
 }
 
 static std::vector<float> MakeSeed(
@@ -692,6 +698,17 @@ static std::vector<float> MakeSeed(
 	const OLMKiraKiraInfo &info)
 {
 	std::vector<float> seed((size_t)w * h);
+    if (UsesRecoveredColorBoxPipeline(info)) {
+        seed.resize((size_t)w*h*4);
+        const float exponent = (float)info.strength_multiplier + 1.0f;
+        for (size_t i=0; i<pixels.size(); ++i) {
+            seed[i*4] = std::pow(pixels[i].r,exponent)*pixels[i].a;
+            seed[i*4+1] = std::pow(pixels[i].g,exponent)*pixels[i].a;
+            seed[i*4+2] = std::pow(pixels[i].b,exponent)*pixels[i].a;
+            seed[i*4+3] = pixels[i].a;
+        }
+        return seed;
+    }
 	// Original double threshold 0.001 selects float replacement 0x3a83126f.
 	const bool recovered_scalar_alpha = UsesRecoveredScalarAlphaPipeline(info);
 	const double exponent = recovered_scalar_alpha
@@ -787,11 +804,21 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<float> seed = MakeSeed(working_pixels, work_width, work_height, info);
 	const A_long passes = BlurModePasses(info.blur_mode);
 	const double glow_rotation = info.glow_rotation;
-	const std::vector<float> zero_ray((size_t)work_width * work_height, 0.0f);
+	const bool color_owner = UsesRecoveredColorBoxPipeline(info);
+    const std::vector<float> zero_ray(seed.size(), 0.0f);
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
-		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
+		if (color_owner) {
+            std::vector<float> result(seed.size()), plane((size_t)work_width*work_height);
+            for (int c=0; c<4; ++c) {
+                for (size_t i=0; i<plane.size(); ++i) plane[i]=seed[i*4+c];
+                const auto ray=RotatedAxisBoxBlur(plane,work_width,work_height,len,angle,passes,info.blur_mode,false,true,false);
+                for (size_t i=0; i<plane.size(); ++i) result[i*4+c]=ray[i];
+            }
+            return result;
+        }
+        return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
 			info.channel == 1 && info.highlight_radius == 0 &&
 				(info.strength_multiplier == 1.0 || UsesRecoveredScalarAlphaPipeline(info)),
 			UsesRecoveredScalarAlphaPipeline(info));
@@ -811,8 +838,18 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// The actual Mode-4 Highlight branch shares Mode 2's three isotropic
 		// box-filter calls.  It does not use the directional Mode-4 recurrence.
 		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
-		highlight = olm::kirakira::highlight_isotropic_box_blur(
-			seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
+		if (color_owner) {
+            highlight.resize(seed.size());
+            std::vector<float> plane((size_t)work_width*work_height);
+            for (int c=0; c<4; ++c) {
+                for (size_t i=0; i<plane.size(); ++i) plane[i]=seed[i*4+c];
+                const auto ray=olm::kirakira::highlight_isotropic_box_blur(plane,work_width,work_height,highlight_radius*2+1,highlight_passes,false);
+                for (size_t i=0; i<plane.size(); ++i) highlight[i*4+c]=ray[i];
+            }
+        } else {
+            highlight = olm::kirakira::highlight_isotropic_box_blur(
+                seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
+        }
 	}
 
 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
@@ -829,7 +866,38 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	// writer, but initializes the aggregation selector at state+0x48 to one.
 	// Consequently both public merge choices use FUN_18114fd90 here; only the
 	// downstream composition changes with info.merge_mode.
-	AddColoredUnion(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp, scale);
+    if (color_owner) {
+        const std::vector<float>* rays[]={&vertical,&horizontal,&diagonal,&diagonal2,&highlight};
+        for (size_t i=0; i<glow.size(); ++i) {
+            auto &g=glow[i];
+            float norms[5] = {(float)info.vertical_length,(float)info.horizontal_length,
+                (float)info.diagonal_length,(float)info.diagonal2_length,
+                (float)((info.highlight_radius*2+1)*(info.highlight_radius*2+1))};
+            if (info.blur_mode == 2) {
+                for (int c=0;c<4;++c) norms[c]=norms[c]*norms[c]*norms[c];
+                norms[4]=norms[4]*norms[4]; norms[4]=norms[4]*norms[4];
+            }
+            int ray_index=0;
+            for (const auto *ray:rays) {
+                const float divisor=norms[ray_index++];
+                const float norm=divisor == 0.0f ? 0.0f : 1.0f/divisor;
+                const float alpha=(*ray)[i*4+3];
+                if ((double)alpha <= 0.001) continue;
+                const float inv=1.0f/alpha;
+                const float a=Clamp01(alpha*norm);
+                g.r = inv*(*ray)[i*4]*a*scale+g.r;
+                g.g = inv*(*ray)[i*4+1]*a*scale+g.g;
+                g.b = inv*(*ray)[i*4+2]*a*scale+g.b;
+                g.a = a+g.a;
+            }
+            if (g.a>0.0f) {
+                g.a=Clamp01(g.a);
+                const float inv=1.0f/g.a;
+                g.r=inv*g.r; g.g=inv*g.g; g.b=inv*g.b;
+            }
+        }
+    } else {
+    AddColoredUnion(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp, scale);
 	AddColoredUnion(glow, horizontal, info.horizontal_color, info.horizontal_use_ramp, info.horizontal_ramp, scale);
 	AddColoredUnion(glow, diagonal, info.diagonal_color, info.diagonal_use_ramp, info.diagonal_ramp, scale);
 	// FUN_18114f4a0 owns four directional slots followed by Highlight.
@@ -857,6 +925,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				g.b /= g.a;
 			}
 		}
+	}
 	}
 	std::vector<FloatRGBA> composed((size_t)work_width * work_height);
 	for (A_long y = 0; y < work_height; ++y) {
@@ -1593,6 +1662,16 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 static bool IsSmartLuminanceBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
 {
     if (info.channel != 2 || !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+    OLMKiraKiraInfo alpha = info;
+    alpha.channel = 1;
+    return IsAlphaBoxTuple(alpha, format, true, true, true);
+}
+
+// Original 18114ef10/18114f020 own the four-component seed and sum pipeline.
+// C16 pairs Channels 3/5/6 through unnormalised box passes and aggregation.
+static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+{
+    if (info.channel != 3 && info.channel != 5 && info.channel != 6) return false;
     OLMKiraKiraInfo alpha = info;
     alpha.channel = 1;
     return IsAlphaBoxTuple(alpha, format, true, true, true);
@@ -2687,6 +2766,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 					info, input_world->width, input_world->height) ||
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartLuminanceBoxTuple(info, format) ||
+				 IsSmartColorBoxTuple(info, format) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
