@@ -25,3 +25,11 @@ is replaced only by an equally strict current one. Do not install into AE.
 
 ## Rules
 OLM_TEST_JOBS=2. No plugin production changes. Report a before/after gate table.
+
+## Added by orchestrator after R03 (read `orchestra/reports/R03-harness-ucrt-link.md`)
+- 18 RadialBlur fixtures now compile and fail numerically. F39 showed earlier Radial fixture failures were oracle drift
+  (references made before UCRT-exact math / SSE NaN fixes). For each: re-render the reference with the current F46 worker
+  from the original AEX (twice, identical); if current Mac == new reference, it is drift → repin with provenance. If Mac
+  differs from the F46 reference, it is a genuine finding: save a fuzz-format witness and report it (do not hide it).
+- 13 runtime/contract failures and 3 stale installed bindings from R03: adjudicate each (current contract vs superseded
+  expectation), same strictness rule as above.
