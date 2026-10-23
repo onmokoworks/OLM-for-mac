@@ -21,6 +21,26 @@ def candidate_source(experiment, source):
         old = "\tif constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {\n\t\tif (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;\n\t}"
         assert source.count(old) == 1
         return source.replace(old, '')
+    if experiment.startswith('nonfinite-'):
+        start = source.index('static bool GenericRadialInputIsFinite(')
+        end = source.index('\ntemplate <typename PixelT>', start)
+        source = source[:start] + 'static bool GenericRadialInputIsFinite(const PF_EffectWorld *input) { (void)input; return true; }\n' + source[end:]
+        old = '\t\tif (weight == 0.0f) return;'
+        assert source.count(old) == 1
+        source = source.replace(old, '')
+        if experiment in ('nonfinite-cancelled-rgb', 'nonfinite-x86-generated'):
+            old = '\t\tresult.eligible = coordinate_gate ? 1 : 0;\n\t}\n\treturn result;'
+            new = '\t\tresult.eligible = coordinate_gate ? 1 : 0;\n\t} else {\n\t\tfor (int c = 0; c < 3; ++c) result.rgba[c] = rgb_sum[c];\n\t\tresult.rgba[3] = alpha_sum;\n\t}\n\treturn result;'
+            assert source.count(old) == 1
+            source = source.replace(old, new)
+        if experiment == 'nonfinite-x86-generated':
+            source = '#include "'+str(verify.ROOT/'core/x86_float.h')+'"\n'+source
+            for op in ('*', '+', '/', '-'):
+                old = '\tvolatile float result = lhs '+op+' rhs;\n\treturn result;'
+                new = '\tvolatile float result = lhs '+op+' rhs;\n\treturn olm::x86_float::generated_nan(result, lhs, rhs);'
+                assert source.count(old) == 1
+                source = source.replace(old, new)
+        return source
     if experiment == 'rotation-zero-alpha':
         old = 'if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {'
         new = 'if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {'
@@ -34,7 +54,7 @@ def candidate_source(experiment, source):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--experiment', choices=('negative-phase', 'rotation-zero-alpha', 'production'), required=True)
+    ap.add_argument('--experiment', choices=('negative-phase', 'rotation-zero-alpha', 'nonfinite-zero-taps', 'nonfinite-cancelled-rgb', 'nonfinite-x86-generated', 'production'), required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--campaign', type=Path)
     ap.add_argument('--replay', type=Path)

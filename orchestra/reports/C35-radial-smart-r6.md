@@ -1,11 +1,11 @@
-status: partial
+status: blocked
 
 summary:
 - Closed PF32 defined negative-Noise-Offset and finite Rotation admissions against F32.
 - Seed 1 Smart E/M/R/U: 253/0/45/2 -> 254/0/44/2 -> 255/0/43/2; seed 5: 256/0/44/0 -> 258/0/42/0 -> 258/0/42/0.
 - All baseline-exact hashes retained; both milestones pass 600 sanitized Smart executions and 35 unchanged corpus rows.
 - Restored Rotation's original zero-alpha RGB accumulation; independent finite-input matrix is 216/216 exact and clean.
-- Two clusters closed; residual investigation continues.
+- Stopped after two source-sampler/NaN admission hypotheses failed without a new downstream boundary; no third closure.
 
 facts:
 
@@ -98,6 +98,44 @@ index 44's full original output. Corpus complete-result hash remains
 `a17e514cdfd8d2ad776d83eb9ad33bc2467004ccb1ab84e8cd6ac74ab81bbb36`.
 
 
+
+Residual nonfinite Zoom — rejected experiments and stop:
+
+FACT: Import-free source-sampler RVA `0x1520` was checked on three independent
+2x2 controls (constant-color ABI, a zero-weight infinity tap, and cancelling
+signed alpha). All candidate builds use ASan/UBSan. Production skips a zero-
+weight tap and produces red `0000803e`; AEX evaluates it and produces
+`0000c0ff`. Removing only that skip produces Mac `0000c07f`, exposing generated-
+NaN sign as a new boundary. The cancellation control returns AEX RGB
+`000080be 0000003e 0000003e`, alpha zero; production returns four zero words.
+Retaining accumulated RGB repairs this control. Applying the existing
+`core/x86_float.h` generated-NaN helper in scratch repairs the first control
+as well. The final scratch variant is 3/3 byte-exact on these leaf controls;
+none of these controls is claimed to trace a full nonfinite public case.
+
+FACT: Three successive scratch admission experiments were run against all 300
+retained seed-1 references: (1) evaluate zero-weight source taps, (2) additionally
+retain RGB at cancelled source alpha, (3) additionally restore x86 generated-
+NaN signs in the four Radial arithmetic wrappers. Each experiment admits the
+same four nonfinite Zoom cases and all four mismatch. All 900 executions are
+sanitizer-clean. No source-sampler or NaN-helper change is promoted.
+
+| Seed-1 index | First word | Original -> all three candidates | Words different, tap / cancellation / x86 |
+|---:|---:|---|---:|
+| 17 | 0 | `0000807f` -> `4623c1ff` | 1265 / 1265 / 845 |
+| 89 | 0 | `00000000` -> `4623c1ff` | 324 / 324 / 282 |
+| 238 | 40 | `9beb483e` -> `4623c1ff` | 237 / 237 / 107 |
+| 247 | 4 | `68e9513d` -> `4623c1ff` | 562 / 562 / 550 |
+
+FACT: The generated-NaN sign boundary was observed after the first hypothesis.
+The subsequent cancelled-alpha and generated-NaN hypotheses both fail to
+establish safe public admission, without a new downstream stage boundary.
+The two-refuted-hypotheses stop condition now fires. Numerical exploration
+stops; subsequent commands only remeasure production, summarize and clean up.
+No finite/nonfinite payload tolerance is used. No new host-math import boundary
+was observed, so these failures are not labeled `ucrt-math-pending`.
+
+
 inference:
 
 INFERENCE: Current F32/UCRT evidence supports removing the historical PF32-only
@@ -110,7 +148,8 @@ changed_files:
 - `tools/fuzz/probe_radialblur_C35.py`: scratch admission, sanitized campaigns and replay.
 - `tools/fuzz/verify_radialblur_negative_C11.py`: select worker; allow matrix-only verification.
 - `tools/fuzz/summarize_radialblur_C35.py`: compact measurements and hash transitions.
-- `tools/fuzz/trace_radialblur_inverse_C35.py`: lossless typed inverse-operation diagnostic for subsequent residual investigation.
+- `tools/fuzz/trace_radialblur_inverse_C35.py`: typed inverse replay with raw taps, static AEX bytes and explicit upstream limitation.
+- `tools/fuzz/trace_radialblur_source_C35.py`: independent import-free source-sampler controls and rejected scratch variants.
 - `orchestra/reports/C35-radial-smart-r6.evidence.json` and this report.
 
 verify:
@@ -140,7 +179,9 @@ original seed-1 baseline command above was run at starting source with
 references with `--experiment negative-phase --admission-campaign ...`.
 
 next:
-- Negative-phase cluster commit: `c9d863c1`; second cluster is the finite Rotation correction.
+- Accepted cluster commits: `c9d863c1` (negative phase), `854fad36` (finite Rotation). Review independently of the blocked nonfinite investigation.
+- Follow-up: add an F32-bound lossless typed raw full-stage trace for nonfinite Zoom (source unpack/polar, prepass, accumulation and normalization). Existing F32 CLI exposes watches only via PNG; do not substitute lossy PNG inputs or rebuild the reference worker without authorization.
+- The Python inverse replay has residual NaN-sign differences and does not establish upstream native equality; an F32-bound full-stage Rotation trace would strengthen that proof.
 - Type3 missing-layer allocation/prepass, nonfinite Zoom, and host checkout
   remain separate boundaries. Work-budget and invalid-index refusals remain.
 
@@ -158,3 +199,22 @@ public diff 0 words, 35 unchanged corpus results. The isolated Python leaf
 replay deliberately reports two NaN-sign differences; it does not override the
 full F32 oracle. Original candidate campaigns used each retained negative-phase
 campaign as `--admission-campaign` and `--experiment rotation-zero-alpha`.
+
+Rejected experiments and source-leaf reproduction (campaign commands are
+expected to exit 1 with mismatch indices 17/89/238/247):
+
+```sh
+# First produce a production seed-1 campaign with retained successful references.
+python3 tools/fuzz/probe_radialblur_C35.py --experiment production --seed 1 --output "$S/current-seed1" > "$S/current-seed1.log" 2>&1
+for E in nonfinite-zero-taps nonfinite-cancelled-rgb nonfinite-x86-generated; do
+  python3 tools/fuzz/probe_radialblur_C35.py --experiment "$E" --admission-campaign "$S/current-seed1/campaign.json" --output "$S/$E" > "$S/$E.log" 2>&1
+  # Expected exit 1: record it and continue explicitly.
+done
+"$PY" tools/fuzz/trace_radialblur_source_C35.py --output "$S/source-leaf-final" > "$S/source-leaf.log" 2>&1
+```
+
+Expected source-leaf result: constant control matches all variants; original
+production differs in 1/3 words on zero-weight/cancellation controls; final
+scratch variant matches all three controls. This does not establish public
+nonfinite admission. Full mismatch bytes and source/provenance hashes are in
+`C35-radial-smart-r6.evidence.json`.

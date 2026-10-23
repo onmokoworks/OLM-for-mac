@@ -56,6 +56,29 @@ def main():
     for name in ['inverse-before','inverse-after','inverse-production']:
         path=root/name/'report.json'
         if path.exists():result[name]=json.loads(path.read_text())
+    result['rejected'] = {}
+    for name in ['nonfinite-zero-taps','nonfinite-cancelled-rgb','nonfinite-x86-generated']:
+        path=root/name/'campaign.json'
+        if path.exists():
+            d=json.loads(path.read_text())
+            result['rejected'][name]=dict(report_sha256=sha(path),provenance=d['provenance'],failures=d['failures'],
+                clean=sum(not r['result']['routes']['smart'].get('sanitizer') for r in d['cases']),
+                mismatches=[dict(index=r['index'],diff=r['result']['routes']['smart']['diff']) for r in d['cases'] if r['result']['routes']['smart']['status']=='mismatch'])
+    path=root/'source-leaf-final/report.json'
+    if path.exists():result['source_leaf']=json.loads(path.read_text())
+    path=root/'final.json'
+    if path.exists():
+        d=json.loads(path.read_text());qualified={r['index']:r for r in campaigns['rotation1']['cases']}
+        baseline={r['index']:r for r in campaigns['base1']['cases']}
+        preserved=[];drift=[]
+        for r in d['cases']:
+            i=r['index'];actual=r['result']['routes']['smart'];expected=qualified[i]['result']['routes']['smart']
+            if baseline[i]['result']['routes']['smart']['status']=='exact' and actual.get('raw_sha256')==baseline[i]['result']['routes']['smart'].get('raw_sha256'):preserved.append(i)
+            if actual.get('raw_sha256')!=expected.get('raw_sha256'):drift.append(i)
+        result['final']=dict(report_sha256=sha(path),counts=dict(Counter(r['result']['routes']['smart']['status'] for r in d['cases'])),
+            baseline_exact_hashes_preserved=len(preserved),qualified_hash_drift=drift,
+            uncompared=[dict(index=r['index'],oracle=r['result']['oracles']['smart']) for r in d['cases'] if r['result']['routes']['smart']['status']=='uncompared'])
+        assert not drift
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     print('campaigns',[(n,d['counts']) for n,d in result['campaigns'].items()])
