@@ -36,10 +36,13 @@ def main():
     p.add_argument('--source-ref')
     p.add_argument('--source',type=Path)
     p.add_argument('--case-index',type=int)
+    p.add_argument('--case-json',type=Path,help='Explicit PF32 public case with pixels_hex; mutually exclusive with case-index')
     p.add_argument('--seed',type=int,default=1)
     p.add_argument('--geometry',type=int,nargs=2,help='Independent cropped-prefix case; source must contain enough pixels')
     p.add_argument('--blur-size',type=int)
     args=p.parse_args();args.scratch=args.scratch.resolve()
+    assert args.case_json is None or args.case_index is None
+    targeted = args.case_index is not None or args.case_json is not None
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch))
@@ -48,7 +51,7 @@ def main():
     source=args.source.read_text() if args.source else (subprocess.check_output(['git','show',args.source_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode() if args.source_ref else SOURCE.read_text())
     source=gate_source(source,'finite')
     report=dict(schema='olm.dg-smart-trace-C14/1',source_ref=args.source_ref,source_sha256=sha(source.encode()),rows=[])
-    if args.case_index is not None:
+    if targeted:
         dump='if(const char *dp=getenv("OLM_DG_C14_PF32_BLUR")) { FILE *f=fopen(dp,"ab"); if(f) { fwrite(df.x.data(),4,df.x.size(),f); fclose(f); } }'
         source=source.replace('if (blurred) df.pre_blur_x = df.x;',dump+'\n\tif (blurred) df.pre_blur_x = df.x;')
         source=source.replace('// The Windows typed paths merge the float field',dump+'\n\t// The Windows typed paths merge the float field')
@@ -62,8 +65,14 @@ def main():
       def hook(loader,rip,size):
           ownership.append(loader.uc.reg_read(UC_X86_REG_XMM7).to_bytes(16,'little')[:4].hex())
       ld.add_code_hook(0x181170e1e,hook)
-      for label,c in ([(f'campaign/seed{args.seed}/case{args.case_index}',a.generate(args.seed,args.case_index))] if args.case_index is not None else matrix(a)):
-        if args.case_index is None:
+      if args.case_json:
+          explicit=json.loads(args.case_json.read_text());explicit['pixels']=bytes.fromhex(explicit.pop('pixels_hex'))
+          assert explicit['depth']==32 and len(explicit['pixels'])==explicit['geometry'][0]*explicit['geometry'][1]*16
+          cases=[('explicit/'+args.case_json.name,explicit)]
+      else:
+          cases=[(f'campaign/seed{args.seed}/case{args.case_index}',a.generate(args.seed,args.case_index))] if targeted else matrix(a)
+      for label,c in cases:
+        if not targeted:
             if c['geometry']!=[7,1] or not label.endswith('mode2/bg0'):continue
             if c['profile'] not in ('alpha-signed','uniform-hdr','uniform-negative'):continue
         if args.geometry:
@@ -82,7 +91,7 @@ def main():
             params.append(name+'='+(','.join(map(str,q['value'])) if isinstance(q['value'],list) else str(q['value'])))
         watches=['function=0x1172a10,arg=stack6,size=224',f'rva=0x1173642,arg=rdx,deref=88,size={min(4096,len(c["pixels"]))}']
         plane_capture_bytes=min(4096,w*h*4)
-        if args.case_index is not None:
+        if targeted:
             watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={plane_capture_bytes}',f'rva=0x1173611,arg=rdx,deref=88,size={plane_capture_bytes}', f'rva=0x12c97d3,arg=rcx,deref=16,size={plane_capture_bytes}', f'rva=0x12c97d3,arg=rdx,deref=16,size={plane_capture_bytes}', 'function=0x12c9930,arg=rcx,size=96']
         field_row_ids=[]
         if len(c['pixels'])>4096:
@@ -129,7 +138,7 @@ def main():
                  aex_degenerate_mask=state[0x90],field_hex=field.hex(),ownership_bits=list(ownership),
                  field_diff=raw_diff(expected_field,mac_field,32),aex_hex=raw.hex(),mac_hex=mac.hex(),
                  output_diff=raw_diff(raw,mac,32),public_callback_sha256=sha(raw),watches=watches)
-        if args.case_index is not None:
+        if targeted:
             planes=blurpath.read_bytes();assert len(planes)==w*h*8
             pre=bytes.fromhex(ws['watch-3']['before']['hex']);post=bytes.fromhex(ws['watch-4']['after']['hex'])
             row['backend_witnesses']={k:v for k,v in ws.items() if int(k.split('-')[1])>=5}

@@ -518,11 +518,13 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool sma
 // cvSmooth mode 1 (CV_BLUR) used by Constant + Blur is a normalized box
 // filter with replicated borders. Keep it separate from the Gaussian path
 // used by the other interpolation modes.
-static void box_blur_separable(float *mat, long w, long h, int ksize)
+static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false)
 {
 	if (ksize <= 1) return;
 	const int half = ksize / 2;
-	const float area = (float)(ksize * ksize);
+	// Smart PF32: retain the integer kernel area in double precision.
+	// Odd kernels above 4095 lose area bits when rounded through float.
+	const double area = double_area ? (double)ksize * (double)ksize : (double)(float)(ksize * ksize);
 	std::vector<float> src(mat, mat + (size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		for (long x = 0; x < w; ++x) {
@@ -1160,7 +1162,8 @@ static void build_distance_field(
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) {
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
-				box_blur_separable(df.x.data(), w, h, ksize);
+				box_blur_separable(df.x.data(), w, h, ksize,
+				    p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat));
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
 				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
@@ -1801,7 +1804,7 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 		(p.interp_mode != INTERP_CONSTANT && p.interp_mode != INTERP_LINEAR &&
 		 p.interp_mode != INTERP_SPHERE) ||
 		p.blur_mode < BLUR_MODE_NO_SCALE || p.blur_mode > BLUR_MODE_MEDIAN ||
-		p.blur_size < 1 || p.blur_size > 500 ||
+		p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_NO_SCALE ? 4096 : 500) ||
 		p.in_out < IN_OUT_INSIDE || p.in_out > IN_OUT_BOTH ||
 		p.render_mode < RENDER_MODE_RGB || p.render_mode > RENDER_MODE_LAYER ||
 		p.inside_threshold < 0 || p.inside_threshold > 1000 ||
@@ -1826,6 +1829,12 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
 	    input->width != output->width || input->height != output->height) return false;
+	// C52: finite extended samples share the proven scalar Bilateral field.
+	// Normalize Power only for admission; rendering retains its UCRT exponent.
+	DGParams finite_admission = p;
+	if (p.interp_mode == INTERP_POWER && std::isfinite(p.power) &&
+	    p.power >= 0.01f && p.power <= 5.0f)
+		finite_admission.interp_mode = INTERP_LINEAR;
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
 	if (width > std::numeric_limits<size_t>::max() / height) return false;
@@ -1863,7 +1872,9 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 				if ((value < 0.0f || value > 1.0f) &&
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
 				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)) &&
-				    !is_admitted_pf32_smart_bilateral_beta(p)) return false;
+				    !is_admitted_pf32_smart_bilateral_beta(p) &&
+				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) &&
+				    !is_admitted_pf32_smart_unblurred_beta(finite_admission)) return false;
 			}
 		}
 	}
