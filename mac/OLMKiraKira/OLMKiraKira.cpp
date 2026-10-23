@@ -967,7 +967,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
                 const float divisor=norms[ray_index++];
                 const float norm=divisor == 0.0f ? 0.0f : 1.0f/divisor;
                 const float alpha=(*ray)[i*4+3];
-                if ((double)alpha <= 0.001) continue;
+                // Original 18114f152 COMISD / JBE skips unordered alpha too.
+                // Finite source extremes can overflow into NaN in the filters.
+                if (!((double)alpha > 0.001)) continue;
                 const float inv=1.0f/alpha;
                 const float a=Clamp01(alpha*norm);
                 g.r = inv*(*ray)[i*4]*a*scale+g.r;
@@ -2043,14 +2045,15 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
-// C38: scalar luminance/Max constructors feed the same recovered box and
-// clamp pipeline for finite PF32 HDR/signed samples. Preserve all tuple,
+// C38: scalar luminance/Max and four-component color constructors feed the
+// recovered box and clamp pipelines for finite PF32 HDR/signed samples. Preserve all tuple,
 // geometry, ramp and work limits; other source domains need separate proof.
-static bool SmartFiniteBrightnessInputIsSupported(const PF_EffectWorld *input,
+static bool SmartFiniteBoxInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
     if (!input || format != PF_PixelFormat_ARGB128 ||
-        !IsSmartScalarBrightnessBoxTuple(info, format)) return false;
+        !(IsSmartScalarBrightnessBoxTuple(info, format) ||
+          IsSmartColorBoxTuple(info, format))) return false;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
@@ -2913,7 +2916,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
 				 SmartAlphaBoxInputIsSupported(input_world, format, info) ||
-                 SmartFiniteBrightnessInputIsSupported(input_world, format, info));
+                 SmartFiniteBoxInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
