@@ -1,0 +1,24 @@
+--- a/mac/OLMKiraKira/OLMKiraKira.cpp
++++ b/mac/OLMKiraKira/OLMKiraKira.cpp
+@@ -690,0 +691 @@
++        const bool y_border = iy < 0 || iy >= sh-1;
+@@ -699,0 +701 @@
++            const bool x_border = ix < 0 || ix >= sw-1;
+@@ -703,4 +705,13 @@
+-			const A_long x1 = std::min<A_long>(sw-1, ix+1);
+-			const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
+-			const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], fx);
+-			output[(size_t)y*dw+x] = blend(a, b, fy);
++            const A_long x1 = x_border ? ix : ix+1;
++            // IPP edge kernel 1803238a0 evaluates only the varying axis.
++            // Top/bottom rows use a horizontal blend, including corners;
++            // left/right columns in interior rows use only a vertical blend.
++            if (y_border) {
++                output[(size_t)y*dw+x] = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
++            } else if (x_border) {
++                output[(size_t)y*dw+x] = blend(input[(size_t)y0*sw+ix], input[(size_t)y1*sw+ix], fy);
++            } else {
++                const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
++                const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], fx);
++                output[(size_t)y*dw+x] = blend(a, b, fy);
++            }

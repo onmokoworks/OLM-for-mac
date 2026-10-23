@@ -688,6 +688,7 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 		const double cy = ((double)y + 0.5) * sy_scale - 0.5;
 		float fy;
 		A_long iy = (A_long)std::floor(cy);
+        const bool y_border = iy < 0 || iy >= sh-1;
 		fy = (float)(cy - (double)iy);
 		if (iy < 0) { iy = 0; fy = 0.0f; }
 		if (iy >= sh-1) { iy = sh-1; fy = 0.0f; }
@@ -697,13 +698,23 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 			const double cx = ((double)x + 0.5) * sx_scale - 0.5;
 			float fx;
 			A_long ix = (A_long)std::floor(cx);
+            const bool x_border = ix < 0 || ix >= sw-1;
 			fx = (float)(cx - (double)ix);
 			if (ix < 0) { ix = 0; fx = 0.0f; }
 			if (ix >= sw-1) { ix = sw-1; fx = 0.0f; }
-			const A_long x1 = std::min<A_long>(sw-1, ix+1);
-			const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
-			const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], fx);
-			output[(size_t)y*dw+x] = blend(a, b, fy);
+            const A_long x1 = x_border ? ix : ix+1;
+            // IPP edge kernel 1803238a0 evaluates only the varying axis.
+            // Top/bottom rows use a horizontal blend, including corners;
+            // left/right columns in interior rows use only a vertical blend.
+            if (y_border) {
+                output[(size_t)y*dw+x] = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
+            } else if (x_border) {
+                output[(size_t)y*dw+x] = blend(input[(size_t)y0*sw+ix], input[(size_t)y1*sw+ix], fy);
+            } else {
+                const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
+                const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], fx);
+                output[(size_t)y*dw+x] = blend(a, b, fy);
+            }
 		}
 	}
 	return output;
@@ -2074,7 +2085,8 @@ static bool GenericBetaInputIsFiniteSDR(
 }
 
 // C38: finite PF32 HDR/signed input is supported by the recovered brightness
-// and color box pipelines, and by Alpha Gaussian/approximation. Preserve
+// and color box pipelines, and by Alpha Gaussian/approximation. C50 also
+// validates finite color box approximation with the recovered IPP edges. Preserve
 // tuple, geometry, ramp and work limits; nonfinite input has separate guards.
 static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
@@ -2083,8 +2095,11 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
     const bool filtered_alpha = info.channel == 1 &&
         (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
          IsSmartApproximationTuple(info, format, input->width, input->height));
+    const bool approximated_color = (info.channel == 3 || info.channel == 5 || info.channel == 6) &&
+        (info.blur_mode == 1 || info.blur_mode == 2) &&
+        IsSmartApproximationTuple(info, format, input->width, input->height);
     if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
-          IsSmartColorBoxTuple(info, format) || filtered_alpha)) return false;
+          IsSmartColorBoxTuple(info, format) || filtered_alpha || approximated_color)) return false;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
@@ -2099,13 +2114,18 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
 // source lanes. Row/column state preserves the finite-versus-NaN boundary;
 // the original scalar aggregator clamps NaN ray amounts to zero, and the
 // typed writer clamps composition. NaN sign/payload differences inside the
-// filters do not survive those original operations. Keep other constructors,
-// approximation and Gaussian on their existing source validation paths.
-static bool SmartAlphaBoxInputIsSupported(const PF_EffectWorld *input,
+// filters do not survive those original operations. C50 also validates the
+// full-resolution Gaussian path and recovered approximation (including its
+// one-axis IPP edge operations). Other constructors retain their existing
+// source validation paths.
+static bool SmartAlphaInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
     return input && format == PF_PixelFormat_ARGB128 &&
-        IsAlphaBoxTuple(info, format, true, true, true);
+        (IsAlphaBoxTuple(info, format, true, true, true) ||
+         (info.channel == 1 &&
+          (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
+           IsSmartApproximationTuple(info, format, input->width, input->height))));
 }
 
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
@@ -2947,7 +2967,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputIsSupported(input_world, format, info) ||
+				 SmartAlphaInputIsSupported(input_world, format, info) ||
                  SmartFiniteInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",

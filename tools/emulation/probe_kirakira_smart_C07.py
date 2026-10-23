@@ -29,6 +29,22 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'nonfinite-alpha-gaussian-negative-C50':
+        for case in cases(adapter, 'nonfinite-alpha-negative'):
+            params = {p['slot']: p for p in case['parameters']}
+            if params[2]['value'] == 3: continue
+            params[2]['value'] = 3
+            yield case
+        return
+    if family in ('nonfinite-alpha-gaussian-C50', 'nonfinite-alpha-gaussian-boundary-C50'):
+        # Independent C34 source-bit matrix, now through Gaussian filtering.
+        for case in cases(adapter, 'nonfinite-alpha-lengths' if 'boundary' in family else 'nonfinite-alpha-box'):
+            params = {p['slot']: p for p in case['parameters']}
+            if params[2]['value'] != 1: continue
+            params[2]['value'] = 3
+            case['profile'] = family
+            yield case
+        return
     if family == 'finite-alpha-filtered-boundary':
         for i, (kind, shape, strength, variant) in enumerate(itertools.product(
                 range(3), range(3), (1, 100, 537), range(2))):
@@ -605,11 +621,11 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('finite-alpha-filtered-boundary', 'finite-alpha-filtered', 'finite-alpha-filtered-negative', 'finite-color-boundary', 'finite-color-negative', 'finite-color-box', 'finite-brightness-negative', 'finite-brightness-boundary', 'finite-brightness-box', 'nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('nonfinite-alpha-gaussian-negative-C50', 'nonfinite-alpha-gaussian-C50', 'nonfinite-alpha-gaussian-boundary-C50', 'finite-alpha-filtered-boundary', 'finite-alpha-filtered', 'finite-alpha-filtered-negative', 'finite-color-boundary', 'finite-color-negative', 'finite-color-box', 'finite-brightness-negative', 'finite-brightness-boundary', 'finite-brightness-box', 'nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
-    p.add_argument('--ucrt-math', action='store_true', help='Bind trace expf/powf/atan2f to F32 UCRT FMA imports')
+    p.add_argument('--ucrt-math', action='store_true', help='Bind all trace math imports to F46 UCRT FMA imports')
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--require-refusal', action='store_true')
     p.add_argument('--expect-finite-domain', action='store_true')
@@ -625,7 +641,7 @@ def main():
                               main=main_checkout(), worker=default_worker())
     deadline = time.monotonic() + 7200
     report = dict(schema='olm-kira-C07/1', family=args.family, rows=[], status='running',
-                  gate_off=args.gate_off, trace_powf='host float powf, matching retained worker; not native UCRT', source_sha256=sha(args.source.read_bytes()),
+                  gate_off=args.gate_off, trace_powf='legacy host powf diagnostic; require public-output binding for stage claims', source_sha256=sha(args.source.read_bytes()),
                   worker_sha256=sha(options.worker.read_bytes()),
                   aex_sha256=sha((options.main / 'plugins_2025/OLMKiraKira.aex').read_bytes()))
     report['headers_sha256'] = {}
@@ -648,10 +664,10 @@ def main():
         if args.ucrt_math:
             ucrt_math = scratch / 'trace-ucrt.dylib'
             objects = sorted((scratch / 'build' / 'ucrtmath').glob('*.o'))
-            assert len(objects) == 4
+            assert len(objects) == 7
             subprocess.run(['clang', '-dynamiclib', *map(str, objects), '-o', str(ucrt_math)],
                            check=True, capture_output=True)
-            report['trace_powf'] = 'independent UCRT expf/powf/atan2f FMA, matching F32'
+            report['trace_powf'] = 'independent UCRT FMA imports, matching F46'
         directory = scratch / 'case'
         directory.mkdir(exist_ok=True)
         selected = cases(adapter, args.family)

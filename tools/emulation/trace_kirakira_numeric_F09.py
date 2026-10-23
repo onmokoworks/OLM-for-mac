@@ -40,8 +40,8 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
         def register_libm_impls(self, max_threads=1):
             super().register_libm_impls(max_threads)
             if host_powf:
-                # Match the retained worker's f32::powf import, not the
-                # historical Python double-pow substitute. Not native UCRT.
+                # Legacy host-powf diagnostic, not the F46 UCRT import.
+                # Require final public-output binding before stage claims.
                 import ctypes
                 powf = ctypes.CDLL(None).powf
                 powf.argtypes = (ctypes.c_float, ctypes.c_float)
@@ -51,19 +51,24 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                     return 0
                 self.import_impls['powf'] = imported_powf
             if ucrt_math is not None:
-                # F32 uses these independent UCRT implementations in FMA mode.
-                # Preserve every other import and all original numerical code.
+                # Bind all F46 imported math to the independent UCRT library.
                 import ctypes
                 library = ctypes.CDLL(str(ucrt_math))
-                for name, count in (('expf', 1), ('powf', 2), ('atan2f', 2)):
+                for name, count, wide in (('expf', 1, False), ('powf', 2, False),
+                        ('atan2f', 2, False), ('sinf', 1, False), ('cosf', 1, False),
+                        ('log2f', 1, False), ('sin', 1, True), ('cos', 1, True),
+                        ('exp', 1, True), ('pow', 2, True)):
                     function = getattr(library, 'ucrt_' + name)
-                    function.argtypes = [ctypes.c_float] * count + [ctypes.c_int]
-                    function.restype = ctypes.c_float
-                    def imported(uc, args, function=function, count=count):
-                        values = [self.read_xmm_f32(i) for i in range(count)]
-                        self.write_xmm_f32(0, function(*values, 1))
+                    scalar = ctypes.c_double if wide else ctypes.c_float
+                    function.argtypes = [scalar] * count + [ctypes.c_int]
+                    function.restype = scalar
+                    def imported(uc, args, function=function, count=count, wide=wide):
+                        read = self.read_xmm_f64 if wide else self.read_xmm_f32
+                        write = self.write_xmm_f64 if wide else self.write_xmm_f32
+                        write(0, function(*(read(i) for i in range(count)), 1))
                         return 0
                     self.import_impls[name] = imported
+
 
 
         def add_code_hook(self, address, callback):
