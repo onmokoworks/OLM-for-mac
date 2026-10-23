@@ -1,0 +1,81 @@
+[
+  {
+    "boundary": "initial-suite-discovery",
+    "plugin": "colorkeep",
+    "worker_sha256": "71fc06d07cb7b0a56efcca4f5ea6701166d26254ade88abd710db50277a0a0fd",
+    "case": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7f7bec60ea3ac177715f65c77d665bdff3c5e644344cb314d9634f0d136bb1c6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "smart": {
+          "diagnostic": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF ColorParamSuite 1 supported=1\nF47c AcquireSuite PF Iterate8 Suite 2 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 24 error=516\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=101 acquire=2 release=2 formats=2 checkout=100 checkin=100\naex_guest_error: selector RENDER returned 516\n",
+          "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF ColorParamSuite 1 supported=1\nF47c AcquireSuite PF Iterate8 Suite 2 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 24 error=516\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=101 acquire=2 release=2 formats=2 checkout=100 checkin=100\naex_guest_error: selector RENDER returned 516\n",
+          "returncode": 1,
+          "status": "reject"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    }
+  },
+  {
+    "boundary": "initial-suite-discovery",
+    "plugin": "olmdirectionalblur",
+    "worker_sha256": "71fc06d07cb7b0a56efcca4f5ea6701166d26254ade88abd710db50277a0a0fd",
+    "case": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "routes": {
+        "smart": {
+          "diagnostic": "F47c AcquireSuite AEGP Utility Suite 13 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 1 error=516\nF47c counters declarations=0 acquire=0 release=0 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 516\n",
+          "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 1 error=516\nF47c counters declarations=0 acquire=0 release=0 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 516\n",
+          "returncode": 1,
+          "status": "reject"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    }
+  },
+  {
+    "boundary": "second-pass-callback-discovery",
+    "plugin": "olmdirectionalblur",
+    "worker_sha256": "535c2517a4f96a4c392e6c666e18ec41a4be53862dea92cd0f2a2f3c29319e3b",
+    "case": {
+      "diagnostic": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c unsupported/invalid callback: checkout_layer_pixels\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\naex_guest_error: selector RENDER returned 516\n",
+      "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c unsupported/invalid callback: checkout_layer_pixels\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\naex_guest_error: selector RENDER returned 516\n",
+      "returncode": 1,
+      "status": "reject"
+    }
+  },
+  {
+    "boundary": "second-pass-callback-discovery",
+    "plugin": "olmkirakira",
+    "worker_sha256": "535c2517a4f96a4c392e6c666e18ec41a4be53862dea92cd0f2a2f3c29319e3b",
+    "case": {
+      "diagnostic": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c AcquireSuite PF Handle Suite 2 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 4 error=13\nF47c selector 3 error=0\nF47c counters declarations=13 acquire=1 release=1 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 13\n",
+      "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c AcquireSuite PF Handle Suite 2 supported=0\nF47c unsupported/invalid callback: AcquireSuite\nF47c selector 4 error=13\nF47c selector 3 error=0\nF47c counters declarations=13 acquire=1 release=1 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 13\n",
+      "returncode": 1,
+      "status": "reject"
+    }
+  },
+  {
+    "boundary": "second-pass-callback-discovery",
+    "plugin": "olmsmoother",
+    "worker_sha256": "535c2517a4f96a4c392e6c666e18ec41a4be53862dea92cd0f2a2f3c29319e3b",
+    "case": {
+      "diagnostic": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c unsupported/invalid callback: GetPixelFormat\nF47c selector 11 error=516\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=1 release=1 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 516\n",
+      "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c unsupported/invalid callback: GetPixelFormat\nF47c selector 11 error=516\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=1 release=1 formats=0 checkout=0 checkin=0\naex_guest_error: selector RENDER returned 516\n",
+      "returncode": 1,
+      "status": "reject"
+    }
+  }
+]

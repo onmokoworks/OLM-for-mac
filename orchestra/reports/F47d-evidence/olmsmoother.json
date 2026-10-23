@@ -1,0 +1,3860 @@
+{
+  "summary": {
+    "route": "classic",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 65,
+      "reject": 35
+    },
+    "bundle_counts": {
+      "exact": 65,
+      "reject": 35
+    },
+    "source_counts": {
+      "exact": 65,
+      "refusal": 35
+    },
+    "classifications": {
+      "same-output-as-source": 65,
+      "same-refusal-as-source": 35
+    },
+    "first_mismatch": null
+  },
+  "bundle_report_sha256": "306075f043427fa8064436d4ba48e94c1f2d24eaeac8a66c23069bb99fd2393d",
+  "source_report_sha256": "ca70ba3bdc5a4a58b71a4fcfcaa0a03d421a9d159af6e2f81ef061ce8bf0c7b0",
+  "bundle_provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/bundles/xcode/OLMSmoother/products/OLMSmoother.plugin",
+    "candidate_sha256": "1a3316fc6a7605229385bf12b6718e9d037b95d2237311b9161c8b87e295c7c5",
+    "case_timeout_seconds": 10.0,
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "host": "F47d shared Rust ClassicHost arena; AEX setup, native candidate setup and selected render route",
+    "oracle_routes": {
+      "classic": "classic"
+    },
+    "original_routes": {
+      "classic": "render"
+    },
+    "parameter_profile": "shared declarations",
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/checked/aex-guest-worker",
+    "worker_sha256": "8057af6313d851f7e00939400b6b64a302fd00addc8f22c0812715216c49c35b",
+    "world": "same ARGB worlds: input padding rounded up to pixel alignment, 0xA5 fill; output packed in both runs; generated output_padding unused"
+  },
+  "source_provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "0cb1ff8e8f31ea22f6b9fa787c505c1e221e2ac675b7052641772f48d83eb905",
+    "case_timeout_seconds": 10.0,
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "6b64edfc16c5e513ca9fe9e6bdffe83bbb7c8debac80082668ff14c33b80a129",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "classic"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "absent; Mac Smart wrapper is explicitly compared to original Classic"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/aex-guest-worker",
+    "worker_sha256": "71fc06d07cb7b0a56efcca4f5ea6701166d26254ade88abd710db50277a0a0fd",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "cases": [
+    {
+      "index": 0,
+      "depth": 8,
+      "geometry": [
+        21,
+        19
+      ],
+      "input_sha256": "c01ddc26297d665884bdee40adee624acd698b7ab42d28bfd3edb1e9b116cc0c",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7ffaf5e7bea21fca19688efbf48953d83b57a403abbcc42a0b1ae637d3650644",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7ffaf5e7bea21fca19688efbf48953d83b57a403abbcc42a0b1ae637d3650644",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "7ffaf5e7bea21fca19688efbf48953d83b57a403abbcc42a0b1ae637d3650644",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "7ffaf5e7bea21fca19688efbf48953d83b57a403abbcc42a0b1ae637d3650644",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 1,
+      "depth": 16,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 2,
+      "depth": 32,
+      "geometry": [
+        10,
+        19
+      ],
+      "input_sha256": "e1555855b414b299e3598fe9bce776291bd9842184b93b599cbd98c7fcacb2f4",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 3,
+      "depth": 16,
+      "geometry": [
+        39,
+        45
+      ],
+      "input_sha256": "1b85b79c657285d8be2be91d0bb9797646d15af0b552aeada870fb623aad1254",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8ee2188a5ec1c787278badc7359a5bf07a66a222fb0f3b2788745b5a3d56bc92",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8ee2188a5ec1c787278badc7359a5bf07a66a222fb0f3b2788745b5a3d56bc92",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "8ee2188a5ec1c787278badc7359a5bf07a66a222fb0f3b2788745b5a3d56bc92",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8ee2188a5ec1c787278badc7359a5bf07a66a222fb0f3b2788745b5a3d56bc92",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 4,
+      "depth": 8,
+      "geometry": [
+        117,
+        244
+      ],
+      "input_sha256": "91b920b11c3422bfc2025f7888661ca64b8c212d633cf578eefda95d8efe75df",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "350c33bcc41a910171db57ebeaf6e2b1ae50bb5bd4b55b718cc771d0cb9bf4a0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "350c33bcc41a910171db57ebeaf6e2b1ae50bb5bd4b55b718cc771d0cb9bf4a0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "350c33bcc41a910171db57ebeaf6e2b1ae50bb5bd4b55b718cc771d0cb9bf4a0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "350c33bcc41a910171db57ebeaf6e2b1ae50bb5bd4b55b718cc771d0cb9bf4a0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 5,
+      "depth": 16,
+      "geometry": [
+        16,
+        67
+      ],
+      "input_sha256": "112bd2d872dbee4d983d6d70462c106bc103713de1a278d2dee16e4b0e546aca",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ba9d289d1fb59ed137842c6639a94dceb66eca199ad35fc5ccd66b68ee828ff1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ba9d289d1fb59ed137842c6639a94dceb66eca199ad35fc5ccd66b68ee828ff1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "ba9d289d1fb59ed137842c6639a94dceb66eca199ad35fc5ccd66b68ee828ff1",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ba9d289d1fb59ed137842c6639a94dceb66eca199ad35fc5ccd66b68ee828ff1",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 6,
+      "depth": 8,
+      "geometry": [
+        33,
+        61
+      ],
+      "input_sha256": "c17f00487644c2f7debcf8f52d71462b4ba293afa915601e9e0a52f54f520a90",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4e8ca8f11a298753e1c3830b20b7a1520ad0f4e43d84befabd478fe1d5a05516",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4e8ca8f11a298753e1c3830b20b7a1520ad0f4e43d84befabd478fe1d5a05516",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "4e8ca8f11a298753e1c3830b20b7a1520ad0f4e43d84befabd478fe1d5a05516",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4e8ca8f11a298753e1c3830b20b7a1520ad0f4e43d84befabd478fe1d5a05516",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 7,
+      "depth": 32,
+      "geometry": [
+        23,
+        24
+      ],
+      "input_sha256": "41d109576fea700b1ffee1fde17da7d748fe109961a4e33503d0eedb547c9abe",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 8,
+      "depth": 8,
+      "geometry": [
+        10,
+        2
+      ],
+      "input_sha256": "f26362b7dc13782c0e615f16b9c4d27b0111cc12b5d34613bde415cc9a3ea257",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43424d04f33b5aff14d45da72121279e71041a7e3f564f9f374bf6f1fd662060",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43424d04f33b5aff14d45da72121279e71041a7e3f564f9f374bf6f1fd662060",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "43424d04f33b5aff14d45da72121279e71041a7e3f564f9f374bf6f1fd662060",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "43424d04f33b5aff14d45da72121279e71041a7e3f564f9f374bf6f1fd662060",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 9,
+      "depth": 8,
+      "geometry": [
+        24,
+        5
+      ],
+      "input_sha256": "5a7e511f6dcef90677e0b39e3e2142b866b5b4b689f5c24158b3528ca42037c2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a6ffa145f71d226623d77f2342202d4a3160d471a487f025237a4b5a606f1ace",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a6ffa145f71d226623d77f2342202d4a3160d471a487f025237a4b5a606f1ace",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "a6ffa145f71d226623d77f2342202d4a3160d471a487f025237a4b5a606f1ace",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a6ffa145f71d226623d77f2342202d4a3160d471a487f025237a4b5a606f1ace",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 10,
+      "depth": 8,
+      "geometry": [
+        6,
+        38
+      ],
+      "input_sha256": "b567f5b2320706930bd6ca5adc6d8b66d962ffebb38e49c5fd2c05f26f138d17",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b567f5b2320706930bd6ca5adc6d8b66d962ffebb38e49c5fd2c05f26f138d17",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b567f5b2320706930bd6ca5adc6d8b66d962ffebb38e49c5fd2c05f26f138d17",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "b567f5b2320706930bd6ca5adc6d8b66d962ffebb38e49c5fd2c05f26f138d17",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b567f5b2320706930bd6ca5adc6d8b66d962ffebb38e49c5fd2c05f26f138d17",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 11,
+      "depth": 16,
+      "geometry": [
+        37,
+        46
+      ],
+      "input_sha256": "6697cf0110eedb9430151bc7fc90435ef720bec84b6f5162fa4c9ba0a5a1bd32",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "77fcb66b4e59071385f4ac09cd40341841aac94c38098ad17d1cda703a466b9c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "77fcb66b4e59071385f4ac09cd40341841aac94c38098ad17d1cda703a466b9c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "77fcb66b4e59071385f4ac09cd40341841aac94c38098ad17d1cda703a466b9c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "77fcb66b4e59071385f4ac09cd40341841aac94c38098ad17d1cda703a466b9c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 12,
+      "depth": 16,
+      "geometry": [
+        2,
+        18
+      ],
+      "input_sha256": "9f7fc38e00b69cab93d57da71debfc82b6785f745a43b3f7adebf515131dcf17",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0bd9192fd2229630619c4ed0b7ffd3a0564af6f7666c4d698860036fafe66e91",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0bd9192fd2229630619c4ed0b7ffd3a0564af6f7666c4d698860036fafe66e91",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "0bd9192fd2229630619c4ed0b7ffd3a0564af6f7666c4d698860036fafe66e91",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0bd9192fd2229630619c4ed0b7ffd3a0564af6f7666c4d698860036fafe66e91",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 13,
+      "depth": 16,
+      "geometry": [
+        24,
+        17
+      ],
+      "input_sha256": "7a88592dc59a9881b5f6df672d9c3fded87600221d3e1f3d17b84ada67bfeae8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43084a3b6c26ef14b5b4fd669865e490f365785191e696a4fbbd146f51a19f6d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43084a3b6c26ef14b5b4fd669865e490f365785191e696a4fbbd146f51a19f6d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "43084a3b6c26ef14b5b4fd669865e490f365785191e696a4fbbd146f51a19f6d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "43084a3b6c26ef14b5b4fd669865e490f365785191e696a4fbbd146f51a19f6d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 14,
+      "depth": 8,
+      "geometry": [
+        18,
+        1
+      ],
+      "input_sha256": "a0115c7bcb340c7beb25d6891eb0a6bcd6bbfc2fac93a761f7a51936f6262da1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "22c41d85e4ae8157bf3eedbd6edb69844fb38a80bb4333e3c5a8eeb8c5a04039",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "22c41d85e4ae8157bf3eedbd6edb69844fb38a80bb4333e3c5a8eeb8c5a04039",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "22c41d85e4ae8157bf3eedbd6edb69844fb38a80bb4333e3c5a8eeb8c5a04039",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "22c41d85e4ae8157bf3eedbd6edb69844fb38a80bb4333e3c5a8eeb8c5a04039",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 15,
+      "depth": 32,
+      "geometry": [
+        9,
+        19
+      ],
+      "input_sha256": "947ba819e590216bd6438b9a8c7e9e39b158b1ffd70fe750772842b2ee0f7a9b",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 16,
+      "depth": 32,
+      "geometry": [
+        4,
+        22
+      ],
+      "input_sha256": "6e595210a07e020975da9f549f926b1d5e20f7eaa569e7aa4207604d793f063e",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 17,
+      "depth": 32,
+      "geometry": [
+        19,
+        158
+      ],
+      "input_sha256": "b614f2e480d738d48a24f258f9fcbbc737ef65e76ad395b4f73f575ca89d6231",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 18,
+      "depth": 32,
+      "geometry": [
+        1,
+        39
+      ],
+      "input_sha256": "01464d084957def28a01f2d58a5b783ae56605dd1fc90487540111ec18425d3c",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 19,
+      "depth": 8,
+      "geometry": [
+        8,
+        21
+      ],
+      "input_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "dfe25dd4fb6f90e67a0b464f8a94a3b661ad33e31ecd410dc275838654aff408",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "dfe25dd4fb6f90e67a0b464f8a94a3b661ad33e31ecd410dc275838654aff408",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "dfe25dd4fb6f90e67a0b464f8a94a3b661ad33e31ecd410dc275838654aff408",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "dfe25dd4fb6f90e67a0b464f8a94a3b661ad33e31ecd410dc275838654aff408",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 20,
+      "depth": 32,
+      "geometry": [
+        10,
+        22
+      ],
+      "input_sha256": "09a26773b78220c4c43d5db472c69715ae7d8b19701191dffbb319622a7e2443",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 21,
+      "depth": 16,
+      "geometry": [
+        1,
+        34
+      ],
+      "input_sha256": "45deb56d3193e63428d5b5fe921021cddb1ac899689209c51d8e265312349507",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cd6724e4e64d96486aff57b2757f9ed80a5c60ade29d9310e438f8038c20756f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cd6724e4e64d96486aff57b2757f9ed80a5c60ade29d9310e438f8038c20756f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "cd6724e4e64d96486aff57b2757f9ed80a5c60ade29d9310e438f8038c20756f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "cd6724e4e64d96486aff57b2757f9ed80a5c60ade29d9310e438f8038c20756f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 22,
+      "depth": 16,
+      "geometry": [
+        4,
+        4
+      ],
+      "input_sha256": "2615077b4565ed3892fce6108e0efdbcc655de44e0db0db3d333bcc4e011a7af",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2615077b4565ed3892fce6108e0efdbcc655de44e0db0db3d333bcc4e011a7af",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2615077b4565ed3892fce6108e0efdbcc655de44e0db0db3d333bcc4e011a7af",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "2615077b4565ed3892fce6108e0efdbcc655de44e0db0db3d333bcc4e011a7af",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2615077b4565ed3892fce6108e0efdbcc655de44e0db0db3d333bcc4e011a7af",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 23,
+      "depth": 32,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "913812aaa95d2b8b0866ce1e6d1e088719d388f18ee8396daff56e6d7bdd32cf",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 24,
+      "depth": 32,
+      "geometry": [
+        50,
+        34
+      ],
+      "input_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 25,
+      "depth": 32,
+      "geometry": [
+        1,
+        91
+      ],
+      "input_sha256": "8e579e2268ba527214f568053bf786463f35571ffb5ce5f4907fd074da204224",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 26,
+      "depth": 16,
+      "geometry": [
+        7,
+        22
+      ],
+      "input_sha256": "7946427ba3a72c18f6f6f6f5237e025c7523fff2259c32aa52394ab07ed39e1f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "81dea9a385ce35b62d239e9019fd3313d8976c1524943dd674d1ed918da36d1b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "81dea9a385ce35b62d239e9019fd3313d8976c1524943dd674d1ed918da36d1b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "81dea9a385ce35b62d239e9019fd3313d8976c1524943dd674d1ed918da36d1b",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "81dea9a385ce35b62d239e9019fd3313d8976c1524943dd674d1ed918da36d1b",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 27,
+      "depth": 32,
+      "geometry": [
+        5,
+        10
+      ],
+      "input_sha256": "d46dd34c278ae6671271d037cfea0ee2e9c7c7f968e89874b31e24a30dea3062",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 28,
+      "depth": 32,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "281baa9100c3308106790d4a8cecc0d99909e453135f0fb8103cddcdc5853e86",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 29,
+      "depth": 16,
+      "geometry": [
+        22,
+        42
+      ],
+      "input_sha256": "c8c7c5070375f20f3d300d17da32cd454be17082486798224507e010400bd67b",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bd0c8125b295c772452db6c48ef5041623fd9b9fcc425622cafb4d6127af0bed",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bd0c8125b295c772452db6c48ef5041623fd9b9fcc425622cafb4d6127af0bed",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "bd0c8125b295c772452db6c48ef5041623fd9b9fcc425622cafb4d6127af0bed",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bd0c8125b295c772452db6c48ef5041623fd9b9fcc425622cafb4d6127af0bed",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 30,
+      "depth": 32,
+      "geometry": [
+        23,
+        1
+      ],
+      "input_sha256": "98597199edad05ebdb3639463a38e21e10cbce8393b642c2c79708dd1d4d40e5",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 31,
+      "depth": 16,
+      "geometry": [
+        5,
+        12
+      ],
+      "input_sha256": "775a31e804a38a5f21fe1149ffd75245a98e657064db40468621a4ebce4422fe",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fa845b57f41a1e2eaac1d112153e7b2cbf2419d17d1ef207f240203cbdf11777",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fa845b57f41a1e2eaac1d112153e7b2cbf2419d17d1ef207f240203cbdf11777",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "fa845b57f41a1e2eaac1d112153e7b2cbf2419d17d1ef207f240203cbdf11777",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "fa845b57f41a1e2eaac1d112153e7b2cbf2419d17d1ef207f240203cbdf11777",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 32,
+      "depth": 32,
+      "geometry": [
+        14,
+        2
+      ],
+      "input_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 33,
+      "depth": 16,
+      "geometry": [
+        1,
+        12
+      ],
+      "input_sha256": "c7814cb25226f8201e890fed4fd2112792dba7f79eaac248e49fd1f08f3ac1e2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "261336bb2eae7d0c0a1efa70435bfeeb3e9f71a64746dbc9cb7a977da86b6aec",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "261336bb2eae7d0c0a1efa70435bfeeb3e9f71a64746dbc9cb7a977da86b6aec",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "261336bb2eae7d0c0a1efa70435bfeeb3e9f71a64746dbc9cb7a977da86b6aec",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "261336bb2eae7d0c0a1efa70435bfeeb3e9f71a64746dbc9cb7a977da86b6aec",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 34,
+      "depth": 32,
+      "geometry": [
+        19,
+        7
+      ],
+      "input_sha256": "21a9a0660ed6b038ce383c177f5a49ddb6f56718c0b687771bff7abed5ec52c7",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 35,
+      "depth": 8,
+      "geometry": [
+        16,
+        56
+      ],
+      "input_sha256": "991d4cec5348cf443cd9316a4ec06ce6e2465fa6658500dc8e2203779e1f6fb7",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a79752c311f663afd5893202d8f2ed8cdad7c0fb32b9b3cd1160cc6ad7473364",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a79752c311f663afd5893202d8f2ed8cdad7c0fb32b9b3cd1160cc6ad7473364",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "a79752c311f663afd5893202d8f2ed8cdad7c0fb32b9b3cd1160cc6ad7473364",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a79752c311f663afd5893202d8f2ed8cdad7c0fb32b9b3cd1160cc6ad7473364",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 36,
+      "depth": 16,
+      "geometry": [
+        10,
+        38
+      ],
+      "input_sha256": "9f9e1a8ac12c818295fca4ef23007564cfe2b8d6f2d682f2f59d96d5671a2645",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "345787504ee390eef436bfac72b8e45faac8330c0b13004f5c803c66012f68f5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "345787504ee390eef436bfac72b8e45faac8330c0b13004f5c803c66012f68f5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "345787504ee390eef436bfac72b8e45faac8330c0b13004f5c803c66012f68f5",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "345787504ee390eef436bfac72b8e45faac8330c0b13004f5c803c66012f68f5",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 37,
+      "depth": 8,
+      "geometry": [
+        13,
+        9
+      ],
+      "input_sha256": "5bf57564db5007037bf41e0a20db53d3dc617ad426e0bc35c9082bd4fa487efa",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5bf57564db5007037bf41e0a20db53d3dc617ad426e0bc35c9082bd4fa487efa",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5bf57564db5007037bf41e0a20db53d3dc617ad426e0bc35c9082bd4fa487efa",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "5bf57564db5007037bf41e0a20db53d3dc617ad426e0bc35c9082bd4fa487efa",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5bf57564db5007037bf41e0a20db53d3dc617ad426e0bc35c9082bd4fa487efa",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 38,
+      "depth": 16,
+      "geometry": [
+        10,
+        7
+      ],
+      "input_sha256": "5a18a0727789ca13affe52a5df4d9634722a2805db3dac9b8abc6d2c59c23d3f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5a18a0727789ca13affe52a5df4d9634722a2805db3dac9b8abc6d2c59c23d3f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5a18a0727789ca13affe52a5df4d9634722a2805db3dac9b8abc6d2c59c23d3f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "5a18a0727789ca13affe52a5df4d9634722a2805db3dac9b8abc6d2c59c23d3f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5a18a0727789ca13affe52a5df4d9634722a2805db3dac9b8abc6d2c59c23d3f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 39,
+      "depth": 32,
+      "geometry": [
+        21,
+        6
+      ],
+      "input_sha256": "1b914ac86a818bac79f425e2ff8449b85fc20acfdfd9ac2c055daba8bbf83ecc",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 40,
+      "depth": 16,
+      "geometry": [
+        147,
+        169
+      ],
+      "input_sha256": "582584c5e591dd9df465bd4ec37ce371c95d6956be3b4d0b70a8ff70f15e635a",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cd89ebc922a033e417ad8a7e6704ae0e787a82e417f4a00579b77b652f377d7e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cd89ebc922a033e417ad8a7e6704ae0e787a82e417f4a00579b77b652f377d7e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "cd89ebc922a033e417ad8a7e6704ae0e787a82e417f4a00579b77b652f377d7e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "cd89ebc922a033e417ad8a7e6704ae0e787a82e417f4a00579b77b652f377d7e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 41,
+      "depth": 8,
+      "geometry": [
+        20,
+        15
+      ],
+      "input_sha256": "93bde58c757fafad0b4284cc1e96fc5919fdece85314b5ef5071b1077346b4cc",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8782782a125130e77fb0e0cfd45574d95974c65447d114aaf5aaaecb4302e186",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8782782a125130e77fb0e0cfd45574d95974c65447d114aaf5aaaecb4302e186",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "8782782a125130e77fb0e0cfd45574d95974c65447d114aaf5aaaecb4302e186",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8782782a125130e77fb0e0cfd45574d95974c65447d114aaf5aaaecb4302e186",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 42,
+      "depth": 8,
+      "geometry": [
+        8,
+        16
+      ],
+      "input_sha256": "15735e6eb76d24faa7abcaae5071f6215a2ad5d32e47d545de4d68be48cad1c1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fbc001a17679b2226a1a56906c2fcc83b363b9b57ffa136ce9549a8e3d101b5e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fbc001a17679b2226a1a56906c2fcc83b363b9b57ffa136ce9549a8e3d101b5e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "fbc001a17679b2226a1a56906c2fcc83b363b9b57ffa136ce9549a8e3d101b5e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "fbc001a17679b2226a1a56906c2fcc83b363b9b57ffa136ce9549a8e3d101b5e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 43,
+      "depth": 32,
+      "geometry": [
+        5,
+        14
+      ],
+      "input_sha256": "d95a9350814120402af300fd5202c4319c769d898fabbe9e20f1882632120885",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 44,
+      "depth": 16,
+      "geometry": [
+        49,
+        6
+      ],
+      "input_sha256": "2e4c56b54b002e413543aa008c83b88ee520c6ecb0bfe773c9787f1506321634",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c40720fbca66d52972e8cb272f40ba4bc114af9a432af41ecc0ae23e39362de9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c40720fbca66d52972e8cb272f40ba4bc114af9a432af41ecc0ae23e39362de9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "c40720fbca66d52972e8cb272f40ba4bc114af9a432af41ecc0ae23e39362de9",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c40720fbca66d52972e8cb272f40ba4bc114af9a432af41ecc0ae23e39362de9",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 45,
+      "depth": 8,
+      "geometry": [
+        14,
+        20
+      ],
+      "input_sha256": "684b6ea5fb18c122ab3b4a663608fe4fb5d8979335dc3e2090e2949d33535042",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "139cc87bd5de325abb7ff4ca972a765419dc6fdcf06ffcb7a21500cfac54a4ce",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "139cc87bd5de325abb7ff4ca972a765419dc6fdcf06ffcb7a21500cfac54a4ce",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "139cc87bd5de325abb7ff4ca972a765419dc6fdcf06ffcb7a21500cfac54a4ce",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "139cc87bd5de325abb7ff4ca972a765419dc6fdcf06ffcb7a21500cfac54a4ce",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 46,
+      "depth": 32,
+      "geometry": [
+        2,
+        20
+      ],
+      "input_sha256": "cefbe90ba2b56a3ad741772e9ae66d24b54fa3c73c65305d46f57dcc443d0bbc",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 47,
+      "depth": 16,
+      "geometry": [
+        22,
+        134
+      ],
+      "input_sha256": "5708b23185c5e22d345912511bfa3616d04607ab0c1cd4f24908be078b65ae65",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "30192562be417c8e7cd249ed885aa1d49eefd497cb114f30947088806634b2df",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "30192562be417c8e7cd249ed885aa1d49eefd497cb114f30947088806634b2df",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "30192562be417c8e7cd249ed885aa1d49eefd497cb114f30947088806634b2df",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "30192562be417c8e7cd249ed885aa1d49eefd497cb114f30947088806634b2df",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 48,
+      "depth": 8,
+      "geometry": [
+        1,
+        65
+      ],
+      "input_sha256": "b155820af9027c7f015fe454eb8b5aa3ac17d8af54af191c49dff578a19b8eeb",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f3364046ac34aaab1f0ef1a28ccf68ca35559a9db45a38a4a381f483c811ad5c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f3364046ac34aaab1f0ef1a28ccf68ca35559a9db45a38a4a381f483c811ad5c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "f3364046ac34aaab1f0ef1a28ccf68ca35559a9db45a38a4a381f483c811ad5c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f3364046ac34aaab1f0ef1a28ccf68ca35559a9db45a38a4a381f483c811ad5c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 49,
+      "depth": 16,
+      "geometry": [
+        9,
+        8
+      ],
+      "input_sha256": "f772b9c250d5be489479a253fb5a73b7c6e6aff669b43e047765ac9c44f074a1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2d77ece79b6af46fa5b7b911e2ea90d1516545ed64fd0a73abc8c4231271c8bd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2d77ece79b6af46fa5b7b911e2ea90d1516545ed64fd0a73abc8c4231271c8bd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "2d77ece79b6af46fa5b7b911e2ea90d1516545ed64fd0a73abc8c4231271c8bd",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2d77ece79b6af46fa5b7b911e2ea90d1516545ed64fd0a73abc8c4231271c8bd",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 50,
+      "depth": 8,
+      "geometry": [
+        16,
+        5
+      ],
+      "input_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1ec0c8e30a15c915e20e504fa0b834b4b7c4da2fd644b2d47e8e8a451abad54e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1ec0c8e30a15c915e20e504fa0b834b4b7c4da2fd644b2d47e8e8a451abad54e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "1ec0c8e30a15c915e20e504fa0b834b4b7c4da2fd644b2d47e8e8a451abad54e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "1ec0c8e30a15c915e20e504fa0b834b4b7c4da2fd644b2d47e8e8a451abad54e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 51,
+      "depth": 32,
+      "geometry": [
+        51,
+        23
+      ],
+      "input_sha256": "132ebff5c4eb256d60e483888d759c69b2a6d599c7919e874a29dc2052c4c070",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 52,
+      "depth": 32,
+      "geometry": [
+        3,
+        21
+      ],
+      "input_sha256": "4474f585c6381a1adaeb999ee93213b029124071ecd6c055312958f8b173d59a",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 53,
+      "depth": 32,
+      "geometry": [
+        5,
+        18
+      ],
+      "input_sha256": "7a78331769818cc64bcf7d67090164ae71de036f72bef07cbe2d4711b4115971",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 54,
+      "depth": 16,
+      "geometry": [
+        14,
+        1
+      ],
+      "input_sha256": "b22280d7bf0d6e494208e48d8e7d59456a199d0527454c9cb079041958bc9a41",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b22280d7bf0d6e494208e48d8e7d59456a199d0527454c9cb079041958bc9a41",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b22280d7bf0d6e494208e48d8e7d59456a199d0527454c9cb079041958bc9a41",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "b22280d7bf0d6e494208e48d8e7d59456a199d0527454c9cb079041958bc9a41",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b22280d7bf0d6e494208e48d8e7d59456a199d0527454c9cb079041958bc9a41",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 55,
+      "depth": 8,
+      "geometry": [
+        2,
+        53
+      ],
+      "input_sha256": "4975cf1ec01c29266f71d51e31b7b44f3eccfa2b84bc2260957e64ba75655b10",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "498c99e95fce1aef3be00969fe80465c466b56e79b20b2e222012eb61dbed3fd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "498c99e95fce1aef3be00969fe80465c466b56e79b20b2e222012eb61dbed3fd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "498c99e95fce1aef3be00969fe80465c466b56e79b20b2e222012eb61dbed3fd",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "498c99e95fce1aef3be00969fe80465c466b56e79b20b2e222012eb61dbed3fd",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 56,
+      "depth": 8,
+      "geometry": [
+        1,
+        113
+      ],
+      "input_sha256": "fd8e782466b3f68885d7f8c570b5fa9a61c1770f6fb874fd73e7f995161d1e96",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2392829333b4aca12b8841eb3d5ad5d68dca18590e771962b4241bd8e44188d7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2392829333b4aca12b8841eb3d5ad5d68dca18590e771962b4241bd8e44188d7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "2392829333b4aca12b8841eb3d5ad5d68dca18590e771962b4241bd8e44188d7",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2392829333b4aca12b8841eb3d5ad5d68dca18590e771962b4241bd8e44188d7",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 57,
+      "depth": 16,
+      "geometry": [
+        3,
+        35
+      ],
+      "input_sha256": "04910c12c8374ab455212eb52b44abdd41c369c18562e64bb963f07c55f09669",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fa712b117371f7c136702dd8b18a81ddad380d063a443f2a45ef5a082b1b5d6c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fa712b117371f7c136702dd8b18a81ddad380d063a443f2a45ef5a082b1b5d6c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "fa712b117371f7c136702dd8b18a81ddad380d063a443f2a45ef5a082b1b5d6c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "fa712b117371f7c136702dd8b18a81ddad380d063a443f2a45ef5a082b1b5d6c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 58,
+      "depth": 8,
+      "geometry": [
+        1,
+        140
+      ],
+      "input_sha256": "a091c6c12c41ea99e7d914fbe68fd70d54d76c522754d4500fb3c51905af1a49",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4c810853cac8e15544d00772cf57c5f918aede0700d39ab7dcfd3727a0210dc0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4c810853cac8e15544d00772cf57c5f918aede0700d39ab7dcfd3727a0210dc0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "4c810853cac8e15544d00772cf57c5f918aede0700d39ab7dcfd3727a0210dc0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4c810853cac8e15544d00772cf57c5f918aede0700d39ab7dcfd3727a0210dc0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 59,
+      "depth": 32,
+      "geometry": [
+        8,
+        13
+      ],
+      "input_sha256": "1e41da3b8097bde537ca2632e3f1f5a8c1ff98213abd9c36b91b750e00ef0d33",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 60,
+      "depth": 8,
+      "geometry": [
+        13,
+        23
+      ],
+      "input_sha256": "02f1e73459461843ef59223f0fe96d1d754db085c8bd2240464b12361908daec",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bfe4fb46b5e93c21daa316b76cd9ed2f032bfcc02b1cf99ef0a7e6adc143588c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bfe4fb46b5e93c21daa316b76cd9ed2f032bfcc02b1cf99ef0a7e6adc143588c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "bfe4fb46b5e93c21daa316b76cd9ed2f032bfcc02b1cf99ef0a7e6adc143588c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bfe4fb46b5e93c21daa316b76cd9ed2f032bfcc02b1cf99ef0a7e6adc143588c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 61,
+      "depth": 8,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "a5130b42ea29fa04350a768df6c6f7349e9f1fec1982acf20456e78b8f31f5f1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a5130b42ea29fa04350a768df6c6f7349e9f1fec1982acf20456e78b8f31f5f1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a5130b42ea29fa04350a768df6c6f7349e9f1fec1982acf20456e78b8f31f5f1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "a5130b42ea29fa04350a768df6c6f7349e9f1fec1982acf20456e78b8f31f5f1",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a5130b42ea29fa04350a768df6c6f7349e9f1fec1982acf20456e78b8f31f5f1",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 62,
+      "depth": 16,
+      "geometry": [
+        7,
+        7
+      ],
+      "input_sha256": "866ef1a31aa3aa657c9f5bae5dba70d12ad34d4985fdfd96fd3670ae7d128eeb",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bba644af435a10aa0bda2a3f1288a5734ef9860e9dbe2bdfc732566ce77f3c6f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bba644af435a10aa0bda2a3f1288a5734ef9860e9dbe2bdfc732566ce77f3c6f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "bba644af435a10aa0bda2a3f1288a5734ef9860e9dbe2bdfc732566ce77f3c6f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bba644af435a10aa0bda2a3f1288a5734ef9860e9dbe2bdfc732566ce77f3c6f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 63,
+      "depth": 32,
+      "geometry": [
+        12,
+        21
+      ],
+      "input_sha256": "6627d1e4a28b387dbe8b82da58dc249f15c992b8d9b1a83c1e004dc383583d7e",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 64,
+      "depth": 32,
+      "geometry": [
+        12,
+        3
+      ],
+      "input_sha256": "89785c56e3c2223f32e673b9632c2c97a16c97dcce6b50f3b3ff859d088502df",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 65,
+      "depth": 8,
+      "geometry": [
+        23,
+        6
+      ],
+      "input_sha256": "ff19b95a142f1749c795e84876258e85d74498e456574083515bda59f885d841",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ca970c241c65fe7d1b5bed5e3cd57d830e96ea5ca2f1c392403ab7838f2b4cf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ca970c241c65fe7d1b5bed5e3cd57d830e96ea5ca2f1c392403ab7838f2b4cf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "6ca970c241c65fe7d1b5bed5e3cd57d830e96ea5ca2f1c392403ab7838f2b4cf",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6ca970c241c65fe7d1b5bed5e3cd57d830e96ea5ca2f1c392403ab7838f2b4cf",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 66,
+      "depth": 32,
+      "geometry": [
+        5,
+        3
+      ],
+      "input_sha256": "e0549a9e1c245c4f1c41765c7c7798004f3b973f8a1594486aadd06c7faa72ee",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 67,
+      "depth": 8,
+      "geometry": [
+        11,
+        8
+      ],
+      "input_sha256": "430f734871f1296b6f9996e2f1679cd27785d611e3f9da2446d81741ec9d56c8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f7c19d1e280bdad92fb352c84607a87bad477e4dc5a688e07832e425310f371f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f7c19d1e280bdad92fb352c84607a87bad477e4dc5a688e07832e425310f371f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "f7c19d1e280bdad92fb352c84607a87bad477e4dc5a688e07832e425310f371f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f7c19d1e280bdad92fb352c84607a87bad477e4dc5a688e07832e425310f371f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 68,
+      "depth": 32,
+      "geometry": [
+        80,
+        1
+      ],
+      "input_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 69,
+      "depth": 16,
+      "geometry": [
+        8,
+        14
+      ],
+      "input_sha256": "da44e5599be888210ad13096d5697fc50e37f617651aefd0fbedfb46e6ab2494",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ad4c75d7e6c95e352c59ea17467c985da1f9b894d018fc4c7507c7e3437c2072",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ad4c75d7e6c95e352c59ea17467c985da1f9b894d018fc4c7507c7e3437c2072",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "ad4c75d7e6c95e352c59ea17467c985da1f9b894d018fc4c7507c7e3437c2072",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ad4c75d7e6c95e352c59ea17467c985da1f9b894d018fc4c7507c7e3437c2072",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 70,
+      "depth": 16,
+      "geometry": [
+        6,
+        17
+      ],
+      "input_sha256": "e1c7d95eabc6023fab3835f0587183ca4a41d79e907f21ff9562dbb3408755d2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cbb6cd3f477b457484bc77b73f3cdeddf458d2f91cf71dff00240376530f2bc3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cbb6cd3f477b457484bc77b73f3cdeddf458d2f91cf71dff00240376530f2bc3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "cbb6cd3f477b457484bc77b73f3cdeddf458d2f91cf71dff00240376530f2bc3",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "cbb6cd3f477b457484bc77b73f3cdeddf458d2f91cf71dff00240376530f2bc3",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 71,
+      "depth": 32,
+      "geometry": [
+        17,
+        8
+      ],
+      "input_sha256": "0252dde9ed3495d397cfb5839edcb7960e49c0e5d37e6ce452ee97aa5c7dd2f0",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 72,
+      "depth": 8,
+      "geometry": [
+        22,
+        19
+      ],
+      "input_sha256": "49660841a183ed1956c678a1348f68f84a7e1dcaaf2153cf8f5803a7b0989e08",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "30e76a47d0d4a5c5731618732c0b234665a583fae1c8b4014fc74ac0bcc830f7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "30e76a47d0d4a5c5731618732c0b234665a583fae1c8b4014fc74ac0bcc830f7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "30e76a47d0d4a5c5731618732c0b234665a583fae1c8b4014fc74ac0bcc830f7",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "30e76a47d0d4a5c5731618732c0b234665a583fae1c8b4014fc74ac0bcc830f7",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 73,
+      "depth": 8,
+      "geometry": [
+        12,
+        6
+      ],
+      "input_sha256": "739e2599116b834a624f8eb511e6b8f1a10015803fddf42ae6b8a295c7759617",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "079c01dd9487f6d1828bef9d307e232a12ca3b796df58148c087cd6068d84f76",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "079c01dd9487f6d1828bef9d307e232a12ca3b796df58148c087cd6068d84f76",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "079c01dd9487f6d1828bef9d307e232a12ca3b796df58148c087cd6068d84f76",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "079c01dd9487f6d1828bef9d307e232a12ca3b796df58148c087cd6068d84f76",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 74,
+      "depth": 16,
+      "geometry": [
+        223,
+        1
+      ],
+      "input_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4dc94f9aa96c00933328a44998b0158676f3d91c65c6311df15a645c8f5736c0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4dc94f9aa96c00933328a44998b0158676f3d91c65c6311df15a645c8f5736c0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "4dc94f9aa96c00933328a44998b0158676f3d91c65c6311df15a645c8f5736c0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4dc94f9aa96c00933328a44998b0158676f3d91c65c6311df15a645c8f5736c0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 75,
+      "depth": 8,
+      "geometry": [
+        6,
+        28
+      ],
+      "input_sha256": "f3af76039047eb4c8794f40dfabfc1fb24f156073ed8cb7b551f3702a8eab6d8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8fcf1a4fcf466d2a2edfb046bdc66b22b003b8b32f155a6601ea8885da6bd4af",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8fcf1a4fcf466d2a2edfb046bdc66b22b003b8b32f155a6601ea8885da6bd4af",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "8fcf1a4fcf466d2a2edfb046bdc66b22b003b8b32f155a6601ea8885da6bd4af",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8fcf1a4fcf466d2a2edfb046bdc66b22b003b8b32f155a6601ea8885da6bd4af",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 76,
+      "depth": 16,
+      "geometry": [
+        6,
+        12
+      ],
+      "input_sha256": "ca5af0785eaf3c7cae57c4538d1eb789b6bd148f3508c41e0d5cd6276ac751d2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5fe98f4957f5e70c9ec56b2a8a8062ea2383758063cdc0793c58a77c6f00b46d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5fe98f4957f5e70c9ec56b2a8a8062ea2383758063cdc0793c58a77c6f00b46d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "5fe98f4957f5e70c9ec56b2a8a8062ea2383758063cdc0793c58a77c6f00b46d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5fe98f4957f5e70c9ec56b2a8a8062ea2383758063cdc0793c58a77c6f00b46d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 77,
+      "depth": 8,
+      "geometry": [
+        18,
+        18
+      ],
+      "input_sha256": "4a598e67b005d828e10bd587e3d0a49d7fdbfd2944b157c97e1f1bcb89126425",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7de2d939e35265867f3eb3e5f6d1bd969eb172cd93d2828c6af0e1d10c69943d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7de2d939e35265867f3eb3e5f6d1bd969eb172cd93d2828c6af0e1d10c69943d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "7de2d939e35265867f3eb3e5f6d1bd969eb172cd93d2828c6af0e1d10c69943d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "7de2d939e35265867f3eb3e5f6d1bd969eb172cd93d2828c6af0e1d10c69943d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 78,
+      "depth": 8,
+      "geometry": [
+        8,
+        19
+      ],
+      "input_sha256": "d6a22fbdbbd412993f883b8bde625dc12cdb256f7988042d7351519c42c45b65",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fcfe0f5eea5e139a093ca389e2e6942a646f04da59427810e2acaaac8b32ed54",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fcfe0f5eea5e139a093ca389e2e6942a646f04da59427810e2acaaac8b32ed54",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "fcfe0f5eea5e139a093ca389e2e6942a646f04da59427810e2acaaac8b32ed54",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "fcfe0f5eea5e139a093ca389e2e6942a646f04da59427810e2acaaac8b32ed54",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 79,
+      "depth": 16,
+      "geometry": [
+        10,
+        4
+      ],
+      "input_sha256": "03dc1f9a782018aef4763574a67aede4d918257d4b0b1b0e187d5c1c6c419511",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "dc614b729f6a80e9616e1e663f6276023ed85d276bec0849aeccca86db4c271d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "dc614b729f6a80e9616e1e663f6276023ed85d276bec0849aeccca86db4c271d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "dc614b729f6a80e9616e1e663f6276023ed85d276bec0849aeccca86db4c271d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "dc614b729f6a80e9616e1e663f6276023ed85d276bec0849aeccca86db4c271d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 80,
+      "depth": 16,
+      "geometry": [
+        33,
+        59
+      ],
+      "input_sha256": "dbd50b70c06cf191d69ec66bb208930311a2f4778a73f61aac1ef41e287689fd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d891b814c82d83280f47ec400da5bf249d65725020c0e7246a986712e3bb7f28",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d891b814c82d83280f47ec400da5bf249d65725020c0e7246a986712e3bb7f28",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "d891b814c82d83280f47ec400da5bf249d65725020c0e7246a986712e3bb7f28",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d891b814c82d83280f47ec400da5bf249d65725020c0e7246a986712e3bb7f28",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 81,
+      "depth": 8,
+      "geometry": [
+        14,
+        14
+      ],
+      "input_sha256": "95b91ad74ac6ba4ac99b16d7e5dd0625c7c1e52a46a67ba25714bc36e023ffa2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5e7d0a5299c3168397333a10316b6bdc43b43770393610fe84377c16529659c2",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5e7d0a5299c3168397333a10316b6bdc43b43770393610fe84377c16529659c2",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "5e7d0a5299c3168397333a10316b6bdc43b43770393610fe84377c16529659c2",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5e7d0a5299c3168397333a10316b6bdc43b43770393610fe84377c16529659c2",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 82,
+      "depth": 32,
+      "geometry": [
+        22,
+        13
+      ],
+      "input_sha256": "e4b7ab9b6f625d038a003485b03ee82f5d8deb9d8cfd0c08cff8354edb6aa1df",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 83,
+      "depth": 16,
+      "geometry": [
+        6,
+        9
+      ],
+      "input_sha256": "ea55db0dbda10640181e21e3200c2f040abd9d8f01bb3e6adf5709afc0f06b91",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "90ecbd305cfbeaee9e79e3ae39fe66bf76db544ede7d6f083a6d18f18a1ebeaf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "90ecbd305cfbeaee9e79e3ae39fe66bf76db544ede7d6f083a6d18f18a1ebeaf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "90ecbd305cfbeaee9e79e3ae39fe66bf76db544ede7d6f083a6d18f18a1ebeaf",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "90ecbd305cfbeaee9e79e3ae39fe66bf76db544ede7d6f083a6d18f18a1ebeaf",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 84,
+      "depth": 16,
+      "geometry": [
+        19,
+        36
+      ],
+      "input_sha256": "f89b6884bebf578b46ad29436c489b626aff94e24e254140cbe3dc023cbacd52",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0e6421cfe74180cea79775a7dcb374c37c9e513ab7c3e4a0afe2cfc336ea7519",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0e6421cfe74180cea79775a7dcb374c37c9e513ab7c3e4a0afe2cfc336ea7519",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "0e6421cfe74180cea79775a7dcb374c37c9e513ab7c3e4a0afe2cfc336ea7519",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0e6421cfe74180cea79775a7dcb374c37c9e513ab7c3e4a0afe2cfc336ea7519",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 85,
+      "depth": 32,
+      "geometry": [
+        16,
+        3
+      ],
+      "input_sha256": "5cb211d12258a906e7cc8f50dd00173610110f71eb085973bf269ebe8403a408",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 86,
+      "depth": 32,
+      "geometry": [
+        31,
+        5
+      ],
+      "input_sha256": "ec824c384f5e8b583252bad5782ccfdc2249141c0683bfb3145593c418215dfe",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 87,
+      "depth": 16,
+      "geometry": [
+        22,
+        5
+      ],
+      "input_sha256": "00fd2d12017705d8c9ca9ed6a5c4d39071008171bba73b962c6099a2567fe851",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e8397daecdc2eb4cb03aa43e99b8bfab4444085506d0978ea5adfe6c7040e6a5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e8397daecdc2eb4cb03aa43e99b8bfab4444085506d0978ea5adfe6c7040e6a5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "e8397daecdc2eb4cb03aa43e99b8bfab4444085506d0978ea5adfe6c7040e6a5",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "e8397daecdc2eb4cb03aa43e99b8bfab4444085506d0978ea5adfe6c7040e6a5",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 88,
+      "depth": 8,
+      "geometry": [
+        4,
+        14
+      ],
+      "input_sha256": "ac1c08fe78fd3c06bfd1cee1d80fea43c64a99cde53f52018b1c04db327afeb2",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "af296fe042d6f58a9053faabadca366d95f59f7746247c527de995500733bd80",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "af296fe042d6f58a9053faabadca366d95f59f7746247c527de995500733bd80",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "af296fe042d6f58a9053faabadca366d95f59f7746247c527de995500733bd80",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "af296fe042d6f58a9053faabadca366d95f59f7746247c527de995500733bd80",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 89,
+      "depth": 32,
+      "geometry": [
+        17,
+        21
+      ],
+      "input_sha256": "37d1f6f919805c5d42efcdf25d1d2d91851be3d3f2a18e52c9794a77fe64f9be",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 90,
+      "depth": 16,
+      "geometry": [
+        22,
+        9
+      ],
+      "input_sha256": "813ace0bc94f1a53e7aadb7b98ea15d5c99f2e9df03cb9d3118e70b3bf3bfa4d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c1c0ed94f384c066d9e97c2145db6831dff84d86f8f2f21b2b9c25c6b038ec74",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c1c0ed94f384c066d9e97c2145db6831dff84d86f8f2f21b2b9c25c6b038ec74",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "c1c0ed94f384c066d9e97c2145db6831dff84d86f8f2f21b2b9c25c6b038ec74",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c1c0ed94f384c066d9e97c2145db6831dff84d86f8f2f21b2b9c25c6b038ec74",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 91,
+      "depth": 8,
+      "geometry": [
+        8,
+        4
+      ],
+      "input_sha256": "d54d955aaf5ffbe15072ec3910fb5895e8b3169dff0a47d1c537b0ddaab28bfd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "68b3b6bf3828e512b4508c6c0882ef9d12ae19113e192ae40896d9c21435c0cd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "68b3b6bf3828e512b4508c6c0882ef9d12ae19113e192ae40896d9c21435c0cd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "68b3b6bf3828e512b4508c6c0882ef9d12ae19113e192ae40896d9c21435c0cd",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "68b3b6bf3828e512b4508c6c0882ef9d12ae19113e192ae40896d9c21435c0cd",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 92,
+      "depth": 32,
+      "geometry": [
+        56,
+        44
+      ],
+      "input_sha256": "f1a8bd5964a5cc7ed2227b93a864616053d1e8b571ecab2dbeec12e21715ce65",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 93,
+      "depth": 16,
+      "geometry": [
+        72,
+        1
+      ],
+      "input_sha256": "a485512bc7820fd2a26979290b9c800859664b1445294c5f1951f733ca194fa1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f4eb7b4ec73d6a58971a291fdd046993ab20f316718c7423c7dfe17386a8d1f9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f4eb7b4ec73d6a58971a291fdd046993ab20f316718c7423c7dfe17386a8d1f9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "f4eb7b4ec73d6a58971a291fdd046993ab20f316718c7423c7dfe17386a8d1f9",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f4eb7b4ec73d6a58971a291fdd046993ab20f316718c7423c7dfe17386a8d1f9",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 94,
+      "depth": 32,
+      "geometry": [
+        51,
+        132
+      ],
+      "input_sha256": "a82917c56112844b5958e65953dd9b31bf8f1e459dfa8024a10cbffaf7dc86bd",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 95,
+      "depth": 32,
+      "geometry": [
+        3,
+        3
+      ],
+      "input_sha256": "950e7339a83d7ae11c488aec7f41e02c03a7139336afe8aa0d5ddc5f7eb377f1",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 96,
+      "depth": 16,
+      "geometry": [
+        104,
+        1
+      ],
+      "input_sha256": "d61a44c876a6d423f9ea103552cdee212ac13e7a6503cc87e95adbf3600702f8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8ad104446ff38123314d2e014103cb244bfdf3c0ab89c09749ee35c77671da62",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8ad104446ff38123314d2e014103cb244bfdf3c0ab89c09749ee35c77671da62",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "8ad104446ff38123314d2e014103cb244bfdf3c0ab89c09749ee35c77671da62",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8ad104446ff38123314d2e014103cb244bfdf3c0ab89c09749ee35c77671da62",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 97,
+      "depth": 16,
+      "geometry": [
+        13,
+        22
+      ],
+      "input_sha256": "6564e9ad620fc1e362e59462272cee07cf4868eef3d840ca3396748663fadc5d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f0c300a0558897c18467910adc5bb96c7fc0476633454ac1db97a0814d7601d0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f0c300a0558897c18467910adc5bb96c7fc0476633454ac1db97a0814d7601d0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "f0c300a0558897c18467910adc5bb96c7fc0476633454ac1db97a0814d7601d0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f0c300a0558897c18467910adc5bb96c7fc0476633454ac1db97a0814d7601d0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 98,
+      "depth": 8,
+      "geometry": [
+        23,
+        7
+      ],
+      "input_sha256": "66b5a67d0cc96672b3b2dcf201f9eda0c348231e686b69db02421ae87a508f24",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5e3199848c282a9528d0d0087d82f460f93851d3a8468c7a6404579483b69645",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5e3199848c282a9528d0d0087d82f460f93851d3a8468c7a6404579483b69645",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n",
+        "raw_sha256": "5e3199848c282a9528d0d0087d82f460f93851d3a8468c7a6404579483b69645",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5e3199848c282a9528d0d0087d82f460f93851d3a8468c7a6404579483b69645",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 99,
+      "depth": 32,
+      "geometry": [
+        1,
+        127
+      ],
+      "input_sha256": "97399920244eb2d01123eef2231b7f5c50a884bf56a3b16ad09a7c95792b9266",
+      "classification": "same-refusal-as-source",
+      "oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source_oracle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "bundle": {
+        "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "native_trace": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "source": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25"
+        },
+        "status": "refusal"
+      },
+      "refusal_guards": null
+    }
+  ]
+}

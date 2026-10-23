@@ -1,0 +1,31 @@
+{
+  "worker_sha256": "8057af6313d851f7e00939400b6b64a302fd00addc8f22c0812715216c49c35b",
+  "abi_constants": 8,
+  "memory_free_percent": 52,
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/Users/onmk/.cache/olm-emu/F47d-aarch64-apple-darwin-scratch-link/source/Cargo.toml",
+    "--release",
+    "--target",
+    "aarch64-apple-darwin",
+    "--offline",
+    "--locked",
+    "-j",
+    "1",
+    "-p",
+    "aex-guest-worker",
+    "--bin",
+    "aex-guest-worker"
+  ],
+  "sources": {
+    "F47d-native-host.md": "04f8d65d9023c5b6e4fe6dfc9ca992fa691f6a1d35e79c3e68cc09ddc7da871b",
+    "F47d-native-ffi.rs": "d7f5cea4b20fb2c66316aada414030057f1d6e504e202ff4fdb4e740c0b78495",
+    "F47d-native-render.rs": "0cb9687f1f3d8647766d366dd216fa83f8614024307793e43cd31eff0aa3b898",
+    "F47d-native-bridge.cpp": "16d9e9ea5a2f7a00afa51368432dcd2977940241c338aad526745d03fbef753f"
+  },
+  "architecture": "arm64",
+  "compiled_sources_match_committed_files": true,
+  "note": "The documentation-only F47d-native-host.md changed after this build manifest; all compiled source hashes match."
+}

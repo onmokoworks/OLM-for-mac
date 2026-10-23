@@ -235,9 +235,13 @@ class Adapter:
                               'parameters':'v4|'+';'.join(encoded)}).encode()
         status, out, err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
                                    '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
-                                   '--fixture-render-path',route],
+                                   '--fixture-render-path',route,
+                                   *getattr(self, 'session_arguments', lambda case, directory: [])(case, directory)],
                                   data=struct.pack('<I',len(request))+request,
                                   timeout=self.timeout, deadline=deadline, env=self.env)
+        observer = getattr(self, 'session_observed', None)
+        if observer is not None:
+            observer(out, err)
         if status['status'] != 'ok':
             diagnostic = err.decode(errors='replace')
             reason = diagnostic if len(diagnostic) <= 1600 else diagnostic[:800]+' ... '+diagnostic[-800:]

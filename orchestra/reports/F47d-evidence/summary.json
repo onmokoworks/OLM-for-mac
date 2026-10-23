@@ -1,0 +1,249 @@
+{
+  "olmblur": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "colorkeep": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 65,
+      "reject": 35
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 65,
+      "real-bug-colorkeep-world-flag-contract": 35
+    },
+    "first_mismatch": null
+  },
+  "olmcolorkey": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "olmdirectionalblur": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "olmdistancegradation": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 95,
+      "budget": 2,
+      "reject": 3
+    },
+    "bundle_counts": {
+      "exact": 95,
+      "budget": 1,
+      "uncompared": 3,
+      "reject": 1
+    },
+    "source_counts": {
+      "exact": 95,
+      "budget": 1,
+      "uncompared": 3,
+      "refusal": 1
+    },
+    "classifications": {
+      "same-output-as-source": 98,
+      "same-timeout-as-source": 1,
+      "same-refusal-as-source": 1
+    },
+    "first_mismatch": null
+  },
+  "olmkirakira": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 97,
+      "reject": 3
+    },
+    "bundle_counts": {
+      "exact": 97,
+      "reject": 3
+    },
+    "source_counts": {
+      "exact": 97,
+      "refusal": 3
+    },
+    "classifications": {
+      "same-output-as-source": 97,
+      "same-refusal-as-source": 3
+    },
+    "first_mismatch": null
+  },
+  "olmsmoother2": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "olmtoondilate": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "radialblur": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 84,
+      "budget": 2,
+      "reject": 14
+    },
+    "bundle_counts": {
+      "exact": 79,
+      "uncompared": 2,
+      "reject": 19
+    },
+    "source_counts": {
+      "exact": 80,
+      "uncompared": 1,
+      "refusal": 19
+    },
+    "classifications": {
+      "same-output-as-source": 81,
+      "same-refusal-as-source": 19
+    },
+    "first_mismatch": null
+  },
+  "olmsmoother": {
+    "route": "classic",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 65,
+      "reject": 35
+    },
+    "bundle_counts": {
+      "exact": 65,
+      "reject": 35
+    },
+    "source_counts": {
+      "exact": 65,
+      "refusal": 35
+    },
+    "classifications": {
+      "same-output-as-source": 65,
+      "same-refusal-as-source": 35
+    },
+    "first_mismatch": null
+  }
+}

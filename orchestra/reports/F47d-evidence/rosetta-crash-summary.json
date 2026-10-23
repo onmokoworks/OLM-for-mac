@@ -1,0 +1,139 @@
+{
+  "procPath": "/Users/USER/Documents/*/aex-guest-worker",
+  "translated": true,
+  "exception": {
+    "codes": "0x0000000000000001, 0x00000000b52c4ff5",
+    "rawCodes": [
+      1,
+      3039580149
+    ],
+    "type": "EXC_BAD_ACCESS",
+    "signal": "SIGSEGV",
+    "subtype": "KERN_INVALID_ADDRESS at 0x00000000b52c4ff5"
+  },
+  "termination": {
+    "flags": 0,
+    "code": 11,
+    "namespace": "SIGNAL",
+    "indicator": "Segmentation fault: 11",
+    "byProc": "exc handler",
+    "byPid": 85360
+  },
+  "faultingThread": 0,
+  "frames": [
+    {
+      "imageOffset": 4359825296,
+      "region": "<translation info unavailable>",
+      "imageIndex": 4
+    },
+    {
+      "imageOffset": 13107,
+      "symbol": "_sigtramp",
+      "symbolLocation": 51,
+      "imageIndex": 5
+    },
+    {
+      "imageOffset": 3330185,
+      "symbol": "resume_all_vcpus_x86_64",
+      "symbolLocation": 201,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 3294158,
+      "symbol": "uc_emu_start",
+      "symbolLocation": 766,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 686654,
+      "symbol": "aex_guest_worker::x64::GuestEngine::call_win64_with_timeout::h93ae4f0a63e09864",
+      "symbolLocation": 2862,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 726607,
+      "symbol": "aex_guest_worker::x64::GuestEngine::run_process_attach_addresses::he2d0ca1447a32bc7",
+      "symbolLocation": 1039,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 635531,
+      "symbol": "aex_guest_worker::x64::GuestEngine::load_primary::h7ff82d08083cdf4a",
+      "symbolLocation": 24411,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 739343,
+      "symbol": "aex_guest_worker::x64::GuestEngine::load::h050b496a98bef9d8",
+      "symbolLocation": 79,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 2094412,
+      "symbol": "aex_guest_worker::classic::ClassicHost::new_with_effect::h0c065a35f020b179",
+      "symbolLocation": 44,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 261714,
+      "symbol": "aex_guest_worker::resident::run_resident_session::hc4104b6a1f4f91e6",
+      "symbolLocation": 450,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 131425,
+      "symbol": "aex_guest_worker::run_session_command::_$u7b$$u7b$closure$u7d$$u7d$::h50771068c529a6a5",
+      "symbolLocation": 385,
+      "imageIndex": 3
+    },
+    {
+      "imageOffset": 150495,
+      "symbol": "aex_guest_worker::main::h1d44dbe78b256d87",
+      "symbolLocation": 6879,
+      "imageIndex": 3
+    }
+  ],
+  "images": [
+    {
+      "name": "dyld",
+      "path": "/usr/lib/dyld"
+    },
+    {
+      "name": "runtime",
+      "path": "/usr/libexec/rosetta/runtime"
+    },
+    {
+      "name": "libRosettaRuntime",
+      "path": "/Library/Apple/*/libRosettaRuntime"
+    },
+    {
+      "name": "aex-guest-worker",
+      "path": "/Users/USER/Documents/*/aex-guest-worker"
+    },
+    {
+      "name": null,
+      "path": null
+    },
+    {
+      "name": "libsystem_platform.dylib",
+      "path": "/usr/lib/system/libsystem_platform.dylib"
+    },
+    {
+      "name": "libsystem_kernel.dylib",
+      "path": "/usr/lib/system/libsystem_kernel.dylib"
+    },
+    {
+      "name": "libsystem_c.dylib",
+      "path": "/usr/lib/system/libsystem_c.dylib"
+    },
+    {
+      "name": "libsystem_pthread.dylib",
+      "path": "/usr/lib/system/libsystem_pthread.dylib"
+    }
+  ],
+  "worker_image": {
+    "uuid": "81b09303-0b62-3ea4-aa84-a57f2ce59f99",
+    "arch": "x86_64",
+    "name": "aex-guest-worker"
+  }
+}
