@@ -16,3 +16,9 @@ Read first: the plugin's triage and fix reports in orchestra/reports/ (grep the 
 No base-exact Smart case may change. Smart exact must not decrease. Corpus replay changes only
 toward exact (rebaseline with a before/after table). Sanitizer clean. Cause outside the port
 (Windows dependency/host/oracle) -> document and move to the next cluster.
+
+## Resume note (orchestrator, 2026-10-23)
+The previous run died on a Codex network timeout. The duplicate-collision report was obsolete and
+has been removed in a WIP commit together with your in-progress probe edit. Inspect `git log -3`,
+the WIP diff and `orchestra/state/C16-kira-smart-r4/`, keep what you can verify, and continue the
+campaign. Up to 5 workers run now: use `--jobs 1`.
