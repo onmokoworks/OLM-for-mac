@@ -1,0 +1,9 @@
+{
+  "cases": 881,
+  "all_correctly_round_to": "00000001",
+  "ucrt": "00000000",
+  "minimum_exact_result_in_min_subnormal_units": "0.50013480375461442284999690587453901491633130803899245810721675",
+  "maximum_exact_result_in_min_subnormal_units": "0.99884828805007995675030558645050735130439381162068503744836388",
+  "mpfr": "MPFR 4.2.2",
+  "precision": 200
+}

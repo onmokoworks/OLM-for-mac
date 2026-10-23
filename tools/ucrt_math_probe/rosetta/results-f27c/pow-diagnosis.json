@@ -1,0 +1,82 @@
+{
+  "paper_mismatches": [
+    {
+      "bits": [
+        "3f887ffa",
+        "44ac7ebb"
+      ],
+      "kind": "rounded/truncated log index",
+      "ucrt_index": 17,
+      "amd_index": 16
+    },
+    {
+      "bits": [
+        "54738288",
+        "c063703b"
+      ],
+      "kind": "underflow cutoff",
+      "ucrt": "00000000",
+      "amd": "00000001"
+    }
+  ],
+  "table_comparison": {
+    "log_256": {
+      "amd_entries": 257,
+      "ucrt_entries": 257,
+      "equal_used_entries": true,
+      "extra_amd_entries": []
+    },
+    "log_f_inv_256": {
+      "amd_entries": 258,
+      "ucrt_entries": 257,
+      "equal_used_entries": true,
+      "extra_amd_entries": [
+        "0x0"
+      ]
+    }
+  },
+  "output_classes": {
+    "zero/subnormal": 881,
+    "nan/nan": 757,
+    "normal/normal": 88,
+    "subnormal/subnormal": 1
+  },
+  "first_by_class": {
+    "zero/subnormal": {
+      "pair": "ucrt0/amd-off",
+      "a": "56363937",
+      "b": "c052da19",
+      "left": "00000000",
+      "right": "00000001"
+    },
+    "nan/nan": {
+      "pair": "ucrt0/amd-off",
+      "a": "ffea91ad",
+      "b": "4b13538b",
+      "left": "ffea91ad",
+      "right": "7fea91ad"
+    },
+    "normal/normal": {
+      "pair": "ucrt0/amd-off",
+      "a": "3cda7d17",
+      "b": "c19e6a67",
+      "left": "73399ede",
+      "right": "73399edd"
+    },
+    "subnormal/subnormal": {
+      "pair": "ucrt0/amd-off",
+      "a": "1a3f7436",
+      "b": "3fd8eae0",
+      "left": "00762209",
+      "right": "0076220a"
+    }
+  },
+  "table_index_diagnostic": {
+    "nan_sign_only": 757,
+    "negative_nan_odd_exponent": 757,
+    "table_path_cases": 89,
+    "ucrt_model_matches": 89,
+    "amd_model_matches": 89,
+    "different_index": 89
+  }
+}

@@ -18,4 +18,4 @@ if [ ! -d "$state/aocl" ]; then git clone https://github.com/amd/aocl-libm-ose.g
 git -C "$state/aocl" checkout --detach 29fd054f383e6c5e2dec2fce781d5220059f1836
 python3 "$source_dir/build_amd.py" --source "$state/aocl" --out "$state/amd"
 python3 "$source_dir/compare_sample.py" --apple "$state/apple" --amd "$state/amd" --corpus "$state/qualification"
-python3 "$source_dir/check_results.py" --actual "$state" --expected "$source_dir/results"
+python3 "$source_dir/check_results.py" --actual "$state" --expected "$source_dir/results" --boundaries "$source_dir/results-f27c/boundaries.json"

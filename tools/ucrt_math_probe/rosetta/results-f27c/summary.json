@@ -1,0 +1,141 @@
+{
+  "expf": {
+    "processed": 4294967296,
+    "counts": {
+      "ucrt0/ucrt1": 1,
+      "ucrt0/apple": 305178,
+      "ucrt0/amd-off": 8388606,
+      "ucrt0/amd-fma": 8388607,
+      "ucrt1/apple": 305179,
+      "ucrt1/amd-off": 8388607,
+      "ucrt1/amd-fma": 8388606,
+      "apple/amd-off": 8693784,
+      "apple/amd-fma": 8693785,
+      "amd-off/amd-fma": 1
+    },
+    "pilot_seconds": 0.673004,
+    "pilot_projected_seconds": 172.289024,
+    "progress": [
+      "4294967296",
+      "504.277526",
+      "4294967296"
+    ],
+    "stub_counts": "GetLastError=6117020726 SetLastError=6117020726 FlsGetValue=8157360134"
+  },
+  "sinf": {
+    "processed": 4294967296,
+    "counts": {
+      "ucrt0/ucrt1": 44232,
+      "ucrt0/apple": 3344140,
+      "ucrt0/amd-off": 35909448,
+      "ucrt0/amd-fma": 35909448,
+      "ucrt1/apple": 3304072,
+      "ucrt1/amd-off": 35876564,
+      "ucrt1/amd-fma": 35876564,
+      "apple/amd-off": 36942712,
+      "apple/amd-fma": 36942712,
+      "amd-off/amd-fma": 0
+    },
+    "pilot_seconds": 0.632224,
+    "pilot_projected_seconds": 161.849344,
+    "progress": [
+      "4294967296",
+      "305.067253",
+      "4294967296"
+    ],
+    "stub_counts": "GetLastError=8 SetLastError=8 FlsGetValue=12"
+  },
+  "cosf": {
+    "processed": 4294967296,
+    "counts": {
+      "ucrt0/ucrt1": 18018,
+      "ucrt0/apple": 3430118,
+      "ucrt0/amd-off": 35355952,
+      "ucrt0/amd-fma": 35355952,
+      "ucrt1/apple": 3425432,
+      "ucrt1/amd-off": 35337938,
+      "ucrt1/amd-fma": 35337938,
+      "apple/amd-off": 36532258,
+      "apple/amd-fma": 36532258,
+      "amd-off/amd-fma": 0
+    },
+    "pilot_seconds": 1.05121,
+    "pilot_projected_seconds": 269.10976,
+    "progress": [
+      "4294967296",
+      "323.025153",
+      "4294967296"
+    ],
+    "stub_counts": "GetLastError=8 SetLastError=8 FlsGetValue=12"
+  },
+  "atan2f": {
+    "processed": 100000000,
+    "counts": {
+      "ucrt0/ucrt1": 0,
+      "ucrt0/apple": 20364273,
+      "ucrt0/amd-off": 1595,
+      "ucrt0/amd-fma": 1595,
+      "ucrt1/apple": 20364273,
+      "ucrt1/amd-off": 1595,
+      "ucrt1/amd-fma": 1595,
+      "apple/amd-off": 20362678,
+      "apple/amd-fma": 20362678,
+      "amd-off/amd-fma": 0
+    },
+    "pilot_seconds": 1.690883,
+    "pilot_projected_seconds": 10.078448057174683,
+    "progress": [
+      "100000000",
+      "7.437732",
+      "100000000"
+    ],
+    "stub_counts": "GetLastError=0 SetLastError=0 FlsGetValue=0"
+  },
+  "powf": {
+    "processed": 100000000,
+    "counts": {
+      "ucrt0/ucrt1": 0,
+      "ucrt0/apple": 2742,
+      "ucrt0/amd-off": 1727,
+      "ucrt0/amd-fma": 1727,
+      "ucrt1/apple": 2742,
+      "ucrt1/amd-off": 1727,
+      "ucrt1/amd-fma": 1727,
+      "apple/amd-off": 2697,
+      "apple/amd-fma": 2697,
+      "amd-off/amd-fma": 0
+    },
+    "pilot_seconds": 3.662617,
+    "pilot_projected_seconds": 21.83089852333069,
+    "progress": [
+      "100000000",
+      "21.983543",
+      "100000000"
+    ],
+    "stub_counts": "GetLastError=251675948 SetLastError=251675948 FlsGetValue=354907480"
+  },
+  "provenance": {
+    "host": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.2\nBuildVersion:\t\t24G325",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+    "binary_hashes": {
+      "sweep": "14d145da1c9e90a7b8ee6b4c710dcc65fe9fc91cc2985ab5d361056f6e0db96e",
+      "amd/amd-off.dylib": "8b6b9d46a85e480c1721211073dd78b31c147b9bbf728d5e6012b9492a42f173",
+      "amd/amd-fma.dylib": "f0f7144563a9e83402005fb75c41939800d18f55ab0ea1e25610672e87d9a210"
+    },
+    "dll_sha256": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+    "amd_commit": "29fd054f383e6c5e2dec2fce781d5220059f1836",
+    "seed": "0xf27c",
+    "rng": "SplitMix64(n XOR seed): low/high 32 bits, n starts at 0",
+    "order": [
+      "ucrt0",
+      "ucrt1",
+      "apple",
+      "amd-off",
+      "amd-fma"
+    ],
+    "unary": "n=0..2^32-1, exact bits including NaNs",
+    "bucket": "(input_bits >> 23) & 255; sign combined; binary argument 0 and 1 marginals",
+    "pairwise": "raw output bits; NaN sign and payload differences count as mismatches",
+    "chunks": 16777216
+  }
+}

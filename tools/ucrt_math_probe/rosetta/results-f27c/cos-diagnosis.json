@@ -1,0 +1,8 @@
+{
+  "a": "3a544395",
+  "ucrt0": "3f7ffffb",
+  "ucrt1": "3f7ffffa",
+  "amd_off": "3f7ffffa",
+  "diagnostic_matches_all": true,
+  "region": "no reduction: UCRT0 full cosine polynomial; UCRT1/AMD 1-x*x/2"
+}

@@ -1,0 +1,32 @@
+{
+  "mpfr": "MPFR 4.2.2",
+  "precision": 200,
+  "cases": [
+    {
+      "function": "expf",
+      "a": "c2890f89",
+      "b": "00000000",
+      "mpfr_binary32": "0e0c39fd",
+      "outputs": {
+        "ucrt0": "0e0c39fc",
+        "ucrt1": "0e0c39fd",
+        "apple": "0e0c39fc",
+        "amd-off": "0e0c39fc",
+        "amd-fma": "0e0c39fd"
+      }
+    },
+    {
+      "function": "atan2f",
+      "a": "803c1252",
+      "b": "0686decf",
+      "mpfr_binary32": "b8e40bc5",
+      "outputs": {
+        "ucrt0": "b8e40bc6",
+        "ucrt1": "b8e40bc6",
+        "apple": "b8e40bc5",
+        "amd-off": "b8e40bc5",
+        "amd-fma": "b8e40bc5"
+      }
+    }
+  ]
+}
