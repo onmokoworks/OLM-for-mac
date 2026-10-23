@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""C35: qualify PF32 negative-phase admission against the F32 oracle."""
+import argparse
+import json
+import shutil
+import time
+from types import SimpleNamespace
+import os
+import re
+from pathlib import Path
+import sys
+import subprocess
+sys.dont_write_bytecode = True
+import verify_radialblur_smart_C06 as verify
+from adapters.radialblur import public, Adapter
+from core import sha, raw_diff
+
+
+def candidate_source(experiment, source):
+    if experiment == 'negative-phase':
+        old = "\tif constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {\n\t\tif (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;\n\t}"
+        assert source.count(old) == 1
+        return source.replace(old, '')
+    if experiment.startswith('nonfinite-'):
+        start = source.index('static bool GenericRadialInputIsFinite(')
+        end = source.index('\ntemplate <typename PixelT>', start)
+        source = source[:start] + 'static bool GenericRadialInputIsFinite(const PF_EffectWorld *input) { (void)input; return true; }\n' + source[end:]
+        old = '\t\tif (weight == 0.0f) return;'
+        assert source.count(old) == 1
+        source = source.replace(old, '')
+        if experiment in ('nonfinite-cancelled-rgb', 'nonfinite-x86-generated'):
+            old = '\t\tresult.eligible = coordinate_gate ? 1 : 0;\n\t}\n\treturn result;'
+            new = '\t\tresult.eligible = coordinate_gate ? 1 : 0;\n\t} else {\n\t\tfor (int c = 0; c < 3; ++c) result.rgba[c] = rgb_sum[c];\n\t\tresult.rgba[3] = alpha_sum;\n\t}\n\treturn result;'
+            assert source.count(old) == 1
+            source = source.replace(old, new)
+        if experiment == 'nonfinite-x86-generated':
+            source = '#include "'+str(verify.ROOT/'core/x86_float.h')+'"\n'+source
+            for op in ('*', '+', '/', '-'):
+                old = '\tvolatile float result = lhs '+op+' rhs;\n\treturn result;'
+                new = '\tvolatile float result = lhs '+op+' rhs;\n\treturn olm::x86_float::generated_nan(result, lhs, rhs);'
+                assert source.count(old) == 1
+                source = source.replace(old, new)
+        return source
+    if experiment == 'rotation-zero-alpha':
+        old = 'if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {'
+        new = 'if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {'
+        assert source.count(old) == 1
+        source = source.replace(old, new)
+        old = 'GenericRadialInputIsSDR<PF_PixelFloat>(input));'
+        assert source.count(old) == 1
+        return source.replace(old, 'GenericRadialInputIsFinite<PF_PixelFloat>(input));')
+    return source
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--experiment', choices=('negative-phase', 'rotation-zero-alpha', 'nonfinite-zero-taps', 'nonfinite-cancelled-rgb', 'nonfinite-x86-generated', 'production'), required=True)
+    ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--campaign', type=Path)
+    ap.add_argument('--replay', type=Path)
+    ap.add_argument('--admission-campaign', type=Path)
+    ap.add_argument('--source-revision', help='Read this revision of the plugin source without modifying the checkout')
+    ap.add_argument('--seed', type=int, help='Run a sanitized n300 campaign instead of the independent matrix')
+    args = ap.parse_args()
+    out = args.output.resolve()
+    assert out.is_relative_to(verify.ROOT/'orchestra/state/C35-radial-smart-r6')
+    out.mkdir(parents=True, exist_ok=False)
+    os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out))
+    verify.WORKER = Path.home()/'.cache/olm-emu/worker-F32-deep/aex-guest-worker'
+    argv = [sys.argv[0], '--output', str(out)]
+    if args.experiment == 'production' and not args.source_revision:
+        if args.seed is None and args.replay is None and args.admission_campaign is None:
+            assert args.campaign
+            argv += ['--campaign', str(args.campaign), '--smoke']
+    else:
+        snapshot = out/'experiment.cpp'
+        source = public.SOURCE.read_text()
+        if args.source_revision:
+            source = subprocess.run(['git', 'show', args.source_revision+':mac/OLMRadialBlur/OLMRadialBlur.cpp'], capture_output=True, text=True, check=True, cwd=verify.ROOT).stdout
+        source = candidate_source(args.experiment, source)
+        source = re.sub(r'^#include "([^" ]+)"', lambda m: '#include "' + str((public.SOURCE.parent/m.group(1)).resolve()) + '"', source, flags=re.MULTILINE)
+        snapshot.write_text(source)
+        for name in ('OLMRadialBlur.h', 'OLMRadialBlur_Strings.h', 'OLMRadialBlur_Strings.cpp'):
+            (out/name).symlink_to(public.SOURCE.parent/name)
+        snapshot.with_suffix('.h').write_bytes(public.SOURCE.with_suffix('.h').read_bytes())
+        argv += ['--source', str(snapshot)]
+    if args.seed is None and args.replay is None and args.admission_campaign is None and args.experiment == 'negative-phase':
+        import verify_radialblur_negative_C11 as negative
+        sys.argv = [sys.argv[0], '--source', str(snapshot), '--all-depths', '--skip-plane-trace', '--worker', str(verify.WORKER), '--output', str(out/'matrix')]
+        return negative.main()
+    if args.seed is None and args.replay is None and args.admission_campaign is None and args.experiment == 'rotation-zero-alpha':
+        import verify_radialblur_smart_C11 as matrix
+        matrix.ALL_DEPTHS = True
+        verify.independent_cases = lambda adapter, unused=None: matrix.finite_cases(adapter)
+        sys.argv = [sys.argv[0], '--source', str(snapshot), '--independent', '--output', str(out)]
+        return verify.main()
+    if args.admission_campaign:
+        if args.experiment != 'production' or args.source_revision:
+            public.SOURCE = snapshot
+        os.environ['OLM_RADIAL_CANDIDATE_SANITIZE'] = '1'
+        adapter = Adapter(SimpleNamespace(main=verify.MAIN, worker=verify.WORKER, max_size=256, case_timeout=60))
+        deadline = time.monotonic()+7200
+        old = json.loads(args.admission_campaign.read_text())
+        report = dict(seed=old['seed'], provenance=adapter.prepare(out, deadline),
+                      reference_campaign_sha256=sha(args.admission_campaign.read_bytes()), cases=[], failures=[], refusal_error_changes=[])
+        for row in old['cases']:
+            case = adapter.generate(old['seed'], row['index'])
+            assert sha(case['pixels']) == row['input_sha256']
+            actual, raw, guards = adapter.candidate(case, out, 'smart', deadline)
+            before, oracle = row['result']['routes']['smart'], row['result']['oracles']['smart']
+            observed = dict(actual, raw_sha256=sha(raw))
+            if actual['status'] == 'ok':
+                observed['status'] = ('exact' if sha(raw) == oracle['raw_sha256'] else 'mismatch') if oracle['status'] == 'ok' else 'uncompared'
+            if observed['status'] == 'mismatch':
+                check, reference = adapter.oracle(case, out, deadline, 'smart')
+                assert check['status'] == 'ok' and sha(reference) == oracle['raw_sha256']
+                observed['diff'] = raw_diff(reference, raw, case['depth'])
+            same = before['status'] == observed['status'] and before.get('raw_sha256') == observed.get('raw_sha256')
+            admitted = before['status'] == 'refusal' and observed['status'] == 'exact'
+            # A still-refused case may reach the unchanged resource guard after admission.
+            if before['status'] == observed['status'] == 'refusal':
+                same = not raw
+                if before['error'] != observed['error']:
+                    report['refusal_error_changes'].append(dict(index=row['index'], before=before['error'], after=observed['error'], guards=guards))
+            if actual.get('sanitizer') or not (same or admitted):
+                report['failures'].append(row['index'])
+            report['cases'].append(dict(index=row['index'], input_sha256=row['input_sha256'],
+                result=dict(routes=dict(smart=observed), oracles=dict(smart=oracle)), refusal_guards=dict(smart=guards)))
+        (out/'campaign.json').write_text(json.dumps(report, indent=2)+'\n')
+        shutil.rmtree(out/'build')
+        print('ADMISSION', len(report['cases']), 'failures', report['failures'], flush=True)
+        return bool(report['failures'])
+    if args.seed is not None or args.replay is not None:
+        import run
+        if args.experiment != 'production' or args.source_revision:
+            public.SOURCE = snapshot
+        os.environ['OLM_RADIAL_CANDIDATE_SANITIZE'] = '1'
+        sys.argv = [sys.argv[0], '--plugin', 'radialblur', '--n', '300', '--seed', str(args.seed), '--jobs', '1', '--worker', str(verify.WORKER), '--case-timeout', '30', '--shrink-attempts', '0', '--shrink-seconds', '0', '--scratch', str(out/'scratch'), '--report', str(out/'campaign.json'), '--corpus', str(out/'corpus')]
+        if args.replay is not None:
+            sys.argv = [sys.argv[0], '--plugin', 'radialblur', '--replay', str(args.replay), '--jobs', '1', '--worker', str(verify.WORKER), '--case-timeout', '30', '--scratch', str(out/'scratch'), '--report', str(out/'replay.json'), '--corpus', str(out/'corpus')]
+        return run.main()
+    sys.argv = argv
+    return verify.main()
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

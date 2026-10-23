@@ -440,9 +440,9 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 			RadialF32Mul(sample_valid(x1, y1), w11));
 	}
 
-	// Zoom retains accumulated RGB when signed alpha cancels to zero;
-	// the original sampler then skips only the reciprocal normalization.
-	if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {
+	// Both original samplers accumulate RGB even when alpha cancels or
+	// underflows to zero; only reciprocal normalization is then skipped.
+	if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {
 		const float reciprocal_alpha = state.alpha != 0.0f ? RadialF32Div(1.0f, state.alpha) : 1.0f;
 		for (int c = 0; c < 3; ++c) {
 			if (aex_column_major_taps) {
@@ -1033,11 +1033,8 @@ static bool IsGenericBaselineWorldPair(
 	const size_t last_row = (size_t)input->height - 1;
 	if ((last_row != 0 && input_rowbytes > std::numeric_limits<size_t>::max() / last_row) ||
 		(last_row != 0 && output_rowbytes > std::numeric_limits<size_t>::max() / last_row)) return false;
-	// Negative-phase PF32 reveals a separate Gaussian/import residual. Keep
-	// that admission closed while allowing proven integer-depth noise planes.
-	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-		if (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;
-	}
+	// C35: defined negative-phase indices also match for PF32 with UCRT math.
+	// The Radial noise generator still rejects every out-of-table index.
 	size_t rgba_words = 0;
 	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
 		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;
@@ -5463,10 +5460,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
-			// Match typed Zoom's finite-input contract. Its FLOAT32 path retains
-			// signed/HDR values; Rotation has independent HDR/subnormal residuals.
-			(info.blur_type == 1 ? GenericRadialInputIsFinite<PF_PixelFloat>(input) :
-			 GenericRadialInputIsSDR<PF_PixelFloat>(input));
+			// Both typed paths preserve finite signed/HDR values. Rotation
+			// retains zero-alpha RGB accumulation before its original clamp.
+			GenericRadialInputIsFinite<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached
