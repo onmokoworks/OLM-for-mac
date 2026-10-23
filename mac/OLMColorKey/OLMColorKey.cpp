@@ -1,5 +1,6 @@
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMColorKey.h"
+#include "../../core/x86_float.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>
@@ -1753,18 +1754,18 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	}
 	static void scale(PF_PixelFloat &dst, const PF_PixelFloat &src, float weight)
 	{
-		dst.red = src.red * weight;
-		dst.green = src.green * weight;
-		dst.blue = src.blue * weight;
-		dst.alpha = src.alpha * weight;
+		dst.red = olm::x86_float::mul(src.red, weight);
+		dst.green = olm::x86_float::mul(src.green, weight);
+		dst.blue = olm::x86_float::mul(src.blue, weight);
+		dst.alpha = olm::x86_float::mul(src.alpha, weight);
 	}
 	static void scale_alpha_only(PF_PixelFloat &dst, float weight)
 	{
-		dst.alpha *= weight;
+		dst.alpha = olm::x86_float::mul(dst.alpha, weight);
 	}
 	static void scale_alpha_public(PF_PixelFloat &dst, float weight) { scale_alpha_only(dst, weight); }
 	static void restore_alpha(PF_PixelFloat &dst, const PF_PixelFloat &src) { dst.alpha = src.alpha; }
-	static void scale_alpha_unbounded(PF_PixelFloat &dst, float weight) { dst.alpha *= weight; }
+	static void scale_alpha_unbounded(PF_PixelFloat &dst, float weight) { dst.alpha = olm::x86_float::mul(dst.alpha, weight); }
 };
 
 // World rowbytes is a byte stride, not a guarantee of PixelT alignment.
@@ -1836,7 +1837,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
 			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
 			PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
-			output_pixel.alpha = source_pixel.alpha - output_pixel.alpha;
+			// SUBSS generates the x86 negative indefinite for infinity-infinity.
+			const float source_alpha = source_pixel.alpha;
+			const float matte_alpha = output_pixel.alpha;
+			output_pixel.alpha = OLMCKPixelTraits<PixelT>::is_32bpc()
+			    ? olm::x86_float::generated_nan(source_alpha - matte_alpha, source_alpha, matte_alpha)
+			    : source_pixel.alpha - output_pixel.alpha;
 			WritePixel(output, x, y, output_pixel);
 		}
 		return PF_Err_NONE;
@@ -2041,22 +2047,41 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				matched[(size_t)y * (size_t)w + (size_t)x] = 0;
 		}
 	}
+	// Native boundary/curve UCOMISS branches treat unordered matte alpha like
+	// zero (0x180008ef7/8f60, 0x18000548f). Keep that topology separate
+	// from the stored matte: negative Thin must still preserve its NaN payload.
+	auto distance_mask = [&]() {
+		std::vector<u_char> mask = matched;
+		if (OLMCKPixelTraits<PixelT>::is_32bpc()) {
+			for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+				const float alpha = OLMCKPixelTraits<PixelT>::a(ReadPixel<PixelT>(
+				    input, x + input_offset_x, y + input_offset_y));
+				if (alpha != alpha) mask[(size_t)y * w + x] = 0;
+			}
+		}
+		return mask;
+	};
 	if (info.edge_thin_amount < 0.0) {
-		std::vector<u_char> boundary = Boundary8(matched, w, h);
+		std::vector<u_char> boundary = Boundary8(distance_mask(), w, h);
 		std::vector<float> dist = MatteDistanceTo(boundary, w, h, info.edge_thin_distance_type);
 		// Distance generators read PF_InData downsample numerators. Standard
 		// full-resolution hosts pass 1 for both axes, independently of depth.
 		const float scale = 1.0f;
 		const float amount = (float)std::fabs(info.edge_thin_amount);
 		for (A_long i = 0; i < w * h; ++i) {
-			matched[i] = (matched[i] && dist[i] * scale >= amount) ? 1 : 0;
+			// AEX 0x180009c7c UCOMISS + JZ skips both zero and unordered
+			// matte alpha. A NaN copied by the classifier survives erosion.
+			const float alpha = OLMCKPixelTraits<PixelT>::a(ReadPixel<PixelT>(
+			    input, i % w + input_offset_x, i / w + input_offset_y));
+			if (alpha == alpha)
+				matched[i] = (matched[i] && dist[i] * scale >= amount) ? 1 : 0;
 		}
         if (w == 1 && IsRecoveredPublicBlur(info) && info.edge_blur_distance_type == 1)
             thin_distance_workspace = std::move(dist);
 	} else if (info.edge_thin_amount > 0.0) {
-		std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
+		std::vector<float> dist = MatteDistanceTo(distance_mask(), w, h, info.edge_thin_distance_type);
         if (w == 1 && IsRecoveredPublicBlur(info) && info.edge_blur_distance_type == 1)
-            thin_distance_workspace = MatteDistanceTo(Boundary8(matched, w, h), w, h,
+            thin_distance_workspace = MatteDistanceTo(Boundary8(distance_mask(), w, h), w, h,
                 info.edge_thin_distance_type);
 		// Standard-host positive Thin distances are in pixel units at every depth.
 		const float distance_scale = 1.0f;
@@ -2081,7 +2106,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			PixelT output_pixel = source_pixel;
 			bool keep = info.color_keep ? matched[(size_t)y * (size_t)w + (size_t)x] != 0
 			                            : matched[(size_t)y * (size_t)w + (size_t)x] == 0;
-			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep ? 1 : 0;
+			const float source_alpha = OLMCKPixelTraits<PixelT>::a(source_pixel);
+			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep && source_alpha == source_alpha ? 1 : 0;
 			if (!keep) {
 				// Premultiplied changes the classifier input above, not ownership
 				// of the stored RGB.  The native writer always clears alpha only;
@@ -2161,7 +2187,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// The Windows worker builds the boundary on the matched side before
 		// FUN_1800066F0 propagates distance.  Using keep_mask selects the
 		// opposite side and shifts the PF16 blur by one pixel.
-		std::vector<u_char> boundary = Boundary8(matched, w, h);
+		std::vector<u_char> boundary = Boundary8(distance_mask(), w, h);
 		const bool use_pf32_amount2_native_plane =
             !IsRecoveredPublicBlur(info) && OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
 		    edge_blur_direction >= 1 && edge_blur_direction <= 3;

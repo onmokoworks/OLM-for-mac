@@ -1,0 +1,1588 @@
+{
+  "case": {
+    "depth": 32,
+    "geometry": [
+      202,
+      1
+    ],
+    "index": 22,
+    "input_padding": 7,
+    "output_padding": 11,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 6,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 8,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 11,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 14,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 18,
+        "value": 4000.0
+      },
+      {
+        "kind": "u",
+        "slot": 19,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 20,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 24
+      },
+      {
+        "kind": "b",
+        "slot": 23,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 24,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 26,
+        "value": [
+          255,
+          64,
+          79,
+          144
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 27,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 30,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 31,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 32,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 33,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 34,
+        "value": [
+          0,
+          185,
+          112,
+          233
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 36,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 37,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 38,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 39,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 40,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 41,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 42,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 43,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 44,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 45,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 46,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 47,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 48,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 49,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 50,
+        "value": [
+          128,
+          118,
+          180,
+          177
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 51,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 52,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 53,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 54,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 55,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 56,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 57,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 58,
+        "value": [
+          0,
+          197,
+          124,
+          188
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 59,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 60,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 61,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 62,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 63,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 64,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 65,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 66,
+        "value": [
+          0,
+          82,
+          78,
+          24
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 67,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 68,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 69,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 70,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 71,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 72,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 73,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 74,
+        "value": [
+          0,
+          156,
+          106,
+          157
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 75,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 76,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 77,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 78,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 79,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 80,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 81,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 82,
+        "value": [
+          128,
+          185,
+          134,
+          38
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 83,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 84,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 85,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 86,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 87,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 88,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 89,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 90,
+        "value": [
+          128,
+          214,
+          38,
+          110
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 91,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 92,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 93,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 94,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 95,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 96,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 97,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 98,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 99,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 100,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 101,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 102,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 103,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 104,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 105,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 106,
+        "value": [
+          255,
+          16,
+          68,
+          134
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 107,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 108,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 109,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 110,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 111,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 112,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 113,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 114,
+        "value": [
+          255,
+          123,
+          80,
+          235
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 115,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 116,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 117,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 118,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 119,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 120,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 121,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 122,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 123,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 124,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 125,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 126,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 127,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 128,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 129,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 130,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 131,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 132,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 133,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 134,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 135,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 136,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 137,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 138,
+        "value": [
+          128,
+          173,
+          152,
+          43
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 139,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 140,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 141,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 142,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 143,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 144,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 145,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 146,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 147,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 148,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 149,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 150,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 151,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 152,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 153,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 154,
+        "value": [
+          255,
+          6,
+          168,
+          96
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 155,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 156,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 157,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 158,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 159,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 160,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 161,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 162,
+        "value": [
+          0,
+          45,
+          157,
+          186
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 163,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 164,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 165,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 166,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 167,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 168,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 169,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 170,
+        "value": [
+          255,
+          183,
+          67,
+          99
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 171,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 172,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 173,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 174,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 175,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 176,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 177,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 178,
+        "value": [
+          255,
+          12,
+          88,
+          193
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 179,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 180,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 181,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 182,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 183,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 184,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 185,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 186,
+        "value": [
+          0,
+          195,
+          81,
+          221
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 187,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 188,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 189,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 190,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 191,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 192,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 193,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 194,
+        "value": [
+          128,
+          16,
+          254,
+          89
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 195,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 196,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 197,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 198,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 199,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 200,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 201,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 202,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 203,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 204,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 205,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 206,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 207,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 208,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 209,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 210,
+        "value": [
+          128,
+          103,
+          227,
+          221
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 211,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 212,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 213,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 214,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 215,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 216,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 217,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 218,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 219,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 220,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 221,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 222,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 223,
+        "value": 0.0
+      }
+    ],
+    "profile": "nonfinite",
+    "seed": 47
+  },
+  "generator_version": 1,
+  "index": 22,
+  "input_sha256": "ed0f9a031f83e1a1b38ddea29bbdf1557cdcf3e06bc3bc2c929b416858e3ac76",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmcolorkey",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "candidate_sha256": "31985fd8326a95a19820816c9f5ab4698802588c0ece1add235e8cab4351520f",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "dependencies_sha256": {
+      "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+      "mac/OLMColorKey/OLMColorKey.cpp": "8dcf692569fbcd03269a509930a9a577ee1149234d3b9e962d711c616f9ef175",
+      "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+      "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+      "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "rebaseline_history": [
+    {
+      "previous_provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+        "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+        "candidate_sha256": "0c61884fef6a737be3ab7fb840245a17d16c923b519eb63ed1172384afb68721",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+        "dependencies_sha256": {
+          "mac/OLMColorKey/OLMColorKey.cpp": "a85a71fcef74c3250d495120947a4300a12a819cab9153e0af3032bcf33d1132",
+          "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+          "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+          "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "triage": {
+          "bypass": false,
+          "host_flags_control": false,
+          "sanitizers": false,
+          "trace": true
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "previous_result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "df66d6e43afb0468eda3149e5eaaffda44271cf157a9d9ea4ff6b6dafccb030c",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 3232,
+              "actual_word_hex": "0000c07f",
+              "different_bytes": 2577,
+              "different_words": 769,
+              "expected_bytes": 3232,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "770a7944cb4bac90ae6c1de21acbb19a77f4697f40132b9852dbd89e19cb9760",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 3232,
+              "actual_word_hex": "0000c07f",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 3232,
+              "expected_word_hex": "0000c0ff",
+              "first_byte": 3,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "770a7944cb4bac90ae6c1de21acbb19a77f4697f40132b9852dbd89e19cb9760",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "ticket": "C42-colorkey-pf32-nan-mismatch"
+    }
+  ],
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "df66d6e43afb0468eda3149e5eaaffda44271cf157a9d9ea4ff6b6dafccb030c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 3232,
+          "actual_word_hex": "0000c0ff",
+          "different_bytes": 2577,
+          "different_words": 769,
+          "expected_bytes": 3232,
+          "expected_word_hex": "00000000",
+          "first_byte": 2,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        },
+        "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        },
+        "raw_sha256": "d201b2afd44e6e04509622e669b0e60bcc7ff11e20da3a6fe8a005f99ce485eb",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 47
+}

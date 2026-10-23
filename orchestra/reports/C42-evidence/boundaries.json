@@ -1,0 +1,536 @@
+{
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "candidate_sha256": "31985fd8326a95a19820816c9f5ab4698802588c0ece1add235e8cab4351520f",
+    "dependencies_sha256": {
+      "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+      "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+      "mac/OLMColorKey/OLMColorKey.cpp": "8dcf692569fbcd03269a509930a9a577ee1149234d3b9e962d711c616f9ef175",
+      "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+      "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+    },
+    "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "out_of_range_builder_defaults": [],
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "oracle_render_path": "smartfx",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion",
+    "layer": "None; independent layer worlds outside this adapter",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "triage": {
+      "trace": true,
+      "bypass": false,
+      "sanitizers": false,
+      "host_flags_control": false
+    },
+    "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+    "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels"
+  },
+  "cases": [
+    {
+      "alpha_word": "7fc12345",
+      "thin": -1,
+      "keep": 0,
+      "input_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "275435853c5cfba65efa49b69a3c60746ca3ebd6625d56c86261db5f9849d62d",
+      "candidate_sha256": "275435853c5cfba65efa49b69a3c60746ca3ebd6625d56c86261db5f9849d62d",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -1,
+      "keep": 1,
+      "input_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "f4c87e07436f85e891bf97e9ee0975ba569fda24693170f4bdea5add9f6f68ca",
+      "candidate_sha256": "f4c87e07436f85e891bf97e9ee0975ba569fda24693170f4bdea5add9f6f68ca",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -2929,
+      "keep": 0,
+      "input_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "candidate_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -2929,
+      "keep": 1,
+      "input_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "bec65d8488dc0cf308769a3bd2f7adcc2c76a4d76b8810eb513b1b9353a0b39f",
+      "candidate_sha256": "bec65d8488dc0cf308769a3bd2f7adcc2c76a4d76b8810eb513b1b9353a0b39f",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -1,
+      "keep": 0,
+      "input_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "55697ff109eadb2374972d8627cc83c4aa5cc312fc378a93fb8bc590fdf46054",
+      "candidate_sha256": "55697ff109eadb2374972d8627cc83c4aa5cc312fc378a93fb8bc590fdf46054",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -1,
+      "keep": 1,
+      "input_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "5ec15d557bfb5af5fa4b7c99c655a8a1717e52d0b32ff10e1d22165e0661313e",
+      "candidate_sha256": "5ec15d557bfb5af5fa4b7c99c655a8a1717e52d0b32ff10e1d22165e0661313e",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -2929,
+      "keep": 0,
+      "input_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "candidate_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -2929,
+      "keep": 1,
+      "input_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "50569a368e03e6aa57988ba13a0bbb5f6f6a23fa0374a631d8b5fc12d6f5369c",
+      "candidate_sha256": "50569a368e03e6aa57988ba13a0bbb5f6f6a23fa0374a631d8b5fc12d6f5369c",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -1,
+      "keep": 0,
+      "input_sha256": "f7c38e13807c1e3be85a9d15bc35834365dc0301676803fdac61861917d6a3eb",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "275435853c5cfba65efa49b69a3c60746ca3ebd6625d56c86261db5f9849d62d",
+      "candidate_sha256": "275435853c5cfba65efa49b69a3c60746ca3ebd6625d56c86261db5f9849d62d",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -1,
+      "keep": 1,
+      "input_sha256": "f7c38e13807c1e3be85a9d15bc35834365dc0301676803fdac61861917d6a3eb",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "912f829e78d846ea5794bf30625270a299fa5bc1dbcfa84050fc7f4f6b8eee2b",
+      "candidate_sha256": "912f829e78d846ea5794bf30625270a299fa5bc1dbcfa84050fc7f4f6b8eee2b",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -2929,
+      "keep": 0,
+      "input_sha256": "f7c38e13807c1e3be85a9d15bc35834365dc0301676803fdac61861917d6a3eb",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "candidate_sha256": "dc7301ff2b7c722c081d100eca7d10e70d7aa3a23a6e08c3561eabcf921b886d",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -2929,
+      "keep": 1,
+      "input_sha256": "f7c38e13807c1e3be85a9d15bc35834365dc0301676803fdac61861917d6a3eb",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "b36a6da7d863c2615f9f7c52a5253cfe453e1da6701e39c7f8b94fe2afde9208",
+      "candidate_sha256": "b36a6da7d863c2615f9f7c52a5253cfe453e1da6701e39c7f8b94fe2afde9208",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -1,
+      "keep": 0,
+      "input_sha256": "f7a80058567a6c9021ab96e7d9f1bde972ed73b66c18789cc4a9b2f3d17187b8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "55697ff109eadb2374972d8627cc83c4aa5cc312fc378a93fb8bc590fdf46054",
+      "candidate_sha256": "55697ff109eadb2374972d8627cc83c4aa5cc312fc378a93fb8bc590fdf46054",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -1,
+      "keep": 1,
+      "input_sha256": "f7a80058567a6c9021ab96e7d9f1bde972ed73b66c18789cc4a9b2f3d17187b8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "07c74942852cde53ab97ee1a25e49c1cdfc76d92cd5b5730930cf30374aa2a7d",
+      "candidate_sha256": "07c74942852cde53ab97ee1a25e49c1cdfc76d92cd5b5730930cf30374aa2a7d",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -2929,
+      "keep": 0,
+      "input_sha256": "f7a80058567a6c9021ab96e7d9f1bde972ed73b66c18789cc4a9b2f3d17187b8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "candidate_sha256": "0dfcf5e0b7418dbb6253a33cfdc3311014424f41db56f5552394d368e6d8f6a8",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -2929,
+      "keep": 1,
+      "input_sha256": "f7a80058567a6c9021ab96e7d9f1bde972ed73b66c18789cc4a9b2f3d17187b8",
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "candidate": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        }
+      },
+      "reference_sha256": "05f0a024f2a2c99e1857ffcf9878a4b6be38752b209630a8ba5afd33aa3c7de5",
+      "candidate_sha256": "05f0a024f2a2c99e1857ffcf9878a4b6be38752b209630a8ba5afd33aa3c7de5",
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    }
+  ]
+}
