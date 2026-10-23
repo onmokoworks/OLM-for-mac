@@ -1515,7 +1515,7 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		if (dist >= amount) return inside ? 1.0f : 0.0f;
 		float phase = dist * ((pi * 0.5f) / amount);
 		if (!inside) phase = -phase;
-		return (std::sin(phase) + 1.0f) * 0.5f;
+		return (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
 	}
 	if (direction == 3) {
 		if (inside) return 1.0f;
@@ -2243,7 +2243,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					else {
 						float phase = native_dist * (1.5707963705062866f / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
-						float sine = std::sin(phase);
+						float sine = ucrt_sinf(phase, UCRT_FMA);
 						weight = (sine + 1.0f) * 0.5f;
 					}
 					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
@@ -2273,7 +2273,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						float phase = native_dist *
 						    ((pi * 0.5f) / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
-						weight = (std::sin(phase) + 1.0f) * 0.5f;
+						weight = (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
 					}
 				} else if (bounded_public_owner_lane && edge_blur_direction == 3) {
 					if (!keep) weight = 0.0f;

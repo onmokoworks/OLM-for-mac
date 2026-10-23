@@ -38,9 +38,9 @@ def default_worker():
     configured = os.environ.get('OLM_AEX_WORKER')
     if configured:
         return Path(configured)
-    # F32: F30 UCRT/SSE NaN semantics plus legacy DEEP_PIXELS allocation.
-    # F30 and older workers remain selectable with --worker / OLM_AEX_WORKER.
-    retained = Path.home()/'.cache/olm-emu/worker-F32-deep/aex-guest-worker'
+    # F44: F32 plus UCRT sinf/cosf/log2f in default FMA mode.
+    # F32 and older workers remain selectable with --worker / OLM_AEX_WORKER.
+    retained = Path.home()/'.cache/olm-emu/worker-F44-msfloat/aex-guest-worker'
     return retained if retained.is_file() else None
 
 
