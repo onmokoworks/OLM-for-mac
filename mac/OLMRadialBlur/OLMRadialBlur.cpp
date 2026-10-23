@@ -965,7 +965,7 @@ static bool ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
 
 static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
-	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
+	if (info.noise_variation == 0.0) return info.noise_type >= 1 && info.noise_type <= 3;
 	if (!std::isfinite(info.noise_variation) || info.noise_variation < 0.0 || info.noise_variation > 100.0) return false;
 	// Negative phases are valid only while all generated table indices remain
 	// in range. The noise builder checks each index before either table read.
@@ -2103,7 +2103,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					// SV0 fade tuples have a size factor of exactly one even where a
 					// noise-composed scatter span falls below one.  The bounded Size x
 					// Edge fixture instead carries the sampled component factor here.
-					const float factor = (outer_fade_span > 0 || inner_fade_span > 0)
+					// C46: an explicit size plane also owns the no-fade prepass.
+					const float factor = fade_factor_plane ? (*fade_factor_plane)[cell] : (outer_fade_span > 0 || inner_fade_span > 0)
 						? (use_fade_factor_plane
 							? (fade_factor_plane ? (*fade_factor_plane)[cell] : span_plane[cell])
 							: 1.0f)
@@ -3295,8 +3296,9 @@ static PF_Err RenderZoomTyped(
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> fade_factor_with_guard;
-	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation) &&
-		(info.outer_edge_fade != 0 || info.inner_edge_fade != 0);
+	const bool use_generic_size_fade = use_generic_baseline &&
+		((RadialSizeVariationEnabled(info.size_variation) && (info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) ||
+		 (info.noise_type == 3 && info.noise_variation == 0.0));
 	std::vector<float> fade_factor_plane;
 	std::vector<float> source_scalar_plane;
 	if (use_aex_outer_only) {
@@ -3369,6 +3371,13 @@ static PF_Err RenderZoomTyped(
 			}
 		}
 	}
+	if (info.noise_type == 3 && info.noise_variation == 0.0) {
+		// 65C0 leaves the scatter allocation unwritten without a layer.
+		// Deterministic zero follows the oracle; B150 still owns the size plane.
+		fade_factor_with_guard = source_factor_with_guard;
+		fade_factor_plane.resize((size_t)angular_count * radius_count);
+		std::fill(source_factor_with_guard.begin(), source_factor_with_guard.end(), 0.0f);
+	}
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
@@ -3417,6 +3426,8 @@ static PF_Err RenderZoomTyped(
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 				if (use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 					fade_factor_plane[(size_t)ai * radius_count + ri] =
+						// 56F0 writes literal one when the size-variation flag is clear.
+						!RadialSizeVariationEnabled(info.size_variation) ? 1.0f :
 						info.repeat_border == FALSE
 							? SampleScalarAEXNoRepeat(fade_factor_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
@@ -4674,6 +4685,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 		}
 	}
+	// Same missing-layer zero contract as Zoom; retain the separate size prepass.
+	if (info.noise_type == 3 && info.noise_variation == 0.0)
+		std::fill(rotation_scalar_source_with_guard.begin(), rotation_scalar_source_with_guard.end(), 0.0f);
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
@@ -5452,10 +5466,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	bool smart_render = false)
 {
 	if (IsRadialNoOpControlProfile(info)) return RenderRadialNoOpCopy(input, output, info, bitdepth);
-	if (info.noise_type == 3 && !RequiresNoiseLayer(info) &&
+	if (info.noise_type == 3 && info.noise_variation != 0.0 && !RequiresNoiseLayer(info) &&
 		!RadialExperimentBypass("type3-zero-noise")) {
-		// A zero/negative Type-3 amount does not belong to the sole admitted
-		// NV25 layer tuple; do not let it fall through a generic neutral lane.
+		// Zero Type-3 amount uses the deterministic missing-layer span contract.
+		// Negative amounts remain outside the admitted layer/procedural lanes.
 		return OLM_RADIAL_REFUSAL("type3-zero-noise");
 	}
 	if (RequiresNoiseLayer(info)) {

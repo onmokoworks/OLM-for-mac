@@ -40,6 +40,7 @@ def main():
     ap.add_argument('--measure-only', action='store_true')
     ap.add_argument('--align-worlds', action='store_true')
     ap.add_argument('--sampler-only', action='store_true')
+    ap.add_argument('--prefix-only', action='store_true', help='F46-compatible 4096-byte polar/scatter/prepass prefixes; no full-plane claim')
     ap.add_argument('--no-shrink', action='store_true')
     ap.add_argument('--legacy-trace-angles', action='store_true', help='Old trace CLI; only zero Angle controls are supported')
     ap.add_argument('--trace-worker', type=Path, default=Path('/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker'))
@@ -99,7 +100,10 @@ def main():
         body=zoom.plane_harness().replace('w>64||h>64', 'w>256||h>256')
         marker='dump("polar.f32",probe_polar.data(),probe_polar.size()*4);'
         assert body.count(marker)==1
-        hp.write_text(body.replace(marker,marker+'dump("weights.f32",probe_weights.data(),probe_weights.size()*4);'))
+        extra = 'dump("weights.f32",probe_weights.data(),probe_weights.size()*4);'
+        if args.prefix_only:
+            extra += 'dump("prepass_factor.f32",probe_factor.data(),probe_factor.size()*4);'
+        hp.write_text(body.replace(marker,marker+extra))
         old=public.initial.HARNESS; public.initial.HARNESS=hp
         passive = zoom.passive_source(source)
         marker='static FloatImage BuildZoomAEXOuterOnlyPolar('
@@ -107,6 +111,15 @@ def main():
         pos=passive.index('const A_long radius_count = polar.width;',start)
         passive=passive[:pos]+'probe_weights=weights;\n\t'+passive[pos:]
         passive=passive[:start]+'static std::vector<float> probe_weights;\n'+passive[start:]
+        if args.prefix_only:
+            at=passive.index('static FloatImage BuildZoomAEXOuterOnlyPolar(')
+            passive=passive[:at]+'static std::vector<float> probe_factor;\n'+passive[at:]
+            old='std::atomic<A_long> next_row(0);'
+            at=passive.index(old,passive.index('static FloatImage BuildZoomAEXOuterOnlyPolar('))
+            passive=passive[:at]+'probe_factor.assign(cell_count,0.0f);\n\t'+passive[at:]
+            old='float source_scalar = source_scalar_plane[cell];'
+            at=passive.index(old,passive.index('static FloatImage BuildZoomAEXOuterOnlyPolar('))
+            passive=passive[:at]+'probe_factor[cell]=factor;\n\t'+passive[at:]
         binary=public.build(out/'planes_build',passive)
         provenance['passive_source_sha256'] = sha(passive.encode())
         provenance['passive_binary_sha256'] = sha(binary.read_bytes())
@@ -184,6 +197,11 @@ def main():
         (directory/'native_weights.f32').write_bytes(native_weights)
         row['weights']=zoom.fields.compare_words(native_weights,(planes/'weights.f32').read_bytes())
         specs=[('polar',0xb150,'rdx',None,cells*16,'before'),('eligible',0xa9d0,'stack5',None,cells,'before'),('span',0xa9d0,'r9',None,cells*4,'before'),('preaccum',0xb150,'rcx',0x4210,cells*16,'after'),('premax',0xb150,'rcx',0x4218,cells*4,'after'),('accum',0xa9d0,'rcx',0x4210,cells*16,'after'),('max',0xa9d0,'rcx',0x4218,cells*4,'after'),('normalized',0x9d80,'rcx',None,cells*16,'before')]
+        if args.prefix_only:
+            specs=[('polar',0xb150,'rdx',None,min(cells*16,4096),'before'),
+                   ('span',0xa9d0,'r9',None,min(cells*4,4096),'before'),
+                   ('prepass_factor',0xb150,'r9',None,min(cells*4,4096),'before')]
+            row['trace_scope']='first 4096 bytes per plane only'
         row['planes']={}
         if args.sampler_only:
             specs=[]
@@ -193,12 +211,14 @@ def main():
             for offset in range(0,size,4096):
                 spec=f'function={hex(rva)},arg={arg},size={min(4096,size-offset)},offset={offset},occurrence=1'
                 if deref is not None:spec+=f',deref={hex(deref)}'
+                if args.prefix_only: spec=spec.replace(f',offset={offset}','')
                 options+=['--watch',spec]
             data,watches=trace(options,name+'_trace.json')
             assert data['raw_pixel_sha256']==row['trace_raw_sha256']
             native=b''.join(bytes.fromhex(watches[f'watch-{i+1}'][when]['hex']) for i in range(len(options)//2))
             suffix='.u8' if name=='eligible' else '.f32';(directory/('native_'+name+suffix)).write_bytes(native)
             mac=(planes/(name+suffix)).read_bytes()
+            if args.prefix_only: mac=mac[:size]
             if not mac:
                 row['planes'][name]={'status':'not_executed_in_mac_path','native_sha256':sha(native)}
                 continue
@@ -210,7 +230,7 @@ def main():
         row['sampler_rgba_hex']=[]
         row['coordinate_radius_angle_hex']=[]
         # Keep large unshrunk witnesses below the retained worker's watch cap.
-        for start in range(0,w*h,128):
+        for start in range(0,0 if args.prefix_only else w*h,128):
             count=min(128,w*h-start)
             sample_options=[]
             coordinates=[]
