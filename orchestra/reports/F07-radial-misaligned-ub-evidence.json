@@ -1,0 +1,1095 @@
+{
+  "base_revision": "0e3481cbba7c9b63e3c23480d8abb081fe03733f",
+  "corpus": {
+    "replay": {
+      "cases": [
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000006_253d4390d90b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000029_b099428e963b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000034_f67ec58a433d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000041_42e5f8af427d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000043_5a4c69b38522.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000044_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000050_aa6536a877df.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000081_9774c69c219e.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000091_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000152_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000153_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000180_f67ec58a433d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000203_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000221_dc2eff5fb2aa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000230_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000253_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000268_c68d152bb97c.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000269_d7848a7c740d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000271_9a5b282a1ffa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000303_5a4c69b38522.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000305_93a01b17e479.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000328_93a01b17e479.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000347_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000369_90303525f87f.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000379_dc2eff5fb2aa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000384_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000390_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000421_71f8c982c45b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000440_e04d91d93cb4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000444_253d4390d90b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000448_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000458_e04d91d93cb4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000486_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000487_5a4c69b38522.json"
+        }
+      ],
+      "matches_saved": true,
+      "sanitizer_rows": 0,
+      "status": "replay_complete"
+    },
+    "sanitize-replay": {
+      "cases": [
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000006_253d4390d90b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000029_b099428e963b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000034_f67ec58a433d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000041_42e5f8af427d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000043_5a4c69b38522.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000044_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000050_aa6536a877df.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000081_9774c69c219e.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000091_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000152_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000153_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000180_f67ec58a433d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000203_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000221_dc2eff5fb2aa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000230_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000253_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000268_c68d152bb97c.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000269_d7848a7c740d.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000271_9a5b282a1ffa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000303_5a4c69b38522.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000305_93a01b17e479.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000328_93a01b17e479.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000347_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000369_90303525f87f.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000379_dc2eff5fb2aa.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000384_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000390_f8d4024784b4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000421_71f8c982c45b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000440_e04d91d93cb4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000444_253d4390d90b.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000448_d1d38fe702c9.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000458_e04d91d93cb4.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000486_0f4b356bb556.json"
+        },
+        {
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/radialblur/seed1_case000487_5a4c69b38522.json"
+        }
+      ],
+      "matches_saved": true,
+      "sanitizer_rows": 0,
+      "status": "replay_complete"
+    }
+  },
+  "production": {
+    "after": {
+      "completed": 300,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": false,
+        "candidate_sha256": "ea7e7cf915f25d138a80b1517f1d7ad9f86edfe99023735c34757b5234a2806e",
+        "candidate_source_sha256": "88cf9482af17eafeed61da5f9fefd87b0c542c88b33d6a564f28957b64800a7c",
+        "case_timeout_seconds": 10,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "b269277801195d27cb204e85069984650c0c575d6ee79ad72e6d17e4a0ea1cd9",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "88cf9482af17eafeed61da5f9fefd87b0c542c88b33d6a564f28957b64800a7c",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+        "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "summary": {
+        "aex_budget": 5,
+        "aex_classic_ok": 300,
+        "aex_ok": 275,
+        "aex_reject": 20,
+        "aex_smart_budget": 5,
+        "aex_smart_ok": 275,
+        "aex_smart_reject": 20,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 118,
+        "classic_refusal": 181,
+        "pixel_mismatch_cases": 186,
+        "smart_exact": 148,
+        "smart_mismatch": 92,
+        "smart_refusal": 59,
+        "smart_uncompared": 1
+      }
+    },
+    "before": {
+      "completed": 300,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": false,
+        "candidate_sha256": "050359a4f378806350aaa2b139e85d0db07179eab5c776df6f91bb68ede52f1b",
+        "candidate_source_sha256": "d569b69db194cb60734e02eb9cd25d49080021daf998b6f6415e0eb5d7940801",
+        "case_timeout_seconds": 10,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "b269277801195d27cb204e85069984650c0c575d6ee79ad72e6d17e4a0ea1cd9",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "d569b69db194cb60734e02eb9cd25d49080021daf998b6f6415e0eb5d7940801",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+        "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "summary": {
+        "aex_budget": 4,
+        "aex_classic_ok": 300,
+        "aex_ok": 276,
+        "aex_reject": 20,
+        "aex_smart_budget": 4,
+        "aex_smart_ok": 276,
+        "aex_smart_reject": 20,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 118,
+        "classic_refusal": 181,
+        "pixel_mismatch_cases": 186,
+        "smart_exact": 148,
+        "smart_mismatch": 92,
+        "smart_refusal": 59,
+        "smart_uncompared": 1
+      }
+    },
+    "changed_candidate_rows": []
+  },
+  "sanitizer": {
+    "after": {
+      "diagnostic_rows": [],
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "candidate_sha256": "fd3da9f13b9324e02333dcf3cf7e9a1822303711098a1a6204c418cd3fd05a17",
+        "candidate_source_sha256": "88cf9482af17eafeed61da5f9fefd87b0c542c88b33d6a564f28957b64800a7c",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "b269277801195d27cb204e85069984650c0c575d6ee79ad72e6d17e4a0ea1cd9",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "88cf9482af17eafeed61da5f9fefd87b0c542c88b33d6a564f28957b64800a7c",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+        "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "row_identities_sha256": "a2f02f284f09e5b8555be5bb03d86e4d8d5d4b859e44bba4f57bdbc253daded4",
+      "rows": 1000,
+      "sanitizer_rows": 0,
+      "summary": {
+        "ok": 592,
+        "refusal": 408
+      },
+      "witnesses": [
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 0,
+            "byte": 0,
+            "candidate": 75
+          },
+          "guards": [],
+          "index": 193,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":12,\"height\":8,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e6\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc0800000\",\"dx\":\"0xc0c00000\",\"cos_dy\":\"0xc0800000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc0800000\",\"ey\":\"0xc0800000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0c00000\",\"ex\":\"0xc0c00000\",\"ex_squared\":\"0x42100000\",\"ey_squared\":\"0x41800000\",\"radius_squared\":\"0x42500000\"},\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e6\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=0 radius_index=7.21110249 angle_index=1068.45032 fx=0.211102486 fy=0.450317383 indices=(7,8,1068,1069) sample_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) sample_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) sample_u8=(139,76,193,215) alpha=0.846067607 alpha_hex=0x1.b12fc6p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.461800963,0.255474895,0.640658915,0.846067607) accum_rgba_hex=(0x1.d8e25ap-2,0x1.059b36p-2,0x1.480472p-1,0x1.b12fc6p-1) normalized_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) normalized_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) cell_valid=(1,1,1,1) cell_alpha=(0.846630394,0.824280143,0.855909884,0.833314657) cell_rgb=((0.555766225,0.297762156,0.737079561),(0.509120405,0.306887269,0.827192664),(0.555608928,0.302513838,0.739338398),(0.506466746,0.313293338,0.834706128)) src_cell_rgba=((0.670043468,0.109803744,0.461740524,0.126259327),(0.916960955,0.212190375,0.0300796609,-0.427132159),(0.666024029,0.108137071,0.468767107,0.105930567),(0.912367463,0.210285664,0.0381100327,-0.450365037))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=1 radius_index=6.70820379 angle_index=1032.8252 fx=0.708203793 fy=0.825195312 indices=(6,7,1032,1033) sample_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) sample_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) sample_u8=(153,68,142,215) alpha=0.845546126 alpha_hex=0x1.b0eb6cp-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.507983506,0.227228329,0.473629862,0.845546126) accum_rgba_hex=(0x1.04166ap-1,0x1.d15d16p-3,0x1.e4ff3ap-2,0x1.b0eb6cp-1) normalized_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) normalized_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) cell_valid=(1,1,1,1) cell_alpha=(0.787476599,0.887553871,0.787368119,0.865686417) cell_rgb=((0.567774475,0.289310485,0.611361563),(0.615075707,0.262724042,0.533862114),(0.567305565,0.287283272,0.616126001),(0.612832844,0.261456966,0.540811002)) src_cell_rgba=((0.534810424,0.0537281297,0.698154628,0.667810917),(0.800342202,0.163833335,0.233952358,0.887553871),(0.53204,0.0525793359,0.702997983,0.686554432),(0.797109902,0.162493035,0.239603028,0.865686417))\n",
+          "intermediate_trace_sha256": "86d1db3b37bfa8a395c03dfeaad7caaa19e3d2de277c5645901b43153829778c",
+          "oracle_sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+          "oracle_status": "ok",
+          "route": "classic",
+          "sanitizer": [],
+          "sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "ok"
+        },
+        {
+          "exact": true,
+          "first_mismatch": null,
+          "guards": [],
+          "index": 193,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":12,\"height\":8,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e5\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc0800000\",\"dx\":\"0xc0c00000\",\"cos_dy\":\"0xc0800000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc0800000\",\"ey\":\"0xc0800000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0c00000\",\"ex\":\"0xc0c00000\",\"ex_squared\":\"0x42100000\",\"ey_squared\":\"0x41800000\",\"radius_squared\":\"0x42500000\"},\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e5\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=0 radius_index=7.21110249 angle_index=1068.45032 fx=0.211102486 fy=0.450317383 indices=(7,8,1068,1069) sample_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) sample_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) sample_u8=(139,76,193,215) alpha=0.846067607 alpha_hex=0x1.b12fc6p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.461800963,0.255474895,0.640658915,0.846067607) accum_rgba_hex=(0x1.d8e25ap-2,0x1.059b36p-2,0x1.480472p-1,0x1.b12fc6p-1) normalized_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) normalized_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) cell_valid=(1,1,1,1) cell_alpha=(0.846630394,0.824280143,0.855909884,0.833314657) cell_rgb=((0.555766225,0.297762156,0.737079561),(0.509120405,0.306887269,0.827192605),(0.555608928,0.302513838,0.739338398),(0.506466746,0.313293338,0.834706128)) src_cell_rgba=((0.670043468,0.109803744,0.461740524,0.126259327),(0.916960955,0.212190375,0.0300796609,-0.427132159),(0.666024029,0.108137071,0.468767107,0.105930567),(0.912367463,0.210285664,0.0381100327,-0.450365037))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=1 radius_index=6.70820379 angle_index=1032.8252 fx=0.708203793 fy=0.825195312 indices=(6,7,1032,1033) sample_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) sample_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) sample_u8=(153,68,142,215) alpha=0.845546126 alpha_hex=0x1.b0eb6cp-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.507983506,0.227228329,0.473629862,0.845546126) accum_rgba_hex=(0x1.04166ap-1,0x1.d15d16p-3,0x1.e4ff3ap-2,0x1.b0eb6cp-1) normalized_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) normalized_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) cell_valid=(1,1,1,1) cell_alpha=(0.787476599,0.887553871,0.787368119,0.865686417) cell_rgb=((0.567774475,0.289310455,0.611361623),(0.615075707,0.262724042,0.533862114),(0.567305565,0.287283272,0.616126001),(0.612832844,0.261456966,0.540811002)) src_cell_rgba=((0.534810424,0.0537281297,0.698154628,0.667810917),(0.800342202,0.163833335,0.233952358,0.887553871),(0.53204,0.0525793359,0.702997983,0.686554432),(0.797109902,0.162493035,0.239603028,0.865686417))\n",
+          "intermediate_trace_sha256": "03018360d49719e16de10ba40cc905ce046ca0fd306cae7ecf8acea2026363a0",
+          "oracle_sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "oracle_status": "ok",
+          "route": "smart",
+          "sanitizer": [],
+          "sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "ok"
+        },
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 0,
+            "byte": 0,
+            "candidate": 58
+          },
+          "guards": [],
+          "index": 425,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":14,\"height\":18,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc1100000\",\"dx\":\"0xc0e00000\",\"cos_dy\":\"0xc1100000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc1100000\",\"ey\":\"0xc1100000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0e00000\",\"ex\":\"0xc0e00000\",\"ex_squared\":\"0x42440000\",\"ey_squared\":\"0x42a20000\",\"radius_squared\":\"0x43020000\"},\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=0 radius_index=11.4017544 angle_index=1160.62512 fx=0.401754379 fy=0.62512207 indices=(11,12,1160,1161) sample_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) sample_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) sample_u8=(255,0,255,240) alpha=0.941852212 alpha_hex=0x1.e23a74p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(4.85895777,-0.017730087,3.69701672,0.941852212) accum_rgba_hex=(0x1.36f92ap+2,-0x1.227d6p-6,0x1.d937d8p+1,0x1.e23a74p-1) normalized_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) normalized_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) cell_valid=(1,1,1,1) cell_alpha=(0.962211013,0.911525548,0.960226297,0.914497972) cell_rgb=((4.32260609,1.07610345,3.37118459),(6.29126358,-1.91834378,4.52986717),(4.4277606,1.17344666,3.53076601),(6.41113138,-1.77634358,4.70127487)) src_cell_rgba=((4.32260609,1.07610345,3.37118459,0.962211013),(6.29126358,-1.91834378,4.52986717,0.911525548),(4.4277606,1.17344666,3.53076601,0.960226297),(6.41113138,-1.77634358,4.70127487,0.914497972))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=1 radius_index=10.630146 angle_index=1144.07031 fx=0.630146027 fy=0.0703125 indices=(10,11,1144,1145) sample_rgba=(2.30111623,1.25960922,1.78376114,1) sample_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) sample_u8=(255,255,255,255) alpha=1 alpha_hex=0x1p+0 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(2.30111623,1.25960922,1.78376114,1) accum_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) normalized_rgba=(2.30111623,1.25960922,1.78376114,1) normalized_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) cell_valid=(1,1,1,1) cell_alpha=(1,1,1,1) cell_rgb=((1.2777257,3.28801322,3.13050222),(2.89887094,0.0677803829,0.985812128),(1.23037493,3.266819,3.09232998),(2.96801543,0.09856987,1.1149019)) src_cell_rgba=((1.2777257,3.28801322,3.13050222,1.8414495),(2.89887094,0.0677803829,0.985812128,1.08883166),(1.23037493,3.266819,3.09232998,1.84126997),(2.96801543,0.09856987,1.1149019,1.0756321))\n",
+          "intermediate_trace_sha256": "787bc2f97bd260907ebadf48401789a678801748c7a3ec0d2b2490c9d7999fea",
+          "oracle_sha256": "782972264d2f448a7741cb6afbc10275ffde7e1d3f5f9005fd45543a7c2b81b5",
+          "oracle_status": "ok",
+          "route": "classic",
+          "sanitizer": [],
+          "sha256": "3be601058ea8a661745bda9e8d090ffee90ac05a1e5d21bb9bdef628ab7846b6",
+          "status": "ok"
+        },
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 248,
+            "byte": 2016,
+            "candidate": 223
+          },
+          "guards": [],
+          "index": 425,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":14,\"height\":18,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc1100000\",\"dx\":\"0xc0e00000\",\"cos_dy\":\"0xc1100000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc1100000\",\"ey\":\"0xc1100000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0e00000\",\"ex\":\"0xc0e00000\",\"ex_squared\":\"0x42440000\",\"ey_squared\":\"0x42a20000\",\"radius_squared\":\"0x43020000\"},\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=0 radius_index=11.4017544 angle_index=1160.62512 fx=0.401754379 fy=0.62512207 indices=(11,12,1160,1161) sample_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) sample_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) sample_u8=(255,0,255,240) alpha=0.941852212 alpha_hex=0x1.e23a74p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(4.85895777,-0.017730087,3.69701672,0.941852212) accum_rgba_hex=(0x1.36f92ap+2,-0x1.227d6p-6,0x1.d937d8p+1,0x1.e23a74p-1) normalized_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) normalized_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) cell_valid=(1,1,1,1) cell_alpha=(0.962211013,0.911525548,0.960226297,0.914497972) cell_rgb=((4.32260609,1.07610345,3.37118459),(6.29126358,-1.91834378,4.52986717),(4.4277606,1.17344666,3.53076601),(6.41113138,-1.77634358,4.70127487)) src_cell_rgba=((4.32260609,1.07610345,3.37118459,0.962211013),(6.29126358,-1.91834378,4.52986717,0.911525548),(4.4277606,1.17344666,3.53076601,0.960226297),(6.41113138,-1.77634358,4.70127487,0.914497972))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=1 radius_index=10.630146 angle_index=1144.07031 fx=0.630146027 fy=0.0703125 indices=(10,11,1144,1145) sample_rgba=(2.09170508,1.67295504,2.05780983,1.36660087) sample_rgba_hex=(0x1.0bbcfep+1,0x1.ac46c8p+0,0x1.07665p+1,0x1.5dd98ep+0) sample_u8=(255,255,255,255) alpha=1.36660087 alpha_hex=0x1.5dd98ep+0 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(2.85852599,2.2862618,2.8122046,1.36660087) accum_rgba_hex=(0x1.6de42ep+1,0x1.24a43ap+1,0x1.67f652p+1,0x1.5dd98ep+0) normalized_rgba=(2.09170508,1.67295504,2.05780983,1.36660087) normalized_rgba_hex=(0x1.0bbcfep+1,0x1.ac46c8p+0,0x1.07665p+1,0x1.5dd98ep+0) cell_valid=(1,1,1,1) cell_alpha=(1.8414495,1.08883166,1.84126997,1.0756321) cell_rgb=((1.2777257,3.28801322,3.13050222),(2.89887094,0.0677803829,0.985812128),(1.23037493,3.266819,3.09232998),(2.96801543,0.09856987,1.1149019)) src_cell_rgba=((1.2777257,3.28801322,3.13050222,1.8414495),(2.89887094,0.0677803829,0.985812128,1.08883166),(1.23037493,3.266819,3.09232998,1.84126997),(2.96801543,0.09856987,1.1149019,1.0756321))\n",
+          "intermediate_trace_sha256": "433b02cfda5d193f480f0e4d4673ef5b5563a9321b7270ec5cdf4c754c6faf57",
+          "oracle_sha256": "c7592da2c43efa9358be0b2400b7659fde4b8f5df419fb82c4f0fe75341b9861",
+          "oracle_status": "ok",
+          "route": "smart",
+          "sanitizer": [],
+          "sha256": "8405927c8b78605ecd5b76dd15eb2a7b5d0b85df52ce708a410305069cd117dc",
+          "status": "ok"
+        }
+      ]
+    },
+    "before": {
+      "diagnostic_rows": [
+        {
+          "index": 109,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x621000002a83 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 123,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x6260000001b9 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 127,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46: runtime error: reference binding to misaligned address 0x61b000000799 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x61b000000799 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 138,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x61f000000131 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 173,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x6180000000fb for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 193,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3174:88: runtime error: reference binding to misaligned address 0x6180000000e7 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3174:88 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6: runtime error: reference binding to misaligned address 0x6180000004e1 for type 'PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6 "
+          ]
+        },
+        {
+          "index": 257,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46: runtime error: reference binding to misaligned address 0x62000000008f for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x62000000008f for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 298,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x000102b50f87 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 302,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x62d0000007c1 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43: runtime error: reference binding to misaligned address 0x62d000000b71 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43 "
+          ]
+        },
+        {
+          "index": 316,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x6260000001b7 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43: runtime error: reference binding to misaligned address 0x626000000257 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43 "
+          ]
+        },
+        {
+          "index": 349,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x61d000000117 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 380,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x624000002271 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43: runtime error: reference binding to misaligned address 0x6240000023d1 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2693:43 "
+          ]
+        },
+        {
+          "index": 418,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46: runtime error: reference binding to misaligned address 0x616000000397 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:2679:46 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x616000000397 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        },
+        {
+          "index": 425,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6: runtime error: reference binding to misaligned address 0x621000003de5 for type 'PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6 "
+          ]
+        },
+        {
+          "index": 434,
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5: runtime error: reference binding to misaligned address 0x617000000163 for type 'const PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:1780:5 "
+          ]
+        }
+      ],
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "candidate_sha256": "e4fa55595ca17f01cccf2469ec28659e779415ecd4ca5ab04fcae75f9533fa0a",
+        "candidate_source_sha256": "d569b69db194cb60734e02eb9cd25d49080021daf998b6f6415e0eb5d7940801",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "b269277801195d27cb204e85069984650c0c575d6ee79ad72e6d17e4a0ea1cd9",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "d569b69db194cb60734e02eb9cd25d49080021daf998b6f6415e0eb5d7940801",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+        "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "row_identities_sha256": "a2f02f284f09e5b8555be5bb03d86e4d8d5d4b859e44bba4f57bdbc253daded4",
+      "rows": 1000,
+      "sanitizer_rows": 15,
+      "summary": {
+        "ok": 592,
+        "refusal": 408
+      },
+      "witnesses": [
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 0,
+            "byte": 0,
+            "candidate": 75
+          },
+          "guards": [],
+          "index": 193,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":12,\"height\":8,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e6\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc0800000\",\"dx\":\"0xc0c00000\",\"cos_dy\":\"0xc0800000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc0800000\",\"ey\":\"0xc0800000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0c00000\",\"ex\":\"0xc0c00000\",\"ex_squared\":\"0x42100000\",\"ey_squared\":\"0x41800000\",\"radius_squared\":\"0x42500000\"},\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e6\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=0 radius_index=7.21110249 angle_index=1068.45032 fx=0.211102486 fy=0.450317383 indices=(7,8,1068,1069) sample_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) sample_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) sample_u8=(139,76,193,215) alpha=0.846067607 alpha_hex=0x1.b12fc6p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.461800963,0.255474895,0.640658915,0.846067607) accum_rgba_hex=(0x1.d8e25ap-2,0x1.059b36p-2,0x1.480472p-1,0x1.b12fc6p-1) normalized_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) normalized_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) cell_valid=(1,1,1,1) cell_alpha=(0.846630394,0.824280143,0.855909884,0.833314657) cell_rgb=((0.555766225,0.297762156,0.737079561),(0.509120405,0.306887269,0.827192664),(0.555608928,0.302513838,0.739338398),(0.506466746,0.313293338,0.834706128)) src_cell_rgba=((0.670043468,0.109803744,0.461740524,0.126259327),(0.916960955,0.212190375,0.0300796609,-0.427132159),(0.666024029,0.108137071,0.468767107,0.105930567),(0.912367463,0.210285664,0.0381100327,-0.450365037))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=1 radius_index=6.70820379 angle_index=1032.8252 fx=0.708203793 fy=0.825195312 indices=(6,7,1032,1033) sample_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) sample_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) sample_u8=(153,68,142,215) alpha=0.845546126 alpha_hex=0x1.b0eb6cp-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.507983506,0.227228329,0.473629862,0.845546126) accum_rgba_hex=(0x1.04166ap-1,0x1.d15d16p-3,0x1.e4ff3ap-2,0x1.b0eb6cp-1) normalized_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) normalized_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) cell_valid=(1,1,1,1) cell_alpha=(0.787476599,0.887553871,0.787368119,0.865686417) cell_rgb=((0.567774475,0.289310485,0.611361563),(0.615075707,0.262724042,0.533862114),(0.567305565,0.287283272,0.616126001),(0.612832844,0.261456966,0.540811002)) src_cell_rgba=((0.534810424,0.0537281297,0.698154628,0.667810917),(0.800342202,0.163833335,0.233952358,0.887553871),(0.53204,0.0525793359,0.702997983,0.686554432),(0.797109902,0.162493035,0.239603028,0.865686417))\n",
+          "intermediate_trace_sha256": "86d1db3b37bfa8a395c03dfeaad7caaa19e3d2de277c5645901b43153829778c",
+          "oracle_sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+          "oracle_status": "ok",
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3174:88: runtime error: reference binding to misaligned address 0x6180000000e7 for type 'const PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3174:88 ",
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6: runtime error: reference binding to misaligned address 0x6180000004e1 for type 'PF_Pixel16', which requires 2 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6 "
+          ],
+          "sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "ok"
+        },
+        {
+          "exact": true,
+          "first_mismatch": null,
+          "guards": [],
+          "index": 193,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":12,\"height\":8,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e5\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc0800000\",\"dx\":\"0xc0c00000\",\"cos_dy\":\"0xc0800000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc0800000\",\"ey\":\"0xc0800000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0c00000\",\"ex\":\"0xc0c00000\",\"ex_squared\":\"0x42100000\",\"ey_squared\":\"0x41800000\",\"radius_squared\":\"0x42500000\"},\"radius_raw_bits\":\"0x40e6c15a\",\"angle_raw_bits\":\"0x406eb1b0\",\"radius_index_bits\":\"0x40e6c15a\",\"angle_index_bits\":\"0x44858e69\",\"radius_fraction_bits\":\"0x3e582b40\",\"angle_fraction_bits\":\"0x3ee69000\",\"radius_indices\":[7,8],\"angle_indices\":[1068,1069],\"cell_indices\":[[1068,7],[1068,8],[1069,7],[1069,8]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x3f0e46b2\",\"0x3e987448\",\"0x3f3cb13f\",\"0x3f58bcc5\"],[\"0x3f0255b7\",\"0x3e9d2054\",\"0x3f53c2e5\",\"0x3f530406\"],[\"0x3f0e3c63\",\"0x3e9ae318\",\"0x3f3d4548\",\"0x3f5b1ce9\"],[\"0x3f01a7ce\",\"0x3ea067fc\",\"0x3f55af4d\",\"0x3f55541c\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=0 radius_index=7.21110249 angle_index=1068.45032 fx=0.211102486 fy=0.450317383 indices=(7,8,1068,1069) sample_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) sample_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) sample_u8=(139,76,193,215) alpha=0.846067607 alpha_hex=0x1.b12fc6p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.461800963,0.255474895,0.640658915,0.846067607) accum_rgba_hex=(0x1.d8e25ap-2,0x1.059b36p-2,0x1.480472p-1,0x1.b12fc6p-1) normalized_rgba=(0.545820415,0.30195564,0.757219553,0.846067607) normalized_rgba_hex=(0x1.1775c6p-1,0x1.3533dcp-2,0x1.83b248p-1,0x1.b12fc6p-1) cell_valid=(1,1,1,1) cell_alpha=(0.846630394,0.824280143,0.855909884,0.833314657) cell_rgb=((0.555766225,0.297762156,0.737079561),(0.509120405,0.306887269,0.827192605),(0.555608928,0.302513838,0.739338398),(0.506466746,0.313293338,0.834706128)) src_cell_rgba=((0.670043468,0.109803744,0.461740524,0.126259327),(0.916960955,0.212190375,0.0300796609,-0.427132159),(0.666024029,0.108137071,0.468767107,0.105930567),(0.912367463,0.210285664,0.0381100327,-0.450365037))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=12 h=8 x=0 y=1 radius_index=6.70820379 angle_index=1032.8252 fx=0.708203793 fy=0.825195312 indices=(6,7,1032,1033) sample_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) sample_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) sample_u8=(153,68,142,215) alpha=0.845546126 alpha_hex=0x1.b0eb6cp-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(0.507983506,0.227228329,0.473629862,0.845546126) accum_rgba_hex=(0x1.04166ap-1,0x1.d15d16p-3,0x1.e4ff3ap-2,0x1.b0eb6cp-1) normalized_rgba=(0.600775659,0.268735588,0.560146689,0.845546126) normalized_rgba_hex=(0x1.3398dep-1,0x1.132f6cp-2,0x1.1ecb8cp-1,0x1.b0eb6cp-1) cell_valid=(1,1,1,1) cell_alpha=(0.787476599,0.887553871,0.787368119,0.865686417) cell_rgb=((0.567774475,0.289310455,0.611361623),(0.615075707,0.262724042,0.533862114),(0.567305565,0.287283272,0.616126001),(0.612832844,0.261456966,0.540811002)) src_cell_rgba=((0.534810424,0.0537281297,0.698154628,0.667810917),(0.800342202,0.163833335,0.233952358,0.887553871),(0.53204,0.0525793359,0.702997983,0.686554432),(0.797109902,0.162493035,0.239603028,0.865686417))\n",
+          "intermediate_trace_sha256": "03018360d49719e16de10ba40cc905ce046ca0fd306cae7ecf8acea2026363a0",
+          "oracle_sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "oracle_status": "ok",
+          "route": "smart",
+          "sanitizer": [],
+          "sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "ok"
+        },
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 0,
+            "byte": 0,
+            "candidate": 58
+          },
+          "guards": [],
+          "index": 425,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":14,\"height\":18,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc1100000\",\"dx\":\"0xc0e00000\",\"cos_dy\":\"0xc1100000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc1100000\",\"ey\":\"0xc1100000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0e00000\",\"ex\":\"0xc0e00000\",\"ex_squared\":\"0x42440000\",\"ey_squared\":\"0x42a20000\",\"radius_squared\":\"0x43020000\"},\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=0 radius_index=11.4017544 angle_index=1160.62512 fx=0.401754379 fy=0.62512207 indices=(11,12,1160,1161) sample_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) sample_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) sample_u8=(255,0,255,240) alpha=0.941852212 alpha_hex=0x1.e23a74p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(4.85895777,-0.017730087,3.69701672,0.941852212) accum_rgba_hex=(0x1.36f92ap+2,-0x1.227d6p-6,0x1.d937d8p+1,0x1.e23a74p-1) normalized_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) normalized_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) cell_valid=(1,1,1,1) cell_alpha=(0.962211013,0.911525548,0.960226297,0.914497972) cell_rgb=((4.32260609,1.07610345,3.37118459),(6.29126358,-1.91834378,4.52986717),(4.4277606,1.17344666,3.53076601),(6.41113138,-1.77634358,4.70127487)) src_cell_rgba=((4.32260609,1.07610345,3.37118459,0.962211013),(6.29126358,-1.91834378,4.52986717,0.911525548),(4.4277606,1.17344666,3.53076601,0.960226297),(6.41113138,-1.77634358,4.70127487,0.914497972))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=1 radius_index=10.630146 angle_index=1144.07031 fx=0.630146027 fy=0.0703125 indices=(10,11,1144,1145) sample_rgba=(2.30111623,1.25960922,1.78376114,1) sample_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) sample_u8=(255,255,255,255) alpha=1 alpha_hex=0x1p+0 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(2.30111623,1.25960922,1.78376114,1) accum_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) normalized_rgba=(2.30111623,1.25960922,1.78376114,1) normalized_rgba_hex=(0x1.268afap+1,0x1.4275cp+0,0x1.c8a492p+0,0x1p+0) cell_valid=(1,1,1,1) cell_alpha=(1,1,1,1) cell_rgb=((1.2777257,3.28801322,3.13050222),(2.89887094,0.0677803829,0.985812128),(1.23037493,3.266819,3.09232998),(2.96801543,0.09856987,1.1149019)) src_cell_rgba=((1.2777257,3.28801322,3.13050222,1.8414495),(2.89887094,0.0677803829,0.985812128,1.08883166),(1.23037493,3.266819,3.09232998,1.84126997),(2.96801543,0.09856987,1.1149019,1.0756321))\n",
+          "intermediate_trace_sha256": "787bc2f97bd260907ebadf48401789a678801748c7a3ec0d2b2490c9d7999fea",
+          "oracle_sha256": "782972264d2f448a7741cb6afbc10275ffde7e1d3f5f9005fd45543a7c2b81b5",
+          "oracle_status": "ok",
+          "route": "classic",
+          "sanitizer": [
+            "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6: runtime error: reference binding to misaligned address 0x621000003de5 for type 'PF_PixelFloat', which requires 4 byte alignment",
+            "SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F07-radial-misaligned-ub/orchestra/state/F07-radial-misaligned-ub/sanitize-before/alignment_fwwqlqck/build/production_under_test.cpp:3580:6 "
+          ],
+          "sha256": "3be601058ea8a661745bda9e8d090ffee90ac05a1e5d21bb9bdef628ab7846b6",
+          "status": "ok"
+        },
+        {
+          "exact": false,
+          "first_mismatch": {
+            "aex": 248,
+            "byte": 2016,
+            "candidate": 223
+          },
+          "guards": [],
+          "index": 425,
+          "intermediate_trace": "OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":14,\"height\":18,\"x\":0,\"y\":0,\"production\":{\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]},\"aex_f32_candidate\":{\"operation_bits\":{\"dy\":\"0xc1100000\",\"dx\":\"0xc0e00000\",\"cos_dy\":\"0xc1100000\",\"sin_dx\":\"0x80000000\",\"ey_numerator\":\"0xc1100000\",\"ey\":\"0xc1100000\",\"sin_dy\":\"0x80000000\",\"cos_dx\":\"0xc0e00000\",\"ex\":\"0xc0e00000\",\"ex_squared\":\"0x42440000\",\"ey_squared\":\"0x42a20000\",\"radius_squared\":\"0x43020000\"},\"radius_raw_bits\":\"0x41366d96\",\"angle_raw_bits\":\"0x4081a4a0\",\"radius_index_bits\":\"0x41366d96\",\"angle_index_bits\":\"0x44911401\",\"radius_fraction_bits\":\"0x3ecdb2c0\",\"angle_fraction_bits\":\"0x3f200800\",\"radius_indices\":[11,12],\"angle_indices\":[1160,1161],\"cell_indices\":[[1160,11],[1160,12],[1161,11],[1161,12]],\"cell_values_available\":true,\"cell_rgba_bits\":[[\"0x408a52ca\",\"0x3f89bdc2\",\"0x4057c17d\",\"0x3f765376\"],[\"0x40c95208\",\"0xbff58c4a\",\"0x4090f4ac\",\"0x3f6959bd\"],[\"0x408db037\",\"0x3f963380\",\"0x4061f812\",\"0x3f75d164\"],[\"0x40cd27fd\",\"0xbfe35f3a\",\"0x409670d8\",\"0x3f6a1c8a\"]]}}\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=0 radius_index=11.4017544 angle_index=1160.62512 fx=0.401754379 fy=0.62512207 indices=(11,12,1160,1161) sample_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) sample_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) sample_u8=(255,0,255,240) alpha=0.941852212 alpha_hex=0x1.e23a74p-1 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(4.85895777,-0.017730087,3.69701672,0.941852212) accum_rgba_hex=(0x1.36f92ap+2,-0x1.227d6p-6,0x1.d937d8p+1,0x1.e23a74p-1) normalized_rgba=(5.15893841,-0.0188247003,3.92526197,0.941852212) normalized_rgba_hex=(0x1.4a2c0cp+2,-0x1.346c84p-6,0x1.f66efcp+1,0x1.e23a74p-1) cell_valid=(1,1,1,1) cell_alpha=(0.962211013,0.911525548,0.960226297,0.914497972) cell_rgb=((4.32260609,1.07610345,3.37118459),(6.29126358,-1.91834378,4.52986717),(4.4277606,1.17344666,3.53076601),(6.41113138,-1.77634358,4.70127487)) src_cell_rgba=((4.32260609,1.07610345,3.37118459,0.962211013),(6.29126358,-1.91834378,4.52986717,0.911525548),(4.4277606,1.17344666,3.53076601,0.960226297),(6.41113138,-1.77634358,4.70127487,0.914497972))\nOLMRADIALBLUR_DEBUG_POINT kind=zoom w=14 h=18 x=0 y=1 radius_index=10.630146 angle_index=1144.07031 fx=0.630146027 fy=0.0703125 indices=(10,11,1144,1145) sample_rgba=(2.09170508,1.67295504,2.05780983,1.36660087) sample_rgba_hex=(0x1.0bbcfep+1,0x1.ac46c8p+0,0x1.07665p+1,0x1.5dd98ep+0) sample_u8=(255,255,255,255) alpha=1.36660087 alpha_hex=0x1.5dd98ep+0 validity_alpha=1 validity_alpha_hex=0x1p+0 brightness_gain=1 accum_rgba=(2.85852599,2.2862618,2.8122046,1.36660087) accum_rgba_hex=(0x1.6de42ep+1,0x1.24a43ap+1,0x1.67f652p+1,0x1.5dd98ep+0) normalized_rgba=(2.09170508,1.67295504,2.05780983,1.36660087) normalized_rgba_hex=(0x1.0bbcfep+1,0x1.ac46c8p+0,0x1.07665p+1,0x1.5dd98ep+0) cell_valid=(1,1,1,1) cell_alpha=(1.8414495,1.08883166,1.84126997,1.0756321) cell_rgb=((1.2777257,3.28801322,3.13050222),(2.89887094,0.0677803829,0.985812128),(1.23037493,3.266819,3.09232998),(2.96801543,0.09856987,1.1149019)) src_cell_rgba=((1.2777257,3.28801322,3.13050222,1.8414495),(2.89887094,0.0677803829,0.985812128,1.08883166),(1.23037493,3.266819,3.09232998,1.84126997),(2.96801543,0.09856987,1.1149019,1.0756321))\n",
+          "intermediate_trace_sha256": "433b02cfda5d193f480f0e4d4673ef5b5563a9321b7270ec5cdf4c754c6faf57",
+          "oracle_sha256": "c7592da2c43efa9358be0b2400b7659fde4b8f5df419fb82c4f0fe75341b9861",
+          "oracle_status": "ok",
+          "route": "smart",
+          "sanitizer": [],
+          "sha256": "8405927c8b78605ecd5b76dd15eb2a7b5d0b85df52ce708a410305069cd117dc",
+          "status": "ok"
+        }
+      ]
+    }
+  }
+}
