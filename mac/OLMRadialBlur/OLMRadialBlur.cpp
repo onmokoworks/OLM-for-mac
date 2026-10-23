@@ -926,8 +926,8 @@ static bool CheckedCellProduct(A_long width, A_long height, size_t channels, siz
 // FLOAT32 squares/add/sqrt and truncates before the caller divides the near
 // radius by Ratio. A mathematical max(center, extent-center) differs for an
 // odd extent with a center between floor(extent/2) and extent/2.
-static void ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
-    float ratio, A_long *minimum, A_long *maximum)
+static bool ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
+    float ratio, A_long *minimum, A_long *maximum, bool checked = false)
 {
     auto axis = [](A_long extent, float center, float *near, float *far) {
         const float size = (float)extent;
@@ -945,12 +945,22 @@ static void ZoomRadiusBoundsAEX(A_long width, A_long height, float cx, float cy,
     float near_x, near_y, far_x, far_y;
     axis(width, cx, &near_x, &far_x);
     axis(height, cy, &near_y, &far_y);
-    const A_long near_radius = (A_long)std::sqrt(RadialF32Add(
+    const float near_value = std::sqrt(RadialF32Add(
         RadialF32Mul(near_x, near_x), RadialF32Mul(near_y, near_y)));
-    const A_long far_radius = (A_long)std::sqrt(RadialF32Add(
+    const float far_value = std::sqrt(RadialF32Add(
         RadialF32Mul(far_x, far_x), RadialF32Mul(far_y, far_y)));
+    // Smart preflight checks the actual FLOAT32-to-A_long conversion and
+    // the +2 / inclusive-span additions before any polar allocation.
+    const double limit = (double)std::numeric_limits<A_long>::max();
+    if (checked && (!std::isfinite(near_value) || !std::isfinite(far_value) ||
+        near_value < 0 || (double)near_value > limit || far_value < 0 ||
+        (double)far_value > limit - 2)) return false;
+    const A_long near_radius = (A_long)near_value;
+    const A_long far_radius = (A_long)far_value;
     *minimum = std::max<A_long>(0, (A_long)RadialF32Div((float)near_radius, ratio) - 2);
     *maximum = far_radius + 2;
+    return !checked || (*maximum >= *minimum &&
+        (int64_t)*maximum - *minimum + 1 <= std::numeric_limits<A_long>::max());
 }
 
 static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
@@ -1086,13 +1096,18 @@ static bool CheckedRadialGenericBudget(
 	static constexpr uint64_t kMaxBytes = UINT64_C(1) << 30;
 	static constexpr uint64_t kReserveBytes = UINT64_C(64) << 20;
 	static constexpr uint64_t kMaxWork = UINT64_C(350000000);
-	if (width <= 0 || height <= 0 || width > 4096 || height > 4096 ||
+	if (width <= 0 || height <= 0 || (!smart_render && (width > 4096 || height > 4096)) ||
 		!IsGenericRadialControlProfile(info)) return false;
 	const uint64_t w = (uint64_t)width;
 	const uint64_t h = (uint64_t)height;
 	if (w > UINT64_MAX / h) return false;
 	const uint64_t pixels = w * h;
-	if (pixels > kMaxPixels) return false;
+	if (!smart_render && pixels > kMaxPixels) return false;
+	if (smart_render) {
+		A_long minimum = 0, maximum = 0;
+		if (!ZoomRadiusBoundsAEX(width, height, (float)info.center_x, (float)info.center_y,
+			(float)info.ratio, &minimum, &maximum, true)) return false;
+	}
 	uint64_t pixel_bytes = 0;
 	if (bitdepth == 8) pixel_bytes = sizeof(PF_Pixel8);
 	else if (bitdepth == 16) pixel_bytes = sizeof(PF_Pixel16);
@@ -1136,6 +1151,7 @@ static bool CheckedRadialGenericBudget(
 	// fixed reserve for vectors, weights, thread state, and allocator overhead.
 	if (pixels > (UINT64_MAX - kReserveBytes) / 40 || polar > UINT64_MAX / 52)
 		return false;
+	if (smart_render && polar * 52 > UINT64_MAX - kReserveBytes - pixels * 40) return false;
 	uint64_t bytes = kReserveBytes + pixels * 40 + polar * 52;
 	if (smart_render) {
 		if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
@@ -1153,7 +1169,7 @@ static bool CheckedRadialGenericBudget(
 	const uint64_t strength = std::max(raw_strength, scaled_strength);
 	if (strength > UINT64_MAX - 8 || polar > UINT64_MAX / (strength + 8)) return false;
 	uint64_t work = polar * (strength + 8);
-    if (bytes <= kMaxBytes && info.blur_type == 2 && (info.outer_offset != 0 || info.inner_offset != 0)) {
+    if ((smart_render || bytes <= kMaxBytes) && info.blur_type == 2 && (info.outer_offset != 0 || info.inner_offset != 0)) {
         // Bound the added radius-dependent scatter with the same resolved spans
         // as the render path. Retain the previous estimate as a lower bound.
         // The full-polar occupancy estimate is conservative; its rejection is
@@ -1185,7 +1201,13 @@ static bool CheckedRadialGenericBudget(
     }
 	if (estimated_bytes) *estimated_bytes = bytes > SIZE_MAX ? SIZE_MAX : (size_t)bytes;
 	if (estimated_work) *estimated_work = work;
-	return bytes <= kMaxBytes && work <= kMaxWork;
+	// The retained oracle cannot complete the high-work Rotation Override
+	// family (F41b seed 1/index 117 still stops with a 120s case timeout).
+	// Retain that family's previous work refusal; do not special-case inputs.
+	const bool unverified_override = info.blur_type == 2 &&
+		(info.outer_offset_mode == 3 || info.inner_offset_mode == 3);
+	return (smart_render || bytes <= kMaxBytes) &&
+		((smart_render && !unverified_override) || work <= kMaxWork);
 }
 
 // Called only after IsGenericBaselineWorldPair validates aligned storage.
@@ -5425,7 +5447,8 @@ static PF_Err RenderRadialNoOpCopy(PF_EffectWorld *input, PF_EffectWorld *output
 }
 
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
-	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
+	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth,
+	bool smart_render = false)
 {
 	if (IsRadialNoOpControlProfile(info)) return RenderRadialNoOpCopy(input, output, info, bitdepth);
 	if (info.noise_type == 3 && !RequiresNoiseLayer(info) &&
@@ -5494,7 +5517,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			return PF_Err_NONE;
 		}
-		if (!CheckedRadialGenericBudget(input->width, input->height, bitdepth, info, false))
+		if (!CheckedRadialGenericBudget(input->width, input->height, bitdepth, info, smart_render))
 			return OLM_RADIAL_ERROR("generic-budget", PF_Err_OUT_OF_MEMORY);
 	}
 	if (bitdepth == 8) {
@@ -6347,7 +6370,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 					}
 				}
 				if (!err) err = RenderWorld(render_input, &staged_world, noise_world, info,
-				                            extra->input->bitdepth);
+				                            extra->input->bitdepth, true);
 				render_complete = err == PF_Err_NONE;
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
 				if (!err) ERR(CaptureDiagnosticPF32World("output", &staged_world, info,
