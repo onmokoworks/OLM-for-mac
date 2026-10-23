@@ -45,3 +45,4 @@ F40-stale-bindings-adjudication
 F41-relax-work-budget
 F42-ucrtmath-ms-float
 F43-ucrtmath-double
+C38-kira-smart-r9
