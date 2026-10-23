@@ -37,6 +37,8 @@ def main():
     p.add_argument('--source',type=Path)
     p.add_argument('--case-index',type=int)
     p.add_argument('--seed',type=int,default=1)
+    p.add_argument('--geometry',type=int,nargs=2,help='Independent cropped-prefix case; source must contain enough pixels')
+    p.add_argument('--blur-size',type=int)
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -64,6 +66,13 @@ def main():
         if args.case_index is None:
             if c['geometry']!=[7,1] or not label.endswith('mode2/bg0'):continue
             if c['profile'] not in ('alpha-signed','uniform-hdr','uniform-negative'):continue
+        if args.geometry:
+            assert min(args.geometry)>0 and len(c['pixels'])>=args.geometry[0]*args.geometry[1]*16
+            c['geometry']=args.geometry
+            c['pixels']=c['pixels'][:args.geometry[0]*args.geometry[1]*16]
+        if args.blur_size is not None:
+            for q in c['parameters']:
+                if q['slot']==12:q['value']=args.blur_size
         w,h=c['geometry']
         proxy=[(64,128,192,0 if al<1.5/255 else 255) for al,r,g,b in struct.iter_unpack('<4f',c['pixels'])]
         im=Image.new('RGBA',(w,h));im.putdata(proxy);im.save(td/'proxy.png')
@@ -72,8 +81,9 @@ def main():
             name=next(d['name'] for d in a.binding['parameters'] if d['slot']==q['slot'])
             params.append(name+'='+(','.join(map(str,q['value'])) if isinstance(q['value'],list) else str(q['value'])))
         watches=['function=0x1172a10,arg=stack6,size=224',f'rva=0x1173642,arg=rdx,deref=88,size={min(4096,len(c["pixels"]))}']
+        plane_capture_bytes=min(4096,w*h*4)
         if args.case_index is not None:
-            watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={w*h*4}',f'rva=0x1173611,arg=rdx,deref=88,size={w*h*4}', f'rva=0x12c97d3,arg=rcx,deref=16,size={w*h*4}', f'rva=0x12c97d3,arg=rdx,deref=16,size={w*h*4}', 'function=0x12c9930,arg=rcx,size=96']
+            watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={plane_capture_bytes}',f'rva=0x1173611,arg=rdx,deref=88,size={plane_capture_bytes}', f'rva=0x12c97d3,arg=rcx,deref=16,size={plane_capture_bytes}', f'rva=0x12c97d3,arg=rdx,deref=16,size={plane_capture_bytes}', 'function=0x12c9930,arg=rcx,size=96']
         field_row_ids=[]
         if len(c['pixels'])>4096:
             assert w*16<=4096
@@ -115,7 +125,7 @@ def main():
         shades=[dict(token.split('=',1) for token in line.split()[1:]) for line in debug.read_text().splitlines() if line.startswith('shade ')]
         mac_field=b''.join(struct.pack('<f',float(s['field_x'])) for s in shades)
         expected_field=b''.join(field[x*16+4:x*16+8] for x in range(w*h))
-        row=dict(label=label,source_hex=c['pixels'].hex(),aex_refcon_tail_hex=state[0x90:].hex(),
+        row=dict(label=label,geometry=c['geometry'],parameters=c['parameters'],source_hex=c['pixels'].hex(),aex_refcon_tail_hex=state[0x90:].hex(),
                  aex_degenerate_mask=state[0x90],field_hex=field.hex(),ownership_bits=list(ownership),
                  field_diff=raw_diff(expected_field,mac_field,32),aex_hex=raw.hex(),mac_hex=mac.hex(),
                  output_diff=raw_diff(raw,mac,32),public_callback_sha256=sha(raw),watches=watches)
@@ -124,7 +134,8 @@ def main():
             pre=bytes.fromhex(ws['watch-3']['before']['hex']);post=bytes.fromhex(ws['watch-4']['after']['hex'])
             row['backend_witnesses']={k:v for k,v in ws.items() if int(k.split('-')[1])>=5}
             row.update(aex_pre_hex=pre.hex(),aex_post_hex=post.hex(),mac_pre_hex=planes[:w*h*4].hex(),mac_post_hex=planes[w*h*4:].hex(),
-                       pre_diff=raw_diff(pre,planes[:w*h*4],32),post_diff=raw_diff(post,planes[w*h*4:],32))
+                       plane_capture_bytes=plane_capture_bytes,plane_total_bytes=w*h*4,
+                       pre_diff=raw_diff(pre,planes[:plane_capture_bytes],32),post_diff=raw_diff(post,planes[w*h*4:w*h*4+plane_capture_bytes],32))
         report['rows'].append(row)
         print(label,'degenerate',state[0x90],'field equal',expected_field==mac_field,'output equal',raw==mac,flush=True)
     args.report.parent.mkdir(parents=True,exist_ok=True)

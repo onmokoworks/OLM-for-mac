@@ -30,6 +30,7 @@ def main():
     for name in ('width','height','radius'):p.add_argument('--'+name,type=int,required=True)
     p.add_argument('--allow-mismatch',action='store_true')
     p.add_argument('--vector-exp',action='store_true')
+    p.add_argument('--generic',action='store_true',help='Compare the mixed scalar/vector circular kernel')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -71,7 +72,7 @@ def main():
     assert ld.read_bytes(output,64)==ld.read_bytes(dst+len(post),64)==b'\xa5'*64
     assert ld.read_bytes(src,len(pre))==pre
     assert actual==post,raw_diff(post,actual,32)
-    report=dict(schema='olm.dg-C19-bilateral/1',aex_sha256=sha(aex.read_bytes()),
+    report=dict(schema='olm.dg-C19-bilateral/1',kernel='generic' if args.generic else 'radius-one' if r==1 else 'scalar',aex_sha256=sha(aex.read_bytes()),
                 source_sha256=sha(args.source.read_bytes()),geometry=[w,h],radius=r,
                 public_output_sha256=row.get('oracle_sha256',row.get('public_callback_sha256')),
                 original_post_sha256=sha(post),original_body_sha256=sha(actual),dispatch=dict(dispatch),
@@ -104,7 +105,7 @@ def main():
     report.update(exp_count=len(inputs),used_exp_count=len(used) if args.vector_exp else len(exponent_inputs),
                   exp_backend='vector-180ba5780' if args.vector_exp else 'scalar-18144ee30',exp_output_sha256=sha(expected))
     source=args.source.read_text().replace('#include "OLMDistanceGradation.h"',
-        '#include "'+str(ROOT/'mac/OLMDistanceGradation/OLMDistanceGradation.h')+'"').replace('"../../core/','"'+str(ROOT/'core')+'/')
+        '#include "'+str(ROOT/'mac/OLMDistanceGradation/OLMDistanceGradation.h')+'"').replace('"../../core/','"'+str(ROOT/'core')+'/').replace('"../../ucrtmath/','"'+str(ROOT/'ucrtmath')+'/')
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as td:
         td=Path(td);local=td/'candidate.cpp';local.write_text(source)
@@ -124,6 +125,8 @@ int main(int argc,char **argv) {
 }
 '''.replace('else for(float &x:data)x=bilateral_ipp_exp(x);',
             'else for(float &x:data)x=bilateral_ipp_vector_exp(x);' if args.vector_exp else 'else for(float &x:data)x=bilateral_ipp_exp(x);'))
+        if args.generic:
+            cpp.write_text(cpp.read_text().replace('if(std::stoi(argv[5])==1)', 'if(false)').replace('else bilateral_blur_ipp_scalar(', 'else bilateral_blur_ipp_general('))
         for name,flags in [('o2',['-O2','-ffp-contract=off']),('o3',['-O3','-ffp-contract=fast']),
                            ('san',['-O2','-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             exe=td/name;out=td/(name+'.bin');filtered=td/(name+'-plane.bin')

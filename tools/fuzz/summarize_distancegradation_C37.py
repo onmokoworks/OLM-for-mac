@@ -18,9 +18,14 @@ def main():
         entry={'report_sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
         for key,value in data.items():
             if key in ('clusters','cases'):continue
-            entry[key]=value
+            if key=='summary' and isinstance(value,dict):
+                entry[key]={k:v for k,v in value.items() if k!='clusters'}
+            elif key=='rows':
+                entry[key]=[{k:v for k,v in row.items() if k not in ('parameters','sanitized')} for row in value]
+            else:
+                entry[key]=value
         if 'cases' in data:
-            entry['cases']=[{k:r[k] for k in ('index','input_sha256','geometry','depth','profile','parameters','refusal_guards') if k in r} |
+            entry['cases']=[{k:r[k] for k in ('index','input_sha256','geometry','depth','profile','refusal_guards') if k in r} |
                 {'smart':r['result']['routes']['smart'],'oracle':r['result']['oracles']['smart']} for r in data['cases']]
         result['measurements'][name]=entry
     args.output.parent.mkdir(parents=True,exist_ok=True)

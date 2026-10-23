@@ -11,7 +11,7 @@ import tempfile
 import time
 import sys
 sys.dont_write_bytecode = True
-from adapters.olmdistancegradation import Adapter, SOURCE
+from adapters.olmdistancegradation import Adapter, SOURCE, SHIM_DIR, FIELDGEN
 from adapters.public import ROOT, replace_once
 from core import sha, raw_diff
 from run import main_checkout, default_worker
@@ -21,9 +21,16 @@ from verify_distancegradation_smart_C14 import matrix as extended_matrix
 
 def candidate(source, mode):
     if mode == 'vector-radius':
+        source=source.replace('identity-filter boundary; finite extended samples also use Box/Gaussian.',
+            'identity-filter boundary; finite extended samples also use Box/Gaussian and radius-one Bilateral.')
+        source=source.replace('field and callback. Median and Bilateral retain their SDR boundary;',
+            'field and callback. Median and larger-radius Bilateral retain their SDR boundary;')
+        source=source.replace('// existing fixed-profile cells enter the retained IPP reproduction below.',
+            '// bounded generic-radius and fixed-profile cells enter the IPP reproductions below.')
         start=source.index('static void bilateral_blur_ipp_scalar(')
         end=source.index('static bool is_scalar_bilateral_shape(',start)
         body=source[start:end].replace('bilateral_blur_ipp_scalar(', 'bilateral_blur_ipp_general(')
+        body='// FUN_1802a1640 selects scalar side tiles and vector top/bottom/interior.\n// FUN_1806b7d40 retains circular row-major taps and separate float operations.\n'+body
         body=body.replace('const float center = source[(size_t)y*w+x];',
             'const bool vector_dispatch = w >= 16 && w > 2*radius && h > 2*radius &&\n'
             '\t\t\t    (y < radius || y >= h-radius || (x >= radius && x < w-radius));\n'
@@ -135,6 +142,17 @@ def negative(a, mode):
         yield 'work-budget',cc
 
 
+class BudgetAdapter(Adapter):
+    """Only the diagnostic negative run needs a frame above the fuzz host cap."""
+    def build(self, scratch, deadline):
+        binary, dependencies = super().build(scratch, deadline)
+        host = scratch/'host.cpp'
+        host.write_text(replace_once(host.read_text(), 'W>256||H>256', 'W>512||H>512'))
+        self.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
+                      '-I',SHIM_DIR,host,FIELDGEN,'-o',binary],deadline)
+        return binary, dependencies
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--mode',choices=['power-scalar','finite-bilateral','vector-radius'],required=True)
@@ -153,8 +171,9 @@ def main():
     base=subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
     source=candidate(base,args.mode)
     if args.write_source:args.write_source.write_text(source)
-    a=Adapter(argparse.Namespace(max_size=256,case_timeout=120,main=main_checkout(),worker=default_worker()))
-    report=dict(schema='olm.dg-C37-probe/1',mode=args.mode,before_ref=args.before_ref,source_sha256=sha(source.encode()),rows=[])
+    adapter_type=BudgetAdapter if args.negative and args.mode=='vector-radius' else Adapter
+    a=adapter_type(argparse.Namespace(max_size=256,case_timeout=120,main=main_checkout(),worker=default_worker()))
+    report=dict(schema='olm.dg-C37-probe/1',diagnostic_host_geometry_limit=512 if adapter_type is BudgetAdapter else 256,mode=args.mode,before_ref=args.before_ref,source_sha256=sha(source.encode()),rows=[])
     deadline=time.monotonic()+5400
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as temp:

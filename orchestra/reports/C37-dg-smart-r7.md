@@ -1,10 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Closed two admission clusters: scalar Bilateral Power and finite radius-one Bilateral.
-- Seed1 remains 290 exact / 0 mismatch / 3 refusal / 7 uncompared, all prior exact bytes preserved.
-- Fresh seed37 cases73/22 improve refusal→exact; independent300+1944 exact, negative8+6 unchanged refusals, sanitizer equality throughout.
-- Corpus145 remains exact without expectation edits. Other Bilateral domains remain under investigation.
+- Closed three clusters: scalar Bilateral Power, finite radius-one Bilateral, and generic-radius scalar/vector dispatch.
+- Seed1 remains290/0/3/7; seed37 improves279→282 exact and10→7 refusal, with0 mismatch and its1 timeout unchanged.
+- Every prior exact output is preserved; only seed37 cases22/25/73 improve refusal→exact.
+- Independent2496 exact, sanitizer equality, corpus145 unchanged, final9 beta tests pass.
+- Three-cluster stop reached; original failures and unsupported size/domain controls remain separate follow-ups.
 
 facts:
 - Starting commit `7f9c2ae051394482a2eae609ccca838e63dd67a8`, branch `orch/C37-dg-smart-r7`. Read AGENT_GUIDE, GOTCHAS, plugin ledger row, compatibility plan and T07/C03/C08/C14/C19/C27/C31/F10/F12 reports. MAIN, original emulator sources and retained workers are read-only.
@@ -95,3 +96,78 @@ Expected:only seed37 case22 changes in this verification; corpus145 unchanged; t
 
 next:
 - Generic-radius scalar/vector candidate has passed its independent matrix and import-free IPP leaf check; full campaign regression and negative admission checks are pending. No existing work budget has changed.
+
+Cluster 3 — generic-radius Bilateral scalar/vector dispatch (base `497de6fd`):
+
+facts:
+- Re-measured seed1 after cluster2:290/0/3/7; all300 Smart result dictionaries still equal the initial campaign.
+- Seed37 case25 is56x42 PF32 SDR, radius12. The gate-off Mac branch skipped the filter outside its previously admitted shapes. The first divergent captured stage is post-filter: first1024 pre-filter words exact; all1024 captured post-filter words differ, first original `aa9c0b3f`, Mac `abaa2a3f`. Full final field2352 words differ; final output2924 words/9982 bytes differ, first original `acc6e83e`, Mac `aaaaaa3e` at byte0.
+- Initial trace attempt stopped because existing watches requested more than4096 bytes. The tool now records `plane_capture_bytes` and `plane_total_bytes` and compares only the captured prefix; it does not claim a complete pre/post capture for case25. Its existing per-row field capture still covers the full2352-word final field. Added explicit geometry/blur-size overrides produce independently rendered smaller cases with complete source bytes/parameters in the report.
+- Original static dispatch `FUN_1802a1640` and table1815c7540 select generic vector `1806b7d40` for PF32 radii>=3 at width>=16, and scalar `1806be1e0` otherwise. Whole-image padding uses scalar when either dimension is below the kernel diameter; ordinary frames use scalar side tiles, vector top/bottom/interior. The generic kernel keeps circular row-major offsets, border replication, center inclusion, scalar spatial weights, cutoff strictly>-25, and separate float multiply/add. Vector color exponent is `(difference*difference)*-0.5`; scalar is `(-0.5*difference)*difference`.
+- Independent17x9/radius3 case derived by explicit prefix reshape from seed37/index25: original public output binds to relocated typed callback, complete pre/post/final field153 words and final output match. Original IPP init/filter18000c280/18000c2f0 reproduces the public post plane without imports or numerical detours. Dispatch counts:1806b7d40 three calls,1806be1e0 two calls. All153 filtered words and8207 original vector-exp inputs match O2, O3 requesting contraction, and ASan/UBSan. Original plane SHA256 `d8c8ebeb3c54c5b7260585e60c0b1d3b9e630ad6879ac1322ad39a599188ebf8`.
+- The generic implementation admits only PF32 Smart SDR, Constant/Linear/Sphere, unit downsample, radius3..32 and bounded work. The existing scalar branch remains first and retains its Power promotion. The new domain has a400,000,000 square-kernel-operation ceiling, equal to the existing Median ceiling; no existing work budget is changed. Radius2, radius>32, generic Power and extended/nonfinite generic inputs remain refused.
+- Independent252 original-AEX cases all change refusal→exact with sanitizer equality:7x7/r3,15x9/r3,16x9/r3,17x9/r3,33x19/r4,56x42/r12,67x65/r32; all ownership/RGB-or-Layer/background/interpolation states, inversion variation, odd padding. The width15/16/17 and maximum-radius boundaries are included.
+- Full seed37/index25 paired trace after the repair: all2352 final field words and all37632 output bytes exact; captured pre/post prefixes exact. This is the original field-operation correction, not an output-byte adjustment.
+- Negative first run:7 refusal checks pass; the512x512 work-budget control returns host process exit64 before entering the plugin because the ordinary fuzz host caps dimensions at256. This failed assertion is retained as `vector-negative-host-limit`, not credited as a plugin guard or exact output. A diagnostic-only Adapter raises that scratch host cap to512 for negative tests. Corrected8 controls all remain unchanged refusals, ordinary/sanitized identical, with the work-budget control attributed to `RenderBits:pf32-smart-profile`. No original is required or invoked for these admission-only negative controls.
+- Before/current/sanitized verifier passes all600 campaign cases and145 corpus cases. Seed1:290 unchanged exact/10 unchanged nonexact. Seed37:282 unchanged exact/17 unchanged nonexact/1 newly exact(case25). No previously exact output changes. The180-second verification reference set ends283 exact, versus280 before any C37 change; only22/25/73 improve.
+- Earlier evidence files were compacted by removing redundant generated parameters, duplicate sanitized result dictionaries and Classic cluster details. A recursive subset comparison against the committed prior artifacts proves all retained values, row counts, hashes and verdicts unchanged. Original full-report SHA256 bindings and reproducible generators remain retained.
+
+| Cluster3 Smart corpus | Before | After | Expectation edits |
+|---|---|---|---|
+| Saved145 |145 exact|145 exact, identical bytes/status|None|
+
+inference:
+- The refusal protects a previously unimplemented generic dispatch, not a host-math discrepancy. The scalar/vector exponential and accumulation order explain the first divergent post-filter stage. No divergent still-host math import was observed, so no `ucrt-math-pending` claim is made.
+- These CPU-emulator/public-shim proofs do not establish native AE ROI/downsample, arbitrary UCRT or every unsupported input domain.
+
+changed_files (cluster3):
+- `mac/OLMDistanceGradation/OLMDistanceGradation.cpp`
+- `tools/emulation/trace_distancegradation_smart_C14.py`
+- `tools/emulation/trace_distancegradation_bilateral_C19.py`
+- `tools/fuzz/probe_distancegradation_C37.py`
+- `tools/fuzz/summarize_distancegradation_C37.py`
+- `reports/fuzz/olmdistancegradation_C37_{power,finite,vector}.json`
+- `orchestra/reports/C37-dg-smart-r7.md`
+
+verify (additional commands; same scratch environment as above):
+```sh
+python3 tools/fuzz/probe_distancegradation_C19.py --before-ref 7f9c2ae --seed 37 --index 22 --index 25 --index 73 --experiment gate-off --scratch "$s/gate" --report "$s/gate.json" --write-source "$s/gate.cpp"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C14.py --seed 37 --case-index 25 --source "$s/gate.cpp" --scratch "$s/trace25" --report "$s/trace25.json"
+python3 tools/fuzz/probe_distancegradation_C37.py --mode vector-radius --before-ref 99b73247 --index 25 --scratch "$s/vector25" --report "$s/vector25.json" --write-source "$s/vector.cpp"
+python3 tools/fuzz/probe_distancegradation_C37.py --mode vector-radius --before-ref 99b73247 --scratch "$s/vector-matrix" --report "$s/vector-matrix.json" --require-exact
+python3 tools/fuzz/probe_distancegradation_C37.py --mode vector-radius --before-ref 497de6fd --negative --scratch "$s/vector-negative" --report "$s/vector-negative.json" --write-source "$s/vector-final.cpp"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C14.py --seed 37 --case-index 25 --geometry 17 9 --blur-size 3 --source "$s/vector.cpp" --scratch "$s/trace17" --report "$s/trace17.json"
+PATH="$s/bin:$PATH" '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_bilateral_C19.py --trace "$s/trace17.json" --source "$s/vector-final.cpp" --width 17 --height 9 --radius 3 --generic --vector-exp --scratch "$s/vector-leaf-final" --report "$s/vector-leaf-final.json"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C14.py --seed 37 --case-index 25 --source "$s/vector-final.cpp" --scratch "$s/trace25-after" --report "$s/trace25-after.json"
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref 497de6fd --candidate-source "$s/vector-final.cpp" --campaign "$s/base.json" --campaign "$s/fresh.json" --corpus --strict-admission --case-timeout 180 --scratch "$s/vector-verify" --report "$s/vector-verify.json"
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 1 --jobs 1 --shrink-attempts 0 --scratch "$s/final" --corpus "$s/final-corpus" --report "$s/final.json"
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 37 --jobs 1 --shrink-attempts 0 --scratch "$s/final-fresh" --corpus "$s/final-fresh-corpus" --report "$s/final-fresh.json"
+```
+Expected: diagnostic gate22/73 exact and25 mismatch; generic25 exact; matrix252 exact; negative8 unchanged refusal; leaf8207 exp/153 plane words exact in all3 builds; complete paired field/output exact. The final candidate differs from the initial verification candidate only in explanatory comments; final campaigns bind the production source. Corpus remains145 exact without edits.
+
+Final facts and stop:
+- Final production source SHA256 `0ed446ab4e919ccf6a51bbd058d4d6f2c63d592f1ee7a2396e6e4ec2515158ab` equals the final leaf-check source binding. Final leaf again passes all8207 exponential inputs and153 filtered words at O2/O3/ASan+UBSan; beta tests9 run, OK (17.013s).
+- Final n300 seed1:290/0/3/7, all300 Smart result dictionaries identical to baseline. Final n300 seed37:282/0/7/10 plus1 unchanged Mac budget(case201). All279 initial exact dictionaries are identical; only22/25/73 change refusal→exact. Original statuses remain290 success/8 reject/2 budget for seed1,286 success/14 reject for seed37.
+- Strict saved-corpus replay completes145, `replay_matches_saved=true`, honoring both saved worker bindings (139 cases:SHA256544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2;6 cases:SHA2563cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261), without worker override or expectation edits.
+
+| Final Smart campaign (10-second per-render allowance) | Exact | Mismatch | Refusal | Uncompared | Mac budget |
+|---|---:|---:|---:|---:|---:|
+| seed1 before |290|0|3|7|0|
+| seed1 final |290|0|3|7|0|
+| seed37 before |279|0|10|10|1|
+| seed37 final |282|0|7|10|1|
+
+Additional final verification:
+```sh
+python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 1 --scratch "$s/final-replay" --report "$s/final-replay.json"
+PATH="$s/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_olmdistancegradation_*beta_20260820.py'
+git diff --check
+```
+Expected:145 saved-result matches,9 tests OK, clean diff check. All three independent matrices total2496 exact, with sanitizer equality; no case-specific output patches, tolerance or byte correction.
+
+next:
+- Three clusters closed: stop under the ticket's three-cluster rule. No remaining seed1 case has a successfully rendered original and nonexact Smart output.
+- Fresh seed37 successful-original refusals3/288 have Box sizes3703/2025 outside the existing size<=500 admission; these are size/domain limits, not observed numerical mismatches. Case199 has HDR input and Bilateral radius988 outside the retained finite/radius domains. They need separate scoped investigations, not budget increases.
+- Work-budget-exceeding controls also remain protected: seed1/index53 Median square-kernel work3,178,732,410; seed37/index103:43,066,624,320 and index165:3,265,436,736 exceed the unchanged400,000,000 Median ceiling (and are excluded earlier by size/domain guards). Their originals reject. No budget was increased to admit them.
+- Original median assertions, original timeouts and Mac timeout201 are not exact outputs. The latter does match at both source revisions under the180-second sanitizer verification allowance; performance remains separate from byte equality.
+- MAIN, other plugins, external emulator sources/workers, installed bundles, release gates, ledger and saved corpus expectations remain unchanged. No push, stash, history rewrite or background work is left running. Scratch build trees are removed; logs/reports remain below5GiB.
