@@ -11,11 +11,20 @@ from core import evaluate, load_corpus, sha
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--base',required=True); p.add_argument('--label',required=True)
-    p.add_argument('--rebaseline',action='store_true'); args=p.parse_args()
-    scratch=ROOT/'orchestra/state/C01-smoother2-smart'/args.label; scratch.mkdir(parents=True,exist_ok=True)
+    p.add_argument('--rebaseline',action='store_true')
+    p.add_argument('--scratch',type=Path,default=ROOT/'orchestra/state/C01-smoother2-smart')
+    p.add_argument('--worker',type=Path)
+    p.add_argument('--seeds',type=int,nargs='+',default=[1,2])
+    p.add_argument('--jobs',type=int,default=1,choices=[1])
+    p.add_argument('--report',type=Path)
+    args=p.parse_args()
+    scratch=args.scratch.resolve()/args.label; scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),PYTHONDONTWRITEBYTECODE='1')
-    initial=json.loads((scratch.parent/'before.json').read_text())
-    opts=argparse.Namespace(main=ROOT.parent.parent,worker=Path(initial['provenance']['worker_path']),max_size=256,case_timeout=30)
+    worker=args.worker
+    if worker is None:
+        initial=json.loads((scratch.parent/'before.json').read_text())
+        worker=Path(initial['provenance']['worker_path'])
+    opts=argparse.Namespace(main=ROOT.parent.parent,worker=worker,max_size=256,case_timeout=30)
     prod=Adapter(opts); pd=scratch/'production'; pd.mkdir(exist_ok=True)
     deadline=time.monotonic()+1800; provenance=prod.prepare(pd,deadline)
     variants={}; source=subprocess.check_output(['git','show',args.base+':'+str(SOURCE.relative_to(ROOT))],text=True)
@@ -25,7 +34,7 @@ def main():
         a=copy.copy(prod); a.binary=d/'mac'; a.env=dict(prod.env,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         a.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',*flags,'-I',d,'-I',SHIM,'-I',SOURCE.parent,d/'host.cpp','-o',a.binary],deadline)
         variants[name]=a
-    cases=[(f'seed{seed}',prod.generate(seed,i),None) for seed in (1,2) for i in range(300)]
+    cases=[(f'seed{seed}',prod.generate(seed,i),None) for seed in args.seeds for i in range(300)]
     for path in sorted((ROOT/'tests/fuzz_corpus/olmsmoother2').glob('*.json')):
         case,data=load_corpus(path,prod); cases.append(('corpus',case,path))
     def run(item):
@@ -55,14 +64,14 @@ def main():
             data['result']=result; data['provenance']=provenance
             path.write_text(json.dumps(data,sort_keys=True,indent=2)+'\n')
         return row
-    with ThreadPoolExecutor(max_workers=2) as pool: rows=list(pool.map(run,cases))
+    with ThreadPoolExecutor(max_workers=args.jobs) as pool: rows=list(pool.map(run,cases))
     counts={}
-    for group in ('seed1','seed2','corpus'):
+    for group in [*(f'seed{s}' for s in args.seeds),'corpus']:
         subset=[r for r in rows if r['group']==group]
         counts[group]={name:dict(Counter('exact' if r[name]['exact'] else 'mismatch' for r in subset)) for name in ('base','current','sanitized')}
         counts[group]['changed_cases']=sum(bool(r['changed_words']) for r in subset)
     report={'base':args.base,'base_source_sha256':sha(source.encode()),'source_sha256':sha(SOURCE.read_bytes()),
         'provenance':provenance,'counts':counts,'sanitizer_errors':0,'base_exact_changes':0,'changes_away_from_exact':0,'cases':rows}
-    out=ROOT/'orchestra/reports'/f'C01-{args.label}.json'; out.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n')
+    out=args.report or ROOT/'orchestra/reports'/f'C01-{args.label}.json'; out.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n')
     print(json.dumps(counts,sort_keys=True)); print(out)
 if __name__=='__main__':main()

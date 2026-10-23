@@ -484,9 +484,12 @@ static void win_FUN_180002930_palette_filter(FPix *scratch, int32_t w, int32_t h
 		for (int32_t x = 0; x < w; ++x) {
 			bool match = false;
 			for (int i = 0; i < palette_count; ++i) {
-				if (fabs_bits(row[x].r - palette[i].red)   < K_COLOR_TOL &&
-				    fabs_bits(row[x].g - palette[i].green) < K_COLOR_TOL &&
-				    fabs_bits(row[x].b - palette[i].blue)  < K_COLOR_TOL) {
+				// COMISS/JNC at 0x1800029fa and 0x180002a0c reject
+				// ordered >=; final COMISS/JC also accepts unordered.
+				// A NaN channel therefore passes this palette component.
+				if (!(fabs_bits(row[x].r - palette[i].red)   >= K_COLOR_TOL) &&
+				    !(fabs_bits(row[x].g - palette[i].green) >= K_COLOR_TOL) &&
+				    !(fabs_bits(row[x].b - palette[i].blue)  >= K_COLOR_TOL)) {
 					match = true;
 					break;
 				}

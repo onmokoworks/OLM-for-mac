@@ -33,6 +33,8 @@ def build(adapter, directory, source):
 }
 '''
     src = src.replace('static int g_olmsmoother2_trace_x = -1;', helper+'static int g_olmsmoother2_trace_x = -1;')
+    src = src.replace('const std::vector<FPix> scratch_pre_setup = scratch;', 'const std::vector<FPix> scratch_pre_setup = scratch; c01_dump("pre_setup",scratch.data(),w*h*sizeof(FPix));')
+    src = src.replace('const std::vector<FPix> scratch_pre_gamma = scratch;', 'const std::vector<FPix> scratch_pre_gamma = scratch; c01_dump("pre_gamma",scratch.data(),w*h*sizeof(FPix));')
     src = src.replace('p.class_plane = class_plane.data();', '''p.class_plane = class_plane.data();
  c01_dump("input_plane",sample_base,w*h*sizeof(FPix));
  c01_dump("class_plane",class_plane.data(),w*h*4);''')
@@ -52,6 +54,8 @@ def build(adapter, directory, source):
 
 def pair(case, adapter, directory, xy):
     directory.mkdir(parents=True, exist_ok=True)
+    for name in ('pre_setup','pre_gamma','input_plane','class_plane','center','polygon','c0d0_center','c0d0_polygon','ab00','b120'):
+        (directory/(name+'.bin')).unlink(missing_ok=True)
     adapter.env.update(C01_DUMP=str(directory), OLMSMOOTHER2_TRACE_PIXEL=','.join(map(str,xy)),
                        OLMSMOOTHER2_TRACE_LOG=str(directory/'mac.log'))
     status, raw, _ = adapter.candidate(case,directory,'smart',time.monotonic()+120)
@@ -59,7 +63,7 @@ def pair(case, adapter, directory, xy):
     oracle, reference = adapter.oracle(case,directory,time.monotonic()+120)
     assert oracle['status']=='ok', oracle
     params = {p['slot']:p['value'] for p in case['parameters']}
-    assert params[1] == 0, 'key-enabled config outside this probe'
+    early_stages = {}
     assert params[8] != 3 or params[9] == 1, 'gamma pow outside this probe'
     w,h = case['geometry']
     l = AexLoader(str(adapter.aex),verbose=False,fast=False)
@@ -67,6 +71,35 @@ def pair(case, adapter, directory, xy):
     def alloc(data):
         p=l.bump_alloc(max(16,len(data)),align=16); l.write_bytes(p,bytes(data)); return p
     inp=(directory/'input_plane.bin').read_bytes()
+    if params[1]:
+        assert case['depth'] == 32, 'key stage currently grounded for PF32 only'
+        pre=(directory/'pre_setup.bin').read_bytes()
+        expected=b''.join(case['pixels'][i+4:i+16]+case['pixels'][i:i+4] for i in range(0,len(case['pixels']),16))
+        assert pre==expected, 'PF32 source unpack differs before key stage'
+        kb=alloc(pre); kd=desc(l,kb,w*16,w,h)
+        ptrs=[alloc(struct.pack('<i',v)) for v in (w,0,h,0)]
+        color=params[2]
+        rgb=[v/255 for v in color[1:]]
+        SmallStatic(l,h)
+        if params[3]:
+            palette=alloc(struct.pack('<4f',*rgb,color[0]/255))
+            keycfg=bytearray(0x80)
+            struct.pack_into('<QQ',keycfg,0x60,1,palette)
+            l.call_function(0x180002930,int_args=[*ptrs,kd,alloc(keycfg)],max_instructions=10_000_000)
+        else:
+            key=alloc(struct.pack('<4f',color[0]/255,*rgb))
+            l.call_function(0x180002a70,int_args=[*ptrs,kd,key],max_instructions=10_000_000)
+        keyed=l.read_bytes(kb,len(pre))
+        early_stages['pre_setup']=pre
+        early_stages['pre_gamma']=keyed
+        # The original key worker modifies alpha only. Reuse the captured
+        # candidate RGB decode (not an independent decode-stage proof), and
+        # join original keyed alpha to the independently rendered public AEX.
+        decoded=bytearray(inp)
+        for i in range(0,len(pre),16):
+            assert keyed[i:i+12]==pre[i:i+12]
+            decoded[i+12:i+16]=keyed[i+12:i+16]
+        inp=bytes(decoded)
     sb=alloc(inp); cb=alloc(b'\xa5'*(w*h*4))
     sd,cd=desc(l,sb,w*16,w,h),desc(l,cb,w*4,w,h)
     cfg=bytearray(0x80)
@@ -76,6 +109,10 @@ def pair(case, adapter, directory, xy):
     # identity pow, so still invoke the original gamma helper with apply=true.
     struct.pack_into('<f',cfg,0x28,params[9])
     if params[8]==3: cfg[0x40]=1
+    if params[8]==2 and params[10]:
+        palette=alloc(b''.join(struct.pack('<4f',*(v/255 for v in params[11+i][1:]),params[11+i][0]/255) for i in range(params[10])))
+        struct.pack_into('<QQ',cfg,0x30,params[10],palette)
+        cfg[0x40]=3
     config=alloc(cfg); rect=alloc(struct.pack('<4i',0,0,w,h))
     SmallStatic(l,h)
     result=l.call_function(0x18000ada0,int_args=[sd,cd,rect,config],max_instructions=30_000_000)
@@ -122,34 +159,50 @@ def pair(case, adapter, directory, xy):
     joined=l.read_bytes(ob,len(reference))
     assert joined==reference, 'reconstructed core does not join public AEX output'
     comparisons={}
-    for name,expected in dict(class_plane=classes,**stages).items():
-        actual=(directory/(name+'.bin')).read_bytes()
-        mismatches=[i for i,(a,b) in enumerate(zip(expected,actual)) if a!=b]
+    for name,expected in dict(**early_stages,class_plane=classes,**stages).items():
+        actual_path=directory/(name+'.bin')
+        if not actual_path.exists():
+            comparisons[name]={'equal':False,'mac_stage_not_executed':True,'aex_hex':expected.hex()}
+            continue
+        actual=actual_path.read_bytes()
+        mismatches=[i for i in range(max(len(expected),len(actual))) if expected[i:i+1]!=actual[i:i+1]]
         comparisons[name]={'equal':expected==actual,'aex_bytes':len(expected),'mac_bytes':len(actual),
             'different_bytes':len(mismatches),'first_byte':mismatches[0] if mismatches else None,
-            'aex_hex':expected.hex() if name!='class_plane' else None,
-            'mac_hex':actual.hex() if name!='class_plane' else None}
+            'first_aex_word':expected[(mismatches[0]//4)*4:(mismatches[0]//4)*4+4].hex() if mismatches else None,
+            'first_mac_word':actual[(mismatches[0]//4)*4:(mismatches[0]//4)*4+4].hex() if mismatches else None,
+            'aex_hex':expected.hex() if name not in ('class_plane','pre_setup','pre_gamma') else None,
+            'mac_hex':actual.hex() if name not in ('class_plane','pre_setup','pre_gamma') else None}
     return {'index':case['index'],'geometry':[w,h],'xy':xy,'input_sha256':sha(case['pixels']),
         'core_public_aex_join':joined==reference,'public_exact':raw==reference,'public_aex_sha256':sha(reference),'public_mac_sha256':sha(raw),
-        'source_plane_sha256':sha(inp),'aex_events':events,'stages':comparisons}
+        'source_plane_sha256':sha(inp),'key_stage_original':bool(params[1]),
+        'rgb_decode_scope':'captured candidate RGB; original key alpha; full public join asserted' if params[1] else 'captured candidate source plane; full public join asserted',
+        'aex_events':events,'stages':comparisons}
 
 
 def main():
-    p=argparse.ArgumentParser(); p.add_argument('--indices',type=int,nargs='+',default=[299]); p.add_argument('--generated',action='store_true'); p.add_argument('--label',default='trace'); p.add_argument('--source-ref'); p.add_argument('--reference-trace',type=Path); args=p.parse_args()
-    SCRATCH.mkdir(parents=True,exist_ok=True)
-    os.environ.update(TMPDIR=str(SCRATCH),TMP=str(SCRATCH),TEMP=str(SCRATCH))
-    baseline=json.loads((SCRATCH/'before.json').read_text())
-    options=argparse.Namespace(main=MAIN,worker=Path(baseline['provenance']['worker_path']),max_size=256,case_timeout=120)
+    p=argparse.ArgumentParser(); p.add_argument('--indices',type=int,nargs='+',default=[299]); p.add_argument('--generated',action='store_true'); p.add_argument('--label',default='trace'); p.add_argument('--source-ref'); p.add_argument('--reference-trace',type=Path)
+    p.add_argument('--seed',type=int,default=1)
+    p.add_argument('--scratch',type=Path,default=SCRATCH)
+    p.add_argument('--worker',type=Path)
+    args=p.parse_args()
+    scratch=args.scratch.resolve()
+    scratch.mkdir(parents=True,exist_ok=True)
+    os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch))
+    worker=args.worker
+    if worker is None:
+        baseline=json.loads((scratch/'before.json').read_text())
+        worker=Path(baseline['provenance']['worker_path'])
+    options=argparse.Namespace(main=MAIN,worker=worker,max_size=256,case_timeout=120)
     source=SOURCE.read_text() if not args.source_ref else subprocess.check_output(['git','show',args.source_ref+':'+str(SOURCE.relative_to(ROOT))],text=True)
-    adapter=Adapter(options); build(adapter,SCRATCH/(args.label+'-build'),source); rows=[]
+    adapter=Adapter(options); build(adapter,scratch/(args.label+'-build'),source); rows=[]
     coords={c['index']:c['xy'] for c in json.loads(args.reference_trace.read_text())['cases']} if args.reference_trace else {}
     for index in args.indices:
         if args.generated:
-            case=adapter.generate(1,index)
+            case=adapter.generate(args.seed,index)
         else:
             path=next((ROOT/'tests/fuzz_corpus/olmsmoother2').glob(f'*case{index:06d}_*.json'))
             case,_=load_corpus(path,adapter)
-        directory=SCRATCH/(args.label+f'-{index}')
+        directory=scratch/(args.label+f'-{index}')
         directory.mkdir(exist_ok=True)
         # Locate the first public output mismatch before capturing stages.
         adapter.env.pop('C01_DUMP',None); adapter.env.pop('OLMSMOOTHER2_TRACE_PIXEL',None)
@@ -162,5 +215,5 @@ def main():
         row=pair(case,adapter,directory,xy); rows.append(row)
         print(index,xy,{k:v['equal'] for k,v in row['stages'].items()},flush=True)
     report={'source_sha256':sha(source.encode()),'aex_sha256':sha(adapter.aex.read_bytes()),'cases':rows}
-    (SCRATCH/(args.label+'.json')).write_text(json.dumps(report,indent=2)+'\n')
+    (scratch/(args.label+'.json')).write_text(json.dumps(report,indent=2)+'\n')
 if __name__=='__main__': main()
