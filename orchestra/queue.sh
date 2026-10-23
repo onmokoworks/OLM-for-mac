@@ -19,6 +19,10 @@ while true; do
   while read -r t; do
     [[ -z $t || $t == \#* ]] && continue
     [[ -f "$MAIN/orchestra/state/$t.meta" ]] && continue  # started or done; delete meta to re-run
+    # "depends: <id>" lines in the ticket: wait until that ticket finished and its branch was merged+deleted
+    blocked=0; for d in $(sed -n 's/^depends: *//p' "$MAIN/orchestra/tickets/$t.md" 2>/dev/null); do
+      { [[ -f "$MAIN/orchestra/state/$d.meta" ]] && grep -q "^exit" "$MAIN/orchestra/state/$d.meta" && [[ -z $(git -C "$MAIN" branch --list "orch/$d") ]]; } || blocked=1
+    done; (( blocked )) && continue
     next=$t; break
   done < "$q"
   [[ -z $next ]] && { sleep 120; continue; }

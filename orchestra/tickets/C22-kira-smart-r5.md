@@ -1,3 +1,4 @@
+depends: C16-kira-smart-r4
 ## Goal
 Reduce the **Smart-route** residual of **olmkirakira** (F18: Smart is the route AE uses).
 Current seed-1 n300 Smart residual: measure after C16; remaining refusals (active IPP resize, Length1, other numeric families)
