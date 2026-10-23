@@ -31,6 +31,7 @@ def main():
                               for tag in (r.get('refusal_guards', {}).get('smart', []) or ['host-checkout']))
             result['campaigns'][name] = dict(sha256=sha(path), seed=p['seed'], count=len(rows), counts=counts,
                 rendered_refusals=refusal, provenance=p.get('provenance'),
+                verifier_failures=p.get('failures', []), refusal_error_changes=p.get('refusal_error_changes', []),
                 sanitizer_reports=sum(bool(r['result']['routes']['smart'].get('sanitizer')) for r in rows))
         elif p.get('independent'):
             rows = p['independent']
@@ -46,23 +47,27 @@ def main():
                 smart_counts=Counter(r['result']['routes']['smart']['status'] for r in p['replays']))
     names = list(result['campaigns'])
     for before, after in [('baseline.json', 'center-seed1/campaign.json'),
-                          ('base-seed2/campaign.json', 'center-seed2/campaign.json')]:
+                          ('base-seed2/campaign.json', 'center-seed2/campaign.json'),
+                          ('center-seed1/campaign.json', 'center16-seed1/campaign.json'),
+                          ('center-seed2/campaign.json', 'center16-seed2/campaign.json')]:
         if before not in names or after not in names:
             continue
         old = json.loads((args.state/before).read_text())['cases']
         new = json.loads((args.state/after).read_text())['cases']
         assert len(old) == len(new) == 300
-        transitions, changes, lost = Counter(), [], []
+        transitions, changes, lost, error_changes = Counter(), [], [], []
         for a, b in zip(old, new):
             assert a['index'] == b['index'] and a['input_sha256'] == b['input_sha256']
             x, y = (r['result']['routes']['smart'] for r in (a, b))
             transitions[x['status']+' -> '+y['status']] += 1
             if x['status'] == 'exact' and (y['status'] != 'exact' or x['raw_sha256'] != y['raw_sha256']):
                 lost.append(a['index'])
+            if x['status'] == y['status'] == 'refusal' and x['error'] != y['error']:
+                error_changes.append(dict(index=a['index'], before=x['error'], after=y['error'], guards=b.get('refusal_guards', {})))
             if x['status'] != y['status']:
                 changes.append(dict(index=a['index'], before=x, after=y, oracle=b['result']['oracles']['smart']))
         result['comparisons'].append(dict(before=before, after=after, transitions=transitions,
-                                          lost_exact=lost, changes=changes))
+                                          lost_exact=lost, changes=changes, refusal_error_changes=error_changes))
     prod = args.state/'production-verify/report.json'
     if prod.exists():
         p = json.loads(prod.read_text())

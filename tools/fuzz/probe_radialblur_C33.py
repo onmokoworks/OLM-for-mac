@@ -24,6 +24,10 @@ def candidate_source(experiment, source):
     elif experiment == 'centers16':
         old = '(std::is_same<PixelT, PF_Pixel16>::value && info.blur_type == 1);'
         new = 'std::is_same<PixelT, PF_Pixel16>::value;'
+    elif experiment == 'nonfinite-zoom':
+        start = source.index('static bool GenericRadialInputIsFinite(')
+        end = source.index('\ntemplate <typename PixelT>', start)
+        return source[:start] + 'static bool GenericRadialInputIsFinite(const PF_EffectWorld *input)\n{\n    (void)input; return true; // Scratch-only admission experiment.\n}\n' + source[end:]
     elif experiment == 'finite-rotation':
         old = 'GenericRadialInputIsSDR<PF_PixelFloat>(input));'
         new = 'GenericRadialInputIsFinite<PF_PixelFloat>(input));'
@@ -38,7 +42,7 @@ def candidate_source(experiment, source):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--experiment', choices=('centers32', 'centers16', 'finite-rotation', 'production'), required=True)
+    ap.add_argument('--experiment', choices=('centers32', 'centers16', 'nonfinite-zoom', 'finite-rotation', 'production'), required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--campaign', type=Path)
     ap.add_argument('--replay', type=Path)
@@ -86,7 +90,7 @@ def main():
         deadline = time.monotonic()+7200
         old = json.loads(args.admission_campaign.read_text())
         report = dict(seed=old['seed'], provenance=adapter.prepare(out, deadline),
-                      reference_campaign_sha256=sha(args.admission_campaign.read_bytes()), cases=[], failures=[])
+                      reference_campaign_sha256=sha(args.admission_campaign.read_bytes()), cases=[], failures=[], refusal_error_changes=[])
         for row in old['cases']:
             case = adapter.generate(old['seed'], row['index'])
             assert sha(case['pixels']) == row['input_sha256']
@@ -101,9 +105,11 @@ def main():
                 observed['diff'] = raw_diff(reference, raw, case['depth'])
             same = before['status'] == observed['status'] and before.get('raw_sha256') == observed.get('raw_sha256')
             admitted = before['status'] == 'refusal' and observed['status'] == 'exact'
-            # Refusals have no retained output hash; compare their error codes.
+            # A still-refused case may reach the unchanged resource guard after admission.
             if before['status'] == observed['status'] == 'refusal':
-                same = before['error'] == observed['error']
+                same = not raw
+                if before['error'] != observed['error']:
+                    report['refusal_error_changes'].append(dict(index=row['index'], before=before['error'], after=observed['error'], guards=guards))
             if actual.get('sanitizer') or not (same or admitted):
                 report['failures'].append(row['index'])
             report['cases'].append(dict(index=row['index'], input_sha256=row['input_sha256'],
