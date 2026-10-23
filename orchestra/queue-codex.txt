@@ -22,4 +22,5 @@ C26-radial-smart-r4
 C27-dg-smart-r5
 C28-kira-smart-r6
 F31-port-ucrtmath-switch-oracle
+F32-smoother-oracle-deep-pixels
 I02-integration-finish
