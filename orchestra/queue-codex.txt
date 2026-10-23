@@ -30,3 +30,6 @@ F34-dg-fixture-f02-regression
 F35-dg-fixture-rebind
 F36-fixture-runner-worktree-and-triage
 F38-x86-default-nan-sign
+C29-kira-smart-r7
+C30-dblur-smart-r5
+C31-dg-smart-r6
