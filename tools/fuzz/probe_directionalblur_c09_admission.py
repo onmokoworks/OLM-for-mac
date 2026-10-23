@@ -44,6 +44,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--baseline', required=True)
     p.add_argument('--seeds', nargs='+', type=int, default=[1, 2, 3])
+    p.add_argument('--jobs', type=int, choices=[1, 2], default=1)
     args = p.parse_args()
     args.main, args.max_size, args.case_timeout = ROOT.parent.parent, 256, 30
     scratch = args.scratch.resolve(); scratch.mkdir(parents=True, exist_ok=True)
@@ -79,7 +80,7 @@ def main():
                             row['exact'] = reference == raws[1]
                             row['diff'] = raw_diff(reference, raws[1], case['depth'])
                 return row
-        with ThreadPoolExecutor(max_workers=2) as pool:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
             for row in pool.map(run, [(s, i) for s in args.seeds for i in range(300)]):
                 report['cases'].append(row)
                 if row['changed']:
