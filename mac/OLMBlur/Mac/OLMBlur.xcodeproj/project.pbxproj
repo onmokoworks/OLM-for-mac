@@ -25,6 +25,7 @@
 		F31000000000000000000001 /* ucrt_powf.c in Sources */ = {isa = PBXBuildFile; fileRef = F31100000000000000000001; settings = {COMPILER_FLAGS = "-O2 -ffp-contract=off -fno-fast-math -I\"$(SRCROOT)/../../../ucrtmath/include\""; }; };
 		F31000000000000000000002 /* ucrt_atan2f.c in Sources */ = {isa = PBXBuildFile; fileRef = F31100000000000000000002; settings = {COMPILER_FLAGS = "-O2 -ffp-contract=off -fno-fast-math -I\"$(SRCROOT)/../../../ucrtmath/include\""; }; };
 		F31000000000000000000003 /* ucrt_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = F31100000000000000000003; settings = {COMPILER_FLAGS = "-O2 -ffp-contract=off -fno-fast-math -I\"$(SRCROOT)/../../../ucrtmath/include\""; }; };
+		F46000000000000000000000 /* ucrt_ms_pow.c in Sources */ = {isa = PBXBuildFile; fileRef = F46100000000000000000000; settings = {COMPILER_FLAGS = "-O2 -ffp-contract=off -fno-fast-math"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		F31100000000000000000001 /* ucrt_powf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ../../../ucrtmath/src/powf.c; sourceTree = SOURCE_ROOT; };
 		F31100000000000000000002 /* ucrt_atan2f.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ../../../ucrtmath/src/atan2f.c; sourceTree = SOURCE_ROOT; };
 		F31100000000000000000003 /* ucrt_tables.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ../../../ucrtmath/src/tables.c; sourceTree = SOURCE_ROOT; };
+		F46100000000000000000000 /* ucrt_ms_pow.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ../../../ucrtmath/ms/pow.c; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F46000000000000000000000 /* ucrt_ms_pow.c in Sources */,
 				F31000000000000000000003 /* ucrt_tables.c in Sources */,
 				F31000000000000000000002 /* ucrt_atan2f.c in Sources */,
 				F31000000000000000000001 /* ucrt_powf.c in Sources */,

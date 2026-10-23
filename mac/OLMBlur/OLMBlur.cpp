@@ -1337,7 +1337,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 		if (bp->repeat > 1) decay = ucrt_powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1), UCRT_FMA);
 
 		for (A_long iter = 0; iter < bp->repeat; ++iter) {
-			double radius_d = (double)blur_amount * pow((double)decay, (double)iter);
+			double radius_d = (double)blur_amount * ucrt_pow((double)decay, (double)iter, UCRT_FMA);
 			A_long radius = (A_long)radius_d;
 			if (radius == 0) break;
 			float sigma = (float)radius_d / 3.0f;
