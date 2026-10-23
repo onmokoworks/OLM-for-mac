@@ -791,8 +791,9 @@ static std::vector<float> MakeSeed(
 		? (double)std::max(0.001f, (float)info.strength_multiplier)
 		: std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
 	const float fade_threshold = (float)info.fade_out;
+    // FUN_1811501b0 UCOMISS/JNE returns zero for both zero and unordered.
 	auto apply_fade = [&](float value) -> float {
-		if (value == 0.0f) return 0.0f;
+		if (value == 0.0f || (recovered_seed && std::isnan(value))) return 0.0f;
 		if (fade_threshold < value) return recovered_seed ? ucrt_powf(value, (float)exponent, UCRT_FMA) : (float)std::pow(value, exponent);
 		const float normalized = value / fade_threshold;
 		return recovered_seed ? ucrt_powf(normalized, 2.0f, UCRT_FMA) * ucrt_powf(fade_threshold, (float)exponent, UCRT_FMA)
@@ -811,7 +812,11 @@ static std::vector<float> MakeSeed(
 					: p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
 				v = apply_fade(luma) * p.a;
 			} else if (info.channel == 4) {
-				v = apply_fade(std::max({p.r, p.g, p.b})) * p.a;
+				// Original COMISS/CMOVB selects the second operand when
+                // unordered, and compares G/B before R/the selected value.
+                const float gb = p.g >= p.b ? p.g : p.b;
+                const float maximum = p.r >= gb ? p.r : gb;
+                v = apply_fade(recovered_seed ? maximum : std::max({p.r, p.g, p.b})) * p.a;
 			} else {
 				v = std::max({
 					(float)std::pow(p.r, exponent),
@@ -2095,11 +2100,19 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
     const bool filtered_alpha = info.channel == 1 &&
         (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
          IsSmartApproximationTuple(info, format, input->width, input->height));
+    // C55: finite scalar and color sources retain the existing Gaussian tuple
+    // limits; paired public output and independent HDR/signed matrices are exact.
+    const bool gaussian_source =
+        IsSmartDirectionalGaussianTuple(info, format, input->width, input->height);
+    // C55: restored unordered fade/max branches cover finite scalar resize
+    // overflow through the existing box and Gaussian approximation tuple.
+    const bool approximated_scalar = (info.channel == 2 || info.channel == 4) &&
+        IsSmartApproximationTuple(info, format, input->width, input->height);
     const bool approximated_color = (info.channel == 3 || info.channel == 5 || info.channel == 6) &&
         (info.blur_mode == 1 || info.blur_mode == 2) &&
         IsSmartApproximationTuple(info, format, input->width, input->height);
     if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
-          IsSmartColorBoxTuple(info, format) || filtered_alpha || approximated_color)) return false;
+          IsSmartColorBoxTuple(info, format) || filtered_alpha || gaussian_source || approximated_scalar || approximated_color)) return false;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);

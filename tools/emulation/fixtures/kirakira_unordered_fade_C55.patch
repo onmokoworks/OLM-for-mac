@@ -1,0 +1,5 @@
+--- before.cpp
++++ candidate.cpp
+@@ -795 +795 @@
+-		if (value == 0.0f) return 0.0f;
++		if (value == 0.0f || (recovered_seed && std::isnan(value))) return 0.0f;
