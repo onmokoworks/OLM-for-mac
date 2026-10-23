@@ -1,0 +1,17 @@
+{
+  "classification": {
+    "raw_byte_exact": 100,
+    "pixel_differences": 0,
+    "refusals": 0,
+    "harness_errors": 0,
+    "timeouts": 0
+  },
+  "depth_counts": {
+    "8": 31,
+    "16": 34,
+    "32": 35
+  },
+  "first_mismatch": null,
+  "input_equal_output_cases": 4,
+  "fuzz_report_sha256": "73df0fefc08778693c356efe6eb9477f50d019016e07f48233744ed50db14ec0"
+}
