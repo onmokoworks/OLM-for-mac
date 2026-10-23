@@ -43,3 +43,4 @@ C37-dg-smart-r7
 F40-stale-bindings-adjudication
 F41-relax-work-budget
 F42-ucrtmath-ms-float
+F43-ucrtmath-double
