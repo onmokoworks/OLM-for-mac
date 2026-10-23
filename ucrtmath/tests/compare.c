@@ -18,7 +18,7 @@ int main(int argc,char **argv){
   for(size_t i=0;i<n;i++)for(int m=0;m<2;m++){
    float a,b,z;memcpy(&a,&rows[i][0],4);memcpy(&b,&rows[i][1],4);
    base=images[m];size=sizes[m];
-   z=!strcmp(argv[2],"expf")?((unary)fn[m])(a):((binary)fn[m])(a,b);
+   z=(strcmp(argv[2],"atan2f") && strcmp(argv[2],"powf"))?((unary)fn[m])(a):((binary)fn[m])(a,b);
    uint32_t u;memcpy(&u,&z,4);
    if(u!=rows[i][2+m]){if(bad[m]<32)fprintf(stderr,"mode %d: %08x %08x oracle %08x native %08x\n",m,rows[i][0],rows[i][1],u,rows[i][2+m]);if(!bad[m]){first[m][0]=rows[i][0];first[m][1]=rows[i][1];first[m][2]=u;first[m][3]=rows[i][2+m];}bad[m]++;}
   }count+=n;

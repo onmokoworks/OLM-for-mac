@@ -1,0 +1,38 @@
+{
+  "platform": "macOS-15.7.2-arm64-arm-64bit-Mach-O",
+  "compiler": [
+    "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+    "Target: arm64-apple-darwin24.6.0",
+    "Thread model: posix",
+    "InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+  ],
+  "source_sha256": {
+    "ucrtmath/build.sh": "1330e3f358c9df24dff0399b64c1c42a8b4f7aef6dee8f0e64385db478727f6b",
+    "ucrtmath/tests/build.sh": "da9764defbd0c77d34b23077a4bff6144a5e6f98c71cad76a398a2e80f80ece7",
+    "ucrtmath/tests/targeted.py": "edd45f24bb3747eb8f20b6d3f5adf1d9301f00bd0171923e776dd777b3855edb",
+    "ucrtmath/tests/native.c": "4717ea127ed068133d8ea076213ff612a7417971152dcf3a5aa6f8daca859196",
+    "ucrtmath/tests/compare.c": "94a0f42f7c0fbfd37a7884fbeb10209f8169b702cc6027989f6145c69cdf58cd",
+    "ucrtmath/include/ucrtmath.h": "f9bcc64889ad8a4c385872e7f3a4ae29d15c8f01886506102823cc317299d8e8",
+    "tools/ucrt_math_probe/rosetta/oracle.c": "6f7abbc223a2df9fa40c7d9b1f9c5f6b4ca00964050df57ac6a836f9f2513035",
+    "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+    "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+    "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+    "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+    "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+    "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+    "ucrtmath/ms/check.py": "eb285ff31ad243970b5e1200f80aac3f56a762df4850c93265da70b259b7e25c",
+    "ucrtmath/ms/check_harness.py": "095eae66632509301fc06f9c878ac4209b20334a50f1dec2c81fe4e810902608",
+    "ucrtmath/ms/float.c": "e4f3026414abda2bf413914635fc818fc54657343385c3c50c0c37d7090624b0",
+    "ucrtmath/ms/retain.py": "2c6530f50108d33b0e645b7d967230d6518ed70f075006e75ae3debd1bf29f10",
+    "ucrtmath/ms/tables.h": "520703045dc85d6e112b4aebd0ad6c509d5aefde85a69b13fc34711fd13aa93f"
+  },
+  "build_sha256": {
+    "native": "d40514f295b68b3d2061d909ae95a0ed2395db473773a5e0673c3317f4f7c043",
+    "compare": "bc0adc58319f1eb4dc465c711593402eb0b82164261a1703db408784e52de492",
+    "libucrtmath.a": "f39b3e965e71f8a1f831e39df2b5d3db0fb82c6cb60b173fd9132ff0480f93c8"
+  },
+  "dll_sha256": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+  "targets_sha256": "923965e838c3362c282b5cea5748b5cfb862db99624b6488f977470ab80387f6",
+  "full_input_order": "unsigned words 0 through 4294967295, each compared in modes 0 and 1",
+  "contract": "raw binary32 return bits; RN; gradual underflow; no errno/exception-flags claim"
+}

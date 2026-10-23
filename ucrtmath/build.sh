@@ -8,4 +8,5 @@ export TMPDIR=$(CDPATH= cd -- "$out" && pwd)
 for f in expf powf atan2f tables; do
  clang -arch "$arch" -std=c11 -O2 -ffp-contract=off -fno-fast-math -I"$src/include" -c "$src/src/$f.c" -o "$out/$f.o"
 done
-ar rcs "$out/libucrtmath.a" "$out/expf.o" "$out/powf.o" "$out/atan2f.o" "$out/tables.o"
+clang -arch "$arch" -std=c11 -O2 -ffp-contract=off -fno-fast-math -I"$src/include" -c "$src/ms/float.c" -o "$out/ms-float.o"
+ar rcs "$out/libucrtmath.a" "$out/expf.o" "$out/powf.o" "$out/atan2f.o" "$out/tables.o" "$out/ms-float.o"
