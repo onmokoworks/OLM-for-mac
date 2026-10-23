@@ -1,4 +1,4 @@
-// Pinned PE64 leaf loader; deliberately no Windows startup or OS emulation.
+// Pinned PE64 math loader: no Windows startup; narrow errno/FLS import stubs.
 #define _DARWIN_C_SOURCE
 #include <CommonCrypto/CommonDigest.h>
 #include <sys/mman.h>
@@ -26,6 +26,26 @@ static void fault(int sig,siginfo_t *si,void *context){
  _exit(128+sig);
 }
 __attribute__((noreturn)) static void import_abort(const char *name){fprintf(stderr,"IMPORT_ABORT %s function=%s a=%08x b=%08x\n",name,current,in_a,in_b);exit(86);}
+// Only the error-path imports observed/authorized for this pinned DLL.
+// ms_abi is essential: the PE caller supplies Windows shadow space/registers.
+static _Thread_local uint32_t last_error;
+static _Thread_local unsigned char fake_ptd[4096];
+static uint64_t stub_hits[3];
+__attribute__((ms_abi)) static uint32_t stub_GetLastError(void){stub_hits[0]++;return last_error;}
+__attribute__((ms_abi)) static void stub_SetLastError(uint32_t v){stub_hits[1]++;last_error=v;}
+__attribute__((ms_abi)) static void *stub_FlsGetValue(uint32_t index){
+ stub_hits[2]++;if(index==0)return NULL;if(index==1)return fake_ptd;
+ die("unexpected FLS index");return NULL;
+}
+static void report_stubs(void){fprintf(stderr,"STUB GetLastError=%llu SetLastError=%llu FlsGetValue=%llu\n",
+ (unsigned long long)stub_hits[0],(unsigned long long)stub_hits[1],(unsigned long long)stub_hits[2]);}
+static void *benign_import(const char *name){
+ const char *n=strchr(name,'!');if(!n)return NULL;n++;
+ if(!strcmp(n,"GetLastError"))return stub_GetLastError;
+ if(!strcmp(n,"SetLastError"))return stub_SetLastError;
+ if(!strcmp(n,"FlsGetValue"))return stub_FlsGetValue;
+ return NULL;
+}
 static void *export_named(uint32_t r,const char *name){
  uint8_t *d=at(r,40);uint32_t n=u32(d+24);
  for(uint32_t i=0;i<n;i++)if(!strcmp(at(u32(at(u32(d+32)+4*i,4)),1),name)){
@@ -56,16 +76,24 @@ static uint32_t load(const char *path){
    else snprintf(name,sizeof name,"%s!%s",(char*)at(u32(d+12),1),(char*)at((uint32_t)t+2,1));
    if(used+32>cap)die("too many imports");uint8_t *s=thunks+used;used+=32;
    s[0]=0x48;s[1]=0xbf;uint64_t v=(uintptr_t)strdup(name);memcpy(s+2,&v,8);s[10]=0x48;s[11]=0xb8;v=(uintptr_t)import_abort;memcpy(s+12,&v,8);s[20]=0xff;s[21]=0xe0;
-   v=(uintptr_t)s;memcpy(at(iat+i*8,8),&v,8);
+   void *benign=benign_import(name);v=(uintptr_t)(benign?benign:s);memcpy(at(iat+i*8,8),&v,8);
   }
  }
  if(mprotect(thunks,cap,PROT_READ|PROT_EXEC)||mprotect(base,size,PROT_READ|PROT_WRITE|PROT_EXEC))die("mprotect executable image");
+ // Startup-free FLS: global-state slot 0 contains the app-state index 0;
+ // per-thread CRT slot 1 points to a zeroed 0x3c8-byte state (errno +0x20).
+ *(uint32_t*)at(0x13a4f0,4)=0;*(uint32_t*)at(0x13a4f4,4)=1;
+ // __acrt_has_user_matherr decodes this callback with the security cookie.
+ // Encode NULL exactly as the omitted CRT startup would do.
+ memcpy(at(0x13bc30,8),at(0x13a480,8),8);
  uint32_t er=u32(opt+112);free(raw);return er;
 }
 typedef float (__attribute__((ms_abi)) *unary)(float);
 typedef float (__attribute__((ms_abi)) *binary)(float,float);
 typedef int (__attribute__((ms_abi)) *setter)(int);
+#ifndef ORACLE_EMBEDDED
 int main(int argc,char **argv){
+ atexit(report_stubs);
  if(argc!=4){fprintf(stderr,"usage: oracle DLL MODE FUNCTION < hex-pairs.txt > hex-results.txt\n");return 2;}
  struct sigaction sa={0};sa.sa_sigaction=fault;sa.sa_flags=SA_SIGINFO;sigaction(SIGSEGV,&sa,0);sigaction(SIGBUS,&sa,0);sigaction(SIGILL,&sa,0);
  uint32_t er=load(argv[1]);current=argv[3];int mode=atoi(argv[2]);if(mode!=0&&mode!=1)die("mode must be 0/1");
@@ -76,3 +104,5 @@ int main(int argc,char **argv){
  while(scanf("%x %x",&in_a,&in_b)==2){float a,b,z;uint32_t out;memcpy(&a,&in_a,4);memcpy(&b,&in_b,4);z=bin?((binary)fn)(a,b):((unary)fn)(a);memcpy(&out,&z,4);printf("%08x\n",out);fflush(stdout);}
  return ferror(stdin)||ferror(stdout)?2:0;
 }
+
+#endif

@@ -1,0 +1,5 @@
+input,ucrt_region,amd_region,ucrt_residual,amd_residual
+4c43326e,3,3,0x1.90ed8712804ffp-1,0x1.90ed8712804ffp-1
+4d123456,2,2,0x1.587934a09db9fp-2,0x1.587934a09db9fp-2
+7f7fffff,0,0,-0x1.191cfe681daf6p-1,-0x1.191cfe681daf7p-1
+6c678b0d,2,2,-0x1.1f527a09e3285p-1,-0x1.1f527a09e3285p-1

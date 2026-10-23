@@ -1,0 +1,16 @@
+[
+  {
+    "a": "3a1285ff",
+    "region": "small cubic: double 1/6 vs float32 1/6",
+    "ucrt0": "3a1285ff",
+    "amd_off": "3a1285fe",
+    "diagnostic_matches_both": true
+  },
+  {
+    "a": "bee5220e",
+    "region": "direct sine: degree 9 vs degree 7",
+    "ucrt0": "bedd8f93",
+    "amd_off": "bedd8f92",
+    "diagnostic_matches_both": true
+  }
+]

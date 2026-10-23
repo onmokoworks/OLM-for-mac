@@ -1,0 +1,117 @@
+{
+  "mpfr": "MPFR 4.2.2",
+  "precision": 200,
+  "passed": 10,
+  "cases": [
+    {
+      "function": "expf",
+      "a": "42c80000",
+      "b": "00000000",
+      "mode": 0,
+      "expected": "+infinity after binary32 round-to-nearest overflow or pole",
+      "bits": "7f800000",
+      "sign": 0,
+      "payload": "000000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "expf",
+      "a": "42c80000",
+      "b": "00000000",
+      "mode": 1,
+      "expected": "+infinity after binary32 round-to-nearest overflow or pole",
+      "bits": "7f800000",
+      "sign": 0,
+      "payload": "000000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "sinf",
+      "a": "7f800000",
+      "b": "00000000",
+      "mode": 0,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "sinf",
+      "a": "7f800000",
+      "b": "00000000",
+      "mode": 1,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "cosf",
+      "a": "7f800000",
+      "b": "00000000",
+      "mode": 0,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "cosf",
+      "a": "7f800000",
+      "b": "00000000",
+      "mode": 1,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "powf",
+      "a": "bf800000",
+      "b": "3f000000",
+      "mode": 0,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "powf",
+      "a": "bf800000",
+      "b": "3f000000",
+      "mode": 1,
+      "expected": "NaN (IEEE does not prescribe sign/payload)",
+      "bits": "ffc00000",
+      "sign": 1,
+      "payload": "400000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "powf",
+      "a": "00000000",
+      "b": "bf800000",
+      "mode": 0,
+      "expected": "+infinity after binary32 round-to-nearest overflow or pole",
+      "bits": "7f800000",
+      "sign": 0,
+      "payload": "000000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    },
+    {
+      "function": "powf",
+      "a": "00000000",
+      "b": "bf800000",
+      "mode": 1,
+      "expected": "+infinity after binary32 round-to-nearest overflow or pole",
+      "bits": "7f800000",
+      "sign": 0,
+      "payload": "000000",
+      "stub_hits": "STUB GetLastError=2 SetLastError=2 FlsGetValue=3"
+    }
+  ]
+}

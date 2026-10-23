@@ -1,0 +1,496 @@
+[
+  {
+    "function": "atan2f",
+    "line": 490,
+    "hex": [
+      "0x1.960176p-63",
+      "0x1.f88dp+80"
+    ],
+    "bits": [
+      "204b00bb",
+      "67fc4680"
+    ],
+    "outputs": {
+      "ucrt0": "00000034",
+      "ucrt1": "00000034",
+      "apple": "00000034",
+      "amd-off": "00000034",
+      "amd-fma": "00000034"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 491,
+    "hex": [
+      "-0x1.58a7ecp-118",
+      "0x1.58a7bep-123"
+    ],
+    "bits": [
+      "84ac53f6",
+      "022c53df"
+    ],
+    "outputs": {
+      "ucrt0": "bfc51030",
+      "ucrt1": "bfc51030",
+      "apple": "bfc51030",
+      "amd-off": "bfc51030",
+      "amd-fma": "bfc51030"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 582,
+    "hex": [
+      "0x1.fffe24p+59",
+      "0x1.000adcp+73"
+    ],
+    "bits": [
+      "5d7fff12",
+      "6400056e"
+    ],
+    "outputs": {
+      "ucrt0": "38fff437",
+      "ucrt1": "38fff437",
+      "apple": "38fff436",
+      "amd-off": "38fff437",
+      "amd-fma": "38fff437"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 583,
+    "hex": [
+      "-0x1.f9cf48p+49",
+      "0x1.f60598p+51"
+    ],
+    "bits": [
+      "d87ce7a4",
+      "597b02cc"
+    ],
+    "outputs": {
+      "ucrt0": "be7cace0",
+      "ucrt1": "be7cace0",
+      "apple": "be7cacdf",
+      "amd-off": "be7cace0",
+      "amd-fma": "be7cace0"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 661,
+    "hex": [
+      "0x1.a10104p+123",
+      "0x1.99f182p+125"
+    ],
+    "bits": [
+      "7d508082",
+      "7e4cf8c1"
+    ],
+    "outputs": {
+      "ucrt0": "3e7f00f4",
+      "ucrt1": "3e7f00f4",
+      "apple": "3e7f00f4",
+      "amd-off": "3e7f00f4",
+      "amd-fma": "3e7f00f4"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 662,
+    "hex": [
+      "0x1.a10104p+123",
+      "0x1.99f182p+125"
+    ],
+    "bits": [
+      "7d508082",
+      "7e4cf8c1"
+    ],
+    "outputs": {
+      "ucrt0": "3e7f00f4",
+      "ucrt1": "3e7f00f4",
+      "apple": "3e7f00f4",
+      "amd-off": "3e7f00f4",
+      "amd-fma": "3e7f00f4"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 749,
+    "hex": [
+      "-0x1.ce62cep-116",
+      "0x1.cbf9bp-113"
+    ],
+    "bits": [
+      "85e73167",
+      "0765fcd8"
+    ],
+    "outputs": {
+      "ucrt0": "bdfffffa",
+      "ucrt1": "bdfffffa",
+      "apple": "bdfffffb",
+      "amd-off": "bdfffffa",
+      "amd-fma": "bdfffffa"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 750,
+    "hex": [
+      "0x1.960176p-63",
+      "0x1.f88dp+80"
+    ],
+    "bits": [
+      "204b00bb",
+      "67fc4680"
+    ],
+    "outputs": {
+      "ucrt0": "00000034",
+      "ucrt1": "00000034",
+      "apple": "00000034",
+      "amd-off": "00000034",
+      "amd-fma": "00000034"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 833,
+    "hex": [
+      "0x1.fffe24p+59",
+      "0x1.000adcp+73"
+    ],
+    "bits": [
+      "5d7fff12",
+      "6400056e"
+    ],
+    "outputs": {
+      "ucrt0": "38fff437",
+      "ucrt1": "38fff437",
+      "apple": "38fff436",
+      "amd-off": "38fff437",
+      "amd-fma": "38fff437"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 834,
+    "hex": [
+      "0x1.a10104p+123",
+      "0x1.99f182p+125"
+    ],
+    "bits": [
+      "7d508082",
+      "7e4cf8c1"
+    ],
+    "outputs": {
+      "ucrt0": "3e7f00f4",
+      "ucrt1": "3e7f00f4",
+      "apple": "3e7f00f4",
+      "amd-off": "3e7f00f4",
+      "amd-fma": "3e7f00f4"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 847,
+    "hex": [
+      "-0x1.9be82ap-101",
+      "0x1.92cfb2p-101"
+    ],
+    "bits": [
+      "8d4df415",
+      "0d4967d9"
+    ],
+    "outputs": {
+      "ucrt0": "bf4beb79",
+      "ucrt1": "bf4beb79",
+      "apple": "bf4beb79",
+      "amd-off": "bf4beb79",
+      "amd-fma": "bf4beb79"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 923,
+    "hex": [
+      "-0x1.eda3fep-120",
+      "0x1.e3bfa8p-118"
+    ],
+    "bits": [
+      "83f6d1ff",
+      "04f1dfd4"
+    ],
+    "outputs": {
+      "ucrt0": "be7fc772",
+      "ucrt1": "be7fc772",
+      "apple": "be7fc772",
+      "amd-off": "be7fc772",
+      "amd-fma": "be7fc772"
+    }
+  },
+  {
+    "function": "atan2f",
+    "line": 924,
+    "hex": [
+      "-0x1.00f6f2p+44",
+      "0x1.ffe934p+46"
+    ],
+    "bits": [
+      "d5807b79",
+      "56fff49a"
+    ],
+    "outputs": {
+      "ucrt0": "bdffac3b",
+      "ucrt1": "bdffac3b",
+      "apple": "bdffac3b",
+      "amd-off": "bdffac3b",
+      "amd-fma": "bdffac3b"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 496,
+    "hex": [
+      "0x1.025736p+0",
+      "0x1.309f94p+13"
+    ],
+    "bits": [
+      "3f812b9b",
+      "46184fca"
+    ],
+    "outputs": {
+      "ucrt0": "7f7ffb22",
+      "ucrt1": "7f7ffb22",
+      "apple": "7f7ffb22",
+      "amd-off": "7f7ffb22",
+      "amd-fma": "7f7ffb22"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 497,
+    "hex": [
+      "0x1.fe7782p-1",
+      "-0x1.c361cap+14"
+    ],
+    "bits": [
+      "3f7f3bc1",
+      "c6e1b0e5"
+    ],
+    "outputs": {
+      "ucrt0": "7dfe026a",
+      "ucrt1": "7dfe026a",
+      "apple": "7dfe026a",
+      "amd-off": "7dfe026a",
+      "amd-fma": "7dfe026a"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 586,
+    "hex": [
+      "0x1.10fff4p+0",
+      "0x1.58fd76p+10"
+    ],
+    "bits": [
+      "3f887ffa",
+      "44ac7ebb"
+    ],
+    "outputs": {
+      "ucrt0": "7f7ff8b2",
+      "ucrt1": "7f7ff8b2",
+      "apple": "7f7ff8b2",
+      "amd-off": "7f7ff8b4",
+      "amd-fma": "7f7ff8b4"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 587,
+    "hex": [
+      "0x1.d6411cp-102",
+      "0x1.793482p+0"
+    ],
+    "bits": [
+      "0ceb208e",
+      "3fbc9a41"
+    ],
+    "outputs": {
+      "ucrt0": "00000001",
+      "ucrt1": "00000001",
+      "apple": "00000001",
+      "amd-off": "00000001",
+      "amd-fma": "00000001"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 665,
+    "hex": [
+      "0x1.343e4ep+0",
+      "0x1.af3c4p+8"
+    ],
+    "bits": [
+      "3f9a1f27",
+      "43d79e20"
+    ],
+    "outputs": {
+      "ucrt0": "793a0169",
+      "ucrt1": "793a0169",
+      "apple": "793a0169",
+      "amd-off": "793a0169",
+      "amd-fma": "793a0169"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 666,
+    "hex": [
+      "1.025736p+0",
+      "1.309f94p+13"
+    ],
+    "bits": [
+      "3f812b9b",
+      "46184fca"
+    ],
+    "outputs": {
+      "ucrt0": "7f7ffb22",
+      "ucrt1": "7f7ffb22",
+      "apple": "7f7ffb22",
+      "amd-off": "7f7ffb22",
+      "amd-fma": "7f7ffb22"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 754,
+    "hex": [
+      "0x1.95e42cp-27",
+      "0x1.369972p-14"
+    ],
+    "bits": [
+      "324af216",
+      "389b4cb9"
+    ],
+    "outputs": {
+      "ucrt0": "3f7fa779",
+      "ucrt1": "3f7fa779",
+      "apple": "3f7fa779",
+      "amd-off": "3f7fa779",
+      "amd-fma": "3f7fa779"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 755,
+    "hex": [
+      "0x1.ffff38p-1",
+      "0x1.bd5894p+23"
+    ],
+    "bits": [
+      "3f7fff9c",
+      "4b5eac4a"
+    ],
+    "outputs": {
+      "ucrt0": "00b67c6b",
+      "ucrt1": "00b67c6b",
+      "apple": "00b67c6b",
+      "amd-off": "00b67c6b",
+      "amd-fma": "00b67c6b"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 837,
+    "hex": [
+      "0x1.e7051p+41",
+      "-0x1.c6e076p+1"
+    ],
+    "bits": [
+      "54738288",
+      "c063703b"
+    ],
+    "outputs": {
+      "ucrt0": "00000000",
+      "ucrt1": "00000000",
+      "apple": "00000001",
+      "amd-off": "00000001",
+      "amd-fma": "00000001"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 838,
+    "hex": [
+      "0x1.343e4ep+0",
+      "0x1.af3c4p+8"
+    ],
+    "bits": [
+      "3f9a1f27",
+      "43d79e20"
+    ],
+    "outputs": {
+      "ucrt0": "793a0169",
+      "ucrt1": "793a0169",
+      "apple": "793a0169",
+      "amd-off": "793a0169",
+      "amd-fma": "793a0169"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 849,
+    "hex": [
+      "0x1.025736p+0",
+      "0x1.309f94p+13"
+    ],
+    "bits": [
+      "3f812b9b",
+      "46184fca"
+    ],
+    "outputs": {
+      "ucrt0": "7f7ffb22",
+      "ucrt1": "7f7ffb22",
+      "apple": "7f7ffb22",
+      "amd-off": "7f7ffb22",
+      "amd-fma": "7f7ffb22"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 927,
+    "hex": [
+      "0x1.6794b6p+0",
+      "0x1.f9f1bap+7"
+    ],
+    "bits": [
+      "3fb3ca5b",
+      "437cf8dd"
+    ],
+    "outputs": {
+      "ucrt0": "7d800000",
+      "ucrt1": "7d800000",
+      "apple": "7d800000",
+      "amd-off": "7d800000",
+      "amd-fma": "7d800000"
+    }
+  },
+  {
+    "function": "powf",
+    "line": 928,
+    "hex": [
+      "0x1.93000ap-10",
+      "0x1.affc98p+3"
+    ],
+    "bits": [
+      "3ac98005",
+      "4157fe4c"
+    ],
+    "outputs": {
+      "ucrt0": "0072ae46",
+      "ucrt1": "0072ae46",
+      "apple": "0072ae46",
+      "amd-off": "0072ae46",
+      "amd-fma": "0072ae46"
+    }
+  }
+]
