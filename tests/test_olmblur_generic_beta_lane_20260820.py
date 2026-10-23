@@ -31,19 +31,22 @@ class GenericBetaLaneTest(unittest.TestCase):
         self.assertIn("staging.commit()", lane)
         self.assertLess(lane.index("checkin_layer_pixels"), lane.index("staging.commit()"))
 
-    def test_geometry_memory_and_work_limits_are_explicit(self):
+    def test_geometry_representation_and_control_limits_are_explicit(self):
         body = re.search(
             r"static const char \*\s+GenericBetaTupleRefusal\(.*?\n\}", self.source, re.S
         ).group(0)
+        # F41b merge 7a0cd797d52c9564c1f89191488f095c73f11b02: AEX has no work/size cap.
         for contract in (
-            "width > 4096",
-            "height > 2160",
-            "640u * 1024u * 1024u",
+            "width <= 0 || height <= 0",
+            "usize_width > ((size_t)-1) / usize_height",
+            "pixels > std::vector<float>().max_size() / 4u",
             "raw.amount > 1000.0",
             "raw.repeat > 10",
-            "max_work=3600u*1000u*1000u",
+
         ):
             self.assertIn(contract, body)
+        for obsolete in ("width > 4096", "height > 2160", "max_work", "640u * 1024u * 1024u"):
+            self.assertNotIn(obsolete, body)
 
     def test_exact_small_fixtures_remain_owned_by_exact_lane(self):
         self.assertIn('if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small)', self.source)

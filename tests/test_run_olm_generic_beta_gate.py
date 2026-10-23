@@ -48,12 +48,27 @@ class GenericBetaGateTests(unittest.TestCase):
             empty = base / "test_empty.py"
             passing.write_text("def test_ok():\n    assert 2 + 2 == 4\n", encoding="utf-8")
             failing.write_text("def test_bad():\n    assert False\n", encoding="utf-8")
-            skipped.write_text("import pytest\n@pytest.mark.skipif(True, reason='bounded')\ndef test_skip(): pass\n", encoding="utf-8")
+            skipped.write_text("import pytest\n@pytest.mark.skipif(True, reason='bounded')\ndef test_skip(): raise AssertionError('must not execute')\n", encoding="utf-8")
             empty.write_text("def helper(): pass\n", encoding="utf-8")
             self.assertEqual(GATE.run_test_file(passing), 0)
             self.assertEqual(GATE.run_test_file(failing), 1)
             self.assertEqual(GATE.run_test_file(skipped), 77)
             self.assertEqual(GATE.run_test_file(empty), 1)
+
+    def test_real_pytest_skipif_marks_without_replacing_loaded_pytest(self):
+        # Exercise real-pytest's mark protocol even in the stdlib-only runner.
+        with tempfile.TemporaryDirectory(prefix="generic_gate_marks_") as raw:
+            path = Path(raw) / "test_marks.py"
+            path.write_text(
+                "ENABLED = True\ndef test_skip(): raise AssertionError('must skip')\n"
+                "test_skip.pytestmark = [MARK]\n", encoding="utf-8")
+            # The imported test's global name is provided by the source itself.
+            path.write_text("from types import SimpleNamespace\nMARK = "
+                            "SimpleNamespace(name='skipif', args=(False, 'ENABLED'), kwargs={})\n"
+                            + path.read_text(), encoding="utf-8")
+            self.assertEqual(GATE.run_test_file(path), 77)
+            path.write_text(path.read_text().replace("ENABLED = True", "ENABLED = False"), encoding="utf-8")
+            self.assertEqual(GATE.run_test_file(path), 1)
 
     def test_parameterized_module_test_fails_instead_of_silent_ignore(self):
         with tempfile.TemporaryDirectory(prefix="generic_gate_parameterized_") as raw:
