@@ -6256,7 +6256,13 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			err = extra->cb->checkout_layer_pixels(
 				in_data->effect_ref, OLMRADIALBLUR_NOISE_LAYER, &noise_world);
 			noise_checked_out = err == PF_Err_NONE;
-			if (!err && (!noise_world || !noise_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-noise-world");
+			// C57: the original accepts a zero-sized descriptor, then clears
+			// context+A8 on the dimension check. A null descriptor itself is
+			// dereferenced by the original and remains outside this contract.
+			if (!err && (!noise_world || (!noise_world->data &&
+				(noise_world->width != 0 || noise_world->height != 0))))
+				err = OLM_RADIAL_REFUSAL("smartrender-noise-world");
+			if (!err && !noise_world->data) noise_world = nullptr;
 		}
 		if (!err) {
 			err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
@@ -6297,6 +6303,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (RequiresNoiseLayer(info) != requires_noise_layer) {
 				err = OLM_RADIAL_REFUSAL("smartrender-noise-requirement");
 			}
+			// With an empty checked-out Layer the original never reads Noise
+			// Variation: its span allocation is left unwritten. Reuse C46's
+			// deterministic zero-span contract, preserving the size/fade plane.
+			if (!err && requires_noise_layer && !noise_world)
+				info.noise_variation = 0.0;
 			if (!err) {
 				PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 				PF_PixelFormat noise_format = PF_PixelFormat_INVALID;

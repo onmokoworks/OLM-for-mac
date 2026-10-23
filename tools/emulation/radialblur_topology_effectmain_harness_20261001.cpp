@@ -5,6 +5,7 @@
 #include <string>
 
 static PF_EffectWorld *g_input, *g_output;
+static PF_EffectWorld g_empty_noise{};
 static PF_ParamDef g_defs[OLMRADIALBLUR_NUM_PARAMS];
 static PF_PixelFormat g_format;
 static int g_param_out, g_param_in, g_pixel_out, g_pixel_in, g_pre, g_acquire, g_release;
@@ -22,15 +23,17 @@ static PF_Err checkout(PF_ProgPtr, A_long slot, A_long, A_long, A_u_long, PF_Par
 static PF_Err checkin(PF_ProgPtr,PF_ParamDef*) { ++g_param_in; return 0; }
 static PF_Err pre(PF_ProgPtr,PF_ParamIndex slot,A_long id,const PF_RenderRequest *request,
                   A_long,A_long,A_u_long,PF_CheckoutResult *result) {
+    if(slot==OLMRADIALBLUR_NOISE_LAYER && id==slot) { ++g_pre; *result={}; return 0; }
     if(slot||id||!request->preserve_rgb_of_zero_alpha||request->rect.left||request->rect.top||
        request->rect.right!=g_input->width||request->rect.bottom!=g_input->height) return 710;
     ++g_pre; *result={};result->result_rect={0,0,g_input->width,g_input->height};
     result->max_result_rect=result->result_rect;result->ref_width=g_input->width;result->ref_height=g_input->height;return 0;
 }
 static PF_Err pixels(PF_ProgPtr,A_long slot,PF_EffectWorld **v) {
+    if(slot==OLMRADIALBLUR_NOISE_LAYER) { ++g_pixel_out; *v=&g_empty_noise; return 0; }
     if(slot)return 711; ++g_pixel_out; *v=g_input; return 0;
 }
-static PF_Err pixels_in(PF_ProgPtr,A_long slot) { if(slot)return 712; ++g_pixel_in;return 0; }
+static PF_Err pixels_in(PF_ProgPtr,A_long slot) { if(slot && slot!=OLMRADIALBLUR_NOISE_LAYER)return 712; ++g_pixel_in;return 0; }
 static PF_Err output(PF_ProgPtr,PF_EffectWorld **v) { *v=g_output;return 0; }
 
 int main(int argc,char **argv) {
