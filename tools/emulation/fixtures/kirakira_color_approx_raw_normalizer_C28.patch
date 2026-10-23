@@ -1,0 +1,8 @@
+--- base.cpp
++++ candidate.cpp
+@@ -703 +703 @@
+-	return info.approximated_input && (info.channel == 1 || info.channel == 2 || info.channel == 4) &&
++	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
+@@ -740 +740 @@
+-    return !info.approximated_input &&
++    return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
