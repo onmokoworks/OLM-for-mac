@@ -1,0 +1,23 @@
+[
+  {
+    "function": "expf",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "5a64e2643d7d7e79d38517919fdef0c8b948bda62109eba8412c7cebbec3543a",
+    "invalid_exit": -6
+  },
+  {
+    "function": "atan2f",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "be1523920efc60d963bd6872908591468c2dff6642346b0ce38d6c133ec8a978",
+    "invalid_exit": -6
+  },
+  {
+    "function": "powf",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "bac690c25b52e6cce13e42fe52eef02b3567a716e1daf6a2566a7d1ea799199d",
+    "invalid_exit": -6
+  }
+]

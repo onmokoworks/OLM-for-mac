@@ -1,0 +1,31 @@
+core/olmblur_worker_orchestration.cpp:73:        decay = std::pow(3.0f / params.blur_amount,
+core/olmblur_worker_orchestration.cpp:80:                                    std::pow(static_cast<double>(decay),
+core/olmblur_worker16_nonlegacy.cpp:90:        decay = std::pow(3.0f / params.blur_amount,
+core/olmblur_worker16_nonlegacy.cpp:97:                                    std::pow(static_cast<double>(decay),
+core/olmblur_worker32_nonlegacy.cpp:65:        decay = std::pow(3.0f / params.blur_amount,
+core/olmblur_worker32_nonlegacy.cpp:72:                                    std::pow(static_cast<double>(decay),
+mac/OLMKiraKira/OLMKiraKira.cpp:752:            seed[i*4] = std::pow(pixels[i].r,exponent)*pixels[i].a;
+mac/OLMKiraKira/OLMKiraKira.cpp:753:            seed[i*4+1] = std::pow(pixels[i].g,exponent)*pixels[i].a;
+mac/OLMKiraKira/OLMKiraKira.cpp:754:            seed[i*4+2] = std::pow(pixels[i].b,exponent)*pixels[i].a;
+mac/OLMKiraKira/OLMKiraKira.cpp:767:		if (fade_threshold < value) return recovered_seed ? std::pow(value, (float)exponent) : (float)std::pow(value, exponent);
+mac/OLMKiraKira/OLMKiraKira.cpp:769:		return recovered_seed ? std::pow(normalized, 2.0f) * std::pow(fade_threshold, (float)exponent)
+mac/OLMKiraKira/OLMKiraKira.cpp:770:			: normalized * normalized * (float)std::pow(fade_threshold, exponent);
+mac/OLMKiraKira/OLMKiraKira.cpp:777:				v = recovered_seed ? std::pow(p.a, (float)exponent)
+mac/OLMKiraKira/OLMKiraKira.cpp:778:					: (float)std::pow(p.a, exponent);
+mac/OLMKiraKira/OLMKiraKira.cpp:788:					(float)std::pow(p.r, exponent),
+mac/OLMKiraKira/OLMKiraKira.cpp:789:					(float)std::pow(p.g, exponent),
+mac/OLMKiraKira/OLMKiraKira.cpp:790:					(float)std::pow(p.b, exponent)
+mac/OLMKiraKira/OLMKiraKira.cpp:1999:				!std::isfinite(std::pow(p.alpha, exponent))) return false;
+core/dblur_rowdriver.cpp:45:    volatile float r = static_cast<float>(std::pow(static_cast<double>(value),
+mac/OLMDistanceGradation/OLMDistanceGradation.cpp:1167:		double s = 1.0 - std::pow(t, 2.0);
+core/dblur_noise.h:97:            std::pow(static_cast<double>(fraction), 2.0));
+mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:883:		std::pow(vx * info.render_scale_x, 2) +
+mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:884:		std::pow(vy * info.render_scale_y, 2)));
+mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1231:		std::pow(vx * info.render_scale_x, 2) + std::pow(vy * info.render_scale_y, 2)));
+mac/OLMColorKey/OLMColorKey.cpp:868:		: std::pow(t, 0.3333300054073334f);
+mac/OLMColorKey/OLMColorKey.cpp:880:		: std::pow(x, 0.3333300054073334f) * 116.0f - 16.0f;
+mac/OLMColorKey/OLMColorKey.cpp:927:		float h = std::atan2(bb, aa) * 57.2957763671875f + 180.0f;
+mac/OLMRadialBlur/OLMRadialBlur.cpp:192:	// The AEX imports api-ms-win-crt-math atan2f and passes scalar floats.
+mac/OLMRadialBlur/OLMRadialBlur.cpp:193:	volatile float result = (float)std::atan2((double)y, (double)x);
+mac/OLMRadialBlur/OLMRadialBlur.cpp:5086:				// rounds atan2 once to float, performs the negative-angle add in
+mac/OLMRadialBlur/OLMRadialBlur.cpp:5114:				double angle = std::atan2(ey, ex);

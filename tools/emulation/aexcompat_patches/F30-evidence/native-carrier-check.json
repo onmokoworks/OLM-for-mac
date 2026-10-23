@@ -1,0 +1,18 @@
+{
+  "native-check": {
+    "errors": [
+      "error[E0432]: unresolved import `crate::backend::CustomUiRegistration`",
+      "error[E0599]: no method named `register_ui_callback_address` found for reference `&native_x64::GuestEngine<'static>` in the current scope",
+      "error[E0599]: no method named `custom_ui_registration` found for struct `native_x64::GuestEngine<'a>` in the current scope"
+    ],
+    "exit_code": 101
+  },
+  "native-parent-check": {
+    "errors": [
+      "error[E0432]: unresolved import `crate::backend::CustomUiRegistration`",
+      "error[E0599]: no method named `register_ui_callback_address` found for reference `&native_x64::GuestEngine<'static>` in the current scope",
+      "error[E0599]: no method named `custom_ui_registration` found for struct `native_x64::GuestEngine<'a>` in the current scope"
+    ],
+    "exit_code": 101
+  }
+}
