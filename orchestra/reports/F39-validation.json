@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+    "session",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "orchestra/state/F39-radial-fixture-oracle-recheck/168/input.raw",
+    "orchestra/state/F39-radial-fixture-oracle-recheck/watch-output.raw",
+    "9",
+    "7",
+    "24",
+    "--pixel-format",
+    "argb32f",
+    "--watch",
+    "function=0x4640,arg=rcx,size=16"
+  ],
+  "returncode": 2,
+  "result": "usage, no render",
+  "source_path": "/Users/onmk/.cache/olm-emu/src-F32/reference-guest/crates/aex-guest-worker/src/main.rs",
+  "source_sha256": "b01b0eb136c2a8b64ee3438c41b00ccc6d21338a32a6349c12095b81d5e0e19f",
+  "source_matches_F32_manifest": true,
+  "source_boundary": "render_png decodes with into_rgba8 then promotes; session does not accept --watch",
+  "fresh_final_verifier": "14 final fixtures verified against fresh F32 and Mac Smart; stage assertions are not re-adjudicated."
+}
