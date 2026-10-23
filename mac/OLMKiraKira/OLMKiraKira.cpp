@@ -712,7 +712,8 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
 	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
-		(info.blur_mode == 1 || info.blur_mode == 2);
+		(info.blur_mode == 1 || info.blur_mode == 2 ||
+         (info.blur_mode == 3 && info.highlight_radius == 0));
 }
 
 template <typename PixelT>
@@ -737,14 +738,15 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // same constructor, percentage materialization and aggregation. C28 adds
 // luminance/max and four-component directional Gaussian after pairing
 // their FLOAT32 seeds, rays and aggregation.
-// Keep unresolved Highlight and other resize owners outside this recovery.
+// C29 adds scalar Highlight and directional Gaussian approximation.
+// Keep the unresolved four-component Highlight owner outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool directional_gaussian = info.blur_mode == 3 &&
+	const bool gaussian_seed = info.blur_mode == 3 &&
 		(info.highlight_radius == 0 || info.channel == 1 || info.channel == 2 || info.channel == 4);
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
-		 (info.channel >= 1 && info.channel <= 6 && directional_gaussian));
+		 (info.channel >= 1 && info.channel <= 6 && gaussian_seed));
 }
 
 static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
@@ -1739,7 +1741,11 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.highlight_use_ramp, info.highlight_ramp);
 }
 
-// C22/C28: recovered scalar/four-component box resize retains full-resolution source composition.
+static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
+    PF_PixelFormat format, A_long width, A_long height);
+
+// C22/C28/C29: recovered scalar/four-component resize retains full-resolution
+// source composition for box and directional Gaussian owners.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)
@@ -1748,6 +1754,10 @@ static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     if (info.channel != 1 && !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
     OLMKiraKiraInfo full = info;
     full.approximated_input = FALSE;
+    // Use the full-frame dimensions and unscaled lengths for a conservative
+    // bound on the half-resolution Gaussian work and retained source storage.
+    if (info.blur_mode == 3)
+        return IsSmartDirectionalGaussianTuple(full, format, width, height);
     full.channel = 1;
     return IsAlphaBoxTuple(full, format, true, true, true);
 }
