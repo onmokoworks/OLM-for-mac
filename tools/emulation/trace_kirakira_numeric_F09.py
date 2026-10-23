@@ -25,7 +25,7 @@ from core import load_corpus, sha, raw_diff
 from run import default_worker, main_checkout
 
 
-def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
+def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False, ucrt_math=None):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
         UC_X86_REG_RSP, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
@@ -33,7 +33,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
     fw, fh = case['geometry']; fn = fw*fh
     w, h = (fw//2, fh//2) if p[4] else (fw, fh)
     n = w*h
-    stages = {}; geometry = []; row_filters = {}; resize_writers = []
+    stages = {}; geometry = []; row_filters = {}; column_filters = []; resize_writers = []
     original = base.AexLoader
 
     class Loader(original):
@@ -50,6 +50,21 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                     self.write_xmm_f32(0, powf(self.read_xmm_f32(0), self.read_xmm_f32(1)))
                     return 0
                 self.import_impls['powf'] = imported_powf
+            if ucrt_math is not None:
+                # F32 uses these independent UCRT implementations in FMA mode.
+                # Preserve every other import and all original numerical code.
+                import ctypes
+                library = ctypes.CDLL(str(ucrt_math))
+                for name, count in (('expf', 1), ('powf', 2), ('atan2f', 2)):
+                    function = getattr(library, 'ucrt_' + name)
+                    function.argtypes = [ctypes.c_float] * count + [ctypes.c_int]
+                    function.restype = ctypes.c_float
+                    def imported(uc, args, function=function, count=count):
+                        values = [self.read_xmm_f32(i) for i in range(count)]
+                        self.write_xmm_f32(0, function(*values, 1))
+                        return 0
+                    self.import_impls[name] = imported
+
 
         def add_code_hook(self, address, callback):
             # The base probe normally stops at Gaussian entry. Here execute
@@ -142,6 +157,15 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 row_filters[key] = row_filters.get(key, 0) + 1
             for row_entry in (0x18127f3c0, 0x1812d6690, 0x1812adaa0, 0x1812f9a70, 0x1813183d0):
                 super().add_code_hook(row_entry, row_filter_entry)
+            def column_filter_entry(ld, address, _size):
+                obj = ld.uc.reg_read(UC_X86_REG_RCX)
+                stack = ld.uc.reg_read(UC_X86_REG_RSP)
+                column_filters.append(dict(address=hex(address),
+                    kernel=struct.unpack('<i', ld.read_bytes(obj + 8, 4))[0],
+                    sum_count=struct.unpack('<i', ld.read_bytes(obj + 0x18, 4))[0],
+                    rows=struct.unpack('<i', ld.read_bytes(stack + 0x28, 4))[0],
+                    width=struct.unpack('<i', ld.read_bytes(stack + 0x30, 4))[0]))
+            super().add_code_hook(0x1812d1d70, column_filter_entry)
             ray_number = [-1]
             op_number = [0]
             def helper_entry(ld, _addr, _size):
@@ -256,7 +280,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
         result = base.run(SimpleNamespace(aex_path=aex,width=w,height=h,length=50,sigma=0,max_instructions=200_000_000))
     finally:
         base.AexLoader = original
-    return dict(stages=stages,geometry=geometry,row_filters=row_filters,resize_writers=resize_writers,status=result['status'],error=result.get('error'),
+    return dict(stages=stages,geometry=geometry,row_filters=row_filters,column_filters=column_filters,resize_writers=resize_writers,status=result['status'],error=result.get('error'),
                 crt=result.get('manual_crt_initializers_diagnostic'))
 
 
@@ -264,6 +288,7 @@ def traced_source(source_path, gate_off=True):
     source = source_path.read_text()
     source = source.replace('#include "OLMKiraKira.h"', '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
     source = source.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
+    source = source.replace('#include "../../ucrtmath/', '#include "'+str(ROOT/'ucrtmath')+'/')
     assert source.count('if (!exact_closure && !generic_beta) {') == 2
     if gate_off:
         source = source.replace('if (!exact_closure && !generic_beta) {','if (false) {')

@@ -13,6 +13,7 @@ import json
 import os
 import random
 import struct
+import subprocess
 from pathlib import Path
 import shutil
 import sys
@@ -27,6 +28,105 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family in ('approximation-gaussian', 'approximation-gaussian-boundary'):
+        boundary = family.endswith('-boundary')
+        geometries = ((4, 4), (4, 9), (9, 4)) if boundary else ((4, 4), (7, 11), (17, 13))
+        channels = (1, 3) if boundary else (1, 2, 3, 4, 5, 6)
+        lengths = (0, 1, 2, 3, 999, 1000) if boundary else (1, 2, 3, 14, 50)
+        for i, (depth, channel, geometry, length) in enumerate(itertools.product(
+                (8, 16, 32), channels, geometries, lengths)):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {4:1, 5:(1, 1.25, 7.5)[i%3], 6:(1, 97, 100, 537)[i%4],
+                      7:(0, 0.1, 1)[i%3], 8:(0, 1, 97, 100, 1703)[i%5],
+                      9:(0, 1, 97, 100)[i%4],
+                      10:length, 16:0 if boundary else length,
+                      22:0, 28:0 if boundary else length, 34:0}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family == 'approximation-gaussian-negative':
+        for i in range(6):
+            case = matrix_case(adapter, i, (3, 9) if i == 1 else (7, 11), 32, 1, 3, 2)
+            values = {4:1, 5:1, 6:97, 7:0.1, 8:100, 9:100, 10:3, 16:0, 22:0, 28:0, 34:0}
+            if i == 0: values[34] = 1
+            if i == 2: values[1] = 7
+            if i == 4: values[40] = -2147483648/65536
+            if i == 5: values[7] = 50
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            if i == 3: case['pixels'] = struct.pack('<f', 2) + case['pixels'][4:]
+            yield case
+        return
+    if family == 'nan-alpha-opacity':
+        for i, (mode, merge, glow, source) in enumerate(itertools.product(
+                (1, 2), (1, 2), (0, 1, 100, 10000), (0, 100))):
+            case = matrix_case(adapter, i, (13, 9), 32, merge, mode, 1)
+            values = {6:97, 8:glow, 9:source, 10:2, 16:7, 34:3}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            pixels = bytearray(case['pixels'])
+            for pixel in range(13*9):
+                struct.pack_into('<f', pixels, pixel*16, -0.5 if pixel%3 else 0.75)
+            case['pixels'] = bytes(pixels)
+            yield case
+        return
+    if family == 'nan-alpha-negative':
+        yield from (case for case in cases(adapter, 'invalid-input') if case['index'] != 0)
+        return
+    if family in ('nan-alpha', 'nan-alpha-lengths'):
+        powf = ctypes.CDLL(None).powf
+        powf.argtypes = (ctypes.c_float, ctypes.c_float)
+        powf.restype = ctypes.c_float
+        f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+        for case in cases(adapter, 'finite-alpha'):
+            params = {p['slot']: p['value'] for p in case['parameters']}
+            exponent = max(f32(0.001), f32(f32(params[6]) * f32(0.01)))
+            if any(math.isinf(powf(struct.unpack_from('<f', case['pixels'], i)[0], exponent))
+                   for i in range(0, len(case['pixels']), 16)):
+                continue
+            if family.endswith('-lengths'):
+                lengths = (1, 2, 3, 4, 5, 6, 7, 15, 50, 1000)
+                i = case['index']
+                values = {10:lengths[i%10], 16:lengths[(i+1)%10],
+                          34:(0, 1, 2, 3, 15, 50, 500)[i%7],
+                          40:(0, 1, 22, 90, -31, 359)[i%6]/65536}
+                for param in case['parameters']:
+                    if param['slot'] in values: param['value'] = values[param['slot']]
+                    if param['slot'] in (13, 19, 37): param['value'] = i%2
+            yield case
+        return
+    if family == 'gaussian-highlight-negative':
+        for i, (slot, value) in enumerate(((1, 7), (4, 1), (5, 0.5),
+                                           (7, 50.0), (40, -2147483648/65536))):
+            case = next(c for c in cases(adapter, 'gaussian-highlight-scalar')
+                        if c['depth'] == 32 and any(p['slot'] == 1 and p['value'] == 2 for p in c['parameters']))
+            case['index'] = i
+            for param in case['parameters']:
+                if param['slot'] == slot: param['value'] = value
+            yield case
+        return
+    if family == 'gaussian-highlight-boundary':
+        for i, (depth, geometry, radius) in enumerate(itertools.product(
+                (8, 16, 32), ((1, 1), (1, 17), (17, 1), (2, 3), (8, 6)), (1, 2, 4, 13))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, (1, 2, 4)[i%3])
+            values = {4:0, 5:1, 6:97, 7:0.1, 8:97, 9:83,
+                      10:0, 16:0, 22:0, 28:0, 34:radius}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family == 'gaussian-highlight-scalar':
+        for i, (depth, channel, geometry, radius) in enumerate(itertools.product(
+                (8, 16, 32), (1, 2, 4), ((7, 11), (13, 9)), (1, 2, 3, 4, 6, 13, 50, 500))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {4:0, 5:(1, 1.25, 7.5)[i%3], 6:(1, 97, 100, 250)[i%4],
+                      7:(0, 0.001, 0.1)[i%3], 8:97, 9:83,
+                      10:3 if i%2 else 0, 16:0, 22:0, 28:0, 34:radius}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
     if family == 'approximation-color-highlight':
         for i, (depth, mode, channel, radius) in enumerate(itertools.product(
                 (8, 16, 32), (1, 2), (3, 5, 6), (1, 2, 3, 15, 50, 500))):
@@ -356,10 +456,11 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
+    p.add_argument('--ucrt-math', action='store_true', help='Bind trace expf/powf/atan2f to F32 UCRT FMA imports')
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--require-refusal', action='store_true')
     p.add_argument('--expect-finite-domain', action='store_true')
@@ -389,6 +490,14 @@ def main():
             (scratch / 'build').mkdir()
             adapter = adapter_class(args.source, args.gate_off)(options)
             adapter.binary, _ = adapter.build(scratch / 'build', deadline)
+        ucrt_math = None
+        if args.ucrt_math:
+            ucrt_math = scratch / 'trace-ucrt.dylib'
+            objects = sorted((scratch / 'build' / 'ucrtmath').glob('*.o'))
+            assert len(objects) == 4
+            subprocess.run(['clang', '-dynamiclib', *map(str, objects), '-o', str(ucrt_math)],
+                           check=True, capture_output=True)
+            report['trace_powf'] = 'independent UCRT expf/powf/atan2f FMA, matching F32'
         directory = scratch / 'case'
         directory.mkdir(exist_ok=True)
         selected = cases(adapter, args.family)
@@ -407,13 +516,14 @@ def main():
                        reference_sha256=sha(reference))
             report['rows'].append(row)
             if args.trace_index is not None:
-                original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
+                original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True, ucrt_math=ucrt_math)
                 row['original_trace_status'] = original['status']
                 row['original_trace_error'] = original.get('error')
                 if 'output' not in original['stages']:
                     save()
                     raise RuntimeError('Original trace has no output: ' + str(original.get('error')))
                 row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
+                row['aex_column_filters'] = original.get('column_filters', [])
                 row['aex_resize_writers'] = original.get('resize_writers', [])
                 row['aex_normalizers_f32_hex'] = original['stages'].get('normalizers')
                 stages = original['stages']

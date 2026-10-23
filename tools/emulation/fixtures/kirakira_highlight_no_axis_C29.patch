@@ -1,0 +1,20 @@
+--- kirakira_highlight_gaussian.h
++++ kirakira_highlight_no_axis.h
+@@ -43,9 +43,6 @@
+     std::vector<float> rows(seed.size()), output(seed.size());
+     for (int y = 0; y < height; ++y) {
+         for (int x = 0; x < width; ++x) {
+-            // GaussianBlur collapses singleton dimensions to a one-tap
+-            // identity before creating the separable filters.
+-            if (width == 1) { rows[y] = seed[y]; continue; }
+             const auto at = [&](int dx) { return seed[y * width + reflect(x + dx, width)]; };
+             float value;
+             if (radius == 1) {
+@@ -68,7 +65,6 @@
+     }
+     for (int y = 0; y < height; ++y) {
+         for (int x = 0; x < width; ++x) {
+-            if (height == 1) { output[x] = rows[x]; continue; }
+             float value = rows[y * width + x] * kernel[radius];
+             for (int k = 1; k <= radius; ++k) {
+                 const float pair = rows[reflect(y - k, height) * width + x] +

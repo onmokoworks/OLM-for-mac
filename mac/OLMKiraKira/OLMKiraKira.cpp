@@ -5,6 +5,7 @@
 #pragma clang fp contract(off)
 #endif
 #include "../../core/kirakira_gaussian.h"
+#include "../../core/kirakira_highlight_gaussian.h"
 #include "../../core/kirakira_highlight.h"
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
@@ -461,7 +462,14 @@ static std::vector<float> DirectionBoxBlur(
 	const A_long right = length - left - 1;
 	for (A_long pass = 0; pass < passes; ++pass) {
 		std::fill(dst.begin(), dst.end(), 0.0f);
+        // The original height-one ColumnSum is called by FilterEngine in
+        // four-row batches. Its sumCount stays zero, so each call clears SUM.
+        // Finite rows cancel to zero; NaNs persist only inside that batch.
+        constexpr A_long column_batch_rows = 4;
+        std::vector<double> column_sum(width, 0.0);
 		for (A_long y = 0; y < height; ++y) {
+            if (y % column_batch_rows == 0)
+                std::fill(column_sum.begin(), column_sum.end(), 0.0);
 			// C07: original 18127f3c0 RowSum<float,double> order.
 			if (recovered_scalar_box && dx == 1 && dy == 0) {
 				double sum = 0.0;
@@ -481,7 +489,9 @@ static std::vector<float> DirectionBoxBlur(
 							sum += (double)src[(size_t)y * width + sx];
 						}
 					}
-					dst[(size_t)y * width + x] = (float)(sum * scale);
+                    const double total = column_sum[x] + sum;
+                    dst[(size_t)y * width + x] = (float)(total * scale);
+                    column_sum[x] = total - sum;
 					if (x + 1 < width && length != 3 && length != 5) {
 						const A_long incoming = Reflect101Index((int)(x + right + 1), (int)width);
 						const A_long outgoing = Reflect101Index((int)(x - left), (int)width);
@@ -702,7 +712,8 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
 	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
-		(info.blur_mode == 1 || info.blur_mode == 2);
+		(info.blur_mode == 1 || info.blur_mode == 2 ||
+         (info.blur_mode == 3 && info.highlight_radius == 0));
 }
 
 template <typename PixelT>
@@ -727,13 +738,15 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // same constructor, percentage materialization and aggregation. C28 adds
 // luminance/max and four-component directional Gaussian after pairing
 // their FLOAT32 seeds, rays and aggregation.
-// Keep unresolved Highlight and other resize owners outside this recovery.
+// C29 adds scalar Highlight and directional Gaussian approximation.
+// Keep the unresolved four-component Highlight owner outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
+	const bool gaussian_seed = info.blur_mode == 3 &&
+		(info.highlight_radius == 0 || info.channel == 1 || info.channel == 2 || info.channel == 4);
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
-		 (info.channel >= 1 && info.channel <= 6 && directional_gaussian));
+		 (info.channel >= 1 && info.channel <= 6 && gaussian_seed));
 }
 
 static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
@@ -874,7 +887,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
             return result;
         }
         return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			(info.channel == 1 || info.channel == 2 || info.channel == 4) && info.highlight_radius == 0 &&
+			(info.channel == 1 || info.channel == 2 || info.channel == 4) &&
 				(info.strength_multiplier == 1.0 || UsesRecoveredSeedPipeline(info)),
 			UsesRecoveredSeedPipeline(info));
 	};
@@ -906,6 +919,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
                 seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
         }
 	}
+
+    if (highlight_radius > 0 && info.blur_mode == 3 && !color_owner &&
+        (info.channel == 1 || info.channel == 2 || info.channel == 4)) {
+        highlight = olm::kirakira::highlight_gaussian(
+            seed, work_width, work_height, highlight_radius);
+    }
 
 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
 	// trailing argument of both aggregation vtable calls. Natural exported
@@ -1722,7 +1741,11 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.highlight_use_ramp, info.highlight_ramp);
 }
 
-// C22/C28: recovered scalar/four-component box resize retains full-resolution source composition.
+static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
+    PF_PixelFormat format, A_long width, A_long height);
+
+// C22/C28/C29: recovered scalar/four-component resize retains full-resolution
+// source composition for box and directional Gaussian owners.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)
@@ -1731,6 +1754,10 @@ static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     if (info.channel != 1 && !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
     OLMKiraKiraInfo full = info;
     full.approximated_input = FALSE;
+    // Use the full-frame dimensions and unscaled lengths for a conservative
+    // bound on the half-resolution Gaussian work and retained source storage.
+    if (info.blur_mode == 3)
+        return IsSmartDirectionalGaussianTuple(full, format, width, height);
     full.channel = 1;
     return IsAlphaBoxTuple(full, format, true, true, true);
 }
@@ -1759,9 +1786,10 @@ static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat for
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 	PF_PixelFormat format, A_long width, A_long height)
 {
-	// The directional Mode-3 operation is independent of the Highlight branch,
-	// whose two-dimensional Gaussian is not implemented here.
-	if (info.blur_mode != 3 || info.highlight_radius != 0 ||
+	// Scalar Highlight shares the recovered constructor and adds a separable
+	// two-dimensional Gaussian. Four-component Highlight remains separate.
+	if (info.blur_mode != 3 ||
+        (info.highlight_radius != 0 && info.channel != 1 && info.channel != 2 && info.channel != 4) ||
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
@@ -1802,6 +1830,18 @@ static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 		largest_workspace = std::max(largest_workspace, pixels);
 		largest_kernel = std::max(largest_kernel, taps);
 	}
+    if (info.highlight_radius > 0) {
+        const uint64_t radius = (uint64_t)info.highlight_radius;
+        const uint64_t taps = radius * 2u + 1u;
+        const uint64_t extent = (uint64_t)std::max<A_long>(1, std::min(width, height) - 1);
+        const uint64_t folds = std::max<uint64_t>(1, (radius + extent - 1u) / extent);
+        uint64_t filter_work = 0;
+        if (!KiraCheckedMultiply(frame_pixels, taps * 2u, &filter_work) ||
+            !KiraCheckedMultiply(filter_work, folds, &filter_work) ||
+            !KiraCheckedAdd(work, filter_work, &work)) return false;
+        largest_workspace = std::max(largest_workspace, frame_pixels);
+        largest_kernel = std::max(largest_kernel, taps);
+    }
 	// Conservative peak: all retained frame planes plus the largest active
 	// helper's three float workspaces and its float/double kernel storage.
 	uint64_t bytes = frame_pixels * 92u, workspace_bytes = 0, kernel_bytes = 0;
@@ -1997,12 +2037,13 @@ static bool GenericBetaInputIsFiniteSDR(
 }
 
 // Smart's recovered Alpha box pipeline accepts finite floating source
-// colors beyond SDR when its scalar powf seed remains finite. C13 also pairs
-// signed seeds through the original warp/RowSum/aggregation operations.
-// Negative alpha with a fractional exponent and powf overflow still produce
-// NaN/Inf filtering families outside this recovery. Admission tests the
-// constructor's domain, never a final-output value.
-static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
+// colors beyond SDR. C13 pairs finite signed seeds through the original
+// warp/RowSum/aggregation operations.
+// C29 recovers ColumnSum's per-call state for canonical NaN seeds from
+// negative alpha and fractional exponents. Source samples must stay finite;
+// powf overflow (infinite seeds) remains outside this admission. Validation
+// tests the constructor's domain, never a final-output value.
+static bool SmartAlphaBoxInputHasSupportedSeed(const PF_EffectWorld *input,
 	PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
 	if (!input || format != PF_PixelFormat_ARGB128 ||
@@ -2013,7 +2054,7 @@ static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
 			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
 			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
 				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
-				!std::isfinite(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
+				std::isinf(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
 		}
 	}
 	return true;
@@ -2857,7 +2898,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
+				 SmartAlphaBoxInputHasSupportedSeed(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
