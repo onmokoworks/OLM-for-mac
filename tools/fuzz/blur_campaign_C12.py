@@ -7,6 +7,7 @@ without changing the worktree. Sanitizers abort on the first finding per case.
 """
 import argparse
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,6 +23,8 @@ def main():
     parser.add_argument('--blur-small-off', action='store_true')
     parser.add_argument('--blur-sanitize', action='store_true')
     parser.add_argument('--blur-source-revision')
+    parser.add_argument('--blur-native-expf-depth', type=int, choices=(16, 32))
+    parser.add_argument('--blur-expf-legacy', action='store_true')
     options, remaining = parser.parse_known_args()
     original = olmblur.SOURCE
 
@@ -45,6 +48,14 @@ def main():
                 copy = core/path.name; copy.unlink()
                 copy.write_bytes(subprocess.check_output(['git','show',options.blur_source_revision+':core/'+path.name]))
         olmblur.CORES = [core/path.name for path in olmblur.CORES]
+        if options.blur_native_expf_depth:
+            lane = 'legacy' if options.blur_expf_legacy else 'nonlegacy'
+            path = core/f'olmblur_worker{options.blur_native_expf_depth}_{lane}.cpp'
+            text, count = re.subn(r'static_cast<float>\(\s*std::exp\(static_cast<double>\(exponent\)\)\)',
+                                 'std::exp(exponent)', path.read_text())
+            assert count == 1
+            path.unlink()  # Never write through the production-source symlink.
+            path.write_text(text)
         for name in ('OLMBlur.h','OLMBlur_Strings.cpp','OLMBlur_Strings.h'):
             shutil.copyfile(original.with_name(name),target/name)
         olmblur.SOURCE = target/'OLMBlur.cpp'

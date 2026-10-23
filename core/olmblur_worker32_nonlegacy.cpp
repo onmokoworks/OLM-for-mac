@@ -83,8 +83,9 @@ void render_nonlegacy(const float* source_argb, float* destination_argb,
         for (std::size_t k = 0; k <= radius; ++k) {
             const float exponent =
                 -static_cast<float>(k * k) / denominator;
-            weights[k] = static_cast<float>(
-                std::exp(static_cast<double>(exponent)));
+            // The original coefficient builder calls binary32 expf. A
+            // binary64 exp followed by rounding differs at repeated radii.
+            weights[k] = std::exp(exponent);
         }
         if (params.bias_direction == 1) {
             horizontal(flags.data(), plane_a.data(), plane_b.data(), weights.data(), width, height, radius);
