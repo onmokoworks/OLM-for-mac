@@ -1,0 +1,163 @@
+{
+  "schema": "olm.radial.F32-final-fixture/1",
+  "command_index": 157,
+  "geometry": [
+    9,
+    7
+  ],
+  "depth": 32,
+  "controls": {
+    "Blur Type": 2,
+    "Center": [
+      4.0,
+      3.0
+    ],
+    "Outer Strength": 5,
+    "Outer Offset Mode": 1,
+    "Outer Offset": 0,
+    "Outer Edge Fade": 0,
+    "Inner Strength": 0,
+    "Inner Offset Mode": 1,
+    "Inner Offset": 0,
+    "Inner Edge Fade": 0,
+    "Repeat Border": 1,
+    "Ratio": 1,
+    "Angle": 0,
+    "Quality": 5.0,
+    "Brightness Gain": 1.0,
+    "Size Variation": 0,
+    "Noise Variation": 25,
+    "Noise Type": 1,
+    "Seed": 1,
+    "Noise Offset": 0.0,
+    "Thickness": 10.0,
+    "GPU Rendering": 100
+  },
+  "parameters": [
+    {
+      "slot": 1,
+      "kind": "u",
+      "value": 2
+    },
+    {
+      "slot": 2,
+      "kind": "p",
+      "value": [
+        4.0,
+        3.0
+      ]
+    },
+    {
+      "slot": 4,
+      "kind": "i",
+      "value": 5
+    },
+    {
+      "slot": 5,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 6,
+      "kind": "i",
+      "value": 0
+    },
+    {
+      "slot": 7,
+      "kind": "i",
+      "value": 0
+    },
+    {
+      "slot": 10,
+      "kind": "i",
+      "value": 0
+    },
+    {
+      "slot": 11,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 12,
+      "kind": "i",
+      "value": 0
+    },
+    {
+      "slot": 13,
+      "kind": "i",
+      "value": 0
+    },
+    {
+      "slot": 15,
+      "kind": "b",
+      "value": 1
+    },
+    {
+      "slot": 17,
+      "kind": "s",
+      "value": 1
+    },
+    {
+      "slot": 18,
+      "kind": "a",
+      "value": 0.0
+    },
+    {
+      "slot": 20,
+      "kind": "s",
+      "value": 5.0
+    },
+    {
+      "slot": 21,
+      "kind": "s",
+      "value": 1.0
+    },
+    {
+      "slot": 22,
+      "kind": "s",
+      "value": 0
+    },
+    {
+      "slot": 24,
+      "kind": "s",
+      "value": 25
+    },
+    {
+      "slot": 25,
+      "kind": "u",
+      "value": 1
+    },
+    {
+      "slot": 27,
+      "kind": "i",
+      "value": 1
+    },
+    {
+      "slot": 28,
+      "kind": "a",
+      "value": 0.0
+    },
+    {
+      "slot": 29,
+      "kind": "s",
+      "value": 10.0
+    }
+  ],
+  "source_sha256": "cf0b33ee05f01f3c75a62117e1ea2e69ae420bbbc1d5b6a2fa15794449da6528",
+  "output_sha256": "ee66e1a45fe673b8c236b80c774046d9d3113aa2cd4699250e10880644ca97a9",
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+  "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+  "route": "original AEX public Smart",
+  "rowbytes": 144,
+  "legacy_padded_output_sha256": "eaca6d098caceec39f577743a885ce042349506627c1f2557c1220800e107cb8",
+  "superseded_final_outputs": [],
+  "superseded_reports": [
+    "refs/conformance/olmradialblur_rotation_pf32_strength5_noise_type1_actual_aex_20260810.json"
+  ],
+  "candidate_revision": "3781f6320be08bb475dbbc39d2cb192808ce7c40",
+  "candidate_source_sha256": "cd59c5834462004dc29c81fb0e75f62a7b270e395c31a21a6d74320d7e4c444b",
+  "scope": "F36 first failing witness only; packed visible final pixels. Legacy full-plane assertions remain active. Provisional until raw typed F32 intermediate capture.",
+  "regenerate": "python3 -B orchestra/reports/F39-recheck.py 157; python3 -B orchestra/reports/F39-package-evidence.py"
+}
