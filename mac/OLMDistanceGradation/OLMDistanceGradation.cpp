@@ -518,11 +518,13 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool sma
 // cvSmooth mode 1 (CV_BLUR) used by Constant + Blur is a normalized box
 // filter with replicated borders. Keep it separate from the Gaussian path
 // used by the other interpolation modes.
-static void box_blur_separable(float *mat, long w, long h, int ksize)
+static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false)
 {
 	if (ksize <= 1) return;
 	const int half = ksize / 2;
-	const float area = (float)(ksize * ksize);
+	// Smart PF32: retain the integer kernel area in double precision.
+	// Odd kernels above 4095 lose area bits when rounded through float.
+	const double area = double_area ? (double)ksize * (double)ksize : (double)(float)(ksize * ksize);
 	std::vector<float> src(mat, mat + (size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		for (long x = 0; x < w; ++x) {
@@ -1160,7 +1162,8 @@ static void build_distance_field(
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) {
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
-				box_blur_separable(df.x.data(), w, h, ksize);
+				box_blur_separable(df.x.data(), w, h, ksize,
+				    p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat));
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
 				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
@@ -1801,7 +1804,7 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 		(p.interp_mode != INTERP_CONSTANT && p.interp_mode != INTERP_LINEAR &&
 		 p.interp_mode != INTERP_SPHERE) ||
 		p.blur_mode < BLUR_MODE_NO_SCALE || p.blur_mode > BLUR_MODE_MEDIAN ||
-		p.blur_size < 1 || p.blur_size > 500 ||
+		p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_NO_SCALE ? 4096 : 500) ||
 		p.in_out < IN_OUT_INSIDE || p.in_out > IN_OUT_BOTH ||
 		p.render_mode < RENDER_MODE_RGB || p.render_mode > RENDER_MODE_LAYER ||
 		p.inside_threshold < 0 || p.inside_threshold > 1000 ||

@@ -76,9 +76,9 @@ def main():
         manifest = read(EVIDENCE / 'manifest.json')
         for name, digest in manifest.items():
             assert hashlib.sha256((EVIDENCE / name).read_bytes()).hexdigest() == digest, name
-        paths = sorted(EVIDENCE.glob('seed*.json.gz'))
+        paths = sorted(EVIDENCE.glob('seed*.json.gz')) + sorted(EVIDENCE.glob('final-seed*.json.gz'))
     if not args.campaign:
-        for name in ('scalar', 'scalar-linear', 'power', 'power-extreme', 'box'):
+        for name in ('scalar', 'scalar-linear', 'scalar-extreme', 'power', 'power-extreme', 'box', 'box-area', 'box-extreme', 'box-power'):
             path = EVIDENCE / (name+'.json.gz')
             if path.exists():
                 data = read(path)
@@ -96,13 +96,35 @@ def main():
                            (not r['before_exact'] or r['after_exact']) for r in group['rows'])
             assert len(data['corpus']) == 147
             assert all(r['after_exact'] and not r['changed'] and r['sanitized_equal'] for r in data['corpus'])
+        before_trace = EVIDENCE/'box-trace.json.gz'
+        if before_trace.exists():
+            before = read(before_trace)['rows'][0]
+            after = read(EVIDENCE/'box-trace-after.json.gz')['rows'][0]
+            assert before['source_hex']==after['source_hex']
+            assert before['public_callback_sha256']==after['public_callback_sha256']
+            assert before['pre_diff']['different_words']==0
+            assert before['post_diff']['different_words']==1
+            assert before['output_diff']['different_words']==2
+            assert all(after[k]['different_words']==0 for k in ('pre_diff','post_diff','output_diff'))
         corpus = read(EVIDENCE/'corpus-before.json.gz')
         assert corpus['completed']==147 and corpus['replay_matches_saved']
+        if (EVIDENCE/'corpus-final.json.gz').exists():
+            corpus=read(EVIDENCE/'corpus-final.json.gz')
+            assert corpus['completed']==147 and corpus['replay_matches_saved']
     for path in paths:
         data = read(path)
         baseline = ROOT / ('orchestra/reports/C47-evidence/seed1.json.gz' if data['seed'] == 1 else
                            f'orchestra/reports/S01-wide-mismatch-sweep/olmdistancegradation_seed{data["seed"]}.json.gz')
-        output['campaigns'][str(data['seed'])] = dict(census=census(data), comparison=compare(read(baseline), data))
+        label = str(data['seed'])
+        if path.name.startswith('final-'):
+            baseline = EVIDENCE / f'seed{data["seed"]}.json.gz'
+            label = 'final-'+label
+        comparison = compare(read(baseline), data)
+        if path.name.startswith('final-'):
+            assert not comparison['unconfirmed_previous_exact']
+            assert comparison['transitions'] == ([] if data['seed']==1 else [[214,'refusal','exact'],[285,'refusal','exact'],[293,'refusal','exact']])
+            assert data['summary'].get('smart_mismatch',0)==0
+        output['campaigns'][label] = dict(census=census(data), comparison=comparison)
     if args.output:
         args.output.write_text(json.dumps(output, indent=2, sort_keys=True)+'\n')
     print(json.dumps({section: {seed: (item['counts'] if section == 'historical' else

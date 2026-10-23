@@ -1,9 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Re-measured seed1 and seed105, n300: Smart290/280 exact, zero mismatches; every historical exact hash preserved.
-- S01 unresolved counts mix original Median assertions, original timeouts and Mac timeouts; attribution is retained separately.
-- Closed scalar Bilateral and unblurred Power finite-source admission: seed105 exact280→282, zero admitted mismatches.
+- Closed three clusters in separate commits: finite scalar Bilateral, finite unblurred Power, and large-Box area precision/admission.
+- Final seed1 remains290 exact; seed105 improves280→283 exact and6→3 refusals; zero Smart mismatches or prior exact losses.
+- Independent2280 exact cases,22 refused boundary controls and sanitizer comparisons pass; final corpus147/147 unchanged.
+- S01 unresolved counts are classified as original Median assertions, original timeouts and Mac timeouts.
+- Four historical beta-test failures reproduce identically at the starting revision; three-cluster stop reached.
 
 facts:
 - Base HEAD `59b4273d640e30d23fc76ea58374c59874af609c`; branch `orch/C52-dg-smart-r1`.
@@ -39,6 +41,7 @@ inference:
 changed_files:
 - `tools/fuzz/audit_distancegradation_C52.py`
 - `tools/fuzz/probe_distancegradation_C52.py`
+- `tools/fuzz/check_distancegradation_beta_C52.py`
 - `orchestra/reports/C52-evidence/`
 - `orchestra/reports/C52-dg-smart-r1.md`
 
@@ -140,3 +143,70 @@ Expected:432+324 exact,7 unchanged refusals; only case293 newly exact versus clu
 
 next:
 - Investigate large-Box admission; retain larger-radius Bilateral refusal until independently justified. Historical resource-cap beta tests remain the same documented baseline failures.
+
+Cluster3 — Smart PF32 Box area precision and Size501..4096 admission (base `68c3cef4`):
+
+facts:
+- Full seed1 remeasurement after cluster2 again completes300 with290 exact/0 mismatch/3 refusal/1 budget/6 uncompared.
+- Initial full-range gate experiment is refuted:24 exact cases then a1x3 Size4096 witness differs by2 words/2 bytes; first byte4/word1, original `00f0ff3e`, candidate `01f0ff3e`. Sanitized output equals ordinary output. The failing diagnostic is retained as `box-full.json.gz`, not promoted.
+- Size4096 means kernel8193, integer area67125249; binary32 rounds this to67125248. At Size2048, kernel4097 area16785409 rounds to16785408; Size2047/kernel4095 area16769025 is exactly representable. These are arithmetic facts, not inferred oracle internals.
+- First observed divergent stage is the Box filter. Reused C14 paired trace with a new generic explicit-PF32-case input option. Original pre-filter words are0,0.5,1; all3 Mac words match. Post-filter differs at word0 only; original `00f0ff3e`, Mac `01f0ff3e`. Original post-field callback replay equals the separate typed public original output exactly. This same-mask PNG proxy plus typed callback binding is not a natural full-owner typed memory capture.
+- A narrower Size<=2047 diagnostic matrix first passes48/48 with sanitizers, establishing a new boundary after the refuted full-range admission. It is superseded by the cause fix below, not the final production limit.
+- Smart PF32 Box now retains the integer area in double precision through normalization. Its accumulated numerator, traversal, division and writer are unchanged. The call passes this precision rule only for Smart PF32; existing Classic/PF8/PF16 normalization is unchanged. Existing admitted sizes<=500 have exactly representable areas, so their divisor values are unchanged.
+- With double area, the same original pre/post planes and complete output all match (0/3 pre words,0/3 post words,0/12 output words differ). Original source bytes and public callback hash are identical between both traces.
+- Raise only the PF32 Box admission bound from500 to the declared4096 maximum. Other filter bounds remain500, and world/control/source checks remain in place. Independent final matrices:48 SDR Linear,144 finite-extreme Linear,144 SDR Power, all336 exact and sanitized-identical. Sizes501/1845/2048/4096 straddle the newly observed area-rounding boundary; geometry7x3/3x1/1x3; all ownership/RGB-or-Layer/background states, inversion variation; Power0.01/2.25/5.
+- Eight negative controls still refuse, with sanitizer equality: exponent0.005/5.01, positive alpha conversion overflow, RGB infinity/NaN, Size4097, Gaussian501 and Median501.
+- Before/current/sanitized verifier: seed1 PF32 remains91 exact+4 nonexact; seed10586 unchanged exact+3 unchanged nonexact+case285 newly exact. All147 corpus cases remain exact with identical hashes. No expectation edits or sanitizer diagnostic; leak checking disabled.
+- Supplementary scalar Bilateral extreme matrix324/324 also passes with sanitizer equality, extending cluster1 evidence to maximum finite RGB, alpha-conversion edges, negative maximum alpha and subnormals. This makes the three promoted independent matrices total2280 exact cases;22 negative controls retain refusals.
+
+|Smart result, fixed initial oracle set|Before cluster3|After cluster3|
+|---|---|---|
+|seed1 exact/mismatch/refusal/budget/uncompared|290/0/3/1/6|290/0/3/1/6|
+|seed105 exact/mismatch/refusal/budget/uncompared|282/0/4/3/11|283/0/3/3/11|
+|corpus exact|147|147, same hashes|
+
+inference:
+- The rounded area explains the captured filter-stage difference: changing that general normalization operation alone closes the first divergent plane and full output, including the independent area-boundary matrix. No expected-output byte patch or coordinate rule is involved.
+- The three original successful-reference refusals214/293/285 are closed. Seed105292 (HDR Bilateral Size392) is still refused; its zero-valued1x1 gate-off result is insufficient proof for broad large-radius admission. Native AE and other depths' large-kernel precision/performance remain outside these bounded claims.
+
+changed_files (additional):
+- `tools/emulation/trace_distancegradation_smart_C14.py`: accept a generic explicit PF32 case while retaining original public/callback binding and pre/post-plane checks.
+- `orchestra/reports/C52-evidence/box4096-case.json`: full independent trace input.
+
+verify (cluster3):
+```sh
+git show 68c3cef4:mac/OLMDistanceGradation/OLMDistanceGradation.cpp > "$s/power.cpp"
+python3 tools/fuzz/probe_distancegradation_C52.py --mode box-full --source "$s/power.cpp" --scratch "$s/box-full-work" --report "$s/box-full.json" --write-source "$s/box-full.cpp" --require-exact > "$s/box-full.log" 2>&1
+# Expected exit1 at the retained Size4096 witness, after24 exact cases.
+python3 tools/fuzz/probe_distancegradation_C52.py --mode box-exact-area --source "$s/power.cpp" --scratch "$s/box-work" --report "$s/box.json" --write-source "$s/box.cpp" --require-exact > "$s/box.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C52.py --mode box-exact-area --extreme --source "$s/power.cpp" --scratch "$s/box-extreme-work" --report "$s/box-extreme.json" --require-exact > "$s/box-extreme.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C52.py --mode box-exact-area --box-power --source "$s/power.cpp" --scratch "$s/box-power-work" --report "$s/box-power.json" --require-exact > "$s/box-power.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C52.py --mode box-exact-area --negative --source "$s/power.cpp" --scratch "$s/box-negative-work" --report "$s/box-negative.json" > "$s/box-negative.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref 68c3cef4 --candidate-source "$s/box.cpp" --campaign "$s/seed1.json" --campaign "$s/seed105.json" --campaign-pf32-only --corpus --strict-admission --case-timeout 180 --scratch "$s/box-verify-work" --report "$s/box-verify.json" > "$s/box-verify.log" 2>&1
+py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
+"$py" tools/emulation/trace_distancegradation_smart_C14.py --case-json orchestra/reports/C52-evidence/box4096-case.json --source "$s/box-full.cpp" --scratch "$s/trace-before-work" --report "$s/trace-before.json" > "$s/trace-before.log" 2>&1
+"$py" tools/emulation/trace_distancegradation_smart_C14.py --case-json orchestra/reports/C52-evidence/box4096-case.json --source "$s/box.cpp" --scratch "$s/trace-after-work" --report "$s/trace-after.json" > "$s/trace-after.log" 2>&1
+```
+Expected: final48+144+144 exact,8 refused; verifier only case285 newly exact,147 corpus unchanged; paired trace before0/1/2 and after0/0/0 differing pre/post/output words. Trace commands exit0 when capture succeeds, even for a measured mismatch. Supplementary cluster1 extreme reproduction uses its command above plus `--extreme`, expected324 exact.
+
+next:
+- Three clusters closed and final verification completed; no further C52 work.
+- Follow-up: PF32 large-radius Bilateral; original Median assertions and original/Mac timeout domains; repair stale F41b beta-cap expectations separately.
+
+
+Final verification and handoff:
+
+FACT: Final `run.py` campaigns for seeds1/105 complete300 each, exit0, with the exact final table above. All300 seed1 Classic/Smart result dictionaries equal the initial campaign. Seed105 Classic is unchanged for all300; the only changed Smart dictionaries are214/285/293, each refusal→exact. All290+280 initially exact Smart hashes are preserved. Final corpus replay exits0,147/147 `matches_saved=true`; no corpus rebaseline is needed.
+
+FACT: Final production source SHA256 `e4242681e9a6146f8fd827a4bd72de0894cece4985c8508d0bf1bc1cb85d011c`; original AEX SHA256 `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`. Original and final full campaigns/replays, independent matrices, both traces, the refuted full-range experiment, explicit trace input and baseline-test logs are committed under `C52-evidence/`, with a SHA256 manifest. The final audit verifies preservation and the exact three newly admitted indices.
+
+FACT: All launched build/render processes completed. Regenerable build/scratch directories and duplicate generated corpora were removed; retained scratch logs/reports total14,586,969 bytes, well below5GiB. No permission rejection occurred. No MAIN, emulator source/worker, release gate, ledger, other-plugin, corpus expectation, or installed bundle was modified; no push/stash/history rewrite/subagents.
+
+Final quick verification:
+```sh
+python3 tools/fuzz/audit_distancegradation_C52.py
+git diff --check
+```
+Expected exit0, manifest/matrix/trace/corpus assertions pass; final seed1 counts290 exact/3 refusal/1 budget/6 uncompared, final seed105283 exact/3 refusal/3 budget/11 uncompared, zero mismatch and no prior exact loss. Full remeasurement commands are above; observed wall-time budgets can vary with machine load.
+
+Remaining Smart residuals are explicitly not claimed exact: seed105292 successful-original large-radius Bilateral refusal;158 refusal against an original Median assertion;272 refusal against an original timeout;150 Mac timeout with successful original;205/296 Mac timeouts with original Median assertions; original-only assertion/timeout uncompared outputs. Seed1 retains its original assertion/time-budget domains. No original undefined-memory bug was identified, so no deterministic-semantics change to KNOWN_ORIGINAL_BUGS is warranted.
