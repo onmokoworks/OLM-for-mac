@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build F47 Universal Release bundles without modifying the source projects."""
+import argparse
 import json
 import os
 import re
@@ -11,11 +12,18 @@ ROOT = Path(__file__).resolve().parents[2]
 SCRATCH = ROOT / 'orchestra/state/F47-aexcompat-native-plugin-host'
 
 def main():
+    global SCRATCH
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scratch', type=Path, default=SCRATCH)
+    parser.add_argument('--plugins', nargs='+', choices=('OLMBlur', 'OLMColorKey', 'OLMRadialBlur'),
+                        default=['OLMBlur', 'OLMColorKey', 'OLMRadialBlur'])
+    args = parser.parse_args()
+    SCRATCH = args.scratch.resolve()
     SCRATCH.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, TMPDIR=str(SCRATCH), TMP=str(SCRATCH), TEMP=str(SCRATCH))
     subprocess.run([str(ROOT / 'scripts/setup_ae_sdk_links.sh')], env=env, check=True)
     records = []
-    for name in ('OLMBlur', 'OLMColorKey', 'OLMRadialBlur'):
+    for name in args.plugins:
         source = ROOT / 'mac' / name / 'Mac'
         build = SCRATCH / 'xcode' / name
         project = build / f'{name}.xcodeproj'
