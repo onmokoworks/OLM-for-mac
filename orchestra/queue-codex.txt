@@ -27,3 +27,4 @@ I02-integration-finish
 F33-gate-selftest-vs-respawn-guard
 F34-dg-fixture-f02-regression
 F35-dg-fixture-rebind
+F36-fixture-runner-worktree-and-triage
