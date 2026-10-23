@@ -12,8 +12,8 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 CACHE = Path.home()/'.cache/olm-emu'
-S = ROOT/'orchestra/state/F50-oracle-execution-limit'
-E = ROOT/'orchestra/reports/F50-evidence'
+S = ROOT/'orchestra/state/F50b-oracle-budget-build'
+E = ROOT/'orchestra/reports/F50b-evidence'
 
 def sha(path):
     with path.open('rb') as f:
@@ -39,13 +39,12 @@ def main():
     shutil.copytree(parent, source)
     subprocess.run(['patch', '-p1', '-i', str(HERE/'F50-budget.patch')], cwd=source, check=True)
     out.mkdir()
-    build = S/'rust-build'
-    alias = CACHE/'F50-build-scratch'
-    assert not alias.exists() and not alias.is_symlink()
-    alias.symlink_to(S, target_is_directory=True)
+    build = CACHE/'build-F50'
+    assert not build.exists(), 'Never overwrite an existing build directory'
+    build.mkdir()
     env = dict(os.environ, TMPDIR=str(S), TMP=str(S), TEMP=str(S),
                CARGO_BUILD_JOBS='1', CMAKE_BUILD_PARALLEL_LEVEL='1',
-               CARGO_TARGET_DIR=str(alias/'rust-build'), AEXCOMPAT_BUILD_REVISION='F50-budget')
+               CARGO_TARGET_DIR=str(build), AEXCOMPAT_BUILD_REVISION='F50-budget')
     cmd = ['cargo', 'build', '--manifest-path', str(source/'Cargo.toml'), '--release',
            '--offline', '--locked', '-j', '1', '-p', 'aex-guest-worker', '--bin', 'aex-guest-worker']
     try:
@@ -74,7 +73,6 @@ def main():
     finally:
         if build.exists():
             shutil.rmtree(build)
-        alias.unlink()
 
 if __name__ == '__main__':
     main()

@@ -2,7 +2,7 @@
 """Serial byte comparisons of F46/F50, S01 unresolved cases and seed-1 campaigns.
 
 Uses an explicit 3600-second external watchdog, never changes fuzz defaults.
-Writes each completed observation durably; --resume skips only completed rows.
+Writes each completed observation durably; reruns skip completed rows.
 """
 import argparse
 from collections import Counter
@@ -19,8 +19,8 @@ import time
 from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[3]
-S = ROOT/'orchestra/state/F50-oracle-execution-limit'
-E = ROOT/'orchestra/reports/F50-evidence'
+S = ROOT/'orchestra/state/F50b-oracle-budget-build'
+E = ROOT/'orchestra/reports/F50b-evidence'
 CACHE = Path.home()/'.cache/olm-emu'
 sys.path.insert(0, str(ROOT/'tools/fuzz'))
 sys.dont_write_bytecode = True
@@ -73,6 +73,27 @@ def corpus():
                     row = pair(case, a.name, Path(td), route)
                 append(path, dict(key=key, plugin=a.name, corpus=corpus.name, route=route,
                                  corpus_sha256=sha(source.read_bytes()), input_sha256=sha(case['pixels']), **row))
+    # ColorKeep has no retained corpus. Clearly distinguish generated depth
+    # anchors from corpus replays so every plugin has an observed worker pair.
+    a = adapter('colorkeep', 'F50', 16)
+    depths = set()
+    for index in range(100):
+        case = a.generate(1, index)
+        if case['depth'] in depths:
+            continue
+        depths.add(case['depth'])
+        for route in ('classic', 'smart'):
+            key = f'generated-colorkeep:seed1:index{index}:max16:{route}'
+            if key in known:
+                continue
+            with tempfile.TemporaryDirectory(dir=S, prefix='pair_') as td:
+                row = pair(case, 'colorkeep', Path(td), route)
+            append(path, dict(key=key, plugin='colorkeep', corpus='generated-depth-anchors',
+                             route=route, depth=case['depth'], seed=1, index=index, max_size=16,
+                             input_sha256=sha(case['pixels']), **row))
+        if depths == {8, 16, 32}:
+            break
+    assert depths == {8, 16, 32}
     counts = Counter(r['comparison'] for r in existing(path).values())
     print('Corpus counts', dict(counts), flush=True)
 
@@ -126,8 +147,12 @@ def campaigns():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('mode', choices=('corpus','slow','campaigns','smoke'))
+    ap.add_argument('mode', choices=('corpus','slow','campaigns','smoke','pair'))
+    ap.add_argument('--case', type=Path, help='Corpus file for a single paired replay')
+    ap.add_argument('--route', choices=('classic', 'smart'), default='smart')
     args = ap.parse_args()
+    if args.mode == 'pair' and args.case is None:
+        ap.error('pair requires --case')
     S.mkdir(parents=True, exist_ok=True)
     E.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(S), TMP=str(S), TEMP=str(S), OLM_TEST_JOBS='1', OLM_UCRT_FMA='1', PYTHONDONTWRITEBYTECODE='1')
@@ -137,7 +162,17 @@ def main():
         assert json.loads(binding.read_text())==identities
     else:
         binding.write_text(json.dumps(identities,indent=2)+'\n')
-    if args.mode=='smoke':
+    if args.mode == 'pair':
+        source = args.case.resolve()
+        data = json.loads(source.read_text())
+        a = adapter(data['plugin'], 'F50', data['max_size'])
+        case, _ = load_corpus(source, a)
+        with tempfile.TemporaryDirectory(dir=S, prefix='recheck_') as td:
+            row = pair(case, a.name, Path(td), args.route)
+        append(E/'recheck.jsonl', dict(key=str(source.relative_to(ROOT))+':'+args.route,
+            plugin=a.name, route=args.route, corpus_sha256=sha(source.read_bytes()),
+            input_sha256=sha(case['pixels']), **row))
+    elif args.mode=='smoke':
         for name in ('C49_seed1_case000117.json','C46_seed1_case000280.json'):
             source = ROOT/'tests/fuzz_corpus/radialblur'/name
             case,_ = load_corpus(source, adapter('radialblur','F50'))

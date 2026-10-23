@@ -1,0 +1,4 @@
+{'name': 'return', 'returncode': 0, 'elapsed_seconds': 0.32093499999609776}
+{'name': 'exhaustion1', 'returncode': 1, 'elapsed_seconds': 709.0059554159961}
+{'name': 'exhaustion2', 'returncode': 1, 'elapsed_seconds': 679.5839078330027}
+Inspect saved crash registers to confirm RAX=1000000000 and RIP=0x180001005 in both runs.
