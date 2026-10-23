@@ -27,6 +27,20 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-one-negative':
+        yield from (case for case in cases(adapter, 'gaussian-negative') if case['index'] != 0)
+        return
+    if family == 'gaussian-length1':
+        from verify_kirakira_smart_C04 import cases as old_cases
+        yield from old_cases(adapter, family)
+        return
+    if family == 'gaussian-one-controls':
+        for case in cases(adapter, 'gaussian-controls'):
+            for param in case['parameters']:
+                if param['slot'] in (10,16,22,28) and param['value'] > 0:
+                    param['value'] = 1
+            yield case
+        return
     if family == 'color-lengths':
         for i, (depth, mode, length) in enumerate(itertools.product(
                 (8,16,32), (1,2), (1,2,3,5,7,15,50,1000))):
@@ -249,7 +263,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

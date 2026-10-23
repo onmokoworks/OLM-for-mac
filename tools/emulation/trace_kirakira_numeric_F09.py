@@ -132,7 +132,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 channels = struct.unpack('<I', ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP) + 0x28, 4))[0]
                 key = f'{_addr:x}/{kernel}/{width}/{channels}'
                 row_filters[key] = row_filters.get(key, 0) + 1
-            for row_entry in (0x18127f3c0, 0x1812d6690):
+            for row_entry in (0x18127f3c0, 0x1812d6690, 0x1812adaa0, 0x1812f9a70, 0x1813183d0):
                 super().add_code_hook(row_entry, row_filter_entry)
             ray_number = [-1]
             op_number = [0]
@@ -158,7 +158,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                         active[0] = False
                         stages[name+'_out'],_ = read_wrapper(dest_wrapper)
                 super(Loader,self).add_code_hook(ret, returned)
-            for addr in (0x181297ac0,0x181280bc0):
+            for addr in (0x181297ac0,0x181280bc0,0x181272ec0):
                 super().add_code_hook(addr, op_entry)
             def seed(ld, _addr, _size):
                 mat = base.read_mat(ld, ld.uc.reg_read(UC_X86_REG_RBP))
@@ -284,6 +284,8 @@ static void F09Dump(const char *name, const void *data, size_t size) {
         '\tF09Dump(("helper"+std::to_string(F09Ray)+"_op0_out").c_str(),temp_a.data(),temp_a.size()*4);')
     insert('\t\tsrc.swap(dst);',
         '\t\tF09Dump(("helper"+std::to_string(F09Ray)+"_op"+std::to_string(pass+1)+"_out").c_str(),dst.data(),dst.size()*4);')
+    insert('\ttemp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);',
+        '\tif (blur_mode == 3) F09Dump(("helper"+std::to_string(F09Ray)+"_op1_out").c_str(),temp_b.data(),temp_b.size()*4);')
     return source
 
 

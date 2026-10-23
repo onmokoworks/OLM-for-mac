@@ -568,7 +568,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// C04 additionally restores the tiny scalar Alpha/Length>=2 operation.
+	// C22 includes the recovered symmetric tail for scalar Alpha Length 1.
 	// Keep the historical boundary for other seed/Highlight pipelines until
 	// their upstream and aggregation stages are reconciled.
 	const bool mode3_admitted =
@@ -721,13 +721,10 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // scalar box pipeline. The four-component color box owner also uses the
 // recovered percentage parameters (C16). C07 pairs
 // the box pipeline; C13 pairs the directional Gaussian pipeline with the
-// same constructor, percentage materialization and aggregation. Keep the
-// unresolved Length-1, Highlight and resize operations outside this recovery.
+// same constructor, percentage materialization and aggregation. Keep unresolved Highlight and other resize owners outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
-		info.vertical_length != 1 && info.horizontal_length != 1 &&
-		info.diagonal_length != 1 && info.diagonal2_length != 1;
+	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
 		 (info.channel == 1 && directional_gaussian));
@@ -1768,7 +1765,6 @@ static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
 	for (int ray = 0; ray != 4; ++ray) {
 		const A_long length = lengths[ray];
 		if (length == 0) continue;
-		if (length == 1) return false;
 		const auto trig = olm::kirakira::extent_sincos(info.glow_rotation + offsets[ray]);
 		const A_long rw = AexRotatedExtent(width, height,
 			std::abs(trig.cosine), std::abs(trig.sine));
