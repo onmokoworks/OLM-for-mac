@@ -27,6 +27,29 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-color-negative':
+        for case in cases(adapter, 'gaussian-scalar-negative'):
+            for param in case['parameters']:
+                if case['index'] == 3 and param['slot'] == 1: param['value'] = 7
+            yield case
+        return
+    if family == 'gaussian-color':
+        for case in cases(adapter, 'gaussian-ramps'):
+            for param in case['parameters']:
+                if param['slot'] == 1: param['value'] = (3, 5, 6)[case['index']%3]
+            yield case
+        return
+    if family == 'gaussian-color-boundary':
+        for i, (geometry, depth, channel, length) in enumerate(itertools.product(
+                ((1, 1), (2, 18), (31, 23)), (8, 16, 32), (3, 5, 6), (1, 2, 50, 1000))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {6:(0, 97, 537, 1000)[i%4], 8:1703, 9:97,
+                      10:length, 16:0, 22:0, 28:0, 34:0,
+                      40:(-31, 0, 22, 359)[i%4]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
     if family == 'gaussian-scalar-negative':
         for case in cases(adapter, 'gaussian-one-negative'):
             for param in case['parameters']:
@@ -308,7 +331,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

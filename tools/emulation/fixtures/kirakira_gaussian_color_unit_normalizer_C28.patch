@@ -1,0 +1,19 @@
+--- base.cpp
++++ candidate.cpp
+@@ -734 +734 @@
+-		 ((info.channel == 1 || info.channel == 2 || info.channel == 4) && directional_gaussian));
++		 (info.channel >= 1 && info.channel <= 6 && directional_gaussian));
+@@ -739 +739 @@
+-    return !info.approximated_input && (info.blur_mode == 1 || info.blur_mode == 2) &&
++    return !info.approximated_input && (info.blur_mode == 1 || info.blur_mode == 2 || (info.blur_mode == 3 && info.highlight_radius == 0)) &&
+@@ -867 +867 @@
+-                const auto ray=RotatedAxisBoxBlur(plane,work_width,work_height,len,angle,passes,info.blur_mode,false,true,false);
++                const auto ray=RotatedAxisBoxBlur(plane,work_width,work_height,len,angle,passes,info.blur_mode,true,true,false);
+@@ -927 +927,3 @@
+-            if (info.blur_mode == 2) {
++            if (info.blur_mode == 3) {
++                for (float &norm : norms) norm = 1.0f;
++            } else if (info.blur_mode == 2) {
+@@ -1761 +1763 @@
+-	if (info.channel != 1 && !((info.channel == 2 || info.channel == 4) &&
++	if ((info.channel == 2 || info.channel == 4) && !((info.channel == 2 || info.channel == 4) &&
