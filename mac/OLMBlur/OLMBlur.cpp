@@ -1609,8 +1609,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 		(bpc == 8 || bpc == 16 || bpc == 32);
 	// Legacy integer writers preserve the AEX low-word/byte conversion.
 	// C21: PF16's expf coefficients also match at higher repeated radii.
+	// C32: UCRT coefficients and SSE invalid-result semantics also establish
+	// bounded finite PF32 Legacy sources; the source scan remains below.
 	const bool legacy_small = raw.legacy == 1 &&
-		(bpc == 8 || bpc == 16);
+		(bpc == 8 || bpc == 16 || bpc == 32);
 	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";

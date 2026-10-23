@@ -40,6 +40,7 @@ def main():
         root = scratch/'variant'
         target = root/'mac/OLMBlur'
         target.mkdir(parents=True)
+        (root/'ucrtmath').symlink_to(run.ROOT/'ucrtmath', target_is_directory=True)
         core = root/'core'; core.mkdir()
         for path in (run.ROOT/'core').iterdir():
             if path.is_file(): (core/path.name).symlink_to(path)
