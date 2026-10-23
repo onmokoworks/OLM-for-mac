@@ -1,0 +1,2647 @@
+{
+  "gate_off": false,
+  "mode": "outside",
+  "provenance": {
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "after": {
+      "candidate_sha256": "d1840d83c27c83e40e065a890fe8cd57b123e60a205082e201bae5a2aacd9aff",
+      "compiled_source_sha256": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+      "core_sha256": {
+        "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+        "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+        "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+        "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+        "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+        "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+        "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+        "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+      },
+      "revision": null
+    },
+    "before": {
+      "candidate_sha256": "f60f9e5b2b94e02bcc8e2f06fb20733ee6b6ab26cc704bdd8d6165ed3600d412",
+      "compiled_source_sha256": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
+      "core_sha256": {
+        "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+        "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+        "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+        "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+        "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+        "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+        "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+        "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+      },
+      "revision": "c1d1f194"
+    },
+    "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1"
+  },
+  "retained": {
+    "candidate_sha256": "952ca87936bec27d2850398cce71b77019ad134bf1a493870552a7d12d7e73c9",
+    "core_sha256": {
+      "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+      "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+      "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+      "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+      "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+      "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+      "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+      "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+    },
+    "host_sha256": {
+      "probe_olmblur_pf16_7x5_public_admission_20260813.cpp": "796a656e14838dac783611cf534c31c722068e2a17ebc663e0c3c078fb5ee1be",
+      "probe_olmblur_pf16_worker_sources_public_admission_20260813.cpp": "a6306a0e613b71d1ab79bdf1c331acd2fc14537679ce9f33cd7705375cf8206a",
+      "probe_olmblur_pf32_retained_public_admission_20260813.cpp": "0d4c9e29c50e7656ba46186dd78ac54af6e086c6f2bc9daaa5940028d8a9f690",
+      "probe_olmblur_pf8_retained_public_admission_20260813.cpp": "ee0e21390b69d7a766717275b3b6ecd03cce49caae89fccf84f0d7d8b5674b46",
+      "probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5"
+    },
+    "lines": [
+      "WORKER 12x12_repeat1_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 12x12_repeat1_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 12x12_repeat2_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 12x12_repeat2_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat1_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat1_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat3_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat3_nonlegacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 12x12_repeat2_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 12x12_repeat2_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat3_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x18_repeat3_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x12_repeat2_legacy_mixed_alpha positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 18x12_repeat2_legacy_mixed_alpha positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 20x16_smooth62_5_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "WORKER 20x16_smooth62_5_legacy positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_12x12_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_12x12_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_18x18_repeat3 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_18x18_repeat3 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_24x24_repeat1 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_24x24_repeat1 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_24x24_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 nonlegacy_24x24_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_12x12_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_12x12_repeat2 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_18x18_repeat3 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_18x18_repeat3 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_18x12_mixed_alpha positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_18x12_mixed_alpha positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_6x6_boundary_repeat10 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_6x6_boundary_repeat10 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_12x12_boundary_repeat10 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_12x12_boundary_repeat10 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_16x16_repeat1 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_16x16_repeat1 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_10x8_boundary_reverse positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_10x8_boundary_reverse positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_19x13_smooth43_75 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF8 legacy_19x13_smooth43_75 positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1",
+      "PF32 nonlegacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_18x18_repeat3_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_18x18_repeat3_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1294_b1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1294_b1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1294_b2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1294_b2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_4x3_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_7x5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_7x5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_7x5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_7x5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_repeat2_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_repeat2_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 nonlegacy_24x24_5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_18x18_repeat3 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_18x18_repeat3 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_18x12_mixed mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_18x12_mixed mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_7x5_red_boundary mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_7x5_red_boundary mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_9x7_mixed_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_9x7_mixed_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_smooth37_5 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+      "PF32 legacy_24x24_smooth37_5 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1"
+    ],
+    "source_sha256": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+    "status": {
+      "returncode": 0,
+      "status": "ok"
+    },
+    "stderr": ""
+  },
+  "rows": [
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 0,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "7895427594756a3c2d7b2633d87a4fbc796e9001fa5a0211998db2450a49a314",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 1,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "7895427594756a3c2d7b2633d87a4fbc796e9001fa5a0211998db2450a49a314",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 2,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "807163906d3bd022f244113c5bb189502f49d25a1bc31bedd4a7146a687d3b4b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 3,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "807163906d3bd022f244113c5bb189502f49d25a1bc31bedd4a7146a687d3b4b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 4,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "c46eac0874a74b5a2adf02736cee5cdfb1487af6fbd19de08d58176bc15b2a09",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 5,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "c46eac0874a74b5a2adf02736cee5cdfb1487af6fbd19de08d58176bc15b2a09",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 6,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ac6c0c26d33da6f940a957654e39497e19c416ee141e18d4ca94266215fef35b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 7,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ac6c0c26d33da6f940a957654e39497e19c416ee141e18d4ca94266215fef35b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 8,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "1dbc4eb58cadf214c0ee6a19532fa1d92212fc7253582ad5733f557552bc174c",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 9,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "1dbc4eb58cadf214c0ee6a19532fa1d92212fc7253582ad5733f557552bc174c",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 10,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "2101ac9d364eda18061a0dadf498b4a3ddc45abc83c2b7107bc6750176ac92de",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 11,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "2101ac9d364eda18061a0dadf498b4a3ddc45abc83c2b7107bc6750176ac92de",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 12,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ea53e0003921553079b69faace7897c43f112c404904cde6732063dc233bbac9",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 13,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ea53e0003921553079b69faace7897c43f112c404904cde6732063dc233bbac9",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 14,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "6ca3f2e212d28c18338a379bdb36232d6f40b5d95232734d858bc37c3890fc48",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 15,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "6ca3f2e212d28c18338a379bdb36232d6f40b5d95232734d858bc37c3890fc48",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 16,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "66f786312ca17aaed8cd56365010666a566211a82ccd11f3cfc4010d3d26becf",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 17,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "66f786312ca17aaed8cd56365010666a566211a82ccd11f3cfc4010d3d26becf",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 18,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ee881f5ea3671578a7d875fdee4fb0d1f50f624e59006932b3bcb2cb28db753f",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 19,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ee881f5ea3671578a7d875fdee4fb0d1f50f624e59006932b3bcb2cb28db753f",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 20,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "9f0db1a153bba6f076a1b8498558e6a7649114eff6888b6a0a51d3bb5509bf74",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 21,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "9f0db1a153bba6f076a1b8498558e6a7649114eff6888b6a0a51d3bb5509bf74",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 22,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ac29ee349424defa416fbfb4396954a7b0bf93c9865872b8f6fd832b555f322b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 23,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "ac29ee349424defa416fbfb4396954a7b0bf93c9865872b8f6fd832b555f322b",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 24,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "d8e163f57ec4f41330e98431f189a0f77c853a4f2a514908cecfc7b3c03eef56",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 25,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "d8e163f57ec4f41330e98431f189a0f77c853a4f2a514908cecfc7b3c03eef56",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 26,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "3c93b39d4458256991ef7e324fc8eadc7f6f7104fa126b4239e3dd12fd4a71cf",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 27,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "3c93b39d4458256991ef7e324fc8eadc7f6f7104fa126b4239e3dd12fd4a71cf",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 28,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "443e25dcfa89b478e4075a8c30cbcfe44e31f1904c29e7170c9b9b356ef144a5",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 29,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "443e25dcfa89b478e4075a8c30cbcfe44e31f1904c29e7170c9b9b356ef144a5",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 30,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 0
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "869220723f9d2ab87bc8b789d606b12f7861c137826a02acaa01fc51f752a03a",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    {
+      "after": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-pf32-domain@2093"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "before": {
+        "diff": null,
+        "guards": [
+          "SmartRender:generic-small-fixture@2088"
+        ],
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 5 5 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "status": "refusal"
+      },
+      "case": {
+        "depth": 32,
+        "geometry": [
+          3,
+          5
+        ],
+        "index": 31,
+        "input_padding": 7,
+        "output_padding": 11,
+        "parameters": [
+          {
+            "kind": "s",
+            "slot": 1,
+            "value": 5.0
+          },
+          {
+            "kind": "f",
+            "slot": 2,
+            "value": 100.0
+          },
+          {
+            "kind": "i",
+            "slot": 3,
+            "value": 2
+          },
+          {
+            "kind": "u",
+            "slot": 4,
+            "value": 1
+          },
+          {
+            "kind": "b",
+            "slot": 5,
+            "value": 1
+          }
+        ],
+        "profile": "outside-finite-domain"
+      },
+      "input_sha256": "869220723f9d2ab87bc8b789d606b12f7861c137826a02acaa01fc51f752a03a",
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      }
+    }
+  ],
+  "transitions": {
+    "refusal -> refusal": 32
+  }
+}

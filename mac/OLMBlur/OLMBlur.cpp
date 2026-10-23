@@ -1600,7 +1600,7 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 		(raw.repeat == 1 || (width == 1 && height == 1));
 	// C10: the default non-Legacy schedule is independently verified with
 	// arbitrary small-frame sources. PF32's source domain is checked below;
-	// NaN payload propagation is not established by the finite-input evidence.
+	// C32 separately verifies nonfinite propagation with the SSE helpers.
 	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
 		raw.amount == 5.0 && raw.repeat == 2;
 	// C21: PF16/PF32 non-Legacy use the original binary32 expf coefficients
@@ -1609,8 +1609,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 		(bpc == 8 || bpc == 16 || bpc == 32);
 	// Legacy integer writers preserve the AEX low-word/byte conversion.
 	// C21: PF16's expf coefficients also match at higher repeated radii.
+	// C32: UCRT coefficients and SSE invalid-result semantics also establish
+	// PF32 Legacy sources; the bounded-finite/nonfinite scan remains below.
 	const bool legacy_small = raw.legacy == 1 &&
-		(bpc == 8 || bpc == 16);
+		(bpc == 8 || bpc == 16 || bpc == 32);
 	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
@@ -1635,14 +1637,17 @@ static bool
 SmallDefaultPF32Source(const PF_EffectWorld *world)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
-	// Small non-Legacy sources include bounded signed HDR.
-	// Keep nonfinite and larger finite values outside the verified domain.
+	// C32: both workers preserve signed infinities and NaN payloads under
+	// the SSE helper semantics. Keep larger finite values outside this domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
 		for (A_long x=0; x<world->width; ++x) {
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
-			for (int c=0;c<4;++c)
+			for (int c=0;c<4;++c) {
+				uint32_t bits; memcpy(&bits, &argb[c], sizeof(bits));
+				if ((bits & 0x7f800000u) == 0x7f800000u) continue;
 				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
+			}
 		}
 	}
 	return true;

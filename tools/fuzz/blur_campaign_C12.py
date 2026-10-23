@@ -36,10 +36,11 @@ def main():
             if source.count(anchor) != 1:
                 raise ValueError('small-fixture bypass anchor changed')
             source = source.replace(anchor, '\t// C12 diagnostic only: small-fixture guard bypassed.')
-            source = source.replace('!SmallDefaultPF32Source(input_world)', 'false')
+            source = re.sub(r'!SmallDefaultPF32Source\(input_world(?:,[^)]*)?\)', 'false', source)
         root = scratch/'variant'
         target = root/'mac/OLMBlur'
         target.mkdir(parents=True)
+        (root/'ucrtmath').symlink_to(run.ROOT/'ucrtmath', target_is_directory=True)
         core = root/'core'; core.mkdir()
         for path in (run.ROOT/'core').iterdir():
             if path.is_file(): (core/path.name).symlink_to(path)

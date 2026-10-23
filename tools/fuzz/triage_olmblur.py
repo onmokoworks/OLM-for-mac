@@ -76,6 +76,10 @@ def build_binary(adapter, scratch, sanitize=False):
     if sanitize:
         argv += ['-fsanitize=address,undefined', '-fno-sanitize-recover=all']
     argv += ['-Wl,-dead_strip', '-framework', 'Cocoa', '-o', str(scratch/'mac')]
+    library = scratch/'ucrtmath'
+    subprocess.run(['sh', str(ROOT/'ucrtmath/build.sh'), str(library)],
+                   check=True, capture_output=True, env=adapter.env)
+    argv += [str(library/'libucrtmath.a')]
     proc = subprocess.run(argv, capture_output=True, env=adapter.env)
     if proc.returncode:
         raise RuntimeError('build failed: '+proc.stderr.decode(errors='replace')[-4000:])
