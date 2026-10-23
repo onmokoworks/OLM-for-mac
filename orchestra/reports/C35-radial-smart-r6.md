@@ -218,3 +218,28 @@ production differs in 1/3 words on zero-weight/cancellation controls; final
 scratch variant matches all three controls. This does not establish public
 nonfinite admission. Full mismatch bytes and source/provenance hashes are in
 `C35-radial-smart-r6.evidence.json`.
+
+Final closeout:
+
+FACT: Final ordinary `run.py --plugin radialblur --n 300 --seed 1 --jobs 1`
+with the same scratch/corpus/report flags completed at 255 exact / 0 mismatch /
+43 refusal / 2 uncompared. Original Smart: 275 ok / 20 reject / 5 budget.
+Indices 4 and 298 remain uncompared due to 10-second oracle wall timeouts.
+All 253 starting exact hashes remain identical, and every final Smart output
+hash agrees with the retained sanitized qualification. No rendered hash drift.
+
+FACT: The initial final-summary assertion found 43 metadata-only differences:
+ordinary refusals omit raw_sha256, while the sanitized replay records SHA256
+of empty output. All 43 pairs are refusals. The summary now handles empty
+refusal output separately from rendered hash comparisons; the rerun succeeds.
+No numerical expectations or corpus records were changed to resolve this.
+
+FACT: `summarize_radialblur_C35.py --state orchestra/state/C35-radial-smart-r6
+--output orchestra/reports/C35-radial-smart-r6.evidence.json` completes and
+asserts zero lost exact/qualified rendered hash drift. `git diff --check` passes.
+All started renders/builds finished; regenerable build directories were removed.
+Scratch remains below 20 MiB, well below 5 GiB. No permissions rejection,
+MAIN/cache write, worker rebuild, other-plugin edit, release-gate/ledger change,
+push, stash or history rewrite occurred. No legacy smoke-test pass is claimed;
+the acceptance checks here are public sanitized campaigns, independent matrices,
+import-free leaf controls and complete saved corpus replay.

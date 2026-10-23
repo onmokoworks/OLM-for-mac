@@ -74,7 +74,9 @@ def main():
         for r in d['cases']:
             i=r['index'];actual=r['result']['routes']['smart'];expected=qualified[i]['result']['routes']['smart']
             if baseline[i]['result']['routes']['smart']['status']=='exact' and actual.get('raw_sha256')==baseline[i]['result']['routes']['smart'].get('raw_sha256'):preserved.append(i)
-            if actual.get('raw_sha256')!=expected.get('raw_sha256'):drift.append(i)
+            if actual['status']==expected['status']=='refusal':
+                assert not actual.get('raw_sha256') or actual['raw_sha256']==hashlib.sha256(b'').hexdigest()
+            elif actual.get('raw_sha256')!=expected.get('raw_sha256'):drift.append(i)
         result['final']=dict(report_sha256=sha(path),counts=dict(Counter(r['result']['routes']['smart']['status'] for r in d['cases'])),
             baseline_exact_hashes_preserved=len(preserved),qualified_hash_drift=drift,
             uncompared=[dict(index=r['index'],oracle=r['result']['oracles']['smart']) for r in d['cases'] if r['result']['routes']['smart']['status']=='uncompared'])
