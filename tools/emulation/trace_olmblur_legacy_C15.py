@@ -46,6 +46,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source-revision')
+    p.add_argument('--nonfinite-ops', action='store_true', help='Record raw SSE nonfinite operands/results in Legacy helpers')
     p.add_argument('--matrix-depth',type=int,choices=(8,16,32))
     p.add_argument('--seed',type=int,default=1);p.add_argument('--indices',type=int,nargs='+',default=[31,115,141,77,112])
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state')
@@ -97,7 +98,7 @@ def main():
             c=matrix[index] if matrix is not None else a.generate(args.seed,index);v={p['slot']:p['value'] for p in c['parameters']};assert v[5]==1
             oracle,reference=a.oracle(c,work,time.monotonic()+90,'smart');assert oracle['status']=='ok',oracle
             (work/'input.bin').write_bytes(c['pixels']);(work/'expected.bin').write_bytes(reference)
-            stages=[];imports=[];writer=[]
+            stages=[];imports=[];writer=[];nonfinite_ops=[]
             class Traced(original_loader):
                 def register_libm_impls(self, *args, **kwargs):
                     super().register_libm_impls(*args, **kwargs)
@@ -118,6 +119,10 @@ def main():
                     return super().register_import_impl(name,impl)
                 def __init__(self,*aa,**kw):
                     super().__init__(*aa,**kw)
+                    if args.nonfinite_ops:
+                        from olmblur_nonfinite_trace_C24 import install_nonfinite_hooks
+                        install_nonfinite_hooks(self, stages, nonfinite_ops,
+                            ((0x1800014f0,0x180001980),(0x180001ea0,0x180002280)))
                     pending=[]
                     def store(uc,address,size,user):
                         writer.append(dict(address=hex(address),rounded_bits=struct.pack('<f',self.read_xmm_f32(0)).hex(),eax=f"{uc.reg_read(UC_X86_REG_EAX):08x}"))
@@ -168,6 +173,7 @@ def main():
                 size=c['depth']//8;word=next(i for i in range(len(raw)//size) if raw[i*size:(i+1)*size]!=reference[i*size:(i+1)*size]);pixel,channel=divmod(word,4)
                 writer_boundary=dict(pixel=pixel,channel=channel,original=reference[word*size:(word+1)*size].hex(),mac=raw[word*size:(word+1)*size].hex(),instruction=writer[pixel*3+channel-1] if writer else None)
             rows.append(dict(writer_boundary=writer_boundary,writer_calls=len(writer),seed=args.seed,index=index,case={k:v for k,v in c.items() if k!='pixels'},input_sha256=sha(c['pixels']),trace_output=actual,cached_binding=actual['active_sha256']==sha(reference),candidate_sha256=sha(raw),output_exact=raw==reference,output_diff=None if raw==reference else raw_diff(reference,raw,c['depth']),first_difference=first,stages=comparison,imports=imports))
+            if args.nonfinite_ops:rows[-1]['nonfinite_ops']=nonfinite_ops
             print(index,'binding',rows[-1]['cached_binding'],'first',first,flush=True)
     fixture.AexLoader=original_loader;olmblur.SOURCE=source;olmblur.CORES=cores
     args.report.write_text(json.dumps(dict(schema='olmblur-legacy-stages-C15/1',provenance=provenance,rows=rows),indent=2,sort_keys=True)+'\n')
