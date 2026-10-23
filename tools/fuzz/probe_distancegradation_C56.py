@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reuse the C54 public/sanitized comparison for the C56 Bilateral timeout."""
+"""Public/sanitized probes for C56 timeout and scalar radius-two boundaries."""
 import copy
 import struct
 import sys
@@ -44,6 +44,10 @@ def matrix(adapter, mode, extreme=False):
 
 def negatives(adapter):
     for label, case in original_negatives(adapter):
+        if radius_two and label not in ('radius501', 'non-scalar-shape'):
+            for parameter in case['parameters']:
+                if parameter['slot'] == 12:
+                    parameter['value'] = 2
         if radius_two and label == 'radius2':
             case['geometry'] = [5,5]
             raw = case['pixels']

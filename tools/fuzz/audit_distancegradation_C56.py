@@ -18,11 +18,12 @@ def main():
     for name,digest in manifest.items():
         assert hashlib.sha256((E/name).read_bytes()).hexdigest()==digest,name
     summary={}
+    expected_source=read('radius2-verify')['source_sha256']
     for name,n in [('matrix',108),('median-sdr',216),('radius2-wide',180),('radius2-extreme',180)]:
         d=read(name);assert d['completed'] and len(d['rows'])==n
         assert all(r['exact'] and r['sanitized_equal'] for r in d['rows']),name
         summary[name]=n
-    for name,n in [('leaf',648),('median-leaf',324)]:
+    for name,n in [('leaf',648),('median-leaf',324),('final-leaf',648),('final-median-leaf',324)]:
         d=read(name);assert len(d['builds'])==2
         assert all(b['output']==f'cases={n} differing=0' for b in d['builds']),name
     for name in ('target','median205','median296','median51'):
@@ -36,7 +37,7 @@ def main():
         assert len(rows)==n and len(d['corpus'])==147
         assert all(r['sanitized_equal'] and not r['changed'] for r in rows),name
         assert all(not r['before_exact'] or r['after_exact'] for r in rows)
-    negative=read('radius2-negative')
+    negative=read('final-radius2-negative')
     assert negative['completed'] and len(negative['rows'])==8
     assert all(r['candidate']['status']=='refusal' and r['sanitized_equal'] for r in negative['rows'])
     admission=read('radius2-admission')
@@ -55,6 +56,7 @@ def main():
     for seed,exact,changed in [(1,290,[10]),(105,285,[205,296]),(156,284,[51])]:
         before=read(f'seed{seed}');after=read(f'final{seed}')
         assert before['completed']==after['completed']==300
+        assert after['provenance']['dependencies_sha256']['mac/OLMDistanceGradation/OLMDistanceGradation.cpp']==expected_source
         different=[]
         for b,a in zip(before['cases'],after['cases']):
             assert b['index']==a['index'] and b['input_sha256']==a['input_sha256']

@@ -1,10 +1,10 @@
-status: partial
+status: done
 summary:
-- Cluster 1: eliminate exactly-zero spatial taps for finite Smart Bilateral fields.
-- Seed1/10 Mac wall time 19.390s -> 0.139s, identical bytes; original still fails.
-- Seeds1/105 preserve 290/285 exact; 744 before/current/sanitized comparisons pass.
-- Independent 108 public cases exact; 648 arithmetic cases per build identical.
-- Fresh seed156 and final remeasurements are in progress; no numerical admission changed.
+- Closed three clusters: Bilateral zero-tap work, large Median work, and PF32 scalar radius-two reduction/admission.
+- Final seeds1/105/156:290/285/284 Smart exact; zero Smart mismatches/timeouts and all859 prior exact hashes preserved.
+- Four Mac timeout cases now finish in0.139–0.206s with unchanged bytes; original failures remain uncompared.
+- Independent scalar radius-two360 refusals become exact, with binary-grounded loop-state equality.
+- Corpus147/147 unchanged; sanitizer comparisons and retained-evidence audit pass.
 
 facts:
 - Base `f3da6fe1f89f0742a0c57d2c7a41399128c62c14`, branch `orch/C56-dg-smart-r3`. Read shared guide, emulator GOTCHAS, compatibility plan, DG ledger row and prior triage/fix reports, especially C52/C54.
@@ -143,3 +143,64 @@ Expected:180+180 exact,360 baseline refusal->exact,8 unchanged refusals; paired 
 
 next:
 - Three-cluster stop reached. Finish final three full campaigns, strict corpus replay, audit and cleanup. Remaining original failures and larger/vector Bilateral domains are follow-up work.
+
+
+Final verification and handoff:
+
+FACT: All three final full n300 campaigns complete300/exit0 on production source SHA256
+`e1d5c652e1a716448bf9f79dc1452b6899d58d6114c12bfa509e5ac75a92fa8a`.
+Original AEX SHA256 is `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`.
+Final source dependency hashes equal the source used by the third-cluster sanitizer verifier.
+
+| Final Smart (10s timeout) | Exact | Mismatch | Refusal | Mac budget | Uncompared | AEX ok/reject/budget |
+|---|---:|---:|---:|---:|---:|---|
+|seed1|290|0|3|0|7|290/8/2|
+|seed105|285|0|2|0|13|285/12/3|
+|fresh seed156|284|0|0|0|16|284/13/3|
+
+FACT: Every successful original in these900 cases has an exact Smart output.
+All859 prior exact result records/hashes are identical. Geometry, depth, parameters,
+source profile, padding and input hashes are unchanged. Only Smart indices1/10,
+105/205,105/296 and156/51 change, each budget->uncompared; no original failure is
+credited as exact. Classic retains its existing mismatches; Median acceleration
+also removes its corresponding timeout statuses, which is not a Classic exact claim.
+
+FACT: Final production arithmetic comparisons again pass648 Bilateral and324 Median
+cases in each normal/sanitized build. Final radius-two negative checks directly use
+radius2 for invalid Power, alpha overflow, infinity and NaN controls (rather than
+only reusing the old radius33 controls); all8 negatives refuse and are sanitizer-identical.
+No further production change followed these checks.
+
+FACT: Strict full saved-corpus replay completes147/147, `replay_matches_saved=true`,
+exit0. Before/after corpus remains147 exact with identical hashes; no rebaseline.
+`python3 tools/fuzz/audit_distancegradation_C56.py` exits0, verifies39 manifest-bound
+files, traces, sanitizer comparisons, admission changes, final source binding and
+all final per-case preservation rules, and prints `acceptance_met: true`.
+`git diff --check` passes.
+
+FACT: All launched build/render processes completed; no background process remains.
+Removed42 regenerable scratch directories, including build trees and generated corpus
+copies. Remaining scratch logs/reports/source diagnostics total15,278,800 bytes before
+this final report update, below5GiB. No worker was rebuilt, no durable oracle was created,
+and no MAIN/emulator source, release gate, ledger forbidden-action list, other-plugin
+code, installed bundle or saved-corpus expectation was modified. No permission rejection,
+push, stash, history rewrite or subagent occurred.
+
+Final quick verification:
+```sh
+python3 tools/fuzz/audit_distancegradation_C56.py
+git diff --check
+```
+Expected exit0; `acceptance_met: true` and the final counts above. Full reproduction
+commands are retained in each cluster section. To repeat strict corpus replay:
+```sh
+python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 1 --scratch "$s/corpus-final" --report "$s/corpus-final.json" > "$s/corpus-final.log" 2>&1
+```
+Expected147/147 `matches_saved`; use the same scratch environment defined above.
+
+next:
+- Three clusters closed; stop C56 work. Remaining follow-up domains are radius-two
+  vector tiles, scalar radii>500 and larger vector/HDR/Power combinations.
+- Original Median assertions and other oracle rejection/time-budget domains remain
+  non-comparable. Native AE exception presentation and native full-host compatibility
+  are not established by these CPU-emulator/SDK-shim results.

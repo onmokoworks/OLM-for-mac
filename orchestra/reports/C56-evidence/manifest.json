@@ -1,5 +1,12 @@
 {
   "after1.json.gz": "2fa6c7c6f82bd0636d2594490d924c85eb2c5e607cb3a4bf7b8c0e0a79ebf0fb",
+  "corpus-final.json.gz": "5227b613a9d40163a6e8dfa8b00a0009eae12b9cd330bd84c7820157401b75c8",
+  "final-leaf.json.gz": "a4cce1ecff4dd2ddbf0b0412109efb30f15ebd40f9a41b4e23470c51bcf0f96c",
+  "final-median-leaf.json.gz": "35b2dc719fb1213db94fbc0d3c5853ec46cbb0bb9c702b111a9a801474fb5ae5",
+  "final-radius2-negative.json.gz": "365a31600f690a4e1b7ced750ee1ac632aafe65d5b3dcda3df357f079bbe3536",
+  "final1.json.gz": "42c567c408372fdcc77900f419aea09407378dc7f1e430427dec6d6c9d0a610f",
+  "final105.json.gz": "4d85d5227f0663b205037c1c32d0428662db4a0bdc8ef27ec8a10bbbd2986766",
+  "final156.json.gz": "3ad915befd223fe032681b83e2549f89c1c84199810bd497d1f235f677ef38cd",
   "leaf.json.gz": "b21831e1d5c061e89cec7d442b1cc885a3795afe97d4862cf4c98bb56c243b3e",
   "matrix.json.gz": "c741867fb2e1936911ce2d58c5b7c837ae0459d733ae432c0abafbcd5442afda",
   "median-leaf.json.gz": "d6416b2521bef10a30e89e6aec6586309ef4bee5abc59466c10d095315d81a29",
