@@ -1,0 +1,219 @@
+--- a/crates/aex-guest-worker/src/main.rs
++++ b/crates/aex-guest-worker/src/main.rs
+@@ -1,3 +1,6 @@
++#[cfg(target_os = "macos")]
++mod native_plugin;
++
+ use std::env;
+ use std::fs;
+ use std::path::Path;
+@@ -46,6 +49,18 @@
+         usage();
+         return ExitCode::from(2);
+     };
++    #[cfg(target_os = "macos")]
++    if command == "native-plugin" {
++        let Some(path) = args.next().map(PathBuf::from) else { return ExitCode::from(2); };
++        if args.next().as_deref() != Some(std::ffi::OsStr::new("--inspect")) || args.next().is_some() {
++            eprintln!("native-plugin currently requires BUNDLE --inspect; render/session unsupported");
++            return ExitCode::from(2);
++        }
++        return match native_plugin::inspect(&path) {
++            Ok(report) => { println!("{report}"); ExitCode::SUCCESS }
++            Err(error) => { eprintln!("native_plugin_error: {error}"); ExitCode::from(1) }
++        };
++    }
+     if command == "session" {
+         return run_session_command(args.collect());
+     }
+--- /dev/null
++++ b/crates/aex-guest-worker/src/native_plugin.rs
+@@ -0,0 +1,188 @@
++//! F47 loader boundary probe. This does not construct a Mac AE host yet.
++use serde_json::{Value, json};
++use sha2::{Digest, Sha256};
++use std::{
++    ffi::{CString, c_void},
++    path::Path,
++    ptr,
++};
++type CFRef = *const c_void;
++#[link(name = "CoreFoundation", kind = "framework")]
++unsafe extern "C" {
++    fn CFURLCreateFromFileSystemRepresentation(
++        a: CFRef,
++        bytes: *const u8,
++        len: isize,
++        directory: u8,
++    ) -> CFRef;
++    fn CFBundleCreate(a: CFRef, url: CFRef) -> CFRef;
++    fn CFBundleLoadExecutable(bundle: CFRef) -> u8;
++    fn CFBundleCopyExecutableURL(bundle: CFRef) -> CFRef;
++    fn CFURLGetFileSystemRepresentation(
++        url: CFRef,
++        resolve: u8,
++        buffer: *mut u8,
++        size: isize,
++    ) -> u8;
++    fn CFStringCreateWithCString(a: CFRef, bytes: *const i8, encoding: u32) -> CFRef;
++    fn CFBundleGetFunctionPointerForName(bundle: CFRef, name: CFRef) -> *mut c_void;
++    fn CFRelease(value: CFRef);
++}
++struct Owned(CFRef);
++impl Owned {
++    fn new(value: CFRef) -> Result<Self, String> {
++        if value.is_null() {
++            Err("CoreFoundation returned null".into())
++        } else {
++            Ok(Self(value))
++        }
++    }
++}
++impl Drop for Owned {
++    fn drop(&mut self) {
++        unsafe { CFRelease(self.0) }
++    }
++}
++fn be16(b: &[u8], p: usize) -> Result<usize, String> {
++    Ok(u16::from_be_bytes(
++        b.get(p..p + 2)
++            .ok_or("truncated resource u16")?
++            .try_into()
++            .unwrap(),
++    ) as usize)
++}
++fn be32(b: &[u8], p: usize) -> Result<usize, String> {
++    Ok(u32::from_be_bytes(
++        b.get(p..p + 4)
++            .ok_or("truncated resource u32")?
++            .try_into()
++            .unwrap(),
++    ) as usize)
++}
++// Classic resource-file header/map. Offsets in the reference list are relative
++// to the type list; resource data offsets are 24-bit and skip a length prefix.
++fn pipl_resources(bytes: &[u8]) -> Result<Vec<&[u8]>, String> {
++    let data = be32(bytes, 0)?;
++    let map = be32(bytes, 4)?;
++    let types = map + be16(bytes, map + 24)?;
++    let count = be16(bytes, types)?;
++    if count == 65535 {
++        return Ok(vec![]);
++    }
++    let mut result = Vec::new();
++    for i in 0..=count {
++        let entry = types + 2 + 8 * i;
++        let kind = bytes
++            .get(entry..entry + 4)
++            .ok_or("truncated resource type")?;
++        if kind != b"PiPL" {
++            continue;
++        }
++        let refs = types + be16(bytes, entry + 6)?;
++        for j in 0..=be16(bytes, entry + 4)? {
++            let r = refs + j * 12;
++            let offset = be32(bytes, r + 4)? & 0xffffff;
++            let start = data + offset;
++            let len = be32(bytes, start)?;
++            result.push(
++                bytes
++                    .get(start + 4..start + 4 + len)
++                    .ok_or("truncated PiPL")?,
++            );
++        }
++    }
++    Ok(result)
++}
++fn entrypoint(pipl: &[u8]) -> Result<String, String> {
++    if be32(pipl, 0)? != 0 {
++        return Err("unsupported PiPL version".into());
++    }
++    let count = be32(pipl, 4)?;
++    let mut pos = 8;
++    let key: &[u8] = if cfg!(target_arch = "aarch64") {
++        b"ma64"
++    } else {
++        b"mi64"
++    };
++    for _ in 0..count {
++        let property = pipl.get(pos..pos + 16).ok_or("truncated PiPL property")?;
++        let size = be32(property, 12)?;
++        let value = pipl
++            .get(pos + 16..pos + 16 + size)
++            .ok_or("truncated PiPL value")?;
++        if &property[0..4] == b"8BIM" && &property[4..8] == key {
++            // AE_General.r defines CodeMacIntel64/CodeMacARM64 as pstring.
++            let len = *value.first().ok_or("empty PiPL entrypoint")? as usize;
++            let name = value.get(1..1 + len).ok_or("truncated PiPL entrypoint")?;
++            return String::from_utf8(name.to_vec()).map_err(|e| e.to_string());
++        }
++        pos += 16 + ((size + 3) & !3);
++    }
++    Err("PiPL has no code property for this worker architecture".into())
++}
++pub fn inspect(path: &Path) -> Result<Value, String> {
++    let path = path.canonicalize().map_err(|e| e.to_string())?;
++    let mut resources = Vec::new();
++    for item in std::fs::read_dir(path.join("Contents/Resources")).map_err(|e| e.to_string())? {
++        let item = item.map_err(|e| e.to_string())?.path();
++        if item.extension().is_some_and(|s| s == "rsrc") {
++            let bytes = std::fs::read(&item).map_err(|e| e.to_string())?;
++            for pipl in pipl_resources(&bytes)? {
++                resources.push((entrypoint(pipl)?, format!("{:x}", Sha256::digest(pipl))));
++            }
++        }
++    }
++    if resources.len() != 1 {
++        return Err(format!("expected one PiPL, found {}", resources.len()));
++    }
++    let (entry, pipl_sha256) = &resources[0];
++    use std::os::unix::ffi::OsStrExt;
++    let bytes = path.as_os_str().as_bytes();
++    unsafe {
++        let url = Owned::new(CFURLCreateFromFileSystemRepresentation(
++            ptr::null(),
++            bytes.as_ptr(),
++            bytes.len() as isize,
++            1,
++        ))?;
++        let bundle = Owned::new(CFBundleCreate(ptr::null(), url.0))?;
++        let executable_url = Owned::new(CFBundleCopyExecutableURL(bundle.0))?;
++        let mut buffer = [0u8; 4096];
++        if CFURLGetFileSystemRepresentation(
++            executable_url.0,
++            1,
++            buffer.as_mut_ptr(),
++            buffer.len() as isize,
++        ) == 0
++        {
++            return Err("cannot resolve bundle executable".into());
++        }
++        let len = buffer
++            .iter()
++            .position(|&b| b == 0)
++            .ok_or("unterminated executable path")?;
++        let executable = Path::new(std::ffi::OsStr::from_bytes(&buffer[..len]));
++        let hash = format!(
++            "{:x}",
++            Sha256::digest(std::fs::read(executable).map_err(|e| e.to_string())?)
++        );
++        if CFBundleLoadExecutable(bundle.0) == 0 {
++            return Err("CFBundleLoadExecutable failed".into());
++        }
++        let name = CString::new(entry.as_str()).map_err(|e| e.to_string())?;
++        let name = Owned::new(CFStringCreateWithCString(
++            ptr::null(),
++            name.as_ptr(),
++            0x08000100,
++        ))?;
++        if CFBundleGetFunctionPointerForName(bundle.0, name.0).is_null() {
++            return Err(format!("missing entrypoint {entry}"));
++        }
++        Ok(
++            json!({"mode":"native-plugin", "capability":"load-only", "architecture":std::env::consts::ARCH,
++            "bundle":path, "executable":executable, "executable_sha256":hash,
++            "pipl_sha256":pipl_sha256, "entrypoint":entry, "entrypoint_resolved":true,
++            "selectors_executed":[], "render_supported":false}),
++        )
++    }
++}
