@@ -1771,15 +1771,13 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
-// Radius>=3 dispatch uses the generic circular kernel. Keep a bounded
-// 400M square-kernel work ceiling, no larger than the existing Median ceiling.
+// Radius>=3 dispatch uses the generic circular kernel. Smart admission
+// retains the verified kernel domain without a Mac-only work ceiling.
 static bool is_admitted_pf32_smart_bilateral_general_beta(const DGParams &p, long w, long h)
 {
     if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
         p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 3 || p.blur_size > 32 ||
         p.ds_x != 1.0f || p.ds_y != 1.0f || w <= 0 || h <= 0) return false;
-    const size_t kernel = (size_t)p.blur_size*2u+1u;
-    if ((size_t)w*(size_t)h > 400u*1000u*1000u/(kernel*kernel)) return false;
     DGParams identity = p;
     identity.blur_mode = BLUR_MODE_NONE;
     return is_admitted_pf32_smart_unblurred_beta(identity);
@@ -1813,15 +1811,9 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 		p.bg_color.green, p.bg_color.blue};
 	for (float value : controls)
 		if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
-	const size_t pixels = (size_t)w * (size_t)h;
-	const size_t kernel = (size_t)p.blur_size * 2u + 1u;
-	static constexpr size_t kSeparableWorkBudget = 1200u * 1000u * 1000u;
-	static constexpr size_t kMedianWorkBudget = 400u * 1000u * 1000u;
-	if (p.blur_mode == BLUR_MODE_MEDIAN) {
-		return kernel <= kMedianWorkBudget / kernel &&
-			pixels <= kMedianWorkBudget / (kernel * kernel);
-	}
-	return pixels <= kSeparableWorkBudget / (kernel * 2u);
+	// Kernel sizes are bounded by the control checks above; storage products
+	// are checked by the Smart world validator and RenderBits.
+	return true;
 }
 
 static bool pf32_smart_worlds_are_bounded_sdr(
@@ -1829,11 +1821,13 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 {
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
-	    input->width != output->width || input->height != output->height ||
-	    input->width > 4096 || input->height > 4096) return false;
+	    input->width != output->width || input->height != output->height) return false;
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
-	if (width > 4096u * 2160u / height) return false;
+	if (width > std::numeric_limits<size_t>::max() / height) return false;
+	// The EDT owns a long-index plane as well as float planes. Preserve the
+	// largest element's vector representability after removing the area cap.
+	if (width * height > std::vector<long>().max_size()) return false;
 	if ((reinterpret_cast<uintptr_t>(input->data) % alignof(PF_PixelFloat)) != 0 ||
 	    (reinterpret_cast<uintptr_t>(output->data) % alignof(PF_PixelFloat)) != 0 ||
 	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
