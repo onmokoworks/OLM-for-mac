@@ -37,3 +37,7 @@ C31-dg-smart-r6
 C32-olmblur-smart-r7
 C33-radial-smart-r5
 C34-kira-smart-r8
+C35-radial-smart-r6
+C36-dblur-smart-r6
+C37-dg-smart-r7
+F40-stale-bindings-adjudication
