@@ -28,6 +28,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source',type=Path);p.add_argument('--index',type=int,action='append',default=[])
     p.add_argument('--seed',type=int,default=1)
+    p.add_argument('--case-json',type=Path,help='Explicit typed case with hex-encoded pixels')
     p.add_argument('--plane-prefix-bytes',type=int,help='Capture a bounded PF8 plane prefix when the full plane exceeds the worker watch limit')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
@@ -43,8 +44,11 @@ def main():
     deadline=time.monotonic()+600
     with tempfile.TemporaryDirectory(dir=args.scratch) as td:
       td=Path(td);prod=td/'prod';prod.mkdir();report['provenance']=a.prepare(prod,deadline);a=variant(a,td/'candidate',deadline,source)
-      for index in args.index or [45,200]:
-        c=a.generate(args.seed,index);assert c['depth'] in (8,16)
+      for index in ([0] if args.case_json else args.index or [45,200]):
+        if args.case_json:
+            c=json.loads(args.case_json.read_text());c['pixels']=bytes.fromhex(c['pixels'])
+        else:c=a.generate(args.seed,index)
+        assert c['depth'] in (8,16)
         w,h=c['geometry'];n=w*h*4;depth=c['depth']
         capture_n=args.plane_prefix_bytes or n
         assert 0<capture_n<=n and capture_n%4==0

@@ -177,6 +177,8 @@ def main():
     p.add_argument('--campaign-pf32-only', action='store_true')
     p.add_argument('--skip-original-rejected-timeouts', action='store_true',
                    help='Record, but do not repeat, baseline Mac timeouts without an AEX output')
+    p.add_argument('--skip-original-failed-timeouts', action='store_true',
+                   help='Skip baseline Mac timeouts whose original also failed; preserve explicit skip records')
     p.add_argument('--corpus', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
     p.add_argument('--strict-improvement', action='store_true')
@@ -229,9 +231,10 @@ def main():
                 c=a.generate(data['seed'],r['index']);assert sha(c['pixels'])==r['input_sha256']
                 if args.campaign_pf32_only and c['depth']!=32:continue
                 oracle=r['result']['oracles']['smart']
-                if (args.skip_original_rejected_timeouts and oracle['status']=='reject' and
+                if (((args.skip_original_rejected_timeouts and oracle['status']=='reject') or
+                     (args.skip_original_failed_timeouts and oracle['status']!='ok')) and
                         r['result']['routes']['smart']['status']=='budget'):
-                    skipped.append(dict(index=r['index'],reason='baseline Mac timeout; original AEX rejects',depth=c['depth']))
+                    skipped.append(dict(index=r['index'],reason='baseline Mac timeout; original AEX '+oracle['status'],depth=c['depth']))
                     continue
                 row=compare(c,oracle.get('raw_sha256') if oracle['status']=='ok' else None)
                 row.update(index=r['index'],profile=c['profile'],oracle_status=oracle['status'])

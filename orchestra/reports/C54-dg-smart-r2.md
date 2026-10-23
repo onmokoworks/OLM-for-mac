@@ -62,3 +62,47 @@ Expected: audit pass,432 arithmetic comparisons per build,198 public exact, targ
 next:
 - Finish fresh campaign remeasurements, then independently verify and trace the PF16 large-Box area fix.
 - Remaining seed105292 finite large-radius Bilateral refusal follows; original Median/assertion/timeouts remain non-comparable.
+
+Cluster1 final campaigns (commit14eb5a5b; evidence-log follow-upfed8f0e3):
+
+FACT: Fresh seed1 remains290/0/3/1/6, all300 result dictionaries identical. Fresh seed105 is284/0/3/2/11; only Smart index150 changes budget→exact. All Classic result dictionaries are unchanged, every prior exact Smart hash preserved. Both complete300/exit0. This is the measured10-second improvement, separate from the longer verifier allowance.
+
+Cluster2 — retain exact Box area for every Smart typed path (base14eb5a5b):
+
+facts:
+- PF16 independent witness23x16/Size3896 first diverges after Box, not in its source field: all368 pre-filter FLOAT32 words equal;110 post-filter words differ, first original `5ad67f46` versus Mac `5bd67f46`. Output32 words differ, first word46 original `7a35`, Mac `7935`.
+- Kernel7793 area60730849 rounds to60730848 in binary32. Area boundary facts: Size2047/kernel4095 area16769025 is exactly representable; Size2048/kernel4097 area16785409 rounds to16785408; Size4096/kernel8193 area67125249 rounds to67125248.
+- Existing C52 exact-area normalization was selected only for PF32 Smart. Select that same double-precision integer-area normalization for PF8/PF16 Smart too. Classic keeps its existing rounded divisor. No accumulator, admission, field generation, source mask or writer change in this cluster.
+- Corrected trace matches368/368 pre words,368/368 post words, and2944/2944 output bytes. Both traces have identical original input/public-output hashes; typed original callback replay equals the full public original output. PF16 plane capture uses the existing same-mask PNG proxy plus typed public/callback binding, not a native AE capture.
+- Independent public matrix216/216 exact and sanitizer-identical; boundary matrix162/162 exact and sanitizer-identical. The latter covers all3 depths, sizes2047/2048/4096, geometries7x3/3x1/1x7, all ownership/interpolation/render choices with background/invert variation and padded strides. The former includes every originally failing PF16 Size3896 case. No tolerance or expectation adjustment.
+- Before/current/sanitized verifier passes597 campaign cases and147 corpus cases, with no byte/status change at all. Seed1 remains290 exact+9 unchanged nonexact; seed105284 exact+14 unchanged nonexact. Explicitly skipped: seed1/10(original timeout) and seed105/205,296(original Median assertion), each a baseline Mac timeout. These3 cases do not supply successful originals and are not counted exact or sanitizer-clean. A new optional verifier flag records these skips; ordinary/default behavior remains unchanged. The first cluster did execute seed1/10 under the longer allowance.
+
+| Smart comparison | Before cluster2 | After cluster2 |
+|---|---|---|
+| seed1 fixed-oracle exact/mismatch/refusal/budget/uncompared |290/0/3/1/6|290/0/3/1/6|
+| seed105 fixed-oracle exact/mismatch/refusal/budget/uncompared |284/0/3/2/11|284/0/3/2/11|
+| saved corpus147 |147 exact|147 exact, identical hashes|
+| independent failing PF16 witness |32 output words differ|0 output words differ|
+
+inference:
+- Retaining the true integer area explains and closes the first divergent filter stage. This is the same general normalization precision boundary C52 established for PF32, now independently witnessed for PF16 and checked for PF8. Finite matrices do not prove native AE or arbitrary unsupported inputs.
+
+changed_files (additional):
+- `tools/emulation/trace_distancegradation_blur_C14.py`: generic explicit typed-case input; public/callback binding and full-word comparisons remain mandatory.
+- `tools/fuzz/verify_distancegradation_smart_C14.py`: explicit optional skip for baseline Mac timeouts whose originals also failed, with recorded reason.
+- C54 probe/audit, report and evidence; production divisor selector/comment only beyond cluster1.
+
+verify (cluster2; same scratch environment as above):
+```sh
+python3 tools/fuzz/probe_distancegradation_C54.py --mode box --scratch "$s/area" --report "$s/area.json" > "$s/area.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C54.py --mode area-boundaries --scratch "$s/area-boundaries" --report "$s/area-boundaries.json" > "$s/area-boundaries.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref 14eb5a5b --campaign "$s/seed1.json" --campaign "$s/seed105.json" --skip-original-failed-timeouts --corpus --strict-improvement --case-timeout 180 --scratch "$s/area-verify" --report "$s/area-verify.json" > "$s/area-verify.log" 2>&1
+py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
+git show 14eb5a5b:mac/OLMDistanceGradation/OLMDistanceGradation.cpp > "$s/performance.cpp"
+"$py" tools/emulation/trace_distancegradation_blur_C14.py --case-json orchestra/reports/C54-evidence/box16-case.json --source "$s/performance.cpp" --scratch "$s/trace16-before" --report "$s/trace16-before.json" > "$s/trace16-before.log" 2>&1
+"$py" tools/emulation/trace_distancegradation_blur_C14.py --case-json orchestra/reports/C54-evidence/box16-case.json --scratch "$s/trace16-after" --report "$s/trace16-after.json" > "$s/trace16-after.log" 2>&1
+```
+Expected:216+162 exact/sanitized-identical; zero prior exact losses, corpus147 unchanged; paired trace before0/110/32 and after0/0/0 differing pre/post/output words. The trace exits0 on successful capture even when differences exist; audit checks the actual counts.
+
+next:
+- Two clusters closed. Remeasuring seed1 and testing large-radius PF32 scalar Bilateral in scratch before any admission change.

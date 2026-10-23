@@ -573,7 +573,7 @@ static void box_blur_separable(float *mat, long w, long h, int ksize, bool doubl
 {
 	if (ksize <= 1) return;
 	const int half = ksize / 2;
-	// Smart PF32: retain the integer kernel area in double precision.
+	// Smart typed paths retain the integer kernel area in double precision.
 	// Odd kernels above 4095 lose area bits when rounded through float.
 	const double area = double_area ? (double)ksize * (double)ksize : (double)(float)(ksize * ksize);
 	if (smart_owner && box_sum_is_exact(mat, (size_t)w * h, ksize)) {
@@ -1218,7 +1218,7 @@ static void build_distance_field(
 		if (ksize > 1) {
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
 				box_blur_separable(df.x.data(), w, h, ksize,
-				    p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat), p.smart_owner);
+				    p.smart_owner, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
 				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {

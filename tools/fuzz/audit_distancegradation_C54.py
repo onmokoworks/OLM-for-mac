@@ -34,7 +34,7 @@ def main():
     target=read('target')['rows'][0]
     assert target['exact'] and target['before_equal'] and target['sanitized_equal']
     assert target['seconds']<10 and target['before_seconds']>10
-    for name in ('box-final','area-matrix','bilateral-matrix'):
+    for name in ('box-final','area-matrix','area-boundaries','bilateral-matrix','bilateral-extreme'):
         if not (E/(name+'.json.gz')).exists():continue
         d=read(name);assert d['completed']
         assert all(r['exact'] and r['sanitized_equal'] for r in d['rows'])
