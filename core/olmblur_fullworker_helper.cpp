@@ -1,4 +1,5 @@
 #include "olmblur_fullworker_helper.h"
+#include "x86_float.h"
 
 namespace olm::blur::fullworker {
 namespace {
@@ -11,10 +12,10 @@ struct Accum {
 };
 
 inline void add(Accum& a, const float* pixel, float weight) {
-    a.sum += weight;
-    a.red += pixel[0] * weight;
-    a.green += pixel[1] * weight;
-    a.blue += pixel[2] * weight;
+    a.sum = x86_float::add(a.sum, weight);
+    a.red = x86_float::add(a.red, x86_float::mul(pixel[0], weight));
+    a.green = x86_float::add(a.green, x86_float::mul(pixel[1], weight));
+    a.blue = x86_float::add(a.blue, x86_float::mul(pixel[2], weight));
 }
 
 inline void copy_rgb(const float* src, float* dst) {
@@ -26,14 +27,14 @@ inline void copy_rgb(const float* src, float* dst) {
 inline void finish(Accum& a, bool unchanged, const float* center, float* dst) {
     volatile float scale = 1.0f;
     if (a.sum != 0.0f) {
-        scale = 1.0f / a.sum;
+        scale = x86_float::div(1.0f, a.sum);
     }
     if (unchanged) {
         copy_rgb(center, dst);
     } else {
-        dst[0] = scale * a.red;
-        dst[1] = scale * a.green;
-        dst[2] = scale * a.blue;
+        dst[0] = x86_float::mul(scale, a.red);
+        dst[1] = x86_float::mul(scale, a.green);
+        dst[2] = x86_float::mul(scale, a.blue);
     }
 }
 

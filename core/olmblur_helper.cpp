@@ -1,4 +1,5 @@
 #include "olmblur_helper.h"
+#include "x86_float.h"
 
 #include <algorithm>
 
@@ -21,12 +22,12 @@ inline void store_normalized(volatile float& sum,
     if (sum == 0.0f) {
         sum = 0.0f;
     } else {
-        sum = 1.0f / sum;
+        sum = x86_float::div(1.0f, sum);
     }
     const float scale = sum;
-    destination[0] = scale * static_cast<float>(red);
-    destination[1] = scale * static_cast<float>(green);
-    destination[2] = scale * static_cast<float>(blue);
+    destination[0] = x86_float::mul(scale, static_cast<float>(red));
+    destination[1] = x86_float::mul(scale, static_cast<float>(green));
+    destination[2] = x86_float::mul(scale, static_cast<float>(blue));
 }
 
 bool valid(const std::uint8_t* flags, const float* src, float* dst,
@@ -63,10 +64,10 @@ bool horizontal(const std::uint8_t* flags, const float* src, float* dst,
                 if (flags[index] == 0) break;
                 const float weight = weights[d];
                 const float* pixel = src + index * 3;
-                sum += weight;
-                red += weight * pixel[0];
-                green += weight * pixel[1];
-                blue += weight * pixel[2];
+                sum = x86_float::add(sum, weight);
+                red = x86_float::add(red, x86_float::mul(weight, pixel[0]));
+                green = x86_float::add(green, x86_float::mul(weight, pixel[1]));
+                blue = x86_float::add(blue, x86_float::mul(weight, pixel[2]));
             }
             const std::size_t right = std::min(p.radius, p.width - 1 - x);
             for (std::size_t d = 1; d <= right; ++d) {
@@ -74,10 +75,10 @@ bool horizontal(const std::uint8_t* flags, const float* src, float* dst,
                 if (flags[index] == 0) break;
                 const float weight = weights[d];
                 const float* pixel = src + index * 3;
-                sum += weight;
-                red += weight * pixel[0];
-                green += weight * pixel[1];
-                blue += weight * pixel[2];
+                sum = x86_float::add(sum, weight);
+                red = x86_float::add(red, x86_float::mul(weight, pixel[0]));
+                green = x86_float::add(green, x86_float::mul(weight, pixel[1]));
+                blue = x86_float::add(blue, x86_float::mul(weight, pixel[2]));
             }
             store_normalized(sum, red, green, blue, out);
         }
@@ -110,10 +111,10 @@ bool vertical(const std::uint8_t* flags, const float* src, float* dst,
                 if (flags[index] == 0) break;
                 const float weight = weights[d];
                 const float* pixel = src + index * 3;
-                sum += weight;
-                red += weight * pixel[0];
-                green += weight * pixel[1];
-                blue += weight * pixel[2];
+                sum = x86_float::add(sum, weight);
+                red = x86_float::add(red, x86_float::mul(weight, pixel[0]));
+                green = x86_float::add(green, x86_float::mul(weight, pixel[1]));
+                blue = x86_float::add(blue, x86_float::mul(weight, pixel[2]));
             }
             const std::size_t bottom = std::min(p.radius, p.height - 1 - y);
             for (std::size_t d = 1; d <= bottom; ++d) {
@@ -121,10 +122,10 @@ bool vertical(const std::uint8_t* flags, const float* src, float* dst,
                 if (flags[index] == 0) break;
                 const float weight = weights[d];
                 const float* pixel = src + index * 3;
-                sum += weight;
-                red += weight * pixel[0];
-                green += weight * pixel[1];
-                blue += weight * pixel[2];
+                sum = x86_float::add(sum, weight);
+                red = x86_float::add(red, x86_float::mul(weight, pixel[0]));
+                green = x86_float::add(green, x86_float::mul(weight, pixel[1]));
+                blue = x86_float::add(blue, x86_float::mul(weight, pixel[2]));
             }
             store_normalized(sum, red, green, blue, out);
         }
