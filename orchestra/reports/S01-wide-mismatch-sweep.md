@@ -185,9 +185,9 @@ next:
 - Route-specific Classic triage can use the 5,875 retained cases without conflating Classic and Smart oracles.
 
 orchestrator note (merge curation):
-- The 5,868 Classic-route witnesses were moved out of `tests/fuzz_corpus/` into
+- The 5,873 Classic-route witnesses were moved out of `tests/fuzz_corpus/` into
   `orchestra/reports/S01-wide-mismatch-sweep/classic-witnesses.tar.gz`
-  (SHA-256 `0173301f1b0e7d1eebcff77eac5d9a494ac7a251105f9eadd724bf49b0af7847`; also at
+  (SHA-256 `c01f2080ecff1cc09fea294f1fc45b7aeacde594c9543bbfef5dc7bf1b78889d`; also at
   `~/.cache/olm-emu/S01-classic-witnesses/`). Reason: AE always takes the Smart route for these
   SmartFX plugins, so Classic mismatches are not shipping-relevant; keeping them in the corpus would add
   69 MB and thousands of expected-mismatch replays. Extract with `tar xzf` from the repo root.
