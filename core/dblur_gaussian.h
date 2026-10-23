@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #pragma once
 
 #include <cmath>
@@ -20,12 +21,12 @@ inline float gaussian_argument(int count, int index)
 
 inline float gaussian_weight(int count, int index)
 {
-    return static_cast<float>(std::exp(static_cast<double>(gaussian_argument(count, index))));
+    return ucrt_expf(gaussian_argument(count, index), UCRT_FMA);
 }
 
 inline float gaussian_weight_expfloat(int count, int index)
 {
-    return ::expf(gaussian_argument(count, index));
+    return ucrt_expf(gaussian_argument(count, index), UCRT_FMA);
 }
 
 }  // namespace olm::dblur

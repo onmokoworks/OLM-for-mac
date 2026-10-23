@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 SRC="$ROOT_DIR/cli/OLMDirectionalBlur/main.cpp"
 OUT="${1:-$ROOT_DIR/cli/OLMDirectionalBlur/olmdirectionalblur_cli}"
-CXX="${CXX:-clang++}"
+CXX="${CXX:-$ROOT_DIR/tools/ucrt_cxx.py}"
 
 CXXFLAGS=(-std=c++17 -O2 -Wall -Wextra -pedantic)
 LDFLAGS=()

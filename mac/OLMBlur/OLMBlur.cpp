@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMBlur.h"
 #include "olmblur_worker_orchestration.h"
 #include "olmblur_worker16_nonlegacy.h"
@@ -1314,7 +1315,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 				float denom = (sigma + sigma) * sigma;
 				weights[radius] = 1.0f;
 				for (A_long k = 1; k <= radius; ++k) {
-					float v = expf(-(float)(k*k) / denom);
+					float v = ucrt_expf(-(float)(k*k) / denom, UCRT_FMA);
 					weights[radius - k] = v;
 					weights[radius + k] = v;
 				}
@@ -1333,7 +1334,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	} else {
 		BlurDebugConfig debug = load_blur_debug_config();
 		float decay = 1.0f;
-		if (bp->repeat > 1) decay = powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1));
+		if (bp->repeat > 1) decay = ucrt_powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1), UCRT_FMA);
 
 		for (A_long iter = 0; iter < bp->repeat; ++iter) {
 			double radius_d = (double)blur_amount * pow((double)decay, (double)iter);

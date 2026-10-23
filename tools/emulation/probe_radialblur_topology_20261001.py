@@ -78,13 +78,15 @@ def build(directory,source,sanitize=False):
     (directory/'harness.cpp').write_text(HARNESS.read_text())
     sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip()
     binary=directory/'mac'
+    math_root=Path(__file__).resolve().parents[2]/'ucrtmath'
+    subprocess.run(['sh',str(math_root/'build.sh'),str(directory/'ucrtmath')],check=True,capture_output=True)
     flags=['-O1','-g','-fsanitize=address,undefined','-fno-omit-frame-pointer'] if sanitize else ['-O2']
     subprocess.run(['clang++','-std=c++17','-arch','arm64',*flags,'-fno-fast-math','-ffp-contract=off',
                     '-ffunction-sections','-fdata-sections','-Wno-pragma-pack','-isysroot',sdk,
                     *[arg for path in ('Headers','Headers/SP','Util','Resources') for arg in ('-I',str(ROOT/path))],
                     str(directory/'harness.cpp'),str(SOURCE.parent/'OLMRadialBlur_Strings.cpp'),
                     str(ROOT/'Util/AEGP_SuiteHandler.cpp'),str(ROOT/'Util/MissingSuiteError.cpp'),
-                    '-Wl,-dead_strip','-framework','Cocoa','-o',str(binary)],check=True,capture_output=True)
+                    str(directory/'ucrtmath/libucrtmath.a'),'-Wl,-dead_strip','-framework','Cocoa','-o',str(binary)],check=True,capture_output=True)
     return binary
 
 

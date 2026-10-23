@@ -70,22 +70,31 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
     "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
-    "candidate_sha256": "942d049bbf91dfe262273a0334d598d6bd77b789bc892fda5e0951ad46cf68cb",
+    "candidate_sha256": "bbfba7b50c5e1fcc49ba35bb1ac8dbac68f268a26cf11c1bd575effde5525b18",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
     "dependencies_sha256": {
       "core/olmblur_fullworker_helper.cpp": "0c0643143abafd5bd5635fd18755a95e8a297b38786b58913e3af2f5df5c6ad2",
       "core/olmblur_helper.cpp": "ae31902dc64219f9568995d518b7cf8f22a8653644a4a9a8906cf67d90869098",
-      "core/olmblur_worker16_legacy.cpp": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da",
-      "core/olmblur_worker16_nonlegacy.cpp": "e0cec4230006c518514e4c730fa940fb935074a48e401d8e7f586b46b7b4266e",
-      "core/olmblur_worker32_legacy.cpp": "cb861b3dcc572cb2df029ce642c2d7790365e9c92eb81d4735f2b78e71d5f4c3",
-      "core/olmblur_worker32_nonlegacy.cpp": "5db95e5c39c6b232254e4011fcd8e47e2f96d1a8909205e49e25075130df5829",
-      "core/olmblur_worker8_legacy.cpp": "537b416da3b3f8fca50a2bdf90ff01f8cdb7d8b7369a439e7bf5ce573cf943a4",
-      "core/olmblur_worker_orchestration.cpp": "2f896d3e7a838421bb69847f585151da320de1135015b29affa18e8de095caaf",
-      "mac/OLMBlur/OLMBlur.cpp": "cf362169e4ca3bd76d06fe59e31c4d07401964bbe5bf19189cd9d142c6da4cf3",
+      "core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+      "core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+      "core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+      "core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+      "core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+      "core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+      "mac/OLMBlur/OLMBlur.cpp": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
       "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
       "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
       "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
-      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+      "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
     },
     "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
     "layer": "None; independent layer worlds outside this adapter",
@@ -109,8 +118,8 @@
       "value": 0
     },
     "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
-    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
-    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F30-ucrtmath/aex-guest-worker",
+    "worker_sha256": "8b51d0456ff55aa2034a0bbb00b822bd2339cbe27247021c289170a78a3fb53b",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -150,7 +159,7 @@
     "first_mismatching_stage": null,
     "oracle": {
       "guards_intact": true,
-      "raw_sha256": "9f4d3b6ad9bc7010cb46e0b04a54946b6f453eb72a0ddf540f89669d7294aa21",
+      "raw_sha256": "9dc7e6b7652bb2a592669f5f06203946cd4816d9fe790ae0c31e9aa88957c5d2",
       "session_clean": true,
       "status": "ok"
     },
@@ -163,7 +172,7 @@
       },
       "smart": {
         "guards_intact": true,
-        "raw_sha256": "9f4d3b6ad9bc7010cb46e0b04a54946b6f453eb72a0ddf540f89669d7294aa21",
+        "raw_sha256": "9dc7e6b7652bb2a592669f5f06203946cd4816d9fe790ae0c31e9aa88957c5d2",
         "session_clean": true,
         "status": "ok"
       }
@@ -180,13 +189,13 @@
       "smart": {
         "diff": {
           "actual_bytes": 496,
-          "actual_word_hex": "4523c17f",
-          "different_bytes": 22,
-          "different_words": 9,
+          "actual_word_hex": "0000c07f",
+          "different_bytes": 4,
+          "different_words": 4,
           "expected_bytes": 496,
-          "expected_word_hex": "4623c1ff",
-          "first_byte": 116,
-          "first_word": 29
+          "expected_word_hex": "0000c0ff",
+          "first_byte": 219,
+          "first_word": 54
         },
         "error": 0,
         "metadata": {

@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker16_legacy.h"
 
 #include "olmblur_fullworker_helper.h"
@@ -69,7 +70,7 @@ void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) 
         const float exponent = -static_cast<float>(distance * distance) /
                                denominator;
         // The original symmetric coefficient builder calls binary32 expf.
-        const float value = std::exp(exponent);
+        const float value = ucrt_expf(exponent, UCRT_FMA);
         weights[radius - distance] = value;
         weights[radius + distance] = value;
     }

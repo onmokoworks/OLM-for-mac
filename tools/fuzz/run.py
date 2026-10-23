@@ -35,12 +35,14 @@ def main_checkout():
 
 
 def default_worker():
-    configured = os.environ.get('OLM_AEX_WORKER') or shutil.which('aex-guest-worker')
+    configured = os.environ.get('OLM_AEX_WORKER')
     if configured:
         return Path(configured)
-    # Retained local worker discovered on this workstation; always hash-bound.
-    retained = Path.home()/'Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker'
+    # F30: F29 SSE NaN semantics plus UCRT float imports (FMA mode).
+    # The previous worker remains selectable with --worker / OLM_AEX_WORKER.
+    retained = Path.home()/'.cache/olm-emu/worker-F30-ucrtmath/aex-guest-worker'
     return retained if retained.is_file() else None
+
 
 
 def options():

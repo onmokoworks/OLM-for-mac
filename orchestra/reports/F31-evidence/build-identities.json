@@ -1,0 +1,50 @@
+[
+  {
+    "plugin": "OLMBlur",
+    "sha256": "8efccdc913120dd4160e9eff48de915de6ed0c4634023ad76ba775f3fa700097",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  {
+    "plugin": "OLMColorKey",
+    "sha256": "bd327794a53950d418ff9e09ed8ff5f38aa57fe0526c2761d2c964eb91d92362",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  {
+    "plugin": "OLMDirectionalBlur",
+    "sha256": "745a9eeeca3b7728ae3c8b20722004d2f7d01afc448403977ec71ba8c2bb451f",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  {
+    "plugin": "OLMDistanceGradation",
+    "sha256": "3cdc5dc1d38af54ac278f469adde56c38c1db2af451c6285708105e980f08ab8",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  {
+    "plugin": "OLMKiraKira",
+    "sha256": "00b9c71419383405cbe8de452dfdc0d2011689a4efc9563e7aefac516d86e7d1",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  },
+  {
+    "plugin": "OLMRadialBlur",
+    "sha256": "c847a17f4e20a2c3fb0e69d338fe733a0846a170fbc678da228ec2a9cff3bee9",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ]
+  }
+]

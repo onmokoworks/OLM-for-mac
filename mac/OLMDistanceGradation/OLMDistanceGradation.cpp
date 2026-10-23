@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMDistanceGradation.h"
 #include <AEFX_SuiteHelper.h>
 #include "../../core/olmdistancegradation_fieldgen.h"
@@ -1261,10 +1262,10 @@ static inline void compose_pixel(
 				const uint32_t native_ucrt_bits = 0x3f1b5786u;
 				memcpy(&X, &native_ucrt_bits, sizeof(X));
 			} else {
-				X = powf(X, p.power);
+				X = ucrt_powf(X, p.power, UCRT_FMA);
 			}
 		} else {
-			X = powf(X, p.power);
+			X = ucrt_powf(X, p.power, UCRT_FMA);
 		}
 	}
 	// CONSTANT / LINEAR: X passes through. For CONSTANT+Blur, X is already the

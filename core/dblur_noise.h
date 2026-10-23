@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #pragma once
 
 #include <cstdint>
@@ -93,8 +94,7 @@ inline bool generate_noise_plane(int source_width, int source_height,
             return false;
         }
         const float fraction = table_position - static_cast<float>(table_index);
-        float smooth = static_cast<float>(
-            std::pow(static_cast<double>(fraction), 2.0));
+        float smooth = ucrt_powf(fraction, 2.0f, UCRT_FMA);
         smooth *= 3.0f - (fraction + fraction);
         const float interpolated =
             (1.0f - smooth) * table[static_cast<std::size_t>(table_index)] +
