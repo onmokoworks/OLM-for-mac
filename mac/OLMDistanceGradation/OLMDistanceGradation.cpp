@@ -603,9 +603,46 @@ static void box_blur_separable(float *mat, long w, long h, int ksize, bool doubl
 // Legacy cvSmooth mode 3 (CV_MEDIAN).  The retained AEX uses replicated
 // borders and an odd square aperture.  Keep the temporary source separate:
 // OpenCV's median pass never consumes values written earlier in the scan.
+// Large replicated-border windows contain many copies of the same source
+// samples. Count their multiplicities instead of materializing every tap.
+// Finite values with no negative zero have a unique bit pattern per numeric
+// value, so selecting the weighted order statistic preserves nth_element's
+// result bits even when several source samples compare equal.
+static bool median_blur_weighted(float *mat, long w, long h, int ksize)
+{
+	const size_t count = (size_t)w*h;
+	if ((uint64_t)ksize*ksize <= (uint64_t)count*4 ||
+	    !std::all_of(mat, mat+count, [](float v) {
+	        return std::isfinite(v) && !(v == 0.0f && std::signbit(v));
+	    })) return false;
+	const std::vector<float> source(mat, mat+count);
+	std::vector<size_t> order(count);
+	for (size_t i=0; i<count; ++i) order[i]=i;
+	std::sort(order.begin(), order.end(), [&](size_t a, size_t b) {
+		return source[a] < source[b];
+	});
+	const long radius = ksize/2;
+	auto multiplicity = [=](long sample, long center, long length) -> uint64_t {
+		if (length == 1) return ksize;
+		if (sample == 0) return std::max(0L, radius-center+1);
+		if (sample == length-1) return std::max(0L, radius-(length-1-center)+1);
+		return std::abs(sample-center) <= radius ? 1 : 0;
+	};
+	const uint64_t rank = (uint64_t)ksize*ksize/2;
+	for (long y=0; y<h; ++y) for (long x=0; x<w; ++x) {
+		uint64_t cumulative=0;
+		for (size_t i:order) {
+			cumulative += multiplicity(i%w,x,w)*multiplicity(i/w,y,h);
+			if (cumulative > rank) { mat[(size_t)y*w+x]=source[i]; break; }
+		}
+	}
+	return true;
+}
+
 static void median_blur(float *mat, long w, long h, int ksize)
 {
 	if (!mat || w <= 0 || h <= 0 || ksize <= 1) return;
+	if (median_blur_weighted(mat, w, h, ksize)) return;
 	const int radius = ksize / 2;
 	std::vector<float> source(mat, mat + (size_t)w * h);
 	std::vector<float> window((size_t)ksize * ksize);

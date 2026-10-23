@@ -58,3 +58,23 @@ See `orchestra/reports/C46-radial-smart-r8.md` and its bound evidence.
 INFERENCE: Zero initialization removes dependence on uninitialized allocation
 contents, consistent with observed emulator values. Native Windows allocator
 contents remain undefined; no native Windows/AE parity is claimed for this bug.
+
+## DistanceGradation Smart large Median assertion (C56)
+
+FACT: Original DistanceGradation Smart rendering raises `cv::Exception` at
+`median_blur.simd.hpp:985`, with the assertion
+`src.depth() == CV_8U && (cn == 1 || cn == 3 || cn == 4)`, for the retained
+PF16 seed105 cases205 (24x27, Size3600) and296 (18x24, Size2237), and fresh
+seed156 case51 (11x20, Size3416). The F46 worker reports a throw through
+`0x181186c7f` rather than a successful Smart output. Complete parameters,
+input identities and diagnostics are retained in `orchestra/reports/C56-evidence/`.
+This is an original filter/type assertion, not evidence of undefined reads or
+uninitialized memory. No deterministic replacement output is certified here.
+
+INFERENCE: The original Smart render cannot complete normally for these
+witnesses. In native AE, the underlying render would fail unless host/plugin
+exception handling supplies another outcome; the emulator does not establish
+whether AE displays an error, aborts a frame, or handles the exception another
+way. No native AE UI/crash behavior is claimed. Mac output in this domain is
+not labelled AEX exact. C56's Median optimization preserves the previous Mac
+bytes and does not convert the original exception into an exact reference.

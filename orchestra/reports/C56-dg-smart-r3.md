@@ -49,3 +49,51 @@ Expected:648 bit-identical arithmetic cases per build;108 public exact; target b
 
 next:
 - Finish fresh seed and post-performance seed1 measurement. Investigate Median timeout and PF32 Bilateral residual domains separately; do not count original failures as exact.
+
+Cluster 1 completed remeasurements:
+
+FACT: Candidate seed1 completes300/exit0 with290 exact/0 mismatch/3 refusal/0 budget/7 uncompared. Only case10 changes from Mac budget to uncompared; all original successful cases retain exact hashes. Fresh seed156 completes300/exit0 with284 exact/0 mismatch/0 refusal/1 budget/15 uncompared; all284 successful originals are exact. Its one Mac budget is PF16 Median case51, Size3416. These full reports are retained.
+
+Cluster 2 — weighted Median order statistic (base77e7ccb5):
+
+facts:
+- Replicated borders cause the old Median to materialize ksize² samples for every output. The new path sorts source sample indices once, counts each sample's replicated-border multiplicity per output coordinate, and selects rank floor(ksize²/2). No field arithmetic or sample conversion changes.
+- Selection applies only when ksize²>4*pixel_count and every field value is finite without negative zero. Under this predicate numerically equal samples have identical float bits. Nonfinite/signed-zero cases and smaller apertures retain the old nth_element path. No render admission predicate changes.
+- Direct retained-operation differential:324 cases per O2 and ASan/UBSan build, zero differing words; radii1/2/3/7/16/33, geometries1/3/19 by1/17, nine profiles including fallback controls. No sanitizer diagnostic, leak detection disabled.
+- Public Smart targets, including original AEX diagnostics and sanitized results:
+
+| Seed/index | Geometry/Size | Before seconds | After seconds | Baseline/sanitized bytes |
+|---|---|---:|---:|---|
+|105/205|24x27/3600|36.622668|0.193578|identical|
+|105/296|18x24/2237|11.787950|0.206331|identical|
+|156/51|11x20/3416|11.592270|0.145050|identical|
+
+- Every target's original throws the CV_8U Median assertion. These faster Mac outputs remain uncompared, not exact. Output hashes are in the full target reports.
+- Before/current/sanitized verifier on seeds1/105/156:299+298+299 cases, preserving290+285+284 exact hashes and all compared nonexact bytes/statuses. All147 saved corpus outputs remain exact/identical. Four original-failed timeout rows are explicitly skipped; three Median targets and Bilateral1/10 are separately measured with baseline equality.
+- Independent small-Median matrix initially passed144 PF8/PF16 cases, then met the unchanged PF32 HDR refusal. This is a probe-domain error, not a newly admitted mismatch. The retained report shows the refusal. Restricting only the probe's PF32 source to SDR gives216/216 public-original exact and sanitized-identical results (all3 depths, sizes1/2, four geometries, ownership/render/interpolation combinations).
+
+| Saved Smart corpus | Before cluster2 | After cluster2 | Rebaseline |
+|---|---|---|---|
+|147 cases|147 exact|147 exact, identical hashes|None|
+
+inference:
+- Weighted selection is the same order statistic over the same replicated multiset. The finite/no-negative-zero condition also guarantees equal numeric selections preserve their original bit pattern. Baseline and sanitizer comparisons support accelerating these original-failed domains without certifying their Mac outputs against absent original outputs.
+
+changed_files (additional):
+- Production Median helper/dispatch; `tools/fuzz/check_distancegradation_median_C56.py`; C56 public probe target/Median options.
+- `notes/KNOWN_ORIGINAL_BUGS.md`: original Median assertion facts and explicit native-AE uncertainty; no invented deterministic reference semantics.
+- C56 report/evidence.
+
+verify (cluster2, same scratch environment):
+```sh
+python3 tools/fuzz/check_distancegradation_median_C56.py --scratch "$s/median-leaf" --report "$s/median-leaf.json" > "$s/median-leaf.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode box --median --scratch "$s/median-matrix" --report "$s/median-matrix.json" > "$s/median-matrix.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode target --target-case 105 205 --before "$s/base.cpp" --allow-existing-mismatch --scratch "$s/median205" --report "$s/median205.json" > "$s/median205.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode target --target-case 105 296 --before "$s/base.cpp" --allow-existing-mismatch --scratch "$s/median296" --report "$s/median296.json" > "$s/median296.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode target --target-case 156 51 --before "$s/base.cpp" --allow-existing-mismatch --scratch "$s/median51" --report "$s/median51.json" > "$s/median51.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref 77e7ccb5 --campaign "$s/seed1.json" --campaign "$s/seed105.json" --campaign "$s/seed156.json" --skip-original-failed-timeouts --corpus --strict-improvement --case-timeout 180 --scratch "$s/median-verify" --report "$s/median-verify.json" > "$s/median-verify.log" 2>&1
+```
+Expected:324 arithmetic comparisons per build,216 original exact, three targets baseline/sanitizer-identical and under10s; no previously exact loss or corpus change. Timing is load-sensitive. Final full campaign timing census follows after cluster3.
+
+next:
+- Two performance clusters closed. Radius-two PF32 scalar admission is still scratch-only: generic-loop experiment fails20 output words; paired pre-filter plane is exact and post-filter first diverges. A specialized grouped reduction is being checked against original IPP arithmetic before admission.
