@@ -1,0 +1,2726 @@
+{
+  "adapter_sha256": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "cases": [
+    {
+      "depth": 16,
+      "geometry": [
+        7,
+        7
+      ],
+      "index": 62,
+      "input_sha256": "d41c6fcd719456b47b6548bd4916c174944e6a1df2e5897f7066148b2b4aa617",
+      "invalid_sampled_cells": [],
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      },
+      "original_fixture_vs_session": {
+        "a_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "b_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "padding_field_delta": {
+        "a_sha256": "075a7b688c8ea1a13885e662f8a6ccbf063a9fddb13982820a2a53b9db42eed4",
+        "b_sha256": "765eccd5feb9d8c521ddb095273f232dfc79264e9028fe14063f47681e767a59",
+        "different_units": 2,
+        "first": {
+          "a": "0800333f",
+          "b": "0000803f",
+          "byte_offset": 8
+        },
+        "unit_bytes": 4
+      },
+      "padding_output_delta": {
+        "a_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "b_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 440.5373840332031
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 10.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 58.954315185546875
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 4
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 72
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 87.66424560546875
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 19
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 32
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 5.864776611328125
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 64.89993286132812
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 2
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 72
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -318.5372314453125
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 44.72148099411977
+        }
+      ],
+      "seed": 1,
+      "trials": [
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536872408,
+              "size": 2704
+            },
+            {
+              "pointer": 536875112,
+              "size": 2704
+            },
+            {
+              "pointer": 536877816,
+              "size": 676
+            },
+            {
+              "pointer": 536878496,
+              "size": 676
+            },
+            {
+              "pointer": 536879176,
+              "size": 2704
+            },
+            {
+              "pointer": 536881880,
+              "size": 36
+            },
+            {
+              "pointer": 536881920,
+              "size": 404
+            },
+            {
+              "pointer": 536882328,
+              "size": 169
+            },
+            {
+              "pointer": 536882504,
+              "size": 2688
+            },
+            {
+              "pointer": 536885192,
+              "size": 56
+            },
+            {
+              "pointer": 536885248,
+              "size": 8
+            },
+            {
+              "pointer": 536885256,
+              "size": 32
+            },
+            {
+              "pointer": 536885288,
+              "size": 32
+            },
+            {
+              "pointer": 536885320,
+              "size": 32
+            },
+            {
+              "pointer": 536885352,
+              "size": 16
+            },
+            {
+              "pointer": 536885368,
+              "size": 16
+            },
+            {
+              "pointer": 536885384,
+              "size": 32
+            },
+            {
+              "pointer": 536885416,
+              "size": 32
+            },
+            {
+              "pointer": 536885448,
+              "size": 32
+            },
+            {
+              "pointer": 536885480,
+              "size": 16
+            },
+            {
+              "pointer": 536885496,
+              "size": 40
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 9.250245094299316,
+            "back_alpha_fade": 32,
+            "back_sharp_tail": 0.05000000074505806,
+            "back_strength": 19,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 72,
+            "front_sharp_tail": 0.8700000047683716,
+            "front_strength": 4,
+            "internal_mode": 3,
+            "noise_offset": -8.86111068725586,
+            "noise_type": 2,
+            "noise_type_is_one": false,
+            "noise_variation": 0.6399999856948853,
+            "seed": 72,
+            "size_variation_exponent": 0.5799999833106995,
+            "thickness": 44.72148132324219
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "075a7b688c8ea1a13885e662f8a6ccbf063a9fddb13982820a2a53b9db42eed4",
+          "generator": {
+            "cell_size_bits": "cce23242",
+            "offset_bits": "1cc70dc1",
+            "seed": 72,
+            "work_geometry": [
+              13,
+              13
+            ]
+          },
+          "output_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 7,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": null,
+          "sampled_cells": {
+            "0": "0x3487"
+          },
+          "table_reads": 18,
+          "table_sha256": "312e1823b316fc9603946193d4f6b860680c24eb0974f9b2ac9b4350ffc9afc5"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536872408,
+              "size": 2704
+            },
+            {
+              "pointer": 536875112,
+              "size": 2704
+            },
+            {
+              "pointer": 536877816,
+              "size": 676
+            },
+            {
+              "pointer": 536878496,
+              "size": 676
+            },
+            {
+              "pointer": 536879176,
+              "size": 2704
+            },
+            {
+              "pointer": 536881880,
+              "size": 36
+            },
+            {
+              "pointer": 536882176,
+              "size": 404
+            },
+            {
+              "pointer": 536882840,
+              "size": 169
+            },
+            {
+              "pointer": 536883016,
+              "size": 2688
+            },
+            {
+              "pointer": 536885704,
+              "size": 56
+            },
+            {
+              "pointer": 536885760,
+              "size": 8
+            },
+            {
+              "pointer": 536885768,
+              "size": 32
+            },
+            {
+              "pointer": 536885800,
+              "size": 32
+            },
+            {
+              "pointer": 536885832,
+              "size": 32
+            },
+            {
+              "pointer": 536885864,
+              "size": 16
+            },
+            {
+              "pointer": 536885880,
+              "size": 16
+            },
+            {
+              "pointer": 536885896,
+              "size": 32
+            },
+            {
+              "pointer": 536885928,
+              "size": 32
+            },
+            {
+              "pointer": 536885960,
+              "size": 32
+            },
+            {
+              "pointer": 536885992,
+              "size": 16
+            },
+            {
+              "pointer": 536886008,
+              "size": 40
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 9.250245094299316,
+            "back_alpha_fade": 32,
+            "back_sharp_tail": 0.05000000074505806,
+            "back_strength": 19,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 72,
+            "front_sharp_tail": 0.8700000047683716,
+            "front_strength": 4,
+            "internal_mode": 3,
+            "noise_offset": -8.86111068725586,
+            "noise_type": 2,
+            "noise_type_is_one": false,
+            "noise_variation": 0.6399999856948853,
+            "seed": 72,
+            "size_variation_exponent": 0.5799999833106995,
+            "thickness": 44.72148132324219
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "075a7b688c8ea1a13885e662f8a6ccbf063a9fddb13982820a2a53b9db42eed4",
+          "generator": {
+            "cell_size_bits": "cce23242",
+            "offset_bits": "1cc70dc1",
+            "seed": 72,
+            "work_geometry": [
+              13,
+              13
+            ]
+          },
+          "output_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 7,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": 0.0,
+          "sampled_cells": {
+            "0": "0x3487"
+          },
+          "table_reads": 18,
+          "table_sha256": "312e1823b316fc9603946193d4f6b860680c24eb0974f9b2ac9b4350ffc9afc5"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536872408,
+              "size": 2704
+            },
+            {
+              "pointer": 536875112,
+              "size": 2704
+            },
+            {
+              "pointer": 536877816,
+              "size": 676
+            },
+            {
+              "pointer": 536878496,
+              "size": 676
+            },
+            {
+              "pointer": 536879176,
+              "size": 2704
+            },
+            {
+              "pointer": 536881880,
+              "size": 36
+            },
+            {
+              "pointer": 536882176,
+              "size": 404
+            },
+            {
+              "pointer": 536882840,
+              "size": 169
+            },
+            {
+              "pointer": 536883016,
+              "size": 2688
+            },
+            {
+              "pointer": 536885704,
+              "size": 56
+            },
+            {
+              "pointer": 536885760,
+              "size": 8
+            },
+            {
+              "pointer": 536885768,
+              "size": 32
+            },
+            {
+              "pointer": 536885800,
+              "size": 32
+            },
+            {
+              "pointer": 536885832,
+              "size": 32
+            },
+            {
+              "pointer": 536885864,
+              "size": 16
+            },
+            {
+              "pointer": 536885880,
+              "size": 16
+            },
+            {
+              "pointer": 536885896,
+              "size": 32
+            },
+            {
+              "pointer": 536885928,
+              "size": 32
+            },
+            {
+              "pointer": 536885960,
+              "size": 32
+            },
+            {
+              "pointer": 536885992,
+              "size": 16
+            },
+            {
+              "pointer": 536886008,
+              "size": 40
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 9.250245094299316,
+            "back_alpha_fade": 32,
+            "back_sharp_tail": 0.05000000074505806,
+            "back_strength": 19,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 72,
+            "front_sharp_tail": 0.8700000047683716,
+            "front_strength": 4,
+            "internal_mode": 3,
+            "noise_offset": -8.86111068725586,
+            "noise_type": 2,
+            "noise_type_is_one": false,
+            "noise_variation": 0.6399999856948853,
+            "seed": 72,
+            "size_variation_exponent": 0.5799999833106995,
+            "thickness": 44.72148132324219
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "765eccd5feb9d8c521ddb095273f232dfc79264e9028fe14063f47681e767a59",
+          "generator": {
+            "cell_size_bits": "cce23242",
+            "offset_bits": "1cc70dc1",
+            "seed": 72,
+            "work_geometry": [
+              13,
+              13
+            ]
+          },
+          "output_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 2,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 7,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            }
+          ],
+          "padding_float": 1.0,
+          "sampled_cells": {
+            "0": "0x3487"
+          },
+          "table_reads": 18,
+          "table_sha256": "312e1823b316fc9603946193d4f6b860680c24eb0974f9b2ac9b4350ffc9afc5"
+        }
+      ]
+    },
+    {
+      "depth": 16,
+      "geometry": [
+        1,
+        1
+      ],
+      "index": 108,
+      "input_sha256": "1e780634ce4ab6bb6491e3ba55e8bdb994fbdfeda592fc7c2c122e990991b062",
+      "invalid_sampled_cells": [],
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      },
+      "original_fixture_vs_session": {
+        "a_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "b_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "padding_field_delta": {
+        "a_sha256": "0984f87c6fc9a7e7497c1893cb6e78a7d4f51ddaff8211076584b6b96a47be97",
+        "b_sha256": "95173c66c1ad2a73e280ef487091207516470793ca71ab9418e8ce52bda104a3",
+        "different_units": 3,
+        "first": {
+          "a": "7690cb3d",
+          "b": "0f72193f",
+          "byte_offset": 16
+        },
+        "unit_bytes": 4
+      },
+      "padding_output_delta": {
+        "a_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "b_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": -226.54640197753906
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 10.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 60.80023193359375
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 26
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 90
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 71.72845458984375
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 3609
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 63
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 21.666519165039062
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 48.6343994140625
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 354
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -562.2122039794922
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 22.96092871813651
+        }
+      ],
+      "seed": 1,
+      "trials": [
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536871256,
+              "size": 400
+            },
+            {
+              "pointer": 536871656,
+              "size": 400
+            },
+            {
+              "pointer": 536872056,
+              "size": 100
+            },
+            {
+              "pointer": 536872160,
+              "size": 100
+            },
+            {
+              "pointer": 536872264,
+              "size": 400
+            },
+            {
+              "pointer": 536872664,
+              "size": 36
+            },
+            {
+              "pointer": 536872704,
+              "size": 404
+            },
+            {
+              "pointer": 536873112,
+              "size": 25
+            },
+            {
+              "pointer": 536873144,
+              "size": 384
+            },
+            {
+              "pointer": 536873528,
+              "size": 24
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": -2.391101121902466,
+            "back_alpha_fade": 63,
+            "back_sharp_tail": 0.20999999344348907,
+            "back_strength": 3609,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 90,
+            "front_sharp_tail": 0.7099999785423279,
+            "front_strength": 26,
+            "internal_mode": 3,
+            "noise_offset": -15.63888931274414,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.47999998927116394,
+            "seed": 354,
+            "size_variation_exponent": 0.6000000238418579,
+            "thickness": 22.960927963256836
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "12770e81543a62cbac3c6992fe4ca0068adce01244ab51976159722340b17d27",
+          "generator": {
+            "cell_size_bits": "fbafb741",
+            "offset_bits": "e4387ac1",
+            "seed": 354,
+            "work_geometry": [
+              5,
+              5
+            ]
+          },
+          "output_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -36,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f3",
+              "value_bits": "30c9713f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -32,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f8",
+              "value_bits": "8aa3f03e"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "2b32533f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "e5370b3f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -60,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -56,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": null,
+          "sampled_cells": {},
+          "table_reads": 18,
+          "table_sha256": "d40fd0d0a31562b23a89ae76a4561fdad6c80ec1319e6aa87e4b416045c80077"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536871256,
+              "size": 400
+            },
+            {
+              "pointer": 536871656,
+              "size": 400
+            },
+            {
+              "pointer": 536872056,
+              "size": 100
+            },
+            {
+              "pointer": 536872160,
+              "size": 100
+            },
+            {
+              "pointer": 536872264,
+              "size": 400
+            },
+            {
+              "pointer": 536872664,
+              "size": 36
+            },
+            {
+              "pointer": 536872960,
+              "size": 404
+            },
+            {
+              "pointer": 536873624,
+              "size": 25
+            },
+            {
+              "pointer": 536873656,
+              "size": 384
+            },
+            {
+              "pointer": 536874040,
+              "size": 24
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": -2.391101121902466,
+            "back_alpha_fade": 63,
+            "back_sharp_tail": 0.20999999344348907,
+            "back_strength": 3609,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 90,
+            "front_sharp_tail": 0.7099999785423279,
+            "front_strength": 26,
+            "internal_mode": 3,
+            "noise_offset": -15.63888931274414,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.47999998927116394,
+            "seed": 354,
+            "size_variation_exponent": 0.6000000238418579,
+            "thickness": 22.960927963256836
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "0984f87c6fc9a7e7497c1893cb6e78a7d4f51ddaff8211076584b6b96a47be97",
+          "generator": {
+            "cell_size_bits": "fbafb741",
+            "offset_bits": "e4387ac1",
+            "seed": 354,
+            "work_geometry": [
+              5,
+              5
+            ]
+          },
+          "output_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -36,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -32,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -60,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -56,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": 0.0,
+          "sampled_cells": {},
+          "table_reads": 18,
+          "table_sha256": "d40fd0d0a31562b23a89ae76a4561fdad6c80ec1319e6aa87e4b416045c80077"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536871256,
+              "size": 400
+            },
+            {
+              "pointer": 536871656,
+              "size": 400
+            },
+            {
+              "pointer": 536872056,
+              "size": 100
+            },
+            {
+              "pointer": 536872160,
+              "size": 100
+            },
+            {
+              "pointer": 536872264,
+              "size": 400
+            },
+            {
+              "pointer": 536872664,
+              "size": 36
+            },
+            {
+              "pointer": 536872960,
+              "size": 404
+            },
+            {
+              "pointer": 536873624,
+              "size": 25
+            },
+            {
+              "pointer": 536873656,
+              "size": 384
+            },
+            {
+              "pointer": 536874040,
+              "size": 24
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": -2.391101121902466,
+            "back_alpha_fade": 63,
+            "back_sharp_tail": 0.20999999344348907,
+            "back_strength": 3609,
+            "brightness_gain": 10.0,
+            "front_alpha_fade": 90,
+            "front_sharp_tail": 0.7099999785423279,
+            "front_strength": 26,
+            "internal_mode": 3,
+            "noise_offset": -15.63888931274414,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.47999998927116394,
+            "seed": 354,
+            "size_variation_exponent": 0.6000000238418579,
+            "thickness": 22.960927963256836
+          },
+          "field_dimensions": [
+            3,
+            3
+          ],
+          "field_sha256": "95173c66c1ad2a73e280ef487091207516470793ca71ab9418e8ce52bda104a3",
+          "generator": {
+            "cell_size_bits": "fbafb741",
+            "offset_bits": "e4387ac1",
+            "seed": 354,
+            "work_geometry": [
+              5,
+              5
+            ]
+          },
+          "output_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -36,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -32,
+              "field_cell": 4,
+              "index": -9,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 5,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -60,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -56,
+              "field_cell": 6,
+              "index": -15,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            }
+          ],
+          "padding_float": 1.0,
+          "sampled_cells": {},
+          "table_reads": 18,
+          "table_sha256": "d40fd0d0a31562b23a89ae76a4561fdad6c80ec1319e6aa87e4b416045c80077"
+        }
+      ]
+    },
+    {
+      "depth": 16,
+      "geometry": [
+        3,
+        61
+      ],
+      "index": 127,
+      "input_sha256": "917f4606b09664a0e04852814178ce107ace5a9013e8c77f4c95fc0f8554560f",
+      "invalid_sampled_cells": [
+        27,
+        30,
+        31,
+        33
+      ],
+      "oracle": {
+        "guards_intact": true,
+        "session_clean": true,
+        "status": "ok"
+      },
+      "original_fixture_vs_session": {
+        "a_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+        "b_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "padding_field_delta": {
+        "a_sha256": "958e8e1c1e97f586de3dc874fd09b0d526802390f08126dbdebf6dfe533e3c08",
+        "b_sha256": "eafac1018b39178ebb8002fe0ce322b1f8f4590b82eb0a25fa8d3e40d6d242b4",
+        "different_units": 10,
+        "first": {
+          "a": "fb8ccf3e",
+          "b": "7ec6673f",
+          "byte_offset": 4
+        },
+        "unit_bytes": 4
+      },
+      "padding_output_delta": {
+        "a_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+        "b_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 10.0072021484375
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 15.918609619140625
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 91
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 14.632186889648438
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 518
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -399.5963134765625
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 10.0
+        }
+      ],
+      "seed": 1,
+      "trials": [
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536875480,
+              "size": 67600
+            },
+            {
+              "pointer": 536943080,
+              "size": 67600
+            },
+            {
+              "pointer": 537010680,
+              "size": 16900
+            },
+            {
+              "pointer": 537027584,
+              "size": 16900
+            },
+            {
+              "pointer": 537044488,
+              "size": 67600
+            },
+            {
+              "pointer": 537112088,
+              "size": 324
+            },
+            {
+              "pointer": 537112416,
+              "size": 404
+            },
+            {
+              "pointer": 537112824,
+              "size": 4225
+            },
+            {
+              "pointer": 537117056,
+              "size": 67584
+            },
+            {
+              "pointer": 537184640,
+              "size": 264
+            },
+            {
+              "pointer": 537184904,
+              "size": 24
+            },
+            {
+              "pointer": 537184928,
+              "size": 16
+            },
+            {
+              "pointer": 537184944,
+              "size": 8
+            },
+            {
+              "pointer": 537184952,
+              "size": 8
+            },
+            {
+              "pointer": 537184960,
+              "size": 8
+            },
+            {
+              "pointer": 537184968,
+              "size": 16
+            },
+            {
+              "pointer": 537184984,
+              "size": 8
+            },
+            {
+              "pointer": 537184992,
+              "size": 8
+            },
+            {
+              "pointer": 537185000,
+              "size": 16
+            },
+            {
+              "pointer": 537185016,
+              "size": 16
+            },
+            {
+              "pointer": 537185032,
+              "size": 8
+            },
+            {
+              "pointer": 537185040,
+              "size": 8
+            },
+            {
+              "pointer": 537185048,
+              "size": 8
+            },
+            {
+              "pointer": 537185056,
+              "size": 8
+            },
+            {
+              "pointer": 537185064,
+              "size": 16
+            },
+            {
+              "pointer": 537185080,
+              "size": 8
+            },
+            {
+              "pointer": 537185088,
+              "size": 8
+            },
+            {
+              "pointer": 537185096,
+              "size": 8
+            },
+            {
+              "pointer": 537185104,
+              "size": 8
+            },
+            {
+              "pointer": 537185112,
+              "size": 24
+            },
+            {
+              "pointer": 537185136,
+              "size": 8
+            },
+            {
+              "pointer": 537185144,
+              "size": 8
+            },
+            {
+              "pointer": 537185152,
+              "size": 8
+            },
+            {
+              "pointer": 537185160,
+              "size": 8
+            },
+            {
+              "pointer": 537185168,
+              "size": 8
+            },
+            {
+              "pointer": 537185176,
+              "size": 8
+            },
+            {
+              "pointer": 537185184,
+              "size": 8
+            },
+            {
+              "pointer": 537185192,
+              "size": 8
+            },
+            {
+              "pointer": 537185200,
+              "size": 8
+            },
+            {
+              "pointer": 537185208,
+              "size": 8
+            },
+            {
+              "pointer": 537185216,
+              "size": 24
+            },
+            {
+              "pointer": 537185240,
+              "size": 32
+            },
+            {
+              "pointer": 537185272,
+              "size": 8
+            },
+            {
+              "pointer": 537185280,
+              "size": 32
+            },
+            {
+              "pointer": 537185312,
+              "size": 8
+            },
+            {
+              "pointer": 537185320,
+              "size": 32
+            },
+            {
+              "pointer": 537185352,
+              "size": 8
+            },
+            {
+              "pointer": 537185360,
+              "size": 32
+            },
+            {
+              "pointer": 537185392,
+              "size": 8
+            },
+            {
+              "pointer": 537185400,
+              "size": 8
+            },
+            {
+              "pointer": 537185408,
+              "size": 16
+            },
+            {
+              "pointer": 537185424,
+              "size": 24
+            },
+            {
+              "pointer": 537185448,
+              "size": 8
+            },
+            {
+              "pointer": 537185456,
+              "size": 16
+            },
+            {
+              "pointer": 537185472,
+              "size": 8
+            },
+            {
+              "pointer": 537185480,
+              "size": 8
+            },
+            {
+              "pointer": 537185488,
+              "size": 8
+            },
+            {
+              "pointer": 537185496,
+              "size": 16
+            },
+            {
+              "pointer": 537185512,
+              "size": 192
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 1.5707963705062866,
+            "back_alpha_fade": 91,
+            "back_sharp_tail": 0.0,
+            "back_strength": 0,
+            "brightness_gain": 1.0,
+            "front_alpha_fade": 0,
+            "front_sharp_tail": 0.15000000596046448,
+            "front_strength": 0,
+            "internal_mode": 3,
+            "noise_offset": -11.11111068725586,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.14000000059604645,
+            "seed": 518,
+            "size_variation_exponent": 0.10000000149011612,
+            "thickness": 10.0
+          },
+          "field_dimensions": [
+            9,
+            9
+          ],
+          "field_sha256": "958e8e1c1e97f586de3dc874fd09b0d526802390f08126dbdebf6dfe533e3c08",
+          "generator": {
+            "cell_size_bits": "00002041",
+            "offset_bits": "1cc731c1",
+            "seed": 518,
+            "work_geometry": [
+              65,
+              65
+            ]
+          },
+          "output_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 6,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 21,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 47,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 53,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": null,
+          "sampled_cells": {
+            "27": "0x3452",
+            "28": "0x344b",
+            "29": "0x344b",
+            "30": "0x344b",
+            "31": "0x344b",
+            "32": "0x344b",
+            "33": "0x344b",
+            "34": "0x344b",
+            "36": "0x3460",
+            "37": "0x342a",
+            "38": "0x342a",
+            "39": "0x342a",
+            "40": "0x342a",
+            "41": "0x342a",
+            "42": "0x342a",
+            "43": "0x342a"
+          },
+          "table_reads": 162,
+          "table_sha256": "8dc1bd18e36582dc7ca03880bb01907ada686aa022c804f70663843b0753569d"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536875480,
+              "size": 67600
+            },
+            {
+              "pointer": 536943080,
+              "size": 67600
+            },
+            {
+              "pointer": 537010680,
+              "size": 16900
+            },
+            {
+              "pointer": 537027584,
+              "size": 16900
+            },
+            {
+              "pointer": 537044488,
+              "size": 67600
+            },
+            {
+              "pointer": 537112088,
+              "size": 324
+            },
+            {
+              "pointer": 537112672,
+              "size": 404
+            },
+            {
+              "pointer": 537113336,
+              "size": 4225
+            },
+            {
+              "pointer": 537117568,
+              "size": 67584
+            },
+            {
+              "pointer": 537185152,
+              "size": 264
+            },
+            {
+              "pointer": 537185416,
+              "size": 24
+            },
+            {
+              "pointer": 537185440,
+              "size": 16
+            },
+            {
+              "pointer": 537185456,
+              "size": 8
+            },
+            {
+              "pointer": 537185464,
+              "size": 8
+            },
+            {
+              "pointer": 537185472,
+              "size": 8
+            },
+            {
+              "pointer": 537185480,
+              "size": 16
+            },
+            {
+              "pointer": 537185496,
+              "size": 8
+            },
+            {
+              "pointer": 537185504,
+              "size": 8
+            },
+            {
+              "pointer": 537185512,
+              "size": 16
+            },
+            {
+              "pointer": 537185528,
+              "size": 16
+            },
+            {
+              "pointer": 537185544,
+              "size": 8
+            },
+            {
+              "pointer": 537185552,
+              "size": 8
+            },
+            {
+              "pointer": 537185560,
+              "size": 8
+            },
+            {
+              "pointer": 537185568,
+              "size": 8
+            },
+            {
+              "pointer": 537185576,
+              "size": 16
+            },
+            {
+              "pointer": 537185592,
+              "size": 8
+            },
+            {
+              "pointer": 537185600,
+              "size": 8
+            },
+            {
+              "pointer": 537185608,
+              "size": 8
+            },
+            {
+              "pointer": 537185616,
+              "size": 8
+            },
+            {
+              "pointer": 537185624,
+              "size": 24
+            },
+            {
+              "pointer": 537185648,
+              "size": 8
+            },
+            {
+              "pointer": 537185656,
+              "size": 8
+            },
+            {
+              "pointer": 537185664,
+              "size": 8
+            },
+            {
+              "pointer": 537185672,
+              "size": 8
+            },
+            {
+              "pointer": 537185680,
+              "size": 8
+            },
+            {
+              "pointer": 537185688,
+              "size": 8
+            },
+            {
+              "pointer": 537185696,
+              "size": 8
+            },
+            {
+              "pointer": 537185704,
+              "size": 8
+            },
+            {
+              "pointer": 537185712,
+              "size": 8
+            },
+            {
+              "pointer": 537185720,
+              "size": 8
+            },
+            {
+              "pointer": 537185728,
+              "size": 24
+            },
+            {
+              "pointer": 537185752,
+              "size": 32
+            },
+            {
+              "pointer": 537185784,
+              "size": 8
+            },
+            {
+              "pointer": 537185792,
+              "size": 32
+            },
+            {
+              "pointer": 537185824,
+              "size": 8
+            },
+            {
+              "pointer": 537185832,
+              "size": 32
+            },
+            {
+              "pointer": 537185864,
+              "size": 8
+            },
+            {
+              "pointer": 537185872,
+              "size": 32
+            },
+            {
+              "pointer": 537185904,
+              "size": 8
+            },
+            {
+              "pointer": 537185912,
+              "size": 8
+            },
+            {
+              "pointer": 537185920,
+              "size": 16
+            },
+            {
+              "pointer": 537185936,
+              "size": 24
+            },
+            {
+              "pointer": 537185960,
+              "size": 8
+            },
+            {
+              "pointer": 537185968,
+              "size": 16
+            },
+            {
+              "pointer": 537185984,
+              "size": 8
+            },
+            {
+              "pointer": 537185992,
+              "size": 8
+            },
+            {
+              "pointer": 537186000,
+              "size": 8
+            },
+            {
+              "pointer": 537186008,
+              "size": 16
+            },
+            {
+              "pointer": 537186024,
+              "size": 192
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 1.5707963705062866,
+            "back_alpha_fade": 91,
+            "back_sharp_tail": 0.0,
+            "back_strength": 0,
+            "brightness_gain": 1.0,
+            "front_alpha_fade": 0,
+            "front_sharp_tail": 0.15000000596046448,
+            "front_strength": 0,
+            "internal_mode": 3,
+            "noise_offset": -11.11111068725586,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.14000000059604645,
+            "seed": 518,
+            "size_variation_exponent": 0.10000000149011612,
+            "thickness": 10.0
+          },
+          "field_dimensions": [
+            9,
+            9
+          ],
+          "field_sha256": "958e8e1c1e97f586de3dc874fd09b0d526802390f08126dbdebf6dfe533e3c08",
+          "generator": {
+            "cell_size_bits": "00002041",
+            "offset_bits": "1cc731c1",
+            "seed": 518,
+            "work_geometry": [
+              65,
+              65
+            ]
+          },
+          "output_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 6,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 21,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 47,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 53,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "00000000"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "00000000"
+            }
+          ],
+          "padding_float": 0.0,
+          "sampled_cells": {
+            "27": "0x3452",
+            "28": "0x344b",
+            "29": "0x344b",
+            "30": "0x344b",
+            "31": "0x344b",
+            "32": "0x344b",
+            "33": "0x344b",
+            "34": "0x344b",
+            "36": "0x3460",
+            "37": "0x342a",
+            "38": "0x342a",
+            "39": "0x342a",
+            "40": "0x342a",
+            "41": "0x342a",
+            "42": "0x342a",
+            "43": "0x342a"
+          },
+          "table_reads": 162,
+          "table_sha256": "8dc1bd18e36582dc7ca03880bb01907ada686aa022c804f70663843b0753569d"
+        },
+        {
+          "abi_leaf_instructions": 31,
+          "allocations": [
+            {
+              "pointer": 536875480,
+              "size": 67600
+            },
+            {
+              "pointer": 536943080,
+              "size": 67600
+            },
+            {
+              "pointer": 537010680,
+              "size": 16900
+            },
+            {
+              "pointer": 537027584,
+              "size": 16900
+            },
+            {
+              "pointer": 537044488,
+              "size": 67600
+            },
+            {
+              "pointer": 537112088,
+              "size": 324
+            },
+            {
+              "pointer": 537112672,
+              "size": 404
+            },
+            {
+              "pointer": 537113336,
+              "size": 4225
+            },
+            {
+              "pointer": 537117568,
+              "size": 67584
+            },
+            {
+              "pointer": 537185152,
+              "size": 264
+            },
+            {
+              "pointer": 537185416,
+              "size": 24
+            },
+            {
+              "pointer": 537185440,
+              "size": 16
+            },
+            {
+              "pointer": 537185456,
+              "size": 8
+            },
+            {
+              "pointer": 537185464,
+              "size": 8
+            },
+            {
+              "pointer": 537185472,
+              "size": 8
+            },
+            {
+              "pointer": 537185480,
+              "size": 16
+            },
+            {
+              "pointer": 537185496,
+              "size": 8
+            },
+            {
+              "pointer": 537185504,
+              "size": 8
+            },
+            {
+              "pointer": 537185512,
+              "size": 16
+            },
+            {
+              "pointer": 537185528,
+              "size": 16
+            },
+            {
+              "pointer": 537185544,
+              "size": 8
+            },
+            {
+              "pointer": 537185552,
+              "size": 8
+            },
+            {
+              "pointer": 537185560,
+              "size": 8
+            },
+            {
+              "pointer": 537185568,
+              "size": 8
+            },
+            {
+              "pointer": 537185576,
+              "size": 16
+            },
+            {
+              "pointer": 537185592,
+              "size": 8
+            },
+            {
+              "pointer": 537185600,
+              "size": 8
+            },
+            {
+              "pointer": 537185608,
+              "size": 8
+            },
+            {
+              "pointer": 537185616,
+              "size": 8
+            },
+            {
+              "pointer": 537185624,
+              "size": 24
+            },
+            {
+              "pointer": 537185648,
+              "size": 8
+            },
+            {
+              "pointer": 537185656,
+              "size": 8
+            },
+            {
+              "pointer": 537185664,
+              "size": 8
+            },
+            {
+              "pointer": 537185672,
+              "size": 8
+            },
+            {
+              "pointer": 537185680,
+              "size": 8
+            },
+            {
+              "pointer": 537185688,
+              "size": 8
+            },
+            {
+              "pointer": 537185696,
+              "size": 8
+            },
+            {
+              "pointer": 537185704,
+              "size": 8
+            },
+            {
+              "pointer": 537185712,
+              "size": 8
+            },
+            {
+              "pointer": 537185720,
+              "size": 8
+            },
+            {
+              "pointer": 537185728,
+              "size": 24
+            },
+            {
+              "pointer": 537185752,
+              "size": 32
+            },
+            {
+              "pointer": 537185784,
+              "size": 8
+            },
+            {
+              "pointer": 537185792,
+              "size": 32
+            },
+            {
+              "pointer": 537185824,
+              "size": 8
+            },
+            {
+              "pointer": 537185832,
+              "size": 32
+            },
+            {
+              "pointer": 537185864,
+              "size": 8
+            },
+            {
+              "pointer": 537185872,
+              "size": 32
+            },
+            {
+              "pointer": 537185904,
+              "size": 8
+            },
+            {
+              "pointer": 537185912,
+              "size": 8
+            },
+            {
+              "pointer": 537185920,
+              "size": 16
+            },
+            {
+              "pointer": 537185936,
+              "size": 24
+            },
+            {
+              "pointer": 537185960,
+              "size": 8
+            },
+            {
+              "pointer": 537185968,
+              "size": 16
+            },
+            {
+              "pointer": 537185984,
+              "size": 8
+            },
+            {
+              "pointer": 537185992,
+              "size": 8
+            },
+            {
+              "pointer": 537186000,
+              "size": 8
+            },
+            {
+              "pointer": 537186008,
+              "size": 16
+            },
+            {
+              "pointer": 537186024,
+              "size": 192
+            }
+          ],
+          "builder": {
+            "address": "0xf0f6e60",
+            "angle_radians": 1.5707963705062866,
+            "back_alpha_fade": 91,
+            "back_sharp_tail": 0.0,
+            "back_strength": 0,
+            "brightness_gain": 1.0,
+            "front_alpha_fade": 0,
+            "front_sharp_tail": 0.15000000596046448,
+            "front_strength": 0,
+            "internal_mode": 3,
+            "noise_offset": -11.11111068725586,
+            "noise_type": 1,
+            "noise_type_is_one": true,
+            "noise_variation": 0.14000000059604645,
+            "seed": 518,
+            "size_variation_exponent": 0.10000000149011612,
+            "thickness": 10.0
+          },
+          "field_dimensions": [
+            9,
+            9
+          ],
+          "field_sha256": "eafac1018b39178ebb8002fe0ce322b1f8f4590b82eb0a25fa8d3e40d6d242b4",
+          "generator": {
+            "cell_size_bits": "00002041",
+            "offset_bits": "1cc731c1",
+            "seed": 518,
+            "work_geometry": [
+              65,
+              65
+            ]
+          },
+          "output_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+          "outside_reads": [
+            {
+              "allocation_size": 404,
+              "byte_offset": -16,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 1,
+              "index": -4,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 6,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 13,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 14,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 21,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 27,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 30,
+              "index": -2,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -20,
+              "field_cell": 31,
+              "index": -6,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -28,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -24,
+              "field_cell": 33,
+              "index": -7,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 47,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -4,
+              "field_cell": 53,
+              "index": -1,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -12,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f3",
+              "value_bits": "0000803f"
+            },
+            {
+              "allocation_size": 404,
+              "byte_offset": -8,
+              "field_cell": 66,
+              "index": -3,
+              "rva": "0x37f8",
+              "value_bits": "0000803f"
+            }
+          ],
+          "padding_float": 1.0,
+          "sampled_cells": {
+            "27": "0x3452",
+            "28": "0x344b",
+            "29": "0x344b",
+            "30": "0x344b",
+            "31": "0x344b",
+            "32": "0x344b",
+            "33": "0x344b",
+            "34": "0x344b",
+            "36": "0x3460",
+            "37": "0x342a",
+            "38": "0x342a",
+            "39": "0x342a",
+            "40": "0x342a",
+            "41": "0x342a",
+            "42": "0x342a",
+            "43": "0x342a"
+          },
+          "table_reads": 162,
+          "table_sha256": "8dc1bd18e36582dc7ca03880bb01907ada686aa022c804f70663843b0753569d"
+        }
+      ]
+    }
+  ],
+  "expf_leaf": "native-f32",
+  "fixture_sha256": "f549e994f1d73e3bff5b5fc6c36946519299a7e2541fba33a785587c1c30fad5",
+  "generator_sha256": "36d08c20f92fb9449f5402d703e9723dba227ee11acb72166ee8895e7076ba26",
+  "loader_sha256": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+  "observe": true,
+  "probe_sha256": "2fce9150be50ec73864f9cffcb5f308e0765bfa103abc420254ecc405a5ec75f",
+  "schema": "directionalblur.f16-allocator/1",
+  "scope": "Original builder, typed worker and callbacks, rotate, noise generator and rowdriver; host handle/iterate callbacks and host libm. Padding variants are diagnostics, not oracle replacements.",
+  "table_read_code_sha256": "0385def7a93e49cd0c4ca9789db2b6665f91c30fd07524e46541261efac908bf",
+  "table_read_instructions": [
+    {
+      "mnemonic": "xorps",
+      "operands": "xmm1, xmm1",
+      "rva": "0x37a4"
+    },
+    {
+      "mnemonic": "cvtsi2ss",
+      "operands": "xmm1, ebx",
+      "rva": "0x37a7"
+    },
+    {
+      "mnemonic": "comiss",
+      "operands": "xmm6, xmm1",
+      "rva": "0x37ab"
+    },
+    {
+      "mnemonic": "jb",
+      "operands": "0x1800037b9",
+      "rva": "0x37ae"
+    },
+    {
+      "mnemonic": "subss",
+      "operands": "xmm6, xmm1",
+      "rva": "0x37b0"
+    },
+    {
+      "mnemonic": "comiss",
+      "operands": "xmm6, xmm1",
+      "rva": "0x37b4"
+    },
+    {
+      "mnemonic": "jae",
+      "operands": "0x1800037b0",
+      "rva": "0x37b7"
+    },
+    {
+      "mnemonic": "cvttss2si",
+      "operands": "ebx, xmm6",
+      "rva": "0x37b9"
+    },
+    {
+      "mnemonic": "xorps",
+      "operands": "xmm0, xmm0",
+      "rva": "0x37bd"
+    },
+    {
+      "mnemonic": "cvtsi2ss",
+      "operands": "xmm0, ebx",
+      "rva": "0x37c0"
+    },
+    {
+      "mnemonic": "subss",
+      "operands": "xmm6, xmm0",
+      "rva": "0x37c4"
+    },
+    {
+      "mnemonic": "movaps",
+      "operands": "xmm1, xmm11",
+      "rva": "0x37c8"
+    },
+    {
+      "mnemonic": "movaps",
+      "operands": "xmm0, xmm6",
+      "rva": "0x37cc"
+    },
+    {
+      "mnemonic": "call",
+      "operands": "0x18000a67c",
+      "rva": "0x37cf"
+    },
+    {
+      "mnemonic": "addss",
+      "operands": "xmm6, xmm6",
+      "rva": "0x37d4"
+    },
+    {
+      "mnemonic": "movaps",
+      "operands": "xmm1, xmm13",
+      "rva": "0x37d8"
+    },
+    {
+      "mnemonic": "subss",
+      "operands": "xmm1, xmm6",
+      "rva": "0x37dc"
+    },
+    {
+      "mnemonic": "mulss",
+      "operands": "xmm0, xmm1",
+      "rva": "0x37e0"
+    },
+    {
+      "mnemonic": "movsxd",
+      "operands": "rcx, ebx",
+      "rva": "0x37e4"
+    },
+    {
+      "mnemonic": "mov",
+      "operands": "rax, qword ptr [rdi + 0x28]",
+      "rva": "0x37e7"
+    },
+    {
+      "mnemonic": "movaps",
+      "operands": "xmm1, xmm9",
+      "rva": "0x37eb"
+    },
+    {
+      "mnemonic": "subss",
+      "operands": "xmm1, xmm0",
+      "rva": "0x37ef"
+    },
+    {
+      "mnemonic": "mulss",
+      "operands": "xmm1, dword ptr [rax + rcx*4]",
+      "rva": "0x37f3"
+    },
+    {
+      "mnemonic": "mulss",
+      "operands": "xmm0, dword ptr [rax + rcx*4 + 4]",
+      "rva": "0x37f8"
+    }
+  ],
+  "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c"
+}

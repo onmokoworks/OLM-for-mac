@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import struct
 from pathlib import Path
 import tempfile
 import time
@@ -14,6 +15,7 @@ from core import raw_diff, sha
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--depth', type=int, choices=[8,16,32], default=8)
     p.add_argument('--baseline', required=True)
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--worker', type=Path, required=True)
@@ -23,7 +25,7 @@ def main():
     scratch = args.scratch.resolve(); scratch.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
     tempfile.tempdir = str(scratch)
-    report = {'baseline': args.baseline, 'cases': [], 'builds': []}
+    report = {'baseline': args.baseline, 'depth': args.depth, 'cases': [], 'builds': []}
     deadline = time.monotonic() + 1800
     with tempfile.TemporaryDirectory(dir=scratch, prefix='demand_') as tmp:
         tmp = Path(tmp)
@@ -34,6 +36,11 @@ def main():
         for name, case in cases(adapters[0]):
             if name.split(':')[0] not in ('noise-fade', 'active-noise-fade'): continue
             index = case['index']
+            if args.depth == 16:
+                case['pixels'] = b''.join(struct.pack('<H', v*32768//255) for v in case['pixels'])
+            elif args.depth == 32:
+                case['pixels'] = b''.join(struct.pack('<f', v/255.0) for v in case['pixels'])
+            case['depth'] = args.depth
             for param in case['parameters']:
                 if param['slot'] == 19: param['value'] = [-1,-18,-36,-72,-360,-720,-32768][index%7]
             with tempfile.TemporaryDirectory(dir=tmp) as d:
@@ -49,7 +56,7 @@ def main():
                     before, after = observations[0][0], observations[1][0]
                     result = {'before': before, 'after': after, 'sanitizer_same': True}
                     if after['status'] == 'ok':
-                        result['diff'] = raw_diff(reference, observations[1][1], 8)
+                        result['diff'] = raw_diff(reference, observations[1][1], args.depth)
                         result['exact'] = reference == observations[1][1]
                         result['raw_sha256'] = sha(observations[1][1])
                     row['routes'][route] = result

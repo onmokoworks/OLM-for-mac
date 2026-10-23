@@ -23,6 +23,32 @@ inline std::size_t rgba_index(int width, int x, int y) {
             static_cast<std::size_t>(x)) * 4;
 }
 
+// Demand follows FUN_1800038d0's nonzero-alpha sampling branch and
+// FUN_180003370's typed index arithmetic. No sample value is approximated.
+bool generate_demanded_noise(const std::vector<float>& source, int width, int height,
+                            int rows, float cell_size, float offset, std::uint32_t seed,
+                            bool interpolate, std::vector<float>* noise, int* nw, int* nh) {
+    *nw = static_cast<int>(static_cast<float>(width) / cell_size + 3.0f);
+    *nh = static_cast<int>(static_cast<float>(height) / cell_size + 3.0f);
+    noise->assign(static_cast<std::size_t>(*nw) * *nh, 0.0f);
+    // Reuse the output allocation as a mask. Interpolation reads all four
+    // neighbors, including those with zero weight, so all four are required.
+    for (int y = 0; y < rows; ++y) {
+        for (int x = 0; x < width; ++x) {
+            if (source[rgba_index(width, x, y) + 3] == 0.0f) continue;
+            const int ix = static_cast<int>(static_cast<float>(x) / cell_size);
+            const int iy = static_cast<int>(static_cast<float>(y) / cell_size);
+            const std::size_t first = static_cast<std::size_t>(iy) * *nw + ix;
+            (*noise)[first] = 1.0f;
+            if (interpolate) {
+                (*noise)[first + 1] = (*noise)[first + *nw] = (*noise)[first + *nw + 1] = 1.0f;
+            }
+        }
+    }
+    return olm::dblur::generate_noise_plane(width, height, cell_size, offset, seed,
+                                           noise, nw, nh, true);
+}
+
 std::vector<float> gaussian_weights(int count, bool expfloat = false) {
     std::vector<float> weights(static_cast<std::size_t>(count), 1.0f);
     for (int index = 0; index < count; ++index) {
@@ -236,28 +262,10 @@ static int render_rgba8(
         const int workers = std::min(work_height, 32);
         const int processed_rows = process_full_height ? work_height :
             (work_height / workers) * workers;
-        if (use_noise && !layer_mode) {
-            const int nw = static_cast<int>(static_cast<float>(work_width) / noise_cell_size + 3.0f);
-            const int nh = static_cast<int>(static_cast<float>(work_height) / noise_cell_size + 3.0f);
-            noise_plane.assign(static_cast<std::size_t>(nw) * nh, 0.0f);
-            // The original rowdriver samples only nonzero-alpha scatter cells.
-            // Type 1 reads all four neighbors, including zero-weight neighbors.
-            for (int y = 0; y < processed_rows; ++y) {
-                for (int x = 0; x < work_width; ++x) {
-                    if (buffer_a[rgba_index(work_width, x, y) + 3] == 0.0f) continue;
-                    const int ix = static_cast<int>(static_cast<float>(x) / noise_cell_size);
-                    const int iy = static_cast<int>(static_cast<float>(y) / noise_cell_size);
-                    const std::size_t first = static_cast<std::size_t>(iy) * nw + ix;
-                    noise_plane[first] = 1;
-                    if (noise_type == 1) {
-                        noise_plane[first + 1] = noise_plane[first + nw] = noise_plane[first + nw + 1] = 1;
-                    }
-                }
-            }
-            if (!olm::dblur::generate_noise_plane(work_width, work_height, noise_cell_size,
-                    static_cast<float>(noise_offset_ui) / 36.0f, seed,
-                    &noise_plane, &noise_width, &noise_height, true)) return -1;
-        }
+        if (use_noise && !layer_mode && !generate_demanded_noise(
+                buffer_a, work_width, work_height, processed_rows, noise_cell_size,
+                static_cast<float>(noise_offset_ui) / 36.0f, seed, noise_type == 1,
+                &noise_plane, &noise_width, &noise_height)) return -1;
         const float* scatter_front =
             scaled_front_strength > 0 ? front_weights.data() : &empty_table;
         const float* scatter_back =
@@ -512,8 +520,9 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                 field_rotated.data());
         } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
-            if (!olm::dblur::generate_noise_plane(work_width, work_height, thickness_ui,
-                    static_cast<float>(noise_offset_ui) / 36.0f, seed, &noise, &nw, &nh)) return -1;
+            if (!generate_demanded_noise(a, work_width, work_height, processed_rows, thickness_ui,
+                    static_cast<float>(noise_offset_ui) / 36.0f, seed, noise_type == 1,
+                    &noise, &nw, &nh)) return -1;
             olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), work_width,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f, component_divisor,
                 front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,

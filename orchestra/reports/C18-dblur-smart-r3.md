@@ -46,7 +46,7 @@ changed_files:
 - tools/emulation/probe_directionalblur_f16_allocator.py
 - tools/fuzz/verify_directionalblur_c02.py
 - tools/fuzz/verify_directionalblur_c18_demand.py
-- reports/fuzz/c18_dblur_smart/{baseline,pf8-after,demand-verify,demand-matrix,sampling}.json and tests.log
+- reports/fuzz/c18_dblur_smart/{baseline,pf8-after,demand-verify,demand-matrix,sampling}.json and tests-pf8.txt
 - orchestra/reports/C18-dblur-smart-r3.md
 
 verify:
@@ -71,3 +71,41 @@ Expected at PF8 commit: campaign278/1/19/2, regression PASS656, matrix PASS192 (
 next:
 - Investigate the same demand boundary in the PF16/PF32 negative-Offset core refusals, keeping each integration separately verified.
 - Preserve expf/Front Fade and nonfinite guards pending their native dependency contracts.
+
+## Cluster 2 — PF16 demand validation
+
+facts:
+- Baseline `9a0e4eb7`. Extracted the identical PF8 demanded-cell computation into `generate_demanded_noise`, then connected the PF16 pipeline to it. PF32 remains eager at this commit. No further public guard or arithmetic change.
+- The allocator probe now accepts exact raw typed input before world allocation, matching the established C02 transport, plus seed/import selection and an observation mode without historical PF8-specific expectations. It still drives the real builder/worker and checks fixture equality against the original public Smart worker. No numerical AEX detour is added.
+- Native-f32 expf trace, seed1:62: invalid generated cells2/7, one sampled cell, no intersection. Seed1:108: invalid cells4/5/6, no sampled cells. Seed1:127 control:12 invalid cells,16 sampled cells, intersection27/30/31/33. All three fixture outputs equal the cached worker. Padding changes intermediate fields but zero final bytes;127 still refuses because its invalid samples are used.
+- Independent negative-Offset matrix, PF16 typed source:192 cases,132 exact/60 refusal,21 new refusal→exact, identical O2/ASan/UBSan results on both public routes. Already-rendered baseline outputs are unchanged.
+
+inference:
+- PF16 uses the same original rowdriver/sampler contract, but a separate populate/rotation pipeline. The typed trace and independent typed matrix support its own integration; PF8 output equality alone was not used as proof for PF16.
+
+changed_files (cluster2):
+- core/dblur_frontonly.cpp
+- tools/emulation/probe_directionalblur_f16_allocator.py
+- tools/fuzz/verify_directionalblur_c18_demand.py
+- reports/fuzz/c18_dblur_smart/pf16-*.json and tests-pf8.txt/tests-pf16.txt
+- orchestra/reports/C18-dblur-smart-r3.md
+
+verify (same S/W/P setup):
+```sh
+python3 tools/fuzz/verify_directionalblur_c02.py --baseline 9a0e4eb7 --seeds 1 4 --jobs 1 --corpus --scratch "$S" --worker "$W" --report "$S/pf16-verify-recheck.json" > "$S/pf16-verify-recheck.log" 2>&1
+python3 tools/fuzz/verify_directionalblur_c18_demand.py --depth 16 --baseline 9a0e4eb7 --scratch "$S" --worker "$W" --report "$S/pf16-matrix-recheck.json" > "$S/pf16-matrix-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_f16_allocator.py --indices 62 108 127 --observe --expf-leaf native-f32 --scratch "$S" --worker "$W" --report "$S/pf16-sampling-recheck.json" > "$S/pf16-sampling-recheck.log" 2>&1
+```
+The required campaign and existing three-test commands are as above. All commands must exit0; unavailable oracle outputs remain separate.
+
+next: independently validate PF32 demand, preserving the nonfinite input guard.
+
+PF16 completion facts: required campaign exits0, Smart282/1/15/2; regression PASS656; existing tests3 pass in38.220s. Seed1 new exact62/108/282/296; fresh seed4 new exact84/113/177/184. Corpus54 exact→identical exact and2 mismatch→identical mismatch, all56 saved result dictionaries unchanged, no rebaseline. All base-exact hashes are unchanged. The fast committed-evidence audit `python3 tools/fuzz/verify_directionalblur_c18_evidence.py` also passes and binds final source hashes.
+
+| Smart set | PF8 E/M/R/U | PF16 E/M/R/U |
+|---|---|---|
+|seed1|278/1/19/2|282/1/15/2|
+|fresh seed4|272/1/26/1|276/1/22/1|
+|corpus56|54/2/0/0|54/2/0/0|
+
+Additional changed file: tools/fuzz/verify_directionalblur_c18_evidence.py (fast audit, no rendering or expectation updates).
