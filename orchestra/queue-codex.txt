@@ -80,3 +80,4 @@ C54-dg-smart-r2
 F50b-oracle-budget-build
 C55-kira-smart-r2
 C56-dg-smart-r3
+C53b-radial-trace-worker
