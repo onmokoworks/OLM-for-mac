@@ -1,0 +1,74 @@
+--- a/crates/aex-guest-worker/src/classic.rs
++++ b/crates/aex-guest-worker/src/classic.rs
+@@ -2954,15 +2954,42 @@
+         args: [u64; 6],
+         trace_enabled: bool,
+     ) -> Result<(u64, Option<ExecutionTrace>), ClassicError> {
+-        let f49_path = std::env::var_os("AEXCOMPAT_F49_TRACE").filter(|_| selector_name == "SMART_RENDER");
+-        let trace_enabled = trace_enabled || f49_path.is_some();
+-        if f49_path.is_some() {
+-            let size: usize = std::env::var("AEXCOMPAT_F49_BYTES").expect("watch bytes").parse().expect("integer bytes");
+-            assert!(size > 0 && size <= 1048576);
+-            let watches = [("rotation-input", "rcx"), ("rotation-output", "rdx")].into_iter().map(|(id, register)| TraceWatchSpec {
+-                id: id.into(), function_rva: Some(0x1ec0), instruction_rva: None,
+-                absolute_address: None, register, dereference_offset: None, size,
+-                occurrence: None, image_coordinate: None, image_row_offset: None, image_format: None,
++        // Read-only resident capture. Arithmetic and host behavior are unchanged.
++        let resident_path = std::env::var_os("AEXCOMPAT_RESIDENT_TRACE")
++            .filter(|_| selector_name == "SMART_RENDER");
++        let trace_enabled = trace_enabled || resident_path.is_some();
++        if resident_path.is_some() {
++            #[derive(serde::Deserialize)]
++            #[serde(deny_unknown_fields)]
++            struct Watch {
++                id: String,
++                function_rva: Option<u64>,
++                instruction_rva: Option<u64>,
++                register: String,
++                dereference_offset: Option<u64>,
++                size: usize,
++                occurrence: Option<u64>,
++            }
++            let path = std::env::var_os("AEXCOMPAT_RESIDENT_WATCHES").expect("watch JSON path");
++            let file = std::fs::File::open(path).expect("watch JSON file");
++            let specs: Vec<Watch> = serde_json::from_reader(file).expect("watch JSON array");
++            assert!(!specs.is_empty() && specs.len() <= 64, "1..64 watches required");
++            let watches = specs.into_iter().map(|w| {
++                assert!(w.function_rva.is_some() != w.instruction_rva.is_some(), "exactly one RVA required");
++                assert!(w.size > 0 && w.size <= 16777216, "watch bytes must be 1..16777216");
++                assert!(w.occurrence != Some(0), "occurrence must be positive");
++                let register = match w.register.as_str() {
++                    "rcx" => "rcx", "rdx" => "rdx", "r8" => "r8", "r9" => "r9",
++                    "rax" => "rax", "stack5" => "stack5", "stack6" => "stack6",
++                    "stack7" => "stack7", "stack8" => "stack8",
++                    _ => panic!("unsupported watch register"),
++                };
++                TraceWatchSpec {
++                    id: w.id, function_rva: w.function_rva, instruction_rva: w.instruction_rva,
++                    absolute_address: None, register, dereference_offset: w.dereference_offset,
++                    size: w.size, occurrence: w.occurrence,
++                    image_coordinate: None, image_row_offset: None, image_format: None,
++                }
+             }).collect();
+             self.configure_trace(watches, None);
+         }
+@@ -2995,7 +3022,7 @@
+         } else {
+             None
+         };
+-        if let Some(path) = f49_path {
++        if let Some(path) = resident_path {
+             let file = std::fs::File::create(path).expect("trace file");
+             serde_json::to_writer(file, &trace).expect("trace serialization");
+         }
+--- a/crates/aex-guest-worker/src/x64.rs
++++ b/crates/aex-guest-worker/src/x64.rs
+@@ -305,7 +305,7 @@
+ const TRACE_LAST_SAMPLES: usize = 3;
+ const TRACE_DISTINCT_SAMPLES: usize = 16;
+ const TRACE_DISTINCT_FINGERPRINTS: usize = 4096;
+-const MAX_TRACE_WATCH_BYTES: usize = 1048576;
++const MAX_TRACE_WATCH_BYTES: usize = 16777216;
+ const MAX_TRACE_WITNESSES: usize = 256;
+ const MAX_UNSUPPORTED_SUITE_CALLS: usize = 256;
+ const MAX_SUITE_REQUESTS: usize = 256;
