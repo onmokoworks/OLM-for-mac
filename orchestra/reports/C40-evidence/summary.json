@@ -1,0 +1,243 @@
+{
+  "acceptance_met": false,
+  "comparison": "candidate bytes SHA256 versus original AEX SHA256; input regenerated and hash checked",
+  "schema": "olm-C40-cached-oracle/1",
+  "seeds": [
+    {
+      "baseline_sha256": "7387d3ab907f5bf96f86286a8b850171b4068aba643fc15ffc3b79382c2cf836",
+      "baseline_summary": {
+        "classic_exact": 10,
+        "classic_mismatch": 290,
+        "smart_exact": 290,
+        "smart_refusal": 3,
+        "smart_uncompared": 7
+      },
+      "completed": 300,
+      "exact_losses": [
+        {
+          "index": 4,
+          "route": "smart",
+          "to": "refusal"
+        },
+        {
+          "index": 9,
+          "route": "smart",
+          "to": "refusal"
+        },
+        {
+          "index": 146,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ],
+      "seed": 1,
+      "summary": {
+        "classic_exact": 10,
+        "classic_mismatch": 290,
+        "smart_exact": 287,
+        "smart_refusal": 6,
+        "smart_uncompared": 7
+      },
+      "transitions": [
+        {
+          "from": "exact",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 4,
+          "route": "smart",
+          "to": "refusal"
+        },
+        {
+          "from": "exact",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 9,
+          "route": "smart",
+          "to": "refusal"
+        },
+        {
+          "from": "exact",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 146,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ]
+    },
+    {
+      "baseline_sha256": "84748536346389e5919f1c0fd17f80ac0d12ffdb6af69dedcb8f5c428c8dd199",
+      "baseline_summary": {
+        "classic_budget": 1,
+        "classic_exact": 5,
+        "classic_mismatch": 294,
+        "smart_budget": 1,
+        "smart_exact": 276,
+        "smart_mismatch": 1,
+        "smart_refusal": 9,
+        "smart_uncompared": 13
+      },
+      "completed": 300,
+      "exact_losses": [
+        {
+          "index": 275,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ],
+      "seed": 44,
+      "summary": {
+        "classic_exact": 5,
+        "classic_mismatch": 295,
+        "smart_exact": 276,
+        "smart_mismatch": 1,
+        "smart_refusal": 10,
+        "smart_uncompared": 13
+      },
+      "transitions": [
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 112,
+          "route": "classic",
+          "to": "mismatch"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 112,
+          "route": "smart",
+          "to": "exact"
+        },
+        {
+          "from": "exact",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 275,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ]
+    },
+    {
+      "baseline_sha256": "540122e8f84143a46d89f27c9f6fcfc068c2f5e0f3ba46f56b9115fd7ce847e4",
+      "baseline_summary": {
+        "classic_budget": 3,
+        "classic_exact": 7,
+        "classic_mismatch": 290,
+        "smart_budget": 1,
+        "smart_exact": 279,
+        "smart_mismatch": 1,
+        "smart_refusal": 11,
+        "smart_uncompared": 8
+      },
+      "completed": 300,
+      "exact_losses": [
+        {
+          "index": 245,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ],
+      "seed": 45,
+      "summary": {
+        "classic_exact": 7,
+        "classic_mismatch": 293,
+        "smart_exact": 278,
+        "smart_refusal": 13,
+        "smart_uncompared": 9
+      },
+      "transitions": [
+        {
+          "from": "mismatch",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 2,
+          "route": "smart",
+          "to": "refusal"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 17,
+          "route": "classic",
+          "to": "mismatch"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 17,
+          "route": "smart",
+          "to": "uncompared"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 84,
+          "route": "classic",
+          "to": "mismatch"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 123,
+          "route": "classic",
+          "to": "mismatch"
+        },
+        {
+          "from": "exact",
+          "guards": [
+            "RenderBits:pf8-bilateral-zero-half-tie@2019"
+          ],
+          "index": 245,
+          "route": "smart",
+          "to": "refusal"
+        }
+      ]
+    },
+    {
+      "baseline_sha256": "157197262113e7eec0fbdbbffae37af14c2484c59ab95a66c344ece304772705",
+      "baseline_summary": {
+        "classic_budget": 1,
+        "classic_exact": 10,
+        "classic_mismatch": 289,
+        "smart_budget": 1,
+        "smart_exact": 280,
+        "smart_refusal": 13,
+        "smart_uncompared": 6
+      },
+      "completed": 300,
+      "exact_losses": [],
+      "seed": 46,
+      "summary": {
+        "classic_exact": 10,
+        "classic_mismatch": 290,
+        "smart_exact": 280,
+        "smart_refusal": 13,
+        "smart_uncompared": 7
+      },
+      "transitions": [
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 208,
+          "route": "classic",
+          "to": "mismatch"
+        },
+        {
+          "from": "budget",
+          "guards": [],
+          "index": 208,
+          "route": "smart",
+          "to": "uncompared"
+        }
+      ]
+    }
+  ],
+  "source_sha256": "2f43e023e3e2894b6ed36bcaa819b59254a576a1fa05968925a756cbeab1f3a9"
+}

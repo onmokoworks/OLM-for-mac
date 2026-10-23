@@ -1,0 +1,16 @@
+1 4 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "56d77b480d69e49558a58d59c7ab2a17b10081d2097f545df6038ffb85cc6a01"}
+1 9 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "000f4f298dccbe05ab68e00ecb90d95a63c942c0579d0c286d68abc0c6a75f22"}
+1 102 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "68be6bdeb15a7e9c6bb54da08a1203a52959ecb23c59bf495a3266786debed32"}
+1 146 {"status": "refusal", "error": -1, "metadata": {"ERROR": "-1", "COUNTS": "1 1 1 1 12 12"}}
+1 241 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "6c5423557e2b0908dbfd4771bace51ffdc7ed44ed8a37c19e2daab5cde64b912"}
+44 146 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "527fcc14c4a88f98f211857e87bdf0fe191eab579b79fecefb0f9e8366b78b65"}
+44 195 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "f66feb3ff9ec741d84758b53091e6e61017f8cb1f94284a5ae18c2472042ab04"}
+44 275 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "5f373fde63d2039ca9a5ea81b4557ed1da9fd8f58a31e50524344383b61ffa41"}
+45 2 {"status": "refusal", "error": -1, "metadata": {"ERROR": "-1", "COUNTS": "1 1 1 1 12 12"}}
+45 106 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "df93b21064c647d52054ee3c1068e52fc432d353de93ecca7572b90cae596018"}
+45 172 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "9f5e7ba1c97a2bc9af1a16962d7b74b59159e9610db50202ae7ad752c7f13f23"}
+45 245 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "98736ea4fb7df6eb440e63427d4a0f9041db5be7484cdf6b32f84b853e198f96"}
+45 290 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "5673d7231c1801b18a1ce2438eb7c14d9f65e9078e6d9261bf935d8e78ec4c94"}
+45 299 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "8c47c09087b3d332dfe47eab46f87ba72f06d8021c7ea97109e17959e1744054"}
+46 42 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "8db03c120ab1b661888b05305effcca34b3eedcf6c29ce08eebcb62595e44925"}
+46 280 {"status": "exact", "error": 0, "metadata": {"ERROR": "0", "COUNTS": "1 1 1 1 12 12"}, "raw_sha256": "7a43ec8fef0d81e7c97b2f3992ad955829e5bf21e6b9b967fbe35cd4ed4977ba"}

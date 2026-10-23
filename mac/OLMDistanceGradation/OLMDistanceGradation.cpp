@@ -930,13 +930,15 @@ struct DistanceField {
 	std::vector<float> x;    // normalized distance [0,1]
 	std::vector<float> d_alpha; // 0 or 1 — output alpha mask
 	std::vector<float> pre_blur_x; // Constant+Blur writer's unblurred binary field
+	bool pf8_staging_half_tie = false;
 	long w, h;
 };
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging = false, bool smart_pf8_blurred = false);
+	bool smart_pf8_staging = false, bool smart_pf8_blurred = false,
+	bool *staging_half_tie = nullptr);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -1056,7 +1058,7 @@ static void invert_mask(u_char *mask, long w, long h)
 // scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging, bool smart_pf8_blurred)
+	bool smart_pf8_staging, bool smart_pf8_blurred, bool *staging_half_tie)
 {
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
@@ -1068,6 +1070,8 @@ static void dt_to_normalized(
 		// distance 5 / maximum 6 must reach the exact 212.5 packing tie.
 		for (long i = 0; i < w * h; ++i) {
 			const float value = out[i];
+			if (staging_half_tie && value - floorf(value) == 0.5f)
+				*staging_half_tie = true;
 			const int word = value < 0.0f ? 0 : (value > 255.0f ? 255 : (int)lrintf(value));
 			out[i] = (float)word / 255.0f;
 		}
@@ -1121,20 +1125,20 @@ static void build_distance_field(
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
 			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
-			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
 		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
@@ -2004,6 +2008,16 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		(bounded_alpha || smart_owner) &&
 		(!any_owned || !any_unowned);
 	build_distance_field(alpha.data(), df, p, w, h);
+	// C39 captured half-integer PF8 fields at the original cvSmooth entry
+	// for Bilateral Size0. Our identity staging rounds before that call.
+	// A half-integer is a byte-quantization discontinuity: even a small
+	// bilateral change can select the other byte. Refuse this unresolved
+	// staging boundary rather than exposing a rounded field as exact.
+	if (smart_owner && sizeof(P) == sizeof(PF_Pixel8) &&
+	    p.blur_mode == BLUR_MODE_BILATERAL && p.blur_size == 0 &&
+	    df.pf8_staging_half_tie) {
+		return OLM_DG_REFUSAL("pf8-bilateral-zero-half-tie");
+	}
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
 	// Shade
