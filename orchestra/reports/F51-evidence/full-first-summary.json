@@ -1,0 +1,46 @@
+{
+  "host_sha256": "7a5bc8c328503b6cd3918ae1db9b29ef9b0d0e3f274ae31904de0354aa3f0f28",
+  "bundles": {
+    "olmblur": "813408eeade7164c4bde2f18c5a348a6a678b304b4a825f2d253fc8562b97df2",
+    "colorkeep": "8bbb3ca0e318be5bda726e4bcb2bef0cb3324ead876ae4bd5e140811f8db292a",
+    "olmcolorkey": "f78617991c6d40d43cc3c6b3febc49659489cee72fce9b6498f0889268704466",
+    "olmdirectionalblur": "3032c6ecf71cac6b41bd907cf849bca4dca254b58299ae0a92f791eddd1b24b2",
+    "olmdistancegradation": "13ca0e97c2440b15125dc20535c90b838fc9352394596ad697f34fdf25c0e054",
+    "olmkirakira": "f5c7fcc898c0ecf1dc7902b945cb0fae1a908c3b2b197bca7947e58a8144127c",
+    "olmsmoother2": "165058de6beba5365c13d8ee2dc908fc743b2a31e0fd1d14c71ed549ab9e1e97"
+  },
+  "n": 300,
+  "seed": 1,
+  "max_size": 256,
+  "timeout": 30,
+  "host_contract": "F47d shared suites, declarations from retained AEX PARAMS_SETUP; full frame, packed output, rounded input padding; Kira default ramps",
+  "totals": {
+    "equal_render": 2481,
+    "equal_refuse": 16
+  },
+  "plugins": {
+    "olmblur": {
+      "equal_render": 339
+    },
+    "colorkeep": {
+      "equal_render": 300
+    },
+    "olmcolorkey": {
+      "equal_render": 309
+    },
+    "olmdirectionalblur": {
+      "equal_render": 383
+    },
+    "olmdistancegradation": {
+      "equal_render": 444,
+      "equal_refuse": 3
+    },
+    "olmkirakira": {
+      "equal_render": 398,
+      "equal_refuse": 13
+    },
+    "olmsmoother2": {
+      "equal_render": 308
+    }
+  }
+}

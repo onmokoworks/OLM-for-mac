@@ -1,0 +1,44 @@
+{
+  "name": "worker-F51-x86host",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F51-x86host/plugin-host",
+  "worker_sha256": "7a5bc8c328503b6cd3918ae1db9b29ef9b0d0e3f274ae31904de0354aa3f0f28",
+  "recipe": "python3 tools/emulation/aexcompat_patches/build_F51.py",
+  "build_json": "/Users/onmk/.cache/olm-emu/worker-F51-x86host/build.json",
+  "capability": "plugin-only; Universal arm64+x86_64; no AEX/Unicorn",
+  "command": [
+    "clang++",
+    "-std=c++17",
+    "-O2",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-arch",
+    "arm64",
+    "-arch",
+    "x86_64",
+    "-mmacosx-version-min=11.0",
+    "-Wno-pragma-pack",
+    "-I/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F51-x86_64-slice-equivalence/Headers",
+    "-I/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F51-x86_64-slice-equivalence/Headers/SP",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F51-x86_64-slice-equivalence/tools/emulation/aexcompat_patches/F51-plugin-host.cpp",
+    "-o",
+    "/Users/onmk/.cache/olm-emu/worker-F51-x86host/plugin-host"
+  ],
+  "sources": {
+    "tools/emulation/aexcompat_patches/F51-plugin-host.cpp": "1ab351b469498fd0c0b250480eaf179e45ba95b05f38d49d1671d23ddaeed9d0",
+    "tools/emulation/aexcompat_patches/F47d-native-bridge.cpp": "16d9e9ea5a2f7a00afa51368432dcd2977940241c338aad526745d03fbef753f",
+    "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+  },
+  "bundles_path": "/Users/onmk/.cache/olm-emu/worker-F51-x86host/bundles",
+  "bundle_sha256": {
+    "OLMBlur": "813408eeade7164c4bde2f18c5a348a6a678b304b4a825f2d253fc8562b97df2",
+    "ColorKeep": "8bbb3ca0e318be5bda726e4bcb2bef0cb3324ead876ae4bd5e140811f8db292a",
+    "OLMColorKey": "f78617991c6d40d43cc3c6b3febc49659489cee72fce9b6498f0889268704466",
+    "OLMDirectionalBlur": "3032c6ecf71cac6b41bd907cf849bca4dca254b58299ae0a92f791eddd1b24b2",
+    "OLMDistanceGradation": "13ca0e97c2440b15125dc20535c90b838fc9352394596ad697f34fdf25c0e054",
+    "OLMKiraKira": "f5c7fcc898c0ecf1dc7902b945cb0fae1a908c3b2b197bca7947e58a8144127c",
+    "OLMSmoother2": "165058de6beba5365c13d8ee2dc908fc743b2a31e0fd1d14c71ed549ab9e1e97",
+    "OLMToonDilate": "40e08f5f3b399d75e56f129882b2fb8252f303ce6561a39c80aaf5c81a6e2d19",
+    "OLMRadialBlur": "2ee6d37ea59e695abb2d79444cc9798af4ef91d1a8f9992fcd71ecf3a5f39c70",
+    "OLMSmoother": "5a699786d4430bea954b3b0ca5fffbe11da585477302ab38f56a7da978e89dd0"
+  }
+}
