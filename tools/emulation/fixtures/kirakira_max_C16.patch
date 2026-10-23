@@ -1,0 +1,33 @@
+--- a/mac/OLMKiraKira/OLMKiraKira.cpp
++++ b/mac/OLMKiraKira/OLMKiraKira.cpp
+@@ -681,7 +681,7 @@
+ 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
+ 		info.vertical_length != 1 && info.horizontal_length != 1 &&
+ 		info.diagonal_length != 1 && info.diagonal2_length != 1;
+-	return (info.channel == 1 || ((info.channel == 2 || info.channel == 3 || info.channel == 5 || info.channel == 6) && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
++	return (info.channel == 1 || ((info.channel == 2 || info.channel == 4 || info.channel == 3 || info.channel == 5 || info.channel == 6) && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
+ 		(info.blur_mode == 1 || info.blur_mode == 2 || directional_gaussian);
+ }
+ 
+@@ -1659,9 +1659,9 @@
+ // C16: Channel 2 constructor 181150600 uses a scalar luminance seed.
+ // Its FLOAT64 weighted sum, FLOAT32 fade/powf, and box operations are
+ // paired to public Smart; retain SDR, default-ramp and workload boundaries.
+-static bool IsSmartLuminanceBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+-{
+-    if (info.channel != 2 || !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
++static bool IsSmartScalarBrightnessBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
++{
++    if ((info.channel != 2 && info.channel != 4) || !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+     OLMKiraKiraInfo alpha = info;
+     alpha.channel = 1;
+     return IsAlphaBoxTuple(alpha, format, true, true, true);
+@@ -2765,7 +2765,7 @@
+ 				(IsGenericBetaTupleForGeometry(
+ 					info, input_world->width, input_world->height) ||
+ 				 IsAlphaBoxTuple(info, format, true, true, true) ||
+-				 IsSmartLuminanceBoxTuple(info, format) ||
++				 IsSmartScalarBrightnessBoxTuple(info, format) ||
+ 				 IsSmartColorBoxTuple(info, format) ||
+ 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
+ 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&

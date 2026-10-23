@@ -52,7 +52,8 @@ inline std::vector<float> highlight_isotropic_box_blur(
 	int width,
 	int height,
 	int kernel_size,
-	int passes)
+	int passes,
+	bool normalize = true)
 {
 	std::vector<float> result = input;
 	for (int pass = 0; pass < passes; ++pass) {
@@ -87,8 +88,8 @@ inline std::vector<float> highlight_isotropic_box_blur(
 			}
 		}
 		std::vector<float> output(result.size(), 0.0f);
-		const double scale = 1.0 /
-			(static_cast<double>(kernel_size) * kernel_size);
+		const double scale = normalize ? 1.0 /
+			(static_cast<double>(kernel_size) * kernel_size) : 1.0;
 		for (int x = 0; x < width; ++x) {
 			double sum = 0.0;
 			// OpenCV ColumnSum preloads k-1 rows. Each output then adds the
