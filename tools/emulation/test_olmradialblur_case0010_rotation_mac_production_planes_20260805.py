@@ -49,7 +49,7 @@ def main() -> int:
         "report_status_exact": full_pf8_report.get("status") == "exact",
         "report_raw_sha256_exact": full_pf8_report.get("frame", {}).get("raw_sha256") == EXPECTED_FULL_PF8_RAW_SHA256,
         "report_zlib_sha256_exact": full_pf8_report.get("frame", {}).get("zlib_sha256") == EXPECTED_FULL_PF8_ZLIB_SHA256,
-        "report_fixture_path_exact": full_pf8_report.get("frame", {}).get("zlib_path") == str(FULL_PF8_asset_relative(FIXTURE, ROOT)),
+        "report_fixture_path_exact": full_pf8_report.get("frame", {}).get("zlib_path") == str(asset_relative(FULL_PF8_FIXTURE, ROOT)),
     }
     if not all(full_pf8_fixture_identity.values()):
         raise AssertionError(f"full PF8 fixture identity failed: {full_pf8_fixture_identity}")
