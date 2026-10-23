@@ -1,0 +1,23 @@
+{
+  "selector": 11,
+  "selector_name": "PF_Cmd_RENDER",
+  "calls": [
+    {
+      "callback": "new_world",
+      "width": 3,
+      "height": 3,
+      "flags": 2
+    },
+    {
+      "callback": "acquire",
+      "suite": "PF iterate16 Suite",
+      "version": 1
+    },
+    {
+      "callback": "acquire",
+      "suite": "PF iterate16 Suite",
+      "version": 1
+    }
+  ],
+  "output_bytes": 72
+}
