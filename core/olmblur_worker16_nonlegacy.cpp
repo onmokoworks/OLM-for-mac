@@ -108,8 +108,9 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
         for (std::size_t k = 0; k <= radius; ++k) {
             const float exponent =
                 -static_cast<float>(k * k) / denominator;
-            weights[k] = static_cast<float>(
-                std::exp(static_cast<double>(exponent)));
+            // Match the original binary32 expf coefficient operation, including
+            // the radii reached by fractional repeated-radius decay.
+            weights[k] = std::exp(exponent);
         }
         if (params.bias_direction == 1) {
             horizontal_pass(flags.data(), plane_a.data(), plane_b.data(),

@@ -1602,11 +1602,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// NaN payload propagation is not established by the finite-input evidence.
 	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
 		raw.amount == 5.0 && raw.repeat == 2;
-	// C21: PF32 non-Legacy now uses the original binary32 expf coefficients
-	// at every repeated radius. Its bounded source scan remains below.
-	// PF16 higher-repeat coefficient residuals remain outside this rule.
+	// C21: PF16/PF32 non-Legacy use the original binary32 expf coefficients
+	// at every repeated radius. PF32's bounded source scan remains below.
 	const bool radius_small = raw.legacy == 0 &&
-		(bpc == 8 || bpc == 32 || (bpc == 16 && raw.repeat <= 2));
+		(bpc == 8 || bpc == 16 || bpc == 32);
 	// C15: Legacy integer writers preserve the AEX low-word/byte conversion.
 	// PF8 uses all legal schedules; PF16 stays at one/two passes.
 	const bool legacy_small = raw.legacy == 1 &&

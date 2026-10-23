@@ -1,10 +1,10 @@
 status: partial
 summary:
-- First cluster closed: PF32 non-Legacy binary32 expf coefficients and all-repeat bounded-HDR small-frame admission.
-- Seed 1 Smart 220/3/77 -> 246/3/51; fresh seed 7 234/3/63 -> 253/1/46 (exact/mismatch/refusal).
-- All 454 baseline exact cases preserved, normal/sanitized results identical; corpus 39/39 unchanged (37 exact, 2 mismatch).
-- Independent SDR/HDR matrices 720+720 exact; 92 retained controls and seven unit checks pass.
-- Continuing to PF16; Legacy/nonfinite residuals remain.
+- Two clusters closed separately: PF32 and PF16 non-Legacy binary32 expf coefficients and higher-repeat small-frame admission.
+- Seed 1 Smart 220/3/77 -> 268/2/30; fresh seed 7 234/3/63 -> 268/1/31 (exact/mismatch/refusal).
+- All baseline exact cases preserved; each commit passes normal/sanitized campaigns, independent 720-row matrices and 92 retained controls.
+- Corpus now 38 exact / 1 mismatch, strict replay 39/39; only one proven mismatch->exact rebaseline, with history retained.
+- Continuing Legacy investigation; no native AE/UCRT promotion.
 
 facts:
 Base d16f4071faf9a30e65bafe4c62dd3caeaef0cb4e, branch orch/C21-olmblur-smart-r5. Read AGENT_GUIDE, OLMBlur ledger restrictions, GOTCHAS, compatibility plan and previous triage/fix reports. All fuzz/matrix campaigns use jobs=1. At most two task build/emulator processes run concurrently. MAIN, external emulator and cached worker remain read-only; no release-gate, ledger, other-plugin, installation or push changes.
@@ -71,3 +71,38 @@ Expected: all four cached_binding=true; first differing weights listed above. Di
 next:
 - Continue PF16 non-Legacy coefficient repair and higher-repeat admission, then remaining Legacy/nonfinite clusters.
 - Preserve the C15 Legacy PF32 frozen-fixture counterexample; do not globally substitute expf on that lane.
+
+
+Second cluster — PF16 non-Legacy (predecessor 5f6e8ac5):
+
+facts:
+The same original expf operation is restored in core/olmblur_worker16_nonlegacy.cpp. Admission now permits all legal non-Legacy Repeat schedules for PF16 with arbitrary uint16 source. Other numerical operations and all geometry/storage/budget/lifecycle guards remain. The original index-40 first coefficient difference is recorded above; final paired trace binds to the cached worker, has no observed helper-input differences and exact full output.
+
+| Campaign | PF32 predecessor E/M/R | PF16 E/M/R | Refusal->exact | Mismatch->exact |
+|---|---|---|---:|---:|
+| seed 1 n300 | 246/3/51 | 268/2/30 | 21 | 1 |
+| seed 7 n300 | 253/1/46 | 268/1/31 | 15 | 0 |
+
+All 499 predecessor exact campaign cases preserved. Every normal/sanitized result object agrees across both seeds (1,200 sanitized route executions); Classic/oracle results unchanged. Diagnostic candidate gate-off maintains all 292/295 preceding exact cases and fixes one additional mismatch on each seed (1: index 40; 7: index 37). Independent full-uint16 720-row sanitized matrix: 711 exact->exact, 9 mismatch->exact, zero residual. Its parameter/geometric domain is the same as the first cluster's SDR matrix, with full uint16 random/edge values.
+
+Corpus table: 37 exact->exact, 1 mismatch->exact (seed1_case000040_1e01a8a5cbd2.json), 1 mismatch->mismatch (PF32 Legacy nonfinite). The corrected saved case preserves input, parameters, reduction history, original-route oracles and Classic results; C21_updates retains its previous full result. Final strict sanitized replay is 39/39, 38 exact / 1 mismatch. Retained 12+80 and seven unit checks pass. Machine evidence: reports/fuzz/olmblur_C21_pf16.json plus updated diagnostics. No Legacy numerical source is changed by this commit.
+
+inference:
+The same coefficient operation explains the PF16 first divergence. These results support all legal small PF16 non-Legacy schedules without a Repeat-specific exclusion. They do not resolve Legacy or nonfinite PF32.
+
+changed_files (second commit):
+- core/olmblur_worker16_nonlegacy.cpp
+- mac/OLMBlur/OLMBlur.cpp
+- tests/fuzz_corpus/olmblur/seed1_case000040_1e01a8a5cbd2.json
+- reports/fuzz/olmblur_C21_pf16.json
+- reports/fuzz/olmblur_C21_diagnostics.json
+- orchestra/reports/C21-olmblur-smart-r5.md
+
+verify (at the PF16 commit):
+```sh
+bash tools/fuzz/recheck_blur_C21.sh 5f6e8ac5 pf32 pf16 16
+```
+Expected campaign table above, 499 predecessor exact maintained, matrix 711/9, final paired trace exact/no helper difference, corpus 38 exact/1 mismatch with strict replay 39/39, retained 12+80 and seven tests. No rebaseline flag is needed against committed expectations. Initial validation used the same constituent commands and the pre-promotion diagnostic matrix with --native-expf-depth 16 --diagnostic-after.
+
+next:
+Investigate Legacy PF16 higher repeats. The larger Legacy PF32 cluster retains C15's frozen-fixture coefficient conflict; its separate scratch candidate is being rechecked before any further promotion.
