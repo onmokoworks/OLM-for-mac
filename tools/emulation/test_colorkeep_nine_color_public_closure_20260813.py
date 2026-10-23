@@ -2,6 +2,11 @@
 """Close ColorKeep's fixture-bound nine-color public EffectMain lane."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -16,9 +21,9 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/ColorKeep/ColorKeep.cpp"
-AEX = ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex")
 LOADER = ROOT / "tools/emulation/aex_loader.py"
-DISASM = ROOT / "decomp/ColorKeep.aex.c.txt"
+DISASM = resolve_asset(ROOT / "decomp/ColorKeep.aex.c.txt")
 ORACLE = ROOT / "tools/emulation/test_colorkeep_nine_color_effectmain_actual_aex_20260805.py"
 REPORT = ROOT / "refs/conformance/colorkeep_nine_color_public_closure_20260813.json"
 DOC = REPORT.with_suffix(".md")

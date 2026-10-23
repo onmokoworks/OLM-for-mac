@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -13,7 +18,7 @@ from pathlib import Path
 from aex_loader import AexLoader
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
 AEX_SHA256 = "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
 ENTRY = 0x1800083F0
 REPORT = ROOT / "refs/conformance/olmdirectionalblur_ui_setup_actual_aex_20260806.json"
@@ -142,7 +147,7 @@ int main() {
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
             "core/dblur_frontonly.cpp", "core/dblur_rotate.cpp", "core/dblur_rowdriver.cpp",
             "core/dblur_field.cpp", "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
-            "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(exe),
+            str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(exe),
         ]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         if build.returncode:

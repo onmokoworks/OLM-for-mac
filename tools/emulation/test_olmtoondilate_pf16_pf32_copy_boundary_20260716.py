@@ -9,6 +9,11 @@ this is an ABI fixture, not an AE host implementation.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import json
 import re
 import struct
@@ -22,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
+AEX = resolve_asset(ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex")
 REPORT = ROOT / "refs/conformance/olmtoondilate_pf16_pf32_copy_boundary_20260716.md"
 JSON_REPORT = REPORT.with_suffix(".json")
 
@@ -327,7 +332,7 @@ def main() -> int:
     worker_pass = all(item["worker_return_confirmed"] and item["semantic_gate"] for item in depths)
     payload = {"status": "WORKER_COPY_GATE_PASS" if semantic_pass and worker_pass and alpha_matrix_gate else
                ("HELPER_GATE_PASS_WORKER_SEMANTIC_BLOCKED" if semantic_pass else "HELPER_GATE_FAILED"),
-               "aex": str(AEX.relative_to(ROOT)), "workers": depths, "direct_helpers": direct_helpers,
+               "aex": str(asset_relative(AEX, ROOT)), "workers": depths, "direct_helpers": direct_helpers,
                "pf16_alpha_matrix": alpha_matrix,
                "pf16_alpha_matrix_gate": alpha_matrix_gate,
                "comparison": "exact visible-byte copy and padding ownership only; no internal transformation claim",

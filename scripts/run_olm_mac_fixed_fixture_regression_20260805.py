@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from olm_installed_identity import verified_binary
+from olm_assets import resolve_asset, main_assets
 
 LANE_INSTALLED_PLUGIN = {
     "smoother": "OLMSmoother",
@@ -447,13 +448,22 @@ LANES = (
 COMMAND_TIMEOUT = int(os.environ.get("OLM_REGRESSION_CMD_TIMEOUT", "1800"))
 
 
-def run(command: tuple[str, ...]) -> float:
+def run(command: tuple[str, ...], *, env: dict[str, str] | None = None,
+        log: Path | None = None) -> float:
     """Run one regression command in its own process group.
 
     On timeout the whole group is killed, so emulator/test descendants cannot outlive it.
     """
     started = time.monotonic()
-    proc = subprocess.Popen(command, cwd=ROOT, start_new_session=True)
+    output = log.open("w") if log else None
+    try:
+        proc = subprocess.Popen(command, cwd=ROOT, env=env, stdout=output,
+                                stderr=subprocess.STDOUT if output else None,
+                                start_new_session=True)
+    except BaseException:
+        if output:
+            output.close()
+        raise
     try:
         returncode = proc.wait(timeout=COMMAND_TIMEOUT)
     except subprocess.TimeoutExpired:
@@ -461,6 +471,8 @@ def run(command: tuple[str, ...]) -> float:
         proc.wait()
         raise subprocess.CalledProcessError(124, command)
     finally:
+        if output:
+            output.close()
         try:
             os.killpg(proc.pid, signal.SIGKILL)  # reap leftover descendants
         except ProcessLookupError:
@@ -483,7 +495,53 @@ def main() -> int:
         action="store_true",
         help="also regenerate the approximately 21-minute RadialBlur full AEX replay",
     )
+    parser.add_argument("--results-dir", type=Path,
+                        help="retain one log per command and results.json")
     args = parser.parse_args()
+    if args.results_dir:
+        args.results_dir = args.results_dir.resolve()
+        if not args.results_dir.is_relative_to(ROOT):
+            parser.error("--results-dir must be inside the worktree")
+        args.results_dir.mkdir(parents=True, exist_ok=True)
+    scratch = (args.results_dir.absolute() / "scratch" if args.results_dir else
+               ROOT / "orchestra/state/fixed-fixture-regression")
+    scratch.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.update(PYTHONDONTWRITEBYTECODE="1", OLM_MAIN_ASSETS=str(main_assets()),
+               TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch),
+               OLM_REGRESSION_SCRATCH=str(scratch))
+    env["PYTHONPATH"] = os.pathsep.join(filter(None, [str(ROOT), str(ROOT / "tools/emulation"), env.get("PYTHONPATH")]))
+    env["CPATH"] = os.pathsep.join(filter(None, [str(resolve_asset(ROOT / name))
+        for name in ("Headers", "Headers/SP", "Util", "Resources")] + [env.get("CPATH")]))
+    python = resolve_asset(ROOT / "tools/emulation/.venv/bin/python3")
+    interpreter = str(python) if python.is_file() else sys.executable
+    results = []
+
+    def record(row):
+        results.append(row)
+        if args.results_dir:
+            (args.results_dir / "results.json").write_text(json.dumps(results, indent=2) + "\n")
+
+    def execute(lane, command):
+        resolved = (interpreter, *command[1:])
+        if resolved[1] != "-m":
+            resolved = (resolved[0], str(ROOT / resolved[1]), *resolved[2:])
+        log = args.results_dir / f"{len(results):03d}-{lane}.log" if args.results_dir else None
+        started = time.monotonic()
+        rc = 0
+        try:
+            return run(resolved, env=env, log=log)
+        except subprocess.CalledProcessError as exc:
+            rc = exc.returncode
+            raise
+        except OSError as exc:
+            rc = 127
+            if log:
+                log.write_text(str(exc) + "\n")
+            raise subprocess.CalledProcessError(rc, resolved) from exc
+        finally:
+            record(dict(lane=lane, command=list(resolved), returncode=rc,
+                        elapsed=time.monotonic() - started, log=str(log) if log else None))
 
     selected = set(args.plugin or ())
     lanes = tuple(lane for lane in LANES if not selected or lane.name in selected)
@@ -499,6 +557,7 @@ def main() -> int:
             except RuntimeError as exc:
                 command = ("installed-identity-manifest", installed_plugin)
                 failures.append((lane.name, command, 126))
+                record(dict(lane=lane.name, command=list(command), returncode=126, error=str(exc), skipped=len(lane.commands)))
                 print(f"FAIL {lane.name}: {exc}", file=sys.stderr)
                 continue
             print(
@@ -512,9 +571,10 @@ def main() -> int:
                 if not missing.is_file():
                     print(f"FAIL missing test: {missing}", file=sys.stderr)
                     failures.append((lane.name, command, 127))
+                    record(dict(lane=lane.name, command=list(command), returncode=127, error=f"missing test: {missing}"))
                     continue
             try:
-                elapsed = run(command)
+                elapsed = execute(lane.name, command)
             except subprocess.CalledProcessError as exc:
                 failures.append((lane.name, command, exc.returncode))
                 print(f"FAIL {lane.name}: {' '.join(command)} (rc={exc.returncode})", file=sys.stderr)
@@ -525,7 +585,7 @@ def main() -> int:
         command = (sys.executable, "tools/emulation/test_m4_case0010.py")
         print("\n== radialblur slow full Unicorn replay ==", flush=True)
         try:
-            elapsed = run(command)
+            elapsed = execute("radialblur-slow", command)
         except subprocess.CalledProcessError as exc:
             failures.append(("radialblur-slow", command, exc.returncode))
         else:

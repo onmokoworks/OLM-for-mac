@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import subprocess
 import tempfile
 from pathlib import Path
@@ -54,8 +59,8 @@ int main(){{if(run<PF_Pixel8>(8))return 1;if(run<PF_Pixel16>(16))return 2;if(run
         command = [
             "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
-            "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-            "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(cpp),
+            "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+            "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),
             "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe),
         ]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)

@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import ctypes
 import hashlib
 import json
@@ -16,7 +21,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "tools/emulation/dblur_fullrender_host_fixture_20260711.py"
-SOURCE = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+SOURCE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 PRODUCTION = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 EXPECTED = "e9312eb08a382321671c3425c32fc028062edc0a5ff88eaeb659b990216faf93"
 EXPECTED_GAIN_HALF = "6087391dc9fb2be2fda4eee72145c02dd6fb6ca2690228f5923b0bc12ae458ad"

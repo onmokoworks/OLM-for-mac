@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Close OLMSmoother v1's native PF16 Color Key first-pass boundary."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import ctypes
 import hashlib
 import json
@@ -12,7 +17,7 @@ from pathlib import Path
 from aex_loader import AexLoader
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 AEX_SHA256 = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 MASK16_ENTRY = 0x180002670
 HARNESS = ROOT / "tools/emulation/olmsmoother_v1_pf16_colorkey_production_harness_20260810.cpp"

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import hashlib
 import json
@@ -361,10 +366,10 @@ std::ofstream(argv[{marker_argument}])<<"nv_one_away,source_first_bit,layer_firs
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         exe = td / "probe"
         cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-ffp-contract=off", "-isysroot", sdk,
-               "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
-               "-I", str(ROOT / "Resources"), "-I", str(ROOT / "mac/OLMRadialBlur"),
+               "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
+               "-I", str(resolve_asset(ROOT / "Resources")), "-I", str(ROOT / "mac/OLMRadialBlur"),
                str(cpp), str(ROOT / "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp"),
-               str(ROOT / "Util/AEGP_SuiteHandler.cpp"), str(ROOT / "Util/MissingSuiteError.cpp"),
+               str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))), str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
                "-framework", "Cocoa", "-o", str(exe)]
         built = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
         if built.returncode:
@@ -438,7 +443,7 @@ def run_closure() -> dict:
         "identities": {
             "production_source": str(SOURCE.relative_to(ROOT)),
             "production_source_sha256": sha(SOURCE.read_bytes()),
-            "aex": str(pf32.fixture.zoom.fixture.m4.AEX_PATH.relative_to(ROOT)),
+            "aex": str(asset_relative(pf32.fixture.zoom.fixture.m4.AEX_PATH, ROOT)),
             "aex_sha256": sha(pf32.fixture.zoom.fixture.m4.AEX_PATH.read_bytes()),
         },
         "rows": rows,

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Windows exported-owner census plus Mac real-SDK closure for retained PF32 cells."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse,hashlib,json,subprocess,sys,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];EMU=ROOT/"tools/emulation";sys.path.insert(0,str(EMU))
@@ -24,7 +29,7 @@ def census():
  return rows
 def macrun():
  with tempfile.TemporaryDirectory(prefix="olmblur-pf32-") as td:
-  exe=Path(td)/"probe";sources=[PROBE,ROOT/"mac/OLMBlur/OLMBlur_Strings.cpp",*[ROOT/"core"/n for n in ("olmblur_helper.cpp","olmblur_fullworker_helper.cpp","olmblur_worker16_nonlegacy.cpp","olmblur_worker16_legacy.cpp","olmblur_worker32_nonlegacy.cpp","olmblur_worker32_legacy.cpp","olmblur_worker8_legacy.cpp","olmblur_worker_orchestration.cpp")],ROOT/"Util/AEGP_SuiteHandler.cpp",ROOT/"Util/MissingSuiteError.cpp"]
+  exe=Path(td)/"probe";sources=[PROBE,ROOT/"mac/OLMBlur/OLMBlur_Strings.cpp",*[ROOT/"core"/n for n in ("olmblur_helper.cpp","olmblur_fullworker_helper.cpp","olmblur_worker16_nonlegacy.cpp","olmblur_worker16_legacy.cpp","olmblur_worker32_nonlegacy.cpp","olmblur_worker32_legacy.cpp","olmblur_worker8_legacy.cpp","olmblur_worker_orchestration.cpp")],resolve_asset(ROOT/"Util/AEGP_SuiteHandler.cpp"),resolve_asset(ROOT/"Util/MissingSuiteError.cpp")]
   cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1","-Wno-pragma-pack","-Wno-deprecated-declarations",*[x for d in ("Headers","Headers/SP","Util","Resources","core","mac/OLMBlur") for x in ("-I",str(ROOT/d))],*[str(x) for x in sources],"-framework","Cocoa","-o",str(exe)]
   subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True);r=subprocess.run([str(exe)],cwd=ROOT,text=True,capture_output=True)
   if r.returncode or r.stderr:raise RuntimeError(f"probe {r.returncode} {r.stdout} {r.stderr}")
@@ -45,7 +50,7 @@ def validate(v):
  if v!=fresh:raise ValueError("recanonicalization")
 def main():
  p=argparse.ArgumentParser();p.add_argument("--write",action="store_true");p.add_argument("--validate-only",action="store_true");a=p.parse_args()
- live={"source":sha(SOURCE),"probe":sha(PROBE),"public_runner":sha(EMU/"test_olmblur_exported_effectmain_chain_actual_aex_20260811.py"),"nonlegacy_manifest":sha(NON),"legacy_manifest":sha(LEG),"aex":sha(ROOT/"plugins_2025/OLMBlur.aex")}
+ live={"source":sha(SOURCE),"probe":sha(PROBE),"public_runner":sha(EMU/"test_olmblur_exported_effectmain_chain_actual_aex_20260811.py"),"nonlegacy_manifest":sha(NON),"legacy_manifest":sha(LEG),"aex":sha(resolve_asset(ROOT/"plugins_2025/OLMBlur.aex"))}
  if live!=EXPECTED:raise RuntimeError(f"identity drift {live}")
  fresh=build(census(),macrun());validate(fresh)
  if a.write:REPORT.write_text(json.dumps(fresh,indent=2,sort_keys=True)+"\n");DOC.write_text(f"# OLMBlur PF32 retained public closure\n\nStatus: **{fresh['status']}**\n\n{CLAIM}\n");print(fresh["status"]);return 0

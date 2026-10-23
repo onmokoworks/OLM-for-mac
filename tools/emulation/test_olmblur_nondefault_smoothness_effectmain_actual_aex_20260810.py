@@ -10,6 +10,11 @@ AEX workers; this test does not claim an actual-AEX public SmartRender call.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import subprocess
@@ -19,7 +24,7 @@ from pathlib import Path
 import test_olmblur_32bpc_source_aex_adapter_20260717 as base
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMBlur.aex")
 AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 REPORT = ROOT / "refs/conformance/olmblur_nondefault_smoothness_effectmain_actual_aex_20260810.json"
 
@@ -118,8 +123,8 @@ def compile_probe(directory: Path) -> Path:
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
     command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2",
                "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math", "-ffp-contract=off",
-               "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), "-I", str(ROOT / "core"),
+               "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), "-I", str(ROOT / "core"),
                str(source), *[str(ROOT / item) for item in (
                    "core/olmblur_helper.cpp", "core/olmblur_fullworker_helper.cpp",
                    "core/olmblur_worker16_nonlegacy.cpp", "core/olmblur_worker16_legacy.cpp",

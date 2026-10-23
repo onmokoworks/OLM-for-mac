@@ -2,6 +2,11 @@
 """AE-free real-SDK public Smart closure for OLMSmoother2 case 07."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -48,7 +53,7 @@ def run_harness() -> tuple[list[dict[str, object]], str]:
             "-Wno-pragma-pack", "-Wno-deprecated-declarations", "-isysroot", sdk,
             "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", "-Imac/OLMSmoother2",
             str(HARNESS), "mac/OLMSmoother2/OLMSmoother2_Strings.cpp",
-            "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp",
+            str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")),
             "-lz", "-framework", "Cocoa", "-o", str(exe),
         ]
         subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)

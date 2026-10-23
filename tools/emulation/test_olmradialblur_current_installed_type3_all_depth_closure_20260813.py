@@ -9,6 +9,11 @@ silently recompiling the newer source as the old installed owner.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -25,7 +30,7 @@ BASE = ROOT / "tools/emulation/test_olmradialblur_type3_all_depth_public_closure
 SHIM = ROOT / "tools/emulation/olmradialblur_installed_effectmain_shim_20260813.h"
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 SOURCE_REPORT = ROOT / "refs/conformance/olmradialblur_type3_all_depth_public_closure_20260813.json"
-BUILD_IDENTITY = ROOT / "handoffs/olmradialblur_worldsuite_lifecycle_candidate_20260814/build_identity.json"
+BUILD_IDENTITY = resolve_asset(ROOT / "handoffs/olmradialblur_worldsuite_lifecycle_candidate_20260814/build_identity.json")
 INSTALL_IDENTITY = ROOT / "refs/conformance/olmradialblur_worldsuite_lifecycle_install_20260814.json"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur"
 REPORT = ROOT / "refs/conformance/olmradialblur_current_installed_type3_all_depth_closure_20260813.json"

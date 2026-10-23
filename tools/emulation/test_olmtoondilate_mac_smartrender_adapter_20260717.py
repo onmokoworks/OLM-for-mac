@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import json
 import hashlib
 import os
@@ -38,7 +43,7 @@ NONPOSITIVE_REPORT = ROOT / "refs/conformance/olmtoondilate_nonpositive_radius_a
 NONPOSITIVE_REPORT_SHA256 = "db3ff858e53101827b4e6369aaa733350b44c14ce4f3130b97f506ed90366d0c"
 ACTUAL_ENTRY_REPORT = ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"
 ACTUAL_ENTRY_REPORT_SHA256 = "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e"
-AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
+AEX = resolve_asset(ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex")
 AEX_SHA256 = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
 
 
@@ -658,8 +663,8 @@ int main() {{
     if sdk.returncode:
         raise RuntimeError(f"BLOCKED_FAIL_CLOSED: xcrun --show-sdk-path failed: {sdk.stderr.strip()}")
     command = [compiler, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
-               "-isysroot", sdk.stdout.strip(), "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(probe), "-framework", "Cocoa", "-o", str(executable)]
+               "-isysroot", sdk.stdout.strip(), "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(probe), "-framework", "Cocoa", "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=False)
     if build.returncode:
         raise RuntimeError(f"BLOCKED_FAIL_CLOSED: source-included adapter did not compile\n{build.stderr}")

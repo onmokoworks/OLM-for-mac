@@ -1,4 +1,9 @@
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
 import subprocess,tempfile,unittest
 from pathlib import Path
 
@@ -12,7 +17,7 @@ class RealSdkSuiteLifecycle(unittest.TestCase):
    plugin='OLMSmoother' if version=='V1' else 'OLMSmoother2'
    command=['clang++','-std=c++17','-arch','arm64','-O2','-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,
     '-IHeaders','-IHeaders/SP','-IUtil','-IResources',f'-Imac/{plugin}',f'-DTEST_SMOOTHER_{version}=1',str(PROBE),
-    f'mac/{plugin}/{plugin}_Strings.cpp','Util/AEGP_SuiteHandler.cpp','Util/MissingSuiteError.cpp','-framework','Cocoa','-o',str(exe)]
+    f'mac/{plugin}/{plugin}_Strings.cpp',str(resolve_asset('Util/AEGP_SuiteHandler.cpp')),str(resolve_asset('Util/MissingSuiteError.cpp')),'-framework','Cocoa','-o',str(exe)]
    subprocess.run(command,cwd=ROOT,check=True)
    run=subprocess.run([str(exe)],cwd=ROOT,text=True,capture_output=True,check=True)
    self.assertEqual(run.stdout.splitlines()[-1],'SUITE_LIFECYCLE_EXACT=1')

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Bounded actual-AEX/production gate for PF16 Noise Type 3 Layer."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import ctypes
 import hashlib
 import json
@@ -14,7 +19,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "tools/emulation/dblur_fullrender_host_fixture_20260711.py"
-SOURCE = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+SOURCE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 WIDTH = HEIGHT = 16
 ACTIVE = WIDTH * HEIGHT * 8
 INPUT_PADDING = 16

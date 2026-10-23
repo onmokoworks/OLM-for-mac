@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import ctypes
 import hashlib
@@ -432,8 +437,8 @@ def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDL
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--aex", type=Path, default=ROOT / "plugins_2025/OLMDirectionalBlur.aex")
-    parser.add_argument("--source", type=Path, default=ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
+    parser.add_argument("--aex", type=Path, default=resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex"))
+    parser.add_argument("--source", type=Path, default=resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"))
     parser.add_argument("--expected", type=Path, help="optional Windows reference PNG for direct host-output comparison")
     parser.add_argument("--output", type=Path, default=ROOT / "refs/conformance/dblur_fullrender_host_fixture_20260711.json")
     parser.add_argument("--host-output-raw", type=Path, help="write complete host ARGB8 bytes when render finishes")

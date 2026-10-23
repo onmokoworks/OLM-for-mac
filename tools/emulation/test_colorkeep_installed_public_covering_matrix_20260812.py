@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import shutil
@@ -20,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from olm_installed_identity import verified_binary  # noqa: E402
 REPORT = ROOT / "refs/conformance/colorkeep_installed_public_covering_matrix_20260812.json"
 WIDTH, HEIGHT, PADDING = 11, 7, 12
-AEX = ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex")
 AEX_SHA256 = "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
 WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker")
 WORKER_SHA256 = "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc"

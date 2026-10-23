@@ -2,6 +2,11 @@
 """Replay DirectionalBlur's explicit source-bound public sub-union installed."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -30,7 +35,7 @@ TYPE3_PROBE = ROOT / "tools/emulation/probe_olmdirectionalblur_current_installed
 TYPE3_REPORT = ROOT / "refs/conformance/olmdirectionalblur_type3_layer_source_guard_closure_20260813.json"
 NATURAL_TOOL = ROOT / "tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py"
 NATURAL_REPORT = ROOT / "refs/conformance/olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.json"
-FIXTURE = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+FIXTURE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 REPORT = ROOT / "refs/conformance/olmdirectionalblur_current_installed_source_bound_union_20260813.json"
 NOTE = REPORT.with_suffix(".md")
 
@@ -74,12 +79,12 @@ def compile_real_probe(cpp: Path, executable: Path, arch: str) -> None:
         "clang++", "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
         "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
         "-isysroot", sdk,
-        "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-        "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+        "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+        "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
         str(cpp),
         str(ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp"),
-        str(ROOT / "Util/AEGP_SuiteHandler.cpp"),
-        str(ROOT / "Util/MissingSuiteError.cpp"),
+        str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))),
+        str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
         str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"),
         str(ROOT / "core/dblur_rowdriver.cpp"),

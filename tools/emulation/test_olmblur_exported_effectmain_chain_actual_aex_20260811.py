@@ -7,6 +7,11 @@ public command/suite plumbing seam; it does not introduce new pixel values.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import math
@@ -21,7 +26,7 @@ from test_olmblur_fullentry import build_context, build_pf_suites  # noqa: E402
 import test_olmblur_amount_repeat_legacy_matrix_actual_aex_20260810 as base  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMBlur.aex")
 ENTRY = 0x18000A970
 FIXTURE = Path(__file__).parent / "fixtures/olmblur_amount_repeat_legacy_matrix_20260810"
 REPORT = ROOT / "refs/conformance/olmblur_exported_effectmain_chain_actual_aex_20260811.json"

@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -16,10 +21,10 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 PROBE = ROOT / "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp"
 SHIM = ROOT / "tools/emulation/olmblur_installed_effectmain_shim_20260813.h"
-FIXTURE = ROOT / "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810"
+FIXTURE = resolve_asset(ROOT / "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810")
 FIXTURE_MANIFEST = FIXTURE / "manifest.json"
 SOURCE_REPORT = ROOT / "refs/conformance/olmblur_smart_public_admission_20260813.json"
-BUILD_IDENTITY = ROOT / "handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json"
+BUILD_IDENTITY = resolve_asset(ROOT / "handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json")
 INSTALL_IDENTITY = ROOT / "refs/conformance/olm_hostless_batch5_incremental_install_20260813.json"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur"
 REPORT = ROOT / "refs/conformance/olmblur_current_installed_public_closure_20260813.json"

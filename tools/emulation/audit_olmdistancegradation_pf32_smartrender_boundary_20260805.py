@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Pin the actual public PF32 Smart owner and the bounded Mac admission."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
-ASM = ROOT / "disasm/DistanceGradation.aex.asm.txt"
+AEX = resolve_asset(ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex")
+ASM = resolve_asset(ROOT / "disasm/DistanceGradation.aex.asm.txt")
 SOURCE = ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 
 def sha(path: Path) -> str:

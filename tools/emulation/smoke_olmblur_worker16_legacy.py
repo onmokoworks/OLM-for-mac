@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Verify and replay retained complete 16bpc Legacy OLMBlur fixtures."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -10,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = ROOT / "tools/emulation/fixtures/olmblur_worker16_legacy"
+FIXTURES = resolve_asset(ROOT / "tools/emulation/fixtures/olmblur_worker16_legacy")
 MANIFEST_SHA256 = "11ac4c8600f41ce8e3dcbb6aa41999817a3d4dc4c089d563e8f3b1eeb30b53d6"
 AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 

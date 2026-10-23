@@ -2,6 +2,11 @@
 """Fail-close the six residual dual-side Smart routes on x86_64 only."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -91,9 +96,9 @@ def build_probe(directory: Path, width: int, height: int, tuple_index: int,
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = [
         "clang++", "-std=c++17", "-arch", "x86_64", "-O2", "-fno-fast-math",
-        "-ffp-contract=off", "-isysroot", sdk, "-I", str(ROOT / "Headers"),
-        "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
-        "-I", str(ROOT / "Resources"), str(cpp),
+        "-ffp-contract=off", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")),
+        "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
+        "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),
         str(ROOT / "core/dblur_frontonly.cpp"), str(ROOT / "core/dblur_rotate.cpp"),
         str(ROOT / "core/dblur_rowdriver.cpp"), str(ROOT / "core/dblur_field.cpp"),
         "-framework", "Cocoa", "-o", str(exe),

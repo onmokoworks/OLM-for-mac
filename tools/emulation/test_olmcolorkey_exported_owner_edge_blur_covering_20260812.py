@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import os
@@ -17,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 import test_olmcolorkey_mac_smartrender_adapter_20260717 as adapter  # noqa: E402
 
-AEX = ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex")
 SOURCE = ROOT / "mac/OLMColorKey/OLMColorKey.cpp"
 REPORT = ROOT / "refs/conformance/olmcolorkey_exported_owner_edge_blur_covering_20260812.json"
 DOC = REPORT.with_suffix(".md")

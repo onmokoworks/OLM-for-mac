@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Natural/public closure for fixed17x11 PF32 Mode5 IPP exactness."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, hashlib, json, os, re, struct, subprocess, tempfile
 from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2]
-AEX=ROOT/"aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
+AEX=resolve_asset(ROOT/"aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex")
 SOURCE=ROOT/"mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 PROBE=ROOT/"tools/emulation/dg_pf32_mode5_ipp_exact_probe_20260812.cpp"
 PUBLIC=ROOT/"tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp"

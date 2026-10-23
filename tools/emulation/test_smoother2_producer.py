@@ -51,6 +51,11 @@ All new code confined to tools/emulation/. No source/notes/ledger edits, no comm
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import struct
 import sys
 import json
@@ -60,7 +65,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AEX_PATH = REPO_ROOT / "aex" / "OLMSmoother2AE" / "Plugins" / "64" / "2025" / "OLMSmoother2.aex"
+AEX_PATH = resolve_asset(REPO_ROOT / "aex" / "OLMSmoother2AE" / "Plugins" / "64" / "2025" / "OLMSmoother2.aex")
 
 # function addresses (0x180000000 base, confirmed by decomp headers this run)
 FUN_180013140 = 0x180013140   # 0004 NW-triangle emitter
@@ -766,7 +771,7 @@ def main() -> int:
     payload = {
         "kind": "olmsmoother2_producer_branch_sweep",
         "source": "tools/emulation/test_smoother2_producer.py",
-        "aex": str(AEX_PATH.relative_to(REPO_ROOT)),
+        "aex": str(asset_relative(AEX_PATH, REPO_ROOT)),
         "leaf": leaf,
         "case_0004": r0004,
         "case_0004_scanner_sweep": sweep0004,

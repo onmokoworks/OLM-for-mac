@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Natural outer Smart sequence probe through FUN_1811741a0."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,struct,sys,os,traceback
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import UC_X86_REG_RSP,UC_X86_REG_RAX,UC_X86_REG_RIP,UC_X86_REG_RCX,UC_X86_REG_RDX,UC_X86_REG_R8,UC_X86_REG_R9
 H=Path(__file__).resolve().parent;R=H.parents[1];sys.path.insert(0,str(H))
 from aex_loader import AexLoader
-A=R/'plugins_2025/DistanceGradation.aex';ENTRY=0x1811741a0;DISPATCH=0x181174bd0;RENDER=0x1811743b0;PF16_WRAPPER=0x181170280;PF8_WRAPPER=0x181170380
+A=resolve_asset(R/'plugins_2025/DistanceGradation.aex');ENTRY=0x1811741a0;DISPATCH=0x181174bd0;RENDER=0x1811743b0;PF16_WRAPPER=0x181170280;PF8_WRAPPER=0x181170380
 def main():
  depth=int(os.environ.get('OLM_DG_SMART_DEPTH','16'));assert depth in (8,16);pixel_size=8 if depth==16 else 4;typed_wrapper=PF16_WRAPPER if depth==16 else PF8_WRAPPER
  ld=AexLoader(str(A),fast=True);events=[];smart={'depth':depth};ind=ld.host_alloc(0x300);ld.write_bytes(ind,b'\0'*0x300);seq=ld.host_alloc(0x100);ld.write_bytes(seq,b'\0'*0x100);pre=ld.host_alloc(0x100);ld.write_bytes(pre,b'\0'*0x100);suite=ld.host_alloc(0x100);ld.write_bytes(suite,b'\0'*0x100)

@@ -7,10 +7,11 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from olm_assets import resolve_asset
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MANIFEST = ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json"
+MANIFEST = resolve_asset(ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json")
 SCHEMA = "olm.installed-identity-manifest/1"
 SHA256 = re.compile(r"[0-9a-f]{64}")
 

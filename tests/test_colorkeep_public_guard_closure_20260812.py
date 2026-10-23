@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import subprocess
@@ -15,7 +20,7 @@ OWNER = ROOT / "refs/conformance/colorkeep_installed_public_covering_matrix_2026
 CLOSURE = ROOT / "refs/conformance/colorkeep_public_guard_closure_20260812.json"
 GENERATOR = ROOT / "tools/emulation/test_colorkeep_public_guard_closure_20260812.py"
 OWNER_GENERATOR = ROOT / "tools/emulation/test_colorkeep_installed_public_covering_matrix_20260812.py"
-AEX = ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex")
 WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker")
 
 

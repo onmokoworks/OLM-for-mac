@@ -8,6 +8,11 @@ truth, and it does not compare against the production Mac implementation.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import asset_relative
+
 import argparse
 import json
 import re
@@ -120,7 +125,7 @@ def replay(tuple_data: dict) -> dict:
     cce0 = call_cce0_entry(loader, ss, *origin, gamma_colors=False)
     return {
         "local_origin": list(origin),
-        "aex_path": str(AEX_PATH.relative_to(ROOT)),
+        "aex_path": str(asset_relative(AEX_PATH, ROOT)),
         "entries_executed": [hex(FC280), hex(FCCE0)],
         "c280": c280,
         "cce0_no_gamma_entry": cce0,

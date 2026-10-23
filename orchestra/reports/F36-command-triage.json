@@ -1,0 +1,2085 @@
+{
+  "final_counts": {
+    "0": 76,
+    "1": 124,
+    "127": 1,
+    "126": 3
+  },
+  "skipped": 89,
+  "categories": {
+    "b": 72,
+    "d": 38,
+    "a": 6,
+    "c": 18
+  },
+  "commands": [
+    {
+      "index": 4,
+      "lane": "blur",
+      "command": [
+        "refs/scripts/audit_olmblur_pf32_formal_worker_matrix_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/004-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 6,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_classic_public_real_sdk_20260813.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/006-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 7,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_classic_public_real_sdk_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: 'f1ca179590327329c8887b77f732278bc04715e1baeb707609ba4047276df1e3' != '7e5a8e760c40b705ba0c319ef1bd0fa45c017aae789c0ad064e41ab8c2aab910'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/007-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 8,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_smart_public_admission_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/008-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 9,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_smart_public_admission_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '556b1a6659b1174b1c8d436b68eaed9e3f21800b9a8bcb0a912ac9564186e8fa' != '9ed39da2248a5d3e8b3c759fe3f91019eb6335afa257527167aa3c0dda711e70'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/009-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 10,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_current_installed_public_closure_20260813.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/010-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 11,
+      "lane": "blur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmblur_current_installed_public_closure_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/011-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 12,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_7x5_exported_public_owner_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: runner identity",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/012-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 13,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_7x5_exported_public_owner_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: runner identity",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/013-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 14,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_7x5_public_admission_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/014-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 15,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_7x5_public_admission_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '22eb712a' not found in '# OLM for Mac\\n\\nWindows\u7248\u306eAfter Effects\u30d7\u30e9\u30b0\u30a4\u30f3\u300cOLM Tools\u300d\u3092\u3001macOS\u5411\u3051\u306eUniversal\u30d7\u30e9\u30b0\u30a4\u30f3\u3068\u3057\u3066\u79fb\u690d\u3059\u308b\u975e\u516c\u5f0f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u3059\u3002\\n\\n> [!WARNING]\\n> \u73fe\u5728\u306fPublic Beta\u3067\u3059\u3002\u91cd\u8981\u306a\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u306f\u5fc5\u305a\u8907\u88fd\u3092\u4f5c\u308a\u3001\u51fa\u529b\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044\u3002\\n\\n## \u5bfe\u5fdc\u30d7\u30e9\u30b0\u30a4\u30f3\\n\\n- ColorKeep\\n- OLMBlur\\n- OLMColorKey\\n- OLMDirectionalBlur\\n- OLMDistanceGradation\\n- OLMKiraKira\\n- OLMRadialBlur\\n- OLMSmoother\\n- OLMSmoother2\\n- OLMToonDilate\\n\\n## \u5bfe\u5fdc\u74b0\u5883\\n\\n- macOS\uff08Apple Silicon\uff0fIntel Universal\uff09\\n- Adobe After Effects 26.3\u3067\u4e3b\u306b\u691c\u8a3c\\n- CPU Software\u30ec\u30f3\u30c0\u30fc",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/015-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 16,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_worker_sources_exported_public_owner_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: live recanonicalization drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/016-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 17,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_worker_sources_exported_public_owner_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: live recanonicalization drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/017-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 18,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_retained_tuples_exported_public_owner_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: live exact closure mismatch",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/018-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 19,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_retained_tuples_exported_public_owner_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: live exact closure mismatch",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/019-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 20,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_legacy_retained_exported_public_owner_20260813.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Obsolete documentation assertion; no numerical comparison failed.",
+      "evidence": "RuntimeError: documentation drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/020-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 21,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_legacy_retained_exported_public_owner_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: {'claim_boundary': 'Repository AexLoader/Un[4204 chars]: 3}} != {'schema': 'olmblur.pf16-legacy-retained-ex[4204 chars]ow']}",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/021-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 22,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf16_worker_sources_public_admission_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/022-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 23,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf16_worker_sources_public_admission_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: 'PF16' not found in '# OLM for Mac\\n\\nWindows\u7248\u306eAfter Effects\u30d7\u30e9\u30b0\u30a4\u30f3\u300cOLM Tools\u300d\u3092\u3001macOS\u5411\u3051\u306eUniversal\u30d7\u30e9\u30b0\u30a4\u30f3\u3068\u3057\u3066\u79fb\u690d\u3059\u308b\u975e\u516c\u5f0f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u3059\u3002\\n\\n> [!WARNING]\\n> \u73fe\u5728\u306fPublic Beta\u3067\u3059\u3002\u91cd\u8981\u306a\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u306f\u5fc5\u305a\u8907\u88fd\u3092\u4f5c\u308a\u3001\u51fa\u529b\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044\u3002\\n\\n## \u5bfe\u5fdc\u30d7\u30e9\u30b0\u30a4\u30f3\\n\\n- ColorKeep\\n- OLMBlur\\n- OLMColorKey\\n- OLMDirectionalBlur\\n- OLMDistanceGradation\\n- OLMKiraKira\\n- OLMRadialBlur\\n- OLMSmoother\\n- OLMSmoother2\\n- OLMToonDilate\\n\\n## \u5bfe\u5fdc\u74b0\u5883\\n\\n- macOS\uff08Apple Silicon\uff0fIntel Universal\uff09\\n- Adobe After Effects 26.3\u3067\u4e3b\u306b\u691c\u8a3c\\n- CPU Software\u30ec\u30f3\u30c0\u30fc\\n\\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/023-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 24,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf8_retained_exported_public_owner_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/024-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 25,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf8_retained_exported_public_owner_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '7c76270f45f9366f2d5686da73170f17f42121de097bc7b0ad494dcf735a4e17' != '2f5e2d9967105e5d5e0f6cc3327a48db393f9f019d06b389758427b8853e1307'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/025-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 26,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf8_retained_public_admission_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift {'source': 'cfe0cf913fb0757fe4149502c9a6bd9704450c7d8cfba24b041c2d6e0c495786', 'probe': 'ee0e21390b69d7a766717275b3b6ecd03cce49caae89fccf84f0d7d8b5674b46', 'worker': 'e0778c5afb4d9ba6e639f6e6611606bb061d5cfb5693538547ade6f3c87b238b', 'legacy_worker': '5dea604c2ed954e9dc1918dd0c74e8e8b372d6498f918e2f8e95caeffdb6ca2e', 'sha_helper': 'bfdcc9a2f4575aabab692b7b4ca1cf9ddb8188c7fbb1efdae30d197bf0f2d9e5', 'owner': '789d82aeac5f2385f43360fa7ebb7c27fda46aa0503097911f55a5a0c0f6",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/026-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 27,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf8_retained_public_admission_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '80b75ea4d6ccf1ad659cb199a9d68850115d5858002e06951586943f12a0d4b7' != '2f5e96d9d636519571f00f3c359afc6728dd6a597d8e58c0d430efe7bba438f1'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/027-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 28,
+      "lane": "blur",
+      "command": [
+        "tools/emulation/test_olmblur_pf32_retained_public_closure_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: identity drift {'source': 'cfe0cf913fb0757fe4149502c9a6bd9704450c7d8cfba24b041c2d6e0c495786', 'probe': '0d4c9e29c50e7656ba46186dd78ac54af6e086c6f2bc9daaa5940028d8a9f690', 'public_runner': '2b07c6ea1cde0640f954caaab28d5d9294e0b2f48db8ae189db524d725d1f334', 'nonlegacy_manifest': '03e9d5386c96c75f6173a438c629c47bfb30bef4ad40369dad3e1e032a03e2f8', 'legacy_manifest': '53b4f553c3ebc6ad81c4562f251c4624ff55383fcef89c8de4db1e4674227cf5', 'aex': 'f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/028-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 29,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_pf32_retained_public_closure_20260813.py",
+        "-v"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 810ced04; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '22eb712a' not found in '# OLM for Mac\\n\\nWindows\u7248\u306eAfter Effects\u30d7\u30e9\u30b0\u30a4\u30f3\u300cOLM Tools\u300d\u3092\u3001macOS\u5411\u3051\u306eUniversal\u30d7\u30e9\u30b0\u30a4\u30f3\u3068\u3057\u3066\u79fb\u690d\u3059\u308b\u975e\u516c\u5f0f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u3059\u3002\\n\\n> [!WARNING]\\n> \u73fe\u5728\u306fPublic Beta\u3067\u3059\u3002\u91cd\u8981\u306a\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u306f\u5fc5\u305a\u8907\u88fd\u3092\u4f5c\u308a\u3001\u51fa\u529b\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044\u3002\\n\\n## \u5bfe\u5fdc\u30d7\u30e9\u30b0\u30a4\u30f3\\n\\n- ColorKeep\\n- OLMBlur\\n- OLMColorKey\\n- OLMDirectionalBlur\\n- OLMDistanceGradation\\n- OLMKiraKira\\n- OLMRadialBlur\\n- OLMSmoother\\n- OLMSmoother2\\n- OLMToonDilate\\n\\n## \u5bfe\u5fdc\u74b0\u5883\\n\\n- macOS\uff08Apple Silicon\uff0fIntel Universal\uff09\\n- Adobe After Effects 26.3\u3067\u4e3b\u306b\u691c\u8a3c\\n- CPU Software\u30ec\u30f3\u30c0\u30fc",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/029-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 30,
+      "lane": "blur",
+      "command": [
+        "handoffs/olmblur_retained_public_universal_candidate_v4_20260813/verify_candidate.py"
+      ],
+      "category": "d",
+      "initial_returncode": 127,
+      "returncode": 127,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "missing test: handoffs/olmblur_retained_public_universal_candidate_v4_20260813/verify_candidate.py",
+      "log": null,
+      "skipped": 0
+    },
+    {
+      "index": 31,
+      "lane": "blur",
+      "command": [
+        "tests/test_olmblur_retained_public_universal_candidate_v4_20260813.py",
+        "-v"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmblur_retained_public_universal_candidate_v4_20260813/verify_candidate.py'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/031-blur.log",
+      "skipped": 0
+    },
+    {
+      "index": 32,
+      "lane": "colorkeep",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_colorkeep_public_guard_closure_20260812"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "RuntimeError: production source drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/032-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 33,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_nine_color_public_closure_20260813.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: PosixPath('/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites')",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/033-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 34,
+      "lane": "colorkeep",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_colorkeep_nine_color_public_closure_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: PosixPath('/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites')",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/034-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 35,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_current_installed_complete_union_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: ColorKeep current identity drift: {'source_sha256': '8ee2aff5145528ffb7347f0db0760eb6aeb090c14b012b8e3cbf235f53d6cfb5', 'installed_binary_sha256': 'ae9643a5a02f111ac48d284d646418cb1f6c4e9b3eaf213a34c17c5698dd1a10', 'accepted_identity_sha256': 'ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079', 'union_generator_sha256': '32429241a354b1d1e317d515011fe29e568958a23e46f4dbe6b1e2acaf4b993f', 'legacy_closure_sha256': '066ecd23a10b75c78190a8c5dbf3836ba952275d0f4744f687575ce",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/035-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 36,
+      "lane": "colorkeep",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_colorkeep_current_installed_complete_union_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/036-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 37,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_global_setup_actual_aex_20260805.py"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "SDK Util/AEGP_SuiteHandler.cpp and MissingSuiteError.cpp now resolve; recheck PASS.",
+      "evidence": "bit across AE versions\",\n    \"native After Effects plugin load/registration\",\n    \"GLOBAL_SETDOWN because ColorKeep has no implementation branch\"\n  ],\n  \"out_flags\": \"0x02000040\",\n  \"out_flags2\": \"0x08001400\",\n  \"payload_format\": \"little-endian uint32 my_version, out_flags, out_flags2\",\n  \"payload_hex\": \"000808004000000200140008\",\n  \"production_payload_sha256\": \"cde9a1d4c6896017b63da7661ac1714d16acfbe5128c3758ebd683ceefc4916f\",\n  \"public_entrypoint\": \"PF_Cmd_GLOBAL_SETUP\",\n  \"status\": \"exact\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/037-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 38,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_params_setup_actual_aex_20260805.py"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "SDK Util source inputs now resolve; recheck PASS.",
+      "evidence": ": {\n    \"add_param_calls\": 101,\n    \"colors\": {\n      \"count\": 100,\n      \"default_argb8_raw\": \"0x000000ff\",\n      \"disk_ids\": [\n        2,\n        101\n      ],\n      \"type\": \"PF_Param_COLOR\"\n    },\n    \"enabled_count\": {\n      \"default\": 1,\n      \"disk_id\": 1,\n      \"flags\": \"0x40\",\n      \"slider_range\": [\n        0,\n        100\n      ],\n      \"type\": \"PF_Param_SLIDER\",\n      \"valid_range\": [\n        0,\n        100\n      ]\n    },\n    \"num_params_including_input\": 102\n  },\n  \"status\": \"exact\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/038-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 39,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_global_setdown_actual_aex_20260805.py"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "SDK Util source inputs now resolve; recheck PASS.",
+      "evidence": "unload\",\n    \"behavior after unrelated memory corruption or C++ exception state\"\n  ],\n  \"payload_format\": \"little-endian uint32 return code\",\n  \"production_execution\": \"EffectMain receives deliberately invalid non-null sentinel pointers 0x1..0x5 and returns zero without fault, proving the branch dereferences none of them.\",\n  \"production_payload_sha256\": \"df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119\",\n  \"public_entrypoint\": \"PF_Cmd_GLOBAL_SETDOWN\",\n  \"status\": \"exact_noop\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/039-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 40,
+      "lane": "colorkeep",
+      "command": [
+        "tools/emulation/test_colorkeep_installed_entry_worker_writer_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: ColorKeep executable drifted: ae9643a5a02f111ac48d284d646418cb1f6c4e9b3eaf213a34c17c5698dd1a10 != dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/040-colorkeep.log",
+      "skipped": 0
+    },
+    {
+      "index": 42,
+      "lane": "colorkey",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_edge_blur_second_source_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Pinned typed-iterate worker missing/drifted; historical worker is not in the supplied cache.",
+      "evidence": "ERROR: test_exported_owner_and_public_smart_replay_exact (tests.test_olmcolorkey_edge_blur_second_source_20260814.ColorKeySecondFixedSource.test_exported_owner_and_public_smart_replay_exact)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/042-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 43,
+      "lane": "colorkey",
+      "command": [
+        "tools/emulation/test_olmcolorkey_public_source_bound_closure_20260813.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Validator needs missing issue851 worker (same dependency exposed by command 044); source pins also stale.",
+      "evidence": "FAIL_OLMCOLORKEY_PUBLIC_SOURCE_BOUND_CLOSURE\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/043-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 44,
+      "lane": "colorkey",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_public_source_bound_closure_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "AssertionError: '16e7f0d5a8d870ecdd77947db8d4dabd5869a91850d64ecdc9739eaf7b66029a' != '8d30702c279a87633084572d0e9e729b2c0c629bfb6118da1c2ff682713dbbd8'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/044-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 45,
+      "lane": "colorkey",
+      "command": [
+        "tools/emulation/test_olmcolorkey_current_installed_public_closure_20260813.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/045-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 46,
+      "lane": "colorkey",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_current_installed_public_closure_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/046-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 47,
+      "lane": "colorkey",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_real_sdk_suite_lifecycle_20260813",
+        "tests.test_olmcolorkey_source_bound_atomic_20260813",
+        "tests.test_olmcolorkey_public_entries_real_sdk_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "First 2,304 output bytes match expected SHA exactly; first source mutation is now admitted (negatives=0).",
+      "evidence": "ERROR: test_all_public_cells_and_one_aways (tests.test_olmcolorkey_source_bound_atomic_20260813.ColorKeySourceBoundAtomic.test_all_public_cells_and_one_aways)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/047-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 48,
+      "lane": "colorkey",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_public_source_bound_docs_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "AssertionError: 'OLMColorKey 63\u30bb\u30eb' not found in '# OLM for Mac\\n\\nWindows\u7248\u306eAfter Effects\u30d7\u30e9\u30b0\u30a4\u30f3\u300cOLM Tools\u300d\u3092\u3001macOS\u5411\u3051\u306eUniversal\u30d7\u30e9\u30b0\u30a4\u30f3\u3068\u3057\u3066\u79fb\u690d\u3059\u308b\u975e\u516c\u5f0f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u3059\u3002\\n\\n> [!WARNING]\\n> \u73fe\u5728\u306fPublic Beta\u3067\u3059\u3002\u91cd\u8981\u306a\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u306f\u5fc5\u305a\u8907\u88fd\u3092\u4f5c\u308a\u3001\u51fa\u529b\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u4f7f\u7528\u3057\u3066\u304f\u3060\u3055\u3044\u3002\\n\\n## \u5bfe\u5fdc\u30d7\u30e9\u30b0\u30a4\u30f3\\n\\n- ColorKeep\\n- OLMBlur\\n- OLMColorKey\\n- OLMDirectionalBlur\\n- OLMDistanceGradation\\n- OLMKiraKira\\n- OLMRadialBlur\\n- OLMSmoother\\n- OLMSmoother2\\n- OLMToonDilate\\n\\n## \u5bfe\u5fdc\u74b0\u5883\\n\\n- macOS\uff08Apple Silicon\uff0fIntel Universal\uff09\\n- Adobe After Effects 26.3\u3067\u4e3b\u306b\u691c\u8a3c\\n- CPU Soft",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/048-colorkey.log",
+      "skipped": 0
+    },
+    {
+      "index": 49,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/049-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 50,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/050-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 51,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_type3_public_owner_boundary_20260814.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: stored Type-3 owner-boundary report is invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/051-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 52,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_type3_public_owner_boundary_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/052-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 53,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/053-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 54,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_dual_side_exported_smart_closure_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/054-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 57,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_exported_smart_remaining6_census_20260814.py"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "MAIN DirectionalBlur decomp input now resolves; recheck PASS.",
+      "evidence": "PASS_FORMER_REMAINING6_EXPF_RAW_EXACT\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/057-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 58,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_exported_smart_remaining6_census_20260814"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "MAIN decomp dependency now resolves; recheck PASS.",
+      "evidence": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.090s\n\nOK\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/058-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 59,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: same-table dual-owner plumbing evidence invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/059-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 60,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/060-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 61,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: stored dual-side source guard report is invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/061-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 62,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '7ca169c72019553d173b1ddd4b0cc8d293990e1dd7b9c707966aa378c34fcd6c' != '40e86f9c878d688043afef508ffbd9c885093a432c82a47e2f5b03f4676e2eb8'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/062-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 64,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_type2_natural64_current_install_smoke_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 9a0e4eb7; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '10aeb3cdf577d6843f1ccf7e6c24913384bf9edc1fb1a6ac1b07ba45898ce717' != '494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/064-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 65,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: Directional current authority drift: {'source_sha256': '10aeb3cdf577d6843f1ccf7e6c24913384bf9edc1fb1a6ac1b07ba45898ce717', 'installed_binary_sha256': 'bced525426da29a67c45d5cb3071de06cc417d9732a15108dfa1188cb03a7bcc', 'accepted_identity_sha256': 'ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079', 'exported_closure_sha256': '94d9a4d44d9274f88fe7e56398b8bb060ff27508c7c14e212a0ffc6437f33e0f', 'natural_closure_sha256': '1a98a25bf6bbf4dadb340a122721a26965557c54f849c4881e",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/065-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 66,
+      "lane": "directionalblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdirectionalblur_current_installed_complete_bounded_union_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/066-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 68,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"
+      ],
+      "category": "a",
+      "initial_returncode": 1,
+      "returncode": 0,
+      "note": "SDK Util source inputs now resolve; recheck PASS.",
+      "evidence": "{\"end_names\": [\"Sharp Tail\", \"Sharp Tail\", \"Thickness\"], \"global\": {\"my_version\": \"0x88800\", \"out_flags\": \"0x6000040\", \"out_flags2\": \"0x8001408\"}, \"rows\": 21, \"status\": \"pass\", \"type_sequence\": [3, 10, 2, 13, 1, 1, 2, 14, 13, 1, 1, 2, 14, 13, 2, 7, 0, 1, 3, 10, 14]}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/068-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 83,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Host adapter exits 38: layer3 err=-1 exact=0 visible=0 pad=1; no raw numerical mismatch established.",
+      "evidence": "RuntimeError: BLOCKED_FAIL_CLOSED: adapter probe exited 38: layer3 err=-1 exact=0 visible=0 pad=1",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/083-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 91,
+      "lane": "directionalblur",
+      "command": [
+        "tools/emulation/test_olmdirectionalblur_installed_completion_route_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: OLMDirectionalBlur executable drifted: bced525426da29a67c45d5cb3071de06cc417d9732a15108dfa1188cb03a7bcc != c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/091-directionalblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 92,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olmdistancegradation_installed_identity_20260806.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: OLMDistanceGradation executable drifted: ce48b9ebf92bb1b66db9e3da1c0c17f4b176553a4f5097fed0b5f5630d6cb1e5 != 9a97a076c118fd1015f40d922bf7f21be7a041f1f049a0e465cc0bc9cd1cd349",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/092-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 95,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/audit_olmdistancegradation_pf16_smart_natural_capture_20260805.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Source-text topology audit still requires old RenderBits dispatch strings; two string predicates false.",
+      "evidence": "AssertionError: {'smart_pf16_dispatch': True, 'smart_pf8_dispatch': True, 'smart_depth_bit': True, 'smart_sequence_entry': True, 'sequence_calls_pre_render_owner': True, 'production_pf16_full_owner_connected': False, 'production_pf8_full_owner_connected': False, 'legacy_preseed_helpers_not_dispatched': True}",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/095-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 97,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/097-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 98,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/098-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 99,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: authority drift: {'probe': 'ef0e7ccbb75d4d9d10c405306c2ee797d0f11e6d2cf3a5cad59e7d45533665f3', 'source': 'b644d14eedf4aec5c02a0d444885e12ae8273224e2cd311642dda38a3ce5911c', 'strings': '7c8e13d4490e67f9cb918199891d96831b50929d4faa87744830f1fa35d93dd8', 'fieldgen': 'c4daf41e1aed3653cc5645345c2d4f8c5be3bed3c2e28c37de9a47f10df76510', 'frontonly': 'bace26e9338cdd993e80cadeb5fad703991ef18a9368ba25699eac7b1bb28889', 'rotate': '5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/099-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 100,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdistancegradation_current_installed_mode5_20260813"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: authority drift: {'probe': 'ef0e7ccbb75d4d9d10c405306c2ee797d0f11e6d2cf3a5cad59e7d45533665f3', 'source': 'b644d14eedf4aec5c02a0d444885e12ae8273224e2cd311642dda38a3ce5911c', 'strings': '7c8e13d4490e67f9cb918199891d96831b50929d4faa87744830f1fa35d93dd8', 'fieldgen': 'c4daf41e1aed3653cc5645345c2d4f8c5be3bed3c2e28c37de9a47f10df76510', 'frontonly': 'bace26e9338cdd993e80cadeb5fad703991ef18a9368ba25699eac7b1bb28889', 'rotate': '5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/100-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 101,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/101-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 102,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdistancegradation_public_smart_owner_contract_20260812"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/102-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 103,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py",
+        "--validate-only"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/103-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 104,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdistancegradation_pf32_mode5_universal_codegen_20260812"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/104-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 105,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olm_math_ucrt_batch_request_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Analyzer SHA changed d5da42b0\u2026 \u2192 fb79973f\u2026 in 744fc49e; package validation now reaches persisted binding comparison.",
+      "evidence": "FAIL_OLM_MATH_UCRT_BATCH_REQUEST: persisted batch request drift\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/105-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 106,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olm_math_ucrt_batch_request_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Package exists only in MAIN; tamper tests copy it. Copying MAIN assets is outside the worker authorization. Also stale generator pin.",
+      "evidence": "AssertionError: 'a015fb69d5b90a7f9ee3a5e1b0a7c9eedd7074ba288c51d4e8aa6d0ed153b8b6' != '9c562e6109e10528cf7bfb20916c96163940ee6129a14c70c6b8d20163b8def9'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/106-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 107,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olmdistancegradation_same_table_dual_owner_plumbing_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: Distance same-table dual-owner plumbing evidence invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/107-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 108,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmdistancegradation_same_table_dual_owner_plumbing_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/108-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 109,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olm_math_ucrt_native_dual_owner_consumer_readiness_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: native dual-owner consumer readiness invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/109-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 110,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olm_math_ucrt_native_dual_owner_consumer_readiness_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/110-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 111,
+      "lane": "distancegradation",
+      "command": [
+        "tools/emulation/test_olm_native_ucrt_promotion_table_readiness_20260814.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: production source drift: {'core/dblur_gaussian.h': 'c51bfca6d7f8a3d30ac58f3a2605a2bade053876c42f1179c0e02f60adb8258c', 'mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp': '10aeb3cdf577d6843f1ccf7e6c24913384bf9edc1fb1a6ac1b07ba45898ce717', 'mac/OLMDistanceGradation/OLMDistanceGradation.cpp': 'b644d14eedf4aec5c02a0d444885e12ae8273224e2cd311642dda38a3ce5911c'}",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/111-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 112,
+      "lane": "distancegradation",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olm_native_ucrt_promotion_table_readiness_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 90714962; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814/expf_vectors.json'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/112-distancegradation.log",
+      "skipped": 0
+    },
+    {
+      "index": 114,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 3ca06908; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/114-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 115,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_public_smart_bounded_closure_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 3ca06908; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ERROR: setUpClass (tests.test_olmkirakira_public_smart_bounded_closure_20260812.KiraPublicSmartBoundedClosureTests)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/115-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 116,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 3ca06908; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/116-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 117,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_classic_smart_admission_guard_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 3ca06908; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ERROR: setUpClass (tests.test_olmkirakira_classic_smart_admission_guard_20260812.KiraClassicSmartAdmissionGuardTests)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/117-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 118,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_smart_workspace_dependency_manifest_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed 3ca06908; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: 'e149e56aac5b36f8325913dcdb852b92b8a275ed674110e74b76f4893f2c749c' != 'abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/118-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 119,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: authority drift: {'production_source': 'e149e56aac5b36f8325913dcdb852b92b8a275ed674110e74b76f4893f2c749c', 'installed_binary': '69e87ce32570ebf299d8a3e94b707321b607ac51de42324e6a0444f490714c4d', 'accepted_identity': 'ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079', 'install_closure': 'b58642cb7f7317718c7f7fd6ddcd3b2ce7312159f26b65ddea4228b8bbd92bed', 'base_generator': '88fea25c355cc1a63b89fce9f4b0dd1d01b4fbf6090085595126c8a717a04d7f', 'base_report': 'a8cf5cd9560c6",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/119-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 120,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_current_installed_public_closure_20260813"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: authority drift: {'production_source': 'e149e56aac5b36f8325913dcdb852b92b8a275ed674110e74b76f4893f2c749c', 'installed_binary': '69e87ce32570ebf299d8a3e94b707321b607ac51de42324e6a0444f490714c4d', 'accepted_identity': 'ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079', 'install_closure': 'b58642cb7f7317718c7f7fd6ddcd3b2ce7312159f26b65ddea4228b8bbd92bed', 'base_generator': '88fea25c355cc1a63b89fce9f4b0dd1d01b4fbf6090085595126c8a717a04d7f', 'base_report': 'a8cf5cd9560c6",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/120-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 126,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_mode3_32x18_public_failclose_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Old Mode3 rejection contract: PF8=10 PF16=10 PF32=10; setup fails before numerical comparison.",
+      "evidence": "ERROR: setUpClass (tests.test_olmkirakira_mode3_32x18_public_failclose_20260814.KiraMode332x18PublicFailCloseTests)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/126-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 127,
+      "lane": "kirakira",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_mode3_32x18_public_closure_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Historical AEXCompat worker missing; no new worker was substituted or rebuilt.",
+      "evidence": "ERROR: setUpClass (tests.test_olmkirakira_mode3_32x18_public_closure_20260814.KiraMode332x18PublicClosureTests)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/127-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 128,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_mode3_nonwhitelist_production_20260806.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Obsolete exact source-string assertion for RotatedAxisBoxBlur call.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/128-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 134,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_mode4_cropped_typed_installed_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: OLMKiraKira executable drifted: 69e87ce32570ebf299d8a3e94b707321b607ac51de42324e6a0444f490714c4d != d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/134-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 135,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_mode4_mac_ae_runner_preflight_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "AssertionError: ('', 'Traceback (most recent call last):\\n  File \"scripts/run_olmkirakira_mode4_case01_mac_ae_20260805.py\", line 27, in <module>\\n    PLUGIN, PLUGIN_IDENTITY = verified_binary(\"OLMKiraKira\")\\n                              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\\n  File \"tools/emulation/olm_installed_identity.py\", line 60, in verified_binary\\n    raise _fail(f\"{plugin} executable drifted: {actual} != {row[\\'sha256\\']}\")\\nRuntimeError: FAIL CLOSED: installed identity manifest: OLMKiraKira e",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/135-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 137,
+      "lane": "kirakira",
+      "command": [
+        "tools/emulation/test_olmkirakira_merge2_mac_production_boundary_20260805.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Source-text audit mode2_typed_truncate is false; other 11 audited predicates true.",
+      "evidence": "AssertionError: {'distinct_outer_mode2_dispatch': True, 'public_inner_is_fd90': True, 'five_layer_order': True, 'gain_before_skip_and_ramp': True, 'scaled_ray_alpha': True, 'fd90_pf32_single_reciprocal': True, 'outer_mode2_helper': True, 'unscaled_alpha_zero_test': True, 'source_then_glow_weighting': True, 'mode2_typed_truncate': False, 'pf8_scale': True, 'pf16_scale': True}",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/recheck/137-kirakira.log",
+      "skipped": 0
+    },
+    {
+      "index": 152,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Size1: 83 output bytes; f3765f38 first refused, ea3a16c5 re-admitted with differences (parent refuses).",
+      "evidence": "AssertionError: (1.0, {'polar': True, 'source_scalar': True, 'prepass_alpha': True, 'accum': False, 'max_alpha': False, 'final_rgba': False, 'coordinates': True, 'output': False})",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/152-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 153,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_noise_variation_type1_actual_aex_20260810.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "NV0: 83 output bytes; first bad f5a74754, parent 6d0904f8 exact.",
+      "evidence": "ba\": true,\n        \"max_alpha\": true,\n        \"output\": true,\n        \"polar\": true\n      },\n      \"production_source_scalar_bit_exact\": true,\n      \"size_factor_all_one\": true,\n      \"source_scalar_raw_sha256\": \"8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822\",\n      \"span_formula_bit_exact\": true\n    }\n  },\n  \"scope\": \"actual AEX; PF32 Rotation 9x7 rowbytes160; neutral outer-only tuple; SV=0; NV=0/25/100; Noise Type=1; Seed=1; Offset=0; Thickness=10\",\n  \"status\": \"mismatch\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/153-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 155,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Ratio2/Angle0 9x7: 82 output bytes; f5a74754 parent exact.",
+      "evidence": "00, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n{\"cells\": 6, \"status\": \"mismatch\"}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/155-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 156,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_pf32_ellipse_32x18_actual_aex_20260811.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Ratio2/Angle0 32x18: 674 output bytes; f5a74754 parent exact; Zoom cells pass.",
+      "evidence": "loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n{\"rotation\": false, \"status\": \"mismatch\", \"zoom\": true}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/156-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 157,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_strength5_noise_type1_actual_aex_20260810.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Strength5/NV25: 85 output bytes; f5a74754 parent exact. Also obsolete negative controls.",
+      "evidence": "00, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n{\"cases\": 2, \"status\": \"mismatch\"}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/157-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 158,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_noise_type1_actual_aex_20260810.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "OffsetMode3/Offset2/NV25: 4 output bytes; f5a74754 parent exact. Also obsolete negatives.",
+      "evidence": "00, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n{\"cases\": 6, \"status\": \"mismatch\"}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/158-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 159,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_zoom_pf32_noise_inner_actual_aex_20260810.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Zoom Inner50/NV25: 48 output bytes; b07f5c00 first bad, parent 47b8632a exact.",
+      "evidence": " at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n[aex_loader] mapped OLMRadialBlur.aex at 0x180000000 (size 0x34000, delta 0x0)\n[aex_loader] mapped TEB at 0x50000000, GS base set\n[aex_loader] resolved 61 imports into stub table at 0x71000000\n{\"status\": \"mismatch\"}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/159-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 162,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_unsupported_variation_fail_closed_20260806.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Old unsupported-variation rejection probe exits 1; current broadened admission is not a raw-output comparison.",
+      "evidence": "mebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['orchestra/state/F36-fixture-runner-worktree-and-triage/olmradial-fail-closed-m22fx7lw/probe']' returned non-zero exit status 1.\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/162-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 163,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_unproven_geometry_fail_closed_20260811.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Old unproven-geometry rejection probe exits nonzero; assertion is rejection behavior.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/163-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 164,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_case0009_pf32_ae_control_replay_20260806.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF32 full-frame production entry refuses (rc=3) before output comparison; numerical result unavailable.",
+      "evidence": "age/olmradial-pf32-control-replay-0e_5wtm9/probe', 'orchestra/state/F36-fixture-runner-worktree-and-triage/olmradial-pf32-control-replay-0e_5wtm9/control.argb', 'orchestra/state/F36-fixture-runner-worktree-and-triage/olmradial-pf32-control-replay-0e_5wtm9/production.argb']' returned non-zero exit status 3.\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/164-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 165,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_case0010_rotation_mac_production_planes_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Retained full PF8: final output exact; 1,801,691 accum and 95,441 normalized words differ; f5a74754 parent exact.",
+      "evidence": "calar\": \"1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0\"\n  },\n  \"matches\": {\n    \"accum\": false,\n    \"eligibility\": true,\n    \"max_alpha\": true,\n    \"normalized\": false,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"output_argb8_sha256\": \"cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc\",\n  \"scope\": \"Mac production RenderRotation8 internal planes plus bounded modeled inverse/PF8 writer for case_0010; no AE host claim\",\n  \"status\": \"diagnostic_mismatch\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/followup/165-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 167,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf16_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF16 neutral: 2 output bytes; f5a74754 parent exact.",
+      "evidence": "lse,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"production_compared_plane_contract\": [\n    \"polar\",\n    \"source_scalar\",\n    \"accum\",\n    \"max_alpha\",\n    \"final_rgba\",\n    \"coordinates\",\n    \"output\"\n  ],\n  \"scope\": \"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/167-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 168,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF32 neutral: 83 output bytes; f5a74754 parent exact.",
+      "evidence": "  \"kind\": \"olmradialblur_rotation_pf32_small_actual_aex_20260805\",\n  \"matches\": {\n    \"accum\": false,\n    \"coordinates\": true,\n    \"final_rgba\": false,\n    \"max_alpha\": false,\n    \"output\": false,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"scope\": \"independent natural PF32 Rotation 9x7, padded rowbytes 160; no PF8/PF16 fixture or quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"native PF_PixelFloat ARGB; direct float read/write\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/168-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 169,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "OuterFade50: 102 output bytes at HEAD, 85 at f5a74754; its parent exact.",
+      "evidence": "mismatch\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/169-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 170,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "OuterFade50/NV25: 50 output bytes; 7a7f53fe first bad, parent bed824a7 exact.",
+      "evidence": "mismatch\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/170-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 171,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF32 Strength5: 9 output bytes; f5a74754 parent exact.",
+      "evidence": "  \"kind\": \"olmradialblur_rotation_pf32_small_actual_aex_20260805\",\n  \"matches\": {\n    \"accum\": false,\n    \"coordinates\": true,\n    \"final_rgba\": false,\n    \"max_alpha\": false,\n    \"output\": false,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"scope\": \"independent natural PF32 Rotation 9x7, padded rowbytes 160; no PF8/PF16 fixture or quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"native PF_PixelFloat ARGB; direct float read/write\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/171-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 172,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF16 Strength5: final output exact; 2,105 accum bytes differ; f5a74754 parent exact.",
+      "evidence": "rue,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"production_compared_plane_contract\": [\n    \"polar\",\n    \"source_scalar\",\n    \"accum\",\n    \"max_alpha\",\n    \"final_rgba\",\n    \"coordinates\",\n    \"output\"\n  ],\n  \"scope\": \"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/172-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 174,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_zoom_pf16_strength5_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Zoom PF16 Strength5: final output exact; 10,373 post-blur bytes differ; b07f5c00 parent exact.",
+      "evidence": "tion_pf16_small_actual_aex_20260805\",\n  \"matches\": {\n    \"output\": true,\n    \"post_blur\": false,\n    \"pre_blur\": true\n  },\n  \"padding_exact\": true,\n  \"production_compared_plane_contract\": [\n    \"pre_blur\",\n    \"post_blur\",\n    \"output\"\n  ],\n  \"scope\": \"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/174-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 178,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_ui3_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF32 OffsetMode3/Offset3: 1 output byte; f5a74754 parent exact.",
+      "evidence": "\n  \"kind\": \"olmradialblur_rotation_pf32_small_actual_aex_20260805\",\n  \"matches\": {\n    \"accum\": false,\n    \"coordinates\": true,\n    \"final_rgba\": false,\n    \"max_alpha\": true,\n    \"output\": false,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"scope\": \"independent natural PF32 Rotation 9x7, padded rowbytes 160; no PF8/PF16 fixture or quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"native PF_PixelFloat ARGB; direct float read/write\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/178-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 179,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF32 OffsetMode3/Offset4: 41 output bytes; f5a74754 parent exact.",
+      "evidence": "\n  \"kind\": \"olmradialblur_rotation_pf32_small_actual_aex_20260805\",\n  \"matches\": {\n    \"accum\": false,\n    \"coordinates\": true,\n    \"final_rgba\": false,\n    \"max_alpha\": true,\n    \"output\": false,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"scope\": \"independent natural PF32 Rotation 9x7, padded rowbytes 160; no PF8/PF16 fixture or quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"native PF_PixelFloat ARGB; direct float read/write\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/179-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 181,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_pf16_offset_mode3_ui3_small_actual_aex_20260805.py"
+      ],
+      "category": "c",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "PF16 OffsetMode3/Offset3: final output exact; 229 accum bytes differ; f5a74754 parent exact.",
+      "evidence": "rue,\n    \"polar\": true,\n    \"source_scalar\": true\n  },\n  \"padding_exact\": true,\n  \"production_compared_plane_contract\": [\n    \"polar\",\n    \"source_scalar\",\n    \"accum\",\n    \"max_alpha\",\n    \"final_rgba\",\n    \"coordinates\",\n    \"output\"\n  ],\n  \"scope\": \"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim\",\n  \"status\": \"mismatch\",\n  \"typed_source\": \"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse\"\n}\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/181-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 183,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_zoom_pf32_small_actual_aex_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: OLMRadialBlur executable drifted: 0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9 != 9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/183-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 184,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_type3_host_plumbing_20260811.py"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Host mock exits 10 at first Type3 SmartPreRender/event-order check, before render comparison.",
+      "evidence": "omebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['orchestra/state/F36-fixture-runner-worktree-and-triage/olmradial-type3-host-26x2kusg/mock']' returned non-zero exit status 10.\n",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/184-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 185,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_rotation_type1_inverse_cell_closure_20260812.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: production source identity drift (Type1/Type3 integrated source expected)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/185-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 186,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_rotation_type1_inverse_cell_closure_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: production source identity drift (Type1/Type3 integrated source expected)",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/186-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 187,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_strength290_exported_math_boundary_20260814.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: live identity drift: {'production_source_sha256': '88cf9482af17eafeed61da5f9fefd87b0c542c88b33d6a564f28957b64800a7c', 'aex_sha256': 'ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb', 'aexcompat_float_math_patch_sha256': '04147344b71c3f08a5e7e796d9d50f65845def15e924a2836a9e89ae249f81e3', 'aexcompat_float_math_trace_patch_sha256': 'a1dc5e91cb2a9c9c2e332c7ce2361c97eee6134e9b89f3bf0e9bd890b8038684', 'type1_closure_report_sha256': 'd0dd7b20615e18a0e9dc3cf501c4fe858f88e5",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/187-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 188,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_strength290_exported_math_boundary_20260814"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: '3373061a2ffe541e93ae184d2db897be96849363a5923f6df95fdb47fb91389b' != '7af2816f7588ec71d33332c0a65be5bd639f54304c18f4144e47f0ceec7f8fd6'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/188-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 189,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_strength290_ucrt_math_request_20260814.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "ValueError: provenance drift: production_source_sha256",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/189-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 190,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_strength290_ucrt_math_request_20260814"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Historical request package absent in worktree; tamper tests copy directory/ZIP; source provenance pin also stale.",
+      "evidence": "AssertionError: 'e7e7120dafc380b73f4f4bad20ee5111486adfed51af524e599539749b5d94ad' != 'c9e7165abea6a1f7e273f99b4ea40c7f943d95ed3e180c5d90948cccc147ea7e'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/190-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 191,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_strength290_native_ucrt_exported_public_boundary_20260815.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "RuntimeError: Radial Strength290 native-UCRT boundary evidence invalid",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/191-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 192,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_strength290_native_ucrt_exported_public_boundary_20260815"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: False is not true",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/192-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 193,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_type3_layer_span_natural_closure_20260812.py",
+        "--validate-only"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/193-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 194,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_type3_layer_span_natural_closure_20260812"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/194-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 195,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_type3_all_depth_public_closure_20260813.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: production source identity drift",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/195-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 196,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_type3_all_depth_public_closure_20260813"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Stale source/helper/evidence binding; source last changed d8eff1dd; migrated helper hashes changed in 24e8b60d.",
+      "evidence": "AssertionError: 'efe53ac48b7417afc13b1dd95be5da5ce1550028946607b38f1e41afced9b8ed' != '2538fae2eb4c2b3534058a219d9ac0a273fb5ec8a1ad7d19a6671efdef6665ec'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/196-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 197,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_current_installed_type3_all_depth_closure_20260813.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: installed Radial binary drift: 0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/197-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 198,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_current_installed_type3_all_depth_closure_20260813"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: installed Radial binary drift: 0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/198-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 199,
+      "lane": "radialblur",
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_olmradialblur_smart_cleanup_candidate_20260813"
+      ],
+      "category": "d",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Required historical worker/handoff absent; see missing-input inventory. Some suites also report stale pins.",
+      "evidence": "FileNotFoundError: [Errno 2] No such file or directory: 'handoffs/olmradialblur_smart_cleanup_universal_candidate_20260813/test_build_identity.py'",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/199-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 200,
+      "lane": "radialblur",
+      "command": [
+        "tools/emulation/test_olmradialblur_smartrender_fullpath_connection_20260805.py"
+      ],
+      "category": "b",
+      "initial_returncode": 1,
+      "returncode": 1,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "RuntimeError: FAIL CLOSED: installed identity manifest: OLMRadialBlur executable drifted: 0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9 != 9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+      "log": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/orchestra/state/F36-fixture-runner-worktree-and-triage/full/200-radialblur.log",
+      "skipped": 0
+    },
+    {
+      "index": 201,
+      "lane": "smoother",
+      "command": [
+        "installed-identity-manifest",
+        "OLMSmoother"
+      ],
+      "category": "b",
+      "initial_returncode": 126,
+      "returncode": 126,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "FAIL CLOSED: installed identity manifest: OLMSmoother executable drifted: 0c4db1cf1fa6b495ea4644e55332794704d9a3a4a7e94c9b79b7f3e300cc71e3 != f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162",
+      "log": null,
+      "skipped": 28
+    },
+    {
+      "index": 202,
+      "lane": "smoother2",
+      "command": [
+        "installed-identity-manifest",
+        "OLMSmoother2"
+      ],
+      "category": "b",
+      "initial_returncode": 126,
+      "returncode": 126,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "FAIL CLOSED: installed identity manifest: OLMSmoother2 executable drifted: b465f78b5668d6280c0d1d8250fe172af19f63fa79af3bb7a66e0efbcaed7ff5 != c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+      "log": null,
+      "skipped": 47
+    },
+    {
+      "index": 203,
+      "lane": "toondilate",
+      "command": [
+        "installed-identity-manifest",
+        "OLMToonDilate"
+      ],
+      "category": "b",
+      "initial_returncode": 126,
+      "returncode": 126,
+      "note": "Installed/source authority drift; proposed full hashes and historical receipt commits in binding-candidates.json.",
+      "evidence": "FAIL CLOSED: installed identity manifest: OLMToonDilate executable drifted: fb51ccf3373bded030b1d3a809d1dc23b2df9270161ac55e0d29cba34201eb9d != cf029885921b6f7cd9ff5ce26ac6c60aa51392cf0bd31d0a721e2a0f6239d029",
+      "log": null,
+      "skipped": 14
+    }
+  ],
+  "missing_inputs": {
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json",
+      "main_exists": false
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmblur_retained_public_universal_candidate_v4_20260813/verify_candidate.py": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmblur_retained_public_universal_candidate_v4_20260813/verify_candidate.py",
+      "main_exists": false
+    },
+    "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker": {
+      "local_exists": false,
+      "main_alternative": null,
+      "main_exists": null
+    },
+    "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites": {
+      "local_exists": false,
+      "main_alternative": null,
+      "main_exists": null
+    },
+    "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker": {
+      "local_exists": false,
+      "main_alternative": null,
+      "main_exists": null
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json",
+      "main_exists": false
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker",
+      "main_exists": false
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+      "main_exists": false
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814/run_olm_math_ucrt_batch.ps1": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814/run_olm_math_ucrt_batch.ps1",
+      "main_exists": true
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814",
+      "main_exists": true
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814/expf_vectors.json": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814/expf_vectors.json",
+      "main_exists": true
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814",
+      "main_exists": true
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814/README.md": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814/README.md",
+      "main_exists": true
+    },
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F36-fixture-runner-worktree-and-triage/handoffs/olmradialblur_smart_cleanup_universal_candidate_20260813/test_build_identity.py": {
+      "local_exists": false,
+      "main_alternative": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmradialblur_smart_cleanup_universal_candidate_20260813/test_build_identity.py",
+      "main_exists": false
+    }
+  }
+}

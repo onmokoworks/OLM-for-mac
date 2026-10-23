@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import json
 import hashlib
 import math
@@ -31,8 +36,8 @@ from unicorn.x86_const import (  # noqa: E402
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AEX_PATH = REPO_ROOT / "aex" / "OLMRadialBlur" / "Plugins" / "64" / "2025" / "OLMRadialBlur.aex"
-REF_DIR = REPO_ROOT / "refs" / "win_references" / "20260604_olm" / "OLMRadialBlur"
+AEX_PATH = resolve_asset(REPO_ROOT / "aex" / "OLMRadialBlur" / "Plugins" / "64" / "2025" / "OLMRadialBlur.aex")
+REF_DIR = resolve_asset(REPO_ROOT / "refs" / "win_references" / "20260604_olm" / "OLMRadialBlur")
 MANIFEST = REF_DIR / "reference_manifest.json"
 INPUT_PNG = REF_DIR / "case_0010_before_effects.png"
 

@@ -2,6 +2,11 @@
 """Pin RadialBlur's actual-AEX setup surface and compare the Mac public UI."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import hashlib
 import json
 import struct
@@ -14,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "plugins_2025/OLMRadialBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMRadialBlur.aex")
 AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
 ENTRY = 0x180010540
 REPORT = ROOT / "refs/conformance/olmradialblur_ui_setup_actual_aex_20260806.json"
@@ -146,8 +151,8 @@ std::memset(&out,0,sizeof(out));int e=EffectMain(PF_Cmd_PARAMS_SETUP,&in,&out,nu
         cpp.write_text(source)
         command = ["xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
                    "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
-                   "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",
-                   "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(executable)]
+                   "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),
+                   str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(executable)]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         assert built.returncode == 0, built.stderr
         run = subprocess.run([str(executable)], cwd=ROOT, capture_output=True)
@@ -174,7 +179,7 @@ def main() -> int:
     assert mac_globals == actual_globals
     report = {
         "status": "pass_bounded_public_ui_exact",
-        "actual_aex": {"path": str(AEX.relative_to(ROOT)), "sha256": AEX_SHA256,
+        "actual_aex": {"path": str(asset_relative(AEX, ROOT)), "sha256": AEX_SHA256,
                        "entry": hex(ENTRY), "globals": actual_globals,
                        "parameters": actual_rows},
         "mac_production": {"source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",

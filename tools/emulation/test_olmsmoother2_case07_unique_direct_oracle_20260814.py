@@ -2,6 +2,11 @@
 """Prove the unique straight-PF32 preimage of the Windows case-07 EXR."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -19,9 +24,9 @@ from compare_float_exr import read_planes  # noqa: E402
 SOURCE = ROOT / "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
 HARNESS = ROOT / "tools/emulation/olmsmoother2_case07_current_source_direct_harness_20260814.cpp"
 INPUT = ROOT / "refs/conformance/fixtures/olmsmoother2_case07_pf32_entry_20260727/pf32_input_entry_argb.bin.gz"
-EXR = ROOT / "refs/win_references/20260727_010629__ae26_3_32bpc_smoother2_preserve_rgb_case07/windows_preserve_rgb_effect_on.exr"
+EXR = resolve_asset(ROOT / "refs/win_references/20260727_010629__ae26_3_32bpc_smoother2_preserve_rgb_case07/windows_preserve_rgb_effect_on.exr")
 WINDOWS = ROOT / "refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json"
-AEX = ROOT / "plugins_2025/OLMSmoother2.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother2.aex")
 REPORT = ROOT / "refs/conformance/olmsmoother2_case07_unique_direct_oracle_20260814.json"
 NOTE = REPORT.with_suffix(".md")
 

@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import hashlib
 import json
 import struct
@@ -15,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
 
-AEX = ROOT / "plugins_2025/OLMKiraKira.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMKiraKira.aex")
 REPORT_JSON = ROOT / "refs/conformance/olmkirakira_typed_writers_actual_aex_20260716.json"
 REPORT_MD = ROOT / "refs/conformance/olmkirakira_typed_writers_actual_aex_20260716.md"
 WRITERS = {
@@ -152,7 +157,7 @@ def main() -> int:
     ]
     report = {
         "status": "pass",
-        "aex": str(AEX.relative_to(ROOT)),
+        "aex": str(asset_relative(AEX, ROOT)),
         "aex_sha256": sha256(AEX),
         "writer_entries": {depth: f"0x{spec['entry']:x}" for depth, spec in WRITERS.items()},
         "static_proof": static_proof(),

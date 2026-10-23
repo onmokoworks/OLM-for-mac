@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import os
@@ -18,7 +23,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
-INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
+INPUT = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png")
 REPORT = ROOT / "refs/conformance/olmradialblur_production_outer_inputs_20260805.json"
 WIDTH, HEIGHT = 1920, 1080
 POLAR_WIDTH, POLAR_HEIGHT = 1104, 1800
@@ -94,8 +99,8 @@ int main(int argc, char **argv) {{
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         command = [os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
                    "-fno-fast-math", "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
-                   "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-                   "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+                   "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+                   "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
                    "-ffunction-sections", "-fdata-sections", str(probe), "-Wl,-dead_strip",
                    "-framework", "Cocoa", "-o", str(binary)]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)

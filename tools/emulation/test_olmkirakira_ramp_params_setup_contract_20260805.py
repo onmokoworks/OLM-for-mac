@@ -3,15 +3,20 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
-DECOMP = ROOT / "decomp/OLMKiraKira.aex.c.txt"
-SDK = ROOT / "Headers/AE_Effect.h"
+AEX = resolve_asset(ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex")
+DECOMP = resolve_asset(ROOT / "decomp/OLMKiraKira.aex.c.txt")
+SDK = resolve_asset(ROOT / "Headers/AE_Effect.h")
 MAC = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 HEADER = ROOT / "mac/OLMKiraKira/OLMKiraKira.h"
 REPORT = ROOT / "refs/conformance/olmkirakira_ramp_params_setup_contract_20260805.json"

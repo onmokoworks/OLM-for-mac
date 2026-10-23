@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """Fail-closed PF8/PF16 natural Smart capture and full-owner exact gate."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import json
 import subprocess
 import sys
@@ -76,7 +81,7 @@ def run_test(name, marker):
     return result.stdout.strip().splitlines()
 
 def main():
-    asm = (ROOT / "disasm/DistanceGradation.aex.asm.txt").read_text()
+    asm = (resolve_asset(ROOT / "disasm/DistanceGradation.aex.asm.txt")).read_text()
     source = (ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp").read_text()
     smart_body = function_body(source, "SmartRender(PF_InData *in_data")
     facts = {

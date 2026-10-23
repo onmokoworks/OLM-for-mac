@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -17,8 +22,8 @@ DOC = REPORT.with_suffix(".md")
 
 FILES = {
     "production_source": ROOT / "mac/OLMColorKey/OLMColorKey.cpp",
-    "sdk_header": ROOT / "Headers/AE_Effect.h",
-    "windows_aex": ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "sdk_header": resolve_asset(ROOT / "Headers/AE_Effect.h"),
+    "windows_aex": resolve_asset(ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex"),
     "aex_guest_worker": Path(
         "/Users/onmk/Documents/Projects/Personal/04_Tools/"
         "AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker"
@@ -150,7 +155,7 @@ def run_probe(name: str, source: Path) -> dict[str, Any]:
             "-isysroot", sdk, "-IHeaders", "-IHeaders/SP", "-IUtil",
             "-IResources", "-Imac/OLMColorKey", str(source),
             "mac/OLMColorKey/OLMColorKey_Strings.cpp",
-            "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp",
+            str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")),
             "-framework", "Cocoa", "-o", str(executable),
         ]
         subprocess.run(command, cwd=ROOT, check=True)

@@ -2,6 +2,11 @@
 """Close one natural 64x36 Noise Type 2 tuple through AEXCompat and EffectMain."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import copy
 import hashlib
@@ -26,11 +31,11 @@ WORKER_CHECKOUT = Path(
 )
 WORKER = WORKER_CHECKOUT / "guest/target/release/aex-guest-worker"
 WORKER_PIXEL_TRANSPORT = WORKER_CHECKOUT / "guest/crates/aex-guest-worker/src/pixel.rs"
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
 SOURCE = (
-    ROOT
+    resolve_asset(ROOT
     / "refs/win_references/20260604_olm/OLMDirectionalBlur/"
-    "case_0001_before_effects.png"
+    "case_0001_before_effects.png")
 )
 PRODUCTION = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 CORE_SOURCES = [
@@ -205,9 +210,9 @@ def identities() -> dict[str, Any]:
         "worker_commit": git_commit(WORKER_CHECKOUT),
         "worker_pixel_transport_path": str(WORKER_PIXEL_TRANSPORT),
         "worker_pixel_transport_sha256": sha256_file(WORKER_PIXEL_TRANSPORT),
-        "aex_path": str(AEX.relative_to(ROOT)),
+        "aex_path": str(asset_relative(AEX, ROOT)),
         "aex_sha256": sha256_file(AEX),
-        "source_path": str(SOURCE.relative_to(ROOT)),
+        "source_path": str(asset_relative(SOURCE, ROOT)),
         "source_sha256": sha256_file(SOURCE),
         "production_path": str(PRODUCTION.relative_to(ROOT)),
         "production_sha256": sha256_file(PRODUCTION),
@@ -363,13 +368,13 @@ def compile_cpp(cpp: Path, executable: Path) -> None:
         "-isysroot",
         sdk,
         "-I",
-        str(ROOT / "Headers"),
+        str(resolve_asset(ROOT / "Headers")),
         "-I",
-        str(ROOT / "Headers/SP"),
+        str(resolve_asset(ROOT / "Headers/SP")),
         "-I",
-        str(ROOT / "Util"),
+        str(resolve_asset(ROOT / "Util")),
         "-I",
-        str(ROOT / "Resources"),
+        str(resolve_asset(ROOT / "Resources")),
         str(cpp),
         *[str(path) for path in CORE_SOURCES],
         "-framework",

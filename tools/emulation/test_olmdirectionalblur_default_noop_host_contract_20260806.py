@@ -3,13 +3,18 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-REFERENCE_DIR = ROOT / "refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture"
+REFERENCE_DIR = resolve_asset(ROOT / "refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture")
 MANIFEST = REFERENCE_DIR / "reference_manifest.json"
 UI_SETUP = ROOT / "refs/conformance/olmdirectionalblur_ui_setup_actual_aex_20260806.json"
 SOURCE = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"

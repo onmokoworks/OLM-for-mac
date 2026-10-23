@@ -2,6 +2,11 @@
 """Close the fixed public 32x18 dual-side Type-2 tuple over source/layout."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import hashlib
 import importlib.util
@@ -33,10 +38,10 @@ EXPORTED_REPORT = (
     ROOT / "refs/conformance/"
     "olmdirectionalblur_dual_side_exported_smart_closure_20260814.json"
 )
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
 IMAGE = (
-    ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/"
-    "case_0001_before_effects.png"
+    resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/"
+    "case_0001_before_effects.png")
 )
 REPORT = (
     ROOT / "refs/conformance/"
@@ -250,8 +255,8 @@ def build_negative_probe(temp: Path, width: int, height: int, tuple_index: int,
     command = [
         "clang++", "-std=c++17", "-arch", "arm64", "-O2",
         "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
-        "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-        "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+        "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+        "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
         str(cpp), str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"),
         str(ROOT / "core/dblur_field.cpp"), "-framework", "Cocoa", "-o", str(exe),
@@ -332,9 +337,9 @@ def run_live() -> dict:
             "public64_report_sha256": sha256(PUBLIC64_REPORT),
             "exported_report_path": str(EXPORTED_REPORT.relative_to(ROOT)),
             "exported_report_sha256": sha256(EXPORTED_REPORT),
-            "actual_aex_path": str(AEX.relative_to(ROOT)),
+            "actual_aex_path": str(asset_relative(AEX, ROOT)),
             "actual_aex_sha256": sha256(AEX),
-            "fixture_path": str(IMAGE.relative_to(ROOT)),
+            "fixture_path": str(asset_relative(IMAGE, ROOT)),
             "fixture_sha256": sha256(IMAGE),
         },
         "tuples": [list(value) for value in TUPLES],

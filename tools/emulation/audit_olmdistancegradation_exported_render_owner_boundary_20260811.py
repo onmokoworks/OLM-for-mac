@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """Pin why exported PF_Cmd_RENDER cannot own the full DG numerical pipeline."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib, json, os, subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/DistanceGradation.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/DistanceGradation.aex")
 AEX_SHA256 = "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
 PROBE = ROOT / "tools/emulation/probe_olmdistancegradation_pf16_smart_sequence_20260805.py"
-PYTHON = ROOT / "tools/emulation/.venv/bin/python"
-ASM = ROOT / "disasm/DistanceGradation.aex.asm.txt"
+PYTHON = resolve_asset(ROOT / "tools/emulation/.venv/bin/python")
+ASM = resolve_asset(ROOT / "disasm/DistanceGradation.aex.asm.txt")
 REPORT = ROOT / "refs/conformance/olmdistancegradation_exported_render_owner_boundary_20260811.json"
 DOC = ROOT / "refs/conformance/olmdistancegradation_exported_render_owner_boundary_20260811.md"
 

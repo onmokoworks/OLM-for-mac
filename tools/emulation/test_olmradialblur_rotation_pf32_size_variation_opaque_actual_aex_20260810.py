@@ -2,6 +2,11 @@
 """Exact PF32 Rotation Size Variation family for strictly positive alpha."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import asset_relative
+
 import hashlib
 import json
 import struct
@@ -99,7 +104,7 @@ def main() -> int:
         "kind": "olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810",
         "status": "exact_actual_aex_and_production_semantic_noop_family",
         "scope": "Pinned actual-AEX PF32 Rotation 9x7 rowbytes160, all source alpha strictly positive (0.5 or 1.0), Size Variation 1/25/100; all other parameters use the existing neutral outer-only tuple.",
-        "aex": {"path": str(m4.AEX_PATH.relative_to(ROOT)), "sha256": base.AEX_SHA256},
+        "aex": {"path": str(asset_relative(m4.AEX_PATH, ROOT)), "sha256": base.AEX_SHA256},
         "source_alpha": {"minimum": 0.5, "maximum": 1.0, "contains_zero": False},
         "baseline_zero_variation_hashes": baseline_hashes,
         "cases": cases,

@@ -2,6 +2,11 @@
 """Pin RadialBlur's selector/UI-state contract and exercise the Mac handler."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import hashlib
 import json
 import struct
@@ -14,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "plugins_2025/OLMRadialBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMRadialBlur.aex")
 AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
 ENTRY = 0x180010540
 VTABLE = 0x180021E98
@@ -126,8 +131,8 @@ int main(){g_suite.PF_UpdateParamUI=update;g_basic.AcquireSuite=acquire;g_basic.
         cpp.write_text(source)
         command = ["xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
                    "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
-                   "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",
-                   "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(executable)]
+                   "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),
+                   str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(executable)]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         assert built.returncode == 0, built.stderr
         run = subprocess.run([str(executable)], cwd=ROOT, capture_output=True, text=True)
@@ -154,7 +159,7 @@ def main() -> int:
     report = {
         "kind": "olmradialblur_ui_selectors_actual_aex_20260810",
         "status": "pass_bounded_selector_contract",
-        "actual_aex": {"path": str(AEX.relative_to(ROOT)), "sha256": AEX_SHA256, **actual},
+        "actual_aex": {"path": str(asset_relative(AEX, ROOT)), "sha256": AEX_SHA256, **actual},
         "mac_production": {"source": "mac/OLMRadialBlur/OLMRadialBlur.cpp", "update_matrix": matrix},
         "contract": {
             "user_changed_param": "no-op",

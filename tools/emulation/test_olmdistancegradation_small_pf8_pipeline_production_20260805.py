@@ -1,7 +1,12 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 #!/usr/bin/env python3
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
-R=Path(__file__).resolve().parents[2];F=R/'tools/emulation/fixtures/distancegradation_pipeline_pf8_17x11_threshold4_linear_inside'
+R=Path(__file__).resolve().parents[2];F=resolve_asset(R/'tools/emulation/fixtures/distancegradation_pipeline_pf8_17x11_threshold4_linear_inside')
 def main():
  m=json.loads((F/'manifest.json').read_text());assert m['provenance']['compose_function']=='0x181170870'
  for n,d in m['blobs'].items():assert hashlib.sha256((F/n).read_bytes()).hexdigest()==d['sha256']

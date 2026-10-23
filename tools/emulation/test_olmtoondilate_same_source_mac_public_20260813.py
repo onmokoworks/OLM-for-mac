@@ -8,6 +8,11 @@ bundle, and fail-closes unless all twelve shared-source cells are byte exact.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -224,8 +229,8 @@ def main() -> int:
             raise RuntimeError("BLOCKED_FAIL_CLOSED: isolated candidate binary absent")
         compile_command = [
             compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
-            "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-            "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+            "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+            "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
             str(PROBE_SOURCE), "-o", str(probe),
         ]
         run_checked(compile_command, label="real-SDK probe build")

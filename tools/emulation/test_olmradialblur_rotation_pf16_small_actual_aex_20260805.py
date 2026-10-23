@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import hashlib, json, os, struct, subprocess, sys, tempfile, zlib
 from pathlib import Path
 
@@ -227,7 +232,7 @@ g_rotation_test_capture=&cap;auto e=RenderRotationTyped<PF_Pixel16>(&iw,&ow,i);g
 std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)polar.data(),polar.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)scalar.data(),scalar.size()*4);std::ofstream(argv[5],std::ios::binary).write((char*)accum.data(),accum.size()*4);std::ofstream(argv[6],std::ios::binary).write((char*)maximum.data(),maximum.size()*4);std::ofstream(argv[7],std::ios::binary).write((char*)finalrgba.data(),finalrgba.size()*4);std::ofstream(argv[8],std::ios::binary).write((char*)coordinates.data(),coordinates.size()*4);}}
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-        cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
+        cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(resolve_asset(ROOT/"Headers")),"-I",str(resolve_asset(ROOT/"Headers/SP")),"-I",str(resolve_asset(ROOT/"Util")),"-I",str(resolve_asset(ROOT/"Resources")),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
         built=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
         if built.returncode: raise AssertionError(built.stderr)
         names=("output","polar","source_scalar","accum","max_alpha","final_rgba","coordinates"); paths=[td/f"{n}.bin" for n in names]
@@ -258,6 +263,6 @@ def main() -> int:
     aex_hash=sha(m4.AEX_PATH.read_bytes()); aex_identity_exact=aex_hash==AEX_SHA256
     padding_exact=all(mac["output"][y*ROWBYTES+VISIBLE:(y+1)*ROWBYTES]==bytes([0xa0+y])*(ROWBYTES-VISIBLE) for y in range(H))
     exact=all(matches.values()) and padding_exact and fixture_hashes_exact and aex_identity_exact
-    report={"kind":"olmradialblur_rotation_pf16_small_actual_aex_20260805","status":"exact" if exact else "mismatch","scope":"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim","aex":{"path":str(m4.AEX_PATH.relative_to(ROOT)),"sha256":aex_hash,"owner":"0x180006d10","pf16_writer":"0x180017440","identity_exact":aex_identity_exact},"geometry":{"width":W,"height":H,"rowbytes":ROWBYTES,"visible_bytes":VISIBLE,"padding_bytes":ROWBYTES-VISIBLE,"angular_count":struct.unpack('<II',actual['geometry'])[0],"radius_count":struct.unpack('<II',actual['geometry'])[1]},"typed_source":"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse","matches":matches,"differences":differences,"padding_exact":padding_exact,"fixture_hashes_exact":fixture_hashes_exact,"artifacts":artifacts,"actual_required_plane_contract":list(ACTUAL_REQUIRED),"production_compared_plane_contract":list(COMPARED_PLANES),"actual_diagnostics_excluded_from_fixture_artifacts":sorted(set(actual)-set(ACTUAL_REQUIRED))}
+    report={"kind":"olmradialblur_rotation_pf16_small_actual_aex_20260805","status":"exact" if exact else "mismatch","scope":"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim","aex":{"path":str(asset_relative(m4.AEX_PATH, ROOT)),"sha256":aex_hash,"owner":"0x180006d10","pf16_writer":"0x180017440","identity_exact":aex_identity_exact},"geometry":{"width":W,"height":H,"rowbytes":ROWBYTES,"visible_bytes":VISIBLE,"padding_bytes":ROWBYTES-VISIBLE,"angular_count":struct.unpack('<II',actual['geometry'])[0],"radius_count":struct.unpack('<II',actual['geometry'])[1]},"typed_source":"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse","matches":matches,"differences":differences,"padding_exact":padding_exact,"fixture_hashes_exact":fixture_hashes_exact,"artifacts":artifacts,"actual_required_plane_contract":list(ACTUAL_REQUIRED),"production_compared_plane_contract":list(COMPARED_PLANES),"actual_diagnostics_excluded_from_fixture_artifacts":sorted(set(actual)-set(ACTUAL_REQUIRED))}
     REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n");print(json.dumps(report,indent=2,sort_keys=True));return 0 if report["status"]=="exact" else 1
 if __name__=="__main__":raise SystemExit(main())

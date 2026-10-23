@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import json
 import os
 import subprocess
@@ -10,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DECOMP = ROOT / "decomp/OLMKiraKira.aex.c.txt"
+DECOMP = resolve_asset(ROOT / "decomp/OLMKiraKira.aex.c.txt")
 MAC = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 CPP = ROOT / "tools/emulation/test_kirakira_ramp_event.cpp"
 REPORT = ROOT / "refs/conformance/olmkirakira_ramp_event_contract_20260805.json"

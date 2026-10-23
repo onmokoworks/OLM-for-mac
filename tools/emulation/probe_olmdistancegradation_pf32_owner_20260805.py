@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """First executable probe of DG PF32 whole-render owner FUN_181172a10."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,struct,sys,traceback,os
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];sys.path.insert(0,str(HERE))
@@ -10,7 +15,7 @@ import cv_bridge as cvb
 import numpy as np
 from unicorn.x86_const import UC_X86_REG_RSP,UC_X86_REG_RAX,UC_X86_REG_RIP,UC_X86_REG_RCX,UC_X86_REG_RDX,UC_X86_REG_R8,UC_X86_REG_R9
 from test_dg_fieldgen_p1b import setup_tls,build_host_suites
-AEX=ROOT/'plugins_2025/DistanceGradation.aex';OWNER=0x181172a10
+AEX=resolve_asset(ROOT/'plugins_2025/DistanceGradation.aex');OWNER=0x181172a10
 def main():
  source_mode=os.environ.get('OLM_DG_PF32_SOURCE','zero');blur_family=source_mode=='blur_family';assert source_mode in ('zero','controlled','outside_sphere','outside_sphere_invert','both_linear_layer','both_power_layer','inside_constant_blur','blur_family');outside=source_mode.startswith('outside_sphere');both_layer=source_mode in ('both_linear_layer','both_power_layer');constant_blur=source_mode=='inside_constant_blur';padded=outside or both_layer or constant_blur or blur_family
  alpha_fixture=os.environ.get('OLM_DG_PF32_ALPHA_FIXTURE','line_gap');assert alpha_fixture in ('line_gap','exported_matrix')

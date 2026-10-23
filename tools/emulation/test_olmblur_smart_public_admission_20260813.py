@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """Read-only live closure for the bounded OLMBlur Smart public owner."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'mac/OLMBlur/OLMBlur.cpp'
 PROBE=ROOT/'tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp'
-FIXTURE=ROOT/'tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810'
+FIXTURE=resolve_asset(ROOT/'tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810')
 MANIFEST=FIXTURE/'manifest.json'
 ACTUAL=ROOT/'refs/conformance/olmblur_exported_effectmain_chain_actual_aex_20260811.json'
 REPORT=ROOT/'refs/conformance/olmblur_smart_public_admission_20260813.json'
@@ -24,7 +29,7 @@ def compile_run()->str:
   if {k:sha(p) for k,p in [('source',SOURCE),('probe',PROBE),('fixture',MANIFEST),('actual',ACTUAL)]}!={k:EXPECTED[k] for k in ('source','probe','fixture','actual')}:raise RuntimeError('identity drift')
   with tempfile.TemporaryDirectory(prefix='olmblur-smart-public-') as td:
     exe=Path(td)/'probe'
-    sources=[PROBE,ROOT/'mac/OLMBlur/OLMBlur_Strings.cpp',*[ROOT/'core'/n for n in ('olmblur_helper.cpp','olmblur_fullworker_helper.cpp','olmblur_worker16_nonlegacy.cpp','olmblur_worker16_legacy.cpp','olmblur_worker32_nonlegacy.cpp','olmblur_worker32_legacy.cpp','olmblur_worker8_legacy.cpp','olmblur_worker_orchestration.cpp')],ROOT/'Util/AEGP_SuiteHandler.cpp',ROOT/'Util/MissingSuiteError.cpp']
+    sources=[PROBE,ROOT/'mac/OLMBlur/OLMBlur_Strings.cpp',*[ROOT/'core'/n for n in ('olmblur_helper.cpp','olmblur_fullworker_helper.cpp','olmblur_worker16_nonlegacy.cpp','olmblur_worker16_legacy.cpp','olmblur_worker32_nonlegacy.cpp','olmblur_worker32_legacy.cpp','olmblur_worker8_legacy.cpp','olmblur_worker_orchestration.cpp')],resolve_asset(ROOT/'Util/AEGP_SuiteHandler.cpp'),resolve_asset(ROOT/'Util/MissingSuiteError.cpp')]
     cmd=['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1','-Wno-pragma-pack','-Wno-deprecated-declarations',*[x for d in ('Headers','Headers/SP','Util','Resources','core','mac/OLMBlur') for x in ('-I',str(ROOT/d))],*[str(x) for x in sources],'-framework','Cocoa','-o',str(exe)]
     subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True)
     run=subprocess.run([str(exe),str(FIXTURE)],cwd=ROOT,check=False,capture_output=True,text=True)

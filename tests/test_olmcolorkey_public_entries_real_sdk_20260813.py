@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import subprocess
@@ -54,7 +59,7 @@ class ColorKeyPublicEntriesRealSdk(unittest.TestCase):
                 "-isysroot", sdk, "-IHeaders", "-IHeaders/SP", "-IUtil",
                 "-IResources", "-Imac/OLMColorKey", str(PROBE),
                 "mac/OLMColorKey/OLMColorKey_Strings.cpp",
-                "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp",
+                str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")),
                 "-framework", "Cocoa", "-o", str(executable),
             ]
             subprocess.run(command, cwd=ROOT, check=True)

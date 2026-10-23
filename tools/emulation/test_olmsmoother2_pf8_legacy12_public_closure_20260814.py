@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -16,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
 DIRECT = ROOT / "tools/emulation/olmsmoother2_case07_pf8_normalized_direct_probe_20260814.cpp"
 PUBLIC = ROOT / "tools/emulation/olmsmoother2_pf8_legacy12_public_smart_harness_20260814.cpp"
-REF = ROOT / "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2"
+REF = resolve_asset(ROOT / "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2")
 MANIFEST = REF / "reference_manifest.json"
 INPUT_PNG = REF / "input\\current_olm_cells.png"
 REPORT = ROOT / "refs/conformance/olmsmoother2_pf8_legacy12_public_closure_20260814.json"
@@ -116,7 +121,7 @@ def generate() -> dict:
         sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
         command=["clang++","-std=c++17","-arch","arm64","-O2","-Wno-pragma-pack","-Wno-deprecated-declarations","-isysroot",sdk,
             "-IHeaders","-IHeaders/SP","-IUtil","-IResources","-Imac/OLMSmoother2",str(PUBLIC),
-            "mac/OLMSmoother2/OLMSmoother2_Strings.cpp","Util/AEGP_SuiteHandler.cpp","Util/MissingSuiteError.cpp","-framework","Cocoa","-o",str(public_bin)]
+            "mac/OLMSmoother2/OLMSmoother2_Strings.cpp",str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(public_bin)]
         subprocess.run(command,cwd=ROOT,check=True,capture_output=True,text=True)
         public=subprocess.run([str(public_bin),str(input_raw)],cwd=ROOT,check=True,capture_output=True,text=True)
         public_rows=[]

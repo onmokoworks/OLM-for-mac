@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
 import copy,hashlib,importlib.util,json,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];PATH=ROOT/"tools/emulation/test_olmblur_pf32_retained_public_closure_20260813.py"
@@ -20,5 +25,5 @@ class Closure(unittest.TestCase):
  def test_current_docs_and_candidate(self):
   for rel in ("README.md","KNOWN_LIMITATIONS.md","notes/CONFORMANCE_LEDGER.md","refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md","refs/conformance/olm_release_completion_matrix_20260806.md","refs/conformance/olm_mac_port_orchestrator_boundary_20260805.md"):
    text=(ROOT/rel).read_text();self.assertIn("22eb712a",text,rel);self.assertIn("ecdf3d93",text,rel);self.assertIn("20/20",text,rel)
-  self.assertTrue((ROOT/"handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json").is_file())
+  self.assertTrue((resolve_asset(ROOT/"handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json")).is_file())
 if __name__=="__main__":unittest.main()

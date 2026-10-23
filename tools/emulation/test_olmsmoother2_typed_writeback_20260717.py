@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import hashlib
 import json
@@ -162,7 +167,7 @@ def run_depth(depth: str) -> dict[str, Any]:
 
 def grounding() -> None:
     require(hashlib.sha256(AEX_PATH.read_bytes()).hexdigest() == AEX_SHA256, "AEX hash drift")
-    asm = (ROOT / "disasm/OLMSmoother2.aex.asm.txt").read_text(encoding="utf-8")
+    asm = (resolve_asset(ROOT / "disasm/OLMSmoother2.aex.asm.txt")).read_text(encoding="utf-8")
     for anchor in ("; === FUN_180003370", "; === FUN_1800036e0", "; === FUN_180003990"):
         require(anchor in asm, f"missing typed worker anchor {anchor}")
     require("LEA R8,[0x180003370]" in asm and "LEA R8,[0x1800036e0]" in asm and "LEA R8,[0x180003990]" in asm, "wrapper dispatch anchors missing")
@@ -213,7 +218,7 @@ def main() -> int:
     report = {
         "verdict": "PASS_ACTUAL_AEX_POST_CCE0_TYPED_WRITEBACK_ORACLE",
         "scope": "Mac-local actual-AEX typed writeback workers versus independent raw-byte/word/float32 oracle",
-        "aex": {"path": str(AEX_PATH.relative_to(ROOT)), "sha256": AEX_SHA256},
+        "aex": {"path": str(asset_relative(AEX_PATH, ROOT)), "sha256": AEX_SHA256},
         "boundary": {"wrappers": {key: hex(value) for key, value in WRAPPERS.items()}, "workers": {key: hex(value) for key, value in WORKERS.items()}, "center_sample_only": True},
         "cases": cases,
         "claims_not_made": ["No classifier/c280/cce0 correctness claim", "No case0012 host-state claim", "No Windows or AE exact claim", "No production or ledger edit"],

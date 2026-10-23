@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import os
@@ -14,7 +19,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
+AEX = resolve_asset(ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex")
 SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 STRINGS = ROOT / "mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
 CASE = os.environ.get("OLM_KIRA_EXPORTED_CASE", "mode1")
@@ -113,10 +118,10 @@ def production() -> bytes:
         executable = directory / "probe"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = ["clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
-                   "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-                   "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(source),
-                   str(ROOT / "Util/AEGP_SuiteHandler.cpp"),
-                   str(ROOT / "Util/MissingSuiteError.cpp"),
+                   "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+                   "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(source),
+                   str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))),
+                   str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
                    "-framework", "Cocoa", "-o", str(executable)]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         if build.returncode:

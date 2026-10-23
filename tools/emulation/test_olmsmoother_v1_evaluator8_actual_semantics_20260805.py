@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Pin all five PF8 interpolation evaluators to float32 object semantics."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,math,struct,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/emulation'));from aex_loader import AexLoader
-AEX=ROOT/'plugins_2025/OLMSmoother.aex';SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82'
+AEX=resolve_asset(ROOT/'plugins_2025/OLMSmoother.aex');SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82'
 FUNCS=(0x1800010c0,0x1800010e0,0x180001110,0x180001150,0x180001180);TS=(-.25,0.,.125,.5,1.,1.25)
 def f(x):return struct.unpack('<f',struct.pack('<f',x))[0]
 def add(a,b):return f(f(a)+f(b))

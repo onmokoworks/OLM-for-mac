@@ -2,6 +2,11 @@
 """Bind installed DirectionalBlur to the exported-Smart exact/fail-closed boundary."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -16,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 IDENTITY = ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json"
 TRANSACTION = ROOT / "handoffs/olmdirectionalblur_testseam_compat_install_20260814/install_transaction.json"
-CANDIDATE = ROOT / "handoffs/olmdirectionalblur_testseam_compat_candidate_20260814/build_identity.json"
+CANDIDATE = resolve_asset(ROOT / "handoffs/olmdirectionalblur_testseam_compat_candidate_20260814/build_identity.json")
 EXPORTED = ROOT / "refs/conformance/olmdirectionalblur_dual_side_exported_smart_closure_20260814.json"
 DUAL = ROOT / "refs/conformance/olmdirectionalblur_dual_side_public_owner_boundary_20260814.json"
 SOURCE_GUARD = ROOT / "refs/conformance/olmdirectionalblur_dual_side_public_source_guard_closure_20260813.json"
@@ -24,15 +29,15 @@ TYPE3 = ROOT / "refs/conformance/olmdirectionalblur_type3_public_owner_boundary_
 NATURAL = ROOT / "refs/conformance/olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.json"
 DUAL_PROBE = ROOT / "tools/emulation/probe_olmdirectionalblur_exported_smart5_candidate_20260814.cpp"
 TYPE3_PROBE = ROOT / "tools/emulation/probe_olmdirectionalblur_type3_failclose_candidate_20260814.cpp"
-SOURCE_PNG = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+SOURCE_PNG = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 STRINGS = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp"
 FRONTONLY = ROOT / "core/dblur_frontonly.cpp"
 GAUSSIAN = ROOT / "core/dblur_gaussian.h"
 ROTATE = ROOT / "core/dblur_rotate.cpp"
 ROWDRIVER = ROOT / "core/dblur_rowdriver.cpp"
 FIELD = ROOT / "core/dblur_field.cpp"
-SUITE_CPP = ROOT / "Util/AEGP_SuiteHandler.cpp"
-MISSING_CPP = ROOT / "Util/MissingSuiteError.cpp"
+SUITE_CPP = resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))
+MISSING_CPP = resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur"
 REPORT = ROOT / "refs/conformance/olmdirectionalblur_current_installed_internal_owner_boundary_20260814.json"
 NOTE = REPORT.with_suffix(".md")
