@@ -82,7 +82,8 @@ FACT: Full unchanged corpus replay exited0: 36/36, `replay_matches_saved=true`,
 using the recorded F45 worker. Rebaseline table: 36 unchanged saved records,
 zero modified records. This is saved-result stability, not a claim of Classic
 conformance. ASan/UBSan candidate executions: 600, zero reported failures.
-AST parsing and `git diff --check` pass. All started sessions finished;
+AST parsing passes. The staged whitespace check found trailing spaces in the
+disassembly text; a follow-up commit removes them, and the final diff check passes. All started sessions finished;
 regenerable build directories removed. Retained scratch 5,325,991 bytes,
 well below 5GiB. No permission rejection occurred.
 
