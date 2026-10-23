@@ -64,3 +64,4 @@ R01-xcode-release-config
 C45-original-oob-noise-table
 F47c-native-plugin-smart-render
 C46-radial-smart-r8
+F47d-native-plugin-all
