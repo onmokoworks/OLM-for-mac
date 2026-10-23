@@ -1062,14 +1062,14 @@ static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
     // independently failing Front Fade crosses excluded. The noise-disabled
     // Back Fade gather is also validated with active or zero scatter counts;
     // zero counts still execute the alpha prepass, normalization and writer.
-    // Negative Offset
-    // (native out-of-allocation reads) and Layer retain their existing guards.
+    // Generated Noise validates every demanded table read in the core;
+    // unused cells do not require allocator contents. Layer remains guarded.
     // Earlier retained routes keep precedence.
     const bool generated_noise_scatter = info.noise_variation > 0.0 &&
         info.noise_type != 3 && (info.front_strength > 0 || info.back_strength > 0);
     const bool back_fade_only = info.noise_variation == 0.0 && info.front_alpha_fade == 0;
     if ((info.noise_variation != 0.0 &&
-            (info.noise_type == 3 || info.noise_offset < 0)) ||
+            (info.noise_type == 3)) ||
         (info.size_variation != 0.0 &&
             (info.front_alpha_fade != 0 || info.back_alpha_fade != 0) &&
             !generated_noise_scatter && !back_fade_only)) return false;
