@@ -29,6 +29,42 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'finite-brightness-negative':
+        for i, (channel, word) in enumerate(itertools.product((2, 4),
+                (0x7f800000, 0xff800000, 0x7fc12345, 0xff812346))):
+            case = matrix_case(adapter, i, (7, 11), 32, 1, 2, channel)
+            data = bytearray(case['pixels'])
+            struct.pack_into('<I', data, (i%4)*4, word)
+            case.update(pixels=bytes(data), profile='nonfinite-brightness-negative')
+            yield case
+        return
+    if family == 'finite-brightness-boundary':
+        for i, (channel, geometry, strength, fade) in enumerate(itertools.product(
+                (2, 4), ((9, 1), (3, 5), (17, 11)), (1, 100, 537), (0, 0.2))):
+            case = matrix_case(adapter, i, geometry, 32, 1+i%2, 1+(i//2)%2, channel)
+            values = {5:(1, 100)[i%2], 6:strength, 7:fade,
+                      8:(0, 1, 97, 100, 10000)[i%5], 9:(0, 83, 100)[i%3],
+                      10:(1, 2, 15, 1000)[i%4], 16:0, 22:3, 28:0,
+                      34:(1, 2, 3, 15, 500)[i%5], 40:(0, 22, -31)[i%3]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            words = (0, 0x80000000, 1, 0x80000001, 0x3f800000, 0xbf800000,
+                     0x7f7fffff, 0xff7fffff, 0x40000000, 0xc0000000)
+            rng = random.Random(380000+i)
+            case.update(pixels=b''.join(struct.pack('<I', rng.choice(words))
+                        for _ in range(geometry[0]*geometry[1]*4)), profile='finite-brightness-boundary')
+            yield case
+        return
+    if family == 'finite-brightness-box':
+        channels = (2, 4)
+        for channel in channels:
+            for case in cases(adapter, 'finite-alpha'):
+                case['index'] += channel * 1000
+                for param in case['parameters']:
+                    if param['slot'] == 1: param['value'] = channel
+                    if param['slot'] == 7: param['value'] = 0.1
+                yield case
+        return
     if family == 'nonfinite-alpha-negative':
         for i, (slot, value) in enumerate(((1, 2), (1, 3), (1, 4), (2, 3),
                                            (4, 1), (40, -2147483648/65536))):
@@ -526,7 +562,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('finite-brightness-negative', 'finite-brightness-boundary', 'finite-brightness-box', 'nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

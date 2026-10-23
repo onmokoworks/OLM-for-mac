@@ -2043,6 +2043,24 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
+// C38: scalar luminance/Max constructors feed the same recovered box and
+// clamp pipeline for finite PF32 HDR/signed samples. Preserve all tuple,
+// geometry, ramp and work limits; other source domains need separate proof.
+static bool SmartFiniteBrightnessInputIsSupported(const PF_EffectWorld *input,
+    PF_PixelFormat format, const OLMKiraKiraInfo &info)
+{
+    if (!input || format != PF_PixelFormat_ARGB128 ||
+        !IsSmartScalarBrightnessBoxTuple(info, format)) return false;
+    for (A_long y = 0; y < input->height; ++y) {
+        for (A_long x = 0; x < input->width; ++x) {
+            const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
+            if (!std::isfinite(pixel.alpha) || !std::isfinite(pixel.red) ||
+                !std::isfinite(pixel.green) || !std::isfinite(pixel.blue)) return false;
+        }
+    }
+    return true;
+}
+
 // C34: the recovered PF32 Alpha box pipeline handles finite and nonfinite
 // source lanes. Row/column state preserves the finite-versus-NaN boundary;
 // the original scalar aggregator clamps NaN ray amounts to zero, and the
@@ -2894,7 +2912,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputIsSupported(input_world, format, info));
+				 SmartAlphaBoxInputIsSupported(input_world, format, info) ||
+                 SmartFiniteBrightnessInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
