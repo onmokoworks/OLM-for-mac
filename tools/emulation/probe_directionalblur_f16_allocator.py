@@ -24,7 +24,8 @@ from aex_loader import AexLoader
 from aex_witness import leaf_check
 from PIL import Image
 from capstone import Cs, CS_ARCH_X86, CS_MODE_64
-from unicorn.x86_const import (UC_X86_REG_RAX, UC_X86_REG_RCX,
+from unicorn import UC_HOOK_MEM_READ
+from unicorn.x86_const import (UC_X86_REG_RIP, UC_X86_REG_RAX, UC_X86_REG_RCX,
     UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RSP)
 
 TICKET = 'F16-dblur-generated-noise-fallback'
@@ -85,7 +86,8 @@ def run_fixture(case, directory, aex, padding):
                 if offset < 0 or offset+4 > allocation['size']:
                     trace['outside_reads'].append({'rva': hex(address-0x180000000),
                         'index': index, 'byte_offset': offset, 'allocation_size': allocation['size'],
-                        'value_bits': ld.read_bytes(base+offset, 4).hex()})
+                        'value_bits': ld.read_bytes(base+offset, 4).hex(),
+                        'field_cell': (trace['table_reads'] - 1) // 2})
 
             def rowdriver(ld, address, size):
                 if field: return
@@ -94,6 +96,15 @@ def run_fixture(case, directory, aex, padding):
                 w, h = fixture.u32(ld, ctx+0x10), fixture.u32(ld, ctx+0x14)
                 field.append(ld.read_bytes(fixture.u64(ld, ctx+8), w*h*4))
                 trace['field_dimensions'] = [w, h]
+                field_base = fixture.u64(ld, ctx+8)
+                trace['sampled_cells'] = {}
+                def sampled(uc, access, address, size, value, user):
+                    for cell in range((address-field_base)//4,
+                                      (address-field_base+size-1)//4+1):
+                        trace['sampled_cells'].setdefault(str(cell),
+                            hex(uc.reg_read(UC_X86_REG_RIP)-0x180000000))
+                ld.uc.hook_add(UC_HOOK_MEM_READ, sampled,
+                               begin=field_base, end=field_base+w*h*4-1)
                 # Bind the in-allocation table independently of padding contents.
                 trace['table_sha256'] = sha(ld.read_bytes(fixture.u64(ld, ctx+0x28), 404))
 
@@ -150,6 +161,8 @@ def run_fixture(case, directory, aex, padding):
     result = json.loads(output.read_text())
     assert result['status'] == 'ok', result.get('blocked')
     assert result['output']['complete'] and len(field) == 1
+    assert trace['table_reads'] == 2 * math.prod(trace['field_dimensions'])
+    assert all(0x3370 <= int(rva, 16) < 0x34a0 for rva in trace['sampled_cells'].values())
     trace['builder'] = result['execution']['param_context']
     trace['padding_float'] = padding
     trace['output_sha256'] = sha(raw.read_bytes())
@@ -161,10 +174,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--worker', type=Path, required=True)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--scratch', type=Path, default=ROOT/'orchestra/state'/TICKET)
     parser.add_argument('--indices', type=int, nargs='+', default=[102,145,*NEGATIVE])
     args = parser.parse_args()
     args.main, args.max_size, args.case_timeout = ROOT.parent.parent, 256, 20
-    scratch = ROOT/'orchestra/state'/TICKET
+    scratch = args.scratch.resolve()
     scratch.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
     tempfile.tempdir = str(scratch)
@@ -184,7 +198,9 @@ def main():
                 'trials': [t[0] for t in trials],
                 'original_fixture_vs_session': compare(trials[0][2], reference),
                 'padding_field_delta': compare(trials[1][1], trials[2][1], 4),
-                'padding_output_delta': compare(trials[1][2], trials[2][2])})
+                'padding_output_delta': compare(trials[1][2], trials[2][2]),
+                'invalid_sampled_cells': sorted({r['field_cell'] for r in trials[0][0]['outside_reads']} &
+                    {int(k) for k in trials[0][0]['sampled_cells']})})
             assert len({t[0]['table_sha256'] for t in trials}) == 1
             assert all(bool(t[0]['outside_reads']) == (index in NEGATIVE) for t in trials)
             assert rows[-1]['original_fixture_vs_session']['different_units'] == 0

@@ -218,12 +218,6 @@ static int render_rgba8(
         int noise_height = 0;
         const bool use_noise = noise_variation_percent > 0.0f;
         const float noise_cell_size = thickness_ui * render_scale;
-        if (use_noise && !layer_mode && !olm::dblur::generate_noise_plane(
-                work_width, work_height, noise_cell_size,
-                static_cast<float>(noise_offset_ui) / 36.0f, seed,
-                &noise_plane, &noise_width, &noise_height)) {
-            return -1;
-        }
         if (layer_mode) {
             field_source.assign(work_pixels, 0.0f);
             field_rotated.assign(work_pixels, 0.0f);
@@ -242,6 +236,28 @@ static int render_rgba8(
         const int workers = std::min(work_height, 32);
         const int processed_rows = process_full_height ? work_height :
             (work_height / workers) * workers;
+        if (use_noise && !layer_mode) {
+            const int nw = static_cast<int>(static_cast<float>(work_width) / noise_cell_size + 3.0f);
+            const int nh = static_cast<int>(static_cast<float>(work_height) / noise_cell_size + 3.0f);
+            noise_plane.assign(static_cast<std::size_t>(nw) * nh, 0.0f);
+            // The original rowdriver samples only nonzero-alpha scatter cells.
+            // Type 1 reads all four neighbors, including zero-weight neighbors.
+            for (int y = 0; y < processed_rows; ++y) {
+                for (int x = 0; x < work_width; ++x) {
+                    if (buffer_a[rgba_index(work_width, x, y) + 3] == 0.0f) continue;
+                    const int ix = static_cast<int>(static_cast<float>(x) / noise_cell_size);
+                    const int iy = static_cast<int>(static_cast<float>(y) / noise_cell_size);
+                    const std::size_t first = static_cast<std::size_t>(iy) * nw + ix;
+                    noise_plane[first] = 1;
+                    if (noise_type == 1) {
+                        noise_plane[first + 1] = noise_plane[first + nw] = noise_plane[first + nw + 1] = 1;
+                    }
+                }
+            }
+            if (!olm::dblur::generate_noise_plane(work_width, work_height, noise_cell_size,
+                    static_cast<float>(noise_offset_ui) / 36.0f, seed,
+                    &noise_plane, &noise_width, &noise_height, true)) return -1;
+        }
         const float* scatter_front =
             scaled_front_strength > 0 ? front_weights.data() : &empty_table;
         const float* scatter_back =

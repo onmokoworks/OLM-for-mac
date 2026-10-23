@@ -46,7 +46,8 @@ inline float sample_noise_plane(const NoisePlaneView& plane, int x, int y,
 inline bool generate_noise_plane(int source_width, int source_height,
                                  float cell_size, float offset, std::uint32_t seed,
                                  std::vector<float>* output, int* plane_width,
-                                 int* plane_height) {
+                                 int* plane_height,
+                                 bool only_demanded = false) {
     if (source_width <= 0 || source_height <= 0 || cell_size <= 0.0f ||
         output == nullptr || plane_width == nullptr || plane_height == nullptr) {
         return false;
@@ -67,11 +68,19 @@ inline bool generate_noise_plane(int source_width, int source_height,
         value = static_cast<float>(next_unit() * 2.0 - 1.0);
     }
 
-    output->resize(static_cast<std::size_t>(*plane_width) * *plane_height);
+    const std::size_t cells = static_cast<std::size_t>(*plane_width) * *plane_height;
+    // In demand mode, output initially holds a 0/1 mask and is overwritten in
+    // place. This keeps peak allocation identical to the eager generator.
+    if (only_demanded && output->size() != cells) return false;
+    output->resize(cells);
     for (float& value : *output) {
         const float base = static_cast<float>(next_unit());
         float table_position = static_cast<float>(next_unit() * 100.0 +
                                                   static_cast<double>(offset));
+        // Consume both random draws for every cell, preserving the AEX stream.
+        // Undemanded cells are never passed to the sampler: no allocator-adjacent
+        // value is fabricated when their signed table index would be invalid.
+        if (only_demanded && value == 0.0f) continue;
         while (table_position >= 100.0f) {
             table_position -= 100.0f;
         }

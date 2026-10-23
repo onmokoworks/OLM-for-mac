@@ -28,7 +28,7 @@ class Build(Adapter):
         if argv[0]=='clang++':
             host=Path(next(str(x) for x in argv if str(x).endswith('/host.cpp')))
             if self.baseline:
-                for original in (SOURCE,ROOT/'core/dblur_frontonly.cpp',ROOT/'core/dblur_rowdriver.cpp'):
+                for original in (SOURCE,ROOT/'core/dblur_frontonly.cpp',ROOT/'core/dblur_rowdriver.cpp',ROOT/'core/dblur_noise.h'):
                     body=subprocess.check_output(['git','show',f'{self.baseline}:{original.relative_to(ROOT)}'],cwd=ROOT).decode()
                     target=host.with_name(original.name)
                     body=body.replace('#include "../../core/',f'#include "{ROOT}/core/')
@@ -46,6 +46,7 @@ class Build(Adapter):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--jobs',type=int,choices=[1,2],default=1)
     p.add_argument('--baseline',required=True)
     p.add_argument('--scratch',type=Path,default=ROOT/'orchestra/state/C02-dblur-smart')
     p.add_argument('--worker',type=Path,required=True)
@@ -100,7 +101,7 @@ def main():
                             saved['c02_revalidated']={'baseline':args.baseline,'smart_before':b,'reason':'general operation restored against paired AEX stages'}
                             (ROOT/name).write_text(json.dumps(saved,indent=2,sort_keys=True)+'\n')
                 return {'name':name,'before':baseline,'after':after,'sanitized':sanitized,'sanitizer_same':True}
-        with ThreadPoolExecutor(max_workers=2) as pool:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
             for row in pool.map(run,cases):
                 report['cases'].append(row)
                 if len(report['cases'])%50==0:
