@@ -50,3 +50,5 @@ C38-kira-smart-r9
 F43b-ucrtmath-ms-double-trig-exp
 F43c-ucrtmath-ms-pow
 F45-integrate-ms-double
+F46-integrate-ucrt-pow
+C39-seed45-residual-mismatches
