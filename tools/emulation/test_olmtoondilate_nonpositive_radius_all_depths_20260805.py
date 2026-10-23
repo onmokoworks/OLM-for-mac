@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Actual-AEX typed fixtures for zero and negative Search Radius."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import asset_relative
 import hashlib,json,struct,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).parent))
@@ -23,6 +28,6 @@ def run(depth,radius):
 def main():
  if sha(AEX)!=AEX_SHA:raise SystemExit("BLOCKED_FAIL_CLOSED: AEX identity drifted")
  cases=[run(d,r) for d in (8,16,32) for r in (0.0,-1.0)];g={"aex_sha256_exact":True,"six_independent_runs":len(cases)==6,"all_nonpositive_copy_exact":all(all(c["gates"].values()) for c in cases)};status="PASS_NONPOSITIVE_RADIUS_ALL_DEPTHS" if all(g.values()) else "BLOCKED_FAIL_CLOSED"
- p={"status":status,"schema":"olmtoondilate.nonpositive-radius-all-depths/1","aex":str(AEX.relative_to(ROOT)),"aex_sha256":AEX_SHA,"fixture":{"width":W,"height":H,"radii":[0.0,-1.0],"mixed_alpha_and_zero_alpha_nonzero_rgb":True,"padding_byte":PAD},"gates":g,"cases":cases,"claim_boundary":"bounded actual-AEX typed-worker zero/negative-radius copy behavior; SmartRender host extent clipping remains unproved"}
+ p={"status":status,"schema":"olmtoondilate.nonpositive-radius-all-depths/1","aex":str(asset_relative(AEX, ROOT)),"aex_sha256":AEX_SHA,"fixture":{"width":W,"height":H,"radii":[0.0,-1.0],"mixed_alpha_and_zero_alpha_nonzero_rgb":True,"padding_byte":PAD},"gates":g,"cases":cases,"claim_boundary":"bounded actual-AEX typed-worker zero/negative-radius copy behavior; SmartRender host extent clipping remains unproved"}
  REPORT.write_text(json.dumps(p,indent=2)+"\n");MARKDOWN.write_text(f"# OLMToonDilate Nonpositive Radius — 2026-08-05\n\n- Status: **{status}**\n- PF8/PF16/PF32 workers run independently at radius 0 and -1.\n- Mixed-alpha visible typed bytes and row padding remain exact copies: `{g['all_nonpositive_copy_exact']}`.\n- Extent clipping and AE-host behavior remain unproved.\n");print(json.dumps(p,indent=2));return 0 if status.startswith("PASS") else 1
 if __name__=="__main__":raise SystemExit(main())

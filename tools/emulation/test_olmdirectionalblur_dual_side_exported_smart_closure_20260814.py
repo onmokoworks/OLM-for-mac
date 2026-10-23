@@ -2,6 +2,11 @@
 """Close 15 DirectionalBlur dual-side cells through exported AEX Smart + Mac public."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -14,11 +19,11 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKER = ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker"
-WORKER_IDENTITY = ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/build_identity.json"
+WORKER = resolve_asset(ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker")
+WORKER_IDENTITY = resolve_asset(ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/build_identity.json")
 PATCH = ROOT / "tools/emulation/aexcompat_olmdirectionalblur_double_ceil_import_20260814.patch"
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
-SOURCE_PNG = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
+SOURCE_PNG = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 PRODUCTION = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 FEATURE = ROOT / "tools/emulation/test_olmdirectionalblur_public_effectmain_feature_matrix_20260811.py"
 PUBLIC32 = ROOT / "refs/conformance/olmdirectionalblur_public_effectmain_feature_matrix_20260811.json"
@@ -165,9 +170,9 @@ def compile_public(cpp: Path, executable: Path, arch: str) -> None:
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = [
         "clang++", "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
-        "-ffp-contract=off", "-isysroot", sdk, "-I", str(ROOT / "Headers"),
-        "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
-        "-I", str(ROOT / "Resources"), str(cpp), str(ROOT / "core/dblur_frontonly.cpp"),
+        "-ffp-contract=off", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")),
+        "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
+        "-I", str(resolve_asset(ROOT / "Resources")), str(cpp), str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"),
         str(ROOT / "core/dblur_field.cpp"), "-framework", "Cocoa", "-o", str(executable),
     ]

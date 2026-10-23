@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -12,7 +17,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = ROOT / "tools/emulation/fixtures/olmblur_worker32_legacy"
+FIXTURES = resolve_asset(ROOT / "tools/emulation/fixtures/olmblur_worker32_legacy")
 MANIFEST_SHA256 = "53b4f553c3ebc6ad81c4562f251c4624ff55383fcef89c8de4db1e4674227cf5"
 AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 

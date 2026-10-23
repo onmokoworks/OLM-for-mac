@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Independent whole-function interpreter for FUN_1800033d0."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,re,struct,sys
 from pathlib import Path
 from unicorn.x86_const import *
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/emulation'));from aex_loader import AexLoader
-AEX=ROOT/'plugins_2025/OLMSmoother.aex';SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';CFG=ROOT/'refs/conformance/olmsmoother_v1_subhandler8_cfg_20260805.json';ENTRY=0x1800033d0;MOD=0x180000000;STK=0x700000000000;DIRS=(5,3,1,7)
+AEX=resolve_asset(ROOT/'plugins_2025/OLMSmoother.aex');SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';CFG=ROOT/'refs/conformance/olmsmoother_v1_subhandler8_cfg_20260805.json';ENTRY=0x1800033d0;MOD=0x180000000;STK=0x700000000000;DIRS=(5,3,1,7)
 BASES=('rax','rbx','rcx','rdx','rsi','rdi','rbp','rsp','r8','r9','r10','r11','r12','r13','r14','r15');A={}
 for b in BASES:
  if b[1:].isdigit():A.update({b:(b,64),b+'d':(b,32),b+'w':(b,16),b+'b':(b,8)})

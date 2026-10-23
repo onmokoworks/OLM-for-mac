@@ -2,6 +2,11 @@
 """Close the fixed public Type-3 Layer tuple over exact source and layout."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import hashlib
 import importlib.util
@@ -20,15 +25,15 @@ FEATURE_TOOL = (
     / "tools/emulation/"
     "test_olmdirectionalblur_public_effectmain_feature_matrix_20260811.py"
 )
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
 WORKER_HANDOFF = ROOT / "handoffs/olmdirectionalblur_type3_layer_exported_worker_20260814"
 WORKER = WORKER_HANDOFF / "bin/aex-guest-worker"
 LAYER_PATCH = ROOT / "tools/emulation/aexcompat_explicit_input_layer_parameter_20260814.patch"
 CEIL_PATCH = ROOT / "tools/emulation/aexcompat_olmdirectionalblur_double_ceil_import_20260814.patch"
 IMAGE = (
-    ROOT
+    resolve_asset(ROOT
     / "refs/win_references/20260604_olm/OLMDirectionalBlur/"
-    "case_0001_before_effects.png"
+    "case_0001_before_effects.png")
 )
 REPORT = (
     ROOT
@@ -244,8 +249,8 @@ def build_negative_probe(temp: Path):
     command = [
         "clang++", "-std=c++17", "-arch", "arm64", "-O2",
         "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
-        "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-        "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+        "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+        "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
         str(cpp), str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"),
         str(ROOT / "core/dblur_field.cpp"), "-framework", "Cocoa", "-o", str(exe),
@@ -331,7 +336,7 @@ def run_live() -> dict:
             "production_sha256": sha256(SOURCE),
             "feature_tool_path": str(FEATURE_TOOL.relative_to(ROOT)),
             "feature_tool_sha256": sha256(FEATURE_TOOL),
-            "actual_aex_path": str(AEX.relative_to(ROOT)),
+            "actual_aex_path": str(asset_relative(AEX, ROOT)),
             "actual_aex_sha256": sha256(AEX),
             "worker_path": str(WORKER.relative_to(ROOT)),
             "worker_sha256": sha256(WORKER),
@@ -340,7 +345,7 @@ def run_live() -> dict:
             "layer_patch_sha256": sha256(LAYER_PATCH),
             "ceil_patch_path": str(CEIL_PATCH.relative_to(ROOT)),
             "ceil_patch_sha256": sha256(CEIL_PATCH),
-            "fixture_path": str(IMAGE.relative_to(ROOT)),
+            "fixture_path": str(asset_relative(IMAGE, ROOT)),
             "fixture_sha256": sha256(IMAGE),
         },
         "tuple": {

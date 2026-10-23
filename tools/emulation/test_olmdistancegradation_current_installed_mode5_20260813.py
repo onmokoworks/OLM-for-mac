@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Replay the current installed DistanceGradation PF32 Mode5/Power boundary."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse,hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -10,7 +15,7 @@ FILES={
  "strings":ROOT/"mac/OLMDistanceGradation/OLMDistanceGradation_Strings.cpp",
  "fieldgen":ROOT/"core/olmdistancegradation_fieldgen.cpp","frontonly":ROOT/"core/dblur_frontonly.cpp",
  "rotate":ROOT/"core/dblur_rotate.cpp","rowdriver":ROOT/"core/dblur_rowdriver.cpp","field":ROOT/"core/dblur_field.cpp",
- "suite_cpp":ROOT/"Util/AEGP_SuiteHandler.cpp","suite_h":ROOT/"Util/AEGP_SuiteHandler.h","missing_cpp":ROOT/"Util/MissingSuiteError.cpp","sdk_header":ROOT/"Headers/AE_Effect.h",
+ "suite_cpp":resolve_asset(ROOT/"Util/AEGP_SuiteHandler.cpp"),"suite_h":resolve_asset(ROOT/"Util/AEGP_SuiteHandler.h"),"missing_cpp":resolve_asset(ROOT/"Util/MissingSuiteError.cpp"),"sdk_header":resolve_asset(ROOT/"Headers/AE_Effect.h"),
  "installed_binary":Path.home()/"Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
  "mode5_closure":ROOT/"refs/conformance/olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.json",
  "power_install_identity":ROOT/"refs/conformance/olmdistancegradation_power_failclose_incremental_install_identity_20260812.json"}

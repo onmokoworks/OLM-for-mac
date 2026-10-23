@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import hashlib
 import json
@@ -19,7 +24,7 @@ import test_olmblur_worker16_legacy as worker  # noqa: E402
 
 REPORT = ROOT / "refs/conformance/olmblur_pf16_legacy_retained_exported_public_owner_20260813.json"
 DOC = ROOT / "refs/conformance/olmblur_pf16_legacy_retained_exported_public_owner_20260813.md"
-AEX = ROOT / "plugins_2025/OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMBlur.aex")
 AEX_SHA = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 PUBLIC_RUNNER = ROOT / "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py"
 WORKER_RUNNER = ROOT / "tools/emulation/test_olmblur_worker16_legacy.py"
@@ -142,7 +147,7 @@ def live() -> dict[str, object]:
         "schema": "olmblur.pf16-legacy-retained-exported-public-owner/1",
         "status": "PASS_THREE_LEGACY_RETAINED_EXACT_ONE_PUBLIC_MISMATCH_FAIL_CLOSED",
         "identities": {
-            "aex": {"path": AEX.relative_to(ROOT).as_posix(), "sha256": AEX_SHA},
+            "aex": {"path": asset_relative(AEX, ROOT).as_posix(), "sha256": AEX_SHA},
             "public_runner": {"path": PUBLIC_RUNNER.relative_to(ROOT).as_posix(), "sha256": sha256(PUBLIC_RUNNER)},
             "worker_runner": {"path": WORKER_RUNNER.relative_to(ROOT).as_posix(), "sha256": sha256(WORKER_RUNNER)},
         },

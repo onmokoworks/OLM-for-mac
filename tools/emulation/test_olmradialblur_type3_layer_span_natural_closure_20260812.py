@@ -2,6 +2,11 @@
 """Hash-bound direct-owner closure for the bounded PF32 Zoom Type-3 layer lane."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -205,10 +210,10 @@ std::ofstream(argv[7])<<"null_layer,layer_size,layer_origin,layer_rowbytes,layer
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
-               "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(cpp),
+               "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),
                str(ROOT / "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp"),
-               str(ROOT / "Util/AEGP_SuiteHandler.cpp"), str(ROOT / "Util/MissingSuiteError.cpp"),
+               str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))), str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
                "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe)]
         built = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
         if built.returncode:

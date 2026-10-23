@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Independent CFG interpreter gate for FUN_180009e30 (EdgeWalker8)."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,struct,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/emulation'))
 from aex_loader import AexLoader
 import test_olmsmoother_v1_subhandler8_cfg_interpreter_20260805 as core
-AEX=ROOT/'plugins_2025/OLMSmoother.aex';SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';CFG=ROOT/'refs/conformance/olmsmoother_v1_edgewalker8_cfg_20260805.json';ENTRY=0x180009e30;DIRS=(5,3,1,7);OPPOSITE=(8,7,6,5,4,3,2,1,0)
+AEX=resolve_asset(ROOT/'plugins_2025/OLMSmoother.aex');SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';CFG=ROOT/'refs/conformance/olmsmoother_v1_edgewalker8_cfg_20260805.json';ENTRY=0x180009e30;DIRS=(5,3,1,7);OPPOSITE=(8,7,6,5,4,3,2,1,0)
 def fixture(l,mask):
  w=h=7;raw=bytearray()
  for y in range(h):

@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import asset_relative
+
 import argparse
 import hashlib
 import json
@@ -273,7 +278,7 @@ def main() -> int:
         "intake": intake,
         "descriptor": DESCRIPTOR,
         "binary_grounding": {
-            "aex_path": str(AEX_PATH.relative_to(ROOT)),
+            "aex_path": str(asset_relative(AEX_PATH, ROOT)),
             "aex_sha256": hashlib.sha256(AEX_PATH.read_bytes()).hexdigest(),
             "extracted_predicate": "FUN_18000e170",
             "portable_source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",

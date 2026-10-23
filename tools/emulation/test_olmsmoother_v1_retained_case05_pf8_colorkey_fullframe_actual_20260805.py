@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Verify a retained Color-Key-enabled PF8 Windows render byte-for-byte."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import subprocess
@@ -12,10 +17,10 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 BUILD = ROOT / "refs/scripts/build_olmsmoother_cli.sh"
-REFERENCE_DIR = ROOT / "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother"
+REFERENCE_DIR = resolve_asset(ROOT / "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother")
 MANIFEST = REFERENCE_DIR / "reference_manifest.json"
 CASE_ID = "final_random10_olm_smoother_05"
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 AEX_SHA256 = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 OUT = ROOT / "refs/conformance/olmsmoother_v1_retained_case05_pf8_colorkey_fullframe_actual_production_20260805.json"
 

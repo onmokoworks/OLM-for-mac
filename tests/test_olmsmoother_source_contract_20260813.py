@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import re
 import struct
@@ -155,7 +160,7 @@ class SourceContract(unittest.TestCase):
             active = struct.pack("<4H", *pixel) * 5 * 3
             observed[name] = hashlib.sha256(active).hexdigest()
 
-        source = Image.open(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png").convert("RGBA")
+        source = Image.open(resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png")).convert("RGBA")
         argb = b"".join(bytes((a, r, g, b)) for r, g, b, a in source.getdata())
         observed["fullframe_pf8"] = hashlib.sha256(argb).hexdigest()
         self.assertEqual(observed, V1_BY_FIXTURE)

@@ -7,6 +7,11 @@ Only --write updates the JSON/Markdown evidence.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -19,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
-AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
+AEX = resolve_asset(ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex")
 AEX_RUNNER = ROOT / "tools/emulation/probe_olmtoondilate_same_source_actual_aex_20260813.py"
 MAC_RUNNER = ROOT / "tools/emulation/test_olmtoondilate_same_source_mac_public_20260813.py"
 MAC_PROBE = ROOT / "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp"

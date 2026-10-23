@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -86,11 +91,11 @@ def execute() -> tuple[str, str]:
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = [
             "clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
-            "-isysroot", sdk, "-I", str(ROOT / "Headers"),
-            "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
-            "-I", str(ROOT / "Resources"), str(source),
-            str(ROOT / "Util/AEGP_SuiteHandler.cpp"),
-            str(ROOT / "Util/MissingSuiteError.cpp"),
+            "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")),
+            "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
+            "-I", str(resolve_asset(ROOT / "Resources")), str(source),
+            str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))),
+            str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
             "-framework", "Cocoa", "-o", str(executable),
         ]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)

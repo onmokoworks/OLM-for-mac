@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -13,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
+AEX = resolve_asset(ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex")
 MAC = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 STRINGS = ROOT / "mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
 REPORT = ROOT / "refs/conformance/olmkirakira_ui_setup_actual_aex_20260806.json"

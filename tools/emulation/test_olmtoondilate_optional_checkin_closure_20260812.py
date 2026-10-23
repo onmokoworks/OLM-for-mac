@@ -9,6 +9,11 @@ only --write updates the report and Markdown.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -16,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
-SDK = ROOT / "Headers/AE_Effect.h"
+SDK = resolve_asset(ROOT / "Headers/AE_Effect.h")
 PAIRED = ROOT / "refs/conformance/olmtoondilate_same_source_public_paired_replay_20260813.json"
 NEGATIVE = ROOT / "refs/conformance/olmtoondilate_public_admission_negative_closure_20260813.json"
 REPORT = ROOT / "refs/conformance/olmtoondilate_optional_checkin_closure_20260812.json"

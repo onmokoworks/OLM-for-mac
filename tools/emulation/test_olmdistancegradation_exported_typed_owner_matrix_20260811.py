@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Compare exported PF16/PF32 Smart owner buffers with production RenderBits."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib, json, os, struct, subprocess, tempfile
 from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
+AEX = resolve_asset(ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex")
 HARNESS = ROOT / "tools/emulation/dg_exported_typed_owner_compare_harness_20260811.cpp"
 SOURCE = ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 REPORT = ROOT / "refs/conformance/olmdistancegradation_exported_typed_owner_matrix_20260811.json"

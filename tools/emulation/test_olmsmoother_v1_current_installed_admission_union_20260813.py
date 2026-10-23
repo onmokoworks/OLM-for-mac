@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Replay the complete bounded OLMSmoother v1 Classic admission union."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse,hashlib,importlib, json,os,struct,subprocess,sys,tempfile
 from pathlib import Path
 from PIL import Image
@@ -8,11 +13,11 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
 PROBE=ROOT/"tools/emulation/probe_olmsmoother_v1_current_installed_admission_union_20260813.cpp"
 SOURCE=ROOT/"mac/OLMSmoother/Mac/OLMSmoother_port.cpp"; STRINGS=ROOT/"mac/OLMSmoother/OLMSmoother_Strings.cpp"
-SUITE_CPP=ROOT/"Util/AEGP_SuiteHandler.cpp"; MISSING_CPP=ROOT/"Util/MissingSuiteError.cpp"; SDK=ROOT/"Headers/AE_Effect.h"
+SUITE_CPP=resolve_asset(ROOT/"Util/AEGP_SuiteHandler.cpp"); MISSING_CPP=resolve_asset(ROOT/"Util/MissingSuiteError.cpp"); SDK=resolve_asset(ROOT/"Headers/AE_Effect.h")
 INSTALLED=Path.home()/"Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother"
 GUARD=ROOT/"refs/conformance/olmsmoother_public_admission_guard_closure_20260812.json"
 IDENTITY=ROOT/"refs/conformance/olm_hostless_batch4_incremental_install_20260813.json"
-IMAGE=ROOT/"refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png"
+IMAGE=resolve_asset(ROOT/"refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png")
 REPORT=ROOT/"refs/conformance/olmsmoother_v1_current_installed_admission_union_20260813.json"; MD=REPORT.with_suffix(".md")
 PINS={"probe":"9a6a2212869a537bcf2e268d30b6bc415a0fba7039f288e265f3e41dabcc6403","source":"c8c7b7728553ee4ccaadc7ef802be40e607d7e7a7b829958d4b8dfab80f633dc","strings":"ce4ed37933a67172f6cba6570a55a5f2ea592284e8a9f48cd852bf4fcf1484e7","suite_cpp":"7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f","missing_cpp":"8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9","sdk_header":"a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d","installed_binary":"f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162","guard_report":"6ee4224da89573be90d633a9eaca2f52335f304001cc4a8f2abc38c066716d28","install_identity":"415e1b26b77097248173da13239b85ae70d0b6a446fa6eb31bc13a0bdc6895af","fullframe_png":"166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c"}
 RUN_SHA256="8a70694a745a4c0825a9551d73684f824ef581043235fc81806c58c4d8024b25"; STATUS="PASS_OLMSMOOTHER_V1_CURRENT_INSTALLED_COMPLETE_CLASSIC_ADMISSION_UNION_AE_FREE"

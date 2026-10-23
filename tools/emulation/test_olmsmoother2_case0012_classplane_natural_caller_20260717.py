@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import asset_relative
+
 import argparse
 import hashlib
 import json
@@ -276,7 +281,7 @@ def main() -> int:
     report = {
         "verdict": "PASS_MAC_NATURAL_CLASSPLANE_CALLER_WITH_EXACT_LIVE_INPUT_BOUNDARY",
         "scope": "Mac-local actual-AEX ada0/ac00/ae10 execution on a translated retained fixture; corrected live source inputs remain absent",
-        "binary": {"path": str(AEX_PATH.relative_to(ROOT)), "sha256": EXPECTED_AEX_SHA256},
+        "binary": {"path": str(asset_relative(AEX_PATH, ROOT)), "sha256": EXPECTED_AEX_SHA256},
         "binary_grounding": {
             "ada0_vcomp_fork_call": "0x18000adfe",
             "vcomp_import_thunk": "0x180020f00 -> IAT 0x180022120 -> VCOMP140!_vcomp_fork",

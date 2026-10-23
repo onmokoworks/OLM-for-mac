@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Semi-transparent straight/premultiplied worlds through actual AEX core and production."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,math,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_typed_writeback_20260717 as typed
@@ -10,7 +15,7 @@ import test_olmsmoother2_nonuniform_geometry_actual_aex_20260805 as v1
 ROOT=Path(__file__).resolve().parents[2]; W=H=5
 HARNESS=ROOT/'tools/emulation/olmsmoother2_semtransparent_premul_production_harness_20260810.cpp'
 SOURCE=ROOT/'mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp'
-ASM=ROOT/'disasm/OLMSmoother2.aex.asm.txt'
+ASM=resolve_asset(ROOT/'disasm/OLMSmoother2.aex.asm.txt')
 REPORT=ROOT/'refs/conformance/olmsmoother2_semtransparent_premul_actual_aex_20260810.json'
 DOC=ROOT/'refs/conformance/olmsmoother2_semtransparent_premul_actual_aex_20260810.md'
 RGB=[(13,201,71),(240,17,133),(33,89,250),(199,144,7),(81,2,173),(6,77,222),(151,219,38),(244,102,63),(57,188,116),(123,45,209),(217,31,94),(42,231,155),(174,83,12),(9,164,247),(232,196,51),(69,114,184),(255,61,3),(28,214,98),(187,7,226),(104,171,39),(3,129,198),(143,238,76),(221,54,168),(91,11,242),(166,153,24)]

@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import gzip
 import hashlib
@@ -154,7 +159,7 @@ def run_public(directory: Path, input_path: Path) -> tuple[list[dict[str, object
         "-Wno-pragma-pack", "-Wno-deprecated-declarations", "-isysroot", sdk,
         "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", "-Imac/OLMSmoother2",
         str(PUBLIC), "mac/OLMSmoother2/OLMSmoother2_Strings.cpp",
-        "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp",
+        str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")),
         "-framework", "Cocoa", "-o", str(binary),
     ]
     subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)

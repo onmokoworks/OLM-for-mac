@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import importlib.util
 import subprocess
 import tempfile
@@ -71,8 +76,8 @@ std::printf("PASS_OLMDIRECTIONALBLUR_SMART_CLEANUP_ATOMIC cases=%d\n",cases);ret
     command = [
         "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
         "-ffp-contract=off", "-isysroot", sdk,
-        "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-        "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+        "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+        "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
         str(cpp), str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"),
         str(ROOT / "core/dblur_field.cpp"), "-framework", "Cocoa", "-o", str(exe),

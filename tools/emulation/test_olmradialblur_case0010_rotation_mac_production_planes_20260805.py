@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import hashlib
 import json
 import os
@@ -18,8 +23,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
-INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png"
-FIXTURE = ROOT / "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805"
+INPUT = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png")
+FIXTURE = resolve_asset(ROOT / "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805")
 FULL_PF8_FIXTURE = FIXTURE / "post_worker_full_pf8_argb.bin.zlib"
 FULL_PF8_REPORT = ROOT / "refs/conformance/olmradialblur_case0010_full_pf8_actual_aex_20260805.json"
 EXPECTED_FULL_PF8_ZLIB_SHA256 = "b18b2b11e627db82bc79365196a581e01198739fd7708da6af279ef3e2b9e2f1"
@@ -44,7 +49,7 @@ def main() -> int:
         "report_status_exact": full_pf8_report.get("status") == "exact",
         "report_raw_sha256_exact": full_pf8_report.get("frame", {}).get("raw_sha256") == EXPECTED_FULL_PF8_RAW_SHA256,
         "report_zlib_sha256_exact": full_pf8_report.get("frame", {}).get("zlib_sha256") == EXPECTED_FULL_PF8_ZLIB_SHA256,
-        "report_fixture_path_exact": full_pf8_report.get("frame", {}).get("zlib_path") == str(FULL_PF8_FIXTURE.relative_to(ROOT)),
+        "report_fixture_path_exact": full_pf8_report.get("frame", {}).get("zlib_path") == str(FULL_PF8_asset_relative(FIXTURE, ROOT)),
     }
     if not all(full_pf8_fixture_identity.values()):
         raise AssertionError(f"full PF8 fixture identity failed: {full_pf8_fixture_identity}")
@@ -148,8 +153,8 @@ int main(int argc, char **argv) {{
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         command = [os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
                    "-fno-fast-math", "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
-                   "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-                   "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+                   "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+                   "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
                    "-ffunction-sections", "-fdata-sections", str(probe), "-Wl,-dead_strip",
                    "-framework", "Cocoa", "-o", str(binary)]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)

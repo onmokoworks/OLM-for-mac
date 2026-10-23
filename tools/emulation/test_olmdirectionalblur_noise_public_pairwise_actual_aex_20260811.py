@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """PF16/PF32 public Noise-state pairwise crosses against the actual AEX owner."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import ctypes, hashlib, itertools, json, struct, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2]
 FIXTURE=ROOT/'tools/emulation/dblur_fullrender_host_fixture_20260711.py'
-SOURCE=ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png'
+SOURCE=resolve_asset(ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png')
 REPORT=ROOT/'refs/conformance/olmdirectionalblur_noise_public_pairwise_actual_aex_20260811.json'
 NOTE=ROOT/'refs/conformance/olmdirectionalblur_noise_public_pairwise_actual_aex_20260811.md'
 FACTORS=((1,2,3),(1,2),(0,1),(3,10),(25,100),('fade50','sharp50','size50'),((16,16),(32,18)))

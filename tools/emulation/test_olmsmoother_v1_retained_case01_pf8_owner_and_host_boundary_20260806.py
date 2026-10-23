@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Pin the retained-case01 PF8 owner fact without overclaiming its PNG boundary."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -15,10 +20,10 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 AEX_SHA256 = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 BUILD = ROOT / "refs/scripts/build_olmsmoother_cli.sh"
-REFERENCE = ROOT / "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother"
+REFERENCE = resolve_asset(ROOT / "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother")
 SOURCE = REFERENCE / "olm_final_random10_olm_smoother_20260629__software__fr24__final_random10_olm_smoother_01_before_effects.png"
 EXPECTED = REFERENCE / "olm_final_random10_olm_smoother_20260629__software__fr24__final_random10_olm_smoother_01.png"
 PARAMS = REFERENCE / "reference_manifest.json"

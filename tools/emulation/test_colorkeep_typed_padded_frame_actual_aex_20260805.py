@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -15,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex")
 AEX_SHA256 = "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
 REPORT = ROOT / "refs/conformance/colorkeep_typed_padded_frame_actual_aex_20260805.json"
 WIDTH, HEIGHT, PADDING = 4, 3, 8
@@ -75,7 +80,7 @@ def production_frames() -> bytes:
         directory = Path(raw)
         cpp, exe = directory / "probe.cpp", directory / "probe"
         cpp.write_text(source, encoding="utf-8")
-        command = ["xcrun", "clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off", "-D__MACH__", "-Wno-pragma-pack", "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp), "mac/ColorKeep/ColorKeep_Strings.cpp", "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(exe)]
+        command = ["xcrun", "clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off", "-D__MACH__", "-Wno-pragma-pack", "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp), "mac/ColorKeep/ColorKeep_Strings.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")), str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(exe)]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, check=False)
         assert build.returncode == 0, build.stderr.decode(errors="replace")
         run = subprocess.run([str(exe)], cwd=ROOT, capture_output=True, check=False)

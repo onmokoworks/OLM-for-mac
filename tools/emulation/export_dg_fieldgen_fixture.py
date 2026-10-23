@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -32,7 +37,7 @@ from test_dg_fieldgen_p1b import (  # noqa: E402
     setup_tls,
 )
 
-AEX = ROOT / "plugins_2025" / "DistanceGradation.aex"
+AEX = resolve_asset(ROOT / "plugins_2025" / "DistanceGradation.aex")
 DEFAULT_OUTPUT = HERE / "fixtures" / "distancegradation_fieldgen_synthetic_17x11"
 
 

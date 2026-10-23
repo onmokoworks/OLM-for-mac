@@ -2,6 +2,11 @@
 """Close the former six DirectionalBlur exported-Smart residual cells at expf."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -21,15 +26,15 @@ SOURCE = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 GAUSSIAN = ROOT / "core/dblur_gaussian.h"
 BASE = ROOT / "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
 INTERNAL_FIXTURE = ROOT / "tools/emulation/dblur_fullrender_host_fixture_20260711.py"
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
-SOURCE_PNG = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
-PINNED_WORKER = ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
+SOURCE_PNG = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
+PINNED_WORKER = resolve_asset(ROOT / "handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker")
 RAW_WORKER = ROOT / "handoffs/olmdirectionalblur_exported_smart_remaining6_census_20260814/bin/aex-guest-worker-raw-dump"
 CEIL_PATCH = ROOT / "tools/emulation/aexcompat_olmdirectionalblur_double_ceil_import_20260814.patch"
 RAW_PATCH = ROOT / "handoffs/olmdirectionalblur_exported_smart_remaining6_census_20260814/raw_dump.patch"
-BUILD_IDENTITY = ROOT / "handoffs/olmdirectionalblur_exported_smart_remaining6_census_20260814/build_identity.json"
-DECOMP = ROOT / "decomp/OLMDirectionalBlur.aex.c.txt"
-DISASM = ROOT / "disasm/OLMDirectionalBlur.aex.asm.txt"
+BUILD_IDENTITY = resolve_asset(ROOT / "handoffs/olmdirectionalblur_exported_smart_remaining6_census_20260814/build_identity.json")
+DECOMP = resolve_asset(ROOT / "decomp/OLMDirectionalBlur.aex.c.txt")
+DISASM = resolve_asset(ROOT / "disasm/OLMDirectionalBlur.aex.asm.txt")
 EXPORTED = ROOT / "refs/conformance/olmdirectionalblur_dual_side_exported_smart_closure_20260814.json"
 REPORT = ROOT / "refs/conformance/olmdirectionalblur_exported_smart_remaining6_census_20260814.json"
 NOTE = REPORT.with_suffix(".md")
@@ -163,8 +168,8 @@ int main(int argc, char **argv) {
     executable = temp / "remaining6-direct"
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
-               "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(cpp),
+               "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),
                str(ROOT / "core/dblur_frontonly.cpp"), str(ROOT / "core/dblur_rotate.cpp"),
                str(ROOT / "core/dblur_rowdriver.cpp"), str(ROOT / "core/dblur_field.cpp"),
                "-framework", "Cocoa", "-o", str(executable)]

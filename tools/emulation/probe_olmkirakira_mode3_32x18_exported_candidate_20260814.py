@@ -8,6 +8,11 @@ EffectMain(PF_Cmd_RENDER) harness.  It never edits production or installs a plug
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import importlib.util
 import json
@@ -21,7 +26,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py"
 SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
-AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
+AEX = resolve_asset(ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex")
 WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker")
 WIDTH, HEIGHT, PADDING = 32, 18, 12
 DEPTHS = {"PF8": ("argb8", 4), "PF16": ("argb16", 8), "PF32": ("argb32f", 16)}

@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -15,7 +20,7 @@ from aex_loader import AexLoader  # noqa: E402
 from test_olmblur_fullentry import build_context, build_pf_suites  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025" / "OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025" / "OLMBlur.aex")
 FIXTURES = Path(__file__).parent / "fixtures" / "olmblur_worker32_nonlegacy"
 WORKER = 0x180004B80
 

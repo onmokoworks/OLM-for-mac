@@ -2,6 +2,11 @@
 """Build, run, write, and validate Kira's bounded public Smart closure."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -106,9 +111,9 @@ def run_harness() -> tuple[list[dict], list[dict]]:
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         define = '-DKIRA_SOURCE="' + str(SOURCE) + '"'
         cmd = ["clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
-               "-isysroot", sdk, "-w", "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), define, str(HARNESS),
-               str(ROOT / "Util/AEGP_SuiteHandler.cpp"), str(ROOT / "Util/MissingSuiteError.cpp"),
+               "-isysroot", sdk, "-w", "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), define, str(HARNESS),
+               str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))), str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
                "-framework", "Cocoa", "-o", str(exe)]
         built = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True)
         if built.returncode: raise RuntimeError(built.stderr[-8000:])

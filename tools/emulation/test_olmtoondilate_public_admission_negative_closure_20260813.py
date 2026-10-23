@@ -9,6 +9,11 @@ to replace the JSON and Markdown artifacts.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import copy
 import hashlib
@@ -199,8 +204,8 @@ def fresh_report() -> dict:
                      f"SHARED_PRECOMPS_DIR={tmp/'precomp'}", "build"], "isolated bundle build")
         candidate = product / "OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
         run_checked([compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
-                     "-I", str(ROOT/"Headers"), "-I", str(ROOT/"Headers/SP"), "-I", str(ROOT/"Util"),
-                     "-I", str(ROOT/"Resources"), str(PROBE), "-o", str(probe_bin)], "real-SDK probe build")
+                     "-I", str(resolve_asset(ROOT/"Headers")), "-I", str(resolve_asset(ROOT/"Headers/SP")), "-I", str(resolve_asset(ROOT/"Util")),
+                     "-I", str(resolve_asset(ROOT/"Resources")), str(PROBE), "-o", str(probe_bin)], "real-SDK probe build")
         execution = run_checked([str(probe_bin), str(candidate)], "public negative replay")
         raw = json.loads(execution.stdout)
         gates = validate_raw(raw)

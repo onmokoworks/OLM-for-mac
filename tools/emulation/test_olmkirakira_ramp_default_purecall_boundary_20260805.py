@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -12,7 +17,7 @@ from pathlib import Path
 import pefile
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
+AEX = resolve_asset(ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex")
 REPORT = ROOT / "refs/conformance/olmkirakira_ramp_default_purecall_boundary_20260805.json"
 VTABLE = 0x1814D66C8
 SLOT = VTABLE + 0x18

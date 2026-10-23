@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Public UI commands are exact no-ops in actual AEX and production."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,subprocess,sys,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/emulation'))
 from aex_loader import AexLoader
-AEX=ROOT/'plugins_2025/OLMSmoother.aex'; AEX_SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82'; ENTRY=0x18000a2c0
+AEX=resolve_asset(ROOT/'plugins_2025/OLMSmoother.aex'); AEX_SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82'; ENTRY=0x18000a2c0
 SRC=ROOT/'tools/emulation/olmsmoother_v1_ui_noop_production_harness_20260805.cpp';OUT=ROOT/'refs/conformance/olmsmoother_v1_ui_noop_actual_aex_20260805.json'
 def main():
  if hashlib.sha256(AEX.read_bytes()).hexdigest()!=AEX_SHA:raise RuntimeError('AEX drift')

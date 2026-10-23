@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Execute AEX Smart pre-render parameter/depth preparation FUN_181174060."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,json,struct,sys
 from pathlib import Path
 from unicorn.x86_const import UC_X86_REG_RSP
 H=Path(__file__).resolve().parent;R=H.parents[1];sys.path.insert(0,str(H))
 from aex_loader import AexLoader
-A=R/'plugins_2025/DistanceGradation.aex';ENTRY=0x181174060
+A=resolve_asset(R/'plugins_2025/DistanceGradation.aex');ENTRY=0x181174060
 def main():
  ld=AexLoader(str(A),fast=True);events=[];ind=ld.host_alloc(0x300);ld.write_bytes(ind,b'\0'*0x300);basic=ld.host_alloc(0x10);suite=ld.host_alloc(0x20)
  def checkout(l,args):

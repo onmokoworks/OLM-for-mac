@@ -2,6 +2,11 @@
 """Run the bounded ToonDilate matrix through the installed public EffectMain."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import shutil
@@ -23,7 +28,7 @@ ACTUAL_SUPPORT_REPORTS = (
     ("refs/conformance/olmtoondilate_pf16_radius3_boundary_tie_20260805.json", "PASS_PF16_RADIUS3_BOUNDARY_TIE"),
     ("refs/conformance/olmtoondilate_pf32_radius3_boundary_tie_20260805.json", "PASS_PF32_RADIUS3_BOUNDARY_TIE"),
 )
-ACTUAL_AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
+ACTUAL_AEX = resolve_asset(ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex")
 ACTUAL_AEX_SHA256 = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
 
 
@@ -169,7 +174,7 @@ def main() -> int:
         source, executable = temp_path / "probe.cpp", temp_path / "probe"
         source.write_text(PROBE, encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        build = subprocess.run([compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(source), "-o", str(executable)], capture_output=True, text=True)
+        build = subprocess.run([compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(source), "-o", str(executable)], capture_output=True, text=True)
         if build.returncode:
             raise RuntimeError(f"BLOCKED_FAIL_CLOSED: probe build failed\n{build.stderr}")
         run = subprocess.run([str(executable), str(binary)], capture_output=True, text=True)

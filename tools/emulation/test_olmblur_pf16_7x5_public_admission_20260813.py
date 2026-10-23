@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Real-SDK source-included closure for the bounded PF16 7x5 public cell."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse,hashlib,json,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -16,7 +21,7 @@ def sha(p:Path)->str:return hashlib.sha256(p.read_bytes()).hexdigest()
 def run()->str:
  if {k:sha(p) for k,p in [('source',SOURCE),('worker',WORKER),('probe',PROBE),('owner',OWNER)]}!=EXPECTED:raise RuntimeError('identity drift')
  with tempfile.TemporaryDirectory(prefix='olmblur-pf16-7x5-') as td:
-  exe=Path(td)/'probe';sources=[PROBE,ROOT/'mac/OLMBlur/OLMBlur_Strings.cpp',*[ROOT/'core'/n for n in ('olmblur_helper.cpp','olmblur_fullworker_helper.cpp','olmblur_worker16_nonlegacy.cpp','olmblur_worker16_legacy.cpp','olmblur_worker32_nonlegacy.cpp','olmblur_worker32_legacy.cpp','olmblur_worker8_legacy.cpp','olmblur_worker_orchestration.cpp')],ROOT/'Util/AEGP_SuiteHandler.cpp',ROOT/'Util/MissingSuiteError.cpp']
+  exe=Path(td)/'probe';sources=[PROBE,ROOT/'mac/OLMBlur/OLMBlur_Strings.cpp',*[ROOT/'core'/n for n in ('olmblur_helper.cpp','olmblur_fullworker_helper.cpp','olmblur_worker16_nonlegacy.cpp','olmblur_worker16_legacy.cpp','olmblur_worker32_nonlegacy.cpp','olmblur_worker32_legacy.cpp','olmblur_worker8_legacy.cpp','olmblur_worker_orchestration.cpp')],resolve_asset(ROOT/'Util/AEGP_SuiteHandler.cpp'),resolve_asset(ROOT/'Util/MissingSuiteError.cpp')]
   cmd=['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1','-Wno-pragma-pack','-Wno-deprecated-declarations',*[x for d in ('Headers','Headers/SP','Util','Resources','core','mac/OLMBlur') for x in ('-I',str(ROOT/d))],*[str(x) for x in sources],'-framework','Cocoa','-o',str(exe)]
   subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True);r=subprocess.run([str(exe)],cwd=ROOT,capture_output=True,text=True)
   if r.returncode or r.stderr:raise RuntimeError(f'probe rc={r.returncode} stderr={r.stderr!r}')

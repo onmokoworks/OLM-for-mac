@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
+
 import argparse
 import base64
 import hashlib
@@ -24,8 +29,8 @@ from tools.emulation.olm_installed_identity import MANIFEST as IDENTITY_MANIFEST
 
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 DEFAULT_RUN = Path("/tmp/olmradialblur_pf32_20260806.8xa7UB")
-INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
-MAPPING = ROOT / "refs/fixtures/olmradialblur_case0009_ae_control_u8_to_f32_20260806.json"
+INPUT = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png")
+MAPPING = resolve_asset(ROOT / "refs/fixtures/olmradialblur_case0009_ae_control_u8_to_f32_20260806.json")
 REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_ae_control_replay_20260806.json"
 DIAGNOSTIC_REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_world_capture_result_20260806.json"
 WIDTH, HEIGHT = 1920, 1080
@@ -117,8 +122,8 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         cmd = [os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
                "-fno-fast-math", "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
-               "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), "-ffunction-sections",
+               "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), "-ffunction-sections",
                "-fdata-sections", str(cpp), "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe)]
         built = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
         if built.returncode:
@@ -239,7 +244,7 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
         "status": "portable_replay_exact",
         "dimensions": [WIDTH, HEIGHT],
         "input_contract": "pinned PNG regenerated through compact AE-control byte-to-float mapping into PF_PixelFloat ARGB",
-        "compact_mapping_fixture": str(MAPPING.relative_to(ROOT)),
+        "compact_mapping_fixture": str(asset_relative(MAPPING, ROOT)),
         "production_replay_semantic_rgba_sha256": replay_hash,
         "output_module_premultiplied_semantic_rgba_sha256": premultiplied_hash,
         "portable_output_module_transform": "RGB=float32(RGB*alpha), alpha unchanged",

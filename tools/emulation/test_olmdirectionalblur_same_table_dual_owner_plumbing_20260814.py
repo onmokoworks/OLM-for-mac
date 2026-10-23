@@ -2,6 +2,11 @@
 """Prove DirectionalBlur exported-AEX/Mac same-table plumbing without native claims."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import importlib.util
@@ -17,8 +22,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 AEX_REPO = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout")
-AEX = ROOT / "plugins_2025/OLMDirectionalBlur.aex"
-SOURCE_PNG = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMDirectionalBlur.aex")
+SOURCE_PNG = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png")
 PRODUCTION = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 CENSUS = ROOT / "tools/emulation/test_olmdirectionalblur_exported_smart_remaining6_census_20260814.py"
 DOWNSTREAM = ROOT / "tools/emulation/test_olm_math_ucrt_downstream_replay_20260814.py"
@@ -186,8 +191,8 @@ __attribute__((destructor)) static void counters(){const char*p=std::getenv("OLM
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command_line = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                     "-ffp-contract=off", "-fno-builtin-expf", "-fno-builtin-powf", "-fno-builtin-pow",
-                    "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-                    "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(cpp), str(interposer),
+                    "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+                    "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp), str(interposer),
                     str(ROOT / "core/dblur_frontonly.cpp"), str(ROOT / "core/dblur_rotate.cpp"),
                     str(ROOT / "core/dblur_rowdriver.cpp"), str(ROOT / "core/dblur_field.cpp"),
                     "-framework", "Cocoa", "-o", str(executable)]

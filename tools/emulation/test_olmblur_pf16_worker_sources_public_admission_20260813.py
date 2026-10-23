@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -64,8 +69,8 @@ def run() -> str:
                 "olmblur_worker32_nonlegacy.cpp", "olmblur_worker32_legacy.cpp",
                 "olmblur_worker8_legacy.cpp", "olmblur_worker_orchestration.cpp",
             )],
-            ROOT / "Util/AEGP_SuiteHandler.cpp",
-            ROOT / "Util/MissingSuiteError.cpp",
+            resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp"))),
+            resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp"))),
         ]
         command = [
             "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",

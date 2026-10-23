@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Compare the PF8 Color Key callback with the pinned Windows AEX."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import ctypes
 import hashlib
 import json
@@ -16,7 +21,7 @@ sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader
 
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 AEX_SHA256 = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 ENTRY = 0x1800026E0
 HARNESS = ROOT / "tools/emulation/olmsmoother_v1_mainkernel8_production_harness_20260805.cpp"

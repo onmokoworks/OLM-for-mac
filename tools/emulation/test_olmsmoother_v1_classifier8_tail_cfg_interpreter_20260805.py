@@ -5,6 +5,11 @@ Unicorn is used only to establish the architectural state at 0x1800087f0 and
 to obtain the authoritative whole-function return.  Every instruction from
 that point through RET is evaluated below from the checked-in CFG artifact.
 """
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib, json, re, struct, sys
 from pathlib import Path
 
@@ -15,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 SHA = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 CFG = ROOT / "refs/conformance/olmsmoother_v1_classifier8_tail_cfg_20260805.json"
 ENTRY, TAIL = 0x180008060, 0x1800087F0

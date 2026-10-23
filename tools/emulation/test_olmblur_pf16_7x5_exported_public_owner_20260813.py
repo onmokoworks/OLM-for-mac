@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Same-source Windows exported Smart owner for the bounded PF16 7x5 cell."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset, asset_relative
 import argparse, hashlib, json, sys, tempfile
 from pathlib import Path
 
@@ -11,7 +16,7 @@ from test_olmblur_case0006_border_order_writer_differential_20260716 import sour
 
 REPORT=ROOT/'refs/conformance/olmblur_pf16_7x5_exported_public_owner_20260813.json'
 DOC=ROOT/'refs/conformance/olmblur_pf16_7x5_exported_public_owner_20260813.md'
-AEX=ROOT/'plugins_2025/OLMBlur.aex'
+AEX=resolve_asset(ROOT/'plugins_2025/OLMBlur.aex')
 SOURCE_GENERATOR=ROOT/'tools/emulation/test_olmblur_case0006_border_order_writer_differential_20260716.py'
 PUBLIC_RUNNER=ROOT/'tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py'
 AEX_SHA='f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b'
@@ -34,7 +39,7 @@ def live()->dict:
         'amount':4.0,'source':'source.bin','expected':'expected.bin','expected_sha256':OUTPUT_SHA})
     finally:public.WIDTH,public.HEIGHT,public.PADDING[16],public.FIXTURE=old
   return {'schema':'olmblur.pf16-7x5-exported-public-owner/1','status':'PASS_ACTUAL_EXPORTED_SMART_OWNER_PF16_7X5_RAW_EXACT',
-    'identities':{'aex':{'path':str(AEX.relative_to(ROOT)),'sha256':AEX_SHA},
+    'identities':{'aex':{'path':str(asset_relative(AEX, ROOT)),'sha256':AEX_SHA},
       'source_generator':{'path':str(SOURCE_GENERATOR.relative_to(ROOT)),'sha256':sha(SOURCE_GENERATOR)},
       'public_runner':{'path':str(PUBLIC_RUNNER.relative_to(ROOT)),'sha256':sha(PUBLIC_RUNNER)}},
     'contract':{'geometry':[7,5],'depth':'PF16','rowbytes':69,'padding_per_row':13,

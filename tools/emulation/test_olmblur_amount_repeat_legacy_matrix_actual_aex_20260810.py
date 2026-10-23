@@ -8,6 +8,11 @@ through the production Mac EffectMain SmartPreRender -> SmartRender route.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -24,7 +29,7 @@ from test_olmblur_fullentry import build_context, build_pf_suites  # noqa: E402
 import test_olmblur_nondefault_smoothness_effectmain_actual_aex_20260810 as public  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMBlur.aex")
 AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 FIXTURE = Path(__file__).parent / "fixtures/olmblur_amount_repeat_legacy_matrix_20260810"
 MANIFEST = FIXTURE / "manifest.json"
@@ -154,8 +159,8 @@ def compile_public(directory: Path) -> Path:
     executable = directory / "probe"
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
     command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
-        "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-I", str(ROOT/"Headers"), "-I", str(ROOT/"Headers/SP"),
-        "-I", str(ROOT/"Util"), "-I", str(ROOT/"Resources"), "-I", str(ROOT/"core"), str(source),
+        "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-I", str(resolve_asset(ROOT/"Headers")), "-I", str(resolve_asset(ROOT/"Headers/SP")),
+        "-I", str(resolve_asset(ROOT/"Util")), "-I", str(resolve_asset(ROOT/"Resources")), "-I", str(ROOT/"core"), str(source),
         *[str(ROOT/p) for p in ("core/olmblur_helper.cpp", "core/olmblur_fullworker_helper.cpp", "core/olmblur_worker16_nonlegacy.cpp",
         "core/olmblur_worker16_legacy.cpp", "core/olmblur_worker32_nonlegacy.cpp", "core/olmblur_worker32_legacy.cpp",
         "core/olmblur_worker8_legacy.cpp", "core/olmblur_worker_orchestration.cpp")], "-framework", "Cocoa", "-o", str(executable)]

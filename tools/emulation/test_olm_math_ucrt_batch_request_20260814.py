@@ -2,6 +2,11 @@
 """Validate the combined AE-free Windows UCRT expf/powf request."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -51,7 +56,7 @@ DISTANCE_FILES = {
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(resolve_asset(path).read_bytes()).hexdigest()
 
 
 def expected_manifest() -> dict[str, object]:
@@ -77,6 +82,7 @@ def expected_manifest() -> dict[str, object]:
 
 
 def check_files(directory: Path, expected: dict[str, str]) -> None:
+    directory = resolve_asset(directory)
     actual = sorted(path.name for path in directory.iterdir() if path.is_file())
     if actual != sorted(expected):
         raise ValueError(f"file-set drift: {directory}")
@@ -92,7 +98,7 @@ def zip_sources() -> dict[str, bytes]:
                                  (DISTANCE_ID, DISTANCE_FILES)):
         directory = PACKAGE_ROOT / request_id
         for name in expected:
-            sources[f"{request_id}/{name}"] = (directory / name).read_bytes()
+            sources[f"{request_id}/{name}"] = resolve_asset(directory / name).read_bytes()
     return sources
 
 
@@ -106,10 +112,11 @@ def write_zip() -> None:
 
 
 def validate_zip() -> str:
-    if not PACKAGE_ZIP.is_file() or not zipfile.is_zipfile(PACKAGE_ZIP):
+    archive_path = resolve_asset(PACKAGE_ZIP)
+    if not archive_path.is_file() or not zipfile.is_zipfile(archive_path):
         raise ValueError("batch transfer ZIP missing")
     expected = zip_sources()
-    with zipfile.ZipFile(PACKAGE_ZIP) as archive:
+    with zipfile.ZipFile(archive_path) as archive:
         names = archive.namelist()
         if len(names) != len(set(names)) or set(names) != set(expected):
             raise ValueError("batch transfer ZIP member set")
@@ -120,6 +127,7 @@ def validate_zip() -> str:
 
 
 def validate_package(package: Path = PACKAGE) -> dict[str, object]:
+    package = resolve_asset(package)
     check_files(package, BATCH_FILES)
     check_files(PACKAGE_ROOT / DIRECTIONAL_ID, DIRECTIONAL_FILES)
     check_files(PACKAGE_ROOT / DIRECTIONAL_POWF_ID, DIRECTIONAL_POWF_FILES)

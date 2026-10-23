@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Public EffectMain SmartPreRender/SmartRender featureful six-case matrix."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib, importlib.util, json, struct, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
@@ -8,7 +13,7 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py'
 FIXTURE=ROOT/'tools/emulation/dblur_fullrender_host_fixture_20260711.py'
-SOURCE=ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png'
+SOURCE=resolve_asset(ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png')
 REPORT=ROOT/'refs/conformance/olmdirectionalblur_public_effectmain_feature_matrix_20260811.json'
 NOTE=ROOT/'refs/conformance/olmdirectionalblur_public_effectmain_feature_matrix_20260811.md'
 DUAL_W,DUAL_H=32,18
@@ -42,7 +47,7 @@ std::printf("]}");return 0;}'''
  text=text.replace('q->alpha=(x+y)%5?255:96;q->red=(x*13+y*3)&255;q->green=(x*5+y*17)&255;q->blue=(x*19+y*7)&255;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=g_rgba[z+3];q->red=g_rgba[z];q->green=g_rgba[z+1];q->blue=g_rgba[z+2];')
  text=text.replace('q->alpha=(x+y)%5?32768:12288;q->red=(x*701+y*101)&32767;q->green=(x*211+y*907)&32767;q->blue=(x*997+y*307)&32767;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=(g_rgba[z+3]*32768+127)/255;q->red=(g_rgba[z]*32768+127)/255;q->green=(g_rgba[z+1]*32768+127)/255;q->blue=(g_rgba[z+2]*32768+127)/255;')
  text=text.replace('q->alpha=(x+y)%5?1.0f:0.375f;q->red=(x*13+y*3)/255.0f;q->green=(x*5+y*17)/255.0f;q->blue=(x*19+y*7)/255.0f;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=g_rgba[z+3]/255.0f;q->red=g_rgba[z]/255.0f;q->green=g_rgba[z+1]/255.0f;q->blue=g_rgba[z+2]/255.0f;')
- cpp.write_text(text); exe=temp/'feature_probe'; sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip(); cmd=['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-isysroot',sdk,'-I',str(ROOT/'Headers'),'-I',str(ROOT/'Headers/SP'),'-I',str(ROOT/'Util'),'-I',str(ROOT/'Resources'),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-framework','Cocoa','-o',str(exe)]; run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
+ cpp.write_text(text); exe=temp/'feature_probe'; sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip(); cmd=['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-isysroot',sdk,'-I',str(resolve_asset(ROOT/'Headers')),'-I',str(resolve_asset(ROOT/'Headers/SP')),'-I',str(resolve_asset(ROOT/'Util')),'-I',str(resolve_asset(ROOT/'Resources')),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-framework','Cocoa','-o',str(exe)]; run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
  if run.returncode: raise RuntimeError(run.stderr)
  return exe
 

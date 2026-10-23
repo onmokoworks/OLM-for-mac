@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Corrected actual-owner and bounded public Smart contract for DistanceGradation."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, copy, hashlib, json, subprocess, tempfile
 from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2]
-AEX=ROOT/"aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
+AEX=resolve_asset(ROOT/"aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex")
 SOURCE=ROOT/"mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 HARNESS=ROOT/"tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp"
 SHIM=ROOT/"tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h"
@@ -25,7 +30,7 @@ POST_SHA="7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6"
 OUTPUT_SHA="50934ac830542ca73fee4a11b924b746a0ae93f97f34b0d2868170bc371dd387"
 AEX_SHA="a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
 ASM_SHA="b830129adaf05dc2e32a357902b0a60d6cf8f0429340f8cbf869b8287507229c"
-ASM=ROOT/"disasm/DistanceGradation.aex.asm.txt"
+ASM=resolve_asset(ROOT/"disasm/DistanceGradation.aex.asm.txt")
 
 def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
 def require(cond,msg):

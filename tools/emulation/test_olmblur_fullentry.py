@@ -8,6 +8,11 @@ emulation harnesses.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import struct
 import sys
 from pathlib import Path
@@ -18,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AEX_PATH = REPO_ROOT / "plugins_2025" / "OLMBlur.aex"
+AEX_PATH = resolve_asset(REPO_ROOT / "plugins_2025" / "OLMBlur.aex")
 FUN_ENTRY = 0x180005F20
 FUN_HORIZONTAL = 0x1800014F0
 FUN_LEGACY_OR_VERTICAL = 0x180001EA0

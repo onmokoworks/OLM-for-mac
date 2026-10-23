@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 """PF32 Size x front/back Fade/Sharp matrix at two practical geometries."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import ctypes, hashlib, json, struct, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2]
 FIXTURE=ROOT/'tools/emulation/dblur_fullrender_host_fixture_20260711.py'
-SOURCE=ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png'
+SOURCE=resolve_asset(ROOT/'refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png')
 REPORT=ROOT/'refs/conformance/olmdirectionalblur_pf32_size_coeff_geometry_matrix_actual_aex_20260811.json'
 NOTE=ROOT/'refs/conformance/olmdirectionalblur_pf32_size_coeff_geometry_matrix_actual_aex_20260811.md'
 GEOMETRIES=((16,16),(32,18))

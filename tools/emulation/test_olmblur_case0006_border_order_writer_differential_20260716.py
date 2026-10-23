@@ -6,6 +6,11 @@ retained worker fixtures, the ledger, or any existing dated differential.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import math
@@ -18,7 +23,7 @@ from aex_loader import AexLoader  # noqa: E402
 from test_olmblur_fullentry import build_context, build_pf_suites  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025" / "OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025" / "OLMBlur.aex")
 ENTRY = 0x180002280
 REPORT = ROOT / "refs/conformance/olmblur_case0006_border_order_writer_differential_20260716.json"
 REPORT_MD = ROOT / "refs/conformance/olmblur_case0006_border_order_writer_differential_20260716.md"

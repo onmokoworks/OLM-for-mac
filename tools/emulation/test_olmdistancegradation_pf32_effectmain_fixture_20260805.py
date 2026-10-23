@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 import sys
 import tempfile
 import time
@@ -19,7 +20,8 @@ FIXTURES = [R / ('refs/fixtures/olmdistancegradation_pf32_owner_17x11' + suffix
 def main():
     # F18-route-target-per-plugin.md: AE selects Smart for DG. Classic is
     # outside this retained public regression; zero buffers are not its oracle.
-    scratch = R / 'orchestra/state/F35-dg-fixture-rebind'
+    scratch = Path(os.environ.get('OLM_REGRESSION_SCRATCH',
+                                  R / 'orchestra/state/F35-dg-fixture-rebind'))
     scratch.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=scratch) as t:
         directory = Path(t)

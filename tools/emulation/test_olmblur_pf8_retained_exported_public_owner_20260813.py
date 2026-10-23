@@ -2,16 +2,21 @@
 """Same-source exported Smart owner census for retained PF8 OLMBlur cells."""
 
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, hashlib, json, sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import test_olmblur_exported_effectmain_chain_actual_aex_20260811 as public
 
 ROOT=Path(__file__).resolve().parents[2]
-AEX=ROOT/"plugins_2025/OLMBlur.aex"
+AEX=resolve_asset(ROOT/"plugins_2025/OLMBlur.aex")
 RUNNER=ROOT/"tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py"
-NONLEGACY=ROOT/"tools/emulation/fixtures/olmblur_worker_orchestration/manifest.json"
-LEGACY=ROOT/"tools/emulation/fixtures/olmblur_worker8_legacy/manifest.json"
+NONLEGACY=resolve_asset(ROOT/"tools/emulation/fixtures/olmblur_worker_orchestration/manifest.json")
+LEGACY=resolve_asset(ROOT/"tools/emulation/fixtures/olmblur_worker8_legacy/manifest.json")
 REPORT=ROOT/"refs/conformance/olmblur_pf8_retained_exported_public_owner_20260813.json"
 DOC=ROOT/"refs/conformance/olmblur_pf8_retained_exported_public_owner_20260813.md"
 EXPECTED={"aex":"f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b","runner":"5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6","nonlegacy":"40b3225900bb679e03c1a675c1a3877df2335c5822731ae0fe7bed7edcee9b52","legacy":"144d0f8bfdccc6d8d6aa48344addb4dc9b10b280cbdfd585059c35d9f2bf4fa1"}

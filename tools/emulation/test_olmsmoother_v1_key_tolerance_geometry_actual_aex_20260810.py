@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Cross effective Color Key, smoothing range, geometry, and PF8/PF16."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import ctypes
 import hashlib
 import json
@@ -14,7 +19,7 @@ from unicorn.x86_const import UC_X86_REG_RSP
 from aex_loader import AexLoader
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 AEX_SHA = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 ENTRY = 0x18000A2C0
 HARNESS = ROOT / "tools/emulation/olmsmoother_v1_key_tolerance_geometry_production_harness_20260810.cpp"

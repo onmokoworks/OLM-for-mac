@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """Compare MainInterpKernel8 CFG interpretation on every case_0001 edge call."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib
 import ctypes
 import json
@@ -19,10 +24,10 @@ sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader
 from test_olmsmoother_v1_mainkernel8_cfg_interpreter_20260805 import Machine
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 SHA = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 CFG = ROOT / "refs/conformance/olmsmoother_v1_mainkernel8_cfg_20260805.json"
-SOURCE = ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png"
+SOURCE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png")
 OUT = ROOT / "refs/conformance/olmsmoother_v1_case0001_pf8_mainkernel_all_boundaries_20260805.json"
 PRODUCTION_HARNESS = ROOT / "tools/emulation/olmsmoother_v1_mainkernel8_production_harness_20260805.cpp"
 CLASSIFIER = 0x180008060

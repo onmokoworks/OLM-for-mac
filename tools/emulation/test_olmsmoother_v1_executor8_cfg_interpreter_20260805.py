@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """Execute the 187-instruction InterpExecutor8 CFG on a pinned in-bounds call."""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import ctypes
 import hashlib
 import json
@@ -20,11 +25,11 @@ from test_olmsmoother_v1_mainkernel8_case0001_all_boundaries_20260805 import (
     load_production_harness,
 )
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 SHA = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 CFG = ROOT / "refs/conformance/olmsmoother_v1_executor8_cfg_20260805.json"
 BOUNDARY = ROOT / "refs/conformance/olmsmoother_v1_case0001_pf8_mainkernel_boundary_20260805.json"
-SOURCE = ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png"
+SOURCE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png")
 ENTRY = 0x180006270
 ALPHA_BLEND = 0x180002060
 KIND_TO_FUNCTION = (0x1800010C0, 0x1800010E0, 0x180001110, 0x180001150, 0x180001180)

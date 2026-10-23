@@ -8,6 +8,11 @@ typed owner agree, while the exported host-substituted path differs.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import base64
 import hashlib
@@ -21,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[2]
 REPORT = ROOT / "refs/conformance/olmradialblur_strength290_exported_math_boundary_20260814.json"
 MARKDOWN = REPORT.with_suffix(".md")
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
-AEX = ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex"
+AEX = resolve_asset(ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex")
 PATCH = ROOT / "tools/emulation/aexcompat_olmradialblur_float_math_imports_20260814.patch"
 TRACE_PATCH = ROOT / "tools/emulation/aexcompat_olmradialblur_float_math_trace_20260814.patch"
 TYPE1_REPORT = ROOT / "refs/conformance/olmradialblur_rotation_type1_inverse_cell_closure_20260812.json"

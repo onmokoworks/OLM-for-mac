@@ -1,4 +1,9 @@
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib,importlib.util,subprocess,sys,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -11,7 +16,7 @@ class ColorKeepLegacySourceAdmission(unittest.TestCase):
  def setUpClass(cls):
   cls.tmp=tempfile.TemporaryDirectory(prefix="colorkeep-legacy-source-");cls.exe=Path(cls.tmp.name)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=["clang++","-std=c++17","-O2","-arch","arm64","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in("Headers","Headers/SP","Util","Resources","mac/ColorKeep"):cmd += ["-I",str(ROOT/inc)]
-  cmd += [str(PROBE),str(ROOT/"mac/ColorKeep/ColorKeep_Strings.cpp"),str(ROOT/"Util/AEGP_SuiteHandler.cpp"),str(ROOT/"Util/MissingSuiteError.cpp"),"-framework","Cocoa","-o",str(cls.exe)];p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True);assert p.returncode==0,p.stderr;cls.matrix=load()
+  cmd += [str(PROBE),str(ROOT/"mac/ColorKeep/ColorKeep_Strings.cpp"),str(resolve_asset(ROOT/"Util/AEGP_SuiteHandler.cpp")),str(resolve_asset(ROOT/"Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(cls.exe)];p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True);assert p.returncode==0,p.stderr;cls.matrix=load()
  @classmethod
  def tearDownClass(cls):cls.tmp.cleanup()
  def payload(self,count,depth):

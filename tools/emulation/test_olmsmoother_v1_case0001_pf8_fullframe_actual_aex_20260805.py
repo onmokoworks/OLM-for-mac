@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Build the current portable v1 renderer and compare case_0001 byte-for-byte."""
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import subprocess
@@ -12,10 +17,10 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 BUILD = ROOT / "refs/scripts/build_olmsmoother_cli.sh"
-SOURCE = ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png"
-EXPECTED = ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001.png"
-PARAMS = ROOT / "refs/win_references/20260604_olm/OLMSmoother/reference_manifest.json"
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+SOURCE = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png")
+EXPECTED = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/case_0001.png")
+PARAMS = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMSmoother/reference_manifest.json")
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 OUT = ROOT / "refs/conformance/olmsmoother_v1_case0001_pf8_fullframe_actual_aex_20260805.json"
 AEX_SHA256 = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 

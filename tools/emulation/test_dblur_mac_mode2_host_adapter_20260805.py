@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import json
 import os
 import shutil
@@ -63,8 +68,8 @@ int main(){{
             compiler, "-std=c++17", "-arch", "arm64", "-O2",
             "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
             "-ffunction-sections", "-fdata-sections",
-            "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-            "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
+            "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+            "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
             str(probe), str(ROOT / "core/dblur_frontonly.cpp"),
             str(ROOT / "core/dblur_rotate.cpp"),
             str(ROOT / "core/dblur_rowdriver.cpp"),

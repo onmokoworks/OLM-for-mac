@@ -1,10 +1,15 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 #!/usr/bin/env python3
 import hashlib,json,struct,subprocess,sys,tempfile
 from collections import Counter,defaultdict
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'tools/emulation'));from aex_loader import AexLoader
-AEX=ROOT/'plugins_2025/OLMSmoother.aex';SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';SRC=ROOT/'tools/emulation/olmsmoother_v1_classifier8_binary_patterns_production_harness_20260805.cpp';OUT=ROOT/'refs/conformance/olmsmoother_v1_classifier8_binary_families_20260805.json';ENTRY=0x180008060;END=0x18000946e;DIRS=(5,3,1,7)
+AEX=resolve_asset(ROOT/'plugins_2025/OLMSmoother.aex');SHA='6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82';SRC=ROOT/'tools/emulation/olmsmoother_v1_classifier8_binary_patterns_production_harness_20260805.cpp';OUT=ROOT/'refs/conformance/olmsmoother_v1_classifier8_binary_families_20260805.json';ENTRY=0x180008060;END=0x18000946e;DIRS=(5,3,1,7)
 def blocks(trace):
  if not trace:return []
  result=[trace[0]]

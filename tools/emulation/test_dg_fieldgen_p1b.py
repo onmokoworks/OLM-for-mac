@@ -9,6 +9,11 @@ missing detour/mock precisely, without reimplementing the plugin path.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import json
 import argparse
 import importlib.util
@@ -26,7 +31,7 @@ import cv_bridge as cvb  # noqa: E402
 import opencv_impls as ocv  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AEX = REPO_ROOT / "plugins_2025" / "DistanceGradation.aex"
+AEX = resolve_asset(REPO_ROOT / "plugins_2025" / "DistanceGradation.aex")
 FUN_FIELDGEN = 0x181174760
 FUN_CVRESIZE_OR_CONVERT = 0x1812aef70
 FUN_NORMALIZE = 0x18117ca50

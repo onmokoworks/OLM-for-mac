@@ -7,6 +7,11 @@ constructors are modeled from their pinned object layouts, and calls to
 InterpExecutor8 are captured at the Windows x64 ABI boundary.  This keeps the
 test focused on MainInterpKernel8's control flow and float32 construction order.
 """
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 import hashlib
 import json
 import math
@@ -19,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader
 
-AEX = ROOT / "plugins_2025/OLMSmoother.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/OLMSmoother.aex")
 SHA = "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
 CFG = ROOT / "refs/conformance/olmsmoother_v1_mainkernel8_cfg_20260805.json"
 BOUNDARY = ROOT / "refs/conformance/olmsmoother_v1_case0001_pf8_mainkernel_boundary_20260805.json"

@@ -49,6 +49,11 @@ or conformance ledgers are modified. No git commits are made here.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import struct
 import sys
 from pathlib import Path
@@ -57,7 +62,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aex_loader import AexLoader  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AEX_PATH = REPO_ROOT / "aex" / "OLMDistanceGradation" / "Plugins" / "64" / "2025" / "DistanceGradation.aex"
+AEX_PATH = resolve_asset(REPO_ROOT / "aex" / "OLMDistanceGradation" / "Plugins" / "64" / "2025" / "DistanceGradation.aex")
 
 FUN_181170480 = 0x181170480
 

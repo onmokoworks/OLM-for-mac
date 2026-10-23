@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Fail-closed report for the OLMDistanceGradation 32bpc Mac return."""
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, hashlib, json, math, struct, subprocess
 from pathlib import Path
 from typing import Any
@@ -56,7 +61,7 @@ def main()->int:
         if row.get("same_context_no_effect_control",{}).get("effect_enabled") is not False or row.get("same_context_no_effect_control",{}).get("output_settings_equal") is not True: missing.append("same-context no-effect control")
         outs=row.get("outputs",{}); comparisons={}
         for branch, ref in (("no_effect",win["input"]),("effect_on",win["output"])):
-            item=outs.get(branch,{}); mac=path(item.get("path"),a.return_json.parent); winp=ROOT/"refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch"/ref
+            item=outs.get(branch,{}); mac=path(item.get("path"),a.return_json.parent); winp=resolve_asset(ROOT/"refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch")/ref
             if item.get("sha256")!=digest(mac) if mac.is_file() else True: missing.append(branch+" Mac output hash")
             try: comparisons[branch]=compare(mac,winp)
             except (OSError,ValueError,VerificationError,struct.error) as e: missing.append(branch+" raw FLOAT32 comparison: "+str(e));continue

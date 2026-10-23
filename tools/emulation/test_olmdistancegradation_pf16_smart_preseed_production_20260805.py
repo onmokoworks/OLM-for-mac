@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
 #!/usr/bin/env python3
 import json,subprocess,tempfile
 from pathlib import Path
@@ -10,7 +15,7 @@ def main():
  env={'OLM_DG_SMART_RENDER':'1','OLM_DG_SMART_DISPATCH':'1'}
  import os
  runenv=os.environ.copy();runenv.update(env)
- r=subprocess.run([str(ROOT/'tools/emulation/.venv/bin/python'),str(PROBE)],capture_output=True,text=True,env=runenv);assert r.returncode==0,r.stderr
+ r=subprocess.run([str(resolve_asset(ROOT/'tools/emulation/.venv/bin/python')),str(PROBE)],capture_output=True,text=True,env=runenv);assert r.returncode==0,r.stderr
  p=json.loads(r.stdout[r.stdout.index('{'):]);c=p['smart_capture'];assert p['failure'] is None and p['pf16_wrapper_reached'];assert c['active_sha256']=='40033c11b790b2b93832553dc9e422b5bd6293f2965bf593df4b0f14c58c252f';assert c['input_padding_unchanged'] and c['output_padding_unchanged'];assert c['result_rect']==c['max_result_rect']==[0,0,17,11];assert len(bytes.fromhex(c['pre_render_raw']))==0x100
  with tempfile.TemporaryDirectory() as td:
   t=Path(td);src=t/'src';seed=t/'seed';exp=t/'exp';bin=t/'h'

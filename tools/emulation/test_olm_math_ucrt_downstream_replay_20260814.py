@@ -7,6 +7,11 @@ tool never edits production admission and never launches After Effects.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import ctypes
 import hashlib
@@ -114,8 +119,8 @@ def compile_directional(temp: Path, census, interposer: Path) -> Path:
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-fno-builtin-expf", "-fno-builtin-powf", "-isysroot", sdk,
-               "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
-               "-I", str(ROOT / "Resources"), str(cpp), str(interposer),
+               "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
+               "-I", str(resolve_asset(ROOT / "Resources")), str(cpp), str(interposer),
                str(ROOT / "core/dblur_frontonly.cpp"), str(ROOT / "core/dblur_rotate.cpp"),
                str(ROOT / "core/dblur_rowdriver.cpp"), str(ROOT / "core/dblur_field.cpp"),
                "-framework", "Cocoa", "-o", str(executable)]

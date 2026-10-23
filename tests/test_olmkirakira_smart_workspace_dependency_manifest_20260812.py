@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
+
 import copy
 import hashlib
 import json
@@ -113,7 +118,7 @@ class KiraSmartWorkspaceDependencyManifestTests(unittest.TestCase):
 
     def test_windows_static_callback_slots_have_exact_anchors(self) -> None:
         abi = self.manifest["windows_callback_abi"]
-        assembly = (ROOT / "disasm/OLMKiraKira.aex.asm.txt").read_text(encoding="utf-8")
+        assembly = (resolve_asset(ROOT / "disasm/OLMKiraKira.aex.asm.txt")).read_text(encoding="utf-8")
         start = assembly.index("; === FUN_18114c8f0 @ 18114c8f0 ===")
         end = assembly.index("; === FUN_18114ca70 @ 18114ca70 ===", start)
         owner = assembly[start:end]
@@ -130,7 +135,7 @@ class KiraSmartWorkspaceDependencyManifestTests(unittest.TestCase):
 
     def test_sdk_callback_order_and_optional_checkin_match_static_claim(self) -> None:
         abi = self.manifest["windows_callback_abi"]
-        header = (ROOT / "Headers/AE_Effect.h").read_text(encoding="utf-8")
+        header = (resolve_asset(ROOT / "Headers/AE_Effect.h")).read_text(encoding="utf-8")
         start = header.index("PF_Err (*checkout_layer_pixels)(")
         end = header.index("} PF_SmartRenderCallbacks;", start)
         declaration = header[start:end]

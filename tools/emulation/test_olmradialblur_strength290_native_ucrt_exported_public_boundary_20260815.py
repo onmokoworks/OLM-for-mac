@@ -7,6 +7,11 @@ plug-in or launches After Effects.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 from collections import Counter
 import hashlib
@@ -30,7 +35,7 @@ FROZEN_RETURN = ROOT / "refs/conformance/olmradialblur_strength290_ucrt_math_nat
 PRIOR = ROOT / "refs/conformance/olmradialblur_strength290_exported_math_boundary_20260814.json"
 PRIOR_TOOL = ROOT / "tools/emulation/test_olmradialblur_strength290_exported_math_boundary_20260814.py"
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
-AEX = ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex"
+AEX = resolve_asset(ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex")
 PATCHES = [
     ROOT / "tools/emulation/aexcompat_olmradialblur_float_math_imports_20260814.patch",
     ROOT / "tools/emulation/aexcompat_exact_raw_input_20260815.patch",

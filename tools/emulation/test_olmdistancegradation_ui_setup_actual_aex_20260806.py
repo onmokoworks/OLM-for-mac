@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import struct
@@ -15,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "plugins_2025/DistanceGradation.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/DistanceGradation.aex")
 AEX_SHA256 = "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
 ENTRY = 0x181174BD0
 HARNESS = ROOT / "tools/emulation/olmdistancegradation_ui_setup_production_harness_20260806.cpp"
@@ -137,8 +142,8 @@ def run_production() -> dict[str, object]:
             "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(HARNESS),
             "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.cpp",
-            "core/olmdistancegradation_fieldgen.cpp", "Util/AEGP_SuiteHandler.cpp",
-            "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(executable),
+            "core/olmdistancegradation_fieldgen.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),
+            str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(executable),
         ]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
         assert build.returncode == 0, build.stderr

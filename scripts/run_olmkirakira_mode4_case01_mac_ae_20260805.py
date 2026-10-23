@@ -7,6 +7,11 @@ conflicting loaded Kira module; effect application may load the exact installed
 binary during the run.
 """
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.emulation.olm_assets import resolve_asset
 import argparse, hashlib, json, subprocess, tempfile, sys
 from pathlib import Path
 
@@ -15,7 +20,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.report_olmdistancegradation_32bpc_mac_validation_20260715 import compare
 from tools.emulation.olm_installed_identity import MANIFEST as IDENTITY_MANIFEST, verified_binary
 CASE_ID = "final_random10_olm_kira_kira_01"
-REFDIR = ROOT / "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira"
+REFDIR = resolve_asset(ROOT / "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira")
 MANIFEST = REFDIR / "reference_manifest.json"
 INPUT = REFDIR / "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01_before_effects.exr"
 EXPECTED = REFDIR / "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01.exr"

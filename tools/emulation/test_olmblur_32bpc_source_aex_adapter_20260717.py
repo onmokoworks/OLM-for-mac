@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import hashlib
 import json
 import os
@@ -12,7 +17,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "plugins_2025" / "OLMBlur.aex"
+AEX = resolve_asset(ROOT / "plugins_2025" / "OLMBlur.aex")
 EXPECTED_AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 
 
@@ -188,8 +193,8 @@ def compile_probe(directory: Path) -> Path:
     )
     command = [compiler, "-std=c++17", "-arch", "arm64", "-O2",
                "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math", "-ffp-contract=off",
-               "-isysroot", sdk.stdout.strip(), "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
-               "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), "-I", str(ROOT / "core"),
+               "-isysroot", sdk.stdout.strip(), "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
+               "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), "-I", str(ROOT / "core"),
                str(source), str(ROOT / "core/olmblur_helper.cpp"), str(ROOT / "core/olmblur_fullworker_helper.cpp"),
                str(ROOT / "core/olmblur_worker16_nonlegacy.cpp"), str(ROOT / "core/olmblur_worker16_legacy.cpp"),
                str(ROOT / "core/olmblur_worker32_nonlegacy.cpp"), str(ROOT / "core/olmblur_worker32_legacy.cpp"),
@@ -205,8 +210,8 @@ def main() -> int:
     if not AEX.exists() or hashlib.sha256(AEX.read_bytes()).hexdigest() != EXPECTED_AEX_SHA256:
         raise RuntimeError("BLOCKED_FAIL_CLOSED: actual-AEX fixture hash drift or missing AEX")
     manifests = [
-        ROOT / "tools/emulation/fixtures/olmblur_worker32_nonlegacy/manifest.json",
-        ROOT / "tools/emulation/fixtures/olmblur_worker32_legacy/manifest.json",
+        resolve_asset(ROOT / "tools/emulation/fixtures/olmblur_worker32_nonlegacy/manifest.json"),
+        resolve_asset(ROOT / "tools/emulation/fixtures/olmblur_worker32_legacy/manifest.json"),
     ]
     cases = []
     for manifest_path in manifests:

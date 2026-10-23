@@ -3,6 +3,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools.emulation.olm_assets import resolve_asset
+
 import argparse
 import hashlib
 import json
@@ -18,7 +23,7 @@ PROBE = ROOT / "tools/emulation/probe_olmcolorkey_public_entries_real_sdk_202608
 SHIM = ROOT / "tools/emulation/olmcolorkey_installed_effectmain_shim_20260813.h"
 SOURCE = ROOT / "mac/OLMColorKey/OLMColorKey.cpp"
 SOURCE_REPORT = ROOT / "refs/conformance/olmcolorkey_public_source_bound_closure_20260813.json"
-BUILD_IDENTITY = ROOT / "handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json"
+BUILD_IDENTITY = resolve_asset(ROOT / "handoffs/olmcolorkey_toggle24_universal_candidate_20260814/build_identity.json")
 INSTALL_TRANSACTION = ROOT / "handoffs/olmcolorkey_toggle24_incremental_install_20260814/install_transaction.json"
 ACCEPTED_IDENTITY = ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin/Contents/MacOS/OLMColorKey"
@@ -115,7 +120,7 @@ def run_slice(architecture: str) -> dict[str, Any]:
             command.extend(("-I", str(ROOT / include)))
         command.extend((
             str(transformed), str(ROOT / "mac/OLMColorKey/OLMColorKey_Strings.cpp"),
-            str(ROOT / "Util/AEGP_SuiteHandler.cpp"), str(ROOT / "Util/MissingSuiteError.cpp"),
+            str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))), str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),
             "-framework", "Cocoa", "-o", str(executable),
         ))
         compile_run = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
