@@ -1,0 +1,12 @@
+{
+  "beta-base.log.gz": "95c98f0b1c0da8414480a49da3263ce55d136e561ef2961675a4b6a676957f52",
+  "beta-scalar.log.gz": "7ac57597639ed97950974dbbdcfbddf34397f11776ecd4569273b5c770ab56e5",
+  "corpus-before.json.gz": "99559803b9ea5c3be5da571d6b4796d8ac7e01a07d7abc011120a329035aa207",
+  "gate.json.gz": "96cc8f0f20bff0163d3d5dab38acf96295e2b631b019b2377ecda47b11766072",
+  "scalar-linear.json.gz": "883a90cfb0b0132b5ff61aaaf645d5228e21a55fa3bd2b0adb4003b261f26680",
+  "scalar-negative.json.gz": "5f2c01f2e7dc246748ac23aa5459ef775a8cdf6b4009485a4d8a1ae4e949f9b1",
+  "scalar-verify.json.gz": "267ee9227fd4ffc7669c0e1ee15630f43d641dc9b57745a06af25b04358bc077",
+  "scalar.json.gz": "5669a40ca31b7ab85ee04d9016d753da523b27b1ad74be0a69133c98e3e831ab",
+  "seed1.json.gz": "fc9e7e7acf46d5b2aa705b1928bd6385618d479e9907c20ac1b6995591c65b60",
+  "seed105.json.gz": "6b2cfae810dc7c1d086701e23451b199d7b532d9703a500c70c403977c942ae8"
+}

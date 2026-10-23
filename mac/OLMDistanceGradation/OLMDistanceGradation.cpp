@@ -1826,6 +1826,12 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
 	    input->width != output->width || input->height != output->height) return false;
+	// C52: finite extended samples share the proven scalar Bilateral field.
+	// Normalize Power only for admission; rendering retains its UCRT exponent.
+	DGParams finite_admission = p;
+	if (p.interp_mode == INTERP_POWER && std::isfinite(p.power) &&
+	    p.power >= 0.01f && p.power <= 5.0f)
+		finite_admission.interp_mode = INTERP_LINEAR;
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
 	if (width > std::numeric_limits<size_t>::max() / height) return false;
@@ -1863,7 +1869,8 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 				if ((value < 0.0f || value > 1.0f) &&
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
 				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)) &&
-				    !is_admitted_pf32_smart_bilateral_beta(p)) return false;
+				    !is_admitted_pf32_smart_bilateral_beta(p) &&
+				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height)) return false;
 			}
 		}
 	}
