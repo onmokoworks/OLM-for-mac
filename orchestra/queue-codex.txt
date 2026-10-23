@@ -36,3 +36,4 @@ C30-dblur-smart-r5
 C31-dg-smart-r6
 C32-olmblur-smart-r7
 C33-radial-smart-r5
+C34-kira-smart-r8
