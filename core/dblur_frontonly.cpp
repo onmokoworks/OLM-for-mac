@@ -16,7 +16,9 @@
 
 namespace {
 
-constexpr double kPi = 3.141592653589793238462643383279502884;
+// AEX angle builder MULSD at 0x180006d18 reads this binary64 constant
+// (0x18000b360, little-endian f1d4c853fb210940), before rounding to float.
+constexpr double kPi = 3.14159265;
 
 inline std::size_t rgba_index(int width, int x, int y) {
     return (static_cast<std::size_t>(y) * static_cast<std::size_t>(width) +

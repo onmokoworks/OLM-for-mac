@@ -1058,21 +1058,14 @@ static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
     // F06: the AEX PF8 work predicate at 0x180004b50 includes both Fades.
     // The component-map row bounds now match the AEX, including single-row
     // groups, so generated Noise can use this same core. C09 also validates
-    // Size x Fade with generated Noise and active scatter counts. Keep the
-    // independently failing Front Fade crosses excluded. The noise-disabled
-    // Back Fade gather is also validated with active or zero scatter counts;
-    // zero counts still execute the alpha prepass, normalization and writer.
+    // Size x Fade with generated Noise and active scatter counts. C30 closes
+    // the remaining Front Fade crosses after the UCRT expf integration, with
+    // active and zero scatter counts. Zero counts still execute the alpha
+    // prepass, normalization and writer.
     // Generated Noise validates every demanded table read in the core;
     // unused cells do not require allocator contents. Layer remains guarded.
     // Earlier retained routes keep precedence.
-    const bool generated_noise_scatter = info.noise_variation > 0.0 &&
-        info.noise_type != 3 && (info.front_strength > 0 || info.back_strength > 0);
-    const bool back_fade_only = info.noise_variation == 0.0 && info.front_alpha_fade == 0;
-    if ((info.noise_variation != 0.0 &&
-            (info.noise_type == 3)) ||
-        (info.size_variation != 0.0 &&
-            (info.front_alpha_fade != 0 || info.back_alpha_fade != 0) &&
-            !generated_noise_scatter && !back_fade_only)) return false;
+    if (info.noise_variation != 0.0 && info.noise_type == 3) return false;
     olm::dblur::generic::RenderEstimate estimate = {};
     // PF8 uses the same float workspace and tables as deep rendering. The PF16
     // estimate conservatively overcounts its packed source/destination bytes.
