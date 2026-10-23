@@ -13,7 +13,7 @@ from types import SimpleNamespace
 
 sys.dont_write_bytecode = True
 from adapters.radialblur import Adapter, public
-from core import evaluate, shrink, sha
+from core import evaluate, load_corpus, shrink, sha
 import probe_radialblur_rotation_fields_20261001 as fields
 import probe_radialblur_zoom_fade_20261002 as zoom
 from PIL import Image
@@ -31,21 +31,28 @@ def main():
     ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('--index', type=int, default=67)
     ap.add_argument('--fixture', type=Path)
+    ap.add_argument('--worker', type=Path, default=WORKER)
+    ap.add_argument('--watch-batch', type=int, default=32)
     args = ap.parse_args()
+    if args.watch_batch < 1:
+        ap.error("watch batch must be positive")
     out = args.output.resolve()
     assert out.is_relative_to(ROOT/'orchestra/state')
     out.mkdir(parents=True, exist_ok=False)
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out))
     public.SOURCE = args.source.resolve()
     main = ROOT.parent.parent if ROOT.parent.name == 'worktrees' else ROOT
-    adapter = Adapter(SimpleNamespace(main=main, worker=WORKER, max_size=256, case_timeout=60))
+    adapter = Adapter(SimpleNamespace(main=main, worker=args.worker, max_size=256, case_timeout=60))
     adapter.routes = ('smart',)
     adapter.oracle_routes = {'smart': 'smart'}
     deadline = time.monotonic()+2400
     provenance = adapter.prepare(out, deadline)
     if args.fixture:
         saved = json.loads(args.fixture.read_text())
-        case = dict(saved['case'], pixels=bytes.fromhex(saved['input_hex']))
+        if 'pixels_zlib_base64' in saved:
+            case, _ = load_corpus(args.fixture, adapter)
+        else:
+            case = dict(saved['case'], pixels=bytes.fromhex(saved['input_hex']))
         reduction = {'fixture': str(args.fixture)}
         result = evaluate(adapter, case, out, deadline)
     else:
@@ -71,6 +78,7 @@ def main():
         };
         c17_dump("outer_fade.f32", outer_fade_weights);
         c17_dump("inner_fade.f32", inner_fade_weights);
+        c17_dump("fade_factor.f32", rotation_fade_factor);
 '''
     assert source.count(marker) == 1
     source = source.replace(marker, dump + marker)
@@ -94,9 +102,16 @@ def main():
         restored = b''.join(struct.pack('<'+fmt,(v*32768+127)//255 if fmt=='H' else v/255) for v in packed)
         assert restored == case['pixels'], 'Trace PNG must reproduce every typed input byte'
     im.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',packed)]); im.save(out/'input.png')
-    command = [str(WORKER),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),'--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']]]
+    command = [str(args.worker),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),'--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']]]
     def trace(options, name):
-        run = subprocess.run(command+options+zoom.assignments(case), capture_output=True, check=True, timeout=120)
+        assignments = zoom.assignments(case)
+        # Older trace CLIs reject :angle; omit only default-zero controls.
+        zero_angles = {f"param_{p['slot']}@{p['slot']}:angle="
+                       for p in case['parameters'] if p['kind'] == 'a' and p['value'] == 0}
+        assignments = [a for a in assignments if not any(a.startswith(prefix) for prefix in zero_angles)]
+        run = subprocess.run(command+options+assignments, capture_output=True, timeout=120)
+        (out/(name+'.stderr')).write_bytes(run.stderr)
+        run.check_returncode()
         (out/(name+'.json')).write_bytes(run.stdout)
         data = json.loads(run.stdout)
         assert data['raw_pixel_sha256'] == result['oracle']['raw_sha256']
@@ -121,7 +136,7 @@ def main():
         native = bytes.fromhex(watches['watch-1']['after']['hex'])
         (out/('native_'+name+'.f32')).write_bytes(native)
         report['weights'][name] = fields.compare_words(native, mac)
-    specs = [('preaccum',0x2780,'rcx',0x3c940,cells*16),('premax',0x2780,'rcx',0x3c948,cells*4),('polar',0x2780,'rdx',None,cells*16),('scalar',0x2780,'rcx',0x40,cells*4),
+    specs = [('fade_factor',0x2780,'r9',None,cells*4),('preaccum',0x2780,'rcx',0x3c940,cells*16),('premax',0x2780,'rcx',0x3c948,cells*4),('polar',0x2780,'rdx',None,cells*16),('scalar',0x2780,'rcx',0x40,cells*4),
              ('span',0x4640,'rdx',0x90,w*h*4),('accum',0x1b10,'rcx',0x3c940,cells*16),
              ('max',0x1b10,'rcx',0x3c948,cells*4),('normalized',0x1000,'rcx',None,cells*16)]
     for name,rva,arg,deref,size in specs:
@@ -130,7 +145,10 @@ def main():
             spec=f'function={hex(rva)},arg={arg},size={min(4096,size-offset)},offset={offset},occurrence=1'
             if deref is not None: spec+=f',deref={hex(deref)}'
             options+=['--watch',spec]
-        watches=trace(options,name+'_trace')
+        watches = {}
+        for start in range(0, len(options), args.watch_batch*2):
+            batch = trace(options[start:start+args.watch_batch*2], name+'_trace_'+str(start//2))
+            watches.update({f'watch-{start//2+int(k.split("-")[-1])}': v for k,v in batch.items()})
         when = 'after' if name in ('preaccum','premax') else 'before'
         native=b''.join(bytes.fromhex(watches[f'watch-{i+1}'][when]['hex']) for i in range(len(options)//2))
         (out/('native_'+name+'.f32')).write_bytes(native)
