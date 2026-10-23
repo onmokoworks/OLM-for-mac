@@ -16,14 +16,14 @@ def main():
     result={'schema':'olm.dg-C31-evidence/1','measurements':{}}
     names = {'power':('base','fresh','gate','power-bilateral-rejected','power','power-final','verify-timeout','verify','replay'),
              'mask':('after-power','mask','mask-trace','mask-trace-after','mask-verify','mask-hdr-residual'),
-             'writer':('writer','writer-trace','writer-trace-after','writer-verify','final','final-fresh','final-replay')}
+             'writer':('after-mask','writer-no-census','writer','writer-trace','writer-trace-after-final','writer-uniform-before','writer-uniform-after','writer-verify','final','final-fresh','final-replay')}
     for name in names[args.phase]:
         path=args.scratch/(name+'.json')
         data=json.loads(path.read_text())
         out={'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
         for key in ('schema','status','summary','completed','seed','source_sha256','candidate_sha256','source_sha256','before_ref','provenance','replay_matches_saved','requested','reference_sha256'):
             if key in data:out[key]=data[key]
-        if 'trace' in name:out['trace']=data
+        if 'trace' in name or 'uniform' in name:out['trace']=data
         if 'cases' in data:
             out['cases']=[{'index':r['index'],'input_sha256':r['input_sha256'],'smart':r['result']['routes']['smart'],'oracle':r['result']['oracles']['smart']} for r in data['cases']]
         if 'rows' in data:

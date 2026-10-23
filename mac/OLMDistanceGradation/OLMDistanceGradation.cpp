@@ -1459,6 +1459,16 @@ static inline void compose_pixel(
 // Typed PF16 compose/store leaf. Keeping the AEX-grounded float-to-word
 // boundary beside compose_pixel lets CPU fixtures exercise the same
 // production operation used by RenderBits, without reconstructing an AE host.
+// Original Smart PF16 callback 1811707f4..181170828 multiplies by
+// 32768, converts to signed int32 with CVTTSS2SI, then stores AX. The
+// integer-indefinite result for invalid conversion has a zero low word.
+static inline u_short smart_store_pf16(float value)
+{
+	const float scaled = value * 32768.0f;
+	if (!(scaled >= -2147483648.0f && scaled < 2147483648.0f)) return 0;
+	return static_cast<u_short>(static_cast<int32_t>(scaled));
+}
+
 static inline PF_Pixel16 compose_pf16_pixel(
 	float src_a, float src_r, float src_g, float src_b,
 	float d_alpha, float field_x, const DGParams &p,
@@ -1467,10 +1477,10 @@ static inline PF_Pixel16 compose_pf16_pixel(
 	compose_pixel(src_a, src_r, src_g, src_b, d_alpha, field_x,
 	              p, oa, orv, og, ob);
 	PF_Pixel16 out;
-	out.alpha = clamp16(oa);
-	out.red   = clamp16(orv);
-	out.green = clamp16(og);
-	out.blue  = clamp16(ob);
+	out.alpha = p.smart_owner ? smart_store_pf16(oa) : clamp16(oa);
+	out.red   = p.smart_owner ? smart_store_pf16(orv) : clamp16(orv);
+	out.green = p.smart_owner ? smart_store_pf16(og) : clamp16(og);
+	out.blue  = p.smart_owner ? smart_store_pf16(ob) : clamp16(ob);
 	return out;
 }
 
@@ -1938,7 +1948,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	// regardless of source alpha range. The census and field construction use
 	// the same Smart conversion; Classic retains its bounded-alpha contract.
 	p.degenerate_mask =
-		(bounded_alpha || (smart_owner && sizeof(P) == sizeof(PF_PixelFloat))) &&
+		(bounded_alpha || smart_owner) &&
 		(!any_owned || !any_unowned);
 	build_distance_field(alpha.data(), df, p, w, h);
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));

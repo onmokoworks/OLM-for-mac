@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import struct
+import subprocess
 import sys
 import tempfile
 import time
@@ -25,6 +26,7 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--scratch',type=Path,required=True)
     p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--source-ref')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -35,7 +37,8 @@ def main():
     report={'schema':'olm.dg-C31-mask/1'}
     with tempfile.TemporaryDirectory(dir=args.scratch) as tmp:
         td=Path(tmp);prod=td/'prod';prod.mkdir();report['provenance']=a.prepare(prod,deadline)
-        source=SOURCE.read_text()
+        source=subprocess.check_output(['git','show',args.source_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode() if args.source_ref else SOURCE.read_text()
+        report['source_sha256']=sha(source.encode());report['source_ref']=args.source_ref
         anchor='// d_alpha: source ownership follows'
         assert source.count(anchor)==1
         source=source.replace(anchor, 'if(const char *mp=getenv("OLM_DG_C31_MASK")){FILE *f=fopen(mp,"wb");if(f){fwrite(mask.data(),1,mask.size(),f);fclose(f);}}\n\t'+anchor)

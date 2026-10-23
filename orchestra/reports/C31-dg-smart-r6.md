@@ -1,10 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Cluster 1: admit finite-SDR PF32 Smart Power through the already-supported identity/Box/Gaussian/small-Median filter rules using shared UCRT math.
-- Seed 1 Smart exact 287→290; fresh seed 32 exact 281→282. No prior exact changes, no admitted mismatch.
-- All 1260 independent Power cases match AEX and ASan/UBSan; five excluded controls remain refused; corpus 145 remains exact.
-- Cluster2 restores original PF16 raw-alpha/128 mask conversion; fresh seed32 now283 exact/0 mismatch, seed1 remains290 exact.
+- Closed three clusters: bounded UCRT Power admission, PF16 mask coefficient, and Smart PF16 HDR store/census.
+- Seed1 E/M/R/U:287/0/6/7→290/0/3/7; fresh seed32 final284/0/11/5 (283 exact on the original reference set).
+- All prior exacts preserved; corpus145 remains exact with no expectation edits.
+- Independent Power1260, mask576, HDR864 cases and campaign/corpus sanitizer checks pass.
+- Three-cluster stop reached; original exceptions/timeouts and fresh-seed unsupported domains remain.
 
 facts:
 - Initial HEAD `3781f6320be08bb475dbbc39d2cb192808ce7c40`, branch `orch/C31-dg-smart-r6`. Read shared guide, GOTCHAS, plugin forbidden-action row, compatibility plan and T07/C03/C08/C14/C19/C27/F10/F12/F31/F37 reports. MAIN and emulator sources remain read-only; no worker rebuild, push, stash or history rewrite.
@@ -52,7 +53,7 @@ git diff --check
 The first two commands on the updated source measure the updated counts; original counts/hashes are retained in the committed evidence. Expected: seed1 290/0/3/7; seed32 282/1/11/6; independent1260 exact; negative5 refused; corpus145 unchanged; tests9 pass. Timeout verdicts must be reported if they vary with machine load.
 
 next:
-- Continue the independent PF16 first-stage mask discrepancy and inspect remaining fresh-seed refusals. Bilateral Power remains excluded. Original exceptions/time budgets are not exact outputs.
+- The PF16 work below is completed; final follow-up domains are listed at the end. Bilateral Power remains excluded. Original exceptions/time budgets are not exact outputs.
 
 Cluster 2 — PF16 alpha-mask conversion (base `6f1cddb3`):
 
@@ -87,4 +88,57 @@ python3 tools/fuzz/verify_distancegradation_smart_C14.py --scratch "$s/mask-veri
 Expected: matrix576 exact; mask32886/32886 and case96 output exact; only fresh-seed32 case96 changes, corpus145 unchanged. The earlier full seed1 remeasurement is `$s/after-power.json`; regenerate with the usual run.py command at the Power commit if necessary. Baseline-count remeasurement at later commits naturally reflects later fixes.
 
 next:
-- Close the independently located Smart PF16 HDR integer-store operation. Original-rejected and timed-out cases remain unclosed.
+- The Smart PF16 HDR store/census boundary is closed in cluster3 below. Original-rejected and timed-out cases remain unclosed.
+
+Cluster 3 — Smart PF16 HDR integer store and census (base `4b865178`):
+
+facts:
+- The earlier HDR residual is bound to the original public output by capturing actual builder/field state with a same-mask PNG proxy, relocating only source/field world pointers, and replaying the original PF16 callback181170480. All168 output bytes equal the separate typed public render. This is not a natural typed full-owner memory capture.
+- All84 pre-store FLOAT32 words (21 pixels×4 components) match the Mac mask-corrected candidate. First difference occurs only at store: alpha bits `3f8e1d72` (1.1102736) become original word`8e1d` versus Mac`8000`. The original callback consumes no imports in this replay.
+- Original instructions1811707f4..181170828 multiply by32768 (constant181504ac4 bytes`00000047`), use signed-int32 CVTTSS2SI, and store AX. There is no clamp to32768. Restore that operation for Smart PF16 only; Classic retains its existing store. The helper handles CVTTSS2SI's invalid conversion as a zero low word and uses a defined signed conversion followed by unsigned16 reduction; no final-coordinate/value patch or rounding toggle is introduced.
+- First writer-only hypothesis is rejected at independent uniform-HDR7x1/Inside/RGB/background/Constant: old output was exact, candidate regressed seven alpha words from`8000` to`ffff`. This is a new control boundary, not a permitted regression. The rejected source and result are retained as `writer-no-census` evidence and were never promoted.
+- Original callback18117048d checks refcon+0x90 before reading fields/source; at1811704b5 background alpha is constant0x8000. A bound21-pixel uniform-HDR trace observes this nonzero original census byte and reproduces the entire typed public output. Mac had disabled its census for PF16 source alpha>1; removing that restriction for Smart restores the original mask-count control. Classic's bounded-alpha condition remains.
+- After the census correction, uniform-HDR callback/public output and the candidate agree on all168 bytes. This path returns before the original general store hook, so its empty hook record is deliberately not reported as pre-store equality. Mixed-HDR final trace retains84/84 pre-store equality and now168/168 output-byte equality, with no original callback imports.
+- Final independent864-case HDR matrix:441 mismatch→exact,423 unchanged exact,864 sanitizer-identical, zero regression. Covers mixed HDR alpha, SDR alpha/HDR RGB, uniform HDR alpha;7x1/7x3; all ownership modes; RGB/Layer; background/inversion; Constant/Linear/Sphere/Power; None/Box/Gaussian; raw values around191/192/193 and32768 plus65534/65535; odd padding.
+- Final before/current/sanitized-current verification completes all600 seed1/32 campaign cases and all145 corpus cases. Every status/byte is unchanged by cluster3 in these saved campaigns: seed1 remains290 exact, seed32 remains283 exact. Corpus145 stays exact/identical; zero expectation edits. No timeout or sanitizer diagnostic in the final verification (180-second allowance, leak detection disabled).
+
+| Cluster3 Smart corpus | Before | After | Expectation edits |
+|---|---|---|---|
+| Saved145 cases |145 exact|145 exact, identical status and bytes|None|
+
+inference:
+- The first mixed-HDR divergence was an unjustified saturation in the Smart PF16 conversion. Its removal exposed a previously masked missing uniform-mask control. Both original operations are restored generally, while Classic remains outside this ticket.
+
+changed_files (cluster3 additions):
+- `tools/emulation/trace_distancegradation_writer_C31.py`
+- `tools/fuzz/probe_distancegradation_writer_C31.py`
+- `reports/fuzz/olmdistancegradation_C31_writer.json`
+- Existing plugin, C19 probe, evidence summarizer and this report updated.
+
+verify (cluster3):
+```sh
+python3 tools/fuzz/probe_distancegradation_C19.py --scratch "$s/writer" --report "$s/writer.json" --before-ref 4b865178 --experiment writer-pf16 --matrix --matrix-family writer-pf16 --strict-improvement --require-exact --write-source "$s/writer.cpp"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_writer_C31.py --scratch "$s/writer-trace-after-final" --report "$s/writer-trace-after-final.json" --source "$s/writer.cpp"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_writer_C31.py --uniform --scratch "$s/writer-uniform-after" --report "$s/writer-uniform-after.json" --source "$s/writer.cpp"
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --scratch "$s/writer-verify" --report "$s/writer-verify.json" --before-ref 4b865178 --candidate-source "$s/writer.cpp" --campaign "$s/after-mask.json" --campaign "$s/fresh.json" --corpus --strict-improvement --case-timeout 180
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 1 --jobs 1 --shrink-attempts 0 --scratch "$s/final" --corpus "$s/final-corpus" --report "$s/final.json"
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 32 --jobs 1 --shrink-attempts 0 --scratch "$s/final-fresh" --corpus "$s/final-fresh-corpus" --report "$s/final-fresh.json"
+python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 1 --scratch "$s/final-replay" --report "$s/final-replay.json"
+PATH="$s/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_olmdistancegradation_*beta_20260820.py'
+PATH="$s/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_olmdistancegradation_smart_transactional_20260822.py'
+git diff --check
+```
+Expected: HDR864 exact, both original/public/candidate callback witnesses exact; mixed pre-store84 words exact;600 campaign/145 corpus statuses and bytes unchanged relative to cluster2; final seed1 290/0/3/7, seed32 284/0/11/5 when original case78 finishes (283/0/11/6 if it times out again); strict corpus145 saved matches; beta9 and transactional2 pass. `$s/after-mask.json` is the completed full seed1 remeasurement before cluster3.
+
+next:
+- Three clusters closed: stop per ticket. Seed1's residual has no successful-original refusal or mismatch: three Mac refusals correspond to original exceptions, seven uncompared have original exceptions/timeouts.
+- Fresh seed32 still has nine successful-original refusals: large Box work/control budgets (20/163), nonfinite effective filters (21/115), extended Power (82), and Bilateral cases146/209/256/294. Suggested follow-up: paired-stage Bilateral/extended-Power investigation; retain existing guards until exact admission evidence.
+- Power+Bilateral counterexample remains excluded. No native Windows/AE, GPU, or full-domain equivalence claim; no release gates, forbidden-action lists, other plugin source, MAIN, or emulator source were modified.
+
+
+Final verification facts:
+- Production full n300 remeasurements both exit0. Seed1:290/0/3/7, original290 success/8 rejection/2 budgets. Seed32:284/0/11/5, original293 success/7 rejections/0 budgets. The extra exact beyond the paired283 is index78: original reference changed budget→success, SHA256`9d612aad9be70ba5c70a750f1c4d3e0ed0dada10ecbc8d641c7bf1f119110935`; its Mac output hash is unchanged. This is reference availability, not a claimed port improvement.
+- Initial exact dictionaries remain identical:287/287 seed1 and281/281 seed32. All300 Classic result dictionaries are unchanged on each seed. Full seed1 changes only124/125/180 refusal→exact; full seed32 changes96 mismatch→exact,180 refusal→exact and78 uncompared→exact due to the reference timeout resolution.
+- Final beta9 and transactional2 tests pass. Final strict corpus replay exits0,145 completed, `replay_matches_saved=true`; no corpus expectation edits. `git diff --check` passes. Sanitized matrix/campaign/corpus paths use ASan/UBSan with fatal diagnostics and leak checking disabled; no native AE or leak-checking claim.
+- Rejected candidates are reproducible using `--experiment power-ucrt-bilateral --matrix --matrix-family power-ucrt-bilateral --before-ref 3781f6320be08bb475dbbc39d2cb192808ce7c40 --strict-admission` (expected mismatch assertion) or `--experiment writer-pf16-no-census --matrix --matrix-family writer-pf16 --before-ref 4b865178 --strict-improvement` (expected uniform-HDR regression assertion), with the same required scratch/report arguments as above. Both rejected writer source and final writer source reconstruct to their recorded SHA256 exactly. The original mask mismatch is reproduced with the mask trace's `--source-ref 6f1cddb3`; omit it for the corrected source.
+- All work used jobs1 and at most two simultaneous emulator/build workloads. Temporary build directories were removed by their context managers; final scratch is well below5GiB. No started workload remains running at handoff.

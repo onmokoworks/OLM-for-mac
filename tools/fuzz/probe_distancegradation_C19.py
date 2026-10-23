@@ -26,6 +26,9 @@ def candidate_source(experiment, source=None):
     if experiment in ('power-ucrt', 'power-ucrt-bilateral'):
         from probe_distancegradation_C31 import power_source
         return power_source(source, bilateral=experiment.endswith("-bilateral"))
+    if experiment in ('writer-pf16', 'writer-pf16-no-census'):
+        from probe_distancegradation_writer_C31 import writer_source
+        return writer_source(source, census=experiment == "writer-pf16")
     if experiment == 'mask-pf16':
         from probe_distancegradation_C31 import mask_source
         return mask_source(source)
@@ -354,10 +357,11 @@ def main():
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--before-ref', default='0e3481cb')
+    p.add_argument('--before-source', type=Path)
     p.add_argument('--index', type=int, action='append', default=[])
-    p.add_argument('--experiment', choices=['mask-pf16', 'power-ucrt-bilateral', 'power-ucrt', 'gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable','vector-one','vector-one-v1'], default='gate-off')
+    p.add_argument('--experiment', choices=['writer-pf16-no-census', 'writer-pf16', 'mask-pf16', 'power-ucrt-bilateral', 'power-ucrt', 'gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable','vector-one','vector-one-v1'], default='gate-off')
     p.add_argument('--matrix', action='store_true')
-    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable','vector-one','power-ucrt','mask-pf16'],default='nonfinite')
+    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable','vector-one','power-ucrt','mask-pf16','writer-pf16','power-ucrt-bilateral'],default='nonfinite')
     p.add_argument('--write-source', type=Path)
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
@@ -369,12 +373,12 @@ def main():
     os.environ.update(TMPDIR=str(args.scratch), TMP=str(args.scratch), TEMP=str(args.scratch))
     tempfile.tempdir = str(args.scratch)
     a = Adapter(argparse.Namespace(max_size=256, case_timeout=30, main=main_checkout(), worker=default_worker()))
-    base_source = subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
+    base_source = args.before_source.read_text() if args.before_source else subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
     source = candidate_source(args.experiment, base_source)
     if args.write_source:
         args.write_source.write_text(source)
     report = dict(schema='olm.dg-C19-probe/1', experiment=args.experiment, seed=args.seed,
-                  source_sha256=sha(base_source.encode()), before_ref=args.before_ref, candidate_sha256=sha(source.encode()), rows=[])
+                  source_sha256=sha(base_source.encode()), before_ref=args.before_ref, before_source=str(args.before_source) if args.before_source else None, candidate_sha256=sha(source.encode()), rows=[])
     deadline = time.monotonic()+1200
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as td:
@@ -385,8 +389,9 @@ def main():
         current = variant(a, td/'candidate', deadline, source)
         san = variant(a, td/'san', deadline, source, sanitized=True)
         wd = td/'case'; wd.mkdir()
-        from probe_distancegradation_C31 import matrix as ucrt_matrix, mask_matrix
-        families={'mask-pf16':mask_matrix,'power-ucrt':ucrt_matrix,'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix,'vector-one':vector_one_matrix}
+        from probe_distancegradation_C31 import matrix as ucrt_matrix, mask_matrix, power_bilateral_counterexample
+        from probe_distancegradation_writer_C31 import matrix as writer_matrix
+        families={'power-ucrt-bilateral':power_bilateral_counterexample,'writer-pf16':writer_matrix,'mask-pf16':mask_matrix,'power-ucrt':ucrt_matrix,'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix,'vector-one':vector_one_matrix}
         cases = families[args.matrix_family](a) if args.matrix else ((index,a.generate(args.seed,index)) for index in args.index or [94,116,126,223,255,263,283,299])
         for index,c in cases:
             oracle, reference = a.oracle(c, wd, deadline, 'smart')

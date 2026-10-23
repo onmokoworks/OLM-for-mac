@@ -41,6 +41,14 @@ def matrix(a):
 
 
 
+
+def power_bilateral_counterexample(a):
+    label,c=next((label,c) for label,c in power_matrix(a)
+                 if label=='sdr/7x1/owner1/mode1/bg0/blur5/size1')
+    for q in c['parameters']:
+        if q['slot']==10:q['value']=struct.unpack('<f',struct.pack('<I',0x3c23d70a))[0]
+    yield label+'/power3c23d70a',c
+
 def mask_source(source):
     return replace_once(source,
         'const float scaled = alpha * 255.0f;',
