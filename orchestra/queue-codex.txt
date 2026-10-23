@@ -56,3 +56,4 @@ C40-dg-seed45-mismatch
 C41-radial-seed45-mismatch
 C42-colorkey-pf32-nan-mismatch
 F47-aexcompat-native-plugin-host
+C43-dg-bilateral-last-bit
