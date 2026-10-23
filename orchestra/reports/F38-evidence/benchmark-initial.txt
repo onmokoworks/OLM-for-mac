@@ -1,0 +1,14 @@
+FPCR.DN invalid result=7fc00000 (restored FPCR)
+PASS: generated signs, propagated signs/payloads, signed zero, finite arithmetic
+round=1 before
+4K horizontal RGB radius1 median_ms=132.048 sample=0x1.7754a8p-3
+round=1 after
+4K horizontal RGB radius1 median_ms=139.660 sample=0x1.7754a8p-3
+round=2 before
+4K horizontal RGB radius1 median_ms=130.740 sample=0x1.7754a8p-3
+round=2 after
+4K horizontal RGB radius1 median_ms=139.668 sample=0x1.7754a8p-3
+round=3 before
+4K horizontal RGB radius1 median_ms=131.968 sample=0x1.7754a8p-3
+round=3 after
+4K horizontal RGB radius1 median_ms=139.453 sample=0x1.7754a8p-3

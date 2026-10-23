@@ -25,7 +25,7 @@ class Adapter(PublicAdapter):
         body = replace_once(body,'static_cast<size_t>(src->rowbytes));',
                             'static_cast<size_t>(src->width)*(g_depth/8*4));')
         body += '\n#include "'+str(PARAMETERS)+'"\n'+MAIN.read_text()
-        return self.compile_sdk(scratch,body,SOURCE,deadline,CORES),[HOST,MAIN,PARAMETERS,SOURCE,SOURCE.with_suffix('.h'),*CORES]
+        return self.compile_sdk(scratch,body,SOURCE,deadline,CORES),[HOST,MAIN,PARAMETERS,SOURCE,SOURCE.with_suffix('.h'),*CORES,ROOT/'core/x86_float.h']
 
     def scope(self):
         return {'mac_stride':'shared randomly padded input/output stride; host copy callback copies active pixels',
