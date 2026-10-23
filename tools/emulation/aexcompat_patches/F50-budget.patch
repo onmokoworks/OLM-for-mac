@@ -1,0 +1,34 @@
+--- a/crates/aex-guest-worker/src/x64.rs
++++ b/crates/aex-guest-worker/src/x64.rs
+@@ -292,8 +292,4 @@
+-// A nonzero Unicorn instruction limit enables instruction counting across the
+-// whole run, which is prohibitively expensive for image kernels. The wall-clock
+-// timeout and return-sentinel check still bound and validate guest execution.
+-const MAX_INSTRUCTIONS: usize = 0;
+-// A plug-in call that cannot finish inside an interactive frame budget must
+-// fail with a bounded crash snapshot instead of stalling the host or a corpus
+-// sweep for minutes. This covers loader callbacks and effect selectors alike.
+-const TIMEOUT_MICROSECONDS: u64 = 20_000_000;
++// F50: deterministic finite budget per scheduler slice. The engine permits at
++// most 257 slices per call; no wall-clock cutoff is used by production calls.
++const MAX_INSTRUCTIONS: usize = 2_000_000_000;
++const TIMEOUT_MICROSECONDS: u64 = 0;
+--- a/crates/aex-guest-worker/src/x64/engine.rs
++++ b/crates/aex-guest-worker/src/x64/engine.rs
+@@ -1840 +1840 @@
+-            if elapsed >= timeout {
++            if timeout_microseconds != 0 && elapsed >= timeout {
+@@ -1845,3 +1845,7 @@
+-            let remaining_timeout_microseconds = u64::try_from((timeout - elapsed).as_micros())
+-                .unwrap_or(u64::MAX)
+-                .max(1);
++            let remaining_timeout_microseconds = if timeout_microseconds == 0 {
++                0
++            } else {
++                u64::try_from((timeout - elapsed).as_micros())
++                    .unwrap_or(u64::MAX)
++                    .max(1)
++            };
+@@ -2383 +2387 @@
+-                "execution stopped before the guest returned (RIP={rip:#x})"
++                "execution stopped before the guest returned (instruction budget {MAX_INSTRUCTIONS} per scheduler slice; RIP={rip:#x})"
