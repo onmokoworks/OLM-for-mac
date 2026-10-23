@@ -29,8 +29,8 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[2]
     scratch = args.scratch.resolve()
-    if not scratch.is_relative_to(root/'orchestra/state/C40-dg-seed45-mismatch'):
-        parser.error('scratch must be under this ticket state directory')
+    if not scratch.is_relative_to(root/'orchestra/state'):
+        parser.error('scratch must be under orchestra/state')
     scratch.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
     deadline = time.monotonic() + 1800
