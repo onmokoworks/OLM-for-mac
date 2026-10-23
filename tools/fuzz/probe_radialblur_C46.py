@@ -18,6 +18,14 @@ from core import sha, raw_diff
 
 
 def source_for(experiment, source):
+    if experiment == 'qualified-override':
+        old = '(info.outer_offset_mode == 3 || info.inner_offset_mode == 3);'
+        assert source.count(old) == 1
+        return source.replace(old, '(info.outer_offset_mode == 3 && !(info.noise_type == 3 && info.noise_variation == 0.0));')
+    if experiment == 'override-work':
+        old = '((smart_render && !unverified_override) || work <= kMaxWork)'
+        assert source.count(old) == 1
+        return source.replace(old, '(smart_render || work <= kMaxWork)')
     # C17 established a zero source span for Type3 with no checked-out layer.
     # Test whether Zoom must retain its separate size-only prepass seed.
     source = source.replace('if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;', 'if (info.noise_variation == 0.0) return info.noise_type >= 1 && info.noise_type <= 3;')
@@ -68,7 +76,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--campaign', type=Path, required=True)
     ap.add_argument('--revision', default='3ac8d70e85165596581c5dc7086deb2ec03ecb26')
-    ap.add_argument('--experiment', choices=['type3-prepass', 'type3-separated', 'type3-size-flag'], required=True)
+    ap.add_argument('--experiment', choices=['type3-prepass', 'type3-separated', 'type3-size-flag', 'override-work', 'qualified-override'], required=True)
     ap.add_argument('--output', type=Path, required=True)
     args = ap.parse_args()
     out = args.output.resolve()

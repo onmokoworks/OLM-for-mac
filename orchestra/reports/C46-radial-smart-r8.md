@@ -1,10 +1,10 @@
-status: partial
+status: blocked
 summary:
-- Closed Type3/NV0 missing-layer Smart refusals with deterministic zero scatter spans and a separate Zoom size prepass.
-- Seed1 sanitized E/M/R/U: 264/0/33/3 -> 268/0/19/13; fresh46101: 260/0/39/1 -> 260/0/18/22.
-- All 524 baseline exact hashes survive; zero candidate sanitizer failures in 600 campaign executions.
-- Independent original-rendered matrix: 48 references / 144 layouts exact; 96 original crashes / 288 layouts remain uncompared.
-- Other residual domains are still under investigation; no release/AE completeness claim.
+- Closed two clusters: Type3/NV0 missing-layer spans and qualified Rotation Override Smart work admission.
+- Common-oracle seed1 Smart exact264 ->268 ->270, zero mismatch; final ordinary run271/0/17/12 includes one recovered oracle timeout.
+- All baseline exact hashes survive; both stages pass600 sanitized campaign executions each; independent comparable layouts216/216 exact.
+- Existing corpus50 ->54 ->56 witnesses; final replay result is recorded below.
+- Remaining nonfinite traces, general outer Override and layer checkout need oracle/host capabilities; old smoke suite has6 UCRT link failures.
 
 facts:
 
@@ -74,6 +74,47 @@ production independent matrix repeats the same144 exact/288 uncompared layouts.
 
 FACT: Additional old smoke suite (`python3 tools/fuzz/verify_radialblur_smart_C06.py --ordinary --smoke --output orchestra/state/C46-radial-smart-r8/smoke`) ran8 tests:2 pass,6 build failures. They omit the UCRT library from their clang link commands and report unresolved `_ucrt_cos`, `_ucrt_sin`, `_ucrt_expf` (and other UCRT imports). These imports predate this change; this is not a numerical test failure. No smoke-pass claim. Current public-harness ASan/UBSan executions and original-AEX comparisons above do link UCRT and pass.
 
+FACT: Type3 cluster was committed separately as `911dc0a8` (Smart264 ->268
+under the same original results). The second cluster investigates the remaining
+Rotation Override work gate, not its arithmetic or Classic policy.
+
+FACT: Full Smart Override gate-off sanitized seed1:271/0/15/14 (E/M/R/U),
+new exact48/148/280, and117 becomes uncompared. Fresh46101:262/0/13/25,
+new exact88/296. Both preserve every baseline exact hash and have no sanitizer
+failures. This full removal is NOT promoted: a120-second original retry of
+seed1/index117 still stops after20.014 seconds at RVA2cc3, without a rendered
+reference. The worker's own execution limit, not Python's timeout, fires.
+
+FACT: Qualified rule retains high-work *outer* Override with a live span.
+It admits inner Override independently, and Type3/NV0's zero scatter span
+(which does not execute the estimated strength scatter). Seed1 sanitized
+268/0/19/13 ->270/0/17/13, gains48/280; fresh46101 remains260/0/18/22.
+All528 Type3-stage exact hashes survive,600 candidate executions sanitizer-clean.
+This preserves the unverified117 boundary and does not admit the otherwise
+exact148/88/296 outer-Override cases merely by case identity.
+
+FACT: Final ordinary seed1 n300/jobs1 run exits0:271 exact,0 mismatch,17 refusal,12 uncompared. All268 Type3-stage exact hashes survive. Case62 changes unavailable-oracle to exact; it is NOT counted as a fix gain. Original Smart277 rendered,20 rejected,3 budget.
+
+FACT: Independent Override matrix covers inner Override and zero-span outer
+Override, three depths, Size0/50, both Repeat modes, and three strides.
+All24 original AEX references render; all72 sanitized layouts are exact. The final production-source rerun repeats24/24 references and72/72 layouts.
+No pixel mismatch, no tolerance, no changed writer/math/coordinate operation.
+
+FACT: Initial final-corpus replay was55/56: new case280 hit the10-second oracle budget with unchanged candidate hash `5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8`. Explicit30-second replay matches its full saved result. Only this new record's replay timeout is pinned to30 seconds with provenance; campaign counts and output expectations are unchanged.
+
+FACT: Nonfinite17/89/238/247 remain refused. A raw F46 session with `--watch`
+exits2 and prints usage with watches only under `render-trace-png`; the failed
+capability probe is committed. PNG cannot losslessly transport these NaN/Inf
+inputs. No paired first-divergent nonfinite stage is claimed, and the previously
+refuted C35/C44 numeric guesses are not repeated. A trace-capable raw-input
+worker is a separate prerequisite; this ticket prohibits rebuilding workers.
+
+FACT: The remaining seed1/index248 Smart error710 is emitted by the SDK test
+host's `pre()` callback in `radialblur_topology_effectmain_harness_20261001.cpp`:
+`if(slot||id||...) return710`. It rejects the nonzero noise-layer checkout slot.
+This is a host-fixture limitation, not a proven plugin numerical defect. No
+production layer error is suppressed and no missing-layer input is fabricated.
+
 inference:
 
 INFERENCE: Missing-layer scatter allocation and the independent size-factor
@@ -87,9 +128,11 @@ changed_files:
 - `notes/KNOWN_ORIGINAL_BUGS.md`
 - `tools/fuzz/probe_radialblur_C46.py`
 - `tools/fuzz/verify_radialblur_type3_C46.py`
+- `tools/fuzz/verify_radialblur_override_C46.py`
+- `tools/fuzz/retry_radialblur_C46.py`
 - `tools/fuzz/trace_radialblur_smart_C06.py` (opt-in F46 prefix trace)
 - `tools/fuzz/fixtures/radialblur_type3_size_C46.json`
-- `tests/fuzz_corpus/radialblur/C46_*.json` (four new exact witnesses)
+- `tests/fuzz_corpus/radialblur/C46_*.json` (six new exact witnesses)
 - `orchestra/reports/C46-evidence/` and this report
 
 verify:
@@ -103,6 +146,10 @@ export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1 OLM_TEST_JOBS=1
 python3 tools/fuzz/probe_radialblur_C46.py --experiment type3-size-flag --campaign orchestra/reports/C46-evidence/baseline.json --output "$s/seed1" > "$s/seed1.log" 2>&1
 python3 tools/fuzz/probe_radialblur_C46.py --experiment type3-size-flag --campaign orchestra/reports/C46-evidence/fresh.json --output "$s/fresh" > "$s/fresh.log" 2>&1
 python3 tools/fuzz/verify_radialblur_type3_C46.py --independent --output "$s/matrix" > "$s/matrix.log" 2>&1
+python3 tools/fuzz/probe_radialblur_C46.py --experiment qualified-override --revision 911dc0a8 --campaign orchestra/reports/C46-evidence/after-type3.json --output "$s/override-seed1" > "$s/override-seed1.log" 2>&1
+python3 tools/fuzz/probe_radialblur_C46.py --experiment qualified-override --revision 911dc0a8 --campaign orchestra/reports/C46-evidence/fresh.json --output "$s/override-fresh" > "$s/override-fresh.log" 2>&1
+python3 tools/fuzz/verify_radialblur_override_C46.py --output "$s/override-matrix" > "$s/override-matrix.log" 2>&1
+python3 tools/fuzz/retry_radialblur_C46.py --output "$s/override-retry" > "$s/override-retry.log" 2>&1
 '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/fuzz/trace_radialblur_smart_C06.py --source mac/OLMRadialBlur/OLMRadialBlur.cpp --cases-from tools/fuzz/fixtures/radialblur_type3_size_C46.json --indices 52 --no-shrink --prefix-only --legacy-trace-angles --trace-worker /Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker --output "$s/trace" > "$s/trace.log" 2>&1
 python3 tools/fuzz/run.py --plugin radialblur --replay tests/fuzz_corpus/radialblur --jobs 1 --scratch "$s/replay" --report "$s/replay.json" > "$s/replay.log" 2>&1
 git diff --check
@@ -110,12 +157,16 @@ git diff --check
 
 Expected: both campaigns exit0, counts above, no lost exact/sanitizer errors;
 matrix144 exact layouts,288 explicitly uncompared, zero mismatch/unclean;
+qualified Override seed1 270 exact /17 refusal /13 uncompared, fresh260/18/22; Override matrix72 exact/clean layouts; retry117 remains unrendered at the worker limit;
 trace three matching prefixes, original/public binding intact; corpus all saved
 matches. Timeouts can change availability in fresh oracle reruns. Probe replays
 use committed baseline oracle hashes, not a replacement worker.
 
 next:
-- Type3 cluster complete: ordinary post-change seed1 is268/0/19/13, zero baseline exact losses; corpus54/54 matches.
-- Investigate remaining nonfinite, Rotation Override budget and host checkout domains.
+- Two clusters are closed. Stop blocked before a third numerical promotion: F46 cannot capture raw nonfinite intermediates, the outer Override reference117 exhausts the worker limit, and the remaining layer witness is rejected by the test host.
+- Follow-up: add raw typed `session` watches to a separately authorized F46-derived worker, then trace nonfinite source unpack/polar before any arithmetic change. Do not substitute PNG NaNs or older math workers.
+- Follow-up: extend oracle execution budget for outer Override and implement a paired layer-checkout fixture. Preserve current errors until those host contracts are measured.
+- Separate maintenance: link the existing six legacy smoke builds to UCRT; do not change their numerical expectations to hide link failures.
 
-FACT: Final production source SHA256 `d77b9a45193109d3cf1bc151480bb7d6aa5ac2d428c9a4c20993b9771a9d9e9d`.
+FACT: Type3-stage production SHA256 `d77b9a45193109d3cf1bc151480bb7d6aa5ac2d428c9a4c20993b9771a9d9e9d`.
+FACT: Final production SHA256 `138c4fce6960c05507ac1d043ed0959978f913ef94e95a345540d772015b1c74`.
