@@ -68,8 +68,8 @@ void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) 
     for (std::size_t distance = 1; distance <= radius; ++distance) {
         const float exponent = -static_cast<float>(distance * distance) /
                                denominator;
-        const float value = static_cast<float>(
-            std::exp(static_cast<double>(exponent)));
+        // The original symmetric coefficient builder calls binary32 expf.
+        const float value = std::exp(exponent);
         weights[radius - distance] = value;
         weights[radius + distance] = value;
     }

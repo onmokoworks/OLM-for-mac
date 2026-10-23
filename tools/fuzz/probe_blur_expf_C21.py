@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test non-Legacy native-expf substitution against frozen sanitized controls.
+"""Test native-expf substitution against frozen sanitized controls.
 
 Candidate source lives only in ticket scratch; production files are untouched.
 """
@@ -21,16 +21,19 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
+    p.add_argument('--legacy', action='store_true')
+    p.add_argument('--depth', type=int, choices=(16, 32), nargs='+', default=[16, 32])
     args = p.parse_args()
     s = args.scratch.resolve()
     assert s.is_relative_to(ROOT/'orchestra/state/C21-olmblur-smart-r5')
     s.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(s), TMP=str(s), TEMP=str(s))
     original = olmblur.CORES
-    report = {'baseline': verify(s), 'experiments': {}}
+    report = {'legacy': args.legacy, 'baseline': verify(s), 'experiments': {}}
     with tempfile.TemporaryDirectory(prefix='expf_', dir=s) as td:
-        for depth in (16, 32):
-            path = ROOT/f'core/olmblur_worker{depth}_nonlegacy.cpp'
+        for depth in args.depth:
+            lane = 'legacy' if args.legacy else 'nonlegacy'
+            path = ROOT/f'core/olmblur_worker{depth}_{lane}.cpp'
             source = path.read_text()
             body, count = re.subn(r'static_cast<float>\(\s*std::exp\(static_cast<double>\(exponent\)\)\)',
                                  'std::exp(exponent)', source)

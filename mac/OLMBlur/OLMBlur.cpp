@@ -1606,10 +1606,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// at every repeated radius. PF32's bounded source scan remains below.
 	const bool radius_small = raw.legacy == 0 &&
 		(bpc == 8 || bpc == 16 || bpc == 32);
-	// C15: Legacy integer writers preserve the AEX low-word/byte conversion.
-	// PF8 uses all legal schedules; PF16 stays at one/two passes.
+	// Legacy integer writers preserve the AEX low-word/byte conversion.
+	// C21: PF16's expf coefficients also match at higher repeated radii.
 	const bool legacy_small = raw.legacy == 1 &&
-		(bpc == 8 || (bpc == 16 && raw.repeat <= 2));
+		(bpc == 8 || bpc == 16);
 	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";

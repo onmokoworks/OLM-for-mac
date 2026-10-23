@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--blur-sanitize', action='store_true')
     parser.add_argument('--blur-source-revision')
     parser.add_argument('--blur-native-expf-depth', type=int, choices=(16, 32))
+    parser.add_argument('--blur-expf-legacy', action='store_true')
     options, remaining = parser.parse_known_args()
     original = olmblur.SOURCE
 
@@ -48,7 +49,8 @@ def main():
                 copy.write_bytes(subprocess.check_output(['git','show',options.blur_source_revision+':core/'+path.name]))
         olmblur.CORES = [core/path.name for path in olmblur.CORES]
         if options.blur_native_expf_depth:
-            path = core/f'olmblur_worker{options.blur_native_expf_depth}_nonlegacy.cpp'
+            lane = 'legacy' if options.blur_expf_legacy else 'nonlegacy'
+            path = core/f'olmblur_worker{options.blur_native_expf_depth}_{lane}.cpp'
             text, count = re.subn(r'static_cast<float>\(\s*std::exp\(static_cast<double>\(exponent\)\)\)',
                                  'std::exp(exponent)', path.read_text())
             assert count == 1

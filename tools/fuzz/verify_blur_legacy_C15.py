@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import random
+import re
 import shutil
 import struct
 import subprocess
@@ -91,7 +92,7 @@ def hdr_boundaries(adapter):
                 c['profile']=f'outside-HDR-channel{channel}-{bits:08x}';yield c
 
 
-def build(a,work,revision,diagnostic=True):
+def build(a,work,revision,diagnostic=True,native_expf_depth=None):
     original=olmblur.SOURCE;cores=olmblur.CORES
     target=work/'variant/mac/OLMBlur';target.mkdir(parents=True);cr=work/'variant/core';cr.mkdir()
     for f in (run.ROOT/'core').iterdir():
@@ -104,6 +105,11 @@ def build(a,work,revision,diagnostic=True):
     anchor=next(l for l in source.splitlines() if 'return "generic-small-fixture";' in l)
     if diagnostic:source=source.replace(anchor,'\t// C15 diagnostic gate bypass.').replace('!SmallDefaultPF32Source(input_world)','false')
     olmblur.SOURCE=target/'OLMBlur.cpp';olmblur.SOURCE.write_text(source);olmblur.CORES=[cr/f.name for f in cores]
+    if native_expf_depth:
+        path=cr/f'olmblur_worker{native_expf_depth}_legacy.cpp'
+        body,count=re.subn(r'static_cast<float>\(\s*std::exp\(static_cast<double>\(exponent\)\)\)', 'std::exp(exponent)',path.read_text())
+        assert count==1
+        path.unlink();path.write_text(body)
     binary=triage.build_binary(a,work,sanitize=True)
     provenance={'revision':revision,'compiled_source_sha256':sha(source.encode()),'core_sha256':{f.name:sha(f.read_bytes()) for f in olmblur.CORES},'candidate_sha256':sha(binary.read_bytes())}
     olmblur.SOURCE=original;olmblur.CORES=cores
@@ -113,12 +119,14 @@ def build(a,work,revision,diagnostic=True):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--hdr-admission',action='store_true');p.add_argument('--conversion-boundaries',action='store_true');p.add_argument('--before',required=True);p.add_argument('--depth',type=int,choices=(8,16,32),required=True);p.add_argument('--require-exact',action='store_true');p.add_argument('--diagnostic-after',action='store_true');p.add_argument('--single-decay-only',action='store_true');p.add_argument('--source-boundaries',action='store_true')
-    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state/C15-olmblur-smart-r4')
+    p.add_argument('--native-expf-depth',type=int,choices=(16,32))
+    p.add_argument('--jobs',type=int,choices=(1,2),default=1)
+    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=run.main_checkout(),worker=WORKER))
     a.env.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s),ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
     with tempfile.TemporaryDirectory(prefix='radius_',dir=s) as td:
-        work=Path(td);old,op=build(a,work/'before',args.before,diagnostic=not args.source_boundaries);new,np=build(a,work/'after',None,diagnostic=args.diagnostic_after)
+        work=Path(td);old,op=build(a,work/'before',args.before,diagnostic=not args.source_boundaries);new,np=build(a,work/'after',None,diagnostic=args.diagnostic_after,native_expf_depth=args.native_expf_depth)
         # Each thread has independent adapters/env and directories; binaries are read-only.
         def one(c):
             adapter=olmblur.Adapter(a.args) if hasattr(a,'args') else olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=run.main_checkout(),worker=WORKER))
@@ -137,7 +145,7 @@ def main():
         if args.source_boundaries:
             selected=list(hdr_boundaries(a))
             for i,c in enumerate(selected):c['index']=i
-        with ThreadPoolExecutor(max_workers=2) as pool:rows=list(pool.map(one,selected))
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:rows=list(pool.map(one,selected))
     transitions=dict(Counter(r['before']['status']+' -> '+r['after']['status'] for r in rows))
     report={'schema':'olmblur-radius-matrix-C15/1','depth':args.depth,'provenance':{'before':op,'after':np,'aex_sha256':sha(a.aex.read_bytes()),'worker_sha256':sha(WORKER.read_bytes())},'transitions':transitions,'rows':rows}
     args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(transitions)

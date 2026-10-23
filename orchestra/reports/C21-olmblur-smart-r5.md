@@ -1,10 +1,10 @@
-status: partial
+status: done
 summary:
-- Two clusters closed separately: PF32 and PF16 non-Legacy binary32 expf coefficients and higher-repeat small-frame admission.
-- Seed 1 Smart 220/3/77 -> 268/2/30; fresh seed 7 234/3/63 -> 268/1/31 (exact/mismatch/refusal).
-- All baseline exact cases preserved; each commit passes normal/sanitized campaigns, independent 720-row matrices and 92 retained controls.
-- Corpus now 38 exact / 1 mismatch, strict replay 39/39; only one proven mismatch->exact rebaseline, with history retained.
-- Continuing Legacy investigation; no native AE/UCRT promotion.
+- Three clusters closed in separate commits: PF32 non-Legacy, PF16 non-Legacy and PF16 Legacy expf coefficients with higher-repeat admission.
+- Seed 1 Smart 220/3/77 -> 281/2/17; fresh seed 7 234/3/63 -> 277/1/22 (exact/mismatch/refusal).
+- All 454 original exact cases preserved; all per-commit normal/sanitized campaign objects agree, with no newly admitted mismatches.
+- Four independent 720-row matrices exact; each commit passes 92 retained controls and seven unit checks; strict corpus replay 39/39.
+- Stop at three closed clusters. PF32 Legacy frozen-fixture conflict and nonfinite propagation remain; no native AE/UCRT promotion.
 
 facts:
 Base d16f4071faf9a30e65bafe4c62dd3caeaef0cb4e, branch orch/C21-olmblur-smart-r5. Read AGENT_GUIDE, OLMBlur ledger restrictions, GOTCHAS, compatibility plan and previous triage/fix reports. All fuzz/matrix campaigns use jobs=1. At most two task build/emulator processes run concurrently. MAIN, external emulator and cached worker remain read-only; no release-gate, ledger, other-plugin, installation or push changes.
@@ -106,3 +106,68 @@ Expected campaign table above, 499 predecessor exact maintained, matrix 711/9, f
 
 next:
 Investigate Legacy PF16 higher repeats. The larger Legacy PF32 cluster retains C15's frozen-fixture coefficient conflict; its separate scratch candidate is being rechecked before any further promotion.
+
+
+Third cluster — PF16 Legacy (predecessor 82e692eb):
+
+facts:
+The largest remaining group after the second commit was PF32 Legacy (seed 1: 15 refusals plus 2 mismatches; seed 7: 21 refusals plus 1 mismatch). A separate scratch-only native-expf candidate reproduces the C15 negative control: baseline retained 80/80, PF32 Legacy candidate 78/80, both failures are optional-checkin variants of legacy_24x24_smooth37_5. Both calls return zero and preserve guards/source, but exact=0. No coefficient-contract reinterpretation or fixture rebaseline is made, and core/olmblur_worker32_legacy.cpp remains unchanged. This unresolved reference/math-contract conflict blocks that promotion, so the investigation proceeds to PF16 Legacy. The independently tested PF16 Legacy candidate retains all 80 checks with no sanitizer stderr.
+
+PF16 Legacy matrix case 292 (25x1, Amount 3.000000238418579, Smoothness 62.5, Repeat 3, Bias 1) binds the direct original AEX to the cached worker. Its first divergent helper field is weights at event 0: two symmetric words differ, first word 1, AEX 3d9b0f3f versus Mac 3c9b0f3f. The symmetric weight builder calls binary32 expf; the old port rounds binary64 exp. After correcting that operation, the same full output is exact and every observed helper input/output agrees. No integer conversion or final-store tweak is added.
+
+Admission now permits all legal small PF16 Legacy Repeat schedules with arbitrary uint16 source values. The PF32 Legacy gate and bounded PF32 source scan remain unchanged. Existing exact owners, parameter/world/downsample/storage/budget checks and callback lifecycle stay intact.
+
+| Campaign | PF16 predecessor E/M/R | Final E/M/R | Refusal->exact | Mismatch->exact |
+|---|---|---|---:|---:|
+| seed 1 n300 | 268/2/30 | 281/2/17 | 13 | 0 |
+| seed 7 n300 | 268/1/31 | 277/1/22 | 9 | 0 |
+
+All 536 predecessor exact campaign cases preserved. Every normal/sanitized result object agrees across both seeds; Classic/oracle results unchanged. Gate-off full result objects are unchanged by the PF16 Legacy coefficient fix on both seeds; the relevant PF16 Legacy subsets are 41/41 and 34/34 exact with sanitizers. Independent 720-row Legacy matrix supplies the actual numerical counterexamples: 716 exact->exact and 4 mismatch->exact (including 292), no residual and no sanitizer finding. It spans the same six geometries, ten Amount boundaries, six Repeat values, both Bias values, three Smoothness values, random/edge/opaque/transparent full-uint16 sources and odd padding.
+
+Final corpus is unchanged by this third commit: 38 exact->exact and 1 mismatch->mismatch. Strict sanitized replay 39/39, no further expectation edits. Retained 12+80 and seven unit checks pass; bash syntax and git diff --check pass. Machine evidence: reports/fuzz/olmblur_C21_legacy16.json and updated diagnostics (pre-fix paired trace, both gate-off campaigns, rejected PF32 candidate and passing PF16 candidate).
+
+Final totals versus ticket baseline:
+
+| Seed | Initial E/M/R | Final E/M/R | Baseline exact preserved | Refusal->exact | Mismatch->exact |
+|---|---|---|---:|---:|---:|
+| 1 | 220/3/77 | 281/2/17 | 220 | 60 | 1 |
+| 7 | 234/3/63 | 277/1/22 | 234 | 41 | 2 |
+
+Independent transitive comparison verifies all 454 initial exact results, all Classic results and all original-route oracle objects unchanged. Matrix total across the three clusters is 2,880 sanitized comparisons (PF32 SDR/HDR 720 each, PF16 non-Legacy 720, PF16 Legacy 720). These are bounded evidence, not exhaustive domain or native-Windows proof. Remaining seed-1 mismatches are indices 99 (PF32 Legacy nonfinite payload) and 272 (PF32 Legacy coefficients). Remaining refusals: 15 PF32 Legacy and 2 PF32 non-Legacy nonfinite. Seed 7 retains 21 PF32 Legacy refusals, 1 PF32 non-Legacy nonfinite refusal and 1 PF32 Legacy mismatch.
+
+inference:
+The first divergent coefficient operation and exact repaired stages support the PF16 Legacy numerical change. Full uint16 admission is supported by both seed campaigns and independent boundary matrix. The PF32 Legacy fixture conflict is not proof of native Windows UCRT behavior, and no per-case math selection is introduced to hide it.
+
+changed_files (third commit):
+- core/olmblur_worker16_legacy.cpp
+- mac/OLMBlur/OLMBlur.cpp
+- tools/emulation/trace_olmblur_legacy_C15.py
+- tools/fuzz/blur_campaign_C12.py
+- tools/fuzz/probe_blur_expf_C21.py
+- tools/fuzz/recheck_blur_C21.sh
+- tools/fuzz/verify_blur_legacy_C15.py
+- reports/fuzz/olmblur_C21_legacy16.json
+- reports/fuzz/olmblur_C21_diagnostics.json
+- orchestra/reports/C21-olmblur-smart-r5.md
+
+verify (at final commit):
+```sh
+bash tools/fuzz/recheck_blur_C21.sh 82e692eb pf16 legacy16 16 legacy
+```
+Expected final campaign table, 536 predecessor exact maintained, matrix 716/4, paired trace case 292 exact/no helper difference, corpus 39/39 unchanged, retained 12+80 and seven tests. Initial validation used these constituent commands; the numerical matrix was generated before promotion with --native-expf-depth 16 --diagnostic-after.
+
+Reproduce the rejected PF32 Legacy candidate at the final revision:
+```sh
+s="$PWD/orchestra/state/C21-olmblur-smart-r5"
+export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
+python3 tools/fuzz/probe_blur_expf_C21.py --legacy --depth 32 --scratch "$s" --report "$s/legacy32-rejected.json" > "$s/legacy32-rejected.log" 2>&1
+```
+Expected baseline retained 80/80; candidate status error/returncode 4 with precisely the two legacy_24x24_smooth37_5 exact=0 lines. The diagnostic records the rejection and does not edit production or corpus.
+
+next:
+- Three clusters closed; stop under the ticket loop threshold. No further numerical edits are proposed here.
+- Follow-up: reconcile PF32 Legacy native-expf/captured binary64-exp reference contracts before broad admission; keep the frozen fixture as a negative control.
+- Follow-up: locate the first individual PF32 nonfinite arithmetic/NaN propagation difference, preserving payload/sign semantics without output-byte correction.
+- Native AE/UCRT, GPU, arbitrary ROI/downsample and larger finite PF32 values remain separate unverified domains.
+
+Final hygiene: all temporary build directories are automatically removed; scratch contains 24,146,831 bytes of logs, reports and scratch corpora, under 5 GiB. No task background build/emulator remains. No MAIN/external-worker/release-gate/ledger/other-plugin change, push, stash or history rewrite.

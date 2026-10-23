@@ -48,7 +48,7 @@ def main():
     p.add_argument('--source-revision')
     p.add_argument('--matrix-depth',type=int,choices=(8,16,32))
     p.add_argument('--seed',type=int,default=1);p.add_argument('--indices',type=int,nargs='+',default=[31,115,141,77,112])
-    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state/C15-olmblur-smart-r4')
+    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=60,main=run.main_checkout(),worker=WORKER))
     libm=ctypes.CDLL('/usr/lib/libSystem.B.dylib')
