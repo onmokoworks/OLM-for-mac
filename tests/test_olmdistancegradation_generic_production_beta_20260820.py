@@ -161,14 +161,14 @@ template<class P>static bool shifted_and_partial_storage_rejected(){
   return shifted&&partial;
 }
 
-static PF_Err render_pf32_sphere(PF_EffectWorld *iw,PF_EffectWorld *ow){
+static PF_Err render_pf32_sphere(PF_EffectWorld *iw,PF_EffectWorld *ow,bool effective=false){
   PF_ParamDef d[DG_NUM_PARAMS]{};PF_ParamDef*p[DG_NUM_PARAMS]{};for(int i=0;i<DG_NUM_PARAMS;++i)p[i]=d+i;
   d[DG_INPUT].u.ld=*iw;d[DG_INVERT].u.bd.value=0;d[DG_IN_OUT].u.pd.value=IN_OUT_BOTH;
   d[DG_INSIDE_THRESHOLD].u.sd.value=37;d[DG_OUTSIDE_THRESHOLD].u.sd.value=211;
   d[DG_RENDER_MODE].u.pd.value=RENDER_MODE_LAYER;d[DG_USE_BG_COLOR].u.bd.value=1;
   d[DG_GRAD_COLOR].u.cd.value={255,83,17,221};d[DG_BG_COLOR].u.cd.value={255,9,177,61};
   d[DG_INTERP_MODE].u.pd.value=INTERP_SPHERE;d[DG_POWER].u.fs_d.value=7.75;
-  d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_NONE;d[DG_BLUR_SIZE].u.sd.value=0;
+  d[DG_BLUR_MODE].u.pd.value=effective?BLUR_MODE_SCALE:BLUR_MODE_NONE;d[DG_BLUR_SIZE].u.sd.value=effective?1:0;
   PF_InData id{};id.downsample_x={1,1};id.downsample_y={1,1};
   return RenderBits<PF_PixelFloat>(&id,p,iw,ow,true);
 }
@@ -182,9 +182,9 @@ static bool pf32_sphere_general_and_safety(){
     for(int x=w*(int)sizeof(PF_PixelFloat);x<rb;++x)if(ob[(size_t)y*rb+x]!=0xa5)return false;}
   if(!changed)return false;
   auto reject_value=[&](float value){fill<PF_PixelFloat>(ib,rb,w,h);((PF_PixelFloat*)ib.data())[0].red=value;
-    std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;return render_pf32_sphere(&iw,&ow)==PF_Err_BAD_CALLBACK_PARAM&&ob==before;};
-  // C14 admits finite signed/HDR RGB on the unblurred Smart lane.
-  for(float value : {-0.01f,1.01f}) {
+    std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;return render_pf32_sphere(&iw,&ow,true)==PF_Err_BAD_CALLBACK_PARAM&&ob==before;};
+  // C19 also admits nonfinite RGB on the identity-filter Smart lane.
+  for(float value : {-0.01f,1.01f,std::numeric_limits<float>::infinity(),std::numeric_limits<float>::quiet_NaN()}) {
     fill<PF_PixelFloat>(ib,rb,w,h);((PF_PixelFloat*)ib.data())[0].red=value;
     const auto finite_input=ib;
     if(render_pf32_sphere(&iw,&ow)!=PF_Err_NONE||ib!=finite_input)return false;

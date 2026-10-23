@@ -179,16 +179,19 @@ def main():
                    help='Record, but do not repeat, baseline Mac timeouts without an AEX output')
     p.add_argument('--corpus', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
+    p.add_argument('--case-timeout', type=float, default=30,
+                   help='Per-render timeout, including slower sanitizer executions')
     args=p.parse_args()
     args.scratch=args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/C14-dg-smart-r3')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch))
     tempfile.tempdir=str(args.scratch)
     old_source=subprocess.check_output(['git','show',args.before_ref+':mac/OLMDistanceGradation/OLMDistanceGradation.cpp'],cwd=ROOT).decode()
     source=gate_source(args.candidate_source.read_text() if args.candidate_source else
                        (old_source if args.experiment!='none' else SOURCE.read_text()),args.experiment)
-    a=Adapter(argparse.Namespace(max_size=256,case_timeout=30,main=main_checkout(),worker=default_worker()))
+    assert args.case_timeout > 0
+    a=Adapter(argparse.Namespace(max_size=256,case_timeout=args.case_timeout,main=main_checkout(),worker=default_worker()))
     report=dict(schema='olm.dg-smart-C14/1',before_ref=args.before_ref,experiment=args.experiment,
                 before_source_sha256=sha(old_source.encode()),source_sha256=sha(source.encode()),campaigns=[],matrix=[],corpus=[])
     deadline=time.monotonic()+5400

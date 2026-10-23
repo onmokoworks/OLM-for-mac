@@ -835,7 +835,12 @@ static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size, bool s
 	// to an 8-bit plane (nearest-even), then threshold strictly above 1.
 	// The FLOAT32 product at the 1.5 tie rounds to 2. Classic retains its
 	// separately witnessed depth-dependent source mask.
-	if (smart_owner) return alpha * 255.0f >= 1.5f;
+	if (smart_owner) {
+		// cvConvertScale first rounds to signed int32. Overflow/NaN uses
+		// the SSE invalid integer and saturates to byte zero, including +inf.
+		const float scaled = alpha * 255.0f;
+		return scaled >= 1.5f && scaled < 2147483648.0f;
+	}
 	if (pixel_size == sizeof(PF_Pixel8)) return alpha > 0.0f;
 	return alpha > (1.5f / 255.0f);
 }
@@ -1089,6 +1094,21 @@ static void build_distance_field(
 // ============================================================================
 // Per-pixel color combination (mirrors FUN_181170870 disassembly)
 // ============================================================================
+// Original MULSS (181170f8b and 181170f1c) produces the negative
+// indefinite NaN for infinity times zero. ARM produces a positive NaN for
+// that invalid operation. Restore the operation before subsequent blending;
+// the distance-field weight is finite on the admitted identity-filter lane.
+static inline float smart_weighted_sample(float sample, float weight)
+{
+	if (std::isinf(sample) && weight == 0.0f) {
+		const uint32_t indefinite = 0xffc00000u;
+		float result;
+		memcpy(&result, &indefinite, sizeof(result));
+		return result;
+	}
+	return sample * weight;
+}
+
 static inline void compose_pixel(
 	float src_a, float src_r, float src_g, float src_b,
 	float field_aux, float X,
@@ -1199,7 +1219,7 @@ static inline void compose_pixel(
 	// the new alpha. The early ownership exit above already handled unowned
 	// pixels. The Smart callback uses the same selection with or without blur.
 	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
-		out_a = d_alpha * X;
+		out_a = p.smart_owner ? smart_weighted_sample(d_alpha, X) : d_alpha * X;
 		out_r = src_r; out_g = src_g; out_b = src_b;
 		return;
 	}
@@ -1229,9 +1249,9 @@ static inline void compose_pixel(
 	if (p.use_bg) {
 		float oneX = 1.0f - X;
 		if (p.smart_owner) {
-			volatile float bg_r = oneX * p.bg_color.red, fg_r = X * ir;
-			volatile float bg_g = oneX * p.bg_color.green, fg_g = X * ig;
-			volatile float bg_b = oneX * p.bg_color.blue, fg_b = X * ib;
+			volatile float bg_r = oneX * p.bg_color.red, fg_r = smart_weighted_sample(ir, X);
+			volatile float bg_g = oneX * p.bg_color.green, fg_g = smart_weighted_sample(ig, X);
+			volatile float bg_b = oneX * p.bg_color.blue, fg_b = smart_weighted_sample(ib, X);
 			out_r = bg_r + fg_r; out_g = bg_g + fg_g; out_b = bg_b + fg_b;
 		} else {
 			out_r = oneX * p.bg_color.red + X * ir;
@@ -1266,7 +1286,7 @@ static inline void compose_pixel(
 			out_r = out_g = out_b = 0.0f;
 		}
 	} else {
-		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
+		out_a = p.smart_owner ? smart_weighted_sample(d_alpha, X) : d_alpha * X;        // no bg: alpha = d_alpha * X
 		if (p.pixel_size == sizeof(PF_Pixel8) && p.in_out == IN_OUT_INSIDE &&
 		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
@@ -1674,13 +1694,13 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 			reinterpret_cast<const uint8_t *>(input->data) + y * (size_t)input->rowbytes);
 		for (size_t x = 0; x < width; ++x) {
 			const PF_PixelFloat &pixel = row[x];
-			// The original float-to-mask conversion rounds through signed int32.
-			// Positive overflow would produce the SSE invalid integer, then zero
-			// after byte saturation; it is outside this finite-domain admission.
-			if (pixel.alpha * 255.0f >= 2147483648.0f) return false;
+			// C19 restores the original signed-int32 mask conversion and invalid
+			// weighted-sample arithmetic. Extended/nonfinite inputs are admitted
+			// only on the witnessed identity-filter lane.
+			if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
-				if (!std::isfinite(value)) return false;
+				if (!std::isfinite(value) && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 				// Extended samples use only the witnessed identity-filter lane.
 				// Effective filters retain their SDR boundary (Gaussian rounding
 				// and the original large-kernel PF32 Median rejection are separate).
@@ -1802,13 +1822,14 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	bool any_owned = false, any_unowned = false, bounded_alpha = true;
 	for (float a : alpha) {
 		if (!std::isfinite(a) || a < 0.0f || a > 1.0f) bounded_alpha = false;
-		const bool owned = a * 255.0f >= 1.5f;
+		const bool owned = smart_owner ? source_mask_owns_alpha(a, sizeof(P), true)
+		                              : a * 255.0f >= 1.5f;
 		any_owned |= owned;
 		any_unowned |= !owned;
 	}
 	// Original Smart owner 18117339f..1811733ba tests the converted mask count,
-	// regardless of source alpha range. PF32 inputs passed the finite/conversion
-	// guard above; Classic retains its prior bounded-alpha contract.
+	// regardless of source alpha range. The census and field construction use
+	// the same Smart conversion; Classic retains its bounded-alpha contract.
 	p.degenerate_mask =
 		(bounded_alpha || (smart_owner && sizeof(P) == sizeof(PF_PixelFloat))) &&
 		(!any_owned || !any_unowned);
