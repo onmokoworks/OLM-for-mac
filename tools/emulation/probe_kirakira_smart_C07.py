@@ -29,6 +29,85 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'finite-alpha-filtered-boundary':
+        for i, (kind, shape, strength, variant) in enumerate(itertools.product(
+                range(3), range(3), (1, 100, 537), range(2))):
+            geometry = (((1, 9), (9, 1), (17, 11)) if kind == 0 else
+                        ((4, 4), (4, 9), (9, 4)))[shape]
+            case = matrix_case(adapter, i, geometry, 32, 1+i%2,
+                               1+(i//2)%2 if kind == 1 else 3, 1)
+            values = {4:int(kind != 0), 5:(1, 100)[variant], 6:strength,
+                      8:(0, 1, 97, 100, 10000)[i%5], 9:(0, 83, 100)[i%3],
+                      10:(1, 2, 15, 1000)[i%4], 16:0, 22:3, 28:0,
+                      34:(1, 2, 3, 15, 500)[i%5], 40:(0, 22, -31)[i%3]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            words = (0, 0x80000000, 1, 0x80000001, 0x3f800000, 0xbf800000,
+                     0x7f7fffff, 0xff7fffff, 0x40000000, 0xc0000000)
+            rng = random.Random(381000+i)
+            case.update(pixels=b''.join(struct.pack('<I', rng.choice(words))
+                        for _ in range(geometry[0]*geometry[1]*4)), profile=family)
+            yield case
+        return
+    if family == 'finite-alpha-filtered':
+        for kind in range(3):
+            for case in cases(adapter, 'finite-alpha'):
+                if kind and min(case['geometry']) < 4: continue
+                case['index'] += kind * 1000
+                for param in case['parameters']:
+                    if param['slot'] == 2 and kind != 1: param['value'] = 3
+                    if param['slot'] == 4: param['value'] = int(kind != 0)
+                yield case
+        return
+    if family == 'finite-alpha-filtered-negative':
+        for i, (kind, word) in enumerate(itertools.product(range(3),
+                (0x7f800000, 0xff800000, 0x7fc12345, 0xff812346))):
+            case = matrix_case(adapter, i, (7, 11), 32, 1, 2 if kind == 1 else 3, 1)
+            for param in case['parameters']:
+                if param['slot'] == 4: param['value'] = int(kind != 0)
+            data = bytearray(case['pixels'])
+            struct.pack_into('<I', data, (i%4)*4, word)
+            case.update(pixels=bytes(data), profile=family)
+            yield case
+        return
+    if family in ('finite-brightness-negative', 'finite-color-negative'):
+        channels = (2, 4) if family == 'finite-brightness-negative' else (3, 5, 6)
+        for i, (channel, word) in enumerate(itertools.product(channels,
+                (0x7f800000, 0xff800000, 0x7fc12345, 0xff812346))):
+            case = matrix_case(adapter, i, (7, 11), 32, 1, 2, channel)
+            data = bytearray(case['pixels'])
+            struct.pack_into('<I', data, (i%4)*4, word)
+            case.update(pixels=bytes(data), profile=family)
+            yield case
+        return
+    if family in ('finite-brightness-boundary', 'finite-color-boundary'):
+        channels = (2, 4) if family == 'finite-brightness-boundary' else (3, 5, 6)
+        for i, (channel, geometry, strength, fade) in enumerate(itertools.product(
+                channels, ((9, 1), (3, 5), (17, 11)), (1, 100, 537), (0, 0.2))):
+            case = matrix_case(adapter, i, geometry, 32, 1+i%2, 1+(i//2)%2, channel)
+            values = {5:(1, 100)[i%2], 6:strength, 7:fade,
+                      8:(0, 1, 97, 100, 10000)[i%5], 9:(0, 83, 100)[i%3],
+                      10:(1, 2, 15, 1000)[i%4], 16:0, 22:3, 28:0,
+                      34:(1, 2, 3, 15, 500)[i%5], 40:(0, 22, -31)[i%3]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            words = (0, 0x80000000, 1, 0x80000001, 0x3f800000, 0xbf800000,
+                     0x7f7fffff, 0xff7fffff, 0x40000000, 0xc0000000)
+            rng = random.Random(380000+i)
+            case.update(pixels=b''.join(struct.pack('<I', rng.choice(words))
+                        for _ in range(geometry[0]*geometry[1]*4)), profile=family)
+            yield case
+        return
+    if family in ('finite-brightness-box', 'finite-color-box'):
+        channels = (2, 4) if family == 'finite-brightness-box' else (3, 5, 6)
+        for channel in channels:
+            for case in cases(adapter, 'finite-alpha'):
+                case['index'] += channel * 1000
+                for param in case['parameters']:
+                    if param['slot'] == 1: param['value'] = channel
+                    if param['slot'] == 7: param['value'] = 0.1
+                yield case
+        return
     if family == 'nonfinite-alpha-negative':
         for i, (slot, value) in enumerate(((1, 2), (1, 3), (1, 4), (2, 3),
                                            (4, 1), (40, -2147483648/65536))):
@@ -526,7 +605,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('finite-alpha-filtered-boundary', 'finite-alpha-filtered', 'finite-alpha-filtered-negative', 'finite-color-boundary', 'finite-color-negative', 'finite-color-box', 'finite-brightness-negative', 'finite-brightness-boundary', 'finite-brightness-box', 'nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -614,8 +693,8 @@ def main():
                         mac_sha256=sha(actual), diff=None if expected == actual else raw_diff(expected, actual, 32))
                 # Keep raw exactness unchanged; classify payload/sign-only
                 # ray differences separately from finite/NaN boundary errors.
-                row['ray_nan_differences'] = {}
-                for name in ('ray0', 'ray1', 'ray2', 'ray3', 'ray4'):
+                row['stage_nan_differences'] = {}
+                for name in paired:
                     expected = bytes.fromhex(stages[name])
                     actual = (directory / (name + '.raw')).read_bytes()
                     if len(expected) != len(actual): continue
@@ -626,7 +705,9 @@ def main():
                             both_nan += 1
                         else:
                             other += 1
-                    row['ray_nan_differences'][name] = dict(both_nan=both_nan, other=other)
+                    row['stage_nan_differences'][name] = dict(both_nan=both_nan, other=other)
+                row['ray_nan_differences'] = {k: v for k, v in row['stage_nan_differences'].items()
+                                              if k.startswith('ray')}
                 if case['depth'] == 32 and result['status'] != 'refusal':
                     stored_rgba = b''.join(raw[i+4:i+16] + raw[i:i+4] for i in range(0, len(raw), 16))
                     expected = bytes.fromhex(stages['composed'])
