@@ -42,7 +42,7 @@ OLM plugin code, because it may become its own repo later.
      worst-case inputs.
    - Add targeted sets: near 1, subnormals, the underflow/overflow boundaries, and integer and
      half-integer exponents for powf.
-   - Report the mismatch count, which must be 0. If it is not 0, report and stop as `partial`.
+   - Report the mismatch count, which must be 0. If it is not 0, find the first divergence, fix the general cause, and rerun (normal stop rule).
    Use 1 process, 2 at most. Check `memory_pressure` before you start.
 3. **Survey the remaining imports with no library code yet.** Use the same F27c sweep machinery
    on log2f (all 2^32) and on double sin/cos/exp/pow (10^8 random, plus the ranges the plugins
