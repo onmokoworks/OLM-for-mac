@@ -1,0 +1,140 @@
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -50,0 +51 @@
++ "olm-ucrtmath",
+@@ -1077,0 +1079,4 @@
++
++[[package]]
++name = "olm-ucrtmath"
++version = "0.1.0"
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -2,0 +3 @@
++    "crates/olm-ucrtmath",
+--- a/crates/aex-guest-worker/Cargo.toml
++++ b/crates/aex-guest-worker/Cargo.toml
+@@ -15,0 +16 @@
++olm-ucrtmath = { path = "../olm-ucrtmath" }
+--- /dev/null
++++ b/crates/aex-guest-worker/examples/f30_import_probe.rs
+@@ -0,0 +1,4 @@
++fn main() {
++    let args: Vec<String> = std::env::args().collect();
++    aex_guest_worker::x64::f30_import_probe(&args[1], &args[2], args[3].parse().unwrap());
++}
+--- a/crates/aex-guest-worker/src/native_x64/imports.rs
++++ b/crates/aex-guest-worker/src/native_x64/imports.rs
+@@ -31,0 +32 @@
++            | "atan2f"
+@@ -48,0 +50 @@
++        "atan2f" => callback_address!(native_atan2f),
+@@ -272 +274 @@
+-    value.exp()
++    olm_ucrtmath::expf(value)
+@@ -286 +288,4 @@
+-    left.powf(right)
++    olm_ucrtmath::powf(left, right)
++}
++pub(super) unsafe extern "win64" fn native_atan2f(y: f32, x: f32) -> f32 {
++    olm_ucrtmath::atan2f(y, x)
+--- a/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -617 +617 @@
+-                let output = y.atan2(x);
++                let output = olm_ucrtmath::atan2f(y, x);
+--- /dev/null
++++ b/crates/aex-guest-worker/src/x64/f30_import_probe.rs
+@@ -0,0 +1,29 @@
++/// Reproducible raw-bit diagnostic through the same legacy import hooks.
++#[doc(hidden)]
++pub fn f30_import_probe(name: &str, library: &str, count: u64) {
++    use std::io::Write;
++    const CODE: u64 = 0x1000_0000;
++    let mut uc = Unicorn::new_with_data(Arch::X86, Mode::MODE_64, GuestState::default()).unwrap();
++    uc.mem_map(CODE, PAGE_SIZE, Prot::ALL).unwrap();
++    uc.mem_write(CODE, &[0x90]).unwrap();
++    match (name, dispatch_win64_import(library, name)) {
++        ("expf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::ExpF)) => install_float_import(&mut uc, CODE, "expf", olm_ucrtmath::expf).unwrap(),
++        ("powf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::PowF)) => install_float_binary_import(&mut uc, CODE, "powf", olm_ucrtmath::powf).unwrap(),
++        ("atan2f", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Atan2F)) => install_atan2f_import(&mut uc, CODE).unwrap(),
++        _ => panic!("wrong import dispatch"),
++    }
++    let mut out = std::io::BufWriter::new(std::io::stdout().lock());
++    for i in 0..count {
++        let mut z = (i ^ 0xf30).wrapping_add(0x9e3779b97f4a7c15);
++        z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
++        z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
++        z ^= z >> 31;
++        let (a,b) = (z as u32, (z >> 32) as u32);
++        uc.reg_write(RegisterX86::XMM0, a as u64).unwrap();
++        uc.reg_write(RegisterX86::XMM1, b as u64).unwrap();
++        uc.emu_start(CODE, CODE+1, 0, 1).unwrap();
++        let result = uc.reg_read(RegisterX86::XMM0).unwrap() as u32;
++        for word in [a,b,result,result] { out.write_all(&word.to_le_bytes()).unwrap(); }
++    }
++    out.flush().unwrap();
++}
+--- a/crates/aex-guest-worker/src/x64/imports.rs
++++ b/crates/aex-guest-worker/src/x64/imports.rs
+@@ -2637 +2637 @@
+-                    install_float_import(unicorn, stub, "expf", f32::exp)?;
++                    install_float_import(unicorn, stub, "expf", olm_ucrtmath::expf)?;
+@@ -2685 +2685 @@
+-                    install_float_binary_import(unicorn, stub, "powf", f32::powf)?;
++                    install_float_binary_import(unicorn, stub, "powf", olm_ucrtmath::powf)?;
+--- a/crates/aex-guest-worker/src/x64.rs
++++ b/crates/aex-guest-worker/src/x64.rs
+@@ -560,0 +561,2 @@
++
++include!("x64/f30_import_probe.rs");
+--- /dev/null
++++ b/crates/olm-ucrtmath/Cargo.toml
+@@ -0,0 +1,5 @@
++[package]
++name = "olm-ucrtmath"
++version = "0.1.0"
++edition = "2024"
++license = "BSD-3-Clause"
+--- /dev/null
++++ b/crates/olm-ucrtmath/build.rs
+@@ -0,0 +1,18 @@
++use std::{env, path::PathBuf, process::Command};
++fn main() {
++    let out = PathBuf::from(env::var_os("OUT_DIR").unwrap());
++    let arch = match env::var("CARGO_CFG_TARGET_ARCH").unwrap().as_str() {
++        "aarch64" => "arm64", "x86_64" => "x86_64", _ => panic!("unsupported architecture"),
++    };
++    let mut objects = Vec::new();
++    for name in ["expf", "atan2f", "powf", "tables"] {
++        let source = format!("ucrtmath/src/{name}.c");
++        let object = out.join(format!("{name}.o"));
++        assert!(Command::new("clang").args(["-arch", arch, "-std=c11", "-O2", "-ffp-contract=off", "-fno-fast-math", "-Iucrtmath/include", "-c", &source, "-o"]).arg(&object).status().unwrap().success());
++        objects.push(object);
++    }
++    assert!(Command::new("ar").arg("rcs").arg(out.join("libucrtmath.a")).args(objects).status().unwrap().success());
++    println!("cargo:rerun-if-changed=ucrtmath");
++    println!("cargo:rustc-link-search=native={}", out.display());
++    println!("cargo:rustc-link-lib=static=ucrtmath");
++}
+--- /dev/null
++++ b/crates/olm-ucrtmath/src/lib.rs
+@@ -0,0 +1,19 @@
++//! Safe float-only interface; mode is fixed on first use for the worker lifetime.
++use std::sync::OnceLock;
++fn mode() -> i32 {
++    static MODE: OnceLock<i32> = OnceLock::new();
++    *MODE.get_or_init(|| match std::env::var("OLM_UCRT_FMA") {
++        Err(std::env::VarError::NotPresent) => 1,
++        Ok(s) if s == "1" => 1,
++        Ok(s) if s == "0" => 0,
++        _ => panic!("OLM_UCRT_FMA must be 0 or 1"),
++    })
++}
++unsafe extern "C" {
++    fn ucrt_expf(x: f32, mode: i32) -> f32;
++    fn ucrt_atan2f(y: f32, x: f32, mode: i32) -> f32;
++    fn ucrt_powf(x: f32, y: f32, mode: i32) -> f32;
++}
++pub fn expf(x: f32) -> f32 { unsafe { ucrt_expf(x, mode()) } }
++pub fn atan2f(y: f32, x: f32) -> f32 { unsafe { ucrt_atan2f(y, x, mode()) } }
++pub fn powf(x: f32, y: f32) -> f32 { unsafe { ucrt_powf(x, y, mode()) } }

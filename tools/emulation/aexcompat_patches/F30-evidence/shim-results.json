@@ -1,0 +1,158 @@
+[
+  {
+    "function": "expf",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "atan2f",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "powf",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "expf",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  },
+  {
+    "function": "atan2f",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  },
+  {
+    "function": "powf",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  },
+  {
+    "function": "expf",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "atan2f",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "powf",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll"
+  },
+  {
+    "function": "expf",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  },
+  {
+    "function": "atan2f",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  },
+  {
+    "function": "powf",
+    "mode": 0,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "00000000",
+      "00000000",
+      "00000000",
+      "00000000"
+    ],
+    "library": "ucrtbase.dll"
+  }
+]
