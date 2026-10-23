@@ -1752,17 +1752,18 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 		for (size_t x = 0; x < width; ++x) {
 			const PF_PixelFloat &pixel = row[x];
 			// C19 restores the original signed-int32 mask conversion and invalid
-			// weighted-sample arithmetic. Extended/nonfinite inputs are admitted
-			// only on the witnessed identity-filter lane.
+			// weighted-sample arithmetic. Nonfinite inputs retain the witnessed
+			// identity-filter boundary; finite extended samples also use Box/Gaussian.
 			if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
 				if (!std::isfinite(value) && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
-				// Extended samples use only the witnessed identity-filter lane.
-				// Effective filters retain their SDR boundary (Gaussian rounding
-				// and the original large-kernel PF32 Median rejection are separate).
+				// C27 pairs finite extended samples through the existing Box/Gaussian
+				// field and callback. Median and Bilateral retain their SDR boundary;
+				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
 				if ((value < 0.0f || value > 1.0f) &&
-				    !is_admitted_pf32_smart_unblurred_beta(p)) return false;
+				    !is_admitted_pf32_smart_unblurred_beta(p) &&
+				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height))) return false;
 			}
 		}
 	}

@@ -33,6 +33,13 @@ def candidate_source(experiment, source=None):
 \t\tp.interp_mode = INTERP_LINEAR;''')
     if experiment == 'bilateral-scalar':
         return bilateral_scalar_source(source)
+    if experiment in ('finite-filter', 'finite-separable'):
+        predicate = 'is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)'
+        if experiment == 'finite-separable':
+            predicate = '(p.blur_mode != BLUR_MODE_MEDIAN && '+predicate+')'
+        return replace_once(source,
+            'if ((value < 0.0f || value > 1.0f) &&\n\t\t\t\t    !is_admitted_pf32_smart_unblurred_beta(p)) return false;',
+            'if ((value < 0.0f || value > 1.0f) &&\n\t\t\t\t    !is_admitted_pf32_smart_unblurred_beta(p) &&\n\t\t\t\t    !'+predicate+') return false;')
     if experiment in ('identity', 'identity-mul'):
         source = replace_once(source, 'if (pixel.alpha * 255.0f >= 2147483648.0f) return false;',
                               'if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;')
@@ -217,6 +224,36 @@ def bilateral_matrix(a):
             yield f'pf{depth}/{w}x{h}/radius{radius}/owner{owner}/interp{interp}',c
 
 
+def finite_filter_matrix(a):
+    from verify_distancegradation_smart_C14 import matrix as finite_matrix
+    for label, c in finite_matrix(a, extended=True):
+        values = {q['slot']:q['value'] for q in c['parameters']}
+        if values[11] not in (2,3):
+            continue
+        yield label,c
+        # Add a column, retaining exactly the same typed samples and controls.
+        if c['geometry'] == [7,1]:
+            cc = copy.deepcopy(c);cc['geometry'] = [1,7]
+            yield label+'/column',cc
+        if values[11] == 2:
+            cc = copy.deepcopy(c)
+            for q in cc['parameters']:
+                if q['slot'] == 11:q['value'] = 4
+            yield label+'/median',cc
+
+
+def separable_matrix(a):
+    for label, c in finite_filter_matrix(a):
+        c = copy.deepcopy(c)
+        values = {q['slot']:q['value'] for q in c['parameters']}
+        interp = values[2]
+        size = 1 if values[11] == 4 else (1+6*((values[5]+values[6])%3) if values[11] == 3 else 2)
+        for q in c['parameters']:
+            if q['slot'] == 9:q['value'] = interp
+            if q['slot'] == 12:q['value'] = size
+        yield label+f'/effective-interp{interp}-size{size}',c
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--scratch', type=Path, required=True)
@@ -224,9 +261,9 @@ def main():
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--before-ref', default='0e3481cb')
     p.add_argument('--index', type=int, action='append', default=[])
-    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar'], default='gate-off')
+    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable'], default='gate-off')
     p.add_argument('--matrix', action='store_true')
-    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral'],default='nonfinite')
+    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable'],default='nonfinite')
     p.add_argument('--write-source', type=Path)
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
@@ -254,7 +291,7 @@ def main():
         current = variant(a, td/'candidate', deadline, source)
         san = variant(a, td/'san', deadline, source, sanitized=True)
         wd = td/'case'; wd.mkdir()
-        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix}
+        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix}
         cases = families[args.matrix_family](a) if args.matrix else ((index,a.generate(args.seed,index)) for index in args.index or [94,116,126,223,255,263,283,299])
         for index,c in cases:
             oracle, reference = a.oracle(c, wd, deadline, 'smart')
