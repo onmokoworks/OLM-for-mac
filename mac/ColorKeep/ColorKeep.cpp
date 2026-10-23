@@ -204,16 +204,14 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	    output->rowbytes < output->width * pixel_bytes) {
 		return OLM_COLORKEEP_REFUSAL("world-rowbytes");
 	}
-	const bool expected_deep = bitdepth == 16;
-	const bool input_is_deep = (input->world_flags & PF_WorldFlag_DEEP) != 0;
-	const bool output_is_deep = (output->world_flags & PF_WorldFlag_DEEP) != 0;
-	if ((!OLM_COLORKEEP_EXPERIMENT_BYPASS &&
-	     (input_is_deep != expected_deep || output_is_deep != expected_deep)) ||
-	    (int64_t)output->origin_x < input->origin_x ||
+	// The original SmartRender (0x180001ca0) dispatches on the requested
+	// bitdepth, without testing world_flags. Both callers additionally verify
+	// PF_GetPixelFormat; DEEP is not a discriminator for float worlds.
+	if ((int64_t)output->origin_x < input->origin_x ||
 	    (int64_t)output->origin_y < input->origin_y ||
 	    (int64_t)output->origin_x + output->width > (int64_t)input->origin_x + input->width ||
 	    (int64_t)output->origin_y + output->height > (int64_t)input->origin_y + input->height) {
-		return OLM_COLORKEEP_REFUSAL("world-flags-or-bounds");
+		return OLM_COLORKEEP_REFUSAL("world-bounds");
 	}
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
 	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
