@@ -52,6 +52,9 @@ def main():
     for row in trace['cases']:
         assert row['original_fixture_vs_session']['different_units'] == 0
         assert row['padding_output_delta']['different_units'] == 0
+    if (D/'final-replay.json').exists():
+        replay = read('final-replay.json')
+        assert replay['completed'] == 56 and replay['replay_matches_saved']
     print('PASS final source bindings, base-exact preservation, sanitizer equality, corpus56 unchanged, original sampling boundaries')
 
 

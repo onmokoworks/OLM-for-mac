@@ -700,9 +700,9 @@ static int render_minimal_argb32(const float* input_argb,
                 field_rotated.data());
         } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
-            if (!olm::dblur::generate_noise_plane(
-                    ww, wh, thickness_ui, static_cast<float>(noise_offset_ui) / 36.0f,
-                    seed, &noise, &nw, &nh)) return -1;
+            if (!generate_demanded_noise(a, ww, wh, processed_rows, thickness_ui,
+                    static_cast<float>(noise_offset_ui) / 36.0f, seed, noise_type == 1,
+                    &noise, &nw, &nh)) return -1;
             olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), ww,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
                 component_divisor, front_sharp_tail_percent / 100.0f,

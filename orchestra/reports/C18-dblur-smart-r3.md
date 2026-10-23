@@ -1,13 +1,15 @@
-status: partial
+status: done
 
 summary:
-- Closed PF8 negative-Offset refusal cases whose invalid generated cells are never sampled.
-- Seed1 Smart improves 275→278 exact; mismatch1/uncompared2 unchanged, refusals22→19.
-- Fresh seed4 retains272 exact/1 mismatch/26 refusal/1 uncompared; all prior exact hashes and all56 corpus records remain unchanged.
-- Independent192 negative-Offset cases yield132 newly exact and60 clean refusals;656-case production regression is sanitizer-clean on both routes.
-- Deep negative-Offset, imported expf, and nonfinite boundaries remain under investigation.
+- Closed three depth-specific demand-admission clusters in separate PF8/PF16/PF32 commits, preserving the original random stream and every demanded sample.
+- Seed1 Smart improves275→285 exact, refusals22→12; mismatch1 and uncompared2 unchanged.
+- Fresh seed4 improves272→276 exact; all baseline-exact hashes and all56 corpus records remain unchanged.
+- Each commit passes656-case O2/ASan/UBSan regression;576 independent typed cases and final56/56 replay pass with zero newly admitted mismatches.
+- Invalid demanded cells, Front Fade/expf and nonfinite boundaries remain refused or explicitly mismatching; no all-input/native-AE completion claim.
 
 facts:
+
+Cluster1 — PF8:
 - Base `992918f5722b1444ce4dbc3fffd352fbb353bb81`, branch `orch/C18-dblur-smart-r3`. Read AGENT_GUIDE, DirectionalBlur ledger row, compatibility plan, GOTCHAS and T10/F05/F06/F16/C02/C09/F10/F12 reports. MAIN/emulator sources and cached workers are read-only; no release gate, ledger, other-plugin operations, installation, push, stash or history rewrite.
 - Original AEX SHA256 `d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`; cached worker SHA256 `16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c`. Full command/build/source/hash records are committed under `reports/fuzz/c18_dblur_smart/`.
 - Required n300/seed1 campaign ran before and after with jobs1 (machine limit takes precedence over ticket example jobs2), scratch corpora, no shrinking. Both exit0. Baseline Smart275/1/22/2, after278/1/19/2 (E/M/R/U). Classic3/275/22/0→3/278/19/0; its original zero-output owner remains a distinct oracle, not a Smart numerical reference.
@@ -109,3 +111,48 @@ PF16 completion facts: required campaign exits0, Smart282/1/15/2; regression PAS
 |corpus56|54/2/0/0|54/2/0/0|
 
 Additional changed file: tools/fuzz/verify_directionalblur_c18_evidence.py (fast audit, no rendering or expectation updates).
+
+## Cluster 3 — PF32 demand validation and final acceptance
+
+facts:
+- Baseline `3b8f5c7e`. Connected only the PF32 generated-Noise branch to the same demanded-cell helper. The nonfinite input guard, float operations, sampler, Gaussian tables and writer remain unchanged. The separate typed pipelines are validated as three admission clusters, not as three unrelated numerical causes.
+- Original raw-PF32 traces, native-f32 expf:52 and124 each have one invalid generated cell and one sampled cell, with no intersection. Control7 has257 invalid generated cells,596 sampled cells,98 invalid sampled cells; its core refusal is retained. All three original fixture outputs match the cached Smart worker. Counterfactual padding changes intermediate fields but zero final bytes; that does not authorize7.
+- Independent PF32 matrix192 cases:132 exact/60 refusal,21 new refusal→exact, no new mismatch; both public routes match their sanitized builds. Across all three depths the independent matrices total576 cases/2,304 current ordinary-and-sanitized route executions, with396 exact cases and180 clean refusals. Existing already-rendered matrix outputs are unchanged.
+- Regression exits0, PASS656: seed1 new exact52/124/125, fresh seed4 unchanged, all56 corpus cases unchanged. All baseline-exact Smart hashes remain identical. Required final n300 campaign exits0, Smart285/1/12/2; Classic4/284/12/0. Classic's zero-output oracle remains explicitly separate.
+- Final route-aware corpus replay exits0,56/56 matches_saved. The complete corpus before/after table remains54 exact→identical exact,2 mismatch→identical mismatch; no corpus file changed or rebaseline was necessary.
+- Existing input-owner/features/feature-budget tests3 pass in43.579s. Sanitizers are strict ASan/UBSan, zero reports; `git diff --check` and the committed-evidence/source audit pass.
+
+| Smart set | PF16 E/M/R/U | Final E/M/R/U | New exact |
+|---|---|---|---|
+|seed1 n300|282/1/15/2|285/1/12/2|52,124,125|
+|fresh seed4 n300|276/1/22/1|276/1/22/1|none|
+|corpus56|54/2/0/0|54/2/0/0|none|
+
+Final residual facts:12 refusals are negative-Offset/core cases4/7/127/246/280/284, PF8 Front Fade guards73/78/175/200, and nonfinite PF32 cases109/299. This ticket directly traces invalid sampled cells for7/127/246; it does not invent a native allocator trace for4/280/284. Seed1:84 remains exactly two differing bytes/two PF16 words, first byte2508, AEX `6841` versus Mac `6941`. Its C09 unshrunk import-boundary evidence remains applicable because Gaussian and row arithmetic did not change. Original Smart274/289 remain budget/unavailable references.
+
+inference:
+- Three independently verified typed integrations close the requested bounded loop. The operation is general demand analysis, not a coordinate/case allowlist; read cells are determined by the current rotated source, processed rows and Noise Type.
+- Used invalid samples still lack an allocator-independent contract even when a final image happens to hide them. Imported expf and nonfinite ISA/oracle semantics remain separate unresolved dependencies. No clamp/wrap, tolerance, final-byte patch, native Windows equivalence, GPU/ROI/lifecycle certification, or complete plugin compatibility is claimed.
+
+changed_files (cluster3):
+- core/dblur_frontonly.cpp
+- tools/fuzz/verify_directionalblur_c18_evidence.py
+- reports/fuzz/c18_dblur_smart/{pf32-after,pf32-verify,pf32-matrix,pf32-sampling,final-replay}.json and tests-pf32.txt
+- orchestra/reports/C18-dblur-smart-r3.md
+
+verify (same S/W/P setup; final source):
+```sh
+python3 tools/fuzz/verify_directionalblur_c18_evidence.py
+python3 tools/fuzz/verify_directionalblur_c02.py --baseline 3b8f5c7e --seeds 1 4 --jobs 1 --corpus --scratch "$S" --worker "$W" --report "$S/pf32-verify-recheck.json" > "$S/pf32-verify-recheck.log" 2>&1
+python3 tools/fuzz/verify_directionalblur_c18_demand.py --depth 32 --baseline 3b8f5c7e --scratch "$S" --worker "$W" --report "$S/pf32-matrix-recheck.json" > "$S/pf32-matrix-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_f16_allocator.py --indices 52 124 7 --observe --expf-leaf native-f32 --scratch "$S" --worker "$W" --report "$S/pf32-sampling-recheck.json" > "$S/pf32-sampling-recheck.log" 2>&1
+python3 tools/fuzz/run.py --plugin olmdirectionalblur --jobs 1 --replay tests/fuzz_corpus/olmdirectionalblur --scratch "$S" --worker "$W" --report "$S/replay-recheck.json" --corpus "$S/replay-unused" > "$S/replay-recheck.log" 2>&1
+```
+Also run the top campaign/three-test commands. Expected final:285/1/12/2 seed1,276/1/22/1 seed4, PASS656, matrix132 exact/60 refusal, three original-fixture matches with the sampling intersections above, replay56/56, tests3 pass. To reproduce earlier intermediate tables, run their commands at the corresponding commit; final-source comparison against an earlier baseline includes later depth improvements.
+
+next:
+- Preserve used-negative-index safety refusals. Any further reduction requires a stronger dependency proof, not substituting allocator bytes or guessing from final equality.
+- Follow up the recorded native-UCRT expf contract for84 and guarded Front Fade, and native-ISA/nonfinite oracle contract for109/299.
+- No new boundary-free refutation loop, permission rejection or unfinished background process occurred. The loop ends after the three validated depth clusters.
+
+Final scratch after deleting regenerable campaign corpora: **13,154,514 bytes**, below5 GiB. Temporary build contexts removed their build trees; logs/reports are retained.
