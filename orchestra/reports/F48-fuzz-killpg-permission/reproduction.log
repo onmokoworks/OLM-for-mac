@@ -1,0 +1,99 @@
+test_live_child_pid_fallback (test_timeout_cleanup.CleanupTests.test_live_child_pid_fallback) ... 
+  test_live_child_pid_fallback (test_timeout_cleanup.CleanupTests.test_live_child_pid_fallback) (error='PermissionError') ... ERROR
+  test_live_child_pid_fallback (test_timeout_cleanup.CleanupTests.test_live_child_pid_fallback) (error='ProcessLookupError') ... ERROR
+
+======================================================================
+ERROR: test_live_child_pid_fallback (test_timeout_cleanup.CleanupTests.test_live_child_pid_fallback) (error='PermissionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/orchestra/state/F48-fuzz-killpg-permission/baseline_core.py", line 33, in command
+    out, err = proc.communicate(data, timeout=remaining)
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2154, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1268, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/homebrew/opt/python@3.14/bin/python3.14', '-c', 'import time; time.sleep(60)']' timed out after 0.05 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/tools/fuzz/test_timeout_cleanup.py", line 45, in test_live_child_pid_fallback
+    with patch.object(core.subprocess, 'Popen', side_effect=launch), \
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         patch.object(core.os, 'killpg', side_effect=signal_group):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        result, _, _ = core.command(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/orchestra/state/F48-fuzz-killpg-permission/baseline_core.py", line 35, in command
+    os.killpg(proc.pid, signal.SIGKILL)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/tools/fuzz/test_timeout_cleanup.py", line 38, in signal_group
+    def signal_group(pid, sig):
+            ^^^^^^^^^^^
+PermissionError: [Errno 1] injected
+
+======================================================================
+ERROR: test_live_child_pid_fallback (test_timeout_cleanup.CleanupTests.test_live_child_pid_fallback) (error='ProcessLookupError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/orchestra/state/F48-fuzz-killpg-permission/baseline_core.py", line 33, in command
+    out, err = proc.communicate(data, timeout=remaining)
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2154, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1268, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/homebrew/opt/python@3.14/bin/python3.14', '-c', 'import time; time.sleep(60)']' timed out after 0.05 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/tools/fuzz/test_timeout_cleanup.py", line 45, in test_live_child_pid_fallback
+    with patch.object(core.subprocess, 'Popen', side_effect=launch), \
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         patch.object(core.os, 'killpg', side_effect=signal_group):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        result, _, _ = core.command(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/orchestra/state/F48-fuzz-killpg-permission/baseline_core.py", line 35, in command
+    os.killpg(proc.pid, signal.SIGKILL)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F48-fuzz-killpg-permission/tools/fuzz/test_timeout_cleanup.py", line 38, in signal_group
+    def signal_group(pid, sig):
+            ^^^^^^^^^^^
+ProcessLookupError: [Errno 3] injected
+
+----------------------------------------------------------------------
+Ran 1 test in 120.076s
+
+FAILED (errors=2)
+EXPECTED REPRODUCTION: 2 errors
