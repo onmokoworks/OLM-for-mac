@@ -780,10 +780,12 @@ ColorCompare16(const uint16_t *param_1, const uint16_t *param_2)
 		if (iVar1 == 0) iVar1 = 1;
 
 		float fVar5x;
-		// The PE imports at 0x18000c424/0x18000c41e truncate the signed luma
-		// delta toward zero (the old decompiler labels had floor/ceil swapped).
-		if (_X <= 0.0f) fVar5x = ceilf(_X);
-		else            fVar5x = floorf(_X);
+		// The PE jump at 0x18000c41e targets IAT 0x18000d0d0 (ceilf),
+		// and 0x18000c424 targets 0x18000d0c8 (floorf): round away from zero.
+		// The old diagnostic host left these imports unimplemented, making
+		// the following CVTTSS2SI appear to truncate the unrounded delta.
+		if (_X <= 0.0f) fVar5x = floorf(_X);
+		else            fVar5x = ceilf(_X);
 		uint32_t uVar3x = (uint32_t)(int32_t)fVar5x;
 		int32_t iVar2 = (int32_t)((uVar3x ^ (uint32_t)((int32_t)uVar3x >> 31)) -
 		                          (uint32_t)((int32_t)uVar3x >> 31));
@@ -827,8 +829,8 @@ ColorCompare8(const uint8_t *param_1, const uint8_t *param_2)
 		if (iVar1 == 0) iVar1 = 1;
 
 		float fVar5x;
-		if (_X <= 0.0f) fVar5x = ceilf(_X);
-		else            fVar5x = floorf(_X);
+		if (_X <= 0.0f) fVar5x = floorf(_X);
+		else            fVar5x = ceilf(_X);
 		uint32_t uVar3x = (uint32_t)(int32_t)fVar5x;
 		int32_t iVar2 = (int32_t)((uVar3x ^ (uint32_t)((int32_t)uVar3x >> 31)) -
 		                          (uint32_t)((int32_t)uVar3x >> 31));

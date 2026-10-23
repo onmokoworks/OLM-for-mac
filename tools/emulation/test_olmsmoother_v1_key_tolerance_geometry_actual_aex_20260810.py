@@ -4,6 +4,7 @@
 import ctypes
 import hashlib
 import json
+import math
 import struct
 import subprocess
 import tempfile
@@ -99,6 +100,21 @@ iterate_guest:
 """
 
 
+def register_smoother_math(loader):
+    """Implement the original's two float imports; the loader defaults to no-op."""
+    for name, fn in (("ceilf", math.ceil), ("floorf", math.floor)):
+        def impl(_uc, _args, fn=fn):
+            value = loader.read_xmm_f32(0)
+            # Preserve signed zero and non-finite values (finite plugin inputs
+            # produce finite deltas); ceil/floor are exact for binary32 here.
+            result = float(fn(value)) if math.isfinite(value) and value != 0 else value
+            if result == 0:
+                result = math.copysign(0.0, value)
+            loader.write_xmm_f32(0, result)
+            return 0
+        loader.register_import_impl(name, impl)
+
+
 def widen(value):
     return (value * 0x8000 + 0x80) // 0xFF
 
@@ -156,6 +172,7 @@ def fixture(depth):
 
 def actual(depth, payload, rowbytes, use_key, tolerance, code, diagnostics=False):
     loader = AexLoader(str(AEX), verbose=False, fast=True)
+    register_smoother_math(loader)
     trace = []
     guest = 0x83000000
     loader.uc.mem_map(guest, 0x1000, UC_PROT_ALL)

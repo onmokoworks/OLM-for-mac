@@ -54,8 +54,8 @@ def aex_classifier(loader, case, x, y):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--jobs', type=int, choices=[2], required=True,
-                   help='Two-job cap; the stateful Unicorn leaf probe runs serially')
+    p.add_argument('--jobs', type=int, choices=[1, 2], required=True,
+                   help='One/two-job cap; the stateful Unicorn leaf probe runs serially')
     p.add_argument('--corpus', type=Path, action='append', required=True)
     p.add_argument('--owner-corpus', type=Path,
                    help='Also compare an existing direct original Classic harness to the worker and Mac')
@@ -83,6 +83,8 @@ def main():
     aex = args.main/'plugins_2025/OLMSmoother.aex'
     assert sha(aex.read_bytes()) == adapter.binding['aex_sha256']
     loader = AexLoader(str(aex), verbose=False, fast=True)
+    from test_olmsmoother_v1_key_tolerance_geometry_actual_aex_20260810 import register_smoother_math
+    register_smoother_math(loader)
     report = {'schema': 'olm-smoother-classifier8-compare/1', 'entry': hex(ENTRY),
               'directions': list(DIRS), 'aex_sha256': sha(aex.read_bytes()),
               'candidate_sha256': provenance['candidate_sha256'],
@@ -120,7 +122,7 @@ def main():
         report['owner_scope'] = (
             'Original PF_Cmd_RENDER through the retained Python host, with zero-initialized '
             'InData and hand-materialized parameter unions. Its existing serial guest iterate '
-            'and copy/new-world providers are unchanged. This cross-host diagnostic does not '
+            'and copy/new-world providers are unchanged; ceilf/floorf now have explicit providers. This cross-host diagnostic does not '
             'replace the frozen worker or prove native AE behavior.')
         report['owner_cases'] = []
         code = owner.guest_code(build, 4)
