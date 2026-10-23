@@ -38,9 +38,9 @@ def default_worker():
     configured = os.environ.get('OLM_AEX_WORKER')
     if configured:
         return Path(configured)
-    # F44: F32 plus UCRT sinf/cosf/log2f in default FMA mode.
-    # F32 and older workers remain selectable with --worker / OLM_AEX_WORKER.
-    retained = Path.home()/'.cache/olm-emu/worker-F44-msfloat/aex-guest-worker'
+    # F45: F44 plus UCRT double sin/cos/exp in default FMA mode; pow stays host.
+    # F44 and older workers remain selectable with --worker / OLM_AEX_WORKER.
+    retained = Path.home()/'.cache/olm-emu/worker-F45-msdouble/aex-guest-worker'
     return retained if retained.is_file() else None
 
 

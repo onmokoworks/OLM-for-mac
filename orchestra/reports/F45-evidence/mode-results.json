@@ -1,0 +1,23 @@
+[
+  {
+    "function": "sin",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "bb2510cfd92f92dd1ddb59b8abf72a2d24b3d405d721ad97e7161da56c63412f",
+    "invalid_exit": -6
+  },
+  {
+    "function": "cos",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "7261d0f531fd05a88392b27900efb78d045b35db9b92ebf10612a8455d6bef06",
+    "invalid_exit": -6
+  },
+  {
+    "function": "exp",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "67340689fa99d3bd56fd895e14ec268b53e7610a576e44c316bfa78b25b55668",
+    "invalid_exit": -6
+  }
+]

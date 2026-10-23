@@ -1,0 +1,83 @@
+[
+  {
+    "campaign": "radialblur-seed1",
+    "case": 62,
+    "route": "smart",
+    "input_sha256": "40895ca969d32861ff634759c479dc2bb971241d15835b3275c09d29840b832f",
+    "original_before": {
+      "limit_seconds": 10,
+      "reason": "wall timeout",
+      "status": "budget"
+    },
+    "original_after": {
+      "guards_intact": true,
+      "raw_sha256": "d3d08c4296f99ebc15bfa4e2cb2d9c2dc9890e68802bbcc177a5187d08027042",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "rechecks": [
+      {
+        "worker": "worker-F44-msfloat",
+        "worker_sha256": "768138633933a872af35ed26ba5af6b7d880e837bfa9de686991e200fe427813",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "d3d08c4296f99ebc15bfa4e2cb2d9c2dc9890e68802bbcc177a5187d08027042"
+        },
+        "elapsed_seconds": 8.308592124987626
+      },
+      {
+        "worker": "worker-F45-msdouble",
+        "worker_sha256": "8849565128e4147bb39b145bf392e20da1983c476498ca4448001ea278a38409",
+        "result": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x180001fa2); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x180001fa2)\",\"registers\":{\"r10\":49,\"r11\":144000,\"r12\":2304000,\"r13\":1880896352,\"r14\":4300233216,\"r15\":51,\"r8\":4300271464,\"r9\":9562,\"rax\":1173,\"rbp\":9561,\"rbx\":18000,\"rcx\":1173,\"rdi\":4299657216,\"rdx\":4297502112,\"rflags\":135,\"rip\":6442459042,\"rsi\":4295045120,\"rsp\":1880895280},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"4c53fa42000000000000000000000000\",\"f32_lanes\":[125.16269,0.0,0.0,0.0],\"f64_lanes\":[5.55182347e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"5ef35542000000000000000000000000\",\"f32_lanes\":[53.487663,0.0,0.0,0.0],\"f64_lanes\":[5.498600435e-315,0.0]},{\"register\":\"xmm2\" ... 905984,1880896352,6442470644,18000,1,1880895904,0,4294967305,4294967456,8,71,4294967312,4295045120,4299657216,1073743280,6442586896,4294967298,4295045848,14,4309200896,4608000,1152000,18000,4308905984,288000,72000,4295041024,4299653120,4300812288,4305424384,4306583552,4307742720,4308901888,4309196800,1073743280,0,0,0,0,0,0,108796109343112,1073743400,7,1073743768,7,1073741912,4295012352,1881144752,1880896288,6442480442,16,16],\"handle_allocations\":[504,784,784,196,196,49,196,64,404,2744,32,8,32,32,8,8,16,8,8,24,32,40,8,8,8,56,4608000,1152000,4608000,1152000,1152000,1152000,288000,144000],\"handle_allocation_failures\":[],\"live_handle_count\":17,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4309348352,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "elapsed_seconds": 20.019983166988823
+      }
+    ]
+  },
+  {
+    "campaign": "radialblur-seed45",
+    "case": 158,
+    "route": "smart",
+    "input_sha256": "459d515c1b27c85f8d05c666db429a023c027d382e8e364f9a4d7d6dff268f1e",
+    "original_before": {
+      "guards_intact": true,
+      "raw_sha256": "9734dca1e491ee71dcc6b5c68b9f8b4f74d6465bdf30528ac3c74657fa6f7ce6",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "original_after": {
+      "limit_seconds": 10,
+      "reason": "wall timeout",
+      "status": "budget"
+    },
+    "rechecks": [
+      {
+        "worker": "worker-F44-msfloat",
+        "worker_sha256": "768138633933a872af35ed26ba5af6b7d880e837bfa9de686991e200fe427813",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "9734dca1e491ee71dcc6b5c68b9f8b4f74d6465bdf30528ac3c74657fa6f7ce6"
+        },
+        "elapsed_seconds": 15.010957291000523
+      },
+      {
+        "worker": "worker-F45-msdouble",
+        "worker_sha256": "8849565128e4147bb39b145bf392e20da1983c476498ca4448001ea278a38409",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "9734dca1e491ee71dcc6b5c68b9f8b4f74d6465bdf30528ac3c74657fa6f7ce6"
+        },
+        "elapsed_seconds": 14.983951665999484
+      }
+    ]
+  }
+]
