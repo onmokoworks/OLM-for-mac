@@ -1925,7 +1925,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !is_admitted_pf32_smart_bilateral_beta(p) &&
-		    !is_admitted_pf32_smart_bilateral_scalar_beta(p, w, h) &&
+		    !is_admitted_pf32_smart_bilateral_scalar_beta(admission, w, h) &&
 		    !p.pf32_smart_oracle_profile_admitted) {
 			return OLM_DG_REFUSAL("pf32-smart-profile");
 		}
