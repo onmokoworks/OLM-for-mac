@@ -30,6 +30,8 @@ Stub boundary and qualification:
 
 - Final `reproduce_f27c.sh --full`: exit 0. All five complete sweep CSV sets reproduce byte-for-byte from the atomic checkpoints, with processed counts/bucket sums/witness caps checked. Full numerical sweeps had already completed; this final invocation verified restart/idempotence rather than spending another full sweep runtime. The subsequently added cosine diagnostic also passes and reproduces its retained JSON exactly.
 
+- Cleanup: removed scratch executables, AMD build products/source checkout, paper checkout and MPFR venv; logs/checkpoints/data remain (51 MiB). No started background process remains. Committed result artifacts total 901523 bytes, including their SHA256 manifest; no Microsoft or AMD binaries are staged.
+
 Sweep measurements:
 All runs exit 0; zero aborts/signals. Counts below are **mismatches**, not matches. All ten pairs are retained. O = UCRT non-FMA; F = UCRT FMA; A = Apple; D0/D1 = AMD contraction-off/fast.
 
