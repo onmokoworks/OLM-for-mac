@@ -35,3 +35,7 @@ modes in full-width and signed-exponent ranges on arm64 and x86_64.
 Keep F45 selectable using `--worker` or `OLM_AEX_WORKER` set to
 `~/.cache/olm-emu/worker-F45-msdouble/aex-guest-worker`.
 See `orchestra/reports/F46-evidence/boundaries.md` for boundary exclusions.
+
+The current zero-context patch reproduces the original built sources exactly.
+`F46-evidence/patch-format-check.json` binds it to the original build-manifest
+patch hash retained in commit `ae04a8de`; the formatting change needs no rebuild.

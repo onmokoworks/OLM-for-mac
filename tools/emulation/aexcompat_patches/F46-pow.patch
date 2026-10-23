@@ -1,63 +1,30 @@
 --- a/crates/olm-ucrtmath/build.rs
 +++ b/crates/olm-ucrtmath/build.rs
-@@ -5,7 +5,7 @@
-         "aarch64" => "arm64", "x86_64" => "x86_64", _ => panic!("unsupported architecture"),
-     };
-     let mut objects = Vec::new();
+@@ -8 +8 @@
 -    for name in ["expf", "atan2f", "powf", "tables", "../ms/float", "../ms/double"] {
 +    for name in ["expf", "atan2f", "powf", "tables", "../ms/float", "../ms/double", "../ms/pow"] {
-         let source = format!("ucrtmath/src/{name}.c");
-         let object = out.join(format!("{}.o", name.replace("/", "_")));
-         assert!(Command::new("clang").args(["-arch", arch, "-std=c11", "-O2", "-ffp-contract=off", "-fno-fast-math", "-Iucrtmath/include", "-c", &source, "-o"]).arg(&object).status().unwrap().success());
 --- a/crates/olm-ucrtmath/src/lib.rs
 +++ b/crates/olm-ucrtmath/src/lib.rs
-@@ -10,6 +10,7 @@
-     })
- }
- unsafe extern "C" {
+@@ -12,0 +13 @@
 +    fn ucrt_pow(x: f64, y: f64, mode: i32) -> f64;
-     fn ucrt_sin(x: f64, mode: i32) -> f64;
-     fn ucrt_cos(x: f64, mode: i32) -> f64;
-     fn ucrt_exp(x: f64, mode: i32) -> f64;
-@@ -31,3 +32,5 @@
- pub fn sin(x: f64) -> f64 { unsafe { ucrt_sin(x, mode()) } }
- pub fn cos(x: f64) -> f64 { unsafe { ucrt_cos(x, mode()) } }
- pub fn exp(x: f64) -> f64 { unsafe { ucrt_exp(x, mode()) } }
+@@ -33,0 +35,2 @@
 +
 +pub fn pow(x: f64, y: f64) -> f64 { unsafe { ucrt_pow(x, y, mode()) } }
 --- a/crates/aex-guest-worker/src/x64/imports.rs
 +++ b/crates/aex-guest-worker/src/x64/imports.rs
-@@ -2691,7 +2691,7 @@
-                     install_float_binary_import(unicorn, stub, "powf", olm_ucrtmath::powf)?;
-                 }
-                 LegacyWin64Import::Pow => {
+@@ -2694 +2694 @@
 -                    install_double_binary_import(unicorn, stub, "pow", f64::powf)?;
 +                    install_double_binary_import(unicorn, stub, "pow", olm_ucrtmath::pow)?;
-                 }
-                 LegacyWin64Import::Sin => {
-                     install_double_import(unicorn, stub, "sin", olm_ucrtmath::sin)?;
 --- a/crates/aex-guest-worker/src/native_x64/imports.rs
 +++ b/crates/aex-guest-worker/src/native_x64/imports.rs
-@@ -304,7 +304,7 @@
-     olm_ucrtmath::atan2f(y, x)
- }
- pub(super) unsafe extern "win64" fn native_pow(left: f64, right: f64) -> f64 {
+@@ -307 +307 @@
 -    left.powf(right)
 +    olm_ucrtmath::pow(left, right)
- }
- 
- pub(super) unsafe extern "win64" fn add_param(
 --- a/crates/aex-guest-worker/src/x64/f30_import_probe.rs
 +++ b/crates/aex-guest-worker/src/x64/f30_import_probe.rs
-@@ -10,15 +10,25 @@
-         ("sin", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Sin)) => install_double_import(&mut uc, CODE, "sin", olm_ucrtmath::sin).unwrap(),
-         ("cos", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Cos)) => install_double_import(&mut uc, CODE, "cos", olm_ucrtmath::cos).unwrap(),
-         ("exp", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Exp)) => install_double_import(&mut uc, CODE, "exp", olm_ucrtmath::exp).unwrap(),
+@@ -12,0 +13 @@
 +        ("pow", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Pow)) => install_double_binary_import(&mut uc, CODE, "pow", olm_ucrtmath::pow).unwrap(),
-         _ => panic!("wrong import dispatch"),
-     }
-     let mut out = std::io::BufWriter::new(std::io::stdout().lock());
-     for i in 0..count {
+@@ -17,5 +18,14 @@
 -        let mut z = (i ^ 0xf45).wrapping_add(0x9e3779b97f4a7c15);
 -        z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
 -        z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
@@ -77,6 +44,3 @@
 +                2 => (y % 100) as f64, _ => (y >> 11) as f64 / 9007199254740992.0 * 10.0 };
 +            ((if i % 8 == 0 {base * 16.0} else {base}).to_bits(), exponent.to_bits())
 +        } else { (x,y) };
-         uc.reg_write(RegisterX86::XMM0, a as u64).unwrap();
-         uc.reg_write(RegisterX86::XMM1, b as u64).unwrap();
-         uc.emu_start(CODE, CODE+1, 0, 1).unwrap();

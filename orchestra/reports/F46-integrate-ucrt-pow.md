@@ -56,7 +56,8 @@ Smoother v1 Classic equals its Smart counts for both seeds and variants. All oth
 | olmtoondilate_T13 | 23 | 23 / 23 | 23 / 23 |
 | radialblur | 35 | 35 / 35 | 35 / 35 |
 
-- Final `git diff --check`, Python syntax and all 40 campaign worker-hash assertions pass. All started commands exited. Regenerable Rust/Xcode/native/fuzz build products and task-created SDK links were removed; logs/raw reports remain. Final scratch 95123260 bytes, below 5 GiB. No permission rejection or numerical-hypothesis stop occurred.
+- Initial staged `git diff --cached --check` flagged the valid unified patch's blank context line as trailing whitespace. Commit `ae04a8de` retains that original build recipe. Reformatted the patch with zero context, applied it to a fresh five-file F45 snapshot, and verified every result against the built F46 source manifest: all five hashes match. `patch-format-check.json` binds both patch hashes; no worker or arithmetic changed.
+- Final `git diff --check`, Python syntax and all 40 campaign worker-hash assertions pass. All started commands exited. Regenerable Rust/Xcode/native/fuzz build products and task-created SDK links were removed; logs/raw reports remain. Cleanup snapshot: scratch 95123260 bytes, below 5 GiB. No permission rejection or numerical-hypothesis stop occurred.
 
 inference:
 - The audit supports imported-pow replacement only; it does not justify replacing embedded softdouble/IPP algorithms or regenerating captured LUTs.
