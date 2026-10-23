@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMKiraKira.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #if defined(__clang__)
@@ -754,9 +755,9 @@ static std::vector<float> MakeSeed(
         seed.resize((size_t)w*h*4);
         const float exponent = (float)info.strength_multiplier + 1.0f;
         for (size_t i=0; i<pixels.size(); ++i) {
-            seed[i*4] = std::pow(pixels[i].r,exponent)*pixels[i].a;
-            seed[i*4+1] = std::pow(pixels[i].g,exponent)*pixels[i].a;
-            seed[i*4+2] = std::pow(pixels[i].b,exponent)*pixels[i].a;
+            seed[i*4] = ucrt_powf(pixels[i].r,exponent, UCRT_FMA)*pixels[i].a;
+            seed[i*4+1] = ucrt_powf(pixels[i].g,exponent, UCRT_FMA)*pixels[i].a;
+            seed[i*4+2] = ucrt_powf(pixels[i].b,exponent, UCRT_FMA)*pixels[i].a;
             seed[i*4+3] = pixels[i].a;
         }
         return seed;
@@ -769,9 +770,9 @@ static std::vector<float> MakeSeed(
 	const float fade_threshold = (float)info.fade_out;
 	auto apply_fade = [&](float value) -> float {
 		if (value == 0.0f) return 0.0f;
-		if (fade_threshold < value) return recovered_seed ? std::pow(value, (float)exponent) : (float)std::pow(value, exponent);
+		if (fade_threshold < value) return recovered_seed ? ucrt_powf(value, (float)exponent, UCRT_FMA) : (float)std::pow(value, exponent);
 		const float normalized = value / fade_threshold;
-		return recovered_seed ? std::pow(normalized, 2.0f) * std::pow(fade_threshold, (float)exponent)
+		return recovered_seed ? ucrt_powf(normalized, 2.0f, UCRT_FMA) * ucrt_powf(fade_threshold, (float)exponent, UCRT_FMA)
 			: normalized * normalized * (float)std::pow(fade_threshold, exponent);
 	};
 	for (A_long y = 0; y < h; ++y) {
@@ -779,7 +780,7 @@ static std::vector<float> MakeSeed(
 			const FloatRGBA &p = pixels[(size_t)y * w + x];
 			float v = 0.0f;
 			if (info.channel == 1) {
-				v = recovered_seed ? std::pow(p.a, (float)exponent)
+				v = recovered_seed ? ucrt_powf(p.a, (float)exponent, UCRT_FMA)
 					: (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
 				float luma = recovered_seed
@@ -2012,7 +2013,7 @@ static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
 			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
 			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
 				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
-				!std::isfinite(std::pow(p.alpha, exponent))) return false;
+				!std::isfinite(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
 		}
 	}
 	return true;

@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMColorKey.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
@@ -865,7 +866,7 @@ static float LabF(float t)
 {
 	return t <= 0.008856000378727913f
 		? t * 7.7870001792907715f + 0.13793103396892548f
-		: std::pow(t, 0.3333300054073334f);
+		: ucrt_powf(t, 0.3333300054073334f, UCRT_FMA);
 }
 
 static void RGBToPluginLab76(const float rgb[3], float out[3])
@@ -877,7 +878,7 @@ static void RGBToPluginLab76(const float rgb[3], float out[3])
 	float fx = LabF(x);
 	out[0] = x <= 0.008856000378727913f
 		? g * 1938.031494140625f + r * 576.3229370117188f + b * 195.57272338867188f
-		: std::pow(x, 0.3333300054073334f) * 116.0f - 16.0f;
+		: ucrt_powf(x, 0.3333300054073334f, UCRT_FMA) * 116.0f - 16.0f;
 	float a_source = r * 1.2373713254928589f + g * 1.0727508068084717f + b * 0.5412744283676147f;
 	float b_source = g * 0.35758259892463684f + r * 0.05800257995724678f + b * 2.8507096767425537f;
 	out[1] = (LabF(a_source) - fx) * 500.0f;
@@ -924,7 +925,7 @@ static float Lab94Distance(const float a[3], const float b[3])
 	const float c2 = std::sqrt(b[1] * b[1] + b[2] * b[2]);
 	const float cmean = std::sqrt(c2 * c1);
 	auto hue = [](float aa, float bb) {
-		float h = std::atan2(bb, aa) * 57.2957763671875f + 180.0f;
+		float h = ucrt_atan2f(bb, aa, UCRT_FMA) * 57.2957763671875f + 180.0f;
 		if (h != 0.0f) {
 			if (h < 0.0f) h += 540.0f;
 			h = std::fmod(h, 360.0f);

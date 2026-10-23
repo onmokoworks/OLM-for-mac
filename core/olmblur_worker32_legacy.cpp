@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker32_legacy.h"
 
 #include "olmblur_fullworker_helper.h"
@@ -48,7 +49,7 @@ void make_weights(std::vector<float>& weights, std::size_t radius,
         const float square = static_cast<float>(distance * distance);
         const float exponent = -square / denominator;
         const float value =
-            static_cast<float>(std::exp(static_cast<double>(exponent)));
+            ucrt_expf(exponent, UCRT_FMA);
         weights[radius - distance] = value;
         weights[radius + distance] = value;
     }

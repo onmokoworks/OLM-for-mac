@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #include "dblur_rowdriver.h"
 #include "dblur_noise.h"
 
@@ -42,8 +43,7 @@ float weight_at(const float* table, int index, float scale) {
 }
 
 __attribute__((noinline)) float powf_compat(float value, float exponent) {
-    volatile float r = static_cast<float>(std::pow(static_cast<double>(value),
-                                                   static_cast<double>(exponent)));
+    volatile float r = ucrt_powf(value, exponent, UCRT_FMA);
     return r;
 }
 

@@ -1,3 +1,4 @@
+#include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker16_nonlegacy.h"
 
 #include "olmblur_helper.h"
@@ -87,8 +88,8 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
 
     float decay = 1.0f;
     if (params.repeat > 1) {
-        decay = std::pow(3.0f / params.blur_amount,
-                         1.0f / static_cast<float>(params.repeat - 1));
+        decay = ucrt_powf(3.0f / params.blur_amount,
+                         1.0f / static_cast<float>(params.repeat - 1), UCRT_FMA);
     }
     const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + 2;
     std::vector<float> weights(max_radius + 1);
@@ -110,7 +111,7 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
                 -static_cast<float>(k * k) / denominator;
             // Match the original binary32 expf coefficient operation, including
             // the radii reached by fractional repeated-radius decay.
-            weights[k] = std::exp(exponent);
+            weights[k] = ucrt_expf(exponent, UCRT_FMA);
         }
         if (params.bias_direction == 1) {
             horizontal_pass(flags.data(), plane_a.data(), plane_b.data(),

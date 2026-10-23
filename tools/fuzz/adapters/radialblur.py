@@ -160,11 +160,11 @@ class Adapter:
         code = ("import sys; from pathlib import Path; "
                 "sys.path.insert(0, sys.argv[1]); "
                 "import probe_radialblur_topology_20261001 as p; "
-                "p.HARNESS=Path(sys.argv[2]); p.ROOT=Path(sys.argv[4]); "
+                "p.HARNESS=Path(sys.argv[2]); p.ROOT=Path(sys.argv[4]); p.SOURCE=Path(sys.argv[7]); "
                 "p.build(Path(sys.argv[3]), Path(sys.argv[5]).read_text(), sanitize=(sys.argv[6]=='1'))")
         status, out, err = command([sys.executable, '-c', code, ROOT/'tools/emulation',
                                     harness, scratch/'build', self.main, candidate_source,
-                                    '1' if sanitize else '0'], timeout=max(0, deadline-time.monotonic()),
+                                    '1' if sanitize else '0', public.SOURCE], timeout=max(0, deadline-time.monotonic()),
                                    deadline=deadline, env=self.env)
         if status['status'] != 'ok':
             raise RuntimeError('Candidate build failed: '+repr(status)+' '+err.decode(errors='replace')[-2000:])
@@ -174,6 +174,7 @@ class Adapter:
             'worker_path': str(self.worker), 'worker_sha256': sha(self.worker.read_bytes()),
             'candidate_sha256': sha(self.binary.read_bytes()),
             'source_sha256': sha(public.SOURCE.read_bytes()),
+            'ucrtmath_sha256': {str(p.relative_to(Path(__file__).resolve().parents[3])):sha(p.read_bytes()) for p in sorted((Path(__file__).resolve().parents[3]/'ucrtmath').glob('src/*'))},
             'candidate_source_sha256': sha(source.encode()),
             'candidate_bypass': bypass,
             'candidate_sanitize': sanitize,

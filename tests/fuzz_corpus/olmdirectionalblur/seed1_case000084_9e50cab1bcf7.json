@@ -110,16 +110,25 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
     "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
-    "candidate_sha256": "52e0cd4f4875e66c5a1774cf42c672214bea1cad4c19b53aa6783fa8661d0730",
+    "candidate_sha256": "112e6eeb1c7e786209775cca57b8d9c96d4493b7b8ec43dc87fdf56b8c443b5b",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
     "dependencies_sha256": {
       "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
-      "core/dblur_frontonly.cpp": "82cf90b237ec0ea9e76dfb47f1fa4b80d2940e8d05b990fefab5a03a527df651",
+      "core/dblur_frontonly.cpp": "bace26e9338cdd993e80cadeb5fad703991ef18a9368ba25699eac7b1bb28889",
       "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
-      "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
-      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "e02a2973a032a77c861a0c86bb8043da6a72f2820141b7a950460c436f9c9156",
+      "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "10aeb3cdf577d6843f1ccf7e6c24913384bf9edc1fb1a6ac1b07ba45898ce717",
       "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
-      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab"
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+      "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
     },
     "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
     "layer": "None; independent layer worlds outside this adapter",
@@ -141,8 +150,8 @@
       "total": 1,
       "value": 0
     },
-    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
-    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F30-ucrtmath/aex-guest-worker",
+    "worker_sha256": "8b51d0456ff55aa2034a0bbb00b822bd2339cbe27247021c289170a78a3fb53b",
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
@@ -177,7 +186,7 @@
     "first_mismatching_stage": null,
     "oracle": {
       "guards_intact": true,
-      "raw_sha256": "7eb2b5dc8155d28a5e26d42fe923fc5715bb44bacdb6730f41cd07ed9c1fe365",
+      "raw_sha256": "6bb98821691911721b0b1908a0082239a9aa7d29ca4f565b90721ed4299ce5f6",
       "session_clean": true,
       "status": "ok"
     },
@@ -190,7 +199,7 @@
       },
       "smart": {
         "guards_intact": true,
-        "raw_sha256": "7eb2b5dc8155d28a5e26d42fe923fc5715bb44bacdb6730f41cd07ed9c1fe365",
+        "raw_sha256": "6bb98821691911721b0b1908a0082239a9aa7d29ca4f565b90721ed4299ce5f6",
         "session_clean": true,
         "status": "ok"
       }
@@ -216,23 +225,13 @@
         "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 5472,
-          "actual_word_hex": "c14e",
-          "different_bytes": 1,
-          "different_words": 1,
-          "expected_bytes": 5472,
-          "expected_word_hex": "c04e",
-          "first_byte": 2770,
-          "first_word": 1385
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "21 21 1 1 1",
           "ERROR": "0"
         },
         "raw_sha256": "6bb98821691911721b0b1908a0082239a9aa7d29ca4f565b90721ed4299ce5f6",
-        "status": "mismatch"
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

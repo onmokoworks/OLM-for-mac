@@ -150,6 +150,7 @@ class PublicAdapter:
             raise ValueError('Original AEX hash differs from captured PARAMS_SETUP')
         self.env.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch))
         self.binary, dependencies = self.build(scratch,deadline)
+        dependencies = [*dependencies, *sorted((ROOT/'ucrtmath/src').glob('*')), ROOT/'ucrtmath/include/ucrtmath.h', ROOT/'ucrtmath/build.sh']
         return {'aex_path':str(self.aex),'aex_sha256':sha(self.aex.read_bytes()),
                 'worker_path':str(self.worker),'worker_sha256':sha(self.worker.read_bytes()),
                 'candidate_sha256':sha(self.binary.read_bytes()),
@@ -172,6 +173,11 @@ class PublicAdapter:
         return {}
 
     def compile(self, argv, deadline):
+        # Link the independent C implementation into every public harness.
+        if str(argv[0]) == 'clang++' and '-o' in argv and '-c' not in argv:
+            out = Path(argv[argv.index('-o') + 1]).parent / 'ucrtmath'
+            self.compile(['sh', ROOT/'ucrtmath/build.sh', out], deadline)
+            argv = [*argv, out/'libucrtmath.a']
         status,out,err = command(argv,timeout=max(0,deadline-time.monotonic()),deadline=deadline,env=self.env)
         if status['status']!='ok':
             raise RuntimeError('Public harness build failed: '+repr(status)+' '+err.decode(errors='replace')[-4000:])

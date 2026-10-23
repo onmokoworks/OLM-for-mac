@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
 #include "../../core/dblur_noise.h"
 #include "../../core/olm_sha256_rows.h"
@@ -190,7 +191,7 @@ static int32_t RadialCVTTSS2SI(float value)
 static float RadialF32Atan2(float y, float x)
 {
 	// The AEX imports api-ms-win-crt-math atan2f and passes scalar floats.
-	volatile float result = (float)std::atan2((double)y, (double)x);
+	volatile float result = ucrt_atan2f(y, x, UCRT_FMA);
 	return result;
 }
 
@@ -1541,9 +1542,8 @@ static std::vector<float> ZoomGaussianWeights(A_long length)
 	for (A_long i = 0; i < length; ++i) {
 		const int square = (int)i * (int)i;
 		const float exponent = RadialF32Mul((float)-square, inv_denom);
-		// The Windows expf result is reproduced by evaluating in double and
-		// rounding once to float; macOS expf differs in 13/1717 case0009 entries.
-		weights[(size_t)i] = (float)std::exp((double)exponent);
+		// Original scalar expf import: use the UCRT FMA implementation.
+		weights[(size_t)i] = ucrt_expf(exponent, UCRT_FMA);
 	}
 	return weights;
 }
@@ -2221,7 +2221,7 @@ static std::vector<float> ZoomGaussianWeightsAEXScalarCandidate(A_long length)
 	for (A_long i = 0; i < length; ++i) {
 		const int square = (int)i * (int)i;
 		const float exponent = RadialF32Mul((float)-square, inv_denom);
-		weights[(size_t)i] = ::expf(exponent);
+		weights[(size_t)i] = ucrt_expf(exponent, UCRT_FMA);
 	}
 	return weights;
 }
