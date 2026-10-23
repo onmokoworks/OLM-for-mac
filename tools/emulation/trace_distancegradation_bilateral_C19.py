@@ -42,7 +42,7 @@ def main():
     row=json.loads(args.trace.read_text())['rows'][0]
     pre=bytes.fromhex(row['aex_pre_hex']);post=bytes.fromhex(row['aex_post_hex'])
     w,h,r=args.width,args.height,args.radius
-    assert 0<w*h<=4096 and 1<=r<=32 and len(pre)==len(post)==w*h*4
+    assert 0<w*h<=4096 and 1<=r<=64 and len(pre)==len(post)==w*h*4
     allocation=ld.bump_alloc(len(pre)+128,align=64);src=allocation+64
     ld.write_bytes(allocation,b'\xa5'*(len(pre)+128));ld.write_bytes(src,pre)
     output=ld.bump_alloc(len(pre)+128,align=64);dst=output+64

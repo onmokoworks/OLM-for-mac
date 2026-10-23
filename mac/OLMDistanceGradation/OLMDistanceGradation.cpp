@@ -518,13 +518,68 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool sma
 // cvSmooth mode 1 (CV_BLUR) used by Constant + Blur is a normalized box
 // filter with replicated borders. Keep it separate from the Gaussian path
 // used by the other interpolation modes.
-static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false)
+// Reordering a double sum is exact when all binary32 inputs share a grid
+// whose largest possible absolute kernel sum fits the 53-bit significand.
+// Otherwise retain the original row-major accumulation below.
+static bool box_sum_is_exact(const float *mat, size_t count, int ksize)
+{
+	int quantum = 0;
+	double maximum = 0.0;
+	for (size_t i = 0; i < count; ++i) {
+		const double value = std::fabs((double)mat[i]);
+		if (!std::isfinite(value)) return false;
+		if (value == 0.0) continue;
+		int exponent;
+		std::frexp(value, &exponent);
+		quantum = std::min(quantum, exponent - 24);
+		maximum = std::max(maximum, value);
+	}
+	const std::uint64_t taps = (std::uint64_t)ksize * (std::uint64_t)ksize;
+	return std::ldexp(maximum, -quantum) <= (double)((UINT64_C(1) << 53) / taps);
+}
+
+static void box_blur_exact_sum(float *mat, long w, long h, int ksize, double area)
+{
+	const long half = ksize / 2;
+	std::vector<double> rows((size_t)w * h);
+	for (long y = 0; y < h; ++y) {
+		const float *src = mat + (size_t)y * w;
+		double sum = 0.0;
+		sum += (double)src[0] * half;
+		for (long x = 0; x <= std::min(half, w - 1); ++x) sum += src[x];
+		if (half >= w) sum += (double)src[w - 1] * (half - w + 1);
+		rows[(size_t)y * w] = sum;
+		for (long x = 1; x < w; ++x) {
+			sum -= src[std::max(0L, x - half - 1)];
+			sum += src[std::min(w - 1, x + half)];
+			rows[(size_t)y * w + x] = sum;
+		}
+	}
+	for (long x = 0; x < w; ++x) {
+		double sum = 0.0;
+		sum += rows[x] * half;
+		for (long y = 0; y <= std::min(half, h - 1); ++y) sum += rows[(size_t)y * w + x];
+		if (half >= h) sum += rows[(size_t)(h - 1) * w + x] * (half - h + 1);
+		mat[x] = (float)(sum / area);
+		for (long y = 1; y < h; ++y) {
+			sum -= rows[(size_t)std::max(0L, y - half - 1) * w + x];
+			sum += rows[(size_t)std::min(h - 1, y + half) * w + x];
+			mat[(size_t)y * w + x] = (float)(sum / area);
+		}
+	}
+}
+
+static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false, bool smart_owner = false)
 {
 	if (ksize <= 1) return;
 	const int half = ksize / 2;
-	// Smart PF32: retain the integer kernel area in double precision.
+	// Smart typed paths retain the integer kernel area in double precision.
 	// Odd kernels above 4095 lose area bits when rounded through float.
 	const double area = double_area ? (double)ksize * (double)ksize : (double)(float)(ksize * ksize);
+	if (smart_owner && box_sum_is_exact(mat, (size_t)w * h, ksize)) {
+		box_blur_exact_sum(mat, w, h, ksize, area);
+		return;
+	}
 	std::vector<float> src(mat, mat + (size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		for (long x = 0; x < w; ++x) {
@@ -711,7 +766,9 @@ static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
 	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
 	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
-	return radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
+	// Retain PF8 dispatch; PF32 scalar tiles are verified through radius 500.
+	return radius >= 3 && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
+	    (w <= 2*radius || h <= 2*radius);
 }
 
 // Bounded lane of the original IPP vector exponential (180ba5780).
@@ -1163,7 +1220,7 @@ static void build_distance_field(
 		if (ksize > 1) {
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
 				box_blur_separable(df.x.data(), w, h, ksize,
-				    p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat));
+				    p.smart_owner, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
 				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
