@@ -483,6 +483,31 @@ def run_test_file(path: Path) -> int:
     for name, function in sorted(vars(module).items()):
         if not name.startswith("test_") or not inspect.isfunction(function):
             continue
+        # Real pytest (already imported by callers) records skipif as marks;
+        # the stdlib shim records unittest attributes. Honor both forms.
+        marks = []
+        for owner in (module, function):
+            recorded = getattr(owner, "pytestmark", [])
+            marks.extend(recorded if isinstance(recorded, (list, tuple)) else [recorded])
+        try:
+            marked_skip = False
+            for mark in marks:
+                if mark.name == "skip":
+                    marked_skip = True
+                elif mark.name == "skipif":
+                    conditions = mark.args or (mark.kwargs.get("condition", False),)
+                    for condition in conditions:
+                        if isinstance(condition, str):
+                            condition = eval(condition, dict(vars(module), sys=sys, os=os))
+                        marked_skip |= bool(condition)
+            if getattr(function, "__unittest_skip__", False) or marked_skip:
+                ran += 1
+                skipped += 1
+                continue
+        except Exception:
+            failures += 1
+            traceback.print_exc()
+            continue
         signature = inspect.signature(function)
         if signature.parameters:
             failures += 1
@@ -494,9 +519,6 @@ def run_test_file(path: Path) -> int:
             }), file=sys.stderr)
             continue
         ran += 1
-        if getattr(function, "__unittest_skip__", False):
-            skipped += 1
-            continue
         try:
             function()
         except unittest.SkipTest:

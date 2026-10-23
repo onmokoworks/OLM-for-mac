@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import inspect
+import hashlib
 import struct
 from pathlib import Path
 
@@ -46,6 +47,7 @@ def test_exported_effectmain_nonzero_origin_classic_and_smart() -> None:
     argb = tuple(harness.PALETTE8[i] for i in selected) + ((32, 222, 32, 96),)
     pixels = (argb * 2)[:12]
     inputs = {}
+    expected_active = {}
     for depth in harness.EXPECTED:
         if depth == "PF8":
             pack = bytes
@@ -54,6 +56,13 @@ def test_exported_effectmain_nonzero_origin_classic_and_smart() -> None:
         else:
             pack = lambda value: struct.pack("<4f", *(x / 255 for x in value))
         active = b"".join(pack(pixel) for pixel in pixels)
+        expected = b"".join(pack(pixel if pixel in harness.PALETTE8 else (0, *pixel[1:]))
+                            for pixel in pixels)
+        # Bind the flag-mutation comparison below to the retained actual-AEX
+        # input/output hashes, independently of the current Mac worker.
+        assert hashlib.sha256(active).hexdigest() == harness.EXPECTED[depth]["input_active"]
+        assert hashlib.sha256(expected).hexdigest() == harness.EXPECTED[depth]["output_active"]
+        expected_active[depth] = expected
         pixel_size = len(active) // 12
         inputs[depth] = b"".join(
             active[y * 4 * pixel_size:(y + 1) * 4 * pixel_size] + b"\xcc" * 8
@@ -124,7 +133,27 @@ def test_exported_effectmain_nonzero_origin_classic_and_smart() -> None:
         "std::fprintf(stderr,\"fail smart=%d depth=%d rc=%d life=%d phase=%d pads=%d unchanged=%d req=%d ih=%d co=%d cc=%d ci=%d li=%d\\n\","
         "smart,depth,rc,life,phase_bad,pads,unchanged,request_unchanged,ih,co,cc,ci,li);return false;}",
     )
-    namespace = dict(harness.__dict__)
+    # R02 merge 8857fbc3077b355f036b0ea2dadc846a9cf507bd: bitdepth,
+    # not DEEP, selects Smart pixels. Classic also admits this flag mutation.
+    # Keep mutation 26 in the matrix, requiring exact active bytes and canaries
+    # rather than counting it as a refusal. These inputs select palette entries
+    # except every sixth pixel, whose alpha the AEX color-key worker clears.
+    source = source.replace(
+        'array("raw32", inputs["PF32"])',
+        'array("raw32", inputs["PF32"]) + array("expected8", expected_active["PF8"])'
+        ' + array("expected16", expected_active["PF16"]) + array("expected32", expected_active["PF32"])',
+    )
+    source = source.replace(
+        "if(mutation){bool noout=true;",
+        "if(mutation==26){bool exact=true;for(int y=0;y<H;y++)for(int x=0;x<W;x++){"
+        "const unsigned char* expected=depth==8?expected8:depth==16?expected16:expected32;"
+        "exact&=std::memcmp(dst+y*orb+x*sizeof(P),expected+(y*W+x)*sizeof(P),sizeof(P))==0;}"
+        "bool life=smart?(co==101&&cc==100&&ci==101&&li==1&&ph==1&&lh==1&&oh==1):"
+        "(co==0&&cc==100&&ci==0&&li==0&&lh==0&&oh==0);"
+        "return rc==PF_Err_NONE&&exact&&life&&pads&&unchanged&&request_unchanged&&!phase_bad&&ih==1;}"
+        "if(mutation){bool noout=true;",
+    )
+    namespace = dict(harness.__dict__, expected_active=expected_active)
     exec(source, namespace)
     observed, _ = namespace["roi_probe"](binary, inputs)
     # Classic PF8/PF16 and Smart PF8/PF16/PF32 must agree at active pixels.

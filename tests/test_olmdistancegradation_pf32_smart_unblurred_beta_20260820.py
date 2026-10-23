@@ -33,7 +33,7 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
             "if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&", self.source
         )
 
-    def test_blurred_beta_has_general_controls_and_geometry_dependent_budget(self):
+    def test_blurred_beta_retains_controls_without_work_caps(self):
         body = self.source.split(
             "static bool is_admitted_pf32_smart_blurred_beta", 1
         )[1].split("static bool pf32_smart_worlds_are_bounded_sdr", 1)[0]
@@ -41,9 +41,11 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
         self.assertIn("p.interp_mode != INTERP_LINEAR", body)
         self.assertIn("p.interp_mode != INTERP_SPHERE", body)
         self.assertIn("p.blur_mode > BLUR_MODE_MEDIAN", body)
-        self.assertIn("p.blur_size < 1 || p.blur_size > 500", body)
-        self.assertIn("kSeparableWorkBudget = 1200u * 1000u * 1000u", body)
-        self.assertIn("kMedianWorkBudget = 400u * 1000u * 1000u", body)
+        self.assertIn("p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_NO_SCALE ? 4096 : 500)", body)
+        # F41b merge 7a0cd797d52c9564c1f89191488f095c73f11b02.
+        self.assertNotIn("kSeparableWorkBudget", body)
+        self.assertNotIn("kMedianWorkBudget", body)
+        self.assertIn("w <= 0 || h <= 0", body)
         self.assertNotIn("BLUR_MODE_BILATERAL", body)
         self.assertNotIn("INTERP_POWER", body)
 
@@ -68,8 +70,11 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
         body = self.source.split(
             "static bool pf32_smart_worlds_are_bounded_sdr", 1
         )[1].split("static constexpr uint32_t PF32_POWER_GENERIC_MAX_ULP", 1)[0]
-        self.assertIn("input->width > 4096", body)
-        self.assertIn("4096u * 2160u / height", body)
+        # F41b retains checked storage products, replacing the beta area cap.
+        self.assertIn("width > std::numeric_limits<size_t>::max() / height", body)
+        self.assertIn("width * height > std::vector<long>().max_size()", body)
+        self.assertNotIn("input->width > 4096", body)
+        self.assertNotIn("4096u * 2160u / height", body)
         self.assertIn("alignof(PF_PixelFloat)", body)
         self.assertIn("require_disjoint", body)
         self.assertIn("!std::isfinite(value)", body)

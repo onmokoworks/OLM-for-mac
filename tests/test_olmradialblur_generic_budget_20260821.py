@@ -25,11 +25,14 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  if(!CheckedRadialGenericBudget(4096,2160,32,q,false,&classic,&work))return 1;
  if(!CheckedRadialGenericBudget(4096,2160,32,q,true,&smart,nullptr))return 2;
  if(!(classic<smart&&smart<=(UINT64_C(1)<<30)&&work<=UINT64_C(350000000)))return 3;
- q.outer_strength=64;q.inner_strength=64;if(CheckedRadialGenericBudget(4096,2160,32,q,true))return 4;
+ // F41b merge 7a0cd797d52c9564c1f89191488f095c73f11b02 removes Smart work caps.
+ q.outer_strength=64;q.inner_strength=64;if(!CheckedRadialGenericBudget(4096,2160,32,q,true))return 4;
  q=profile(3840,2160,4);if(!CheckedRadialGenericBudget(3840,2160,32,q,true))return 5;
  q=profile(1920,1080,17);if(!CheckedRadialGenericBudget(1920,1080,16,q,true))return 6;
  q=profile(4097,1080,4);if(CheckedRadialGenericBudget(4097,1080,8,q,false))return 7;
+ if(!CheckedRadialGenericBudget(4097,1080,8,q,true))return 21;
  q=profile(4096,2161,4);if(CheckedRadialGenericBudget(4096,2161,8,q,false))return 8;
+ if(!CheckedRadialGenericBudget(4096,2161,8,q,true))return 22;
  q=profile(17,11,4);q.blur_type=2;if(!CheckedRadialGenericBudget(17,11,8,q,true))return 9;
  // The small Quality50 owner is covered by the typed public replay.  At
  // 1024x1024 its Rotation spans cost about ten times the raw UI Strength.
@@ -37,11 +40,11 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  if(!CheckedRadialGenericBudget(23,13,32,q,true))return 10;
  q=profile(1024,1024,4);q.blur_type=2;q.quality=50;
  size_t quality_bytes=0;uint64_t quality_work=0;
- if(CheckedRadialGenericBudget(1024,1024,32,q,true,&quality_bytes,&quality_work))return 11;
+ if(!CheckedRadialGenericBudget(1024,1024,32,q,true,&quality_bytes,&quality_work))return 11;
  if(!(quality_bytes<(UINT64_C(1)<<30)&&quality_work>UINT64_C(350000000)))return 12;
  // Legal Strength2000 fits a small frame in both families. Quality50 with
  // two such Rotation spans exceeds the retained work budget independently
- // of its memory estimate; admission is not a whole-range completion claim.
+ // of its memory estimate; Smart admits it, Classic still refuses it.
  for(int type: {{1,2}}){{
   q=profile(9,7,2000);q.inner_strength=2000;q.blur_type=type;
   if(!CheckedRadialGenericBudget(9,7,32,q,true))return 13;
@@ -49,7 +52,8 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  }}
  q=profile(9,7,2000);q.inner_strength=2000;q.blur_type=2;q.quality=50;
  size_t strength_bytes=0;uint64_t strength_work=0;
- if(CheckedRadialGenericBudget(9,7,32,q,true,&strength_bytes,&strength_work))return 15;
+ if(!CheckedRadialGenericBudget(9,7,32,q,true,&strength_bytes,&strength_work))return 15;
+ if(CheckedRadialGenericBudget(9,7,32,q,false))return 20;
  if(!(strength_bytes<(UINT64_C(1)<<30)&&strength_work>UINT64_C(350000000)))return 16;
  // Odd-stride Smart input needs an additional aligned copy, independently
  // of the existing atomic output staging. Account for both allocations.
