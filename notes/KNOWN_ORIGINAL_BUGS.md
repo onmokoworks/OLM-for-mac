@@ -115,3 +115,15 @@ zero in this state. Checkout/checkin remains balanced. True null descriptors,
 nonzero-sized descriptors with missing data, checkout errors, and independent
 nonempty Layer handling are not promoted by C57. See the C57 report for finite
 oracle qualification and remaining native-host limitations.
+
+## Classic (PF_Cmd_RENDER) route of the SmartFX plugins (T14, orchestrator decision)
+
+FACT (T14): the nine SmartFX originals declare the same PiPL/GLOBAL_SETUP flags as the Mac ports, and ordinary AE
+selects SmartRender for them (Smoother v1 is Classic-only). In the original Classic handlers, ColorKey and
+DirectionalBlur return success without writing the output; DistanceGradation consumes uninitialized stack settings and
+existing destination pixels (and interprets PF32 as PF16).
+
+DECISION: the exactness contract for these nine plugins is the Smart route. Their Mac Classic handlers keep rendering
+the Smart algorithm instead of reproducing a no-write or uninitialized-memory result, so a host that does call
+PF_Cmd_RENDER gets the effect rather than an untouched or garbage frame. Classic-route fuzz mismatches for these
+plugins are therefore expected and are not counted as port defects. Smoother v1 Classic remains bit-exact.
