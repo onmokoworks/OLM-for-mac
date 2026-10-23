@@ -58,6 +58,7 @@ def main():
     p.add_argument('--scratch',type=Path,required=True)
     p.add_argument('--baseline',required=True)
     p.add_argument('--production',action='store_true')
+    p.add_argument('--jobs',type=int,choices=[1,2],default=1)
     p.add_argument('--families',nargs='+',default=['fade-only','noise-fade','plain-fade'])
     p.add_argument('--active-only',action='store_true',help='Require at least one nonzero scatter Strength')
     args=p.parse_args();args.main,args.max_size,args.case_timeout=ROOT.parent.parent,256,30
@@ -97,7 +98,7 @@ def main():
         if args.active_only:
             selected=[r for r in selected if any(p['slot'] in (5,10) and p['value']>0
                                                 for p in r[1]['parameters'])]
-        with ThreadPoolExecutor(max_workers=2) as pool:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
             for row in pool.map(run,selected):
                 report['cases'].append(row)
                 if not row['routes']['smart'].get('exact_smart_reference'):
