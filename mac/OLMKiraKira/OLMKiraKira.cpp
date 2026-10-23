@@ -1475,7 +1475,7 @@ static bool IsClassicClosureTuple(const OLMKiraKiraInfo &info)
 	return ClassicClosureSourceFamilyForTuple(info) != ClassicClosureSource_None;
 }
 
-static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height)
+static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height, bool smart_render = false)
 {
 	// The beta excludes tiny diagnostic leaves. 9x7 is also the minimum used by
 	// the geometry-general Mode 3/4 contracts and gives all directional kernels
@@ -1484,18 +1484,45 @@ static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height)
 	// side exceeding 4096. This also makes every frame-sized allocation and the
 	// Mode-3 worst-case Length 300 workload finite before any render allocation.
 	constexpr int64_t kMaxGenericPixels = INT64_C(4096) * INT64_C(2160);
-	return width >= 9 && height >= 7 && width <= 4096 && height <= 4096 &&
-		static_cast<int64_t>(width) * static_cast<int64_t>(height) <=
-			kMaxGenericPixels;
+	return width >= 9 && height >= 7 && (smart_render ||
+		(width <= 4096 && height <= 4096 &&
+		 static_cast<int64_t>(width) * height <= kMaxGenericPixels));
 }
 
 static bool IsSmartOwnerFullFrameDimensions(A_long width, A_long height)
 {
-	// C04: full-frame ownership is independent of numerical tuple admission.
-	// Tiny frames are admitted below only for separately proven branches.
-	constexpr int64_t kMaxGenericPixels = INT64_C(4096) * INT64_C(2160);
-	return width >= 1 && height >= 1 && width <= 4096 && height <= 4096 &&
-		static_cast<int64_t>(width) * static_cast<int64_t>(height) <= kMaxGenericPixels;
+	return width >= 1 && height >= 1;
+}
+
+// Exact representability checks for the allocations, extent casts and
+// signed 2*n reflection arithmetic reached by the Smart ray workers.
+static bool KiraSmartGeometryFits(A_long width, A_long height, const OLMKiraKiraInfo &info)
+{
+	if (width <= 0 || height <= 0) return false;
+	const int64_t limit = INT32_MAX;
+	const uint64_t pixels = (uint64_t)width * (uint64_t)height;
+	if (pixels > std::vector<FloatRGBA>().max_size() ||
+		(int64_t)width * 2 > limit || (int64_t)height * 2 > limit) return false;
+	const A_long lengths[] = {info.vertical_length, info.horizontal_length,
+		info.diagonal_length, info.diagonal2_length};
+	const double angles[] = {90.0, 0.0, 45.0, 135.0};
+	for (int ray = 0; ray < 4; ++ray) {
+		if (lengths[ray] <= 0) continue;
+		const auto trig = olm::kirakira::extent_sincos(info.glow_rotation + angles[ray]);
+		const float ac = std::abs(trig.cosine), as = std::abs(trig.sine);
+		const auto fits = [&](A_long major, A_long minor) {
+			const float a = (float)major * ac, b = (float)minor * as;
+			const float sum = a + b;
+			const float padded = sum + 4.0f;
+			return std::isfinite(padded) && padded > 0.0f &&
+				(double)padded <= (double)(limit / 2) && (int64_t)major + 4 <= limit / 2;
+		};
+		if (!fits(width, height) || !fits(height, width)) return false;
+		const A_long rw = AexRotatedExtent(width, height, ac, as);
+		const A_long rh = AexRotatedExtent(height, width, ac, as);
+		if ((uint64_t)rw * rh > std::vector<float>().max_size()) return false;
+	}
+	return true;
 }
 
 // Generic beta lane: retain the parameter tuples already closed against the
@@ -1540,10 +1567,10 @@ static bool KiraCheckedAdd(uint64_t left, uint64_t right, uint64_t *out)
 static bool IsGenericBetaMode3BudgetAdmitted(
 	const OLMKiraKiraInfo &info,
 	A_long width,
-	A_long height)
+	A_long height, bool smart_render = false)
 {
 	if (!IsGenericBetaMode3HorizontalTuple(info) ||
-		!IsGenericBetaFullFrameDimensions(width, height)) {
+		!IsGenericBetaFullFrameDimensions(width, height, smart_render)) {
 		return false;
 	}
 	const auto trig = olm::kirakira::extent_sincos(info.glow_rotation);
@@ -1612,8 +1639,8 @@ static bool IsGenericBetaMode3BudgetAdmitted(
 
 	constexpr uint64_t kMaxPluginOwnedBytes = UINT64_C(1) << 30;
 	constexpr uint64_t kMaxMode3WorkUnits = UINT64_C(12000000000);
-	return peak_bytes <= kMaxPluginOwnedBytes &&
-		work_units <= kMaxMode3WorkUnits;
+	return smart_render || (peak_bytes <= kMaxPluginOwnedBytes &&
+		work_units <= kMaxMode3WorkUnits);
 }
 
 static bool GenericBetaDirectionalRayIsAdmitted(
@@ -1645,14 +1672,14 @@ static bool GenericBetaDirectionalRayIsAdmitted(
 static bool IsGenericBetaMode34TupleForGeometry(
 	const OLMKiraKiraInfo &info,
 	A_long width,
-	A_long height)
+	A_long height, bool smart_render = false)
 {
 	if ((info.blur_mode != 3 && info.blur_mode != 4) ||
-		!IsGenericBetaFullFrameDimensions(width, height)) {
+		!IsGenericBetaFullFrameDimensions(width, height, smart_render)) {
 		return false;
 	}
 	const bool tuple_is_admitted = info.blur_mode == 3
-		? IsGenericBetaMode3BudgetAdmitted(info, width, height)
+		? IsGenericBetaMode3BudgetAdmitted(info, width, height, smart_render)
 		: ClassicClosureSourceFamilyForTuple(info) != ClassicClosureSource_None;
 	if (!tuple_is_admitted) return false;
 	return GenericBetaDirectionalRayIsAdmitted(
@@ -1812,7 +1839,8 @@ static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 		info.diagonal_length, info.diagonal2_length};
 	const double offsets[] = {90.0, 0.0, 45.0, 135.0};
 	const uint64_t frame_pixels = static_cast<uint64_t>(width) * height;
-	uint64_t work = frame_pixels * 20u;
+	uint64_t work = 0;
+	if (!KiraCheckedMultiply(frame_pixels, 20u, &work)) return false;
 	uint64_t largest_workspace = 0, largest_kernel = 0;
 	for (int ray = 0; ray != 4; ++ray) {
 		const A_long length = lengths[ray];
@@ -1851,26 +1879,26 @@ static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
     }
 	// Conservative peak: all retained frame planes plus the largest active
 	// helper's three float workspaces and its float/double kernel storage.
-	uint64_t bytes = frame_pixels * 92u, workspace_bytes = 0, kernel_bytes = 0;
-	if (!KiraCheckedMultiply(largest_workspace, 12u, &workspace_bytes) ||
+	uint64_t bytes = 0, workspace_bytes = 0, kernel_bytes = 0;
+	if (!KiraCheckedMultiply(frame_pixels, 92u, &bytes) ||
+		!KiraCheckedMultiply(largest_workspace, 12u, &workspace_bytes) ||
 		!KiraCheckedMultiply(largest_kernel, 12u, &kernel_bytes) ||
 		!KiraCheckedAdd(bytes, workspace_bytes, &bytes) ||
 		!KiraCheckedAdd(bytes, kernel_bytes, &bytes)) return false;
 	// Four-component Gaussian executes one planar helper per component.
 	// Retain the same total work/memory limits with a conservative factor.
 	const uint64_t components = UsesRecoveredColorPipeline(info) ? 4u : 1u;
-	return work <= UINT64_C(12000000000) / components &&
-		bytes <= (UINT64_C(1) << 30) / components;
+	return bytes <= SIZE_MAX / components;
 }
 
 static bool IsGenericBetaTupleForGeometry(
 	const OLMKiraKiraInfo &info,
 	A_long width,
-	A_long height)
+	A_long height, bool smart_render = false)
 {
 	return ((IsGenericBetaMode12Tuple(info) || IsZeroRayTuple(info)) &&
-			IsGenericBetaFullFrameDimensions(width, height)) ||
-		IsGenericBetaMode34TupleForGeometry(info, width, height);
+			IsGenericBetaFullFrameDimensions(width, height, smart_render)) ||
+		IsGenericBetaMode34TupleForGeometry(info, width, height, smart_render);
 }
 
 static bool WorldStorageRangesDoNotOverlap(
@@ -2885,8 +2913,9 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				ClassicClosureSourceMatches(input_world, format, source_family);
 			const bool generic_beta = !exact_closure &&
 				generic_world_layout && pre_is_generic_beta &&
+				KiraSmartGeometryFits(input_world->width, input_world->height, info) &&
 				(IsGenericBetaTupleForGeometry(
-					info, input_world->width, input_world->height) ||
+					info, input_world->width, input_world->height, true) ||
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartScalarBrightnessBoxTuple(info, format) ||
 				 IsSmartApproximationTuple(info, format, input_world->width, input_world->height) ||

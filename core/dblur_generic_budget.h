@@ -51,17 +51,17 @@ struct RenderEstimate {
 };
 
 inline bool SourceGeometrySupported(int width, int height,
-	                                std::size_t *source_pixels = nullptr) noexcept
+	                                std::size_t *source_pixels = nullptr, bool smart_render = false) noexcept
 {
 	if (width <= 0 || height <= 0 ||
-		static_cast<std::size_t>(width) > kMaximumDimension ||
-		static_cast<std::size_t>(height) > kMaximumDimension) {
+		(!smart_render && (static_cast<std::size_t>(width) > kMaximumDimension ||
+		static_cast<std::size_t>(height) > kMaximumDimension))) {
 		return false;
 	}
 	std::size_t pixels = 0;
 	if (!olm::allocation::checked_mul(static_cast<std::size_t>(width),
 		static_cast<std::size_t>(height), &pixels) ||
-		pixels > kMaximumSourcePixels) {
+		(!smart_render && pixels > kMaximumSourcePixels)) {
 		return false;
 	}
 	if (source_pixels) *source_pixels = pixels;
@@ -71,11 +71,11 @@ inline bool SourceGeometrySupported(int width, int height,
 // Mirror the production core's float-narrowed diagonal arithmetic exactly.
 // This is intentionally not a ceil(sqrt()) envelope: odd source dimensions
 // can otherwise differ by a row and make the admission estimate drift.
-inline bool ComputeWorkGeometry(int width, int height, WorkGeometry *result) noexcept
+inline bool ComputeWorkGeometry(int width, int height, WorkGeometry *result, bool smart_render = false) noexcept
 {
 	if (!result) return false;
 	std::size_t ignored_source_pixels = 0;
-	if (!SourceGeometrySupported(width, height, &ignored_source_pixels)) return false;
+	if (!SourceGeometrySupported(width, height, &ignored_source_pixels, smart_render)) return false;
 	const std::int64_t diagonal_squared =
 		static_cast<std::int64_t>(width) * width +
 		static_cast<std::int64_t>(height) * height;
@@ -207,7 +207,7 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 	                       int effective_back_strength,
 	                       std::size_t smart_staging_bytes,
 	                       RenderEstimate *result,
-	                       bool allow_zero_strength = false) noexcept
+	                       bool allow_zero_strength = false, bool smart_render = false) noexcept
 {
 	if (!result || effective_front_strength < 0 || effective_front_strength > 4000 ||
 		effective_back_strength < 0 || effective_back_strength > 4000 ||
@@ -215,8 +215,8 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 		return false;
 	}
 	RenderEstimate estimate = {};
-	if (!SourceGeometrySupported(width, height, &estimate.source_pixels) ||
-		!ComputeWorkGeometry(width, height, &estimate.work)) {
+	if (!SourceGeometrySupported(width, height, &estimate.source_pixels, smart_render) ||
+		!ComputeWorkGeometry(width, height, &estimate.work, smart_render)) {
 		return false;
 	}
 	std::size_t pixel_bytes = 0;
@@ -234,11 +234,12 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 		!EstimateOperationUnits(estimate.work, effective_front_strength,
 			effective_back_strength,
 			&estimate.operation_units) ||
-		estimate.operation_units > kOperationUnitLimit) {
+		(!smart_render && estimate.operation_units > kOperationUnitLimit)) {
 		return false;
 	}
 	estimate.smart_staging_bytes = smart_staging_bytes;
-	olm::allocation::RenderBudget budget(kPluginOwnedLiveLimitBytes);
+	olm::allocation::RenderBudget budget(smart_render ?
+        std::numeric_limits<std::size_t>::max() : kPluginOwnedLiveLimitBytes);
 	if (!budget.reserve_bytes(kUnmodelledAllocationReserveBytes) ||
 		!budget.reserve_bytes(estimate.core_workspace_bytes) ||
 		!budget.reserve_bytes(estimate.wrapper_bytes) ||
@@ -257,14 +258,15 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     int front, int back, int front_fade, int back_fade, bool component,
     bool noise, float thickness, std::size_t smart_bytes,
     RenderEstimate *result, bool layer = false,
-    double layer_coefficient_bound = std::numeric_limits<double>::infinity()) noexcept
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity(),
+    bool smart_render = false) noexcept
 {
     if (!result || (depth != 16 && depth != 32) || front_fade < 0 ||
         front_fade > 100 || back_fade < 0 || back_fade > 100 ||
         (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate,
-            front_fade > 0 || back_fade > 0)) return false;
+            front_fade > 0 || back_fade > 0, smart_render)) return false;
     // Unknown deep Layer values need a full-row bound. After the allocation
     // preflight and finite-pixel scan, the caller can supply a tighter bound
     // which already includes float rounding through the final span multiply.
@@ -300,8 +302,9 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
         !CheckedMulU64(noise_pixels, 64u, &extra_units) ||
         !CheckedAddU64(extra_units, gather_units, &extra_units) ||
         !CheckedAddU64(estimate.operation_units, extra_units, &estimate.operation_units) ||
-        estimate.operation_units > kOperationUnitLimit) return false;
-    olm::allocation::RenderBudget budget(kPluginOwnedLiveLimitBytes);
+        (!smart_render && estimate.operation_units > kOperationUnitLimit)) return false;
+    olm::allocation::RenderBudget budget(smart_render ?
+        std::numeric_limits<std::size_t>::max() : kPluginOwnedLiveLimitBytes);
     if (!budget.reserve_bytes(estimate.plugin_owned_live_bytes) ||
         !budget.reserve_bytes(component_bytes) || !budget.reserve_bytes(noise_bytes) ||
         !budget.reserve_bytes(fade_bytes) ||
