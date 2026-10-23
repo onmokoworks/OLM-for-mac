@@ -1,11 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Closed the AEX-rendered PF8 large-Box Mac timeout with a certified exact-sum fast path.
-- Seed1/105 baseline reproduces C52: 290/283 Smart exact, zero mismatch; all prior exact dictionaries preserved.
-- Timed seed105/150 improves 22.068s to 0.229s, identical original/baseline/candidate/sanitized output.
-- Direct arithmetic 432 cases and independent public matrix 198 cases pass; 745 before/current/sanitized comparisons preserve outputs.
-- Investigating an independently discovered, pre-existing PF16 large-Box precision boundary next.
+- Closed three clusters: Smart Box timeout, PF8/PF16 Box area precision, and finite large-radius PF32 scalar Bilateral.
+- Final seed1 remains290 exact; seed105 improves283→285 exact. Zero Smart mismatches or prior exact/hash losses.
+- Seed105/150 improves22.07s→0.229s;292 refusal→exact. Independent PF16 witness32 differing words→0.
+- Public matrices594 exact plus432 arithmetic comparisons and IPP leaf checks pass with sanitizers; corpus147/147 unchanged.
+- All successful originals in both measured seeds now have exact Smart outputs; three-cluster stop reached.
 
 facts:
 - Base `8056458b0c71ba76130066c449c9eb9578faebfd`, branch `orch/C54-dg-smart-r2`. Read AGENT_GUIDE, GOTCHAS, compatibility plan, DG ledger row and DG triage/fix reports (C52 first); F10/F12 admission method. No MAIN, emulator sources/workers, ledger, release-gate or other-plugin edits.
@@ -106,3 +106,78 @@ Expected:216+162 exact/sanitized-identical; zero prior exact losses, corpus147 u
 
 next:
 - Two clusters closed. Remeasuring seed1 and testing large-radius PF32 scalar Bilateral in scratch before any admission change.
+
+Cluster2 remeasurement:
+
+FACT: Fresh seed1 after cluster2 completes300,290 exact/0 mismatch/3 refusal/1 budget/6 uncompared; every result dictionary is identical to its post-performance campaign.
+
+Cluster3 — finite PF32 scalar Bilateral through radius500 (baseaffd91da):
+
+facts:
+- Original successful-reference residual seed105/292 is1x1 PF32 HDR Bilateral Size392. Its gate-off zero output alone was already insufficient in C52; this ticket uses independent nonzero fields instead.
+- Independent7x3/radius33 gate-off trace: pre-filter21/21 words equal; post-filter and final field21/21 words differ, first original `8f71373f`, Mac `0000803f`. Output54 words/181 bytes differ, first word1/byte4 original `2690c53d`, Mac `e1e0e03d`. The ungated baseline skips the filter beyond the existing dispatch bound.
+- Selecting the existing scalar IPP body for that shape/radius makes every pre/post/final field word and all336 output bytes exact. Original public and relocated typed callback remain bound. No exponent, tap order, border handling, accumulation, normalization or writer operation is changed.
+- Import-free original IPP init/filter at radius33 dispatches `0x1806be1e0` once and reproduces the captured public post-plane.21 filtered words and8217 exponential inputs match O2 strict, O3 requesting contraction, and ASan/UBSan; no original imports. Diagnostic harness cap extends32→64, within its existing1MiB spec/8MiB scratch allocation; no reference worker is modified or rebuilt.
+- New general rule: full-resolution Smart PF32 scalar-shape radius3..500 (width<=2*radius OR height<=2*radius), using the existing finite/source/control/Power predicates. PF8 retains its previous radius32 scalar selector and general-dispatch behavior; PF16 and vector-shape radius bound remain unchanged. Existing finite Power[0.01,5] admission applies; nonfinite samples and positive alpha-to-int32 overflow still refuse.
+- Independent ordinary108 plus extreme108 public-original comparisons are all exact and sanitizer-identical. Radii33/392/500; geometries7x3/1x7/7x3; all ownership modes, RGB/Layer, background/inversion variation, Constant/Linear/Sphere and Power0.01/2.25/5. Ordinary sources include HDR/signed RGB and alpha; extremes include maximum finite signed RGB, maximum negative alpha, alpha8421504 at the mask-conversion edge, subnormals and signed zero. Padded strides throughout.
+- Eight independent negative controls remain refused and sanitizer-identical: radius2, radius501,67x67/radius33 non-scalar shape, Power0.005/5.01, positive alpha conversion overflow, RGB infinity and NaN. No original output is claimed for negative controls.
+- Before/current/sanitized verifier:185 PF32 campaign cases plus147 corpus cases, exit0. Seed1 remains91 exact+4 nonexact. Seed10587 exact+2 nonexact unchanged, only292 refusal→exact. All147 corpus outputs are exact and unchanged; no expectation edits and no sanitizer diagnostic (leak detection disabled).
+
+| Smart fixed-oracle comparison | Before cluster3 | After cluster3 |
+|---|---|---|
+| seed1 exact/mismatch/refusal/budget/uncompared |290/0/3/1/6|290/0/3/1/6|
+| seed105 exact/mismatch/refusal/budget/uncompared |284/0/3/2/11|285/0/2/2/11|
+| corpus147 |147 exact|147 exact, identical hashes|
+
+inference:
+- This residual is an omitted bounded dispatch/admission range. Independent filter-plane and import-free IPP evidence support reuse of the existing general scalar operation. The radius500 cap is the tested admission boundary, not a claim that the original rejects501 or that all larger radii are incorrect.
+- All successful originals in the fixed seed1/105 reference sets now have exact Smart outputs. Original assertion/timeout domains remain unresolved and are not converted into exact evidence.
+
+changed_files (additional):
+- `mac/OLMDistanceGradation/OLMDistanceGradation.cpp`: PF32-only scalar-radius selector bound/comment.
+- `tools/emulation/trace_distancegradation_bilateral_C19.py`: diagnostic radius cap64.
+- C54 negative/ordinary/extreme probe, audit, report and bound evidence.
+
+verify (cluster3; same scratch environment):
+```sh
+python3 tools/fuzz/probe_distancegradation_C54.py --mode bilateral --scratch "$s/bilateral" --report "$s/bilateral.json" > "$s/bilateral.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C54.py --mode bilateral --extreme --scratch "$s/bilateral-extreme" --report "$s/bilateral-extreme.json" > "$s/bilateral-extreme.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C54.py --mode bilateral --negative --scratch "$s/bilateral-negative" --report "$s/bilateral-negative.json" > "$s/bilateral-negative.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref affd91da --campaign "$s/seed1.json" --campaign "$s/seed105.json" --campaign-pf32-only --corpus --strict-admission --case-timeout 180 --scratch "$s/bilateral-verify" --report "$s/bilateral-verify.json" > "$s/bilateral-verify.log" 2>&1
+"$py" tools/emulation/trace_distancegradation_smart_C14.py --case-json orchestra/reports/C54-evidence/bilateral33-case.json --scratch "$s/bilateral-trace" --report "$s/bilateral-trace.json" > "$s/bilateral-trace.log" 2>&1
+"$py" tools/emulation/trace_distancegradation_bilateral_C19.py --trace "$s/bilateral-trace.json" --source mac/OLMDistanceGradation/OLMDistanceGradation.cpp --width 7 --height 3 --radius 33 --scratch "$s/bilateral-leaf" --report "$s/bilateral-leaf.json" > "$s/bilateral-leaf.log" 2>&1
+```
+Expected:108+108 exact,8 refused; only292 newly exact versus cluster2,147 corpus unchanged; pre/post/field/output all exact,8217 exp/21 plane words exact in all3 leaf builds. To reproduce the pre-admission diagnostic, apply `candidate_source('gate-off', <affd91da source>)` from `tools/fuzz/probe_distancegradation_C19.py` in scratch and pass it as `--source` to the trace. The gate-off source is never production.
+
+next:
+- Three clusters closed; final full campaigns and strict saved-corpus replay are completing before handoff.
+
+
+Final verification and handoff:
+
+FACT: Final production source SHA256 `8b787fe2a9003f09becaea3b7aa55b3b8e91234b7b248cf414464bcfc0bb8744`. Both final full n300 campaigns exit0, complete300. Every seed1 result dictionary is identical to the starting campaign. Every seed105 Classic result dictionary is identical; the only changed Smart dictionaries are150 (budget→exact) and292 (refusal→exact). All290+283 initially exact Smart hashes remain identical. Input hashes, geometry, depth, parameters, profile and padding are unchanged. The final audit asserts these facts.
+
+| Final measured Smart, timeout10s | exact | mismatch | refusal | Mac budget | uncompared |
+|---|---:|---:|---:|---:|---:|
+| seed1 |290|0|3|1|6|
+| seed105 |285|0|2|2|11|
+
+FACT: Final strict saved-corpus replay exits0,147 completed,147 `matches_saved=true`, honoring the saved worker bindings without override. No corpus expectation changes. The first cluster's retained198 public matrix is superseded by the final216 Box+162 area-boundary checks; together with216 Bilateral checks this is594 final independent public comparisons, all exact and sanitizer-identical. O2/ASan432 direct arithmetic cases and O2/O3/ASan8217-exp/21-plane-word IPP comparisons also pass. The corpus and finite campaigns do not establish native AE or all-input conformance.
+
+FACT: All launched render/build/profile processes have completed. Regenerable scratch build trees and duplicate generated corpus directories were removed; retained scratch files total13,036,676 bytes (<5GiB). Six edited/new Python files parse, evidence audit and `git diff --check` pass. No permission rejection occurred. No MAIN, emulator source/worker, installed bundle, release-gate, ledger, other-plugin or corpus expectation changes; no push/stash/history rewrite/subagents.
+
+Final quick verification:
+```sh
+python3 tools/fuzz/audit_distancegradation_C54.py
+git diff --check
+```
+Expected exit0: manifests match; all previous exact outputs preserved; only150/292 improve; all matrix/trace/sanitizer assertions and corpus147 pass. Full reproduction commands are above. Strict corpus replay can also be independently repeated:
+```sh
+python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 1 --scratch "$s/corpus-final" --report "$s/corpus-final.json" > "$s/corpus-final.log" 2>&1
+```
+Expected exit0,147/147 matches saved. Fresh wall-time outcomes may vary with shared-machine load and are never counted as numerical evidence.
+
+next:
+- Stop: three clusters closed. No AEX-successful nonexact Smart case remains in the measured seed1/105 sets.
+- Follow-up domains: PF32 Bilateral radius2, scalar radius>500 and larger vector/HDR/Power combinations; original Median assertion and oracle-timeout domains. Seed1/10 Mac Bilateral timeout also has an original timeout; seed105/205,296 Mac Median timeouts have original assertions. They remain unresolved, not exact, and need their own performance/oracle work.
+- Native AE/host/ROI and existing Classic mismatches remain outside this ticket. No newly identified original undefined-memory bug or deterministic-oracle change is claimed.

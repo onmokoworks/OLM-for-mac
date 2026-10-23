@@ -766,7 +766,9 @@ static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
 	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
 	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
-	return radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
+	// Retain PF8 dispatch; PF32 scalar tiles are verified through radius 500.
+	return radius >= 3 && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
+	    (w <= 2*radius || h <= 2*radius);
 }
 
 // Bounded lane of the original IPP vector exponential (180ba5780).

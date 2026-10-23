@@ -24,11 +24,22 @@ def main():
             after=read(f'{prefix}seed{seed}');assert after['completed']==300
             for b,a in zip(base['cases'],after['cases']):
                 assert b['index']==a['index'] and b['input_sha256']==a['input_sha256']
+                assert all(b[k]==a[k] for k in ('geometry','depth','parameters','profile','input_padding','output_padding'))
                 br=b['result']['routes']['smart'];ar=a['result']['routes']['smart']
                 if br['status']=='exact':assert ar['status']=='exact' and br['raw_sha256']==ar['raw_sha256']
             counts=Counter(r['result']['routes']['smart']['status'] for r in after['cases'])
             assert counts['mismatch']==0
             summary[f'{prefix}seed{seed}']=dict(counts)
+            if prefix=='final-':
+                changed=[b['index'] for b,a in zip(base['cases'],after['cases']) if b['result']['routes']['smart']!=a['result']['routes']['smart']]
+                assert changed==([] if seed==1 else [150,292])
+                assert all(b['result']['routes']['classic']==a['result']['routes']['classic'] for b,a in zip(base['cases'],after['cases']))
+                assert counts['exact']==(290 if seed==1 else 285)
+    existing=read('box16-before')['rows'][0]
+    assert not existing['exact'] and existing['before_equal'] and existing['sanitized_equal']
+    assert existing['diff']['different_words']==32 and existing['diff']['first_word']==46
+    discovery=read('box')['rows']
+    assert len(discovery)==135 and sum(r['exact'] for r in discovery)==134
     leaf=read('leaf')
     assert all(b['output']=='cases=432 certified=248 fallback=184 differing=0' for b in leaf['builds'])
     target=read('target')['rows'][0]
@@ -53,6 +64,17 @@ def main():
         assert before['pre_diff']['different_words']==0 and before['post_diff']['different_words']==110
         assert before['output_diff']['different_words']==32
         assert all(after[k]['different_words']==0 for k in ('pre_diff','post_diff','output_diff'))
+    if (E/'bilateral-negative.json.gz').exists():
+        d=read('bilateral-negative');assert d['completed'] and len(d['rows'])==8
+        assert all(r['candidate']['status']=='refusal' and r['sanitized_equal'] for r in d['rows'])
+    if (E/'bilateral-trace-after.json.gz').exists():
+        b=read('bilateral-trace-before')['rows'][0];a=read('bilateral-trace-after')['rows'][0]
+        assert b['pre_diff']['different_words']==0 and b['post_diff']['different_words']==21
+        assert b['output_diff']['different_words']==54
+        assert all(a[k]['different_words']==0 for k in ('pre_diff','post_diff','field_diff','output_diff'))
+    if (E/'bilateral-leaf.json.gz').exists():
+        d=read('bilateral-leaf');assert not d['original_imports'] and d['radius']==33
+        assert all(b['exp_diff']['different_words']==0 and b['post_diff']['different_words']==0 for b in d['builds'])
     if (E/'corpus-final.json.gz').exists():
         d=read('corpus-final');assert d['completed']==147 and d['replay_matches_saved']
     print(json.dumps(dict(manifest_files=len(manifest),checks=summary,acceptance_met=True),sort_keys=True))

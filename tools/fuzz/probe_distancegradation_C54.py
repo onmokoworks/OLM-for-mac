@@ -44,10 +44,12 @@ def matrix(a, mode, extreme=False):
 
 def negatives(a):
     c0=next(matrix(a,'bilateral'))[1]
-    for label,params,word in [('radius2',{12:2},None),('radius501',{12:501},None),
+    for label,params,word in [('radius2',{12:2},None),('radius501',{12:501},None),('non-scalar-shape',{},None),
         ('power-low',{9:4,10:.005},None),('power-high',{9:4,10:5.01},None),
         ('alpha-overflow',{},(0,0x4b008081)),('rgb-infinity',{},(1,0x7f800000)),('rgb-nan',{},(1,0x7fc12345))]:
         c=copy.deepcopy(c0)
+        if label=='non-scalar-shape':
+            c['geometry']=[67,67];c['pixels']=(c['pixels']*((67*67+20)//21))[:67*67*16]
         for q in c['parameters']:
             if q['slot'] in params:q['value']=params[q['slot']]
         if word:
