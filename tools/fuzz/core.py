@@ -21,22 +21,90 @@ def case_seed(seed, index):
     return int.from_bytes(hashlib.sha256(f'{seed}:{index}'.encode()).digest()[:8], 'little')
 
 
+CLEANUP_TIMEOUT = 1.0
+
+
+def timeout_cleanup(proc):
+    """Bound cleanup even when signaling fails or descendants hold the pipes."""
+    errors = []
+    group_failed = False
+    try:
+        os.killpg(proc.pid, signal.SIGKILL)
+    except OSError as exc:
+        group_failed = True
+        errors.append(f'killpg: {type(exc).__name__}: {exc}')
+    # poll reaps an exited child and avoids signaling a reused PID. A missing
+    # group does not prove that the child exited (it may have changed groups).
+    if proc.poll() is None:
+        try:
+            proc.kill()
+        except OSError as exc:
+            errors.append(f'kill pid: {type(exc).__name__}: {exc}')
+    drained = False
+    out = err = b''
+    try:
+        out, err = proc.communicate(timeout=CLEANUP_TIMEOUT)
+        drained = True
+    except subprocess.TimeoutExpired as exc:
+        out, err = exc.output or b'', exc.stderr or b''
+        errors.append('pipe drain timed out')
+    except OSError as exc:
+        errors.append(f'pipe drain: {type(exc).__name__}: {exc}')
+    finally:
+        for stream in (proc.stdin, proc.stdout, proc.stderr):
+            if stream is not None:
+                try:
+                    stream.close()
+                except OSError as exc:
+                    errors.append(f'pipe close: {type(exc).__name__}: {exc}')
+    reaped = proc.poll() is not None
+    group_gone = not group_failed
+    if group_failed:
+        try:
+            os.killpg(proc.pid, 0)
+            group_gone = False
+        except ProcessLookupError:
+            group_gone = True
+        except OSError as exc:
+            # EPERM alone is not evidence that a group has disappeared.
+            errors.append(f'group probe: {type(exc).__name__}: {exc}')
+    complete = reaped and drained and group_gone
+    return {'status': 'done' if complete else 'unresolved', 'pid': proc.pid,
+            'child_reaped': reaped, 'pipes_drained': drained,
+            'group_cleanup_confirmed': group_gone, 'errors': errors}, out, err
+
+
 def command(argv, *, data=None, timeout, deadline, env=None):
-    """Kill the entire subprocess group at either deadline; never use shell=True."""
+    """Kill the subprocess group at either deadline; never use shell=True."""
     remaining = min(timeout, deadline - time.monotonic())
     if remaining <= 0:
         return {'status': 'budget', 'reason': 'campaign deadline'}, b'', b''
-    with subprocess.Popen(list(map(str, argv)), stdin=subprocess.PIPE,
-                          stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                          env=env, start_new_session=True) as proc:
-        try:
-            out, err = proc.communicate(data, timeout=remaining)
-        except subprocess.TimeoutExpired:
-            os.killpg(proc.pid, signal.SIGKILL)
-            out, err = proc.communicate()
-            return {'status': 'budget', 'reason': 'wall timeout', 'limit_seconds': remaining}, out, err
+    # Popen.__exit__ waits without a timeout; do not use it when cleanup may
+    # fail. communicate closes the pipes on success, timeout_cleanup on failure.
+    proc = subprocess.Popen(list(map(str, argv)), stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=env, start_new_session=True)
+    try:
+        out, err = proc.communicate(data, timeout=remaining)
+    except subprocess.TimeoutExpired:
+        cleanup, out, err = timeout_cleanup(proc)
+        result = {'status': 'budget', 'reason': 'wall timeout', 'limit_seconds': remaining}
+        if cleanup['errors'] or cleanup['status'] != 'done':
+            result['cleanup'] = cleanup
+        return result, out, err
+    except BaseException:
+        timeout_cleanup(proc)
+        raise
     return {'status': 'ok' if proc.returncode == 0 else 'error',
             'returncode': proc.returncode}, out, err
+
+
+def unresolved_cleanup(result):
+    """Keep lifecycle failures separate from completed pixel comparisons."""
+    statuses = [result['oracle'], *result.get('oracles', {}).values(),
+                *result['routes'].values()]
+    return [s['cleanup'] for s in statuses
+            if s.get('cleanup', {}).get('status') == 'unresolved']
 
 
 def raw_diff(expected, actual, depth):
@@ -169,6 +237,7 @@ def shrink(adapter, original, result, directory, deadline, max_attempts):
     operations = []
     attempts = 0
     outcomes = {}
+    unresolved = []
     # Bounded greedy passes; explicitly not a proof of global minimality.
     while attempts < max_attempts and time.monotonic() < deadline:
         improved = False
@@ -180,6 +249,9 @@ def shrink(adapter, original, result, directory, deadline, max_attempts):
                 continue
             attempts += 1
             observed = evaluate(adapter, candidate, directory, deadline)
+            unresolved.extend(unresolved_cleanup(observed))
+            if unresolved:
+                break
             outcome = observed['oracle']['status'] + '/' + ','.join(
                 observed['routes'][route]['status'] for route in adapter.routes)
             outcomes[outcome] = outcomes.get(outcome, 0) + 1
@@ -191,7 +263,8 @@ def shrink(adapter, original, result, directory, deadline, max_attempts):
         if not improved:
             break
     return case, result, {'attempts': attempts, 'accepted': operations,
-                          'outcomes': outcomes, 'bounded': True, 'minimality_claimed': False}
+                          'outcomes': outcomes, 'bounded': True, 'minimality_claimed': False,
+                          **({'unresolved_cleanup': unresolved} if unresolved else {})}
 
 
 def signature(adapter, case, result):

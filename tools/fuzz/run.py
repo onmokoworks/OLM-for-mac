@@ -20,7 +20,7 @@ import traceback
 import threading
 
 sys.dont_write_bytecode = True
-from core import evaluate, load_corpus, mismatch_routes, save_corpus, sha, shrink, signature
+from core import evaluate, load_corpus, mismatch_routes, save_corpus, sha, shrink, signature, unresolved_cleanup
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SCRATCH = ROOT/'orchestra/state/T02-fuzz-framework-radialblur'
@@ -189,11 +189,13 @@ def run_one(adapter, seed, index, scratch, deadline, args, provenance):
         original = evaluate(adapter, case, directory, deadline, attribution)
         row = {k:v for k,v in case.items() if k != 'pixels'}
         row.update(input_sha256=sha(case['pixels']), result=original)
+        cleanup_failures = unresolved_cleanup(original)
         if attribution:
             row['refusal_guards'] = attribution
         if mismatch_routes(original):
             reduced, observed, reduction = shrink(adapter, case, original, directory,
                 min(deadline, time.monotonic()+args.shrink_seconds), args.shrink_attempts)
+            cleanup_failures.extend(reduction.get('unresolved_cleanup', []))
             key = signature(adapter, reduced, observed)
             filename = f'seed{seed}_case{index:06d}_{sha(key.encode())[:12]}.json'
             path = args.corpus/filename
@@ -208,6 +210,9 @@ def run_one(adapter, seed, index, scratch, deadline, args, provenance):
                        corpus_retained=retained, corpus_omission=None if retained else 'byte cap',
                        shrunk_geometry=reduced['geometry'], shrink_attempts=reduction['attempts'],
                        shrink_accepted=len(reduction['accepted']))
+        if cleanup_failures:
+            row.update(status='unresolved', reason='timeout cleanup could not be confirmed',
+                       unresolved_cleanup=cleanup_failures)
         row['elapsed_seconds'] = round(time.monotonic()-started, 4)
         return row
 
@@ -219,6 +224,8 @@ def summarize(rows):
         if 'worker_error' in row:
             counts['framework_error'] += 1
             continue
+        if row.get('status') == 'unresolved':
+            counts['unresolved_cases'] += 1
         result = row['result']
         counts['aex_'+result['oracle']['status']] += 1
         for route, oracle in result.get('oracles', {}).items():

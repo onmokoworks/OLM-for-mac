@@ -69,6 +69,15 @@ budgets, Mac refusals/budgets/errors, and uncompared outputs have separate count
 A public Mac error does not reveal whether its internal cause was a work budget or
 unsupported controls; the original PF_Err is retained without inventing a reason.
 
+Timeout cleanup falls back to killing the child PID when necessary and bounds
+pipe draining to one additional second. A missing group is harmless only after
+the child has been reaped; an EPERM probe does not prove the group is gone.
+Unconfirmed cleanup is retained as row `status: unresolved`, with `reason` and
+`unresolved_cleanup` diagnostics (including PID), and counted in `unresolved_cases`.
+During shrinking, it stops reduction and preserves the last completed comparison
+and corpus; completed route classifications are unchanged. These recorded lifecycle
+failures do not turn a measured campaign into a framework exception/exit 2.
+
 Scratch is confined to this worktree's `orchestra/state/T02-fuzz-framework-radialblur/`
 (or `--scratch` under `orchestra/state/`), never `/tmp`. Child TMPDIR follows it.
 Each replay uses a fresh disposable directory, including the worker's exclusive

@@ -1,0 +1,101 @@
+{
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "campaign_sha256": "5a9971541397b8664dbbea3d8c98c5852737d9bb64fa940caa6cba8752e8578f",
+  "classification_changes": [
+    {
+      "after": {
+        "aex_classic": "ok",
+        "aex_smart": "ok",
+        "classic": "mismatch",
+        "oracle": "ok",
+        "smart": "exact"
+      },
+      "before": {
+        "aex_classic": "ok",
+        "aex_smart": "ok",
+        "classic": "mismatch",
+        "oracle": "ok",
+        "smart": "refusal"
+      },
+      "index": 125
+    },
+    {
+      "after": {
+        "aex_classic": "ok",
+        "aex_smart": "ok",
+        "classic": "mismatch",
+        "oracle": "ok",
+        "smart": "exact"
+      },
+      "before": {
+        "aex_classic": "ok",
+        "aex_smart": "ok",
+        "classic": "mismatch",
+        "oracle": "ok",
+        "smart": "refusal"
+      },
+      "index": 245
+    }
+  ],
+  "completed": 300,
+  "dependencies_unchanged": false,
+  "dependency_changes": {
+    "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": {
+      "after": "8a13dc9d113ef735f0d11e4f6d9ce6a914621b1d508e67cb442f0eb4ce8cbd63",
+      "before": "93e70987a6f0eabc36bda4f351a6d8d8972e8fe6b61cf81add876119e4eff7a0"
+    }
+  },
+  "elapsed_seconds": 1756.1519,
+  "first_mismatch": {
+    "diff": {
+      "actual_bytes": 460,
+      "actual_word_hex": "18",
+      "different_bytes": 316,
+      "different_words": 316,
+      "expected_bytes": 460,
+      "expected_word_hex": "24",
+      "first_byte": 0,
+      "first_word": 0
+    },
+    "index": 1,
+    "route": "classic"
+  },
+  "matching_classifications": 296,
+  "raw_hash_changes": [],
+  "recovered_rows": {
+    "123": {
+      "aex_classic": "ok",
+      "aex_smart": "ok",
+      "classic": "mismatch",
+      "oracle": "ok",
+      "smart": "exact"
+    },
+    "50": {
+      "aex_classic": "ok",
+      "aex_smart": "ok",
+      "classic": "mismatch",
+      "oracle": "ok",
+      "smart": "exact"
+    }
+  },
+  "shared_raw_hashes": 1446,
+  "summary": {
+    "aex_budget": 3,
+    "aex_classic_ok": 300,
+    "aex_ok": 285,
+    "aex_reject": 12,
+    "aex_smart_budget": 3,
+    "aex_smart_ok": 285,
+    "aex_smart_reject": 12,
+    "both_routes_exact": 5,
+    "classic_budget": 3,
+    "classic_exact": 7,
+    "classic_mismatch": 290,
+    "pixel_mismatch_cases": 290,
+    "smart_budget": 3,
+    "smart_exact": 280,
+    "smart_refusal": 6,
+    "smart_uncompared": 11
+  },
+  "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903"
+}
