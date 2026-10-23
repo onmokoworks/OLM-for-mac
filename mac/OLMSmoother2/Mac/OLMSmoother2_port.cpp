@@ -1,3 +1,4 @@
+#include "../../../ucrtmath/include/ucrtmath.h"
 // OLMSmoother2.cpp — macOS literal port of the Windows OLMSmoother2.aex pipeline.
 // Session B: frame-level setup (copy/unpremul/key/invert/gamma-encode) +
 //            5-stage per-pixel pipeline + inverse-gamma output.
@@ -536,7 +537,7 @@ static inline float win_srgb_decode_one(float v) {
 	if (d < S_BOUND) return (float)(d * S_INVSCALE);      // v * DAT_1800226c0
 	// Ghidra literal: pow(v * (1/1.055) + 0.055/1.055, 2.4)
 	const double offset_over_1055 = 0.055 / 1.055;        // DAT_1800226b0 ≈ 0.05213
-	return (float)pow(d * S_INV1055 + offset_over_1055, S_24);
+	return (float)ucrt_pow(d * S_INV1055 + offset_over_1055, S_24, UCRT_FMA);
 }
 
 static inline float win_srgb_lut_interpolate(const unsigned char *table_bytes,
@@ -4105,13 +4106,13 @@ static void gamma_decode_premul(FPix &center, SmootherPolygon &poly,
 		// promotes that rounded float32 exponent to double for imported pow.
 		const float exponent_f = K_ONE / gamma_value;
 		const double e = (double)exponent_f;
-		center.r = (float)pow((double)center.r, e);
-		center.g = (float)pow((double)center.g, e);
-		center.b = (float)pow((double)center.b, e);
+		center.r = (float)ucrt_pow((double)center.r, e, UCRT_FMA);
+		center.g = (float)ucrt_pow((double)center.g, e, UCRT_FMA);
+		center.b = (float)ucrt_pow((double)center.b, e, UCRT_FMA);
 		for (int i = 0; i < poly.count; ++i) {
-			poly.samples[i].r = (float)pow((double)poly.samples[i].r, e);
-			poly.samples[i].g = (float)pow((double)poly.samples[i].g, e);
-			poly.samples[i].b = (float)pow((double)poly.samples[i].b, e);
+			poly.samples[i].r = (float)ucrt_pow((double)poly.samples[i].r, e, UCRT_FMA);
+			poly.samples[i].g = (float)ucrt_pow((double)poly.samples[i].g, e, UCRT_FMA);
+			poly.samples[i].b = (float)ucrt_pow((double)poly.samples[i].b, e, UCRT_FMA);
 		}
 	}
 	if (center.a != 1.0f) {
@@ -4193,9 +4194,9 @@ static void post_unpremul_gamma(FPix &px, bool gamma_enable, float gamma_value) 
 	}
 	if (gamma_enable && gamma_value > 0.0f) {
 		double e = (double)gamma_value;
-		px.r = (float)pow((double)px.r, e);
-		px.g = (float)pow((double)px.g, e);
-		px.b = (float)pow((double)px.b, e);
+		px.r = (float)ucrt_pow((double)px.r, e, UCRT_FMA);
+		px.g = (float)ucrt_pow((double)px.g, e, UCRT_FMA);
+		px.b = (float)ucrt_pow((double)px.b, e, UCRT_FMA);
 	}
 	if (px.r < 0.0f) px.r = 0.0f; else if (px.r > 1.0f) px.r = 1.0f;
 	if (px.g < 0.0f) px.g = 0.0f; else if (px.g > 1.0f) px.g = 1.0f;
@@ -4352,7 +4353,7 @@ static inline double win_FUN_180004d70_literal(double v)
 	if (v <= 0.0) return 0.0;
 	if (v >= S_ONE) return S_ONE;
 	if (v < S_BREAK) return v * S_1292;
-	return pow(v, S_INV24) * S_1055 - S_OFFSET2;
+	return ucrt_pow(v, S_INV24, UCRT_FMA) * S_1055 - S_OFFSET2;
 }
 
 static void OLMSmoother2WriteWriterFrameProbe(bool apply_inverse_gamma, bool keep_premul)

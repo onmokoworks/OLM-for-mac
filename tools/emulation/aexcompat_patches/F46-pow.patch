@@ -1,0 +1,46 @@
+--- a/crates/olm-ucrtmath/build.rs
++++ b/crates/olm-ucrtmath/build.rs
+@@ -8 +8 @@
+-    for name in ["expf", "atan2f", "powf", "tables", "../ms/float", "../ms/double"] {
++    for name in ["expf", "atan2f", "powf", "tables", "../ms/float", "../ms/double", "../ms/pow"] {
+--- a/crates/olm-ucrtmath/src/lib.rs
++++ b/crates/olm-ucrtmath/src/lib.rs
+@@ -12,0 +13 @@
++    fn ucrt_pow(x: f64, y: f64, mode: i32) -> f64;
+@@ -33,0 +35,2 @@
++
++pub fn pow(x: f64, y: f64) -> f64 { unsafe { ucrt_pow(x, y, mode()) } }
+--- a/crates/aex-guest-worker/src/x64/imports.rs
++++ b/crates/aex-guest-worker/src/x64/imports.rs
+@@ -2694 +2694 @@
+-                    install_double_binary_import(unicorn, stub, "pow", f64::powf)?;
++                    install_double_binary_import(unicorn, stub, "pow", olm_ucrtmath::pow)?;
+--- a/crates/aex-guest-worker/src/native_x64/imports.rs
++++ b/crates/aex-guest-worker/src/native_x64/imports.rs
+@@ -307 +307 @@
+-    left.powf(right)
++    olm_ucrtmath::pow(left, right)
+--- a/crates/aex-guest-worker/src/x64/f30_import_probe.rs
++++ b/crates/aex-guest-worker/src/x64/f30_import_probe.rs
+@@ -12,0 +13 @@
++        ("pow", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Pow)) => install_double_binary_import(&mut uc, CODE, "pow", olm_ucrtmath::pow).unwrap(),
+@@ -17,5 +18,14 @@
+-        let mut z = (i ^ 0xf45).wrapping_add(0x9e3779b97f4a7c15);
+-        z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+-        z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
+-        z ^= z >> 31;
+-        let (a,b) = (z, 0u64);
++        fn mix(mut z: u64) -> u64 {
++            z = z.wrapping_add(0x9e3779b97f4a7c15);
++            z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
++            z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
++            z ^ (z >> 31)
++        }
++        let (x,y) = (mix(i ^ 0xf46), mix(i ^ 0x706f77));
++        // Plugin ranges: normalized/HDR bases, sRGB gamma and repeat exponents.
++        let (a,b) = if std::env::var("F46_RANGE").as_deref() == Ok("plugin") {
++            let base = (x >> 11) as f64 / 9007199254740992.0;
++            let exponent = match i % 4 { 0 => 2.4, 1 => 1.0/2.4,
++                2 => (y % 100) as f64, _ => (y >> 11) as f64 / 9007199254740992.0 * 10.0 };
++            ((if i % 8 == 0 {base * 16.0} else {base}).to_bits(), exponent.to_bits())
++        } else { (x,y) };

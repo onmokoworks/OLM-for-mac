@@ -1,3 +1,4 @@
+#include "../../ucrtmath/include/ucrtmath.h"
 // OLMSmoother2.cpp — macOS literal port of the Windows OLMSmoother2.aex pipeline.
 // Session B: frame-level setup (copy/unpremul/key/invert/gamma-encode) +
 //            5-stage per-pixel pipeline + inverse-gamma output.
@@ -237,7 +238,7 @@ static inline float win_srgb_decode_one(float v) {
 	if (d < S_BOUND) return (float)(d * S_INVSCALE);      // v * (1/12.9216)
 	// Ghidra literal: pow(v * (1/1.055) + 0.055/1.055, 2.4)
 	const double offset_over_1055 = 0.055 / 1.055;        // DAT_1800226b0 ≈ 0.05213
-	return (float)pow(d * S_INV1055 + offset_over_1055, S_24);
+	return (float)ucrt_pow(d * S_INV1055 + offset_over_1055, S_24, UCRT_FMA);
 }
 
 static void win_FUN_180002ba0_gamma_encode(FPix *scratch, int32_t w, int32_t h,
@@ -671,7 +672,7 @@ static inline double win_FUN_180004d70_literal(double v)
 	if (v <= 0.0) return 0.0;
 	if (v >= S_ONE) return S_ONE;
 	if (v < S_BREAK) return v * S_1292;
-	return pow(v, S_INV24) * S_1055 - S_OFFSET2;
+	return ucrt_pow(v, S_INV24, UCRT_FMA) * S_1055 - S_OFFSET2;
 }
 
 // FUN_180004c30 — LUT-based inverse via linear interpolation over a user LUT.

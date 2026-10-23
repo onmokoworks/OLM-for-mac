@@ -1,0 +1,32 @@
+{
+  "memory_free_percent": 52,
+  "native_probe_sha256": "3632003ddb2753fe78cd2e069f5d305eef17ac7ba2c08bf6c443b3e45d64e076",
+  "results": [
+    {
+      "function": "pow",
+      "mode": 1,
+      "count": 1000000,
+      "mismatches": 0,
+      "first_a_b_oracle_worker": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ],
+      "domain": "random"
+    },
+    {
+      "function": "pow",
+      "mode": 1,
+      "count": 1000000,
+      "mismatches": 0,
+      "first_a_b_oracle_worker": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ],
+      "domain": "plugin"
+    }
+  ]
+}

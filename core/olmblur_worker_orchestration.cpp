@@ -78,8 +78,8 @@ void render_8bpc_nonlegacy(const std::uint8_t* source_argb,
     std::vector<float> weights(max_radius + 1);
     for (std::size_t iteration = 0; iteration < params.repeat; ++iteration) {
         const double radius_value = static_cast<double>(params.blur_amount) *
-                                    std::pow(static_cast<double>(decay),
-                                             static_cast<double>(iteration));
+                                    ucrt_pow(static_cast<double>(decay),
+                                             static_cast<double>(iteration), UCRT_FMA);
         // AEX CVTPD2PS precedes CVTTSS2SI: round to binary32 before
         // truncating the iteration radius (e.g. 2.99999996 becomes 3).
         const float materialized_radius = static_cast<float>(radius_value);

@@ -38,9 +38,9 @@ def default_worker():
     configured = os.environ.get('OLM_AEX_WORKER')
     if configured:
         return Path(configured)
-    # F45: F44 plus UCRT double sin/cos/exp in default FMA mode; pow stays host.
-    # F44 and older workers remain selectable with --worker / OLM_AEX_WORKER.
-    retained = Path.home()/'.cache/olm-emu/worker-F45-msdouble/aex-guest-worker'
+    # F46: F45 plus imported UCRT double pow in default FMA mode.
+    # F45 and older workers remain selectable with --worker / OLM_AEX_WORKER.
+    retained = Path.home()/'.cache/olm-emu/worker-F46-pow/aex-guest-worker'
     return retained if retained.is_file() else None
 
 

@@ -1290,7 +1290,7 @@ static inline void compose_pixel(
 		// pow(..., 2.0), subtracts in double, then uses double sqrt before the
 		// final float conversion. A float-only rewrite differs by one ULP.
 		double t = (double)(1.0f - X);
-		double s = 1.0 - std::pow(t, 2.0);
+		double s = 1.0 - ucrt_pow(t, 2.0, UCRT_FMA);
 		X = (s < 0.0) ? 0.0f : (float)std::sqrt(s);
 	} else if (p.interp_mode == INTERP_POWER) {
 		// The fixed PF32 Smart matrix is bound to Windows 11 UCRT 10.0.26100.8875.

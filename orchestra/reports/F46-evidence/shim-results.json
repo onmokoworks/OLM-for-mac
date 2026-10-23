@@ -1,0 +1,58 @@
+[
+  {
+    "function": "pow",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll",
+    "domain": "random"
+  },
+  {
+    "function": "pow",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000"
+    ],
+    "library": "api-ms-win-crt-math-l1-1-0.dll",
+    "domain": "plugin"
+  },
+  {
+    "function": "pow",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000"
+    ],
+    "library": "ucrtbase.dll",
+    "domain": "random"
+  },
+  {
+    "function": "pow",
+    "mode": 1,
+    "count": 1000000,
+    "mismatches": 0,
+    "first_a_b_oracle_worker": [
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000",
+      "0000000000000000"
+    ],
+    "library": "ucrtbase.dll",
+    "domain": "plugin"
+  }
+]
