@@ -1,0 +1,6 @@
+test_production_entries_are_clean_and_deterministic (test_olmkirakira_generic_beta_sanitizers_20260820.KiraKiraGenericBetaSanitizerTests.test_production_entries_are_clean_and_deterministic) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 47.825s
+
+OK

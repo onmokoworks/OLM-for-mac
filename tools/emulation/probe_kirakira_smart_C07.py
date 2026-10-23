@@ -625,7 +625,7 @@ def main():
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
-    p.add_argument('--ucrt-math', action='store_true', help='Bind trace expf/powf/atan2f to F32 UCRT FMA imports')
+    p.add_argument('--ucrt-math', action='store_true', help='Bind all trace math imports to F46 UCRT FMA imports')
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--require-refusal', action='store_true')
     p.add_argument('--expect-finite-domain', action='store_true')
@@ -664,10 +664,10 @@ def main():
         if args.ucrt_math:
             ucrt_math = scratch / 'trace-ucrt.dylib'
             objects = sorted((scratch / 'build' / 'ucrtmath').glob('*.o'))
-            assert len(objects) == 4
+            assert len(objects) == 7
             subprocess.run(['clang', '-dynamiclib', *map(str, objects), '-o', str(ucrt_math)],
                            check=True, capture_output=True)
-            report['trace_powf'] = 'independent UCRT expf/powf/atan2f FMA, matching F32'
+            report['trace_powf'] = 'independent UCRT FMA imports, matching F46'
         directory = scratch / 'case'
         directory.mkdir(exist_ok=True)
         selected = cases(adapter, args.family)
