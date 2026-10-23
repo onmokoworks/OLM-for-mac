@@ -1600,7 +1600,7 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 		(raw.repeat == 1 || (width == 1 && height == 1));
 	// C10: the default non-Legacy schedule is independently verified with
 	// arbitrary small-frame sources. PF32's source domain is checked below;
-	// NaN payload propagation is not established by the finite-input evidence.
+	// C32 separately verifies nonfinite propagation with the SSE helpers.
 	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
 		raw.amount == 5.0 && raw.repeat == 2;
 	// C21: PF16/PF32 non-Legacy use the original binary32 expf coefficients
@@ -1610,7 +1610,7 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// Legacy integer writers preserve the AEX low-word/byte conversion.
 	// C21: PF16's expf coefficients also match at higher repeated radii.
 	// C32: UCRT coefficients and SSE invalid-result semantics also establish
-	// bounded finite PF32 Legacy sources; the source scan remains below.
+	// PF32 Legacy sources; the bounded-finite/nonfinite scan remains below.
 	const bool legacy_small = raw.legacy == 1 &&
 		(bpc == 8 || bpc == 16 || bpc == 32);
 	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
@@ -1634,10 +1634,10 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 }
 
 static bool
-SmallDefaultPF32Source(const PF_EffectWorld *world, bool allow_nonfinite = false)
+SmallDefaultPF32Source(const PF_EffectWorld *world)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
-	// C32: Legacy also preserves signed infinities and NaN payloads under
+	// C32: both workers preserve signed infinities and NaN payloads under
 	// the SSE helper semantics. Keep larger finite values outside this domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;
@@ -1645,7 +1645,7 @@ SmallDefaultPF32Source(const PF_EffectWorld *world, bool allow_nonfinite = false
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
 			for (int c=0;c<4;++c) {
 				uint32_t bits; memcpy(&bits, &argb[c], sizeof(bits));
-				if (allow_nonfinite && (bits & 0x7f800000u) == 0x7f800000u) continue;
+				if ((bits & 0x7f800000u) == 0x7f800000u) continue;
 				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
 			}
 		}
@@ -1930,7 +1930,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height);
 	if (!generic_tuple_refusal && generic_input_ok && bpc==32 &&
 		input_world->width<=24 && input_world->height<=24 &&
-		!SmallDefaultPF32Source(input_world, raw.legacy != 0))
+		!SmallDefaultPF32Source(input_world))
 		generic_tuple_refusal="generic-small-pf32-domain";
 	const bool generic_downsample =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&

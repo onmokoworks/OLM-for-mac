@@ -29,6 +29,13 @@ def main():
                 changes.append({'before':x,'after':y})
             assert v['status'] in ('exact','refusal')
         evidence['campaigns'][str(seed)]={'transitions':dict(trans),'changes':changes,'summary':{k:v['summary'] for k,v in data.items()},'provenance':{k:v['provenance'] for k,v in data.items()},'sha256':{k:hashlib.sha256(v.read_bytes()).hexdigest() for k,v in paths.items()}}
+        if args.phase=='final':
+            path=s/f'normal{seed}.json';normal=json.loads(path.read_text())
+            assert normal['status']=='complete' and normal['completed']==300
+            for x,y in zip(normal['cases'],data['after']['cases']):
+                assert x['input_sha256']==y['input_sha256'] and x['result']==y['result']
+            evidence['campaigns'][str(seed)]['normal_verification']={'identical_results':300,
+                'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'provenance':normal['provenance']}
         print(seed,dict(trans))
     replay=json.loads((s/f'{args.phase}-replay.json').read_text())
     evidence['replay']=replay

@@ -55,7 +55,7 @@ def main():
     p.add_argument('--legacy-value',type=int,choices=(0,1))
     args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(run.ROOT/'orchestra/state')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
-    worker=run.default_worker()
+    worker=Path('/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker')
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=run.main_checkout(),worker=worker))
     a.env.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s),ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
     rows=[]

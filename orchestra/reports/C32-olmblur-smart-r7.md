@@ -1,11 +1,11 @@
-status: partial
+status: done
 
 summary:
-- Closed finite and nonfinite PF32 Legacy admission clusters without numerical changes.
-- Seed 1 Smart 283/0/17 -> 298/0/2; fresh seed 43 281/0/19 -> 297/0/3 (exact/mismatch/refusal).
-- Finite matrix720/720, nonfinite gate-off384/384, production Legacy192/192 and retained80/80 pass.
-- All prior exact campaign cases are preserved; sanitizer campaigns pass and finite-domain exclusions remain.
-- Nonfinite non-Legacy admission remains for the third commit.
+- Closed three Smart refusal clusters in separate commits: finite Legacy, nonfinite Legacy, nonfinite non-Legacy.
+- Seed 1 improves 283/0/17 -> 300/0/0; fresh seed 43 improves 281/0/19 -> 300/0/0 (exact/mismatch/refusal).
+- All 564 baseline exact cases are preserved; all 600 final ordinary/sanitized result objects agree.
+- Independent matrices and retained controls pass; strict corpus stays 39/39 exact with no rebaseline.
+- No numeric core or work-budget change; stop at the three-cluster threshold.
 
 facts:
 Base `c1d1f1943e2e3c9ab6e62e1094ba279643f73385`, branch `orch/C32-olmblur-smart-r7`. Read AGENT_GUIDE, OLMBlur ledger restrictions, compatibility plan, GOTCHAS, T09/C05/C10/C12/C15/C21/C24 and F10/F12/F31/F38 reports. No changes to MAIN, emulator, cached workers, release gates, ledger, other plugins, numeric core or work budget. All campaigns use jobs=1; at most two build/emulator workloads. Scratch and compiler temporary files are ticket-local.
@@ -83,3 +83,52 @@ Additional second-cluster verification: 32 independent out-of-domain source case
 
 Second-cluster campaign results: seed1 296/0/4 -> 298/0/2 (two admissions); seed43 296/0/4 -> 297/0/3 (one admission). All 592 predecessor exact cases are preserved; original-route oracles and Classic results unchanged. These are sanitized production campaigns, not gate-off totals.
 Second-cluster strict replay: 39/39 matches_saved, 39 exact->exact, zero expectation changes. `summarize_blur_C32.py --phase legacy --previous finite` passes all preservation assertions. No production sanitizer finding.
+
+Third cluster — nonfinite non-Legacy (predecessor `0286619e`):
+
+facts:
+Both PF32 modes now use the verified exponent-all-ones source admission; the temporary Legacy-only boolean is removed. Finite words still require [-16,16]. No numerical core or work-budget change. Production non-Legacy matrix192/192 exact: 97 prior exact unchanged, 95 refusal->exact; retained80/80 exact with empty sanitizer stderr. Seven existing source-contract tests pass.
+
+changed_files (third cluster):
+- mac/OLMBlur/OLMBlur.cpp — non-Legacy nonfinite source admission, comments updated.
+- orchestra/reports/C32-evidence/nonlegacy-nonfinite-matrix.json, final campaign evidence, and this report.
+
+verify (final revision):
+```sh
+bash tools/fuzz/recheck_blur_C32.sh final
+s="$PWD/orchestra/state/C32-olmblur-smart-r7"
+export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
+python3 tools/fuzz/verify_blur_C32.py --scratch "$s" --report "$s/nonlegacy-production-recheck.json" --before 0286619e --mode nonfinite --legacy-value 0 --require-exact
+python3 tools/fuzz/verify_blur_C32.py --scratch "$s" --report "$s/outside-recheck.json" --before c1d1f194 --mode outside
+for seed in 1 43; do
+ python3 tools/fuzz/run.py --plugin olmblur --n 300 --seed "$seed" --jobs 1 --worker /Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker --shrink-attempts 0 --scratch "$s" --corpus "$s/normal-corpus" --report "$s/normal$seed.json" > "$s/normal$seed.log" 2>&1
+done
+```
+Expected production matrix192/192 exact; out-of-domain32/32 refused; retained80/80 per matrix. Final campaign and replay measurements are recorded below after completion.
+
+Final campaign facts:
+
+| Seed | Ticket baseline E/M/R | Finite Legacy | Nonfinite Legacy | Final / normal O2 |
+|---|---|---|---|---|
+| 1 | 283/0/17 | 296/0/4 | 298/0/2 | 300/0/0 |
+| 43 | 281/0/19 | 296/0/4 | 297/0/3 | 300/0/0 |
+
+All 600 final normal-O2 and ASan/UBSan result objects are identical, including Classic and both original-route oracle objects. No admitted mismatch, sanitizer error, or work-budget refusal appears in these campaigns. Third-cluster exact preservation is 595/595; transitive baseline exact preservation is 564/564. These are measured local CPU-AEX/fake-host results, not full-domain/native-AE completion.
+
+Execution note: while the final shell driver was running, adding explicit F32 selection changed its text. Bash completed both campaigns but then failed to parse the replay command (`unexpected EOF while looking for matching quote`). The final script passes `bash -n`; the already completed 600 campaign results were retained and the exact replay command was run separately. No numeric hypothesis, oracle, source expectation or renderer was changed to address this shell failure. Final comparisons and corpus assertions are run after the standalone replay completes. Earlier first/second-cluster shell drivers completed normally.
+
+Third-cluster tool changes also pin F32 explicitly in the reproduction driver/matrix tool and assert ordinary/sanitized equality in `summarize_blur_C32.py`. Corpus replay intentionally uses each saved record's hash-bound worker, including historical workers, rather than replacing its oracle contract.
+
+Final inference / next:
+- Three refusal clusters are closed in separate commits; stop at the ticket threshold. No remaining seed1/43 Smart residual is observed.
+- Small-frame finite values beyond [-16,16], arbitrary larger-image source domains, ROI/downsample, native AE/GPU and full Windows dependency equivalence remain outside this promotion. A future ticket may investigate wider finite PF32 admission; do not change the pending work-budget policy.
+- No core/worker arithmetic or saved corpus expectation changed. No release/ledger/other-plugin/MAIN changes, push, stash, history rewrite or emulator rebuild.
+
+Final verification completed: standalone sanitized corpus replay39/39 matches_saved, all39 Smart exact, no rebaseline. Both final aggregator invocations pass (`--previous legacy` and `--previous base`). Final expected campaign result is300/0/0 for each seed in both build modes. Per-commit corpus table:39 exact->exact at finite, Legacy-nonfinite and final revisions, zero changed expectations. All Python syntax checks, shell syntax and `git diff --check` pass. Scratch is11,549,983 bytes; no regenerable build directory or task background process remains. All started emulator/build commands completed. No permission rejection occurred.
+
+Evidence recheck after the full commands above, if baseline and predecessor scratch reports are retained:
+```sh
+python3 tools/fuzz/summarize_blur_C32.py --scratch orchestra/state/C32-olmblur-smart-r7 --phase final --previous legacy --report orchestra/state/C32-olmblur-smart-r7/verified-final.json
+python3 tools/fuzz/summarize_blur_C32.py --scratch orchestra/state/C32-olmblur-smart-r7 --phase final --previous base --report orchestra/state/C32-olmblur-smart-r7/verified-transitive.json
+```
+Expected predecessor preservation595/595; baseline preservation564/564; refusal->exact2+3 and17+19 respectively; all600 ordinary/sanitized result objects identical and strict corpus39/39.

@@ -1,0 +1,3869 @@
+{
+  "campaigns": {
+    "1": {
+      "changes": [
+        {
+          "after": {
+            "depth": 32,
+            "elapsed_seconds": 0.1963,
+            "geometry": [
+              7,
+              6
+            ],
+            "index": 116,
+            "input_padding": 0,
+            "input_sha256": "5a45766d148daefd4d9ca7c8b773d54ee27aa26522aace64d8e151eddb457bb0",
+            "output_padding": 5,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 100.0
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 8
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "2e23f46b7006dfb8da9c566ead1d9fd969070b82e30fef62bf28c936410bc30d",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "5a45766d148daefd4d9ca7c8b773d54ee27aa26522aace64d8e151eddb457bb0",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "2e23f46b7006dfb8da9c566ead1d9fd969070b82e30fef62bf28c936410bc30d",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 0,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "0"
+                  },
+                  "raw_sha256": "2e23f46b7006dfb8da9c566ead1d9fd969070b82e30fef62bf28c936410bc30d",
+                  "status": "exact"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 1
+          },
+          "before": {
+            "depth": 32,
+            "elapsed_seconds": 0.2206,
+            "geometry": [
+              7,
+              6
+            ],
+            "index": 116,
+            "input_padding": 0,
+            "input_sha256": "5a45766d148daefd4d9ca7c8b773d54ee27aa26522aace64d8e151eddb457bb0",
+            "output_padding": 5,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 100.0
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 8
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ],
+              "smart": [
+                "SmartRender:generic-small-pf32-domain@2093"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "2e23f46b7006dfb8da9c566ead1d9fd969070b82e30fef62bf28c936410bc30d",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "5a45766d148daefd4d9ca7c8b773d54ee27aa26522aace64d8e151eddb457bb0",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "2e23f46b7006dfb8da9c566ead1d9fd969070b82e30fef62bf28c936410bc30d",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 1
+          }
+        },
+        {
+          "after": {
+            "depth": 32,
+            "elapsed_seconds": 0.187,
+            "geometry": [
+              11,
+              11
+            ],
+            "index": 290,
+            "input_padding": 1,
+            "input_sha256": "0b871ddb4e9900a5a3663cbfe498b3f6ec1e9f7f31bf39f17f6bc021e5d53bd6",
+            "output_padding": 1,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 60.29753112792969
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 4
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "c76f5d5c075005eeb58a8414f84c10e5d333128b90f6f7306300a653d85a8870",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "0b871ddb4e9900a5a3663cbfe498b3f6ec1e9f7f31bf39f17f6bc021e5d53bd6",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "c76f5d5c075005eeb58a8414f84c10e5d333128b90f6f7306300a653d85a8870",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 0,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "0"
+                  },
+                  "raw_sha256": "c76f5d5c075005eeb58a8414f84c10e5d333128b90f6f7306300a653d85a8870",
+                  "status": "exact"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 1
+          },
+          "before": {
+            "depth": 32,
+            "elapsed_seconds": 0.1792,
+            "geometry": [
+              11,
+              11
+            ],
+            "index": 290,
+            "input_padding": 1,
+            "input_sha256": "0b871ddb4e9900a5a3663cbfe498b3f6ec1e9f7f31bf39f17f6bc021e5d53bd6",
+            "output_padding": 1,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 60.29753112792969
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 4
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ],
+              "smart": [
+                "SmartRender:generic-small-pf32-domain@2093"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "c76f5d5c075005eeb58a8414f84c10e5d333128b90f6f7306300a653d85a8870",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "0b871ddb4e9900a5a3663cbfe498b3f6ec1e9f7f31bf39f17f6bc021e5d53bd6",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "c76f5d5c075005eeb58a8414f84c10e5d333128b90f6f7306300a653d85a8870",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 1
+          }
+        }
+      ],
+      "normal_verification": {
+        "identical_results": 300,
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "5fd923ef3b9f8a6063c7e9d1660dde3ffca39ede2ed8ea1a2a819d8b0ada8083",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "sha256": "97e4140e4cde53e5669302af55da19af10174d7f98d49396c23315fc35a49df1"
+      },
+      "provenance": {
+        "after": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "62f560469721f150e89cd58d7cc1bdf032e982a2d74e1e55ca28f4c2d541e988",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "081a2fa9ff19345bc22928e73054ee4280d713211a9e9f07a2f909906317282e",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_mb_u360o/variant/mac/OLMBlur/OLMBlur.cpp": "081a2fa9ff19345bc22928e73054ee4280d713211a9e9f07a2f909906317282e",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "before": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "f1660cf71e3df429f980681be5d0fa624203b07fbfe871ce5702bf4ca090cf33",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run__7md0h20/variant/mac/OLMBlur/OLMBlur.cpp": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "gate": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "36ff583a8c8360f7d9733aa149f06d035c2d2fb05094d9d02cd59f478063073e",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_ravr6kcr/variant/mac/OLMBlur/OLMBlur.cpp": "1646b1a34a20dc26bf0754df517844464bdac00057a5b7338e74a0de473fc519",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      },
+      "sha256": {
+        "after": "ec67d520028b9797253aec779b2f5b9901cd912370824ad62c76f1a1fc958cb0",
+        "before": "51264126c9314ac2aa0654f6f6e9577b3c2197b3db477ba74e92cd862ef46817",
+        "gate": "37a6a70099d0a857c1c233e27b5153cf439e2d6825a37e5df2a17ecc028ea574"
+      },
+      "summary": {
+        "after": {
+          "aex_classic_ok": 207,
+          "aex_classic_reject": 93,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 13,
+          "classic_exact": 13,
+          "classic_refusal": 287,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 300
+        },
+        "before": {
+          "aex_classic_ok": 207,
+          "aex_classic_reject": 93,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 13,
+          "classic_exact": 13,
+          "classic_refusal": 287,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 298,
+          "smart_refusal": 2
+        },
+        "gate": {
+          "aex_classic_ok": 207,
+          "aex_classic_reject": 93,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 13,
+          "classic_exact": 13,
+          "classic_refusal": 287,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 300
+        }
+      },
+      "transitions": {
+        "exact -> exact": 298,
+        "refusal -> exact": 2
+      }
+    },
+    "43": {
+      "changes": [
+        {
+          "after": {
+            "depth": 32,
+            "elapsed_seconds": 0.1955,
+            "geometry": [
+              21,
+              24
+            ],
+            "index": 185,
+            "input_padding": 7,
+            "input_sha256": "61443bb950f701bbb4cf877a4a23b53d521fc4da218ad4a7c303823158c0f375",
+            "output_padding": 11,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 1.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 56.76994323730469
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 1
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "025317c86bb7b3fe5f75cddf6bb3c0ae2daccfcdbff0cfc2b57dcd93618bb843",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "61443bb950f701bbb4cf877a4a23b53d521fc4da218ad4a7c303823158c0f375",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "025317c86bb7b3fe5f75cddf6bb3c0ae2daccfcdbff0cfc2b57dcd93618bb843",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 0,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "0"
+                  },
+                  "raw_sha256": "025317c86bb7b3fe5f75cddf6bb3c0ae2daccfcdbff0cfc2b57dcd93618bb843",
+                  "status": "exact"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          },
+          "before": {
+            "depth": 32,
+            "elapsed_seconds": 0.2226,
+            "geometry": [
+              21,
+              24
+            ],
+            "index": 185,
+            "input_padding": 7,
+            "input_sha256": "61443bb950f701bbb4cf877a4a23b53d521fc4da218ad4a7c303823158c0f375",
+            "output_padding": 11,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 1.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 56.76994323730469
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 1
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ],
+              "smart": [
+                "SmartRender:generic-small-pf32-domain@2093"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "025317c86bb7b3fe5f75cddf6bb3c0ae2daccfcdbff0cfc2b57dcd93618bb843",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "61443bb950f701bbb4cf877a4a23b53d521fc4da218ad4a7c303823158c0f375",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "025317c86bb7b3fe5f75cddf6bb3c0ae2daccfcdbff0cfc2b57dcd93618bb843",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          }
+        },
+        {
+          "after": {
+            "depth": 32,
+            "elapsed_seconds": 0.2018,
+            "geometry": [
+              4,
+              16
+            ],
+            "index": 220,
+            "input_padding": 0,
+            "input_sha256": "6e209d3d0c30c0e3697db67c71c4af14e482d917a913355d7c28d7a83ab90369",
+            "output_padding": 32,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 56.376068115234375
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 2
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "0bc6294e3a6e09045bc88cf3e9531d1c13e2cd1bc8775fba75b8fb6dae81fc6d",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "6e209d3d0c30c0e3697db67c71c4af14e482d917a913355d7c28d7a83ab90369",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "0bc6294e3a6e09045bc88cf3e9531d1c13e2cd1bc8775fba75b8fb6dae81fc6d",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 0,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "0"
+                  },
+                  "raw_sha256": "0bc6294e3a6e09045bc88cf3e9531d1c13e2cd1bc8775fba75b8fb6dae81fc6d",
+                  "status": "exact"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          },
+          "before": {
+            "depth": 32,
+            "elapsed_seconds": 0.1938,
+            "geometry": [
+              4,
+              16
+            ],
+            "index": 220,
+            "input_padding": 0,
+            "input_sha256": "6e209d3d0c30c0e3697db67c71c4af14e482d917a913355d7c28d7a83ab90369",
+            "output_padding": 32,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 5.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 56.376068115234375
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 2
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ],
+              "smart": [
+                "SmartRender:generic-small-pf32-domain@2093"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "0bc6294e3a6e09045bc88cf3e9531d1c13e2cd1bc8775fba75b8fb6dae81fc6d",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "6e209d3d0c30c0e3697db67c71c4af14e482d917a913355d7c28d7a83ab90369",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "0bc6294e3a6e09045bc88cf3e9531d1c13e2cd1bc8775fba75b8fb6dae81fc6d",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          }
+        },
+        {
+          "after": {
+            "depth": 32,
+            "elapsed_seconds": 0.1906,
+            "geometry": [
+              18,
+              9
+            ],
+            "index": 242,
+            "input_padding": 7,
+            "input_sha256": "bfe2d93f9ef92f0bd47c9ea6abddb23dfc6261315839d5d5b7dec5479fd61b55",
+            "output_padding": 32,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 1000.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 100.0
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 2
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "86d7110a3fdb696fea8d8e074e3cc3209a4b98f6a331e5cb970eff0701e56306",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "bfe2d93f9ef92f0bd47c9ea6abddb23dfc6261315839d5d5b7dec5479fd61b55",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "86d7110a3fdb696fea8d8e074e3cc3209a4b98f6a331e5cb970eff0701e56306",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 0,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "0"
+                  },
+                  "raw_sha256": "86d7110a3fdb696fea8d8e074e3cc3209a4b98f6a331e5cb970eff0701e56306",
+                  "status": "exact"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          },
+          "before": {
+            "depth": 32,
+            "elapsed_seconds": 0.2048,
+            "geometry": [
+              18,
+              9
+            ],
+            "index": 242,
+            "input_padding": 7,
+            "input_sha256": "bfe2d93f9ef92f0bd47c9ea6abddb23dfc6261315839d5d5b7dec5479fd61b55",
+            "output_padding": 32,
+            "parameters": [
+              {
+                "kind": "s",
+                "slot": 1,
+                "value": 1000.0
+              },
+              {
+                "kind": "f",
+                "slot": 2,
+                "value": 100.0
+              },
+              {
+                "kind": "i",
+                "slot": 3,
+                "value": 2
+              },
+              {
+                "kind": "u",
+                "slot": 4,
+                "value": 1
+              },
+              {
+                "kind": "b",
+                "slot": 5,
+                "value": 0
+              }
+            ],
+            "profile": "nonfinite",
+            "refusal_guards": {
+              "classic": [
+                "Render:classic-pf32-unowned@1426"
+              ],
+              "smart": [
+                "SmartRender:generic-small-pf32-domain@2093"
+              ]
+            },
+            "result": {
+              "first_mismatching_stage": null,
+              "oracle": {
+                "guards_intact": true,
+                "raw_sha256": "86d7110a3fdb696fea8d8e074e3cc3209a4b98f6a331e5cb970eff0701e56306",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "oracles": {
+                "classic": {
+                  "guards_intact": true,
+                  "raw_sha256": "bfe2d93f9ef92f0bd47c9ea6abddb23dfc6261315839d5d5b7dec5479fd61b55",
+                  "session_clean": true,
+                  "status": "ok"
+                },
+                "smart": {
+                  "guards_intact": true,
+                  "raw_sha256": "86d7110a3fdb696fea8d8e074e3cc3209a4b98f6a331e5cb970eff0701e56306",
+                  "session_clean": true,
+                  "status": "ok"
+                }
+              },
+              "routes": {
+                "classic": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "0 0 0 0 0 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                },
+                "smart": {
+                  "error": 516,
+                  "metadata": {
+                    "COUNTS": "1 1 1 5 5 0",
+                    "ERROR": "516"
+                  },
+                  "status": "refusal"
+                }
+              },
+              "stage_observation": "paired stages unavailable; final raw output only"
+            },
+            "seed": 43
+          }
+        }
+      ],
+      "normal_verification": {
+        "identical_results": 300,
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "2a525b27bdedbb1b02e031c4b28fc100776d54ac7ad2139274c90f34829faf10",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "sha256": "c246792791f86b7f1ec8d9a1d53ef82d83e9463f9145624c4b9ddb0f162d2ea1"
+      },
+      "provenance": {
+        "after": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "da5727ba62004268d02d3d85cd35da89409dd3877a2b743cc527c6ab5e191d82",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_bbjps8x0/variant/mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "before": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "8326353abb800b17ad74afb2572d615ceb5c44023e2d1462a5151dc86bf2c31f",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_4rozccq2/variant/mac/OLMBlur/OLMBlur.cpp": "804086393c7e735cfd10dd53a3ea186cbe70e6f737df3f252ff1ae2e43c38a73",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        },
+        "gate": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "cc2450b39fad5b51b4ef2a3ce064cbf428fe14f347e35d4342eb2015da15d60b",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_lujimc5j/variant/mac/OLMBlur/OLMBlur.cpp": "1646b1a34a20dc26bf0754df517844464bdac00057a5b7338e74a0de473fc519",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      },
+      "sha256": {
+        "after": "e0a76a2a2511b317804d782a1b596acec50f5bea59803313f78616b1ed4b5d9f",
+        "before": "8156315164cd0006d9248ae5a5ddecd6b99aa8db0be9fd0c1775f32730b2a769",
+        "gate": "8430fa14af60904e4f66a075b4c6bfe8380f01dcba19d0379879e37b6a2c181d"
+      },
+      "summary": {
+        "after": {
+          "aex_classic_ok": 223,
+          "aex_classic_reject": 77,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 17,
+          "classic_exact": 17,
+          "classic_refusal": 283,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 300
+        },
+        "before": {
+          "aex_classic_ok": 223,
+          "aex_classic_reject": 77,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 17,
+          "classic_exact": 17,
+          "classic_refusal": 283,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 297,
+          "smart_refusal": 3
+        },
+        "gate": {
+          "aex_classic_ok": 223,
+          "aex_classic_reject": 77,
+          "aex_ok": 300,
+          "aex_smart_ok": 300,
+          "both_routes_exact": 17,
+          "classic_exact": 17,
+          "classic_refusal": 283,
+          "pixel_mismatch_cases": 0,
+          "smart_exact": 300
+        }
+      },
+      "transitions": {
+        "exact -> exact": 297,
+        "refusal -> exact": 3
+      }
+    }
+  },
+  "matrices": {
+    "legacy-gate": {
+      "provenance": {
+        "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+        "after": {
+          "candidate_sha256": "96d62b9953479e7619fd84d14d45f126480c2963418873785684a0dc68789e9f",
+          "compiled_source_sha256": "d5fba89ed429e9527d609e190ed0f497c4de0d9b8408433f31d9d2b7de6b93cc",
+          "core_sha256": {
+            "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+          },
+          "revision": null
+        },
+        "before": {
+          "candidate_sha256": "1e4366436391c1c8ad87366d212d302a22ae4eb226633634b1bcb812306f0914",
+          "compiled_source_sha256": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
+          "core_sha256": {
+            "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+          },
+          "revision": "c1d1f194"
+        },
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1"
+      },
+      "sha256": "f5e2ca16c9d38cd9f7450de8d287ffca33c264cee6f3d57da0a3b385b644bedb",
+      "transitions": {
+        "exact -> exact": 480,
+        "refusal -> exact": 240
+      }
+    },
+    "nonfinite-gate": {
+      "provenance": {
+        "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+        "after": {
+          "candidate_sha256": "2ddcb87b0aa2644efc893e3dc3820e4c9e698163dd3f2dc54d11eb5926163ca6",
+          "compiled_source_sha256": "4d46a26ead5fb004ed738a96c26a3e0922bb392e9b48712437fbb4cb2ceb2bce",
+          "core_sha256": {
+            "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+          },
+          "revision": null
+        },
+        "before": {
+          "candidate_sha256": "eda25a1b685b6a1c5d0b99ae9c05f2863c6f5646763aa415e220098b0ebcf0c7",
+          "compiled_source_sha256": "102191cff14700c0b26513b82db3938eb5f61d6dc6c3540142844049b036e828",
+          "core_sha256": {
+            "olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108"
+          },
+          "revision": "c1d1f194"
+        },
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1"
+      },
+      "sha256": "e58ea2f058de1dbf597c35ebe00b63bea43a7772a724e283aba76e604cc3d602",
+      "transitions": {
+        "exact -> exact": 193,
+        "refusal -> exact": 191
+      }
+    }
+  },
+  "phase": "final",
+  "replay": {
+    "budget_minutes": 30,
+    "case_timeout_seconds": 10,
+    "cases": [],
+    "claims_not_made": [
+      "Signature clusters are not proven root causes.",
+      "Finite random coverage is not all-input compatibility.",
+      "This is CPU AEX emulation vs a fake SDK host, not native AE/Windows UCRT validation.",
+      "AEX packed strides vs Mac random padding does not establish AEX odd-stride support."
+    ],
+    "completed": 39,
+    "corpus_max_bytes": 2000000,
+    "deadline_reached": false,
+    "elapsed_seconds": 28.6131,
+    "framework_sha256": {
+      "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+      "tools/fuzz/adapters/color_triage.py": "3f6a5422a7493155ba2ed0159d67a9037c763c0340f3ec22c1acbd8b19893b7a",
+      "tools/fuzz/adapters/colorkeep.py": "b04f2d140487414a132de25222ed6292b29d8c2c74c12cf2b8f8c631e72e96df",
+      "tools/fuzz/adapters/olmblur.py": "de1142334ce5ff9dca1a4ea77c8ded9711586271356bec0e5a78a179f6beedc9",
+      "tools/fuzz/adapters/olmcolorkey.py": "01ad703b69f2e925056fd179d24616233db2b2807fc0f449d3ed1acae407d6b3",
+      "tools/fuzz/adapters/olmdirectionalblur.py": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+      "tools/fuzz/adapters/olmdistancegradation.py": "2e58d20d22b65e07fc16c2d59157ae113620fec8ad154a51d62d759323b1e4c1",
+      "tools/fuzz/adapters/olmkirakira.py": "84c38bf2abf6268bc1cf98c20a2af4d7160f6f616eccc8b69bf42e8970f4f3c0",
+      "tools/fuzz/adapters/olmsmoother.py": "a4807fba3ba5eb998e3e9ac48e93bb7aab29131faec1da5d2abb2e1627fdaf0c",
+      "tools/fuzz/adapters/olmsmoother2.py": "d210e4f3a1647b9489ba373bde284c6d6e093b7e366a1e2910ad04d50ccde202",
+      "tools/fuzz/adapters/olmtoondilate.py": "c495c5e5984bcdfc1d8967328087ae6367e08ae00dd1d346c76d2785b62fe094",
+      "tools/fuzz/adapters/public.py": "2452352d4d36774b342db351c349a6fe4dc80475c1ab5ba416cb623b586a26f4",
+      "tools/fuzz/adapters/radialblur.py": "f78a0f4a3e601e1f587d27b866efb2d5b6f3340235a26792a6d5920c3ba877e7",
+      "tools/fuzz/analyze_colors_T12.py": "056d7d3ec098fd3ebacfc7dbcf161727a5f276019464935694830e196898c941",
+      "tools/fuzz/apply_rebaseline_F23.py": "5d47336625dce969194509f7a94bf6d868646992ae83fa5d2e2b9127962cdbdf",
+      "tools/fuzz/audit_radialblur_C17.py": "ca5f37482e33c708aff548af05447324b347c0ddd069b8bc35bdf1d7b3c945c9",
+      "tools/fuzz/audit_radialblur_C26.py": "e96c480b96e62a9dad1becd91789b610129f0d76081c41756b02c7cf4770cd3d",
+      "tools/fuzz/before_F31.py": "c8f0f2e74f2fb35f6c52da024a6295e722c446ec33d5f781f611e54321145f8c",
+      "tools/fuzz/blur_admission_campaign_C05.py": "3ca6fcb6fac1f36c1f763d85833ed311e8a1346e71e8364e7825d88fd80cb329",
+      "tools/fuzz/blur_admission_campaign_C10.py": "0d7921363cb58468296610ee4ed56d6676732b0488eb98eb7f57e153407d51e1",
+      "tools/fuzz/blur_admission_campaign_F17.py": "6eb1a42b30a78e4149a3d9fdacc3f472bf03ed4085f8a404a34e50a5fb7d2b15",
+      "tools/fuzz/blur_campaign_C12.py": "61a32f048b5ffc6cba1e8603809d88c4a8b245d926c7b97c6bf02514a5936be9",
+      "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
+      "tools/fuzz/check_colorkey_boundaries_F20.py": "14f6f52777162214c7bae139b7366e2f16cca4922f5d5f60a5662dd7029a4b5d",
+      "tools/fuzz/check_fixture_F31.py": "de71d1edc4be4123c06d5c5199823358117eab6ca57a5bb8104f6cd9ec25ae09",
+      "tools/fuzz/check_radialblur_exp_C11.py": "5b7f5a9062e6f62f374d2327e46b29a779a23b82f5324fc4bb649068b0084e0e",
+      "tools/fuzz/classify_rebaseline_F23.py": "c814190e3e222bed8a1a235b98d15d50e834b99e4c854b22901e96e007cac3a7",
+      "tools/fuzz/compare_olmsmoother_classifier8.py": "de2ca98d8f11bdbfe7f886f1bc4f43127ae33702d4fc20e23a33e97df2a41bfd",
+      "tools/fuzz/compare_radialblur_admission_F13.py": "7dc2a9fbbf6d199d8dbf427c439795c6d6d3baf863bf0061f49d0db75034541c",
+      "tools/fuzz/compare_radialblur_round6_T01.py": "99ff78cbbfa71acd3ed11c26d44d569099345e82b0d356b8fbbd7bf208779e7d",
+      "tools/fuzz/core.py": "79b697cdbfa6faa8c6c22429d947cbf50f8807899c7d8ebd74a6c85c9aabcf36",
+      "tools/fuzz/kirakira_triage_summary.py": "36340cb869e8bb40601190519a9efa321c15ecf16418eda380fc3a3f91119131",
+      "tools/fuzz/legacy_campaign_F17.py": "e05ff45258fdfcf25bae9e3cd9b6c76ff2a44b7429a7a819387f912761f8edbf",
+      "tools/fuzz/measure_F31.py": "5f94b4c81790ea54feee4f02eeb18e6c3e63c081c76f44ed264c7cf58c2382fd",
+      "tools/fuzz/measure_F37.py": "7234734eef49efbc1ca40869be1214a4da0898b1f679bd5e93ae2bff0c6c145e",
+      "tools/fuzz/measure_F38.py": "48042cf86233cced1ddaf023040661dc5554b09f7458695e03334c80cc21f537",
+      "tools/fuzz/probe_blur_expf_C15.py": "b7a7d12e41cfa758f2cac15938c7a2c093dd7e85b0643e29220b5ae2c006f506",
+      "tools/fuzz/probe_blur_expf_C21.py": "ffbddf05a3ef121de8e276417bc66fc5c28ea69e4a98ad11253ffcba08cfc60f",
+      "tools/fuzz/probe_colorkey_stages_F20.py": "ba81b9e995169e3244c0ecb7f656e811516ac18bf16ee7eaf7371094bf829743",
+      "tools/fuzz/probe_directionalblur_c02_admission.py": "8566ec1296ac8564111589e3b300cc126c8db4255980d907cd87c43ae986552b",
+      "tools/fuzz/probe_directionalblur_c09_admission.py": "48578b1d08df4e83e7a640193ce0f89ae17c947db6229fb6d84c67ee372f3e8b",
+      "tools/fuzz/probe_directionalblur_c30_nonfinite.py": "731d16227417a534b754512f28af78aac7dbe4ae04a35692d596195a33be5e2c",
+      "tools/fuzz/probe_directionalblur_pf8_dispatch.py": "7966348a84bd7945e16f1efbe0a5aaa35816a582817186835b787c21955a8472",
+      "tools/fuzz/probe_directionalblur_zero_strength.py": "547bd8a58c2b24bfe1714a29b31f62427b04494a2872e142dea379d659d58c95",
+      "tools/fuzz/probe_distancegradation_C19.py": "96092071837ddadfc2047d7f1a52e97a353685355b690ebdf5ac8e1573a7799c",
+      "tools/fuzz/probe_distancegradation_default_owner.py": "d5dd94587b38db929d8e2ebd6bd4a92fe4e6ecd1e869ea3a25c75b97c6626702",
+      "tools/fuzz/probe_distancegradation_smart_C03.py": "06a330cd9ca8e6adc1e171ec78ba4ffb42375b60f853d6c615099154c9a03eb3",
+      "tools/fuzz/probe_kirakira_tiny_owner_F04.py": "7ce9a4ab424387ab54f902f96575e8490f277928dd1a5cdd671d8ff7737c7c24",
+      "tools/fuzz/probe_radialblur_offset_refusal_T01.py": "ae28d861c77a2021eb97cf4ffdb6d00a842b10e3d19cd6f6aaad289d084b44c8",
+      "tools/fuzz/probe_radialblur_smart_C11.py": "752315479949fe5ad5d3f18aceb1ee08f70dff41fcf5f218e61be2252a1167db",
+      "tools/fuzz/probe_radialblur_smart_C17.py": "a9bd26a931c378fb3a11424cf917b18c7b65c17fb0c4755e426d19a5eba5c0f6",
+      "tools/fuzz/probe_radialblur_smart_C26.py": "1019bd56e3562a4f54eea94353fa418d45264e85f35542cd2c114cfa2bbb3f85",
+      "tools/fuzz/probe_radialblur_zoom_F08.py": "8075b52a12015545c2656e592d1155e64d56ce902ea399a7bed8ef39c6967b97",
+      "tools/fuzz/rebaseline_F31.py": "bc3558bb547b80569a3b9a3b38aa3649dbc048add5a8983257b282e3fc9fea02",
+      "tools/fuzz/rebaseline_corpus.py": "1d8dc6955f27e895cccfa918634c29935b938706f6199d243871b372cd47fb60",
+      "tools/fuzz/refusal_census.py": "741ee0f8ad24acde87a77af8ce63cc63f142ebb24167eb821e0d63b568302152",
+      "tools/fuzz/replay_all_F23.py": "881c751a03019699d9fa9ded248a5eb80a4ec29d30292db7e40152d5f68f2641",
+      "tools/fuzz/replay_olmsmoother_sanitized.py": "03f2af241e6f577ca58c55b8a5fbbc760e82845c358679c1987aea542337cf3e",
+      "tools/fuzz/run.py": "b3be1ebac7778b1008f5ddc5e7e4f969d2576903ec65a06bc69b09ee16aba09b",
+      "tools/fuzz/run_F38.py": "e4969c959f484bdb8b2dd01a52a4b8c8041990e2a1622d1a5ef247ae2922b010",
+      "tools/fuzz/run_colorkey_revision_F20.py": "83e9b46f63acc34ac049b838e0372d8c5594dbca906530b913d234ef8f409a58",
+      "tools/fuzz/run_radialblur_baseline_T01.py": "3fd8d256f0e3e520212c4eee1fca6b02316f1329dfb8b0f1a2c2775e076742f3",
+      "tools/fuzz/summarize_C23_fresh.py": "60d8355afc102e4240422f742cc9536aa11f471162c99b6dc616c0c5f66c3b3f",
+      "tools/fuzz/summarize_F31.py": "18ba11aba14dee81a93c4be28e2c321d4c3e855d876c86d7fca166c65091c791",
+      "tools/fuzz/summarize_F37.py": "cf4e8ddd3a550baa44939c7e9d2a992662728e3d6c81f757255fc8a1e6ecf6d9",
+      "tools/fuzz/summarize_F38.py": "fe0c801956952da4a375f56e08f8a8b31d59f6b8e71b6dec3787ea498390710b",
+      "tools/fuzz/summarize_blur_C32.py": "8f5fe5d9d4d127a86477e0dbabc5a739ca88549641a567c5ac2908da84c89fc3",
+      "tools/fuzz/summarize_blur_admission_F17.py": "2b89ed140129b49d73084661355c2a2f50035cb3b46b2c5c8f495030c94dac6a",
+      "tools/fuzz/summarize_colorkey_C20.py": "e42ea8dcc1fed2e85ba49f6d18f2bd45a6953eba17afb56e53f16050d368ddfa",
+      "tools/fuzz/summarize_colorkey_F20.py": "0d6042f3779ef7b57997e2d9457e0abe91ec0d4c311bd28ddbf651b3c8ea8708",
+      "tools/fuzz/summarize_directionalblur_c30.py": "2a0fffcfed4cd95785c63a2bdb5f7f61a673db62fb80335c4a775b749f87a5ab",
+      "tools/fuzz/summarize_kirakira_tiny_owner_F04.py": "9c30e52a8eebb40d8370adda1e52e512fa42f6ca2d3176b310560f2cb1638588",
+      "tools/fuzz/summarize_radialblur_smart_C06.py": "c2049dfabc17f76e8f4b52872ab225131094e3ec2eb2962ecd0e889cc8d7ffb1",
+      "tools/fuzz/summarize_routes_F17.py": "6b4fd8b76689a53b2d9df5ac503859064a51160bf61df8f98eb0e1162bc50066",
+      "tools/fuzz/t05_bypass_summary.py": "6c04612b712f336c7d1f1e77e7bf88ec938d4868fb79d7fddba4478f2e8ca3d6",
+      "tools/fuzz/test_adapters.py": "44188e3340302712145e2521eaa42901fd82f890fb1dc97d934cbbab65846ac6",
+      "tools/fuzz/test_colorkey_existing_F20.py": "d271caca8ecec332dad98093608612bc4b7c426cb6ea805d748b26068cdc322c",
+      "tools/fuzz/test_framework.py": "f506e2dcfd656de738788fbcdde2864c856a27f683cfa82794462a37c2929276",
+      "tools/fuzz/test_rebaseline_production.py": "20c5a014329e5dfaaa4a29b81283a5cee65a89a3cff4de04849cef3dd612b127",
+      "tools/fuzz/test_route_oracles.py": "a9ed98cbaae6a2479e24e88719fdb25bce3fc819181db5f3f53b89bb2ba948e0",
+      "tools/fuzz/trace_colorkey_alpha_F20.py": "12b74061c5f4a0b2ea5ceda368ad6dfa9422fd0e888bda340a70efd57bcefdeb",
+      "tools/fuzz/trace_radialblur_rotation_C11.py": "cbdb96520c0dadc910afb3fd51ae137da97443ce48672611b63d01fa0cc0e1b8",
+      "tools/fuzz/trace_radialblur_smart_C06.py": "6a50d2dc7b1e4a7ff6bb93f98535952bf1d3623b92cf0d73fb5d97f130617273",
+      "tools/fuzz/transport_radialblur_C11.py": "db92d031b1f36c0db17546913d7b2f853c897819622b3b38dbae6e9d42160657",
+      "tools/fuzz/transport_radialblur_rotation_C17.py": "dafdaa709e40164efd61abb028e0009be5ae57046ed4030a7dd64cd1d36822be",
+      "tools/fuzz/triage_colors_T12.py": "f58d4dff53aabe0c37481f38a9a2e671f51f1d6b74965024d50413a233061664",
+      "tools/fuzz/triage_directionalblur.py": "6a563f9ccadf1bc7ed515ade56c032ab2c0a0c9df68b49c14a31b591315b409a",
+      "tools/fuzz/triage_distancegradation.py": "5910d6f2495c3cc7745f7aafb5f6b321b3da32ced0327bb0006271dbab685939",
+      "tools/fuzz/triage_kirakira.py": "2839a2425f43ed943c79799377fc2e7ca6ab487da5abebcc06e18ffc92bf84ce",
+      "tools/fuzz/triage_olmblur.py": "8af7e5c38cb059b171bae47c117f14166f34ba587c9f84fe803f8e2343726a41",
+      "tools/fuzz/triage_olmsmoother.py": "6fff3fd79358ff6e4039eb4ef84e263c979150e44098423740c378bf2398e7f0",
+      "tools/fuzz/triage_olmsmoother2.py": "227209086ba97c08717deb0bce9a42705cce0108bca7c0c164a30d9ee5948f8a",
+      "tools/fuzz/triage_toondilate_T13.py": "e2f20f550f5bde47d5b256e1d5f1d569e93a37a778d5fa606cf8da901c17d85a",
+      "tools/fuzz/verify_blur_C12.py": "4369d4de0f75f148e08d619145be7fae9071a59c5a70ddfc1641fef11887badf",
+      "tools/fuzz/verify_blur_C15.py": "83aaa865da8cff8c5d5cc8284648d0de8599f6a3eeddd46a8d3cff1ac93b9428",
+      "tools/fuzz/verify_blur_C21.py": "282329312a764a680f736e8d342b325d518c0a9abcdad25917143f8ecdef9de5",
+      "tools/fuzz/verify_blur_C24.py": "f1403cf4e3f547873e688771f1844cec2bf63cf318f1b5b5b327e43fb242e190",
+      "tools/fuzz/verify_blur_C32.py": "fad1bc1468a8c389a0afe47788ab25dab6b717954013683c6386cfcd28cff1be",
+      "tools/fuzz/verify_blur_admission_C10.py": "50e0fcc34758fc5e6114cf31170b37b5cfc705e970ffb8b5ab1b9fef04c504a9",
+      "tools/fuzz/verify_blur_legacy_C15.py": "3eca71a6f352ae17ad43f90cdb3cf61ecd8d3d89070ba6a8cb3ac2ff27c31429",
+      "tools/fuzz/verify_blur_radius_C12.py": "e25aa5e3209df3f4f48c03cf904daa20b6d03fb7addd0182923b532f6240ed80",
+      "tools/fuzz/verify_blur_retained_C12.py": "4237cbcba34787e32c7588700f5a0c97d564149587a8e7ea03f42d4fc646e277",
+      "tools/fuzz/verify_blur_retained_F17.py": "4c972864d80b042663f3ea341870878337bf151b38d099217baf4c8fb88e8f75",
+      "tools/fuzz/verify_blur_small_C10.py": "473cfb98292bd39c0e311d827b965b1420c59454ea3bacbef04fc6cac8abdda5",
+      "tools/fuzz/verify_blur_small_F17.py": "7a648f678a43dacdd3298fbc5efdf4357db12a76b5221a065b87c9ba2340e471",
+      "tools/fuzz/verify_blur_smart_C05.py": "ff5d415cce81bc902be9f9954c61f0f233131aac215bb47c8beb9d4a5ac5295d",
+      "tools/fuzz/verify_colorkeep_F19.py": "4586276fc7c217a9191840d8b44e4e30eab0c4384847ea56dd580f4b44306ecd",
+      "tools/fuzz/verify_directionalblur_c02.py": "f4564018765000b4f0862260b3c4b46d28f67db0b900097501583609df87910b",
+      "tools/fuzz/verify_directionalblur_c09_evidence.py": "1a2691c772a64bfd2ca53cdfef582964a0b5af8c6bc2c01ea8dd70b5c9b99e98",
+      "tools/fuzz/verify_directionalblur_c09_matrix.py": "527d785892ba4875a1b70e1515c727475efb4cf52500296a8030e3a2935a6082",
+      "tools/fuzz/verify_directionalblur_c18_demand.py": "3529a02f15e03ea7195b8c25224a14ea3561fa9c66fc1dca3a369e3b7e963d0d",
+      "tools/fuzz/verify_directionalblur_c18_evidence.py": "fb7e314eec50a811904f2dc9b27c4f2547b3d30f3298a77961260b92599f2942",
+      "tools/fuzz/verify_directionalblur_c30_angles.py": "d93ed515e9cec0581a7bf2362f13f934ca819e3c909a33c421726dc3cc0d04cc",
+      "tools/fuzz/verify_directionalblur_pf8_dispatch.py": "63b1d81c06e5516226391a27ef02615067b526497f12584ebded70e716d253f8",
+      "tools/fuzz/verify_distancegradation_smart_C03.py": "be10db9f72cf7c7f2e0f5f19c2638350b8981f33e1cc752de18a85acef6ee18d",
+      "tools/fuzz/verify_distancegradation_smart_C08.py": "2eb63daf5882847387e63382ce9704914a16abaf164c3670e11c9267fc6ee6e5",
+      "tools/fuzz/verify_distancegradation_smart_C14.py": "325c1db241a381801d29b71479d45e537a9ba31bb2b6754714ff55250109106e",
+      "tools/fuzz/verify_olmsmoother2_C01.py": "2d193dd84a5edd4f91b236bb50890fa1c2345f9f98e839e9db6cb66ef69cdc66",
+      "tools/fuzz/verify_radialblur_alignment_F07.py": "150758427ab11534db3eb1c0d6f0d1ab0f35f96c6aa987383f2e02b048c1ed1a",
+      "tools/fuzz/verify_radialblur_centers_C17.py": "75860007bda4e8cd752583d870a2b15dbfddcf03bcab70f94732789e73a15b6c",
+      "tools/fuzz/verify_radialblur_centers_C26.py": "21fafd7d6e80d66ed5ccb3a363653e86cddee7d9452e5da967beb1066b70dc28",
+      "tools/fuzz/verify_radialblur_negative_C11.py": "1cb37fc1ef3df24de9a86caf4c26643a733c3bc20d84fdea6fcd16d22f0d29a5",
+      "tools/fuzz/verify_radialblur_offset_admission_F13.py": "7aba35b090806243bbc62ffc0f8397e43fcf9c4cb454e355f4b19efdf2582460",
+      "tools/fuzz/verify_radialblur_offset_round5_T01.py": "d0a5db74f4436b140004820946cd2818234f83ed100ec5660399b2002d311655",
+      "tools/fuzz/verify_radialblur_round6_witnesses_T01.py": "b3be7d479ae3a4e9a01551fc9bff03ff81402161ec439f7643411d73e4b7df33",
+      "tools/fuzz/verify_radialblur_smart_C06.py": "71327d3a14860a85579b3057aae0abc958d6fddefc4e24dfe1adb6316dac6206",
+      "tools/fuzz/verify_radialblur_smart_C11.py": "53bbed4ccb9bafe646702a222651beabb99972b9f2c221a83b7a86398b526dba",
+      "tools/fuzz/verify_toondilate_F21.py": "a5c6717ab7b31e49b81c779b5e0c706ea3acf40353431e2b1fdf13beecdd3c01"
+    },
+    "generator_version": 1,
+    "jobs": 1,
+    "max_size": 256,
+    "plugin": "olmblur",
+    "provenance": null,
+    "replay": "tests/fuzz_corpus/olmblur",
+    "replay_groups": [
+      {
+        "paths": [
+          "tests/fuzz_corpus/olmblur/seed1_case000004_adfc483da30a.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000005_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000008_92552f06afe6.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000074_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000093_83728685d1c5.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000114_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000122_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000127_83728685d1c5.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000128_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000159_92552f06afe6.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000181_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000191_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000196_1e01a8a5cbd2.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000203_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000230_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000234_ced0f1718a01.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000236_fac8522494e3.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000261_1e01a8a5cbd2.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000268_83728685d1c5.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000270_8214084afb2c.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000271_92552f06afe6.json"
+        ],
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "55ab44f129a0e3d8a239e827f7d4ffa370cb1863aa9a24f28fa3d2ea30f94204",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_9nt0pvkb/variant/mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+          "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      },
+      {
+        "paths": [
+          "tests/fuzz_corpus/olmblur/seed1_case000025_def4b9242090.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000029_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000055_37726b848558.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000092_def4b9242090.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000104_37726b848558.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000115_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000120_def4b9242090.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000157_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000176_44f767dbce91.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000206_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000210_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000214_656ab133c0a9.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000244_37726b848558.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000247_def4b9242090.json",
+          "tests/fuzz_corpus/olmblur/seed1_case000272_def4b9242090.json"
+        ],
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "9363e596f16930f0f1d9e112a8d8ffcb7a2bd4efae2c7f16c6b6c496d8f3597b",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_eehdyge7/variant/mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/radial_noop_highdepth_reference_20261002/target/release/aex-guest-worker",
+          "worker_sha256": "9ac2c86cb707e23de7c360c128d61b14d0b4c3b71b417baa3e7e116fe6af42b7",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      },
+      {
+        "paths": [
+          "tests/fuzz_corpus/olmblur/seed1_case000040_1e01a8a5cbd2.json"
+        ],
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "f71959953dc32351ec75b1473b431c2b12eea35e808c80347a3e95e92cab7058",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_4unkf3u3/variant/mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F30-ucrtmath/aex-guest-worker",
+          "worker_sha256": "8b51d0456ff55aa2034a0bbb00b822bd2339cbe27247021c289170a78a3fb53b",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      },
+      {
+        "paths": [
+          "tests/fuzz_corpus/olmblur/seed1_case000099_9b13c27c2f2e.json"
+        ],
+        "provenance": {
+          "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+          "candidate_sha256": "1fb31d8318a4d4adde7c9e2bf63d00c0ee4df018693e55be55d9e40894d1c03f",
+          "case_timeout_seconds": 10,
+          "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+          "dependencies_sha256": {
+            "mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker16_nonlegacy.cpp": "41264575e5f902980d700c5992e0dcbc5a814d5195649b3c6a3b1eb370bf2ac4",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker32_nonlegacy.cpp": "8b6c72f43d4d402f997b9243f3b69ec89759b55cb46f512e7f6b3cef540e9e84",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/core/olmblur_worker_orchestration.cpp": "741cd754a6363f7db84428cf14982bac90dcde4392df302bbbe2caaf871a6108",
+            "orchestra/state/C32-olmblur-smart-r7/run_9llpmc9d/group_cl108_gz/variant/mac/OLMBlur/OLMBlur.cpp": "0f2292a0dbf9b756eafdf542677324379a44d20d21cc96effd7eb578f7612950",
+            "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+            "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+            "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+            "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+            "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+            "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+            "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+            "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+            "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+            "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+            "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+          },
+          "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+          "layer": "None; independent layer worlds outside this adapter",
+          "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+          "oracle_render_path": "smartfx",
+          "oracle_routes": {
+            "classic": "classic",
+            "smart": "smart"
+          },
+          "original_routes": {
+            "classic": "render",
+            "smart": "render"
+          },
+          "out_of_range_builder_defaults": [],
+          "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+          "stage_support": "existing public replay helpers expose final raw output only",
+          "time": {
+            "scale": 24,
+            "step": 1,
+            "total": 1,
+            "value": 0
+          },
+          "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+          "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+          "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+          "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+        }
+      }
+    ],
+    "replay_matches_saved": true,
+    "replays": [
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000004_adfc483da30a.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "37c024fbfe1f1e6ced43ce5ec4a49facfafd9b5f5cbad684b19ee506732aec38",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744070215009288 bytes: handle allocation exceeds 2147483648 bytes: 18446744070215009288\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "37c024fbfe1f1e6ced43ce5ec4a49facfafd9b5f5cbad684b19ee506732aec38",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "37c024fbfe1f1e6ced43ce5ec4a49facfafd9b5f5cbad684b19ee506732aec38",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000005_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "ecf5a9f8f5447667781beb77fedf4ad50d1b61a38a961c1db981e707a3967fe2",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "04a65fe623413ea61b20a6016fa80a1cc79b105a6b72d489743332c4b101e07d",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "ecf5a9f8f5447667781beb77fedf4ad50d1b61a38a961c1db981e707a3967fe2",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "04a65fe623413ea61b20a6016fa80a1cc79b105a6b72d489743332c4b101e07d",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "ecf5a9f8f5447667781beb77fedf4ad50d1b61a38a961c1db981e707a3967fe2",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000008_92552f06afe6.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "43c454e3edea8a68c818b3adffd81e0346892c0e09e5e03139e075d0d70eeefd",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "6063bc19034a649d5db82faba3202fa49686f330578b05ea95528e090c182d06",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "43c454e3edea8a68c818b3adffd81e0346892c0e09e5e03139e075d0d70eeefd",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "6063bc19034a649d5db82faba3202fa49686f330578b05ea95528e090c182d06",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "43c454e3edea8a68c818b3adffd81e0346892c0e09e5e03139e075d0d70eeefd",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000025_def4b9242090.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "868ad15246c33b8139a561eac74d6a09ac473981b99630650839a1e26872c389",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "14d9c68f3f86a10d4cbba79d5e765249c179bbab0ac0e0201e7b045ade8d9d90",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "868ad15246c33b8139a561eac74d6a09ac473981b99630650839a1e26872c389",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "868ad15246c33b8139a561eac74d6a09ac473981b99630650839a1e26872c389",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000029_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "ae4d2cf454fd4c30a4e71127500c0bd29e9845a5a4e81f0c72c4cd6ce28a5d5f",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "5a1e071d4d03011ee2ff351637a061fb507a42f3f70a8d11b99521f8128c016b",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 2,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000040_1e01a8a5cbd2.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "d52d844b641f0a8e41ac4742f9607da899d08e4dc525479e4d076fd48a93d2c4",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "830fa696d0bea923e27f4fa528953ce2d42237acd6b3a238e08759832aad9c8e",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "d52d844b641f0a8e41ac4742f9607da899d08e4dc525479e4d076fd48a93d2c4",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "d52d844b641f0a8e41ac4742f9607da899d08e4dc525479e4d076fd48a93d2c4",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000055_37726b848558.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "fdc272c159f22b40ff1d611cb75bc69be91b37405fd2a802e43b348f6733dce6",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "0a072e4eba8d570384dd21a92168368a20e56bc88a4f707c8be8e9a5b7edb96e",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "fdc272c159f22b40ff1d611cb75bc69be91b37405fd2a802e43b348f6733dce6",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "fdc272c159f22b40ff1d611cb75bc69be91b37405fd2a802e43b348f6733dce6",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000074_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "960c8cd6e571a9377e3806727699a6c815a5c1edb2393579d5e07e0e10996b3d",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "5ee5314c8be5cbf15630946b407cf8745bc1fc975e9f1aad67181a6a751413c0",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "960c8cd6e571a9377e3806727699a6c815a5c1edb2393579d5e07e0e10996b3d",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "5ee5314c8be5cbf15630946b407cf8745bc1fc975e9f1aad67181a6a751413c0",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "960c8cd6e571a9377e3806727699a6c815a5c1edb2393579d5e07e0e10996b3d",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000092_def4b9242090.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "db3d2abd17fd68c60d53b46818ec8f61808ae6888d4e812a3e11d68d5bb1d368",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "0206771d028c87973c34fa70c495254751293d58fb1d42dc6cc4ccd064f77dc6",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "db3d2abd17fd68c60d53b46818ec8f61808ae6888d4e812a3e11d68d5bb1d368",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "db3d2abd17fd68c60d53b46818ec8f61808ae6888d4e812a3e11d68d5bb1d368",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000093_83728685d1c5.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "63697a346c7697cc346b1b9f78bdc22c69d4fb2e6c95eadab5f02a3fbeab7f43",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 8531608072 bytes: handle allocation exceeds 2147483648 bytes: 8531608072\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "63697a346c7697cc346b1b9f78bdc22c69d4fb2e6c95eadab5f02a3fbeab7f43",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "63697a346c7697cc346b1b9f78bdc22c69d4fb2e6c95eadab5f02a3fbeab7f43",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 3,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000099_9b13c27c2f2e.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "9dc7e6b7652bb2a592669f5f06203946cd4816d9fe790ae0c31e9aa88957c5d2",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "66f4b23fbb7a0e719b73ca5246da9d5987b031bbac6e1cc7cd82891ffb62bc7b",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "9dc7e6b7652bb2a592669f5f06203946cd4816d9fe790ae0c31e9aa88957c5d2",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "9dc7e6b7652bb2a592669f5f06203946cd4816d9fe790ae0c31e9aa88957c5d2",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000104_37726b848558.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "db70e5a7c7a62d34a60eb43d69cf9b5dca703335a8a2ad9e656ffb6d7478f689",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "886e2de0855dc75cc312c02ffb2dca3718878901e397d104d4720788e9721372",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "db70e5a7c7a62d34a60eb43d69cf9b5dca703335a8a2ad9e656ffb6d7478f689",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "db70e5a7c7a62d34a60eb43d69cf9b5dca703335a8a2ad9e656ffb6d7478f689",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000114_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "b194573987f1d4faf8c0a89856fb2c8837a87e1e85ad0a24d865906554c3063d",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "6964c807d7dcda927f888af9460d9e978e97acb200d8ab8ee8f97183f40d2a4e",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "b194573987f1d4faf8c0a89856fb2c8837a87e1e85ad0a24d865906554c3063d",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "6964c807d7dcda927f888af9460d9e978e97acb200d8ab8ee8f97183f40d2a4e",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "b194573987f1d4faf8c0a89856fb2c8837a87e1e85ad0a24d865906554c3063d",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000115_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "3d1f388f20d2966b0f894c040ca82beeb8eaea923eac72eee6ee1cd71dc21504",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "b03ddcb20e46aed941c14e44ba735e1f47ed3617376081214f1bbe4cee1a6aae",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "3d1f388f20d2966b0f894c040ca82beeb8eaea923eac72eee6ee1cd71dc21504",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "3d1f388f20d2966b0f894c040ca82beeb8eaea923eac72eee6ee1cd71dc21504",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000120_def4b9242090.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "f626fe32a90b1912fe020a407c3da24fb5bc641dc2b972cddd5a05f52102d88a",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "f8bfd7651915650e350f41ed3b03ae8a78c6485381b53c51f820d90a1f4f5f64",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "f626fe32a90b1912fe020a407c3da24fb5bc641dc2b972cddd5a05f52102d88a",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "f626fe32a90b1912fe020a407c3da24fb5bc641dc2b972cddd5a05f52102d88a",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000122_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "82e3ee660cd879a58ec6e6c4450a4589581a558c0a364f9a0faa65a04c479353",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "47d9a4dc3a5353e5ca3e27696507d49d37c607b83eacf388aceb2b056c0702ca",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "82e3ee660cd879a58ec6e6c4450a4589581a558c0a364f9a0faa65a04c479353",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "47d9a4dc3a5353e5ca3e27696507d49d37c607b83eacf388aceb2b056c0702ca",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "82e3ee660cd879a58ec6e6c4450a4589581a558c0a364f9a0faa65a04c479353",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000127_83728685d1c5.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "4c089d91fb6d2c822a94b39d5128bc693726bd96561ccccc698296222ce447ec",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "2a248cbabc2cd780fdb993ede46731b94d108824c4d7050d193d625f1d36e8bf",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "4c089d91fb6d2c822a94b39d5128bc693726bd96561ccccc698296222ce447ec",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "4c089d91fb6d2c822a94b39d5128bc693726bd96561ccccc698296222ce447ec",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000128_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "4a87d4620f31db94d5ab69faaa5489c9e07c9eaf36357b3b6e393a912722573d",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "39e034930b283b0b60c6c1b8fa137663bbe1028bfa3069111326a164834ea292",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "4a87d4620f31db94d5ab69faaa5489c9e07c9eaf36357b3b6e393a912722573d",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "39e034930b283b0b60c6c1b8fa137663bbe1028bfa3069111326a164834ea292",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "4a87d4620f31db94d5ab69faaa5489c9e07c9eaf36357b3b6e393a912722573d",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000157_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "fade0878072a98147bfb522a9f1c8d25715d18b6c0839d610fd1b398cee42851",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "6cc3e7b60936db6486de22953f3242beafab6e536e72c2117ca23a8ba27d8ccc",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "fade0878072a98147bfb522a9f1c8d25715d18b6c0839d610fd1b398cee42851",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "fade0878072a98147bfb522a9f1c8d25715d18b6c0839d610fd1b398cee42851",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000159_92552f06afe6.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "f576e928bb5465342a1515b6095adbfe38269f95be09f418ede23155d4481c8c",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "f576e928bb5465342a1515b6095adbfe38269f95be09f418ede23155d4481c8c",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "61ba50089730e342a117f05dc3d970c6ac143cadf31accd6d2ce331520c4ddac",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000176_44f767dbce91.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "291155c8eb33f79271b43ac37e1e92e16a031ab1bc4c2e6d8cf21c607d3f2755",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744066691278856 bytes: handle allocation exceeds 2147483648 bytes: 18446744066691278856\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "291155c8eb33f79271b43ac37e1e92e16a031ab1bc4c2e6d8cf21c607d3f2755",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "291155c8eb33f79271b43ac37e1e92e16a031ab1bc4c2e6d8cf21c607d3f2755",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000181_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "52be92e663de3a33367e2af92ad6bda4799446736470a641b9cc9763aa267c8f",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "acd6a3f9a557d8b69c68d0ed403dcf80c9c7ffaee57121962ca521d144cfedf1",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "52be92e663de3a33367e2af92ad6bda4799446736470a641b9cc9763aa267c8f",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "acd6a3f9a557d8b69c68d0ed403dcf80c9c7ffaee57121962ca521d144cfedf1",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "52be92e663de3a33367e2af92ad6bda4799446736470a641b9cc9763aa267c8f",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000191_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "9dc2033fa54159589727a43e72381d7b7a50fffa150508e2a719c3ade4ea676c",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "351a252a2993a6875c0af0f936202159e0a25d693b5e7b7683014986ca3c3a12",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "9dc2033fa54159589727a43e72381d7b7a50fffa150508e2a719c3ade4ea676c",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "351a252a2993a6875c0af0f936202159e0a25d693b5e7b7683014986ca3c3a12",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "9dc2033fa54159589727a43e72381d7b7a50fffa150508e2a719c3ade4ea676c",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000196_1e01a8a5cbd2.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "40437d83081e2de44e86720d8e99642909c23d5676bbcb23d67caa9887d4a1b6",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "e64226698ded15f54eafdef7b44357741fa8b20e2497dc5ed99a22a2623f9273",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "40437d83081e2de44e86720d8e99642909c23d5676bbcb23d67caa9887d4a1b6",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "40437d83081e2de44e86720d8e99642909c23d5676bbcb23d67caa9887d4a1b6",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000203_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "447e43bb880c3be1c0259e90bfb988ab7fade8ac4ba62ab17abb91388afc9af2",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "f88ced293c7aaf90619d9418b5b2ca15a8a288a97560095770587f8f40e4e170",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "447e43bb880c3be1c0259e90bfb988ab7fade8ac4ba62ab17abb91388afc9af2",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "f88ced293c7aaf90619d9418b5b2ca15a8a288a97560095770587f8f40e4e170",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "447e43bb880c3be1c0259e90bfb988ab7fade8ac4ba62ab17abb91388afc9af2",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000206_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "ee181d53f32263545c4592796e22154b6358b05adcf212220917eb77ac083c15",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "db644ad6b40ab0b570e7b5a4af7f0c3507f1c75d644bccab0ac1aa6d4677c148",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "ee181d53f32263545c4592796e22154b6358b05adcf212220917eb77ac083c15",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "ee181d53f32263545c4592796e22154b6358b05adcf212220917eb77ac083c15",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000210_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "ab88c38ecc5d61ee4c6c4aabb7612deb6ef0931ec5fb8be6c5e15846dfda0d85",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "9b9deb7de0246679343010ee7c709fd3714b92fad03a966251317f731aa485e5",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "ab88c38ecc5d61ee4c6c4aabb7612deb6ef0931ec5fb8be6c5e15846dfda0d85",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "ab88c38ecc5d61ee4c6c4aabb7612deb6ef0931ec5fb8be6c5e15846dfda0d85",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000214_656ab133c0a9.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "d4a8300f0b0235c7124d66713b01ca1d55d9700b0803338349e475e06bcc7e9a",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "aa01098bd909f296cff63bd0089d7a37fb12636ee10aadf0b4810ad6cb76ca1c",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "d4a8300f0b0235c7124d66713b01ca1d55d9700b0803338349e475e06bcc7e9a",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "d4a8300f0b0235c7124d66713b01ca1d55d9700b0803338349e475e06bcc7e9a",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000230_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "09fe2ed251b1fb171f348fdafff9a27be58e4a02ea963c3169ab41c52f7bf5b2",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "1751c470115ca0adbc3642dbb1db6eea5ab8b723321fcf54b42e941274938cea",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "09fe2ed251b1fb171f348fdafff9a27be58e4a02ea963c3169ab41c52f7bf5b2",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "1751c470115ca0adbc3642dbb1db6eea5ab8b723321fcf54b42e941274938cea",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "09fe2ed251b1fb171f348fdafff9a27be58e4a02ea963c3169ab41c52f7bf5b2",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000234_ced0f1718a01.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "f20484ecb64a007cee22d9bf3977cea883077571a595b697be36e7f6f41dfe3f",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "212bf69ce56b541b8197199e058aee5d1557fe963097e53646e8e40f50874834",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "f20484ecb64a007cee22d9bf3977cea883077571a595b697be36e7f6f41dfe3f",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "212bf69ce56b541b8197199e058aee5d1557fe963097e53646e8e40f50874834",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "f20484ecb64a007cee22d9bf3977cea883077571a595b697be36e7f6f41dfe3f",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744067113643016 bytes: handle allocation exceeds 2147483648 bytes: 18446744067113643016\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "5fd7668510ffaa0e97f92f26f6d3732da8fd4f50576636cb2a377e9cbf7667fa",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000236_fac8522494e3.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "72e0e9564bbe6d3a3da4d2cde44188519c3ff04b875901a150d5c93dc061db29",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "7bafb692108bc44ec34ef1216e6e1c7e61517a03b753e796bf87ce8609e19e9a",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "72e0e9564bbe6d3a3da4d2cde44188519c3ff04b875901a150d5c93dc061db29",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "72e0e9564bbe6d3a3da4d2cde44188519c3ff04b875901a150d5c93dc061db29",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000244_37726b848558.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "6c4c12a9374e5988071da7f716031d7005a81bbe22546deea7a3647c33805304",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "9bf9f62d3e69f966dc2c262ac1c379379dda5e5376396e4c5632bed385d24f61",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "6c4c12a9374e5988071da7f716031d7005a81bbe22546deea7a3647c33805304",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "6c4c12a9374e5988071da7f716031d7005a81bbe22546deea7a3647c33805304",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000247_def4b9242090.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "c5978394d709ef4a33c09a1d024ae4ccd61a7cc2d72e68f23ea4c5a333b71fdb",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "73ec0f33b25569e7665c65a8c5eac6dab890d28d8ce8c20e7fcd1127329108d6",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "c5978394d709ef4a33c09a1d024ae4ccd61a7cc2d72e68f23ea4c5a333b71fdb",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "c5978394d709ef4a33c09a1d024ae4ccd61a7cc2d72e68f23ea4c5a333b71fdb",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000261_1e01a8a5cbd2.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "d56975426ed23fcce5721dc776737199c07100ff446b660a31c5585957992b08",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "5915db8cc559d40f3b3e1da3b9c3324a3cc34a1d623219936021ce6638f7a4c4",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000268_83728685d1c5.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "720a0cafe24059e3871671325cf329ce6782ce098b78be4ff3581f5ff351caeb",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744065267390472 bytes: handle allocation exceeds 2147483648 bytes: 18446744065267390472\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "720a0cafe24059e3871671325cf329ce6782ce098b78be4ff3581f5ff351caeb",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "720a0cafe24059e3871671325cf329ce6782ce098b78be4ff3581f5ff351caeb",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000270_8214084afb2c.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "476373ffeaa3d3fc640abc5993e0b8dab45d1ea9d306e69f584dfb7fa90a27cd",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744073201779912 bytes: handle allocation exceeds 2147483648 bytes: 18446744073201779912\n",
+              "returncode": 1,
+              "status": "reject"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "476373ffeaa3d3fc640abc5993e0b8dab45d1ea9d306e69f584dfb7fa90a27cd",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "476373ffeaa3d3fc640abc5993e0b8dab45d1ea9d306e69f584dfb7fa90a27cd",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 0,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000271_92552f06afe6.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "b006885657ada0d86bab0add89e9103d1e66e7e97c38c4a40aaee3d211295912",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "a4d3d0205572b69e004f5bf320f891d7c889abe3da6eefb9ff18d05713fa5346",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "b006885657ada0d86bab0add89e9103d1e66e7e97c38c4a40aaee3d211295912",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "a4d3d0205572b69e004f5bf320f891d7c889abe3da6eefb9ff18d05713fa5346",
+              "status": "exact"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "b006885657ada0d86bab0add89e9103d1e66e7e97c38c4a40aaee3d211295912",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      },
+      {
+        "group": 1,
+        "matches_saved": true,
+        "path": "tests/fuzz_corpus/olmblur/seed1_case000272_def4b9242090.json",
+        "result": {
+          "first_mismatching_stage": null,
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "957aaa99eb2dc68c65249477bb607b545a9113bc113aef5e7ab960b34caa2a58",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "oracles": {
+            "classic": {
+              "guards_intact": true,
+              "raw_sha256": "421cd4f4fbaac131807977c0d0c9ce140eda084970a1101d1081d76102ed8d69",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "smart": {
+              "guards_intact": true,
+              "raw_sha256": "957aaa99eb2dc68c65249477bb607b545a9113bc113aef5e7ab960b34caa2a58",
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          "routes": {
+            "classic": {
+              "error": 516,
+              "metadata": {
+                "COUNTS": "0 0 0 0 0 0",
+                "ERROR": "516"
+              },
+              "status": "refusal"
+            },
+            "smart": {
+              "error": 0,
+              "metadata": {
+                "COUNTS": "1 1 1 5 5 0",
+                "ERROR": "0"
+              },
+              "raw_sha256": "957aaa99eb2dc68c65249477bb607b545a9113bc113aef5e7ab960b34caa2a58",
+              "status": "exact"
+            }
+          },
+          "stage_observation": "paired stages unavailable; final raw output only"
+        }
+      }
+    ],
+    "requested": 39,
+    "schema": "olm-fuzz-report/1",
+    "scratch_bytes_before_cleanup": 11452104,
+    "seed": 1,
+    "shrink_attempts": 32,
+    "shrink_seconds": 10,
+    "started_utc": "2026-10-23T10:57:55.346426+00:00",
+    "status": "replay_complete"
+  }
+}
