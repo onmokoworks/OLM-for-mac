@@ -3,7 +3,7 @@ Reduce the **Smart-route** residual of **{PLUGIN}** (F18: Smart is the route AE 
 Current seed-1 n300 Smart residual: {ROW}
 
 ## Loop (repeat until 3 clusters are closed, or the time budget of ~3h, or blocked)
-1. Re-measure: `tools/fuzz/run.py --plugin {PLUGIN} --n 300 --seed 1 --jobs 2` with scratch corpus.
+1. Re-measure: `tools/fuzz/run.py --plugin {PLUGIN} --n 300 --seed 1 --jobs 1` with scratch corpus.
 2. Pick the largest remaining Smart cluster (mismatch or refusal of an AEX-rendered case).
 3. Mismatch: find the FIRST divergent stage vs the original AEX (reuse existing paired-trace tools in
    tools/emulation/ for this plugin; build one if absent) and fix the general operation.
