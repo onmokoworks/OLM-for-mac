@@ -18,6 +18,29 @@ from verify_kirakira_admission_F10 import (
 
 
 def cases(adapter, domain, boundary, negative=False):
+    if domain == 'scalar-approx':
+        family = 'finite-brightness-negative' if negative else ('finite-brightness-boundary' if boundary else 'finite-brightness-box')
+        for case in prior_cases(adapter, family):
+            if min(case['geometry']) < 4:
+                if not boundary: continue
+                case['geometry'] = list(((4, 4), (4, 9), (9, 4), (17, 11))[case['index'] % 4])
+                size = case['geometry'][0] * case['geometry'][1] * 16
+                case['pixels'] = (case['pixels'] * (1 + size // len(case['pixels'])))[:size]
+            for mode in ((1, 2, 3) if not negative else (3,)):
+                c = copy.deepcopy(case)
+                for param in c['parameters']:
+                    if param['slot'] == 2: param['value'] = mode
+                    if param['slot'] == 4: param['value'] = 1
+                yield c
+        return
+    if domain in ('scalar-gaussian', 'color-gaussian'):
+        prefix = 'finite-brightness' if domain == 'scalar-gaussian' else 'finite-color'
+        family = prefix + ('-negative' if negative else '-boundary' if boundary else '-box')
+        for case in prior_cases(adapter, family):
+            for param in case['parameters']:
+                if param['slot'] == 2: param['value'] = 3
+            yield case
+        return
     if negative:
         families = ('finite-color-negative',) if domain == 'color-approx' else (
             'finite-color-negative', 'finite-brightness-negative')
@@ -61,7 +84,9 @@ def cases(adapter, domain, boundary, negative=False):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--domain', choices=('color-approx', 'alpha-approx'), required=True)
+    p.add_argument('--domain', choices=('color-approx', 'alpha-approx', 'scalar-gaussian', 'color-gaussian', 'scalar-approx'), required=True)
+    p.add_argument('--seed', type=int, help='Regenerate one fuzz campaign witness')
+    p.add_argument('--case-index', type=int)
     p.add_argument('--negative', action='store_true', help='Require refusal outside the admitted source domain')
     p.add_argument('--boundary', action='store_true')
     p.add_argument('--trace-index', type=int, help='Trace this independent matrix index with F46 imports')
@@ -71,6 +96,8 @@ def main():
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--require-exact', action='store_true')
     args = p.parse_args()
+    if (args.seed is None) != (args.case_index is None):
+        p.error('--seed and --case-index must be supplied together')
     s = args.scratch.resolve()
     assert s.is_relative_to(ROOT/'orchestra/state')
     s.mkdir(parents=True, exist_ok=True)
@@ -100,7 +127,9 @@ def main():
             subprocess.run(['clang', '-dynamiclib', *map(str, objects), '-o', str(library)], check=True)
             a.env['F09_TRACE'] = str(s/'case')
         (s/'case').mkdir()
-        for i, c in enumerate(cases(a, args.domain, args.boundary, args.negative)):
+        selected = ([a.generate(args.seed, args.case_index)] if args.seed is not None else
+                    cases(a, args.domain, args.boundary, args.negative))
+        for i, c in enumerate(selected):
             if args.trace_index is not None and i != args.trace_index: continue
             oracle, ref = a.oracle(c, s/'case', deadline, 'smart')
             result, raw = observation(a, c, s/'case', 'smart', deadline, ref)
@@ -114,7 +143,10 @@ def main():
                 row['original_trace_status'] = original['status']
                 row['original_trace_error'] = original.get('error')
                 stages = original['stages']
-                row['public_bound'] = bytes.fromhex(stages.get('output', '')) == ref
+                traced_output = bytes.fromhex(stages.get('output', ''))
+                row['public_bound'] = traced_output == ref
+                row['traced_output_sha256'] = sha(traced_output)
+                row['traced_output_diff'] = None if row['public_bound'] else raw_diff(ref, traced_output, c['depth'])
                 row['paired'] = {}
                 for name in ('source_full', 'source', 'seed', 'ray0', 'ray1', 'ray2', 'ray3',
                              'ray4', 'glow', 'glow_full', 'composed'):

@@ -2095,11 +2095,15 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
     const bool filtered_alpha = info.channel == 1 &&
         (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
          IsSmartApproximationTuple(info, format, input->width, input->height));
+    // C55: finite luminance/max sources retain the existing Gaussian tuple
+    // limits; paired public output and independent HDR/signed matrices are exact.
+    const bool gaussian_scalar = (info.channel == 2 || info.channel == 4) &&
+        IsSmartDirectionalGaussianTuple(info, format, input->width, input->height);
     const bool approximated_color = (info.channel == 3 || info.channel == 5 || info.channel == 6) &&
         (info.blur_mode == 1 || info.blur_mode == 2) &&
         IsSmartApproximationTuple(info, format, input->width, input->height);
     if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
-          IsSmartColorBoxTuple(info, format) || filtered_alpha || approximated_color)) return false;
+          IsSmartColorBoxTuple(info, format) || filtered_alpha || gaussian_scalar || approximated_color)) return false;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
