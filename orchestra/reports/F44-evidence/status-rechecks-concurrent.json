@@ -1,0 +1,41 @@
+[
+  {
+    "campaign": "radialblur-seed1",
+    "case": 280,
+    "route": "smart",
+    "input_sha256": "7e1bd292812937f1a7f3bfd31d9fcdf48b50cb05165638728e4b0bd2db608b3f",
+    "original_before": {
+      "guards_intact": true,
+      "raw_sha256": "5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "original_after": {
+      "limit_seconds": 10,
+      "reason": "wall timeout",
+      "status": "budget"
+    },
+    "rechecks": [
+      {
+        "worker": "worker-F32-deep",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "result": {
+          "status": "reject",
+          "returncode": 1
+        },
+        "elapsed_seconds": 20.019653000010294
+      },
+      {
+        "worker": "worker-F44-msfloat",
+        "worker_sha256": "768138633933a872af35ed26ba5af6b7d880e837bfa9de686991e200fe427813",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8"
+        },
+        "elapsed_seconds": 8.937102542011417
+      }
+    ]
+  }
+]

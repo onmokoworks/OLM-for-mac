@@ -1,0 +1,23 @@
+[
+  {
+    "function": "sinf",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "0117fe5df3992ca9b5e6933b3a559a5ec1bea041e093778b156202317d2c45d8",
+    "invalid_exit": -6
+  },
+  {
+    "function": "cosf",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "d6b7bda05d9ccea5d010f37eafdaf6bd25bd97476c358f1aaa2b1eaf2bb10dcc",
+    "invalid_exit": -6
+  },
+  {
+    "function": "log2f",
+    "default_equals_fma1": true,
+    "count": 1024,
+    "raw_sha256": "4bcddf9511cb7532b65f376854cb5c1434de671026a11efba2587aab23b376fd",
+    "invalid_exit": -6
+  }
+]

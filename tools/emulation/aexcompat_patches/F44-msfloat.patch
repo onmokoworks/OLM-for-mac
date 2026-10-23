@@ -1,0 +1,122 @@
+--- a/crates/olm-ucrtmath/build.rs
++++ b/crates/olm-ucrtmath/build.rs
+@@ -5,9 +5,9 @@
+         "aarch64" => "arm64", "x86_64" => "x86_64", _ => panic!("unsupported architecture"),
+     };
+     let mut objects = Vec::new();
+-    for name in ["expf", "atan2f", "powf", "tables"] {
++    for name in ["expf", "atan2f", "powf", "tables", "../ms/float"] {
+         let source = format!("ucrtmath/src/{name}.c");
+-        let object = out.join(format!("{name}.o"));
++        let object = out.join(format!("{}.o", name.replace("/", "_")));
+         assert!(Command::new("clang").args(["-arch", arch, "-std=c11", "-O2", "-ffp-contract=off", "-fno-fast-math", "-Iucrtmath/include", "-c", &source, "-o"]).arg(&object).status().unwrap().success());
+         objects.push(object);
+     }
+--- a/crates/olm-ucrtmath/src/lib.rs
++++ b/crates/olm-ucrtmath/src/lib.rs
+@@ -10,6 +10,10 @@
+     })
+ }
+ unsafe extern "C" {
++    fn ucrt_sinf(x: f32, mode: i32) -> f32;
++    fn ucrt_cosf(x: f32, mode: i32) -> f32;
++    fn ucrt_log2f(x: f32, mode: i32) -> f32;
++
+     fn ucrt_expf(x: f32, mode: i32) -> f32;
+     fn ucrt_atan2f(y: f32, x: f32, mode: i32) -> f32;
+     fn ucrt_powf(x: f32, y: f32, mode: i32) -> f32;
+@@ -17,3 +21,6 @@
+ pub fn expf(x: f32) -> f32 { unsafe { ucrt_expf(x, mode()) } }
+ pub fn atan2f(y: f32, x: f32) -> f32 { unsafe { ucrt_atan2f(y, x, mode()) } }
+ pub fn powf(x: f32, y: f32) -> f32 { unsafe { ucrt_powf(x, y, mode()) } }
++pub fn sinf(x: f32) -> f32 { unsafe { ucrt_sinf(x, mode()) } }
++pub fn cosf(x: f32) -> f32 { unsafe { ucrt_cosf(x, mode()) } }
++pub fn log2f(x: f32) -> f32 { unsafe { ucrt_log2f(x, mode()) } }
+--- a/crates/aex-guest-worker/src/x64/imports.rs
++++ b/crates/aex-guest-worker/src/x64/imports.rs
+@@ -2625,7 +2625,7 @@
+                     install_double_import(unicorn, stub, "cos", f64::cos)?;
+                 }
+                 LegacyWin64Import::CosF => {
+-                    install_float_import(unicorn, stub, "cosf", f32::cos)?;
++                    install_float_import(unicorn, stub, "cosf", olm_ucrtmath::cosf)?;
+                 }
+                 LegacyWin64Import::Ceil => {
+                     install_double_import(unicorn, stub, "ceil", f64::ceil)?;
+@@ -2691,7 +2691,7 @@
+                     install_double_import(unicorn, stub, "sin", f64::sin)?;
+                 }
+                 LegacyWin64Import::SinF => {
+-                    install_float_import(unicorn, stub, "sinf", f32::sin)?;
++                    install_float_import(unicorn, stub, "sinf", olm_ucrtmath::sinf)?;
+                 }
+                 LegacyWin64Import::OmpGetMaxThreads => {
+                     let value = deterministic_import_i32("omp_get_max_threads")
+--- a/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -444,7 +444,7 @@
+         unicorn.add_code_hook(address, address, move |unicorn, _, _| {
+             if let Ok(mut xmm0) = unicorn.reg_read_long(RegisterX86::XMM0) {
+                 let value = f32::from_le_bytes(xmm0[..4].try_into().unwrap());
+-                let output = value.log2();
++                let output = olm_ucrtmath::log2f(value);
+                 if unicorn.get_data().math_calls.len() < 32 {
+                     unicorn
+                         .get_data_mut()
+--- a/crates/aex-guest-worker/src/native_x64/imports.rs
++++ b/crates/aex-guest-worker/src/native_x64/imports.rs
+@@ -30,6 +30,9 @@
+             | "memset"
+             | "expf"
+             | "atan2f"
++            | "sinf"
++            | "cosf"
++            | "log2f"
+             | "floorf"
+             | "lround"
+             | "powf"
+@@ -48,6 +51,10 @@
+         "memset" => callback_address!(native_memset),
+         "expf" => callback_address!(native_expf),
+         "atan2f" => callback_address!(native_atan2f),
++        "sinf" => callback_address!(native_sinf),
++        "cosf" => callback_address!(native_cosf),
++        "log2f" => callback_address!(native_log2f),
++
+         "floorf" => callback_address!(native_floorf),
+         "lround" => callback_address!(native_lround),
+         "powf" => callback_address!(native_powf),
+@@ -354,3 +361,15 @@
+     }
+     0
+ }
++
++pub(super) unsafe extern "win64" fn native_sinf(value: f32) -> f32 {
++    olm_ucrtmath::sinf(value)
++}
++
++pub(super) unsafe extern "win64" fn native_cosf(value: f32) -> f32 {
++    olm_ucrtmath::cosf(value)
++}
++
++pub(super) unsafe extern "win64" fn native_log2f(value: f32) -> f32 {
++    olm_ucrtmath::log2f(value)
++}
+--- a/crates/aex-guest-worker/src/x64/f30_import_probe.rs
++++ b/crates/aex-guest-worker/src/x64/f30_import_probe.rs
+@@ -10,11 +10,14 @@
+         ("expf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::ExpF)) => install_float_import(&mut uc, CODE, "expf", olm_ucrtmath::expf).unwrap(),
+         ("powf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::PowF)) => install_float_binary_import(&mut uc, CODE, "powf", olm_ucrtmath::powf).unwrap(),
+         ("atan2f", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Atan2F)) => install_atan2f_import(&mut uc, CODE).unwrap(),
++        ("sinf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::SinF)) => install_float_import(&mut uc, CODE, "sinf", olm_ucrtmath::sinf).unwrap(),
++("cosf", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::CosF)) => install_float_import(&mut uc, CODE, "cosf", olm_ucrtmath::cosf).unwrap(),
++("log2f", Win64ImportDispatch::LegacyImplemented(LegacyWin64Import::Log2F)) => install_log2f_import(&mut uc, CODE).unwrap(),
+         _ => panic!("wrong import dispatch"),
+     }
+     let mut out = std::io::BufWriter::new(std::io::stdout().lock());
+     for i in 0..count {
+-        let mut z = (i ^ 0xf30).wrapping_add(0x9e3779b97f4a7c15);
++        let mut z = (i ^ 0xf44).wrapping_add(0x9e3779b97f4a7c15);
+         z = (z ^ (z >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+         z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
+         z ^= z >> 31;

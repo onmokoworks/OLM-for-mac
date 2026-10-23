@@ -1,4 +1,5 @@
 #include "dblur_rotate.h"
+#include "../ucrtmath/include/ucrtmath.h"
 
 #include <cmath>
 
@@ -73,8 +74,8 @@ extern "C" void olm_dblur_rotate_scalar_f32(const float* source,
                                              int width,
                                              int height,
                                              float angle) {
-    const float cosine = static_cast<float>(std::cos(static_cast<double>(angle)));
-    const float sine = static_cast<float>(std::sin(static_cast<double>(angle)));
+    const float cosine = ucrt_cosf(angle, UCRT_FMA);
+    const float sine = ucrt_sinf(angle, UCRT_FMA);
     olm_dblur_rotate_scalar_f32_trig(
         source, destination, width, height, cosine, sine);
 }
@@ -170,9 +171,8 @@ extern "C" void olm_dblur_rotate_rgba_f32(const float* source,
                                            int width,
                                            int height,
                                            float angle) {
-    // The checked-in Unicorn AEX fixture models the imported cosf/sinf with
-    // the host libm's double call followed by the import's float return.
-    const float cosine = static_cast<float>(std::cos(static_cast<double>(angle)));
-    const float sine = static_cast<float>(std::sin(static_cast<double>(angle)));
+    // The original AEX imports cosf/sinf: round at the FLOAT32 boundary.
+    const float cosine = ucrt_cosf(angle, UCRT_FMA);
+    const float sine = ucrt_sinf(angle, UCRT_FMA);
     olm_dblur_rotate_rgba_f32_trig(source, destination, width, height, cosine, sine);
 }
