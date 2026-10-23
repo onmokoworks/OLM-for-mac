@@ -738,6 +738,46 @@ static float bilateral_ipp_vector_exp(float x)
 	return poly;
 }
 
+// FUN_1802a1640 selects scalar side tiles and vector top/bottom/interior.
+// FUN_1806b7d40 retains circular row-major taps and separate float operations.
+static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	struct Offset { int x, y; float spatial; };
+	std::vector<Offset> offsets;
+	for (int y = -radius; y <= radius; ++y) {
+		for (int x = -radius; x <= radius; ++x) {
+			const int squared = x*x + y*y;
+			if (squared > radius*radius) continue;
+			const float exponent = -0.5f * (float)squared;
+			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+		}
+	}
+	const std::vector<float> source(mat, mat + (size_t)w*h);
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			const bool vector_dispatch = w >= 16 && w > 2*radius && h > 2*radius &&
+			    (y < radius || y >= h-radius || (x >= radius && x < w-radius));
+			const float center = source[(size_t)y*w+x];
+			float sum = 0.0f, weight_sum = 0.0f;
+			for (const Offset &offset : offsets) {
+				const long sx = std::max(0L, std::min(w-1, x+offset.x));
+				const long sy = std::max(0L, std::min(h-1, y+offset.y));
+				const float sample = source[(size_t)sy*w+sx];
+				const float difference = sample-center;
+				const float exponent = vector_dispatch ? (difference*difference)*-0.5f : (-0.5f*difference)*difference;
+				const float color = exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
+				const float weight = bilateral_noncontracting_product(color, offset.spatial);
+				weight_sum += weight;
+				sum += bilateral_noncontracting_product(sample, weight);
+			}
+			mat[(size_t)y*w+x] = sum / weight_sum;
+		}
+	}
+}
+
 // PF32 Smart reproduction of the retained radius-one IPP bilateral body.
 // cvSmooth(CV_BILATERAL, diameter 1 or 3, ..., 0, 0) selects radius one and
 // unit sigmas (1812ca750). Larger radii and PF8/PF16 remain separate lanes.
@@ -1042,6 +1082,7 @@ static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, l
 	return raw[(size_t)y * w + x];
 }
 
+static bool is_admitted_pf32_smart_bilateral_general_beta(const DGParams &p, long w, long h);
 static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p);
 
 static void build_distance_field(
@@ -1109,7 +1150,7 @@ static void build_distance_field(
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
 	// mode 2 uses normalized box blur, mode 3 Gaussian, mode 4 median, and
 	// mode 5 the legacy bilateral call. Admitted radius-one PF32 Smart and
-	// existing fixed-profile cells enter the retained IPP reproduction below.
+	// bounded generic-radius and fixed-profile cells enter the IPP reproductions below.
 	// PF8/PF16 keep their separate path; their general bilateral remains open.
 	if (has_effective_blur(p)) {
 		long bs = (long)((float)p.blur_size * ds + 0.5f);
@@ -1125,6 +1166,8 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
 				if (is_scalar_bilateral_shape(p, w, h)) {
 					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
+				} else if (is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
+					bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);
 				} else if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
 				    is_admitted_pf32_smart_bilateral_beta(p)) {
 					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
@@ -1728,6 +1771,20 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
+// Radius>=3 dispatch uses the generic circular kernel. Keep a bounded
+// 400M square-kernel work ceiling, no larger than the existing Median ceiling.
+static bool is_admitted_pf32_smart_bilateral_general_beta(const DGParams &p, long w, long h)
+{
+    if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
+        p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 3 || p.blur_size > 32 ||
+        p.ds_x != 1.0f || p.ds_y != 1.0f || w <= 0 || h <= 0) return false;
+    const size_t kernel = (size_t)p.blur_size*2u+1u;
+    if ((size_t)w*(size_t)h > 400u*1000u*1000u/(kernel*kernel)) return false;
+    DGParams identity = p;
+    identity.blur_mode = BLUR_MODE_NONE;
+    return is_admitted_pf32_smart_unblurred_beta(identity);
+}
+
 static bool is_admitted_pf32_smart_bilateral_scalar_beta(const DGParams &p, long w, long h)
 {
 	if (p.pixel_size != sizeof(PF_PixelFloat) || !is_scalar_bilateral_shape(p, w, h)) return false;
@@ -1797,17 +1854,18 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 			const PF_PixelFloat &pixel = row[x];
 			// C19 restores the original signed-int32 mask conversion and invalid
 			// weighted-sample arithmetic. Nonfinite inputs retain the witnessed
-			// identity-filter boundary; finite extended samples also use Box/Gaussian.
+			// identity-filter boundary; finite extended samples also use Box/Gaussian and radius-one Bilateral.
 			if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
 				if (!std::isfinite(value) && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
 				// C27 pairs finite extended samples through the existing Box/Gaussian
-				// field and callback. Median and Bilateral retain their SDR boundary;
+				// field and callback. Median and larger-radius Bilateral retain their SDR boundary;
 				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
 				if ((value < 0.0f || value > 1.0f) &&
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
-				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height))) return false;
+				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)) &&
+				    !is_admitted_pf32_smart_bilateral_beta(p)) return false;
 			}
 		}
 	}
@@ -1925,7 +1983,8 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !is_admitted_pf32_smart_bilateral_beta(p) &&
-		    !is_admitted_pf32_smart_bilateral_scalar_beta(p, w, h) &&
+		    !is_admitted_pf32_smart_bilateral_general_beta(p, w, h) &&
+		    !is_admitted_pf32_smart_bilateral_scalar_beta(admission, w, h) &&
 		    !p.pf32_smart_oracle_profile_admitted) {
 			return OLM_DG_REFUSAL("pf32-smart-profile");
 		}
