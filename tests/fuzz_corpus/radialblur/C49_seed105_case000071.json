@@ -1,0 +1,305 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      11,
+      23
+    ],
+    "index": 71,
+    "input_padding": 16,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 2
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          4.889007568359375,
+          8.169815063476562
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 1395
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 3
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 38
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 83
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 16
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 5
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 4.365300023503419
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": -649.6285552978516
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 30.502979794467517
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 7.830952491830542
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 90.89414490120647
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 13.3781575237652
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 125
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": -407.48219299316406
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 1.0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 105
+  },
+  "generator_version": 1,
+  "index": 71,
+  "input_sha256": "827835129df0a82eaff71d86e10b575e2fa1449706754eb232f090652cd50b31",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoNx3k0GwYcAOAfVkeFBM1a17OxR4uMaVSnKW29OrNa1FVt3HVFPVcdRYVWq+l66IsnjiGdNB7WTvbs0WLUUdce0Qlxk2G0K1VKiv22778PHz0IgYLLDkDa9zJ8oIsAeQwKEjR5oPdWAyLZx6EzOBAPZw76s6pzgX3AvX+ruzWC718Rq8ULIRDodBCeNK/8Uz8LeCIGuir8CH4Sb7Q0fI6Zesv4q4Hw92EpIC9ABWOZAfcmdfyK+S/+P/Vr8AgKwHRiC1yIX2Vd4zmi8euzKL0RD4FOzVhG/gsrF9XARnYa5WsfUY+iD0tvWuFO3zr8fb0FjxhKYEqFD18WCtAxOwWWjBvwW0WvnRwiCZb6GDXB1tew7Ja5/aZxBlJHeTlM1SL4wqNtOYd8O+BMwx7q5DbiLyIL5s2kXXycXJLniEdB56kVHHgzh6SYu4T8F2LtYVka1kXojdIOqcJWaSc2Tq/P627YqOo6hNJ387vk9965YkqU13ti2SQM1WRiVWMJ+n2sgh/URdB8eRaajRRhvL0tlfpwDoz2mvGZrk1BlloUan9y6F0PnYDUrlXwtFbA1sRFFNiuwIfIYQhYsIFAolLpkvIqkguPwcqDJFC0WkNJqAZf032xbexizXX9LSZC/Sm0Z0VOu6ULcg1OmPR+qGXDdlEidvQIsG/IGdTem7xUnEhB8c+029oUM7B4dB7GaOOJ3s6tIV+plhNPvqrClpSDWM8hmdhanMbgEoHzRlQ5PmFvg0bkZ1gxQ8YC04hYuz/2s/vjhGBEbMl7ekyBEycuwoO1J4A6bg0z3+mB9CrjX8/WW1g0Nou4yfpnsJCNXdVFcnnPFcg9p4NNLH3/J1JfiKllQk9LVJ2SyzbQZFx4O8rBGZfQPoWqAWDcmNQ48m5gY8Z5As86HMd5n3QYUJbAp15b86na7FPnnOigKeci52Yc/lbMCntIO4wrKYvoc7QRaWl3L0zlzScbBeygi2E2SsVBYHjfDbUHbFByZzNzf6kCmpml176Kp+FmrxWGxDeAQVMYCOt3kEAtsI3mNCLpUM2gr68Ue+lp9zPdpmGWL4XPtSjYcTGb/npLQT6mnoUSd2ZBd/gQptZGk+3zSJhwSQ7cfCeo7vDFnqQRUKZ4TJsaUS7Fha0gc7C8wq1uAaQRSt9n/1SCuznLQLecpLpLuprte684sLkZyVnsXRDacbCjOJ7brpKA3SMLkM7KA8/nMhw10QLdLSFcdXKsDDJ3hU5ZOJaImlAkZq4mKA+ijCtGsukEqb3NjtEvIoLS+TV87G2J+/aiQRz+DSvbRoAUjhdo08uFGfxn0O5ngskxI9E+sVJwmlNHi3ml/wC3s/sy",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": true,
+    "candidate_sha256": "40f6fc47af9c806ea1d947ed52a46dd0f5389c309ef345670875a0787e90c9fa",
+    "candidate_source_sha256": "fb3325785a7d35c72257bbdc201085f8358b69f2524eba151ea09de625888f80",
+    "case_timeout_seconds": 60,
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "fb3325785a7d35c72257bbdc201085f8358b69f2524eba151ea09de625888f80",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {}
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "f755776efbc480f60c71fed6d664859af7fd3573714cdd23fc527787d8cdca12",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "dca67435629d486cac458300c323b247b68ed22541e3169dbaa0ec0412d595e6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "f755776efbc480f60c71fed6d664859af7fd3573714cdd23fc527787d8cdca12",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 4,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "4",
+          "INFO": "-649.62855529785156 83 5 -7"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "INFO": "-649.62855529785156 83 5 -7"
+        },
+        "raw_sha256": "f755776efbc480f60c71fed6d664859af7fd3573714cdd23fc527787d8cdca12",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 105
+}
