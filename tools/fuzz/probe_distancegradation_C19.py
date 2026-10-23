@@ -31,6 +31,8 @@ def candidate_source(experiment, source=None):
 \tif (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
 \t    p.interp_mode == INTERP_POWER && p.power == 1.0f)
 \t\tp.interp_mode = INTERP_LINEAR;''')
+    if experiment == 'bilateral-scalar':
+        return bilateral_scalar_source(source)
     if experiment in ('identity', 'identity-mul'):
         source = replace_once(source, 'if (pixel.alpha * 255.0f >= 2147483648.0f) return false;',
                               'if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;')
@@ -68,6 +70,75 @@ static inline float smart_weighted_sample(float sample, float weight)
         for channel in 'rgb':
             source = replace_once(source, f'fg_{channel} = X * i{channel};',
                                   f'fg_{channel} = smart_weighted_sample(i{channel}, X);')
+    return source
+
+
+def bilateral_scalar_source(source):
+    helper='''// The original generic scalar IPP body (1806be1e0) scans a circular
+// kernel in row-major order, including the center. Its spatial and color
+// exponent cutoffs are strictly greater than -25 (1815bd7c4/1815dce38).
+static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+\tstruct Offset { int x, y; float spatial; };
+\tstd::vector<Offset> offsets;
+\tfor (int y = -radius; y <= radius; ++y) {
+\t\tfor (int x = -radius; x <= radius; ++x) {
+\t\t\tconst int squared = x*x + y*y;
+\t\t\tif (squared > radius*radius) continue;
+\t\t\tconst float exponent = -0.5f * (float)squared;
+\t\t\toffsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+\t\t}
+\t}
+\tconst std::vector<float> source(mat, mat + (size_t)w*h);
+\tfor (long y = 0; y < h; ++y) {
+\t\tfor (long x = 0; x < w; ++x) {
+\t\t\tconst float center = source[(size_t)y*w+x];
+\t\t\tfloat sum = 0.0f, weight_sum = 0.0f;
+\t\t\tfor (const Offset &offset : offsets) {
+\t\t\t\tconst long sx = std::max(0L, std::min(w-1, x+offset.x));
+\t\t\t\tconst long sy = std::max(0L, std::min(h-1, y+offset.y));
+\t\t\t\tconst float sample = source[(size_t)sy*w+sx];
+\t\t\t\tconst float difference = sample-center;
+\t\t\t\tconst float exponent = (-0.5f*difference)*difference;
+\t\t\t\tconst float color = exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+\t\t\t\tconst float weight = bilateral_noncontracting_product(color, offset.spatial);
+\t\t\t\tweight_sum += weight;
+\t\t\t\tsum += bilateral_noncontracting_product(sample, weight);
+\t\t\t}
+\t\t\tmat[(size_t)y*w+x] = sum / weight_sum;
+\t\t}
+\t}
+}
+
+static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
+{
+\tif (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
+\t    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
+\tconst long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
+\treturn radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
+}
+
+'''
+    anchor='// PF32 Smart reproduction of the retained radius-one IPP bilateral body.'
+    source=replace_once(source,anchor,helper+anchor)
+    source=replace_once(source,'if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||',
+        'if (is_scalar_bilateral_shape(p, w, h)) {\n\t\t\t\t\tbilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);\n\t\t\t\t} else if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||')
+    predicate='''static bool is_admitted_pf32_smart_bilateral_scalar_beta(const DGParams &p, long w, long h)
+{
+\tif (p.pixel_size != sizeof(PF_PixelFloat) || !is_scalar_bilateral_shape(p, w, h)) return false;
+\tDGParams identity = p;
+\tidentity.blur_mode = BLUR_MODE_NONE;
+\treturn is_admitted_pf32_smart_unblurred_beta(identity);
+}
+
+'''
+    source=replace_once(source,'static bool is_admitted_pf32_smart_blurred_beta(',predicate+'static bool is_admitted_pf32_smart_blurred_beta(')
+    source=replace_once(source,'!is_admitted_pf32_smart_bilateral_beta(p) &&',
+        '!is_admitted_pf32_smart_bilateral_beta(p) &&\n\t\t    !is_admitted_pf32_smart_bilateral_scalar_beta(p, w, h) &&')
+    source=source.replace("finite [-0.5, 0] exponent interval.","finite [-25, 0] exponent interval.")
     return source
 
 
@@ -126,6 +197,26 @@ def power_negative(a):
         yield f'power-bits-{bits:08x}',c
 
 
+def bilateral_matrix(a):
+    for radius in (3,4,7,17,18,32):
+      for geometry in ([7,1],[1,7],[min(radius+1,19),min(radius+2,21)]):
+       w,h=geometry
+       for depth in (8,32):
+        top=255 if depth==8 else 1.0
+        av=[0,top,top/2,0,top/4,top,0]
+        colors=(64,128,192) if depth==8 else (.25,.5,.75)
+        pixels=b''.join(struct.pack('<4B' if depth==8 else '<4f',int(av[(x+2*y)%7]) if depth==8 else av[(x+2*y)%7],*colors) for y in range(h) for x in range(w))
+        for owner in (1,2,3):
+         for interp in (1,2,3):
+            c=dict(geometry=geometry,depth=depth,profile='sdr',pixels=pixels,
+                   parameters=a.defaults(w,h),input_padding=3,output_padding=5)
+            values={1:(radius+interp)%2,2:owner,3:6,4:3,5:1+(radius+owner)%2,6:(interp+owner)%2,
+                    7:[255,28,53,238],8:[255,16,160,48],9:interp,11:5,12:radius}
+            for q in c['parameters']:
+                if q['slot'] in values:q['value']=values[q['slot']]
+            yield f'pf{depth}/{w}x{h}/radius{radius}/owner{owner}/interp{interp}',c
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--scratch', type=Path, required=True)
@@ -133,15 +224,16 @@ def main():
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--before-ref', default='0e3481cb')
     p.add_argument('--index', type=int, action='append', default=[])
-    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one'], default='gate-off')
+    p.add_argument('--experiment', choices=['gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar'], default='gate-off')
     p.add_argument('--matrix', action='store_true')
-    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative'],default='nonfinite')
+    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral'],default='nonfinite')
     p.add_argument('--write-source', type=Path)
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
+    p.add_argument('--strict-improvement', action='store_true')
     args = p.parse_args()
     args.scratch = args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/C19-dg-smart-r4')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch), TMP=str(args.scratch), TEMP=str(args.scratch))
     tempfile.tempdir = str(args.scratch)
@@ -162,7 +254,7 @@ def main():
         current = variant(a, td/'candidate', deadline, source)
         san = variant(a, td/'san', deadline, source, sanitized=True)
         wd = td/'case'; wd.mkdir()
-        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative}
+        families={'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix}
         cases = families[args.matrix_family](a) if args.matrix else ((index,a.generate(args.seed,index)) for index in args.index or [94,116,126,223,255,263,283,299])
         for index,c in cases:
             oracle, reference = a.oracle(c, wd, deadline, 'smart')
@@ -171,6 +263,7 @@ def main():
             sanitized, sr, _ = san.candidate(c, wd, 'smart', deadline)
             row = dict(index=index, geometry=c['geometry'], profile=c['profile'],
                        input_sha256=sha(c['pixels']), parameters=c['parameters'], oracle=oracle,
+                       oracle_sha256=sha(reference) if oracle['status']=='ok' else None,
                        before=base, before_guards=guards, candidate=status, sanitized=sanitized,
                        before_sha256=sha(br), candidate_sha256=sha(raw), sanitized_sha256=sha(sr),
                        sanitized_equal=status==sanitized and raw==sr,
@@ -181,6 +274,9 @@ def main():
             if args.strict_admission:
                 assert row['sanitized_equal'],row
                 assert not (base!=status or br!=raw) or (base['status']=='refusal' and row['exact']),row
+            if args.strict_improvement:
+                assert row['sanitized_equal'],row
+                assert not (base!=status or br!=raw) or row['exact'],row
             print(index, 'oracle',oracle['status'],'candidate',status['status'],'exact',row['exact'],
                   'sanitized_equal',row['sanitized_equal'], 'diff',row.get('diff'),flush=True)
         report['completed'] = True

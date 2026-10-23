@@ -568,7 +568,7 @@ static void median_blur(float *mat, long w, long h, int ksize)
 }
 
 // Original IPP scalar expf, FUN_18144ee30, restricted to bilateral's
-// finite [-0.5, 0] exponent interval. The 2^(j/256) table and polynomial
+// finite [-25, 0] exponent interval. The 2^(j/256) table and polynomial
 // constants are read-only coefficients at 18144f000..18144f817.
 // Keep each double operation rounded separately, as in the SSE2 body.
 static float bilateral_ipp_exp(float x)
@@ -662,6 +662,53 @@ static inline float bilateral_noncontracting_product(float left, float right)
 {
 	volatile float product = left * right;
 	return product;
+}
+
+// The original generic scalar IPP body (1806be1e0) scans a circular
+// kernel in row-major order, including the center. Its spatial and color
+// exponent cutoffs are strictly greater than -25 (1815bd7c4/1815dce38).
+static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	struct Offset { int x, y; float spatial; };
+	std::vector<Offset> offsets;
+	for (int y = -radius; y <= radius; ++y) {
+		for (int x = -radius; x <= radius; ++x) {
+			const int squared = x*x + y*y;
+			if (squared > radius*radius) continue;
+			const float exponent = -0.5f * (float)squared;
+			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+		}
+	}
+	const std::vector<float> source(mat, mat + (size_t)w*h);
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			const float center = source[(size_t)y*w+x];
+			float sum = 0.0f, weight_sum = 0.0f;
+			for (const Offset &offset : offsets) {
+				const long sx = std::max(0L, std::min(w-1, x+offset.x));
+				const long sy = std::max(0L, std::min(h-1, y+offset.y));
+				const float sample = source[(size_t)sy*w+sx];
+				const float difference = sample-center;
+				const float exponent = (-0.5f*difference)*difference;
+				const float color = exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				const float weight = bilateral_noncontracting_product(color, offset.spatial);
+				weight_sum += weight;
+				sum += bilateral_noncontracting_product(sample, weight);
+			}
+			mat[(size_t)y*w+x] = sum / weight_sum;
+		}
+	}
+}
+
+static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
+{
+	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
+	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
+	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
+	return radius >= 3 && radius <= 32 && (w <= 2*radius || h <= 2*radius);
 }
 
 // PF32 Smart reproduction of the retained radius-one IPP bilateral body.
@@ -1042,7 +1089,9 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
-				if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
+				if (is_scalar_bilateral_shape(p, w, h)) {
+					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
+				} else if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
 				    is_admitted_pf32_smart_bilateral_beta(p)) {
 					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
 				}
@@ -1635,6 +1684,14 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
+static bool is_admitted_pf32_smart_bilateral_scalar_beta(const DGParams &p, long w, long h)
+{
+	if (p.pixel_size != sizeof(PF_PixelFloat) || !is_scalar_bilateral_shape(p, w, h)) return false;
+	DGParams identity = p;
+	identity.blur_mode = BLUR_MODE_NONE;
+	return is_admitted_pf32_smart_unblurred_beta(identity);
+}
+
 static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long h)
 {
 	if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
@@ -1815,6 +1872,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !is_admitted_pf32_smart_bilateral_beta(p) &&
+		    !is_admitted_pf32_smart_bilateral_scalar_beta(p, w, h) &&
 		    !p.pf32_smart_oracle_profile_admitted) {
 			return OLM_DG_REFUSAL("pf32-smart-profile");
 		}

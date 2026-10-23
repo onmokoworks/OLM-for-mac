@@ -28,7 +28,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source',type=Path);p.add_argument('--index',type=int,action='append',default=[])
     args=p.parse_args();args.scratch=args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/C14-dg-smart-r3')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch));tempfile.tempdir=str(args.scratch)
     a=Adapter(argparse.Namespace(max_size=256,case_timeout=30,main=main_checkout(),worker=default_worker()))

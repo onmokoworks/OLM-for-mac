@@ -38,7 +38,7 @@ def main():
     p.add_argument('--case-index',type=int)
     p.add_argument('--seed',type=int,default=1)
     args=p.parse_args();args.scratch=args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/C14-dg-smart-r3')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch))
     tempfile.tempdir=str(args.scratch)
@@ -71,19 +71,27 @@ def main():
         for q in c['parameters']:
             name=next(d['name'] for d in a.binding['parameters'] if d['slot']==q['slot'])
             params.append(name+'='+(','.join(map(str,q['value'])) if isinstance(q['value'],list) else str(q['value'])))
-        watches=['function=0x1172a10,arg=stack6,size=224',f'rva=0x1173642,arg=rdx,deref=88,size={len(c["pixels"])}']
+        watches=['function=0x1172a10,arg=stack6,size=224',f'rva=0x1173642,arg=rdx,deref=88,size={min(4096,len(c["pixels"]))}']
         if args.case_index is not None:
             watches+=[f'rva=0x1173611,arg=rcx,deref=88,size={w*h*4}',f'rva=0x1173611,arg=rdx,deref=88,size={w*h*4}', f'rva=0x12c97d3,arg=rcx,deref=16,size={w*h*4}', f'rva=0x12c97d3,arg=rdx,deref=16,size={w*h*4}', 'function=0x12c9930,arg=rcx,size=96']
+        field_row_ids=[]
+        if len(c['pixels'])>4096:
+            assert w*16<=4096
+            for y in range(h):
+                field_row_ids.append(f'watch-{len(watches)+1}')
+                watches.append(f'rva=0x1173685,arg=rdx,size={w*16},occurrence={y+1}')
         cmd=[str(a.worker),'render-trace-png',str(a.aex),str(td/'proxy.png'),str(td/'out.png'),'--pixel-format','argb32f']
         for watch in watches:cmd+=['--watch',watch]
-        proc=subprocess.run(cmd+params,capture_output=True,check=True,timeout=30,env=a.env)
+        proc=subprocess.run(cmd+params,capture_output=True,timeout=30,env=a.env)
+        assert proc.returncode==0,proc.stderr[-2000:]
         trace=json.loads(proc.stdout)
         assert trace['render_error']==0 and trace['guards_intact']
         t=next(t for t in trace['execution_traces'] if t['selector']=='SMART_RENDER')
         assert not t['trace_configuration']['unhookable_watches']
         ws={v['watch_id']:v for v in t['memory_witnesses']}
         state=bytearray.fromhex(ws['watch-1']['after']['hex'])
-        field=bytes.fromhex(ws['watch-2']['after']['hex'])
+        field=(b''.join(bytes.fromhex(ws[k]['before']['hex']) for k in field_row_ids)
+               if field_row_ids else bytes.fromhex(ws['watch-2']['after']['hex']))
         def world(data):
             addr=ld.bump_alloc(len(data),align=16);ld.write_bytes(addr,data)
             header=ld.host_alloc(0x80,align=16);body=bytearray(0x80)

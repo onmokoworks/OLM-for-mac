@@ -179,6 +179,7 @@ def main():
                    help='Record, but do not repeat, baseline Mac timeouts without an AEX output')
     p.add_argument('--corpus', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
+    p.add_argument('--strict-improvement', action='store_true')
     p.add_argument('--case-timeout', type=float, default=30,
                    help='Per-render timeout, including slower sanitizer executions')
     args=p.parse_args()
@@ -214,6 +215,8 @@ def main():
             assert not be or (ne and br==nr),'base exact regression'
             if args.strict_admission and changed:
                 assert bs['status']=='refusal' and ne,('unsafe admission',c['geometry'],guards)
+            if args.strict_improvement and changed:
+                assert ne,('change is not exact',c['geometry'],guards)
             row=dict(before_status=bs['status'],after_status=ns['status'],before_sha256=sha(br),
                      after_sha256=sha(nr),oracle_sha256=reference_hash,before_exact=be,after_exact=ne,
                      changed=changed,sanitized_equal=True,input_sha256=sha(c['pixels']))
