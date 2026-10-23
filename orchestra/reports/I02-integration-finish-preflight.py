@@ -28,6 +28,7 @@ def dispatch(source, action):
     fake_sys = types.SimpleNamespace(
         argv=[TARGET, action, '2.0', '30.0', 'unused-output.pkl'], stderr=stderr)
     namespace = {'__name__': '__main__', 'sys': fake_sys,
+                 'os': types.SimpleNamespace(environ={}),
                  'main': lambda: calls.append('campaign main reached') or 99}
     code = compile(ast.Module(body=[block], type_ignores=[]), TARGET, 'exec')
     try:
@@ -78,7 +79,7 @@ def main():
     for effect in ('rotation', 'zoom'):
         name = f'tools/emulation/test_olmradialblur_{effect}_pf32_ellipse_actual_aex_20260811.py'
         result = dispatch((ROOT / name).read_text(), '--production')
-        assert result['campaign_main_calls'] == 1 and result['exit'] == 99
+        assert result['campaign_main_calls'] == 0 and result['exit'] == 2
         siblings.append({'script': name, 'action': '--production', 'current': result,
                          'sha256': hashlib.sha256((ROOT / name).read_bytes()).hexdigest()})
     print(json.dumps({
@@ -89,8 +90,8 @@ def main():
         'over_limit_sites': len(findings),
         'over_limit_files': len({f['script'] for f in findings}),
         'findings': findings, 'dispatch_experiments': experiments,
-        'unprotected_sibling_dispatch': siblings,
-        'status': 'blocked_before_gate_launch',
+        'protected_sibling_dispatch': siblings,
+        'status': 'static_preflight_pass' if not findings else 'over_limit_pool_found',
         'measurement_boundary': 'Static literal pool sizes; no runtime descendant or RSS measurements.',
     }, indent=2))
 
