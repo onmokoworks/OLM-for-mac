@@ -1,0 +1,42 @@
+{
+  "function": "pow",
+  "count": 1000000,
+  "modes": [
+    {
+      "mode": 0,
+      "mismatches": 1,
+      "first_a_b_oracle_native": [
+        "ffff603a66bc749d",
+        "c31b287de1f952ec",
+        "7fff603a66bc749d",
+        "ffff603a66bc749d"
+      ]
+    },
+    {
+      "mode": 1,
+      "mismatches": 1,
+      "first_a_b_oracle_native": [
+        "ffff603a66bc749d",
+        "c31b287de1f952ec",
+        "7fff603a66bc749d",
+        "ffff603a66bc749d"
+      ]
+    }
+  ],
+  "seconds": 0.598,
+  "exits": [
+    0,
+    1
+  ],
+  "sha256": {
+    "/Users/onmk/.cache/olm-emu/ucrt/10.0.28000.2705/ucrtbase.dll": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+    "ucrtmath/ms/pow.c": "ba3c4267274e55cd0b8bc19c8984363615dd1ba14a5423afa9e68c7957af05e7",
+    "ucrtmath/ms/pow_tables.h": "b1fcbc68a82bcce87ba3de206df62b3b6e2c00e5d93815fe6c4ce955933154b8",
+    "ucrtmath/ms/pow_native.c": "58f0dadf82d409746b633691681e00315079b5d10639a529048531272285e0ab",
+    "ucrtmath/ms/pow_compare.c": "bb6e039f50f11ba3ed76996e3c0155efcf9650adae887b4839c19cb8cb30d859",
+    "ucrtmath/ms/pow_check.py": "bfc72cb246aca27bfd69929ca5e30f89428afca4df621abf6b313bc4b28bbfb4",
+    "tools/ucrt_math_probe/rosetta/oracle.c": "6f7abbc223a2df9fa40c7d9b1f9c5f6b4ca00964050df57ac6a836f9f2513035",
+    "orchestra/state/F43c-ucrtmath-ms-pow/build/native": "e9bb0a52b15bd0caa4323f649dbacf5eb2bc589a8494c9f772704bcf73161eb4",
+    "orchestra/state/F43c-ucrtmath-ms-pow/build/compare": "a9cbbf9abf5db324cae44a6a391597f4a42a6c93708f7b635717f972296afea3"
+  }
+}
