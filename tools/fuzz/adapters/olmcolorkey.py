@@ -61,7 +61,7 @@ class Adapter(ColorTriage, PublicAdapter):
             'in_data.width=state->input->width; in_data.height=state->input->height;\n'
             '    in_data.current_time=0; in_data.time_step=1; in_data.time_scale=24;\n'
             '    in_data.inter.checkout_param = CheckoutParam;')
-        return self.compile_sdk(scratch,header+body,SOURCE,deadline),[HOST,HARNESS,SOURCE,SOURCE.with_suffix('.h')]
+        return self.compile_sdk(scratch,header+body,SOURCE,deadline),[HOST,HARNESS,SOURCE,SOURCE.with_suffix('.h'),ROOT/'core/x86_float.h']
 
     def scope(self):
         return dict(super().scope(), **{'mac_stride':'shared randomly padded input/output stride from existing ColorKey helper',

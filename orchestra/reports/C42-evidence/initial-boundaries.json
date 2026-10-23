@@ -1,0 +1,244 @@
+{
+  "cases": [
+    {
+      "alpha_word": "7fc12345",
+      "thin": -1,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "1fb7bc3e",
+        "actual_word_hex": "00000000"
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -1,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "00000000",
+        "actual_word_hex": "1fb7bc3e"
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -2929,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7fc12345",
+      "thin": -2929,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -1,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "1fb7bc3e",
+        "actual_word_hex": "00000000"
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -1,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "00000000",
+        "actual_word_hex": "1fb7bc3e"
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -2929,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ffc12346",
+      "thin": -2929,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -1,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "1fb7bc3e",
+        "actual_word_hex": "00000000"
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -1,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "00000000",
+        "actual_word_hex": "1fb7bc3e"
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -2929,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "7f812345",
+      "thin": -2929,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -1,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "1fb7bc3e",
+        "actual_word_hex": "00000000"
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -1,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 4,
+        "different_words": 1,
+        "first_byte": 464,
+        "first_word": 116,
+        "expected_word_hex": "00000000",
+        "actual_word_hex": "1fb7bc3e"
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -2929,
+      "keep": 0,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    },
+    {
+      "alpha_word": "ff812346",
+      "thin": -2929,
+      "keep": 1,
+      "diff": {
+        "expected_bytes": 1120,
+        "actual_bytes": 1120,
+        "different_bytes": 0,
+        "different_words": 0,
+        "first_byte": 1120,
+        "first_word": 280,
+        "expected_word_hex": "",
+        "actual_word_hex": ""
+      }
+    }
+  ]
+}
