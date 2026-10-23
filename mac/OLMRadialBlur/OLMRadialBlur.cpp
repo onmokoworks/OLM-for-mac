@@ -1201,14 +1201,12 @@ static bool CheckedRadialGenericBudget(
     }
 	if (estimated_bytes) *estimated_bytes = bytes > SIZE_MAX ? SIZE_MAX : (size_t)bytes;
 	if (estimated_work) *estimated_work = work;
-	// Outer Override with a live scatter span still has an unresolved oracle
-	// boundary (F41b/C46). Inner Override is independently exact under Smart.
-	// Type3/NV0 has a zero scatter span, so its strength-based work estimate
-	// cannot justify refusing the size prepass and inverse transform.
-	const bool unverified_override = info.blur_type == 2 &&
-		info.outer_offset_mode == 3 && !(info.noise_type == 3 && info.noise_variation == 0.0);
+	// C49: the previously unavailable outer-Override witness now renders in
+	// the retained AEX worker and is exact, alongside independent high-work
+	// controls. Smart uses checked arithmetic/allocation rather than this
+	// policy work ceiling; Classic retains its historical limit.
 	return (smart_render || bytes <= kMaxBytes) &&
-		((smart_render && !unverified_override) || work <= kMaxWork);
+		(smart_render || work <= kMaxWork);
 }
 
 // Called only after IsGenericBaselineWorldPair validates aligned storage.
