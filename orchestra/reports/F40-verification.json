@@ -1,0 +1,12 @@
+{
+  "applied": true,
+  "identical": true,
+  "non_identity_fields_unchanged": true,
+  "report_sha256": "2077fd254c1c31c4ab8456f9c6c1ac513c1133346402f1c5c0d77be3d0daab7c",
+  "rows": 2,
+  "runs": 2,
+  "unit_test_log": "test_authority_tamper (__main__.OLMBlurPF16WorkerSourcesPublicOwner.test_authority_tamper) ... ok\ntest_docs (__main__.OLMBlurPF16WorkerSourcesPublicOwner.test_docs) ... ok\ntest_live (__main__.OLMBlurPF16WorkerSourcesPublicOwner.test_live) ... ok\ntest_row_tamper (__main__.OLMBlurPF16WorkerSourcesPublicOwner.test_row_tamper) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 1.204s\n\nOK\n",
+  "changed_json_before_sha256": "523553ad15c34677262f7d54a5418caa96bd9a4b2bcefde8fec781f8df9166a2",
+  "changed_json_after_sha256": "2077fd254c1c31c4ab8456f9c6c1ac513c1133346402f1c5c0d77be3d0daab7c",
+  "command": "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3 -B orchestra/reports/F40-regenerate-owner.py --apply"
+}
