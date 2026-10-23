@@ -1,0 +1,39 @@
+{
+  "source": "orchestra/reports/C39-evidence/dg-trace.json",
+  "sha256": "a893b785d3041887e65291615dc6838907e5839dd2c6f5d484c6081f8f3ec983",
+  "changed_words": [
+    {
+      "index": 106,
+      "pre": 212.5,
+      "post": 212.50001525878906,
+      "pre_hex": "00805443",
+      "post_hex": "01805443"
+    },
+    {
+      "index": 107,
+      "pre": 212.5,
+      "post": 212.50001525878906,
+      "pre_hex": "00805443",
+      "post_hex": "01805443"
+    },
+    {
+      "index": 123,
+      "pre": 212.5,
+      "post": 212.50001525878906,
+      "pre_hex": "00805443",
+      "post_hex": "01805443"
+    },
+    {
+      "index": 124,
+      "pre": 212.5,
+      "post": 212.50001525878906,
+      "pre_hex": "00805443",
+      "post_hex": "01805443"
+    }
+  ],
+  "half_tie_levels": [
+    42.5,
+    127.5,
+    212.5
+  ]
+}
