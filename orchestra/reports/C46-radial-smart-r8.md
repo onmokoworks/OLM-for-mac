@@ -3,7 +3,7 @@ summary:
 - Closed two clusters: Type3/NV0 missing-layer spans and qualified Rotation Override Smart work admission.
 - Common-oracle seed1 Smart exact264 ->268 ->270, zero mismatch; final ordinary run271/0/17/12 includes one recovered oracle timeout.
 - All baseline exact hashes survive; both stages pass600 sanitized campaign executions each; independent comparable layouts216/216 exact.
-- Existing corpus50 ->54 ->56 witnesses; final replay result is recorded below.
+- Corpus50 ->54 ->56 witnesses; final55/56 saved matches, one intermittent oracle execution-limit failure with unchanged Mac hash.
 - Remaining nonfinite traces, general outer Override and layer checkout need oracle/host capabilities; old smoke suite has6 UCRT link failures.
 
 facts:
@@ -115,6 +115,10 @@ host's `pre()` callback in `radialblur_topology_effectmain_harness_20261001.cpp`
 This is a host-fixture limitation, not a proven plugin numerical defect. No
 production layer error is suppressed and no missing-layer input is fabricated.
 
+FACT: Final expanded corpus30-second-policy replay exits0 at the harness level but is55/56 saved matches: all54 existing records and new48 match; new280 reaches the worker's internal execution limit and remains uncompared. Its candidate hash is unchanged. The separately recorded30-second case280 replay matches both saved routes. Do not combine these into a false single-run56/56 claim. Second rebaseline table:54 existing records unchanged,0 modified,2 new exact witnesses; one new witness has intermittent oracle availability. No expectation is relaxed and no failed witness is removed. Remaining AEX-rendered ordinary-campaign refusals are17/89/148/238/247/248.
+
+FACT: Production fixes are separate commits `911dc0a8` (Type3) and `04eae080` (qualified work policy). A cleanup script asserted an incorrectly anticipated56/56 final replay and stopped before cleanup; the surrounding shell continued to the second commit. This was not a permission rejection. The final report corrects the count to55/56 and retains the actual results. All numerical subprocesses have finished. Regenerable build trees are removed; scratch contains 30034491 bytes, below5GiB. No permission rejection occurred.
+
 inference:
 
 INFERENCE: Missing-layer scatter allocation and the independent size-factor
@@ -158,8 +162,7 @@ git diff --check
 Expected: both campaigns exit0, counts above, no lost exact/sanitizer errors;
 matrix144 exact layouts,288 explicitly uncompared, zero mismatch/unclean;
 qualified Override seed1 270 exact /17 refusal /13 uncompared, fresh260/18/22; Override matrix72 exact/clean layouts; retry117 remains unrendered at the worker limit;
-trace three matching prefixes, original/public binding intact; corpus all saved
-matches. Timeouts can change availability in fresh oracle reruns. Probe replays
+trace three matching prefixes, original/public binding intact; all54 prior corpus results remain stable and new48 matches. New280 may remain uncompared because of the worker's internal execution limit even at a30-second Python timeout; its candidate hash must remain unchanged. The committed targeted replay is exact, but final whole-corpus replay is55/56. Timeouts can change availability in fresh oracle reruns. Probe replays
 use committed baseline oracle hashes, not a replacement worker.
 
 next:
