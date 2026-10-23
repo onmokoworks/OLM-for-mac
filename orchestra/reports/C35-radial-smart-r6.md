@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Closed PF32 defined negative-Noise-Offset admission against the F32 oracle.
-- Seed 1 Smart E/M/R/U: 253/0/45/2 -> 254/0/44/2; fresh seed 5: 256/0/44/0 -> 258/0/42/0.
-- All 509 baseline-exact hashes preserved; 600 sanitized candidate executions clean.
-- Independent boundary matrix: 288 exact layouts and 144 clean invalid-index refusals; corpus 35/35 unchanged.
-- Further residual investigation continues; no second or third closure claimed here.
+- Closed PF32 defined negative-Noise-Offset and finite Rotation admissions against F32.
+- Seed 1 Smart E/M/R/U: 253/0/45/2 -> 254/0/44/2 -> 255/0/43/2; seed 5: 256/0/44/0 -> 258/0/42/0 -> 258/0/42/0.
+- All baseline-exact hashes retained; both milestones pass 600 sanitized Smart executions and 35 unchanged corpus rows.
+- Restored Rotation's original zero-alpha RGB accumulation; independent finite-input matrix is 216/216 exact and clean.
+- Two clusters closed; residual investigation continues.
 
 facts:
 
@@ -56,6 +56,48 @@ error changes are recorded separately. Corpus before/after complete result
 hash is `a17e514cdfd8d2ad776d83eb9ad33bc2467004ccb1ab84e8cd6ac74ab81bbb36`;
 no corpus expectations changed.
 
+
+Second cluster — finite Rotation:
+
+FACT: The unchanged C33 finite-admission counterexample (independent matrix
+index 44, PF32 3x5) differs in 3 words / 6 bytes; first word 25 (pixel 6 red),
+AEX `0000803f`, Mac `00000000`. A new lossless typed diagnostic captures the
+port's normalized four taps and fractional coordinates before inverse sampling.
+Original import-free RVA `0x1000` is called on exactly those bytes; a constant
+RGBA fractional-coordinate ABI control passes. No worker rebuild or PNG
+conversion is used.
+
+FACT: At pixel 6, weighted alpha underflows to zero. The original inverse
+operation returns RGB `0000c07f 0000c07f 0000c0ff`, alpha `00000000`; the
+old port returns four zero words. The original disassembly accumulates all
+four taps before testing alpha and conditionally taking its reciprocal. The
+port's alpha check skipped the whole RGB accumulation. The fix moves that
+operation back under the strict AEX sampler path, retaining reciprocal=1
+when alpha is zero. The original writer remains unchanged. The independent
+matrix with this correction and finite Rotation admission passes 72 references /
+216 sanitized layouts, including all three formerly failing subnormal inputs.
+
+FACT: This is an isolated inverse-operation boundary, NOT proof that every
+upstream native plane matches. Python AexLoader's unpatched Unicorn still
+returns differing NaN signs at pixels 3 and 6 after correction; these differences
+are preserved in evidence (not treated as bit-exact). Full public F32 output for
+index 44 is exactly equal after correction, as are all 216 independent layouts.
+No imported-math cause is inferred from the NaN-sign diagnostic.
+
+| Rotation check | Before | After |
+|---|---:|---:|
+| Seed 1 Smart E/M/R/U | 254/0/44/2 | 255/0/43/2 |
+| Seed 5 Smart E/M/R/U | 258/0/42/0 | 258/0/42/0 |
+| Prior exact hashes preserved | 512 | 512 |
+| Sanitized campaign executions | — | 600 clean |
+| Corpus complete saved matches | 35 | 35 unchanged |
+
+FACT: Seed-1 index 220 (HDR Rotation) becomes exact. No other campaign result
+regresses. The normalized-tap diagnostic on final production still matches
+index 44's full original output. Corpus complete-result hash remains
+`a17e514cdfd8d2ad776d83eb9ad33bc2467004ccb1ab84e8cd6ac74ab81bbb36`.
+
+
 inference:
 
 INFERENCE: Current F32/UCRT evidence supports removing the historical PF32-only
@@ -64,7 +106,7 @@ noise table domain and resource limits retained. It is bounded evidence, not
 proof over every representable input.
 
 changed_files:
-- `mac/OLMRadialBlur/OLMRadialBlur.cpp`: remove historical PF32 negative-phase gate.
+- `mac/OLMRadialBlur/OLMRadialBlur.cpp`: PF32 negative-phase admission; restore zero-alpha inverse accumulation and admit finite Rotation.
 - `tools/fuzz/probe_radialblur_C35.py`: scratch admission, sanitized campaigns and replay.
 - `tools/fuzz/verify_radialblur_negative_C11.py`: select worker; allow matrix-only verification.
 - `tools/fuzz/summarize_radialblur_C35.py`: compact measurements and hash transitions.
@@ -98,6 +140,21 @@ original seed-1 baseline command above was run at starting source with
 references with `--experiment negative-phase --admission-campaign ...`.
 
 next:
-- Investigate Rotation inverse sampling on the retained signed/subnormal matrix.
+- Negative-phase cluster commit: `c9d863c1`; second cluster is the finite Rotation correction.
 - Type3 missing-layer allocation/prepass, nonfinite Zoom, and host checkout
   remain separate boundaries. Work-budget and invalid-index refusals remain.
+
+Second-cluster reproduction, from the negative-phase commit:
+
+```sh
+python3 tools/fuzz/probe_radialblur_C35.py --experiment rotation-zero-alpha --source-revision c9d863c1 --output "$S/rotation-matrix" > "$S/rotation-matrix.log" 2>&1
+python3 tools/fuzz/probe_radialblur_C35.py --experiment production --admission-campaign "$S/negative-seed5/campaign.json" --output "$S/rotation-seed5" > "$S/rotation5.log" 2>&1
+"$PY" tools/fuzz/trace_radialblur_inverse_C35.py --output "$S/inverse-production" > "$S/inverse.log" 2>&1
+python3 tools/fuzz/probe_radialblur_C35.py --experiment production --replay tests/fuzz_corpus/radialblur --output "$S/corpus-rotation" > "$S/corpus2.log" 2>&1
+```
+
+Expected: 216 exact/clean independent layouts, zero campaign failures, index-44
+public diff 0 words, 35 unchanged corpus results. The isolated Python leaf
+replay deliberately reports two NaN-sign differences; it does not override the
+full F32 oracle. Original candidate campaigns used each retained negative-phase
+campaign as `--admission-campaign` and `--experiment rotation-zero-alpha`.

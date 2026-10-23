@@ -53,7 +53,7 @@ def main():
         if path.exists():
             d=json.loads(path.read_text());result['corpus'][name]=dict(report_sha256=sha(path),rows=len(d['replays']),matches_saved=d['replay_matches_saved'],
                 result_sha256=hashlib.sha256(json.dumps([r['result'] for r in d['replays']],sort_keys=True).encode()).hexdigest())
-    for name in ['inverse-before','inverse-after']:
+    for name in ['inverse-before','inverse-after','inverse-production']:
         path=root/name/'report.json'
         if path.exists():result[name]=json.loads(path.read_text())
     args.output.parent.mkdir(parents=True,exist_ok=True)

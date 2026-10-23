@@ -440,9 +440,9 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 			RadialF32Mul(sample_valid(x1, y1), w11));
 	}
 
-	// Zoom retains accumulated RGB when signed alpha cancels to zero;
-	// the original sampler then skips only the reciprocal normalization.
-	if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {
+	// Both original samplers accumulate RGB even when alpha cancels or
+	// underflows to zero; only reciprocal normalization is then skipped.
+	if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {
 		const float reciprocal_alpha = state.alpha != 0.0f ? RadialF32Div(1.0f, state.alpha) : 1.0f;
 		for (int c = 0; c < 3; ++c) {
 			if (aex_column_major_taps) {
@@ -5460,10 +5460,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
-			// Match typed Zoom's finite-input contract. Its FLOAT32 path retains
-			// signed/HDR values; Rotation has independent HDR/subnormal residuals.
-			(info.blur_type == 1 ? GenericRadialInputIsFinite<PF_PixelFloat>(input) :
-			 GenericRadialInputIsSDR<PF_PixelFloat>(input));
+			// Both typed paths preserve finite signed/HDR values. Rotation
+			// retains zero-alpha RGB accumulation before its original clamp.
+			GenericRadialInputIsFinite<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached

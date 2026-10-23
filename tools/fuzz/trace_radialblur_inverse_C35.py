@@ -13,6 +13,8 @@ import shutil
 import struct
 import sys
 import time
+import capstone
+import pefile
 from types import SimpleNamespace
 sys.dont_write_bytecode = True
 from adapters.radialblur import Adapter, public
@@ -25,6 +27,7 @@ from aex_loader import AexLoader
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--source', type=Path, default=public.SOURCE)
     ap.add_argument('--index', type=int, default=44)
     args = ap.parse_args()
     out = args.output.resolve()
@@ -32,7 +35,7 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out),
                       OLM_RADIAL_CANDIDATE_SANITIZE='1', C35_INVERSE_TRACE=str(out/'taps.bin'))
-    source = public.SOURCE.read_text()
+    source = args.source.read_text()
     source = source.replace('GenericRadialInputIsSDR<PF_PixelFloat>(input));',
                             'GenericRadialInputIsFinite<PF_PixelFloat>(input));')
     marker = '\t\t\tPixelT output_pixel{};'
@@ -82,6 +85,9 @@ def main():
     loader.call_function(0x180001000,int_args=args1000(0x3e800000,0x3f000000),max_instructions=1000)
     assert loader.read_bytes(dst,16)==control[:16] and not loader.import_log
     report['abi_control']='exact; no imports'
+    pe=pefile.PE(str(adapter.aex));base=pe.OPTIONAL_HEADER.ImageBase
+    decoder=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_64)
+    report['inverse_static']=[dict(rva=hex(i.address-base),bytes=i.bytes.hex(),instruction=i.mnemonic+' '+i.op_str) for i in decoder.disasm(pe.get_data(0x1000,0x270),base+0x1000)]
     rows=[]
     for i in range(len(records)//88):
         record=records[i*88:(i+1)*88]

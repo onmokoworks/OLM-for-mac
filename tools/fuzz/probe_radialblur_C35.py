@@ -21,12 +21,20 @@ def candidate_source(experiment, source):
         old = "\tif constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {\n\t\tif (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;\n\t}"
         assert source.count(old) == 1
         return source.replace(old, '')
+    if experiment == 'rotation-zero-alpha':
+        old = 'if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {'
+        new = 'if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {'
+        assert source.count(old) == 1
+        source = source.replace(old, new)
+        old = 'GenericRadialInputIsSDR<PF_PixelFloat>(input));'
+        assert source.count(old) == 1
+        return source.replace(old, 'GenericRadialInputIsFinite<PF_PixelFloat>(input));')
     return source
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--experiment', choices=('negative-phase', 'production'), required=True)
+    ap.add_argument('--experiment', choices=('negative-phase', 'rotation-zero-alpha', 'production'), required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--campaign', type=Path)
     ap.add_argument('--replay', type=Path)
@@ -60,6 +68,12 @@ def main():
         import verify_radialblur_negative_C11 as negative
         sys.argv = [sys.argv[0], '--source', str(snapshot), '--all-depths', '--skip-plane-trace', '--worker', str(verify.WORKER), '--output', str(out/'matrix')]
         return negative.main()
+    if args.seed is None and args.replay is None and args.admission_campaign is None and args.experiment == 'rotation-zero-alpha':
+        import verify_radialblur_smart_C11 as matrix
+        matrix.ALL_DEPTHS = True
+        verify.independent_cases = lambda adapter, unused=None: matrix.finite_cases(adapter)
+        sys.argv = [sys.argv[0], '--source', str(snapshot), '--independent', '--output', str(out)]
+        return verify.main()
     if args.admission_campaign:
         if args.experiment != 'production' or args.source_revision:
             public.SOURCE = snapshot
