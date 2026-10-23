@@ -2223,12 +2223,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						if (keep && native_dist < amount) {
 							const float ratio = 3.1415927410125732f / amount;
 							const double phase = (double)NativeBlurPhaseProduct(native_dist, ratio) - 1.57079632679485;
-							weight = (float)(std::sin(phase) + 1.0) * 0.5f;
+							weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
 					} else if (!keep && native_dist < amount) {
 						const float ratio = 3.1415927410125732f / amount;
 						const double phase = 1.57079632679485 - (double)NativeBlurPhaseProduct(native_dist, ratio);
-						weight = (float)(std::sin(phase) + 1.0) * 0.5f;
+						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
@@ -2305,7 +2305,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						    (float)info.edge_blur_amount;
 						const double phase = (double)(curve_dist * ratio) -
 						    1.57079632679485;
-						weight = (float)(std::sin(phase) + 1.0) * 0.5f;
+						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 				}
 				// The native PF32 temporary direction plane stores the predecessor of
@@ -2364,7 +2364,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 							    (float)info.edge_blur_amount;
 							const double phase = 1.57079632679485 -
 							    (double)(native_dist * ratio);
-							plane = (float)(std::sin(phase) + 1.0) * 0.5f;
+							plane = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
 					}
 					output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;

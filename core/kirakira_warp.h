@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include "../ucrtmath/include/ucrtmath.h"
 #include <cstddef>
 #include <vector>
 
@@ -48,8 +49,8 @@ inline std::vector<float> warp_get_rotation_matrix_2d(
 	int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
 {
 	const double radians = angle_deg * 3.14159265358979323846 / 180.0;
-	const double alpha = std::cos(radians);
-	const double beta = std::sin(radians);
+	const double alpha = ucrt_cos(radians, UCRT_FMA);
+	const double beta = ucrt_sin(radians, UCRT_FMA);
 	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
 	const double m12 = beta * center_x + (1.0 - alpha) * center_y;
 	const double determinant = alpha * alpha + beta * beta;

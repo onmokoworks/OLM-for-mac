@@ -3379,10 +3379,10 @@ static PF_Err RenderZoomTyped(
 	// The AEX setup stores radians as a truncated signed 16.16 integer, but the
 	// Zoom core converts that integer directly to double before calling sin/cos.
 	const int32_t base_angle_fixed_radians = RadialAngleFixedRadians(info.angle_deg);
-	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
-	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
-	const double cos_a = std::cos(base_angle);
-	const double sin_a = std::sin(base_angle);
+	const float cos_a_f = (float)ucrt_cos((double)base_angle_fixed_radians, UCRT_FMA);
+	const float sin_a_f = (float)ucrt_sin((double)base_angle_fixed_radians, UCRT_FMA);
+	const double cos_a = ucrt_cos(base_angle, UCRT_FMA);
+	const double sin_a = ucrt_sin(base_angle, UCRT_FMA);
 	for (A_long ai = 0; ai < angular_count; ++ai) {
 		const float theta = RadialF32Mul((float)ai, step_rad_f);
 		const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
@@ -4681,10 +4681,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			RadialF32Mul((float)quality, 180.0f), (float)kPi))
 		: (float)step_rad;
 	const int32_t base_angle_fixed_radians = RadialAngleFixedRadians(info.angle_deg);
-	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
-	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
-	const double cos_a = std::cos(base_angle);
-	const double sin_a = std::sin(base_angle);
+	const float cos_a_f = (float)ucrt_cos((double)base_angle_fixed_radians, UCRT_FMA);
+	const float sin_a_f = (float)ucrt_sin((double)base_angle_fixed_radians, UCRT_FMA);
+	const double cos_a = ucrt_cos(base_angle, UCRT_FMA);
+	const double sin_a = ucrt_sin(base_angle, UCRT_FMA);
 	for (A_long ri = 0; ri < radius_count; ++ri) {
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			float sx = 0.0f;
@@ -4704,8 +4704,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			} else {
 				const double r = (double)(min_r + ri);
 				const double theta = (double)ai * step_rad;
-				const double sx0 = std::cos(theta) * r;
-				const double sy0 = std::sin(theta) * r * ratio;
+				const double sx0 = ucrt_cos(theta, UCRT_FMA) * r;
+				const double sy0 = ucrt_sin(theta, UCRT_FMA) * r * ratio;
 				sx = (float)(cx + cos_a * sx0 - sin_a * sy0);
 				sy = (float)(cy + sin_a * sx0 + cos_a * sy0);
 			}

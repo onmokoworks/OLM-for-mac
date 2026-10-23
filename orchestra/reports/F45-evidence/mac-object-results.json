@@ -1,0 +1,488 @@
+[
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "arm64",
+    "object_sha256": "c63d54b9da30d11d10c0108c0470e44f8261ca86fc5bba41f977079743f49697"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "arm64",
+    "object_sha256": "c63d54b9da30d11d10c0108c0470e44f8261ca86fc5bba41f977079743f49697"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "arm64",
+    "object_sha256": "c63d54b9da30d11d10c0108c0470e44f8261ca86fc5bba41f977079743f49697"
+  },
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "x86_64",
+    "object_sha256": "09a8c5944e6faf03f7248854aafa5679a880e5654afa0141963a5c7e8ca5237c"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "x86_64",
+    "object_sha256": "09a8c5944e6faf03f7248854aafa5679a880e5654afa0141963a5c7e8ca5237c"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMColorKey",
+    "architecture": "x86_64",
+    "object_sha256": "09a8c5944e6faf03f7248854aafa5679a880e5654afa0141963a5c7e8ca5237c"
+  },
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "arm64",
+    "object_sha256": "f113880828f9887fffec7a83eb560a01386f75da5a7e34dcfb5958572b92acc5"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "arm64",
+    "object_sha256": "f113880828f9887fffec7a83eb560a01386f75da5a7e34dcfb5958572b92acc5"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "arm64",
+    "object_sha256": "f113880828f9887fffec7a83eb560a01386f75da5a7e34dcfb5958572b92acc5"
+  },
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "x86_64",
+    "object_sha256": "8f79fb69d3a061617ae955aca744f86cf3d9eba64e05c1c81f5292bcf8fd47a3"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "x86_64",
+    "object_sha256": "8f79fb69d3a061617ae955aca744f86cf3d9eba64e05c1c81f5292bcf8fd47a3"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMKiraKira",
+    "architecture": "x86_64",
+    "object_sha256": "8f79fb69d3a061617ae955aca744f86cf3d9eba64e05c1c81f5292bcf8fd47a3"
+  },
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "arm64",
+    "object_sha256": "278dcef541689d139c283f86a02388dcd10574a59d131e81d3f7ac0fee1bfd87"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "arm64",
+    "object_sha256": "278dcef541689d139c283f86a02388dcd10574a59d131e81d3f7ac0fee1bfd87"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "arm64",
+    "object_sha256": "278dcef541689d139c283f86a02388dcd10574a59d131e81d3f7ac0fee1bfd87"
+  },
+  {
+    "function": "sin",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "x86_64",
+    "object_sha256": "5b5cbfaf773649269b21c4d6704467dd0b63773b25d650f97db93387f25fb5c7"
+  },
+  {
+    "function": "cos",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "x86_64",
+    "object_sha256": "5b5cbfaf773649269b21c4d6704467dd0b63773b25d650f97db93387f25fb5c7"
+  },
+  {
+    "function": "exp",
+    "count": 1000000,
+    "modes": [
+      {
+        "mode": 0,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      },
+      {
+        "mode": 1,
+        "mismatches": 0,
+        "first_input_oracle_native": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ]
+      }
+    ],
+    "plugin": "OLMRadialBlur",
+    "architecture": "x86_64",
+    "object_sha256": "5b5cbfaf773649269b21c4d6704467dd0b63773b25d650f97db93387f25fb5c7"
+  }
+]
