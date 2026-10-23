@@ -1,0 +1,234 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      252,
+      1
+    ],
+    "index": 62,
+    "input_padding": 7,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 168.43812561035156
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 9.38702242845009
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 43.85589599609375
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 4
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 15
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 43.572174072265625
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 25
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 93
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 91.51657104492188
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 24.198074340820312
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 796
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": -355.5597839355469
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 23.38350531580442
+      }
+    ],
+    "profile": "sdr",
+    "seed": 45102
+  },
+  "generator_version": 1,
+  "index": 62,
+  "input_sha256": "70aef4b00b5e9ca63f16ef363d9a1b3db92b538206bef7aaa63c94dfbe4f3111",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoFwQk0GwYYAOCfPJmjdCVKhcgLc4+1lKcmeyqOxupodbSlUXFEY47OkUrZ617QdHk8JVVjr2yOPQQptnl1V1E8aoQqqgzt3MdQR/bv+6DdXx1It1O97jHYJzIGL6g7pIXIiT6pOKK3BQ/LXCDtjjZExVxDH+cHFD/9MjDZlbkoCl7jPUY2HmuVwmLJENzR9mGZr1/FE0d6KG3xh6NNK7TP1YAvgi4mVsR1hXcZdGC+SgjKXYbAK98DLKpGMGFmEOobA0BhUoMeXbZemPihAf84ZwLszme1Pr6vYE84vLvyjSqrhbMEX0WE9vd314ARx9PM6aCtp2pxGOYY3XBLlw5Zh1HiTyYHUdNMv5yWfbBauWMOkREapfS48TPuoex0ZiAVk242o6xyoqjdTYS02r74k3W2WPDZ82w+yxKvGNKJWrQ1MP2+Q1LYMglvTVn4KDljttjtrPqGfzfOX1fAutktKG0qxLrA7pOpNm1I3JwFmSGbayjI7PE0tQS5/W+YE09D5bUXSJgOxAVzZ5gZ0EXF10LTPIIj8LgFkBdOQNtRGrnogi8Ga9+OmpTy4OAoDFM2ypj7lsmakhSdhV6WEC5OU1ktSkOQnPYeSuslTa3jz2w6yd2YpeDVaMW9BKr8XGAmloDeBAWc8kjShxFCLD67Fz3FvgXzJcpgnvoYpZ5q1afWKeC5sxFr5/4ga9BZErYf8Lhnj8KFqUwODvt8wAZhC15lEsBPXg4p0ym7pOUEoJKlqPxiPHj7l0MIlpWA7NV16H8XpUZLG0B9KRU5/wgo8iYzXJwOB/ESF8c0fR3eug69+1PXD13j6YQ3u2TYO3MIvae1MKOGFD6+sg8FkdVXVo3P43JRHP4e+y8K7C9D954dNgmroIHjYsC7aS3Y4LJGb9QHgVL/aRm7gxg3Zu75c3bmIOoshEL8dyt4Q/EpiBqtr8XqHODLp6sgS1ZHVk0bcVLEA+Po+zhwuQcq+RKcOazEcSQ4UPaT4NOJvMaDXOORlI/PYS5NBpFWv6Lfjwx8I83HwOORcNxuESibX4pcyDtYfpcInVMq/budosNH/uPGbumboPzEBtuJ9oxm91phSEUhOHBjwTXgP2TZzaCqRI5GohzwouZATUWB67ekn8otHGz7knK5uNrqjVReftLLg3XYn/fu5E/Q0anSoO6J2BGXPP6C7HIX8Cz+mE0zScAxE/5cs5EHeH+dgsdWmdhSdwrEXeJRFaOu3tiMIfXPf5AENTlaIHOuGrWCwmCb5h+zXfs3RJPuYlitAW6fS0QybxoECgpQ1vUe+OlqkBQtVuojrXF4y05WjPPBeCn1PobGB0EHdwtjrDv+B8gp9FE=",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "C45": "Original out-of-range noise-table reads use deterministic zero in the port; refusal to exact.",
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "baseline": {
+      "classic": {
+        "guards": [
+          [
+            "RenderExact8:core-result--1@1271"
+          ]
+        ],
+        "result": {
+          "error": 512,
+          "metadata": {
+            "COUNTS": "0 0 0 1 1",
+            "ERROR": "512"
+          },
+          "status": "refusal"
+        }
+      },
+      "smart": {
+        "guards": [
+          [
+            "RenderExact8:core-result--1@1271"
+          ]
+        ],
+        "result": {
+          "error": 512,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "512"
+          },
+          "status": "refusal"
+        }
+      }
+    },
+    "candidate_sha256": "628288d27161ae8b797243bb317044b079d83d4394abc10e61d005ee804386ee",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+      "core/dblur_rotate.cpp": "da531b705676b046221d346385c5e8664cede3986f650d4d42ecbc2e68129599",
+      "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "1b4c06d9e981b3c35e8c53da643bcda772fb57947385fb1e1894ec7855d8fb62",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "noise_header_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "68edd83f0b034e5f204ce92926391447f84ab8190c9bd2b0c811748ef51ea497",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "a9e080790cc3b9e7a988324b4ec1cc1432a8f43cf897c78318943a0670f171f6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "68edd83f0b034e5f204ce92926391447f84ab8190c9bd2b0c811748ef51ea497",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1008,
+          "actual_word_hex": "ff",
+          "different_bytes": 950,
+          "different_words": 950,
+          "expected_bytes": 1008,
+          "expected_word_hex": "00",
+          "first_byte": 5,
+          "first_word": 5
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "68edd83f0b034e5f204ce92926391447f84ab8190c9bd2b0c811748ef51ea497",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "68edd83f0b034e5f204ce92926391447f84ab8190c9bd2b0c811748ef51ea497",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 45102
+}
