@@ -1803,7 +1803,6 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                  !GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, layer_bound, smart_render))) {
                 return OLM_DIRECTIONAL_REFUSAL("pf32-layer-budget");
             }
-            if (!GenericPF32FiniteInput(input)) return OLM_DIRECTIONAL_REFUSAL("pf32-nonfinite-input");
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
             return RenderGenericDeepFeatures(input, output, info, 32, noise_layer);
         }

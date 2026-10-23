@@ -1,3 +1,4 @@
+#include "x86_float.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "dblur_rowdriver.h"
 #include "dblur_noise.h"
@@ -12,15 +13,15 @@ namespace {
 // This matches the scalar SSE instructions in the AEX and prevents the host
 // compiler from contracting or reassociating the arithmetic.
 __attribute__((always_inline)) inline float addf(float a, float b) {
-    volatile float r = a + b;
+    volatile float r = olm::x86_float::sse_add(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float mulf(float a, float b) {
-    volatile float r = a * b;
+    volatile float r = olm::x86_float::sse_mul(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float divf(float a, float b) {
-    volatile float r = a / b;
+    volatile float r = olm::x86_float::sse_div(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float int_scale(int value, float scale) {
@@ -154,14 +155,13 @@ extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
     for (int i = 1; i < length; ++i) {
         const float contribution = mulf(alpha, weight_at(weights, i, scale));
         const int target = pixel + direction * i;
-        destination[target * 4 + 0] = addf(destination[target * 4 + 0], mulf(contribution, red));
-        destination[target * 4 + 1] = addf(destination[target * 4 + 1], mulf(contribution, green));
-        destination[target * 4 + 2] = addf(destination[target * 4 + 2], mulf(contribution, blue));
-        denominator[target] = addf(denominator[target], contribution);
+        // AEX scatter adds contribution first; MAXSS selects it on unordered.
+        destination[target * 4 + 0] = addf(mulf(contribution, red), destination[target * 4 + 0]);
+        destination[target * 4 + 1] = addf(mulf(contribution, green), destination[target * 4 + 1]);
+        destination[target * 4 + 2] = addf(mulf(contribution, blue), destination[target * 4 + 2]);
+        denominator[target] = addf(contribution, denominator[target]);
         float& destination_alpha = destination[target * 4 + 3];
-        if (destination_alpha <= contribution) {
-            destination_alpha = contribution;
-        }
+        destination_alpha = olm::x86_float::sse_max(destination_alpha, contribution);
     }
 }
 
