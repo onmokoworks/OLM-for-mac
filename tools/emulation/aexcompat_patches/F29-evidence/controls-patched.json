@@ -1,0 +1,1160 @@
+{
+  "default_sse_addss": "7fc12345",
+  "library_sha256": "80cea710092f053506fc48035bdeda9942fd3c9f64d9d948aa714717c089a38d",
+  "rows": [
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "00000000000000800040",
+      "unicorn": "00000000000000800040"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "0000000000000080ff3f",
+      "unicorn": "0000000000000080ff3f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 0,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 0,
+      "rosetta": "0000000000000080ff3f",
+      "unicorn": "0000000000000080ff3f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 0,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "0000000000000080ff3f",
+      "unicorn": "0000000000000080ff3f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 1,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 1,
+      "rosetta": "0000000000000080ffbf",
+      "unicorn": "0000000000000080ffbf"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 1,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "0000000000000080ff3f",
+      "unicorn": "0000000000000080ff3f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 2,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 2,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 2,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bc9a7856341200c0ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bd9a7856341200c0ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "be9a785634120080ff7f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "bf9a785634120080ffff",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "0000000000000080ff3f",
+      "unicorn": "0000000000000080ff3f"
+    },
+    {
+      "a": "0000000000000080ff3f",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "0000000000000080ff7f",
+      "unicorn": "0000000000000080ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bc9a7856341200c0ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bc9a7856341200c0ff7f",
+      "unicorn": "bc9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bd9a7856341200c0ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bd9a7856341200c0ffff",
+      "unicorn": "bd9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "be9a785634120080ff7f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "be9a7856341200c0ff7f",
+      "unicorn": "be9a7856341200c0ff7f"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "bf9a785634120080ffff",
+      "equal": true,
+      "op": 3,
+      "rosetta": "bf9a7856341200c0ffff",
+      "unicorn": "bf9a7856341200c0ffff"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "0000000000000080ff3f",
+      "equal": true,
+      "op": 3,
+      "rosetta": "00000000000000000000",
+      "unicorn": "00000000000000000000"
+    },
+    {
+      "a": "00000000000000000000",
+      "b": "00000000000000000000",
+      "equal": true,
+      "op": 3,
+      "rosetta": "00000000000000c0ffff",
+      "unicorn": "00000000000000c0ffff"
+    }
+  ],
+  "x87_rosetta_differences": 0,
+  "x87_rows": 144
+}

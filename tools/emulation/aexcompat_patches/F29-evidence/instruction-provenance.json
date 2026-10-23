@@ -1,0 +1,81 @@
+{
+  "214": {
+    "by_op": {
+      "addpd": 12,
+      "addps": 23,
+      "addsd": 6,
+      "addss": 6,
+      "divpd": 12,
+      "divps": 23,
+      "divsd": 6,
+      "divss": 6,
+      "mulpd": 12,
+      "mulps": 23,
+      "mulsd": 6,
+      "mulss": 6,
+      "subpd": 12,
+      "subps": 23,
+      "subsd": 6,
+      "subss": 6
+    },
+    "differences": 188,
+    "library": "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/lib/python3.14/site-packages/unicorn/lib/libunicorn.2.dylib",
+    "library_sha256": "7207c8e3d7a63118fb0bca73e01816797fd51b1d8a39a4cbc7abfd562ee59c85",
+    "native_features": "CPUID.1:ECX=0298220f FMA=0 AVX=0",
+    "python_binding": "2.1.4",
+    "rows": 3200,
+    "sha256": "92080e623366a78651cf61fce6880cf442e69fd0f629bfa27b86698d447703ea",
+    "uc_version": [
+      2,
+      1,
+      33621247
+    ]
+  },
+  "215": {
+    "by_op": {
+      "addpd": 12,
+      "addps": 23,
+      "addsd": 6,
+      "addss": 6,
+      "divpd": 12,
+      "divps": 23,
+      "divsd": 6,
+      "divss": 6,
+      "mulpd": 12,
+      "mulps": 23,
+      "mulsd": 6,
+      "mulss": 6,
+      "subpd": 12,
+      "subps": 23,
+      "subsd": 6,
+      "subss": 6
+    },
+    "differences": 188,
+    "library": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/build/unicorn-engine-sys-6b38d341175b1fb7/out/lib/libunicorn.2.dylib",
+    "library_sha256": "d4c0324ad23183e1edce5ecfbb15f4e9da1a9f2f11eea3e985b594faf2b8fa91",
+    "native_features": "CPUID.1:ECX=0298220f FMA=0 AVX=0",
+    "python_binding": "2.1.4",
+    "rows": 3200,
+    "sha256": "92080e623366a78651cf61fce6880cf442e69fd0f629bfa27b86698d447703ea",
+    "uc_version": [
+      2,
+      1,
+      33621247
+    ]
+  },
+  "patched": {
+    "by_op": {},
+    "differences": 0,
+    "library": "/Users/onmk/.cache/olm-emu/worker-F29-ssenan/build/release/build/unicorn-engine-sys-47d1eac847893f4c/out/lib/libunicorn.2.dylib",
+    "library_sha256": "80cea710092f053506fc48035bdeda9942fd3c9f64d9d948aa714717c089a38d",
+    "native_features": "CPUID.1:ECX=0298220f FMA=0 AVX=0",
+    "python_binding": "2.1.4",
+    "rows": 3200,
+    "sha256": "82e8ad70f84c78f3a3c053387294bdacbde2fe19a9d904d707dadded3021585f",
+    "uc_version": [
+      2,
+      1,
+      33621247
+    ]
+  }
+}

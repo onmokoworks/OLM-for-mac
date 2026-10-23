@@ -1,0 +1,48 @@
+--- a/qemu/include/fpu/softfloat-types.h
++++ b/qemu/include/fpu/softfloat-types.h
+@@ -177,0 +178,2 @@
++    /* x86 SSE uses operand order; x87 retains significand selection. */
++    flag x86_sse_nan_order;
+--- a/qemu/target/i386/fpu_helper.c
++++ b/qemu/target/i386/fpu_helper.c
+@@ -1582,0 +1583 @@
++    env->sse_status.x86_sse_nan_order = 1;
+--- a/qemu/target/i386/cpu.c
++++ b/qemu/target/i386/cpu.c
+@@ -4524,0 +4525 @@
++    env->sse_status.x86_sse_nan_order = 1;
+--- a/qemu/target/i386/unicorn.c
++++ b/qemu/target/i386/unicorn.c
+@@ -109,0 +110 @@
++    env->sse_status.x86_sse_nan_order = 1;
+--- a/qemu/fpu/softfloat-specialize.inc.c
++++ b/qemu/fpu/softfloat-specialize.inc.c
+@@ -377,2 +377,9 @@
+-                   flag aIsLargerSignificand)
+-{
++                   flag aIsLargerSignificand, float_status *status)
++{
++#if defined(TARGET_I386)
++    /* Intel SDM Vol. 1 Table 4-8: first NaN, quieted by the caller.
++     * Keep the distinct x87 rule for fp_status. */
++    if (status->x86_sse_nan_order) {
++        return is_nan(a_cls) ? 0 : 1;
++    }
++#endif
+@@ -622 +629 @@
+-    if (pickNaN(a_cls, b_cls, aIsLargerSignificand)) {
++    if (pickNaN(a_cls, b_cls, aIsLargerSignificand, status)) {
+@@ -760 +767 @@
+-    if (pickNaN(a_cls, b_cls, aIsLargerSignificand)) {
++    if (pickNaN(a_cls, b_cls, aIsLargerSignificand, status)) {
+@@ -924 +931 @@
+-    if (pickNaN(a_cls, b_cls, aIsLargerSignificand)) {
++    if (pickNaN(a_cls, b_cls, aIsLargerSignificand, status)) {
+@@ -1072 +1079 @@
+-    if (pickNaN(a_cls, b_cls, aIsLargerSignificand)) {
++    if (pickNaN(a_cls, b_cls, aIsLargerSignificand, status)) {
+--- a/qemu/fpu/softfloat.c
++++ b/qemu/fpu/softfloat.c
+@@ -927 +927 @@
+-                    (a.frac == b.frac && a.sign < b.sign))) {
++                    (a.frac == b.frac && a.sign < b.sign), s)) {
