@@ -25,3 +25,12 @@
 3. Do not integrate into the worker or the plugins here. Propose the follow-up: the worker
    import shim (like F30) plus the Mac call sites (like F31).
 - Use 1-2 processes. Check `memory_pressure` first.
+
+## How to derive (interoperability reimplementation)
+- Use the disassembly to understand the algorithm: the reduction scheme, the polynomial degree
+  and form, the evaluation order, and where FMA is used. Then **write your own C**.
+- Do not transliterate the instruction sequence line by line.
+- Take only the constants and tables the algorithm functionally needs. Record in the README
+  where each one came from: an RVA, or a value derived from observed outputs.
+- Prefer black-box confirmation. Every constant you take must be justified by the exhaustive
+  equivalence result.
