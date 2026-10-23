@@ -48,6 +48,8 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
+    p.add_argument('--candidate', choices=('source', 'plugin-bundle'), default='source')
+    p.add_argument('--plugin-bundle', type=Path)
     p.add_argument('--n', type=int, default=2000)
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--jobs', type=int, default=4)
@@ -66,6 +68,8 @@ def options():
     p.add_argument('--corpus-max-bytes', type=int, default=2_000_000)
     p.add_argument('--replay', type=Path, help='Replay a corpus JSON or directory; generation and shrinking are disabled')
     args = p.parse_args()
+    if args.candidate == 'plugin-bundle' and (args.plugin != 'olmblur' or not args.plugin_bundle or args.jobs != 1):
+        p.error('plugin-bundle requires --plugin olmblur --plugin-bundle PATH --jobs 1')
     if not args.plugin.isidentifier():
         p.error('plugin must be an adapter module name')
     if not (args.n > 0 and 1 <= args.jobs <= 32 and args.budget_minutes > 0
@@ -244,7 +248,7 @@ def main():
     os.environ.update(TMPDIR=str(args.scratch), TMP=str(args.scratch), TEMP=str(args.scratch),
                       PYTHONDONTWRITEBYTECODE='1')
     tempfile.tempdir = str(args.scratch)
-    adapter_type = importlib.import_module('adapters.'+args.plugin).Adapter
+    adapter_type = importlib.import_module('adapters.'+('plugin_bundle' if args.candidate == 'plugin-bundle' else args.plugin)).Adapter
     report = {'schema':'olm-fuzz-report/1', 'plugin':args.plugin, 'generator_version':adapter_type.generator_version,
               'started_utc':datetime.now(timezone.utc).isoformat(),
               'seed':args.seed, 'requested':args.n, 'jobs':args.jobs,

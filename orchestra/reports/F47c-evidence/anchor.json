@@ -1,0 +1,94 @@
+{
+  "provenance": {
+    "host": "F47c shared Rust ClassicHost arena; AEX setup, native candidate setup and Smart selectors",
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47c-native-plugin-smart-render/orchestra/state/F47c-native-plugin-smart-render/aex-guest-worker",
+    "worker_sha256": "893f92de3feada4ad66e576a47c378ede762190278d836c70ba3a7e1a8c140b4",
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "candidate_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47c-native-plugin-smart-render/orchestra/state/F47c-native-plugin-smart-render/bundles/xcode/OLMBlur/products/OLMBlur.plugin",
+    "candidate_sha256": "cc5359a9937c9e778fcb77bcc8036433767c13bffc5c78b73f1854344a282047",
+    "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+    "world": "same ARGB worlds: input padding rounded up to pixel alignment, 0xA5 fill; output packed in both runs; generated output_padding unused",
+    "oracle_routes": {
+      "smart": "smart"
+    },
+    "original_routes": {
+      "smart": "render"
+    }
+  },
+  "case": {
+    "seed": 1,
+    "index": 0,
+    "geometry": [
+      32,
+      32
+    ],
+    "depth": 8,
+    "profile": "sdr",
+    "parameters": [
+      {
+        "slot": 1,
+        "kind": "s",
+        "value": 5.0
+      },
+      {
+        "slot": 2,
+        "kind": "f",
+        "value": 100.0
+      },
+      {
+        "slot": 3,
+        "kind": "i",
+        "value": 2
+      },
+      {
+        "slot": 4,
+        "kind": "u",
+        "value": 1
+      },
+      {
+        "slot": 5,
+        "kind": "b",
+        "value": 0
+      }
+    ],
+    "input_padding": 7,
+    "output_padding": 0
+  },
+  "input_sha256": "a6ed198321a84d641a39719bf923e817f3b1b0f0d1a744afc880bae61ebe3be1",
+  "result": {
+    "oracle": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "raw_sha256": "c923c0b37aa3767e0388f7388ea680dc08f79433fdff1986b8a06a6f280bcaf9"
+    },
+    "routes": {
+      "smart": {
+        "status": "exact",
+        "guards_intact": true,
+        "session_clean": true,
+        "native_trace": "F47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=5 acquire=1 release=1 formats=2 checkout=5 checkin=5\n",
+        "raw_sha256": "c923c0b37aa3767e0388f7388ea680dc08f79433fdff1986b8a06a6f280bcaf9"
+      }
+    },
+    "first_mismatching_stage": null,
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "old_worker_candidate_rejection": "harness_error",
+  "aex_regression": {
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "old_sha256": "c923c0b37aa3767e0388f7388ea680dc08f79433fdff1986b8a06a6f280bcaf9",
+    "new_sha256": "c923c0b37aa3767e0388f7388ea680dc08f79433fdff1986b8a06a6f280bcaf9",
+    "equal": true
+  }
+}
