@@ -3297,8 +3297,10 @@ static PF_Err RenderZoomTyped(
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> fade_factor_with_guard;
+	// B150 tests the size plane even without fades; noise may zero the
+	// separate scatter span while the prepass seed remains nonzero.
 	const bool use_generic_size_fade = use_generic_baseline &&
-		((RadialSizeVariationEnabled(info.size_variation) && (info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) ||
+		(RadialSizeVariationEnabled(info.size_variation) ||
 		 (info.noise_type == 3 && info.noise_variation == 0.0));
 	std::vector<float> fade_factor_plane;
 	std::vector<float> source_scalar_plane;
