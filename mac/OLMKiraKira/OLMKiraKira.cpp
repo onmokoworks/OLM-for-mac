@@ -700,7 +700,7 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 
 static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
-	return info.approximated_input && (info.channel == 1 || info.channel == 2 || info.channel == 4) &&
+	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
 		(info.blur_mode == 1 || info.blur_mode == 2);
 }
 
@@ -737,7 +737,7 @@ static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 
 static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
 {
-    return !info.approximated_input &&
+    return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
         (info.blur_mode == 1 || info.blur_mode == 2 ||
          (info.blur_mode == 3 && info.highlight_radius == 0)) &&
         (info.channel == 3 || info.channel == 5 || info.channel == 6);
@@ -925,10 +925,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
         for (size_t i=0; i<glow.size(); ++i) {
             auto &g=glow[i];
             // Original helper returns Length even for normalized Gaussian rays.
-            // The color aggregator consumes that divisor independently.
-            float norms[5] = {(float)info.vertical_length,(float)info.horizontal_length,
-                (float)info.diagonal_length,(float)info.diagonal2_length,
-                (float)((info.highlight_radius*2+1)*(info.highlight_radius*2+1))};
+            // The color aggregator consumes that divisor independently, using
+            // the scaled helper lengths when rendering approximated input.
+            float norms[5] = {(float)scaled_len(info.vertical_length),(float)scaled_len(info.horizontal_length),
+                (float)scaled_len(info.diagonal_length),(float)scaled_len(info.diagonal2_length),
+                (float)((highlight_radius*2+1)*(highlight_radius*2+1))};
             if (info.blur_mode == 2) {
                 for (int c=0;c<4;++c) norms[c]=norms[c]*norms[c]*norms[c];
                 norms[4]=norms[4]*norms[4]; norms[4]=norms[4]*norms[4];
@@ -1720,7 +1721,7 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.highlight_use_ramp, info.highlight_ramp);
 }
 
-// C22: scalar Alpha/luminance/max box resize retains full-resolution source composition.
+// C22/C28: recovered scalar/four-component box resize retains full-resolution source composition.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)
