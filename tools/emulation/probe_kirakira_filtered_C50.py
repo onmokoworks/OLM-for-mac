@@ -101,7 +101,9 @@ def main():
     s = args.scratch.resolve()
     assert s.is_relative_to(ROOT/'orchestra/state')
     s.mkdir(parents=True, exist_ok=True)
-    os.environ.update(TMPDIR=str(s), TMP=str(s), TEMP=str(s))
+    os.environ.update(TMPDIR=str(s), TMP=str(s), TEMP=str(s),
+                      OLM_KK_PROCESS_ATTACH_DIAGNOSTIC='1',
+                      OLM_KK_MANUAL_CRT_INITIALIZERS_DIAGNOSTIC='1')
     options = SimpleNamespace(max_size=256, case_timeout=180,
                               main=main_checkout(), worker=default_worker())
     deadline = time.monotonic() + 7200
