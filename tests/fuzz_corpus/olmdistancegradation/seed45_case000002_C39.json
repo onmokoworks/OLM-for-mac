@@ -159,29 +159,43 @@
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "rebaseline": {
-    "candidate_source_sha256": "2f43e023e3e2894b6ed36bcaa819b59254a576a1fa05968925a756cbeab1f3a9",
-    "previous_smart_result": {
-      "diff": {
-        "actual_bytes": 676,
-        "actual_word_hex": "1a",
-        "different_bytes": 4,
-        "different_words": 4,
-        "expected_bytes": 676,
-        "expected_word_hex": "19",
-        "first_byte": 424,
-        "first_word": 424
+    "candidate_source_sha256": "8a13dc9d113ef735f0d11e4f6d9ce6a914621b1d508e67cb442f0eb4ce8cbd63",
+    "previous_rebaseline": {
+      "candidate_source_sha256": "2f43e023e3e2894b6ed36bcaa819b59254a576a1fa05968925a756cbeab1f3a9",
+      "previous_smart_result": {
+        "diff": {
+          "actual_bytes": 676,
+          "actual_word_hex": "1a",
+          "different_bytes": 4,
+          "different_words": 4,
+          "expected_bytes": 676,
+          "expected_word_hex": "19",
+          "first_byte": 424,
+          "first_word": 424
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 12 12",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bc94a91aa42b9251ca331fd53856f177acea8654ee0416ab1b975db80fd1bfee",
+        "status": "mismatch"
       },
-      "error": 0,
+      "reason": "PF8 Smart Bilateral Size0 pre-filter field contains half-integer byte quantization ties",
+      "ticket": "C40-dg-seed45-mismatch",
+      "transition": "smart mismatch -> refusal"
+    },
+    "previous_smart_result": {
+      "error": -1,
       "metadata": {
         "COUNTS": "1 1 1 1 12 12",
-        "ERROR": "0"
+        "ERROR": "-1"
       },
-      "raw_sha256": "bc94a91aa42b9251ca331fd53856f177acea8654ee0416ab1b975db80fd1bfee",
-      "status": "mismatch"
+      "status": "refusal"
     },
-    "reason": "PF8 Smart Bilateral Size0 pre-filter field contains half-integer byte quantization ties",
-    "ticket": "C40-dg-seed45-mismatch",
-    "transition": "smart mismatch -> refusal"
+    "reason": "Restore original PF8 float staging, IPP dispatch and strict color exponent cutoff",
+    "ticket": "C43-dg-bilateral-last-bit",
+    "transition": "smart refusal -> exact"
   },
   "reduction": {
     "accepted": []
@@ -229,12 +243,13 @@
         "status": "mismatch"
       },
       "smart": {
-        "error": -1,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 1 12 12",
-          "ERROR": "-1"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "c7f3ed695bd7f22776182458d8f2ed460e24520dc0179f7b018a01f433a8b735",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

@@ -245,11 +245,11 @@ struct DGParams {
 };
 
 // The original bilateral filter clamps its radius to at least one: Size0
-// is an effective three-tap diameter, just like Size1, on this PF32 Smart lane.
+// is an effective three-tap diameter, just like Size1, on PF8/PF32 Smart.
 static bool has_effective_blur(const DGParams &p)
 {
 	return p.blur_mode != BLUR_MODE_NONE &&
-		(p.blur_size > 0 || (p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
+		(p.blur_size > 0 || (p.smart_owner && p.pixel_size != sizeof(PF_Pixel16) &&
 		 p.blur_mode == BLUR_MODE_BILATERAL));
 }
 
@@ -778,9 +778,9 @@ static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
 	}
 }
 
-// PF32 Smart reproduction of the retained radius-one IPP bilateral body.
+// PF8/PF32 Smart reproduction of the retained radius-one IPP bilateral body.
 // cvSmooth(CV_BILATERAL, diameter 1 or 3, ..., 0, 0) selects radius one and
-// unit sigmas (1812ca750). Larger radii and PF8/PF16 remain separate lanes.
+// unit sigmas (1812ca750). Larger radii and PF16 remain separate lanes.
 // IPP evaluates four color weights directly, accumulates
 // L/T/R/B without contraction, then applies the common spatial weight.
 static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
@@ -808,7 +808,9 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 			for (int k = 0; k < 4; ++k) {
 				const float difference = values[k] - center;
 				const float exponent = vector_dispatch ? (difference * difference) * -0.5f : (-0.5f * difference) * difference;
-				const float color_weight = vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent);
+				// 1806bd7ba..1806bd84f skips exp at/below -25; the exp
+				// helper is only reproduced on that bounded input interval.
+				const float color_weight = exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
 				weight_sum += color_weight;
 				sum += bilateral_noncontracting_product(values[k], color_weight);
 			}
@@ -930,15 +932,13 @@ struct DistanceField {
 	std::vector<float> x;    // normalized distance [0,1]
 	std::vector<float> d_alpha; // 0 or 1 — output alpha mask
 	std::vector<float> pre_blur_x; // Constant+Blur writer's unblurred binary field
-	bool pf8_staging_half_tie = false;
 	long w, h;
 };
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging = false, bool smart_pf8_blurred = false,
-	bool *staging_half_tie = nullptr);
+	bool smart_pf8_staging = false, bool smart_pf8_blurred = false);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -1058,7 +1058,7 @@ static void invert_mask(u_char *mask, long w, long h)
 // scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging, bool smart_pf8_blurred, bool *staging_half_tie)
+	bool smart_pf8_staging, bool smart_pf8_blurred)
 {
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
@@ -1070,8 +1070,6 @@ static void dt_to_normalized(
 		// distance 5 / maximum 6 must reach the exact 212.5 packing tie.
 		for (long i = 0; i < w * h; ++i) {
 			const float value = out[i];
-			if (staging_half_tie && value - floorf(value) == 0.5f)
-				*staging_half_tie = true;
 			const int word = value < 0.0f ? 0 : (value > 255.0f ? 255 : (int)lrintf(value));
 			out[i] = (float)word / 255.0f;
 		}
@@ -1125,20 +1123,20 @@ static void build_distance_field(
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
 			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
-			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
+			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
 		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, &df.pf8_staging_half_tie);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
@@ -1155,7 +1153,7 @@ static void build_distance_field(
 	// mode 2 uses normalized box blur, mode 3 Gaussian, mode 4 median, and
 	// mode 5 the legacy bilateral call. Admitted radius-one PF32 Smart and
 	// bounded generic-radius and fixed-profile cells enter the IPP reproductions below.
-	// PF8/PF16 keep their separate path; their general bilateral remains open.
+	// PF8 uses the same IPP bodies on its byte-scaled float field.
 	if (has_effective_blur(p)) {
 		long bs = (long)((float)p.blur_size * ds + 0.5f);
 		if (bs < 1) bs = 1;
@@ -1170,13 +1168,15 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
 				if (is_scalar_bilateral_shape(p, w, h)) {
 					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
-				} else if (is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
+				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) && bs > 1) ||
+				           is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
 					bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);
-				} else if (p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
+				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8)) ||
+				           p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
 				    is_admitted_pf32_smart_bilateral_beta(p)) {
 					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
 				}
-				// PF8/PF16 retain their independently proven typed staging.
+				// PF16 retains its independently proven typed staging.
 				// Other PF32 Smart tuples remain fail-closed before field creation.
 			}
 		}
@@ -2008,16 +2008,6 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		(bounded_alpha || smart_owner) &&
 		(!any_owned || !any_unowned);
 	build_distance_field(alpha.data(), df, p, w, h);
-	// C39 captured half-integer PF8 fields at the original cvSmooth entry
-	// for Bilateral Size0. Our identity staging rounds before that call.
-	// A half-integer is a byte-quantization discontinuity: even a small
-	// bilateral change can select the other byte. Refuse this unresolved
-	// staging boundary rather than exposing a rounded field as exact.
-	if (smart_owner && sizeof(P) == sizeof(PF_Pixel8) &&
-	    p.blur_mode == BLUR_MODE_BILATERAL && p.blur_size == 0 &&
-	    df.pf8_staging_half_tie) {
-		return OLM_DG_REFUSAL("pf8-bilateral-zero-half-tie");
-	}
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
 	// Shade

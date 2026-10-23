@@ -30,6 +30,7 @@ def main():
     for name in ('width','height','radius'):p.add_argument('--'+name,type=int,required=True)
     p.add_argument('--allow-mismatch',action='store_true')
     p.add_argument('--vector-exp',action='store_true')
+    p.add_argument('--loop-trace',action='store_true',help='Pair radius-one scalar weights and pre-divide sums')
     p.add_argument('--generic',action='store_true',help='Compare the mixed scalar/vector circular kernel')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
@@ -48,6 +49,17 @@ def main():
     ld.write_bytes(output,b'\xa5'*(len(pre)+128))
     spec=ld.bump_alloc(1024*1024,align=64);scratch=ld.bump_alloc(8*1024*1024,align=64)
     exponent_inputs=set();dispatch=Counter()
+    loop_words=bytearray()
+    if args.loop_trace:
+        assert r==1 and (w<3 or h<3)
+        import unicorn.x86_const as xc
+        def capture(registers):
+            def hook(loader,rip,size):
+                for reg in registers:
+                    loop_words.extend((loader.uc.reg_read(getattr(xc,'UC_X86_REG_XMM'+str(reg))) & 0xffffffff).to_bytes(4,'little'))
+            return hook
+        ld.add_code_hook(0x1806bd84f,capture([14,15,2,0]))
+        ld.add_code_hook(0x1806bd8aa,capture([13,14]))
     def expin(loader,rip,size):exponent_inputs.add(loader.uc.reg_read(UC_X86_REG_XMM0)&0xffffffff)
     ld.add_code_hook(0x1802997a0,expin)
     vector_calls=[]
@@ -106,9 +118,26 @@ def main():
                   exp_backend='vector-180ba5780' if args.vector_exp else 'scalar-18144ee30',exp_output_sha256=sha(expected))
     source=args.source.read_text().replace('#include "OLMDistanceGradation.h"',
         '#include "'+str(ROOT/'mac/OLMDistanceGradation/OLMDistanceGradation.h')+'"').replace('"../../core/','"'+str(ROOT/'core')+'/').replace('"../../ucrtmath/','"'+str(ROOT/'ucrtmath')+'/')
+    if args.loop_trace:
+        assert len(loop_words)==w*h*6*4
+        report['loop_fields']=['top_weight','left_weight','right_weight','bottom_weight','numerator','denominator']
+        report['loop_sites']=['0x1806bd84f','0x1806bd8aa']
+        report['original_loop_hex']=loop_words.hex()
+        start=source.index('static void bilateral_blur_opencv455_f32x4(')
+        prefix,body=source[:start],source[start:]
+        body=body.replace('float weight_sum = 0.0f;', 'float weight_sum = 0.0f; float weights[4];',1)
+        body=body.replace('weight_sum += color_weight;', 'weights[k]=color_weight; weight_sum += color_weight;',1)
+        anchor='mat[(size_t)y * w + x] = (sum + center) / (weight_sum + 1.0f);'
+        body=body.replace(anchor,'''if(const char *path=getenv("OLM_C43_LOOP")) { FILE *f=fopen(path,"ab"); if(f) {
+                float words[6]={weights[1],weights[0],weights[2],weights[3],sum+center,weight_sum+1.0f};
+                fwrite(words,4,6,f); fclose(f); } }
+            '''+anchor,1)
+        source=prefix+body
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as td:
-        td=Path(td);local=td/'candidate.cpp';local.write_text(source)
+        td=Path(td)
+        subprocess.run(['sh',str(ROOT/'ucrtmath/build.sh'),str(td/'ucrtmath')],check=True,capture_output=True)
+        local=td/'candidate.cpp';local.write_text(source)
         ip=td/'exp.bin';ip.write_bytes(b''.join(struct.pack('<I',v) for v in inputs))
         plane=td/'pre.bin';plane.write_bytes(pre)
         cpp=td/'probe.cpp';cpp.write_text('#include "dg_renderbits_real_harness_20260716_sdk_shim.h"\n#include '+json.dumps(str(local))+'''
@@ -132,16 +161,21 @@ int main(int argc,char **argv) {
             exe=td/name;out=td/(name+'.bin');filtered=td/(name+'-plane.bin')
             subprocess.run(['clang++','-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
                 '-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),str(cpp),
-                str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],check=True,capture_output=True)
-            env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1')
+                str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),str(td/'ucrtmath/libucrtmath.a'),'-o',str(exe)],check=True)
+            loop=td/(name+'-loop.bin')
+            env=dict(os.environ,OLM_C43_LOOP=str(loop),ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1')
             subprocess.run([str(exe),str(ip),str(out)],check=True,capture_output=True,env=env)
             subprocess.run([str(exe),str(plane),str(filtered),str(w),str(h),str(r)],check=True,capture_output=True,env=env)
             expdiff=raw_diff(expected,out.read_bytes(),32);diff=raw_diff(post,filtered.read_bytes(),32)
             report['builds'].append(dict(name=name,exp_diff=expdiff,post_diff=diff))
+            if args.loop_trace:
+                report['builds'][-1].update(loop_diff=raw_diff(bytes(loop_words),loop.read_bytes(),32),mac_loop_hex=loop.read_bytes().hex())
             print(name,'exp',expdiff,'post',diff,flush=True)
         assert all(not b['exp_diff']['different_words'] for b in report['builds'])
         if not args.allow_mismatch:
             assert all(not b['post_diff']['different_words'] for b in report['builds'])
+            if args.loop_trace:
+                assert all(not b['loop_diff']['different_words'] for b in report['builds'])
     finally:
         args.report.parent.mkdir(parents=True,exist_ok=True)
         args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
