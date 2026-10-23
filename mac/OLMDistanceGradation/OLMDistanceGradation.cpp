@@ -805,13 +805,55 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 	}
 }
 
+// IPP scalar radius-two body FUN_1806bd9a0 groups taps by squared
+// distance 4, 2, 1. Its spatial multiplication follows each four-tap
+// reduction, and the center enters numerator/denominator at different
+// points. A generic row-major circular reduction has different rounding.
+static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	const int taps[3][4][2] = {
+		{{0,-2},{-2,0},{2,0},{0,2}},
+		{{-1,-1},{1,-1},{-1,1},{1,1}},
+		{{0,-1},{-1,0},{1,0},{0,1}}
+	};
+	const float spatial[3] = {bilateral_ipp_exp(-2.0f),
+	    bilateral_ipp_exp(-1.0f), bilateral_ipp_exp(-0.5f)};
+	const std::vector<float> source(mat, mat+(size_t)w*h);
+	for (long y=0; y<h; ++y) for (long x=0; x<w; ++x) {
+		const float center=source[(size_t)y*w+x];
+		float numerators[3], denominators[3];
+		for (int group=0; group<3; ++group) {
+			float weights[4], products[4];
+			for (int tap=0; tap<4; ++tap) {
+				const long sx=std::max(0L,std::min(w-1,x+taps[group][tap][0]));
+				const long sy=std::max(0L,std::min(h-1,y+taps[group][tap][1]));
+				const float sample=source[(size_t)sy*w+sx];
+				const float difference=sample-center;
+				const float exponent=(-0.5f*difference)*difference;
+				weights[tap]=exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				products[tap]=bilateral_noncontracting_product(sample,weights[tap]);
+			}
+			numerators[group]=bilateral_noncontracting_product(
+			    ((products[0]+products[1])+products[2])+products[3],spatial[group]);
+			denominators[group]=bilateral_noncontracting_product(
+			    ((weights[0]+weights[1])+weights[2])+weights[3],spatial[group]);
+		}
+		const float numerator=(center+(numerators[0]+numerators[1]))+numerators[2];
+		const float denominator=((denominators[0]+denominators[1])+1.0f)+denominators[2];
+		mat[(size_t)y*w+x]=numerator/denominator;
+	}
+}
+
 static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 {
 	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
 	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
 	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
 	// Retain PF8 dispatch; PF32 scalar tiles are verified through radius 500.
-	return radius >= 3 && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
+	return radius >= (p.pixel_size == sizeof(PF_PixelFloat) ? 2 : 3) && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
 	    (w <= 2*radius || h <= 2*radius);
 }
 
@@ -1278,7 +1320,8 @@ static void build_distance_field(
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
 				if (is_scalar_bilateral_shape(p, w, h)) {
-					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
+					if (bs == 2) bilateral_blur_ipp_radius_two(df.x.data(), w, h);
+					else bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
 				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) && bs > 1) ||
 				           is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
 					bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);

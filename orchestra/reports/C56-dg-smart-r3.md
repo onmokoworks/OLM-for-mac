@@ -97,3 +97,49 @@ Expected:324 arithmetic comparisons per build,216 original exact, three targets 
 
 next:
 - Two performance clusters closed. Radius-two PF32 scalar admission is still scratch-only: generic-loop experiment fails20 output words; paired pre-filter plane is exact and post-filter first diverges. A specialized grouped reduction is being checked against original IPP arithmetic before admission.
+
+Cluster 3 — original scalar radius-two Bilateral reduction (basebecd26a2):
+
+facts:
+- Scratch gate/dispatch extension to radius2 is refuted by the first independent Linear case:7x3 PF32,20 output words differ; first word13/byte52 original `d3f27c3e`, candidate `d5f27c3e`. Constant cases preceding it were exact and did not establish general correctness.
+- Paired public/callback-bound trace establishes the FIRST divergent stage:21/21 pre-filter words exact,11/21 post-filter words differ, first word3 original `d3f27c3e`, candidate `d5f27c3e`. Exponential leaf inputs are8201/8201 exact in O2/O3/ASan+UBSan; swapping an exp implementation is not indicated.
+- Original dispatch table `1815c7540` selects scalar radius2 entry25=`1806bd9a0`, distinct from radius>=3 entry26=`1806be1e0`. The radius2 body groups four taps each at squared distances4,2,1, multiplies each group sum by its spatial coefficient, and adds center separately. Generic row-major accumulation is not equivalent.
+- First grouped candidate exposes a NEW boundary: only post word19 differs, original `081e013f`, candidate `071e013f`;2 final output words differ. Paired pre-divide hooks at `1806be0e3` isolate the numerator: word38 of42 original `8a582240`, candidate `89582240`; all denominators match in all3 builds.
+- Original `1806be06b` adds first+second group numerators, then `1806be095` adds that result to center. Restoring that general operation closes all21 pre/post/final field words and all336 output bytes. All42 numerator/denominator words and8201 exponential results match original IPP in O2 strict, O3 requesting contraction, and ASan/UBSan. Original dispatch count `1806bd9a0`:1; no imports. No coordinate/value patch, tolerance or output-byte adjustment.
+- New admission: full-resolution Smart PF32 radius2 with scalar tile shape(width<=4 OR height<=4), retaining existing finite-source, ownership/control, positive alpha-conversion-overflow and Power[0.01,5] checks. PF8/PF16, vector tiles and radius>500 are unchanged. Radius2 uses a separate specialized function; existing generic arithmetic remains unchanged.
+- Independent final matrices180 ordinary +180 extreme all original-public exact and sanitizer-identical. Shapes7x3,1x7,4x9,19x3,3x19; all ownership/render choices, background/inversion variation, Constant/Linear/Sphere and Power0.01/2.25/5; padded strides. Extremes cover maximum finite signed RGB, subnormals, signed zero, negative maximum alpha and alpha8421504 at the conversion boundary.
+- Dedicated fixed-reference admission verifier confirms all360 cases were refused by basebecd26a2, now exact, with sanitized equality and identical input/parameter/geometry binding. Eight negative controls remain refused/sanitizer-identical:5x5 radius2 vector shape,radius501,67x67/radius33,Power0.005/5.01,positive alpha overflow,infinity,NaN. Historical C54's radius2 negative control is intentionally superseded by this newly certified positive domain; the new non-scalar negative retains the unverified boundary.
+- Three-seed before/current/sanitized verifier preserves all859 exact campaign hashes and compared nonexact results;896 campaign rows plus147 corpus rows are unchanged. No saved-corpus expectation changes. Original-failed timeout skips and separate target proofs remain explicit.
+
+| Smart exact | Before cluster3 | After cluster3 (fixed references) |
+|---|---:|---:|
+|seed1|290|290|
+|seed105|285|285|
+|fresh seed156|284|284|
+|saved corpus|147|147, same hashes|
+|independent scalar radius2 matrix|0 (360 refused)|360|
+
+inference:
+- The operation is a distinct IPP reduction topology, not a generic-kernel admission-only change. Successive failure investigations produced a new post-filter boundary and then a new numerator boundary before refinement. The final cause fix follows the actual instruction order and reproduces the original loop state.
+- Finite matrices plus binary-grounded arithmetic support the bounded scalar rule, not arbitrary vector radius2, arbitrary controls or native AE compatibility.
+
+changed_files (additional):
+- Production scalar radius2 operation/selector; `tools/emulation/trace_distancegradation_bilateral_C19.py` radius2 dispatch and numerator/denominator hooks.
+- C56 probe boundary/extreme/negative support; `tools/fuzz/verify_distancegradation_radius2_C56.py`; evidence audit.
+- Full independent reports, failed scratch sources, paired traces and explicit case retained under `C56-evidence/` with manifest hashes.
+
+verify (cluster3; same scratch environment):
+```sh
+python3 tools/fuzz/probe_distancegradation_C56.py --mode bilateral --radius-two --scratch "$s/radius2" --report "$s/radius2.json" > "$s/radius2.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode bilateral --radius-two --extreme --scratch "$s/radius2-extreme" --report "$s/radius2-extreme.json" > "$s/radius2-extreme.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C56.py --mode bilateral --radius-two --negative --scratch "$s/radius2-negative" --report "$s/radius2-negative.json" > "$s/radius2-negative.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_radius2_C56.py --reference "$s/radius2.json" --reference "$s/radius2-extreme.json" --scratch "$s/admission" --report "$s/admission.json" > "$s/admission.log" 2>&1
+py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python'
+"$py" tools/emulation/trace_distancegradation_smart_C14.py --case-json orchestra/reports/C56-evidence/radius2-case.json --scratch "$s/radius2-trace" --report "$s/radius2-trace.json" > "$s/radius2-trace.log" 2>&1
+"$py" tools/emulation/trace_distancegradation_bilateral_C19.py --trace "$s/radius2-trace.json" --source mac/OLMDistanceGradation/OLMDistanceGradation.cpp --width 7 --height 3 --radius 2 --radius-two --loop-trace --scratch "$s/radius2-leaf" --report "$s/radius2-leaf.json" > "$s/radius2-leaf.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref becd26a2 --campaign "$s/seed1.json" --campaign "$s/seed105.json" --campaign "$s/seed156.json" --skip-original-failed-timeouts --corpus --strict-admission --case-timeout 180 --scratch "$s/radius2-verify" --report "$s/radius2-verify.json" > "$s/radius2-verify.log" 2>&1
+```
+Expected:180+180 exact,360 baseline refusal->exact,8 unchanged refusals; paired trace all planes/output exact, leaf8201 exp/21 post/42 loop words exact in all3 builds; all prior exact hashes/corpus preserved. Reproduce failed traces by decompressing retained `radius2.cpp.gz` (generic) or `radius2-grouped.cpp.gz` (initial grouping) to scratch and passing `--source`; traces succeed but report11/1 differing post words. The grouped-loop source and `--allow-mismatch` reproduce the captured numerator difference.
+
+next:
+- Three-cluster stop reached. Finish final three full campaigns, strict corpus replay, audit and cleanup. Remaining original failures and larger/vector Bilateral domains are follow-up work.
