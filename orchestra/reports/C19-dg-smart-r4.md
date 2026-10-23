@@ -1,8 +1,8 @@
 status: partial
 
 summary:
-- Cluster 1 restores Smart mask conversion overflow and invalid weighted-sample arithmetic, then admits nonfinite/overflow PF32 identity-filter inputs.
-- Captured seed1 Smart E/M/R/U improves 274/1/18/7 -> 281/1/11/7; fresh seed6 exact266 ->271. No prior exact bytes change.
+- Two clusters closed: nonfinite/overflow identity-filter inputs and Power exponent-one control equivalence.
+- Seed1 Smart E/M/R/U:274/1/18/7 ->281/1/11/7 ->284/1/8/7; fresh seed6 exact266 ->271 ->276. No prior exact bytes change.
 - Independent432 cases and original-instruction1144 samples are exact; ordinary/sanitized campaign and corpus outputs agree.
 - Power and effective-filter residuals remain under investigation; no native AE/UCRT completion claim.
 
@@ -31,10 +31,25 @@ Cluster 1 — nonfinite/overflow identity-filter PF32:
 |---|---|---|---|
 | All145 Smart cases |145 exact|145 exact, identical bytes/status|None|
 
+
+Cluster 2 — Power exponent exactly one (base `b53f051b`):
+- Re-measured seed1 after cluster1 is281/1/11/7. Six remaining successful-reference refusals select Power. Broad scratch gate-off renders all six exactly, but this does not validate arbitrary native UCRT powf: the retained worker maps PowF to host `f32::powf` (`guest/crates/aex-guest-worker/src/x64/imports.rs:2685`, read-only retained source). The prior native2.25 closure already establishes a host/native distinction. Fractional exponents stay guarded.
+- Three cases (25,68,299) use effective FLOAT32 exponent1. The scratch rule normalizes only Smart PF32 Power/1 to Linear before existing domain/filter admission. This changes no arbitrary-exponent calculation and preserves all existing filter, domain and safety bounds. Source is identical between the verified candidate and production.
+- Original case25:91 original powf calls,10 distinct input bit patterns; every exponent is `3f800000` and every return word equals its input. Original mask and all91 field words match, and the pointer-relocated original callback equals the separate typed public hash. Production output is identical. The trace explicitly records the `powf` import substitution; it is not a native UCRT execution claim.
+- Independent864-case matrix:576 refusal->exact,288 unchanged refusal, zero admitted mismatch, ordinary/sanitized equality864/864. Three source families (SDR, signed/HDR, nonfinite),7x1/1x7/7x3, all ownership modes, RGB/Layer/backgrounds, four identity filters and SDR Box/Gaussian/Median/Bilateral effective filters. Extended/nonfinite effective-filter controls remain refused.
+- Five negative controls at effective power words `3f7fffff`, `3f800001`, `3c23d70a`, `40100000`, `40a00000` remain unchanged refusals. Shared Bilateral negative test now uses Power2.25 explicitly, preserving its arbitrary-Power purpose after Power1 admission.
+- Before/current/sanitized-current checks complete seed1 all300, seed6 all300, corpus145 and seven shared negatives. Seed1 exact281->284; seed6 exact271->276. Every prior exact byte is unchanged; every change is refusal->exact. Gate and production campaign/corpus records agree exactly.
+- Fresh full seed1 census:284 exact/1 mismatch/8 refusal/7 uncompared, original290 success/8 reject/2 budget unchanged. All300 Classic and281 base-exact Smart dictionaries unchanged. Beta9 and transactional2 pass; strict corpus replay145/145 matches saved. No corpus expectation edits.
+- Evidence: `reports/fuzz/olmdistancegradation_C19_power_one.json`.
+
+| Cluster2 corpus | Before | After | Expectation edits |
+|---|---|---|---|
+| All145 Smart cases |145 exact|145 exact, identical bytes/status|None|
+
 inference:
 - The old direct alpha comparison omitted the original conversion's invalid signed-integer result; its effect precedes field construction.
 - ARM's positive NaN for an invalid product is an arithmetic compatibility difference. Restoring the observed x86 operation before blending closes the measured boundary; arbitrary native AE/FPU environment equivalence is not inferred.
-- Power exponent1 is a candidate separate identity rule. Fractional Power, effective filters and larger Bilateral remain separate; successful diagnostic cases alone do not authorize broader admission.
+- Power exponent1 is an exact identity operation on the finite distance field; reuse of Linear admission avoids extending arbitrary host powf behavior. Fractional Power and larger Bilateral remain separate; successful diagnostic cases alone do not authorize broader admission.
 
 changed_files:
 - `mac/OLMDistanceGradation/OLMDistanceGradation.cpp`
@@ -44,6 +59,7 @@ changed_files:
 - `tools/emulation/trace_distancegradation_nonfinite_C19.py`
 - `tools/emulation/verify_distancegradation_mul_C19.py`
 - `reports/fuzz/olmdistancegradation_C19_nonfinite.json`
+- `reports/fuzz/olmdistancegradation_C19_power_one.json`
 - `orchestra/reports/C19-dg-smart-r4.md`
 
 verify:
@@ -64,7 +80,15 @@ python3 -m unittest discover -s tests -p 'test_olmdistancegradation_*beta_202608
 python3 -m unittest discover -s tests -p 'test_olmdistancegradation_smart_transactional_20260822.py' > "$s/check-transactional.log" 2>&1
 git diff --check
 ```
-Expected at cluster1: seed1 E/M/R/U281/1/11/7; seed6 exact271, every original base-exact case unchanged; matrix432 newly exact; negative7 unchanged refusals; corpus145 unchanged exact; scalar1144 exact in three builds; all paired masks/fields/outputs exact; tests9+2 pass. Original timeout counts may depend on workstation load and are not numerical matches.
+Expected after cluster2: seed1 E/M/R/U284/1/8/7; seed6 exact276, every original base-exact case unchanged; matrix432 newly exact; negative7 unchanged refusals; corpus145 unchanged exact; scalar1144 exact in three builds; all paired masks/fields/outputs exact; tests9+2 pass. Original timeout counts may depend on workstation load and are not numerical matches.
+
+Additional cluster2 matrix and trace:
+```sh
+python3 tools/fuzz/probe_distancegradation_C19.py --before-ref b53f051b --experiment production --matrix --matrix-family power --strict-admission --scratch "$s/check-power-matrix" --report "$s/check-power-matrix.json" > "$s/check-power-matrix.log" 2>&1
+python3 tools/fuzz/probe_distancegradation_C19.py --before-ref b53f051b --experiment production --matrix --matrix-family power-negative --strict-admission --scratch "$s/check-power-negative" --report "$s/check-power-negative.json" > "$s/check-power-negative.log" 2>&1
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_nonfinite_C19.py --case-index 25 --scratch "$s/check-power-trace" --report "$s/check-power-trace.json" > "$s/check-power-trace.log" 2>&1
+```
+Expected: matrix576 newly exact/288 unchanged refusal, negatives5 unchanged refusal,91 original pow calls all identity and exact public output. Historical cluster1 production can be extracted with `git show b53f051b:mac/OLMDistanceGradation/OLMDistanceGradation.cpp` and passed via `--candidate-source` to the shared verifier.
 
 next:
-- Continue the ticket loop with remaining Power refusal cluster, then effective-filter/Bilateral residuals. Do not widen arbitrary Power, nonfinite effective filters or native dependency contracts from these witnesses.
+- Continue with the remaining Bilateral mismatch/refusal family. Fractional Power is an unresolved native-library/oracle boundary, not a promoted match. Do not widen arbitrary Power, nonfinite effective filters or native dependency contracts from these witnesses.

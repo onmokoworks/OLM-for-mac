@@ -1780,6 +1780,12 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	p.w = w; p.h = h;
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
+	// Power with exponent exactly one is the same finite-field operation as
+	// Linear. Normalize this control before applying the existing Smart domain
+	// and filter admission rules; arbitrary Power retains its separate guard.
+	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
+	    p.interp_mode == INTERP_POWER && p.power == 1.0f)
+		p.interp_mode = INTERP_LINEAR;
 	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
 	    !pf32_smart_worlds_are_bounded_sdr(input, output, p)) {
 		return OLM_DG_REFUSAL("pf32-smart-bounded-sdr");

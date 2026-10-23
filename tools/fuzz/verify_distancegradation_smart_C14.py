@@ -286,6 +286,7 @@ def main():
                 c=copy.deepcopy(c0)
                 for q in c['parameters']:
                     if q['slot']==slot:q['value']=value
+                    if label=='power' and q['slot']==10:q['value']=2.25
                 if word:
                     raw=bytearray(c['pixels']);struct.pack_into('<I',raw,word[0]*4,word[1]);c['pixels']=bytes(raw)
                 row=compare(c,None);row['label']=label

@@ -28,7 +28,7 @@ import numpy as np
 from cv_bridge import build_ipl, read_ipl
 from windows_runtime import WindowsOpenCVRuntime
 from aex_loader import AexLoader
-from unicorn.x86_const import UC_X86_REG_XMM7, UC_X86_REG_XMM6, UC_X86_REG_XMM2, UC_X86_REG_XMM3
+from unicorn.x86_const import UC_X86_REG_XMM7, UC_X86_REG_XMM6, UC_X86_REG_XMM2, UC_X86_REG_XMM3, UC_X86_REG_XMM0, UC_X86_REG_XMM1
 from PIL import Image
 
 
@@ -74,6 +74,13 @@ def main():
               output_hex=read_ipl(ld,op).tobytes().hex(),imports=sorted(set(v.name for v in ld.import_log))))
       ownership=[]
       products=[]
+      powers=[]
+      def power_hook(loader,rip,size):
+          value=loader.uc.reg_read(UC_X86_REG_XMM0)&0xffffffff
+          if rip==0x181170ea3:
+              powers.append(dict(input=f'{value:08x}',exponent=f'{loader.uc.reg_read(UC_X86_REG_XMM1)&0xffffffff:08x}'))
+          else:powers[-1]['result']=f'{value:08x}'
+      for address in (0x181170ea3,0x181170ea8):ld.add_code_hook(address,power_hook)
       def product_hook(loader,rip,size):
           reg = UC_X86_REG_XMM6 if rip in (0x181170f8b,0x181170f8f) else UC_X86_REG_XMM3
           value = loader.uc.reg_read(reg)&0xffffffff
@@ -120,11 +127,12 @@ def main():
             ld.write_bytes(header,bytes(body));return header
         struct.pack_into('<QQ',state,0,world(c['pixels']),world(field))
         ref=ld.host_alloc(len(state),align=16);ld.write_bytes(ref,bytes(state))
-        raw=b'';ownership.clear();products.clear()
+        raw=b'';ownership.clear();products.clear();powers.clear();callback_imports=set()
         for y in range(h):
           for x in range(w):
             out=ld.bump_alloc(16,align=16);ld.write_bytes(out,b'\xee'*16)
             ld.call_function(0x181170c90,int_args=[ref,x,y,0,out],max_instructions=200000)
+            callback_imports.update(v.name for v in ld.import_log)
             raw+=ld.read_bytes(out,16)
         oracle,public=a.oracle(c,td,deadline,'smart')
         assert oracle['status']=='ok' and public==raw,(label,oracle,raw_diff(public,raw,32))
@@ -148,6 +156,8 @@ def main():
         row['input_sha256']=sha(c['pixels'])
         row['mac_sha256']=sha(mac)
         row['original_products']=list(products)
+        row['original_powers']=list(powers)
+        row['callback_imports']=sorted(callback_imports)
         report['rows'].append(row)
         print(label,'degenerate',state[0x90],'field equal',expected_field==mac_field,'output equal',raw==mac,flush=True)
     args.report.parent.mkdir(parents=True,exist_ok=True)
