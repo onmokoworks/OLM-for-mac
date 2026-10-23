@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Pairwise geometry/classifier matrix: actual AEX versus production."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import collections,hashlib,json,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_nonuniform_actual_aex_20260805 as v2
@@ -99,7 +102,7 @@ def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_
  return raw,plane,cr['instructions'],rr['instructions']
 def main():
  with tempfile.TemporaryDirectory(prefix='sm2_geom_matrix_') as td:
-  binary=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
+  binary=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
   rows=[];all_indices=set()
   for fid,w,h,pattern,names in FIXTURES:
    for name in names:

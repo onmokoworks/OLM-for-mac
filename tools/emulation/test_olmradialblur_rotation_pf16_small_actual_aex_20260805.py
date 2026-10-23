@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -232,7 +235,7 @@ g_rotation_test_capture=&cap;auto e=RenderRotationTyped<PF_Pixel16>(&iw,&ow,i);g
 std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)polar.data(),polar.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)scalar.data(),scalar.size()*4);std::ofstream(argv[5],std::ios::binary).write((char*)accum.data(),accum.size()*4);std::ofstream(argv[6],std::ios::binary).write((char*)maximum.data(),maximum.size()*4);std::ofstream(argv[7],std::ios::binary).write((char*)finalrgba.data(),finalrgba.size()*4);std::ofstream(argv[8],std::ios::binary).write((char*)coordinates.data(),coordinates.size()*4);}}
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-        cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(resolve_asset(ROOT/"Headers")),"-I",str(resolve_asset(ROOT/"Headers/SP")),"-I",str(resolve_asset(ROOT/"Util")),"-I",str(resolve_asset(ROOT/"Resources")),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
+        cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(resolve_asset(ROOT/"Headers")),"-I",str(resolve_asset(ROOT/"Headers/SP")),"-I",str(resolve_asset(ROOT/"Util")),"-I",str(resolve_asset(ROOT/"Resources")),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
         built=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
         if built.returncode: raise AssertionError(built.stderr)
         names=("output","polar","source_scalar","accum","max_alpha","final_rgba","coordinates"); paths=[td/f"{n}.bin" for n in names]

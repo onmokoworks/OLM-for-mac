@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """V2 Gamma Colors duplicate ordered palette and first-match semantics."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_nonuniform_actual_aex_20260805 as v2
@@ -10,7 +13,7 @@ def req(x,m):
  if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2gdup_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return dict(x.split() for x in o.splitlines())
 def make_owner(l,palette):
  pb=b''.join(struct.pack('<4f',*p) for p in palette);pal=l.bump_alloc(len(pb),align=16);l.write_bytes(pal,pb);vec=l.bump_alloc(24,align=16);l.write_bytes(vec,b'\0'*24);l.write_bytes(vec+8,struct.pack('<Q',len(palette)));l.write_bytes(vec+16,struct.pack('<Q',pal));tab=l.bump_alloc(len(v2.ENCODE),align=16);l.write_bytes(tab,v2.ENCODE);ctx=l.bump_alloc(32,align=16);l.write_bytes(ctx,b'\0'*32);l.write_bytes(ctx+16,struct.pack('<Q',10000));l.write_bytes(ctx+24,struct.pack('<Q',tab));owner=l.bump_alloc(32,align=16);l.write_bytes(owner,b'\0'*32);l.write_bytes(owner,struct.pack('<Q',vec));l.write_bytes(owner+16,struct.pack('<Q',ctx));return owner,pb

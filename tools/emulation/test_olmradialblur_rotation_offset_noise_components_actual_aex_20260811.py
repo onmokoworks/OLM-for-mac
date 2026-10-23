@@ -2,6 +2,9 @@
 """Rotation Outer/Inner Offset Mode2/3 x procedural Noise, fixed component frame."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib
 import json
@@ -118,7 +121,7 @@ int main(int argc,char**argv){{
  std::ofstream(argv[12],std::ios::binary|std::ios::app).write((char*)coords.data(),coords.size()*4);
 }}''')
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-    cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
+    cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
            "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
            "-I", str(ROOT / "mac/OLMRadialBlur"), "-I", str(ROOT / "Headers"),
            "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

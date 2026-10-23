@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Actual exported RadialBlur Smart versus SDK-typed public Mac parameters."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -81,7 +84,7 @@ def build(directory,source,sanitize=False):
     math_root=Path(__file__).resolve().parents[2]/'ucrtmath'
     subprocess.run(['sh',str(math_root/'build.sh'),str(directory/'ucrtmath')],check=True,capture_output=True)
     flags=['-O1','-g','-fsanitize=address,undefined','-fno-omit-frame-pointer'] if sanitize else ['-O2']
-    subprocess.run(['clang++','-std=c++17','-arch','arm64',*flags,'-fno-fast-math','-ffp-contract=off',
+    subprocess.run([_UCRT_CXX,'-std=c++17','-arch','arm64',*flags,'-fno-fast-math','-ffp-contract=off',
                     '-ffunction-sections','-fdata-sections','-Wno-pragma-pack','-isysroot',sdk,
                     *[arg for path in ('Headers','Headers/SP','Util','Resources') for arg in ('-I',str(ROOT/path))],
                     str(directory/'harness.cpp'),str(SOURCE.parent/'OLMRadialBlur_Strings.cpp'),

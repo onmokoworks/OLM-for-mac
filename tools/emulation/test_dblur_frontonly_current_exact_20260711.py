@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -59,7 +62,7 @@ def build(directory: Path) -> Path:
         obj = directory / f"{source.stem}.o"
         subprocess.run(
             [
-                "c++", "-std=c++17", optimization, "-fno-fast-math",
+                _UCRT_CXX, "-std=c++17", optimization, "-fno-fast-math",
                 "-ffp-contract=off", "-fPIC", "-c", str(source), "-o", str(obj),
             ],
             cwd=ROOT,
@@ -68,7 +71,7 @@ def build(directory: Path) -> Path:
         objects.append(obj)
     library = directory / "libdblur_frontonly.dylib"
     subprocess.run(
-        ["c++", "-dynamiclib", *(str(obj) for obj in objects), "-o", str(library)],
+        [_UCRT_CXX, "-dynamiclib", *(str(obj) for obj in objects), "-o", str(library)],
         cwd=ROOT,
         check=True,
     )

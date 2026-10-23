@@ -2,6 +2,9 @@
 """Real-SDK hostless closure for KiraKira WorldSuite lifecycle handling."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -79,7 +82,7 @@ def run_probe() -> list[dict]:
     with tempfile.TemporaryDirectory(prefix="kira-worldsuite-") as raw:
         td = Path(raw); cpp = td / "probe.cpp"; exe = td / "probe"
         cpp.write_text(PROBE)
-        cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-ffp-contract=off",
+        cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-ffp-contract=off",
                "-isysroot", sdk, "-I", str(ROOT), "-I", str(ROOT / "Headers"),
                "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
                "-I", str(ROOT / "Resources"), str(cpp),

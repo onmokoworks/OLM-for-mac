@@ -5,6 +5,9 @@ The worker executable is explicitly supplied and hashed; no historical worker
 identity or installed/native AE claim is inherited. Raw images stay temporary.
 """
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import subprocess
@@ -74,7 +77,7 @@ def compile_public(directory: Path, body: str) -> Path:
         'int main()', 'int legacy_main()')+HARNESS)
     sdk=subprocess.check_output(['xcrun','--show-sdk-path'],text=True).strip()
     exe=directory/"public"
-    subprocess.run(['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off',
+    subprocess.run([_UCRT_CXX,'-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off',
         '-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,'-IHeaders','-IHeaders/SP',
         '-IUtil','-IResources','-Imac/OLMColorKey',str(source),'mac/OLMColorKey/OLMColorKey_Strings.cpp',
         'Util/AEGP_SuiteHandler.cpp','Util/MissingSuiteError.cpp','-framework','Cocoa','-o',str(exe)],

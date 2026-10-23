@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Original import-free Kira clamp: preserve input NaN bits and record instructions."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -56,7 +59,7 @@ int main() {
 }
 """)
         binary = directory / 'clamp'
-        subprocess.run(['clang++', '-std=c++20', '-O2', '-fno-fast-math', '-ffp-contract=off',
+        subprocess.run([_UCRT_CXX, '-std=c++20', '-O2', '-fno-fast-math', '-ffp-contract=off',
                         '-fsanitize=address,undefined', str(source), '-o', str(binary)],
                        capture_output=True, check=True)
         result = subprocess.run([str(binary)], input=b''.join(struct.pack('<I', w) for w in words),

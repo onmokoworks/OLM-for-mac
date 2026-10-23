@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -70,7 +73,7 @@ def build_libraries(directory: Path) -> tuple[ctypes.CDLL, ctypes.CDLL]:
     rowdriver_path = directory / "libdblur_rowdriver.dylib"
     subprocess.run(
         [
-            "c++", "-std=c++17", "-O0", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++17", "-O0", "-fno-fast-math", "-ffp-contract=off",
             "-dynamiclib", str(ROOT / "core/dblur_rotate.cpp"), "-o", str(rotate_path),
         ],
         cwd=ROOT,
@@ -78,7 +81,7 @@ def build_libraries(directory: Path) -> tuple[ctypes.CDLL, ctypes.CDLL]:
     )
     subprocess.run(
         [
-            "c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
             "-dynamiclib", str(ROOT / "core/dblur_rowdriver.cpp"), "-o", str(rowdriver_path),
         ],
         cwd=ROOT,

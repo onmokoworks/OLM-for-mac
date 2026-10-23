@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Attribute AEX-rendered noise-plane refusals without performing invalid reads."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import os
@@ -38,7 +41,7 @@ int main() {
  }
 }
 ''')
-    subprocess.run(['clang++','-std=c++17','-O1','-fsanitize=address,undefined','-fno-fast-math','-ffp-contract=off',str(out/'noise.cpp'),'-o',str(out/'noise')],check=True)
+    subprocess.run([_UCRT_CXX,'-std=c++17','-O1','-fsanitize=address,undefined','-fno-fast-math','-ffp-contract=off',str(out/'noise.cpp'),'-o',str(out/'noise')],check=True)
     campaign=json.loads(args.campaign.read_text())
     adapter=Adapter(SimpleNamespace(main=ROOT.parent.parent,worker=Path.home()/'.cache/olm-emu/worker-F46-pow/aex-guest-worker',max_size=256,case_timeout=30))
     rows=[]

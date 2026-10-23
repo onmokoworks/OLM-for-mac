@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Prove SmartRender dispatches PF8/PF16 through the parameterized full owner."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import subprocess
 import tempfile
 from pathlib import Path
@@ -13,7 +16,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="dg_smart_full_owner_") as temporary:
         executable = Path(temporary) / "harness"
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O0",
+            _UCRT_CXX, "-std=c++17", "-O0",
             "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
             str(HARNESS), str(ROOT / "core/olmdistancegradation_fieldgen.cpp"),
             "-o", str(executable),

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare exported AEX Smart owner to the Mac dispatcher on authored inputs."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -29,7 +32,7 @@ def typed(px,depth):
 def compile_harness(binary,sanitize=False):
     sdk=subprocess.check_output(['xcrun','--show-sdk-path'],text=True).strip()
     flags=['-O1','-fsanitize=address,undefined','-fno-omit-frame-pointer'] if sanitize else ['-O2']
-    subprocess.run(['clang++','-std=c++17','-arch','arm64',*flags,'-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations','-Wno-pragma-pack','-ffunction-sections','-fdata-sections','-isysroot',sdk,
+    subprocess.run([_UCRT_CXX,'-std=c++17','-arch','arm64',*flags,'-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations','-Wno-pragma-pack','-ffunction-sections','-fdata-sections','-isysroot',sdk,
                     '-I',str(ROOT/'Headers'),'-I',str(ROOT/'Headers/SP'),'-I',str(ROOT/'Util'),'-I',str(ROOT/'Resources'),str(HARNESS),
                     *(str(ROOT/'core'/p) for p in CORES),'-Wl,-dead_strip','-framework','Cocoa','-o',str(binary)],check=True)
 def main():

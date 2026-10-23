@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -151,7 +154,7 @@ i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_ga
 i.noise_layer=1;i.seed=1;i.thickness=3;i.comp_width=W;i.comp_height=H;
 if(OLMRadialBlurTestRenderWorldWithNoiseLayer(&iw,&ow,&lw,&i,32)!=PF_Err_NONE)return 3;
 std::ofstream(argv[4],std::ios::binary).write((char*)output.data(),output.size()*sizeof(PF_PixelFloat));return 0;}}''')
-    command = ["xcrun", "clang++", "-std=c++17", "-O2", "-fno-fast-math",
+    command = [_UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-D__MACH__", "-Wno-pragma-pack", "-I.", "-IHeaders",
                "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
                "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",

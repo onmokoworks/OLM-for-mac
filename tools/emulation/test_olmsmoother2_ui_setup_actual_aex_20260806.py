@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -137,7 +140,7 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
 def run_production() -> tuple[dict[str, int], list[dict[str, object]]]:
     with tempfile.TemporaryDirectory(prefix="olmsmoother2_ui_setup_") as raw:
         binary = Path(raw) / "probe"
-        command = ["xcrun", "clang++", "-std=c++17", "-O0", "-D__MACH__", "-Wno-pragma-pack",
+        command = [_UCRT_CXX, "--xcrun", "-std=c++17", "-O0", "-D__MACH__", "-Wno-pragma-pack",
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", "-Imac/OLMSmoother2", "-Imac/OLMSmoother2/Mac",
             str(HARNESS), "mac/OLMSmoother2/OLMSmoother2_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",
             "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(binary)]

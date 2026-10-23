@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """PF16 Zoom small-frame actual-AEX/production fixture."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json, struct, subprocess, tempfile
 from pathlib import Path
 
@@ -133,7 +136,7 @@ if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,{RENDER_WORLD_BITDEPTH}))return 4;
 std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)pre.data(),pre.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)post.data(),post.size()*4);
 }}''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-        cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk, "-I", str(fixture.ROOT/"Headers"), "-I", str(fixture.ROOT/"Headers/SP"), "-I", str(fixture.ROOT/"Util"), "-I", str(fixture.ROOT/"Resources"), str(cpp), "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe)]
+        cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk, "-I", str(fixture.ROOT/"Headers"), "-I", str(fixture.ROOT/"Headers/SP"), "-I", str(fixture.ROOT/"Util"), "-I", str(fixture.ROOT/"Resources"), str(cpp), "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe)]
         built = subprocess.run(cmd, cwd=fixture.ROOT, capture_output=True, text=True)
         if built.returncode:
             raise AssertionError(built.stderr)

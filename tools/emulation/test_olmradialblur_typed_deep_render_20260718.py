@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import importlib.util
 import json
@@ -444,7 +447,7 @@ int main(int argc, char **argv) {{
 }}
 ''', encoding="utf-8")
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
-    command = [os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
+    command = [_UCRT_CXX, "--compiler", os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
                "-fno-fast-math", "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
                "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), "-ffunction-sections",
@@ -602,7 +605,7 @@ def main() -> int:
             weight_identity, sort_keys=True, separators=(",", ":")))
         binary = Path(tmp) / "audit"
         build = subprocess.run(
-            ["clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic", str(AUDIT_CPP), "-o", str(binary)],
+            [_UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic", str(AUDIT_CPP), "-o", str(binary)],
             cwd=ROOT,
             text=True,
             capture_output=True,

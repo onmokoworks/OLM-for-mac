@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -139,7 +142,7 @@ def run_production() -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="olmdg_ui_setup_") as raw:
         executable = Path(raw) / "probe"
         command = [
-            "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+            _UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(HARNESS),
             "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.cpp",
             "core/olmdistancegradation_fieldgen.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),

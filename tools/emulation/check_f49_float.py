@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare portable SSE helpers with literal SSE via macOS Rosetta, not Windows."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import json,os,struct,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -41,7 +44,7 @@ def main():
   d=Path(tmp);src=d/'test.cpp';src.write_text(CPP)
   for arch,flags in [('x86_64',['-DSSE']),('arm64',[]),('arm64',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
    binary=d/f'probe{len(results)}'
-   cmd=['clang++','-std=c++17','-arch',arch,'-O2','-fno-fast-math','-ffp-contract=off','-I',str(ROOT/'core'),str(src),'-o',str(binary),*flags];commands.append(cmd);subprocess.run(cmd,check=True,capture_output=True)
+   cmd=[_UCRT_CXX,'-std=c++17','-arch',arch,'-O2','-fno-fast-math','-ffp-contract=off','-I',str(ROOT/'core'),str(src),'-o',str(binary),*flags];commands.append(cmd);subprocess.run(cmd,check=True,capture_output=True)
    cmd=['/usr/bin/arch','-'+arch,str(binary)];commands.append(cmd)
    results.append(subprocess.run(cmd,input=payload,check=True,capture_output=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1')).stdout)
  rows=[]

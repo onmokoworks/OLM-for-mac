@@ -2,6 +2,9 @@
 """Close the fixed DistanceGradation PF32 Power public matrix with native UCRT."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import importlib.util
@@ -165,7 +168,7 @@ def run_current(expected: dict[str, str], root: Path) -> tuple[list[dict], dict]
     include = ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"
     for source, output in ((DIRECT, direct), (PUBLIC, public)):
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O0", "-I", str(include), str(source), str(FIELD), "-o", str(output),
+            _UCRT_CXX, "-std=c++17", "-O0", "-I", str(include), str(source), str(FIELD), "-o", str(output),
         ], cwd=ROOT, text=True, capture_output=True)
         require(build.returncode == 0, f"build {source.name}: {build.stderr}")
     source = root / "source.raw"

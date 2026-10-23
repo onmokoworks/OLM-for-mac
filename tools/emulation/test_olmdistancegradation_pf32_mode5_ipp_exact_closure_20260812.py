@@ -2,6 +2,9 @@
 """Natural/public closure for fixed17x11 PF32 Mode5 IPP exactness."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -42,11 +45,11 @@ def natural(worker,td):
 def mechanism(td,before,after):
  pre=td/"pre";pre.write_bytes(before);builds={};counter=None
  for name,flags in (("production_o0",["-O0"]),("adversarial_contract_fast_o3",["-O3","-ffp-contract=fast"])):
-  exe=td/name;r=subprocess.run(["clang++","-std=c++17",*flags,"-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),"-I",str(ROOT/"tools/emulation"),str(PROBE),str(FIELDGEN),"-o",str(exe)],text=True,capture_output=True);require(r.returncode==0,r.stderr)
+  exe=td/name;r=subprocess.run([_UCRT_CXX,"-std=c++17",*flags,"-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),"-I",str(ROOT/"tools/emulation"),str(PROBE),str(FIELDGEN),"-o",str(exe)],text=True,capture_output=True);require(r.returncode==0,r.stderr)
   c,l,o=(td/f"{name}.{x}" for x in("c","l","o"));q=subprocess.run([str(exe),str(pre),str(c),str(l),str(o)]);require(q.returncode==0,"probe");require(c.read_bytes()==after and sha(c)==POST_SHA,name);builds[name]={"canonical_sha256":POST_SHA,"raw_exact":True}
   if name=="production_o0":counter={"superseded_lut_early_spatial_fused":{"sha256":sha(l),**residual(l.read_bytes(),after)},"direct_exp_lrtb_wrong_order":{"sha256":sha(o),**residual(o.read_bytes(),after)}}
  require(counter=={"superseded_lut_early_spatial_fused":{"sha256":LEGACY_SHA,"different_words":37,"max_ulp":2},"direct_exp_lrtb_wrong_order":{"sha256":ORDER_SHA,"different_words":7,"max_ulp":1}},"counter")
- asm=td/"p.s";r=subprocess.run(["clang++","-std=c++17","-O3","-ffp-contract=fast","-fno-inline-functions","-S","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),"-I",str(ROOT/"tools/emulation"),str(PROBE),"-o",str(asm)],text=True,capture_output=True);require(r.returncode==0,r.stderr);m=re.search(r"(__ZL30bilateral_blur_opencv455_f32x4Pfll:.*?\.cfi_endproc)",asm.read_text(),re.S);require(m and "_expf"in m.group(1)and not re.search(r"\b(?:fmadd|fmla|vfmadd\w*)\b",m.group(1)),"asm")
+ asm=td/"p.s";r=subprocess.run([_UCRT_CXX,"-std=c++17","-O3","-ffp-contract=fast","-fno-inline-functions","-S","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),"-I",str(ROOT/"tools/emulation"),str(PROBE),"-o",str(asm)],text=True,capture_output=True);require(r.returncode==0,r.stderr);m=re.search(r"(__ZL30bilateral_blur_opencv455_f32x4Pfll:.*?\.cfi_endproc)",asm.read_text(),re.S);require(m and "_expf"in m.group(1)and not re.search(r"\b(?:fmadd|fmla|vfmadd\w*)\b",m.group(1)),"asm")
  return {"builds":builds,"counterfactuals":counter},{"flags":["-O3","-ffp-contract=fast","-fno-inline-functions"],"canonical_fused_op_count":0,"direct_expf_call_present":True,"canonical_assembly_sha256":hashlib.sha256(m.group(1).encode()).hexdigest()}
 def validate(p):
  require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
@@ -63,7 +66,7 @@ def validate(p):
 def generate():
  worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(sha(AEX)==AEX_SHA and sha(worker)==WORKER_SHA,"drift");m=json.loads(MATRIX.read_text());rows=[r for r in m["rows"]if r["depth"]=="PF32"and r["blur_mode"]==5 and r["interpolation"]!="constant"]
  with tempfile.TemporaryDirectory()as raw:
-  td=Path(raw);trace,before,after=natural(worker,td);mech,compiler=mechanism(td,before,after);exe=td/"public";b=subprocess.run(["clang++","-std=c++17","-O0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(PUBLIC),str(FIELDGEN),"-o",str(exe)],text=True,capture_output=True);require(b.returncode==0,b.stderr);r=subprocess.run([str(exe)],text=True,capture_output=True);marker="positive=9 mode5_positive=6 power_fail_closed=8 negative=21 classic_guards=4";require(r.returncode==0 and marker in r.stdout,"public")
+  td=Path(raw);trace,before,after=natural(worker,td);mech,compiler=mechanism(td,before,after);exe=td/"public";b=subprocess.run([_UCRT_CXX,"-std=c++17","-O0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(PUBLIC),str(FIELDGEN),"-o",str(exe)],text=True,capture_output=True);require(b.returncode==0,b.stderr);r=subprocess.run([str(exe)],text=True,capture_output=True);marker="positive=9 mode5_positive=6 power_fail_closed=8 negative=21 classic_guards=4";require(r.returncode==0 and marker in r.stdout,"public")
  p={"schema":"olmdistancegradation.pf32-mode5-ipp-exact-closure/1","status":"PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","aex_sha256":AEX_SHA,"worker_sha256":WORKER_SHA,"production_source_sha256":sha(SOURCE),"probe_sha256":sha(PROBE),"public_harness_sha256":sha(PUBLIC),"matrix_sha256":sha(MATRIX),"natural_public_trace":trace,"six_aexcompat_diagnostic_cells":rows,"matrix_summary":{"exact_admitted":56,"pf16_exact":32,"pf32_exact":24,"pf32_power_fail_closed":8,"pf32_mode5_exact":6,"pf32_mode5_fail_closed":2},"field_mechanism":mech,"compiler_proof":compiler,"public_contract":{"mode5_positive_cases":6,"power_fail_closed_cases":8,"input_immutable":True,"output_untouched_on_power_reject":True,"padding_preserved":True,"balanced_parameter_lifecycle":True,"balanced_layer_lifecycle":True,"unlisted_mode5_tuple_fail_closed":True,"marker":marker},"bounded_admission":{"width":17,"height":11,"depth":"PF32","blur_mode":5,"blur_size":1,"admitted_interpolation_modes":["constant","linear","sphere"],"power_requires_native_windows_ucrt_capture":True,"canonical_mask_and_parameter_tuple_required":True},"not_promoted":["PF32 Power without native Windows UCRT powf capture","unlisted PF32 Smart tuple or geometry","partial-world/origin layouts","native After Effects pixels","project/global fast-math configuration and arbitrary fast-math codegen"]};validate(p);return p
 def main():
  a=argparse.ArgumentParser();a.add_argument("--validate-only",action="store_true");q=a.parse_args()

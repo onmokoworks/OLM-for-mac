@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import os
 import subprocess
@@ -16,7 +19,7 @@ SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 
 def compile_probe(cpp: Path, exe: Path) -> None:
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-    command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+    command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
                "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

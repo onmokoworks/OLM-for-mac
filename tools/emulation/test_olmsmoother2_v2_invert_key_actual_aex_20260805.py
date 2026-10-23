@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """V2 invert-key palette owner through natural classifier and typed output."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_key_threshold_actual_aex_20260805 as base
@@ -11,7 +14,7 @@ def req(x,m):
 def f(u):return struct.unpack('<f',struct.pack('<I',u))[0]
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2invert_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return dict(x.split() for x in o.splitlines())
 def main():
  k=typed.f32(1/255);pf16=[(64/32768,128/32768,128/32768,1),(128/32768,128/32768,128/32768,1),(65/32768,128/32768,128/32768,1),(.75,.75,.75,1),(0,1,1,1),(1,0,0,1)];pf32=[(f(0x3b008080),k,k,1),(k,k,k,1),(f(0x3b008082),k,k,1),(f(0x3b008081),k,k,1),(.75,.75,.75,1),(0,1,1,1)];prod=production();rows=[]

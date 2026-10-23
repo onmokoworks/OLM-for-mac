@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Cross PF16 ownership/render/interpolation branches with background enabled."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib
 import struct
 import subprocess
@@ -78,7 +81,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as td:
         td = Path(td); src = td/"src"; exp = td/"exp"; exe = td/"h"
         src.write_bytes(source)
-        build = subprocess.run(["clang++","-std=c++17","-O0","-I",str(HERE/"dg_renderbits_real_harness_20260716"),
+        build = subprocess.run([_UCRT_CXX,"-std=c++17","-O0","-I",str(HERE/"dg_renderbits_real_harness_20260716"),
             str(HERE/"dg_classic_pf16_background_combo_harness_20260810.cpp"),
             str(ROOT/"core/olmdistancegradation_fieldgen.cpp"),"-o",str(exe)],capture_output=True,text=True)
         assert build.returncode == 0, build.stderr

@@ -2,6 +2,9 @@
 """Prove DirectionalBlur exported-AEX/Mac same-table plumbing without native claims."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -189,7 +192,7 @@ __attribute__((destructor)) static void counters(){const char*p=std::getenv("OLM
     cpp = root / "olmdirectionalblur_mac_smartrender_adapter_probe.cpp"
     executable = root / "directional-full-table"
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-    command_line = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+    command_line = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                     "-ffp-contract=off", "-fno-builtin-expf", "-fno-builtin-powf", "-fno-builtin-pow",
                     "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
                     "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp), str(interposer),

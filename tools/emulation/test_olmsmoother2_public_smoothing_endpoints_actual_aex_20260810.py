@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Public Range=100 and Extra Smooth 0/100 with independent output effects at every depth."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,re,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_typed_writeback_20260717 as typed
@@ -12,7 +15,7 @@ def req(x,m):
     if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def production():
     with tempfile.TemporaryDirectory(prefix='sm2_public_endpoints_') as td:
-        b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+        b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
     return {k:bytes.fromhex(v) for k,v in (line.split() for line in o.splitlines())}
 def pixels(depth):
     if depth=='PF8': return [tuple(typed.f32(v/255) for v in (*rgb,255)) for rgb in RGB]

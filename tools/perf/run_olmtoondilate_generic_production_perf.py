@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import ast
 import json
@@ -52,7 +55,7 @@ def main() -> int:
         cpp, executable = directory / "probe.cpp", directory / "probe"
         cpp.write_text(stub.replace("SOURCE_PATH", str(SOURCE)), encoding="utf-8")
         build = subprocess.run(
-            [compiler, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+            [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
              "-I", str(directory), str(cpp), "-o", str(executable)],
             cwd=ROOT, capture_output=True, text=True, check=False,
         )

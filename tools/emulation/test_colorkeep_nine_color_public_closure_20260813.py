@@ -2,6 +2,9 @@
 """Close ColorKeep's fixture-bound nine-color public EffectMain lane."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -156,7 +159,7 @@ int main(int c,char**v){s8.iterate=i8;s16.iterate=i16;sf.iterate=iff;sc.PF_GetFl
     with tempfile.TemporaryDirectory(prefix="ck9_probe.") as raw:
         d=Path(raw); cpp=d/"probe.cpp"; exe=d/"probe"; cpp.write_text(code)
         sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip()
-        cmd=["clang++","-std=c++17","-arch","arm64","-isysroot",sdk,"-IHeaders","-IHeaders/SP","-IUtil","-IResources",str(cpp),"-o",str(exe)]
+        cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-isysroot",sdk,"-IHeaders","-IHeaders/SP","-IUtil","-IResources",str(cpp),"-o",str(exe)]
         build=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
         if build.returncode: raise RuntimeError(build.stderr)
         positive=subprocess.run([str(exe),str(binary)],cwd=ROOT,capture_output=True)

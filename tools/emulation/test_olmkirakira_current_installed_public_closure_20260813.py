@@ -68,12 +68,12 @@ def load_base_for_arch(arch: str):
     if arch != "x86_64":
         raise RuntimeError(f"unsupported architecture: {arch}")
     text = BASE_GENERATOR.read_text()
-    needle = 'cmd = ["clang++", "-std=c++20",'
+    needle = 'cmd = [_UCRT_CXX, "-std=c++20",'
     if text.count(needle) != 1:
         raise RuntimeError("base harness architecture anchor drift")
     module = types.ModuleType("kira_public_base_x86_64")
     module.__file__ = str(BASE_GENERATOR)
-    exec(compile(text.replace(needle, 'cmd = ["clang++", "-arch", "x86_64", "-std=c++20",'), str(BASE_GENERATOR), "exec"), module.__dict__)
+    exec(compile(text.replace(needle, 'cmd = [_UCRT_CXX, "-arch", "x86_64", "-std=c++20",'), str(BASE_GENERATOR), "exec"), module.__dict__)
     return module
 
 

@@ -6,6 +6,9 @@ worker. Temporary source variants only; public admission is not broadened.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import struct
@@ -86,7 +89,7 @@ def compile_core(directory: Path, body: str, name: str) -> Path:
     source.write_text(base.replace_once(source.read_text(),"int main(){","int legacy_main(){")+HARNESS)
     sdk=subprocess.run(["xcrun","--show-sdk-path"],check=True,capture_output=True,text=True).stdout.strip()
     exe=directory/name
-    subprocess.run(["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off",
+    subprocess.run([_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off",
                     "-isysroot",sdk,"-I",str(directory),str(source),"-framework","Cocoa","-o",str(exe)],
                    check=True,capture_output=True)
     return exe

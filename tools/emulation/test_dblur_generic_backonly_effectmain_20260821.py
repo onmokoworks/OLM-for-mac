@@ -7,6 +7,9 @@ does not launch After Effects and does not enable the production test seam.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import shutil
 import subprocess
@@ -867,7 +870,7 @@ def build(directory: Path, sanitize: bool) -> Path:
         else ["-O2"]
     )
     command = [
-        compiler,
+        _UCRT_CXX, "--compiler", compiler,
         "-std=c++17",
         *optimization,
         "-fno-fast-math",

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Read initialized original lattices; verify reciprocal dimensions and MT words."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 from pathlib import Path
@@ -48,7 +51,7 @@ def grid_maps(worker, directory, core):
     for name in ['o2', 'san', 'default']:
         sanitize = name == 'san'
         binary = directory/name
-        command = ['clang++', '-std=c++17', '-O1' if sanitize else '-O2',
+        command = [_UCRT_CXX, '-std=c++17', '-O1' if sanitize else '-O2',
                    '-fno-fast-math', '-ffp-contract=off', str(harness), '-o', str(binary)]
         if name == 'default': command = [c for c in command if c not in ['-fno-fast-math', '-ffp-contract=off']]
         if sanitize: command += ['-fsanitize=address,undefined', '-fno-omit-frame-pointer']

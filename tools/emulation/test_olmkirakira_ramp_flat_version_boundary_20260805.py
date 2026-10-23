@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -23,7 +26,7 @@ def main() -> int:
     assert actual == expected
     with tempfile.TemporaryDirectory(prefix="kk_flat_version_") as td:
         exe = Path(td) / "flat_version"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
         subprocess.run([str(exe)], check=True)
     assert "parse_merge2_ramp_flat(" in MAC.read_text(encoding="utf-8")
     report = {

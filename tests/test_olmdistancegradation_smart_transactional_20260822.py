@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import os
 import subprocess
 import tempfile
@@ -62,7 +65,7 @@ class DistanceGradationSmartTransactionalTests(unittest.TestCase):
             exe = Path(raw) / "probe"
             cpp.write_text(source)
             build = subprocess.run(
-                ["clang++", "-std=c++17", "-O1", "-g", "-fno-fast-math",
+                [_UCRT_CXX, "-std=c++17", "-O1", "-g", "-fno-fast-math",
                  "-ffp-contract=off", "-fsanitize=address,undefined",
                  "-fno-omit-frame-pointer", "-I", str(ROOT), "-I",
                  str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"), str(cpp),

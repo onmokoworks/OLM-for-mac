@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Compare the PF8 Color Key callback with the pinned Windows AEX."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -53,7 +56,7 @@ def main() -> None:
     with tempfile.TemporaryDirectory(prefix="olmsmoother-v1-keymask8-") as temp_name:
         library_path = Path(temp_name) / "libolmsmoother_keymask8.dylib"
         subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-shared", "-fPIC",
+            _UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC",
             "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS),
             "-o", str(library_path),
         ], cwd=ROOT, check=True, capture_output=True, text=True)

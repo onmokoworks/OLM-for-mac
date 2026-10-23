@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -121,7 +124,7 @@ def reconstruct_input(directory: Path) -> tuple[Path, dict[str, object]]:
 def compile_direct(directory: Path, input_path: Path) -> tuple[Path, dict[str, str]]:
     binary = directory / "direct"
     output = directory / "direct_argb16.raw"
-    command = ["clang++", "-std=c++17", "-O2", "-I", "cli/OLMSmoother2/shim",
+    command = [_UCRT_CXX, "-std=c++17", "-O2", "-I", "cli/OLMSmoother2/shim",
                "-I", "mac/OLMSmoother2/Mac", str(DIRECT), "-o", str(binary)]
     subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)
     run = subprocess.run([str(binary), str(input_path), str(output)], cwd=ROOT,
@@ -155,7 +158,7 @@ def run_public(directory: Path, input_path: Path) -> tuple[list[dict[str, object
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True,
                          text=True, check=True).stdout.strip()
     command = [
-        "clang++", "-std=c++17", "-arch", "arm64", "-O2",
+        _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2",
         "-Wno-pragma-pack", "-Wno-deprecated-declarations", "-isysroot", sdk,
         "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", "-Imac/OLMSmoother2",
         str(PUBLIC), "mac/OLMSmoother2/OLMSmoother2_Strings.cpp",

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import struct
 import subprocess
 import tempfile
@@ -51,7 +54,7 @@ def main() -> int:
         run(base + ["--output", str(inside), "--threshold", "36", "--case-id", "distancegradation.case0023.inside.fieldgen.aex"])
         run(base + ["--output", str(outside), "--threshold", "0", "--invert-mask", "--case-id", "distancegradation.case0023.outside.fieldgen.aex"])
         run([
-            "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
+            _UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
             "core/olmdistancegradation_fieldgen.cpp",
             "tools/emulation/replay_dg_fieldgen_fixture.cpp",
             "-o", str(replay),

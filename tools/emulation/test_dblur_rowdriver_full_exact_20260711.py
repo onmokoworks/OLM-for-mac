@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import ctypes
 import hashlib
@@ -220,7 +223,7 @@ class Guarded:
 def build_candidate() -> Path:
     temp = Path(tempfile.mkdtemp(prefix="olm_dblur_rowdriver_full_"))
     lib = temp / "libdblur_rowdriver.so"
-    subprocess.run(["c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+    subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
                     "-fPIC", "-shared", str(ROOT / "core/dblur_rowdriver.cpp"), "-o", str(lib)],
                    cwd=ROOT, check=True)
     return lib

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import ctypes
 import json
@@ -48,7 +51,7 @@ def run(source: Path, output: Path, raw: Path, detour: bool, noise_type: int) ->
 def run_portable_core(directory: Path, source: bytes, noise_type: int) -> tuple[int, bytes]:
     library_path = directory / "dblur_mode3.dylib"
     subprocess.run(
-        ["c++", "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
+        [_UCRT_CXX, "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
          "-ffp-contract=off", str(ROOT / "core/dblur_frontonly.cpp"),
          str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"),
          str(ROOT / "core/dblur_field.cpp"),

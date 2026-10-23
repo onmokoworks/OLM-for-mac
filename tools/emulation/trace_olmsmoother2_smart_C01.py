@@ -6,6 +6,9 @@ only in ticket scratch. AEX classifier/cce0 execute original instructions using
 captured input plane and explicit retained worker ABI/config offsets. Full output
 is independently compared to the public AEX worker; this is not native AE proof.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, json, os, struct, subprocess, sys, time
 from pathlib import Path
 sys.dont_write_bytecode = True
@@ -47,7 +50,7 @@ def build(adapter, directory, source):
     src = src.replace('post_unpremul_gamma(accum, gamma_enable, adaptive_gamma);', '''post_unpremul_gamma(accum, gamma_enable, adaptive_gamma);
  if(trace_this_pixel) c01_dump("b120",&accum,16);''')
     (directory/'production_under_test.cpp').write_text(src)
-    adapter.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
+    adapter.compile([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
         '-Wno-deprecated-declarations','-I',directory,'-I',SHIM,'-I',SOURCE.parent,
         directory/'host.cpp','-o',adapter.binary],time.monotonic()+180)
 

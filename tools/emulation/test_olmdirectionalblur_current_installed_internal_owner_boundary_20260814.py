@@ -2,6 +2,9 @@
 """Bind installed DirectionalBlur to the exported-Smart exact/fail-closed boundary."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -96,7 +99,7 @@ def installed_runtime() -> dict[str, object]:
             (directory / f"{width}x{height}.rgba").write_bytes(
                 image.crop((472, 262, 472 + width, 262 + height)).tobytes())
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        common = ["clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        common = [_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
                   "-isysroot", sdk, "-Wno-pragma-pack", "-Wno-deprecated-declarations"]
         for include in ("Headers", "Headers/SP", "Util", "Resources", "core", "mac/OLMDirectionalBlur"):
             common += ["-I", str(ROOT / include)]

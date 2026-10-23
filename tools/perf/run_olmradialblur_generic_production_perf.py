@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import re
@@ -47,7 +50,7 @@ int main(int c,char**v){{int w=atoi(v[1]),h=atoi(v[2]),type=atoi(v[3]),depth=ato
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
         build = subprocess.run([
-            "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-DNDEBUG",
+            _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-DNDEBUG",
             "-fno-fast-math", "-ffp-contract=off", "-ffunction-sections", "-fdata-sections",
             "-DOLM_RADIALBLUR_TEST_SEAM", "-isysroot", sdk,
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

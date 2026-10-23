@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Actual exported AEX Smart versus Mac public Smart for key/gamma and HDR."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import struct
@@ -69,7 +72,7 @@ def compile_public(directory, source, sanitize=False):
     (directory / 'production_under_test.cpp').write_text(source)
     binary = directory / 'probe'
     flags = ['-O1', '-g', '-fsanitize=address,undefined', '-fno-omit-frame-pointer'] if sanitize else ['-O2']
-    subprocess.run(['clang++', '-std=c++17', *flags, '-fno-fast-math', '-ffp-contract=off',
+    subprocess.run([_UCRT_CXX, '-std=c++17', *flags, '-fno-fast-math', '-ffp-contract=off',
                     '-Wno-deprecated-declarations', '-I', str(directory),
                     '-I', str(ROOT / 'cli/OLMSmoother2/shim'), '-I', str(SOURCE.parent),
                     str(HARNESS), '-o', str(binary)], check=True)

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -156,7 +159,7 @@ def main() -> int:
         source = temp / "adapter.cpp"
         binary = temp / "adapter"
         source.write_text(adapter_source(), encoding="utf-8")
-        command = [os.environ.get("CXX", "clang++"), "-std=c++17", "-O2", "-DNDEBUG",
+        command = [_UCRT_CXX, "--compiler", os.environ.get("CXX", "clang++"), "-std=c++17", "-O2", "-DNDEBUG",
                    str(source), *compiler_flags(), "-o", str(binary)]
         build = subprocess.run(command, check=False, capture_output=True, text=True)
         if build.returncode:

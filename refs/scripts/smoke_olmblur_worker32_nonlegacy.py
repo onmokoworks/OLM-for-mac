@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -62,7 +65,7 @@ def main() -> int:
         binary = Path(temp) / "replay"
         subprocess.run(
             [
-                "c++", "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
+                _UCRT_CXX, "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
                 "core/olmblur_helper.cpp", "core/olmblur_worker32_nonlegacy.cpp",
                 "tools/emulation/replay_olmblur_worker32_nonlegacy.cpp",
                 "-o", str(binary),

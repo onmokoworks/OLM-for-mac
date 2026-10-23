@@ -1,4 +1,7 @@
 """Signed SDK Angle -> native FLOAT32 noise phase -> public render regressions."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import importlib
 import json
 import os
@@ -85,7 +88,7 @@ class NoiseOffsetTests(unittest.TestCase):
                     self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         with tempfile.TemporaryDirectory(prefix='radial_offset_grid_test_') as directory:
             binary = Path(directory)/'grid'
-            subprocess.run(['clang++', '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
+            subprocess.run([_UCRT_CXX, '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
                             str(field.HARNESS), '-o', str(binary)], check=True)
             for row in native['rows']:
                 self.assertTrue(row['core_plane_raw_exact'])

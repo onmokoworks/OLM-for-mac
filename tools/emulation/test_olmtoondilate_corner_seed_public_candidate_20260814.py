@@ -2,6 +2,9 @@
 """Prove one additive ToonDilate 5x5/r4 corner-seed family at public Smart owners."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -121,7 +124,7 @@ def main(write: bool) -> int:
         run(["xcodebuild", "-project", str(stage / PROJECT_REL), "-target", "OLMToonDilate", "-configuration", "Debug", "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", f"CONFIGURATION_BUILD_DIR={product}", f"SYMROOT={temp/'sym'}", f"OBJROOT={temp/'obj'}", f"SHARED_PRECOMPS_DIR={temp/'precomp'}", "build"], "isolated candidate build")
         binary = product / "OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
         sdk = run(["xcrun", "--show-sdk-path"], "SDK lookup").stdout.strip(); probe_bin = temp / "probe"
-        run(["clang++", "-std=c++17", "-O2", "-arch", "arm64", "-DOLM_TOON_CORNER_SEED_ONLY=1", "-isysroot", sdk, "-I", str(resolve_asset(ROOT/"Headers")), "-I", str(resolve_asset(ROOT/"Headers/SP")), "-I", str(resolve_asset(ROOT/"Util")), "-I", str(resolve_asset(ROOT/"Resources")), str(PROBE), "-o", str(probe_bin)], "real-SDK probe build")
+        run([_UCRT_CXX, "-std=c++17", "-O2", "-arch", "arm64", "-DOLM_TOON_CORNER_SEED_ONLY=1", "-isysroot", sdk, "-I", str(resolve_asset(ROOT/"Headers")), "-I", str(resolve_asset(ROOT/"Headers/SP")), "-I", str(resolve_asset(ROOT/"Util")), "-I", str(resolve_asset(ROOT/"Resources")), str(PROBE), "-o", str(probe_bin)], "real-SDK probe build")
         candidate_sha = sha(binary); candidate_source_sha = sha(staged_source); mac = json.loads(run([str(probe_bin), str(binary)], "Mac public EffectMain replay").stdout)
     rows = validate_rows(win, mac)
     report = {"schema":"olmtoondilate.corner-seed-public-candidate/1", "status":"PASS_EXACT3_PAIRED_PUBLIC_OWNER", "fixture":{"family":"corner_seed_5x5_r4_ds1/1","depths":[8,16,32],"source":"A at (0,0), B at (4,4), transparent C elsewhere","rowbytes":"width*pixel_size+13","guard_bytes_per_side":19}, "identities":{"production_source_pre_admission_sha256":sha(SOURCE),"isolated_candidate_source_sha256":candidate_source_sha,"isolated_candidate_binary_sha256":candidate_sha,"windows_exported_runner_sha256":sha(WIN),"mac_real_sdk_probe_sha256":sha(PROBE)}, "paired_cells":rows, "gates":{"three_depths_same_source_raw_exact":True,"active_and_payload_equal":True,"padding_guards_headers_exact":True,"input_immutable":True,"callback_lifecycle_exact":True,"isolated_candidate_only":True,"no_install_no_ae":True}, "claim_boundary":"Actual Windows AEX public SequenceSetup -> SmartPre -> SmartRender under AexLoader with the documented internal f32 radius seam, paired to an isolated Mac arm64 real-SDK public EffectMain candidate. No native Windows runtime, installed binary, or After Effects host claim."}

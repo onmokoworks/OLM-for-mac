@@ -10,6 +10,9 @@ AEX workers; this test does not claim an actual-AEX public SmartRender call.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -121,7 +124,7 @@ def compile_probe(directory: Path) -> Path:
         encoding="utf-8")
     executable = directory / "probe"
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
-    command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2",
+    command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2",
                "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math", "-ffp-contract=off",
                "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
                "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), "-I", str(ROOT / "core"),

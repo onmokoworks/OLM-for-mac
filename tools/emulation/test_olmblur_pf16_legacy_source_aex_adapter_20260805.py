@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -53,7 +56,7 @@ def compile_probe(directory: Path) -> Path:
         "__OLMBLUR_MAC_SOURCE__",
         str(ROOT / "mac/OLMBlur/OLMBlur.cpp").replace("\\", "\\\\").replace('"', '\\"')),
         encoding="utf-8")
-    command = [compiler, "-std=c++17", "-arch", "arm64", "-O2",
+    command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-arch", "arm64", "-O2",
                "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
                "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
                "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

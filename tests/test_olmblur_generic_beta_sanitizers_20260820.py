@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import os
 import subprocess
 import tempfile
@@ -25,7 +28,7 @@ def compile_probe(directory: Path, sanitize: bool) -> Path:
         ["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True
     ).stdout.strip()
     command = [
-        "clang++", "-std=c++17", "-O1" if sanitize else "-O2", "-g",
+        _UCRT_CXX, "-std=c++17", "-O1" if sanitize else "-O2", "-g",
         "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math",
         "-ffp-contract=off", "-Wno-pragma-pack", "-Wno-deprecated-declarations",
         "-isysroot", sdk,

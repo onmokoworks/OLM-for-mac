@@ -2,6 +2,9 @@
 """Close one natural 64x36 Noise Type 2 tuple through AEXCompat and EffectMain."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -356,7 +359,7 @@ def compile_cpp(cpp: Path, executable: Path) -> None:
         ["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True
     ).stdout.strip()
     command = [
-        compiler,
+        _UCRT_CXX, "--compiler", compiler,
         "-std=c++17",
         "-arch",
         "arm64",

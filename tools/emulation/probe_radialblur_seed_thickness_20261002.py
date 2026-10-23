@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Legal seed/thickness profiles and reciprocal-based original grid dimensions."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import copy
 import json
@@ -54,7 +57,7 @@ def default_contract_build(directory, source):
     (directory/'harness.cpp').write_text(public.initial.HARNESS.read_text())
     sdk=subprocess.check_output(['xcrun','--show-sdk-path'],text=True).strip()
     binary=directory/'mac'
-    command=['clang++','-std=c++17','-arch','arm64','-O2',
+    command=[_UCRT_CXX,'-std=c++17','-arch','arm64','-O2',
         '-ffunction-sections','-fdata-sections','-Wno-pragma-pack','-isysroot',sdk,
         *[arg for path in ('Headers','Headers/SP','Util','Resources') for arg in ('-I',str(public.ROOT/path))],
         str(directory/'harness.cpp'),str(public.SOURCE.parent/'OLMRadialBlur_Strings.cpp'),

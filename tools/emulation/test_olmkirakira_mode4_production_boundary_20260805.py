@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -16,7 +19,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmkirakira-mode4-") as tmp:
         binary = Path(tmp) / "mode4"
         subprocess.run([
-            "c++", "-std=c++20", "-O2", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
             str(ROOT / "tools/emulation/test_kirakira_mode4.cpp"),
             "-o", str(binary),
         ], cwd=ROOT, check=True)

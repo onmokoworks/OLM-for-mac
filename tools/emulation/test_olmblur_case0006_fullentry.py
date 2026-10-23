@@ -10,6 +10,9 @@ turning a PNG crop into execution evidence.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -179,7 +182,7 @@ def compile_and_run_portable(source_argb: bytes) -> dict:
         executable = temp_path / "portable_probe"
         source_path.write_bytes(source_argb)
         command = [
-            os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off",
+            _UCRT_CXX, "--compiler", os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off",
             str(PORTABLE_SOURCE),
             str(REPO_ROOT / "core/olmblur_helper.cpp"),
             str(REPO_ROOT / "core/olmblur_worker16_nonlegacy.cpp"),

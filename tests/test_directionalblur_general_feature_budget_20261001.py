@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import subprocess,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -54,6 +57,6 @@ class FeatureBudgetTests(unittest.TestCase):
  def test_checked_budget_and_rejection(self):
   with tempfile.TemporaryDirectory(prefix='dblur_feature_budget_') as td:
    src=Path(td)/'probe.cpp';binary=Path(td)/'probe';src.write_text(CPP)
-   subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT),str(src),'-o',str(binary)],check=True,capture_output=True)
+   subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT),str(src),'-o',str(binary)],check=True,capture_output=True)
    subprocess.run([str(binary)],check=True,capture_output=True)
 if __name__=='__main__':unittest.main()

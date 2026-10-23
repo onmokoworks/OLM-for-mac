@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import subprocess
 from pathlib import Path
 
@@ -12,7 +15,7 @@ REPORT = ROOT / "refs/conformance/olmsmoother2_c280_cce0_replay_20260712.md"
 
 BUILD.mkdir(parents=True, exist_ok=True)
 compile_cmd = [
-    "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra",
+    _UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra",
     f"-I{ROOT / 'cli/OLMSmoother2/shim'}",
     f"-I{ROOT / 'mac/OLMSmoother2/Mac'}",
     str(ROOT / "tools/emulation/smoother2_fullchain_port_adapter.cpp"),

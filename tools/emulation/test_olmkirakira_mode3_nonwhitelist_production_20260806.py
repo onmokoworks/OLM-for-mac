@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -35,7 +38,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmkira-mode3-general-") as td:
         exe = Path(td) / "mode3"
         subprocess.run([
-            "c++", "-std=c++20", "-O2", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
             str(CPP), "-o", str(exe),
         ], cwd=ROOT, check=True)
         subprocess.run([str(exe)], cwd=ROOT, check=True)

@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -15,7 +18,7 @@ class RealSdkSuiteLifecycle(unittest.TestCase):
   with tempfile.TemporaryDirectory(prefix=f'olmsmoother-{version}-real-sdk.') as td:
    exe=Path(td)/'probe';sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip()
    plugin='OLMSmoother' if version=='V1' else 'OLMSmoother2'
-   command=['clang++','-std=c++17','-arch','arm64','-O2','-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,
+   command=[_UCRT_CXX,'-std=c++17','-arch','arm64','-O2','-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,
     '-IHeaders','-IHeaders/SP','-IUtil','-IResources',f'-Imac/{plugin}',f'-DTEST_SMOOTHER_{version}=1',str(PROBE),
     f'mac/{plugin}/{plugin}_Strings.cpp',str(resolve_asset('Util/AEGP_SuiteHandler.cpp')),str(resolve_asset('Util/MissingSuiteError.cpp')),'-framework','Cocoa','-o',str(exe)]
    subprocess.run(command,cwd=ROOT,check=True)

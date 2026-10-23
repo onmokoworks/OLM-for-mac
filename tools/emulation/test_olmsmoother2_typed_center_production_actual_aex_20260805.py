@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -45,7 +48,7 @@ def production() -> dict[str, str]:
         binary = Path(td) / "harness"
         subprocess.run(
             [
-                "clang++", "-std=c++17", "-O2",
+                _UCRT_CXX, "-std=c++17", "-O2",
                 "-I", str(ROOT / "cli/OLMSmoother2/shim"),
                 "-I", str(ROOT / "mac/OLMSmoother2/Mac"),
                 str(HARNESS), "-o", str(binary),

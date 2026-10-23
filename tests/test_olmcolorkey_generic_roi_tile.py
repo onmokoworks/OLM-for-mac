@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import importlib.util
 import subprocess
 import tempfile
@@ -68,7 +71,7 @@ def test_nonzero_origin_roi_tile_classic_smart_parity() -> None:
         ).stdout.strip()
         executable = directory / "roi"
         subprocess.run([
-            "clang++", "-std=c++17", "-arch", "arm64", "-O1",
+            _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O1",
             "-fsanitize=address,undefined", "-fno-omit-frame-pointer",
             "-isysroot", sdk, "-I", str(directory), str(source),
             "-framework", "Cocoa", "-o", str(executable),

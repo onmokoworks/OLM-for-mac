@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import re
 import os
 import subprocess
@@ -223,7 +226,7 @@ int main() {{
             source.write_text(program)
             subprocess.run(
                 [
-                    "clang++", "-std=c++17", "-O1", "-g",
+                    _UCRT_CXX, "-std=c++17", "-O1", "-g",
                     "-fno-omit-frame-pointer", "-fsanitize=address,undefined",
                     "-I", str(ROOT / "cli/OLMSmoother2/shim"),
                     "-I", str(ROOT / "mac/OLMSmoother2"),

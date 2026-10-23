@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import importlib.util
 import json
 import struct
@@ -44,7 +47,7 @@ def main() -> int:
     assert actual_writers["PF32"]["raw_hex"] == "d2917c3fc46ee23e7b970d3fbc350b3f"
     with tempfile.TemporaryDirectory(prefix="kk_typed_ramp_") as td:
         exe = Path(td) / "typed"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
         subprocess.run([str(exe)], check=True)
     source = MAC.read_text(encoding="utf-8")
     assert "compose_merge2_pixel(" in source and source.count("truncate_merge2_channel(") >= 8

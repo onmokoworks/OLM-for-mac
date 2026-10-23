@@ -7,6 +7,9 @@ parity, host staging parity, source-mask ownership parity, or render parity.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -113,7 +116,7 @@ def compile_core_bridge(tmp: Path) -> tuple[ctypes.CDLL, list[str]]:
         raise RuntimeError("clang++ is required to call the current Mac core")
     dylib = tmp / "libdg_fieldgen_actual_aex_20260716.dylib"
     command = [
-        compiler,
+        _UCRT_CXX, "--compiler", compiler,
         "-std=c++17",
         "-O2",
         "-dynamiclib",

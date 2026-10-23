@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare the recovered C++ float sine/cosine against original AEX leaf calls."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -65,7 +68,7 @@ int main(int argc, char **) {
 }
 ''')
     exe = scratch/'leaf'
-    subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(cpp),'-o',str(exe)],check=True)
+    subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(cpp),'-o',str(exe)],check=True)
     bits = lambda x: struct.unpack('<I', struct.pack('<f',x))[0]
     inputs = set()
     # Dense degrees, dense direct radians crossing both reduction branches,

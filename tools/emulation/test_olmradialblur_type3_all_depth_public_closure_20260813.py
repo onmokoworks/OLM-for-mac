@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -365,7 +368,7 @@ std::ofstream(argv[{marker_argument}])<<"nv_one_away,source_first_bit,layer_firs
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         exe = td / "probe"
-        cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-ffp-contract=off", "-isysroot", sdk,
+        cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-ffp-contract=off", "-isysroot", sdk,
                "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
                "-I", str(resolve_asset(ROOT / "Resources")), "-I", str(ROOT / "mac/OLMRadialBlur"),
                str(cpp), str(ROOT / "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp"),

@@ -2,6 +2,9 @@
 """Compare the internal Type-3 composer with all six actual-AEX span rows."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -60,7 +63,7 @@ int main(){{int e=0;
 '''
     with tempfile.TemporaryDirectory(prefix="radial-type3-production-") as raw:
         td = Path(raw); src = td / "probe.cpp"; exe = td / "probe"; src.write_text(cpp)
-        command = ["xcrun", "clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        command = [_UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
                    "-D__MACH__", "-Wno-pragma-pack", "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil",
                    "-IResources", str(src), "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp",
                    "Util/AEGP_SuiteHandler.cpp", "Util/MissingSuiteError.cpp", "-framework", "Cocoa",

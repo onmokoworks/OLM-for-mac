@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -440,7 +443,7 @@ def compile_and_run_probe(temp_dir: Path, input_pf32: Path, trig_payload: bytes)
         check=True,
     ).stdout.strip()
     compile_cmd = [
-        os.environ.get("CXX", "clang++"),
+        _UCRT_CXX, "--compiler", os.environ.get("CXX", "clang++"),
         "-std=c++17",
         "-arch",
         "arm64",

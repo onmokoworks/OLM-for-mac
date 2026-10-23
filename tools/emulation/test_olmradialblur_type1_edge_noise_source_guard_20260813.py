@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse,hashlib,importlib.util,json,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]; SOURCE=ROOT/"mac/OLMRadialBlur/OLMRadialBlur.cpp"
@@ -22,7 +25,7 @@ def identities():
 def run(arch):
  with tempfile.TemporaryDirectory(prefix=f"radial-edge-{arch}.") as raw:
   exe=Path(raw)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip()
-  cmd=["clang++","-std=c++17","-arch",arch,"-O2","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations","-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),"-I",str(ROOT/"core"),"-I",str(ROOT/"mac/OLMRadialBlur"),str(PROBE),str(ROOT/"mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp"),str(ROOT/"Util/AEGP_SuiteHandler.cpp"),str(ROOT/"Util/MissingSuiteError.cpp"),"-framework","Cocoa","-o",str(exe)]
+  cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations","-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),"-I",str(ROOT/"core"),"-I",str(ROOT/"mac/OLMRadialBlur"),str(PROBE),str(ROOT/"mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp"),str(ROOT/"Util/AEGP_SuiteHandler.cpp"),str(ROOT/"Util/MissingSuiteError.cpp"),"-framework","Cocoa","-o",str(exe)]
   b=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
   if b.returncode:raise RuntimeError(b.stdout+b.stderr)
   r=subprocess.run([str(exe)],cwd=ROOT,capture_output=True,text=True)

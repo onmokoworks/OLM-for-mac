@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -131,7 +134,7 @@ def production() -> bytes:
         source.write_text(source.read_text().replace("int main(){", "int legacy_main(){", 1) + CUSTOM_MAIN)
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         executable = directory / "colorspace25"
-        build = subprocess.run(["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-I", str(directory), str(source), "-framework", "Cocoa", "-o", str(executable)], cwd=ROOT, capture_output=True, text=True)
+        build = subprocess.run([_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-I", str(directory), str(source), "-framework", "Cocoa", "-o", str(executable)], cwd=ROOT, capture_output=True, text=True)
         if build.returncode: raise RuntimeError(build.stderr)
         run = subprocess.run([str(executable)], cwd=ROOT, capture_output=True)
         if run.returncode: raise RuntimeError(run.stderr.decode(errors="replace"))

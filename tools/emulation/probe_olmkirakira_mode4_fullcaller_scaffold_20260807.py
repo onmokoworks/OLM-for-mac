@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import importlib.util
 import hashlib
 import json
@@ -55,7 +58,7 @@ def portable_mode4_ray(seed: list[float], width: int, height: int,
     with tempfile.TemporaryDirectory(prefix="kira_natural_ray_") as temporary:
         executable = Path(temporary) / "mode4"
         subprocess.run([
-            "c++", "-std=c++20", "-O2",
+            _UCRT_CXX, "-std=c++20", "-O2",
             str(ROOT / "tools/emulation/test_kirakira_mode4_canonical.cpp"),
             "-o", str(executable),
         ], check=True)
@@ -74,7 +77,7 @@ def portable_highlight_ray(seed: list[float], width: int, height: int,
     with tempfile.TemporaryDirectory(prefix="kira_natural_highlight_") as temporary:
         executable = Path(temporary) / "highlight"
         subprocess.run([
-            "c++", "-std=c++20", "-O2",
+            _UCRT_CXX, "-std=c++20", "-O2",
             str(ROOT / "tools/emulation/test_kirakira_highlight_canonical.cpp"),
             "-o", str(executable),
         ], check=True)
@@ -277,7 +280,7 @@ def main(natural: bool = False, natural_slot: int = 1,
                 with tempfile.TemporaryDirectory(prefix="kira_fullcaller_core_") as temporary:
                     executable = Path(temporary) / "highlight"
                     subprocess.run([
-                        "c++", "-std=c++20", "-O2",
+                        _UCRT_CXX, "-std=c++20", "-O2",
                         str(ROOT / "tools/emulation/test_kirakira_highlight_fullcaller.cpp"),
                         "-o", str(executable),
                     ], check=True)

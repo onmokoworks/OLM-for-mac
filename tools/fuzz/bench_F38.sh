@@ -6,9 +6,9 @@ mkdir -p "$S"
 export TMPDIR="$S" TMP="$S" TEMP="$S"
 # Baseline is the ticket's starting commit. Build artifacts stay ticket-local.
 git show 395e5d8a:core/olmblur_fullworker_helper.cpp > "$S/baseline.cpp"
-clang++ -std=c++17 -O2 -ffp-contract=off -Icore tools/fuzz/bench_F38.cpp "$S/baseline.cpp" -o "$S/bench-before"
-clang++ -std=c++17 -O2 -ffp-contract=off tools/fuzz/bench_F38.cpp core/olmblur_fullworker_helper.cpp -o "$S/bench-after"
-clang++ -std=c++17 -O2 -ffp-contract=off tools/fuzz/test_F38.cpp core/olmblur_helper.cpp core/olmblur_fullworker_helper.cpp -o "$S/test-F38"
+"$PWD/tools/ucrt_cxx.py" -std=c++17 -O2 -ffp-contract=off -Icore tools/fuzz/bench_F38.cpp "$S/baseline.cpp" -o "$S/bench-before"
+"$PWD/tools/ucrt_cxx.py" -std=c++17 -O2 -ffp-contract=off tools/fuzz/bench_F38.cpp core/olmblur_fullworker_helper.cpp -o "$S/bench-after"
+"$PWD/tools/ucrt_cxx.py" -std=c++17 -O2 -ffp-contract=off tools/fuzz/test_F38.cpp core/olmblur_helper.cpp core/olmblur_fullworker_helper.cpp -o "$S/test-F38"
 "$S/test-F38"
 for round in 1 2 3; do
     echo "round=$round before"

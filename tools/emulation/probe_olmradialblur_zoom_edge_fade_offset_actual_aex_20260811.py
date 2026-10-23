@@ -2,6 +2,9 @@
 """Verify the bounded shared-production Zoom Outer Edge Fade matrix."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib
 import json
@@ -149,7 +152,7 @@ def production(cell, expected, fade=50, span_delta=0, radius_limit_delta=0, scal
 int main(int n,char**q){{constexpr int W=32,H=18,RB={rowbytes},C={cells};std::vector<unsigned char>ib(RB*H),ob(RB*H);std::ifstream(q[1],std::ios::binary).read((char*)ib.data(),ib.size());for(int y=0;y<H;y++)for(int x=W*{pixel_bytes};x<RB;x++)ob[y*RB+x]=(0xa0+y)&255;PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;std::vector<float>a(C*4),b(C*4);RadialBlurTestPolarCapture cap{{}};cap.pre_blur_rgba=a.data();cap.post_blur_rgba=b.data();cap.capacity_floats=C*4;OLMRadialBlurInfo i{{}};i.blur_type=1;i.center_x={cx};i.center_y={cy};i.outer_strength=4;i.outer_edge_fade={fade};i.outer_offset_mode={mode};i.outer_offset={value};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;auto e=RenderZoomTyped<{pixel}>(&iw,&ow,i,&cap);if(e||cap.written_floats!=C*4)return 3;auto put=[&](int x,auto&v){{std::ofstream(q[x],std::ios::binary).write((char*)v.data(),v.size()*sizeof(v[0]));}};put(2,ob);put(3,a);put(4,b);}}
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-        command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
                    "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
                    "-I", str(ROOT / "mac/OLMRadialBlur"), "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                    "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), str(cpp), "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(exe)]

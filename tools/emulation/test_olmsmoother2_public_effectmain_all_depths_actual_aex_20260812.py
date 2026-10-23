@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Public EffectMain SmartPreRender/SmartRender covering matrix."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,math,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_geometry_classifier_matrix_actual_aex_20260811 as base
@@ -34,7 +37,7 @@ def pixels(depth,representation):
  return out
 def main():
  with tempfile.TemporaryDirectory(prefix='sm2_effectmain_all_') as td:
-  binary=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True);lines=subprocess.run([str(binary)],check=True,text=True,capture_output=True).stdout.splitlines();prod={int(line.split()[1]):bytes.fromhex(line.split()[2]) for line in lines if line.startswith('CASE ')};meta={int(line.split()[1]):[int(x) for x in line.split()[2:]] for line in lines if line.startswith('META ')};req(len(prod)==len(meta)==6,'harness cases')
+  binary=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True);lines=subprocess.run([str(binary)],check=True,text=True,capture_output=True).stdout.splitlines();prod={int(line.split()[1]):bytes.fromhex(line.split()[2]) for line in lines if line.startswith('CASE ')};meta={int(line.split()[1]):[int(x) for x in line.split()[2:]] for line in lines if line.startswith('META ')};req(len(prod)==len(meta)==6,'harness cases')
   rows=[]
   for i,(name,depth,version,feature,key_mode,palette,gamma,s,r,e,representation) in enumerate(TUPLES):
    psz,pad=base.DEPTHS[depth];actual,plane,ci,wi=base.actual(depth,version,pixels(depth,representation),pad,W,H,s,r,e,feature,gamma,None,palette,key_mode);req(actual==prod[i],name+' actual/core mismatch');m=meta[i];req(m==[1,1,1,15,15,16,-1,1],name+' callbacks/rect/classic rejection');rb=W*psz+pad;req(all(actual[y*rb+W*psz:(y+1)*rb]==b'\xa5'*pad for y in range(H)),name+' padding');rows.append({'id':name,'depth':depth,'version':version,'gamma_mode':feature,'gamma_value':gamma,'key_mode':key_mode,'palette_count':len(palette),'palette_rgba':palette,'smoothing':[s,r,e],'input_representation':representation,'alpha_native_codes':list(ALPHAS),'raw_sha256':hashlib.sha256(actual).hexdigest(),'class_plane_sha256':hashlib.sha256(plane).hexdigest(),'classifier_instructions':ci,'worker_instructions':wi,'callbacks':{'smart_pre_checkout_layer':1,'smart_checkout_layer_pixels':1,'smart_checkout_output':1,'parameter_checkout':15,'parameter_checkin':15},'result_rect':[1,2,16,10],'max_result_rect':[-1,-2,18,13],'classic_same_params_rejected':True,'input_unchanged':True,'padding_preserved':True,'exact':True})

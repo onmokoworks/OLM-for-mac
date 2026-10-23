@@ -2,6 +2,9 @@
 """Close the bounded Mode-4 Highlight gradient box-filter seam."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import copy
 import hashlib
 import importlib.util
@@ -130,7 +133,7 @@ def run_hostless(directory: Path) -> dict[str, object]:
 def compile_ray(directory: Path, source: Path, seed: bytes) -> bytes:
     executable = directory / source.stem
     subprocess.run([
-        "c++", "-std=c++20", "-O2", "-ffp-contract=off",
+        _UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
         str(source), "-o", str(executable),
     ], cwd=ROOT, check=True)
     input_words = "\n".join(f"{word:08x}" for word in struct.unpack("<15I", seed)) + "\n"

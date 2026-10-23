@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import subprocess
@@ -166,7 +169,7 @@ class SmootherV1SmartBeta(unittest.TestCase):
             binary = Path(tmp) / "probe"
             source.write_text(textwrap.dedent(HARNESS))
             build = subprocess.run(
-                ["clang++", "-std=c++17", *flags, "-I", str(ROOT / "cli/OLMSmoother/shim"),
+                [_UCRT_CXX, "-std=c++17", *flags, "-I", str(ROOT / "cli/OLMSmoother/shim"),
                  "-I", str(ROOT), str(source), "-o", str(binary)],
                 cwd=ROOT, text=True, capture_output=True,
             )
@@ -207,7 +210,7 @@ class SmootherV1SmartBeta(unittest.TestCase):
             binary = Path(tmp) / "probe"
             source.write_text(textwrap.dedent(HARNESS))
             build = subprocess.run(
-                ["clang++", "-std=c++17", "-O2", "-I", str(ROOT / "cli/OLMSmoother/shim"),
+                [_UCRT_CXX, "-std=c++17", "-O2", "-I", str(ROOT / "cli/OLMSmoother/shim"),
                  "-I", str(ROOT), str(source), "-o", str(binary)],
                 cwd=ROOT, text=True, capture_output=True,
             )

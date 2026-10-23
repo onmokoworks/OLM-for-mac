@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import subprocess
 import tempfile
 import textwrap
@@ -250,7 +253,7 @@ class DistanceGradationGenericProductionBeta(unittest.TestCase):
             binary = Path(tmp) / "probe"
             source.write_text(textwrap.dedent(HARNESS))
             build = subprocess.run(
-                ["clang++", "-std=c++17", "-O2",
+                [_UCRT_CXX, "-std=c++17", "-O2",
                  "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
                  "-I", str(ROOT), str(source),
                  str(ROOT / "core/olmdistancegradation_fieldgen.cpp"), "-o", str(binary)],
@@ -266,7 +269,7 @@ class DistanceGradationGenericProductionBeta(unittest.TestCase):
             binary = Path(tmp) / "probe"
             source.write_text(textwrap.dedent(HARNESS))
             build = subprocess.run(
-                ["clang++", "-std=c++17", "-O1", "-g", "-fsanitize=address,undefined",
+                [_UCRT_CXX, "-std=c++17", "-O1", "-g", "-fsanitize=address,undefined",
                  "-fno-omit-frame-pointer",
                  "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
                  "-I", str(ROOT), str(source),

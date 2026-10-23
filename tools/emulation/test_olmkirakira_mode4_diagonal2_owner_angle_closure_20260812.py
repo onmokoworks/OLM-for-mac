@@ -2,6 +2,9 @@
 """Close the public Mode-4 Diagonal-2 angle-representative seam."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import copy
 import hashlib
 import importlib.util
@@ -184,7 +187,7 @@ def natural_trace(directory: Path) -> dict[str, object]:
 
 def compile_portable(directory: Path, seed: bytes, angle: int) -> dict[str, bytes]:
     executable = directory / f"mode4-{angle}"
-    subprocess.run(["c++", "-std=c++20", "-O2", "-ffp-contract=off",
+    subprocess.run([_UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
                     str(CORE_PROBE), "-o", str(executable)], cwd=ROOT, check=True)
     seed_values = struct.unpack("<15f", seed)
     padded = [0.0] * 81

@@ -1,4 +1,7 @@
 """Replay legal Around + Thin owner witnesses through real-SDK public entries."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import json
 import os
 import subprocess
@@ -51,7 +54,7 @@ def test_around_column_under_asan_ubsan() -> None:
         directory = Path(raw)/'mac'
         executable = owner.compile_public(directory, owner.SOURCE.read_text())
         sdk = subprocess.check_output(['xcrun','--show-sdk-path'],text=True).strip()
-        subprocess.run(['clang++','-std=c++17','-arch','arm64','-O1','-g','-fno-fast-math','-ffp-contract=off',
+        subprocess.run([_UCRT_CXX,'-std=c++17','-arch','arm64','-O1','-g','-fno-fast-math','-ffp-contract=off',
             '-fsanitize=address,undefined','-fno-omit-frame-pointer','-Wno-pragma-pack','-Wno-deprecated-declarations',
             '-isysroot',sdk,'-IHeaders','-IHeaders/SP','-IUtil','-IResources','-Imac/OLMColorKey',
             str(directory/'public.cpp'),'mac/OLMColorKey/OLMColorKey_Strings.cpp','Util/AEGP_SuiteHandler.cpp',

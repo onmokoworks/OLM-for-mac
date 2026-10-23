@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Load the installed OLMToonDilate bundle and execute SmartPre/SmartRender."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib, json, shutil, subprocess, tempfile
 from pathlib import Path
 from olm_installed_identity import verified_binary
@@ -30,7 +33,7 @@ int main(int argc,char**argv){void*h=dlopen(argv[1],RTLD_NOW|RTLD_LOCAL);if(!h){
  PF_InData in{};PF_OutData out{};in.inter.checkout_param=checkout_param;in.inter.checkin_param=checkin_param;PF_PreRenderInput pi{};PF_PreRenderOutput po{};PF_PreRenderCallbacks pcb{};pcb.checkout_layer=pre_checkout;PF_PreRenderExtra pe{&pi,&po,&pcb};auto a=effect(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pe);
  PF_SmartRenderInput si{};si.bitdepth=8;si.pre_render_data=po.pre_render_data;PF_SmartRenderCallbacks scb{};scb.checkout_layer_pixels=pixels;scb.checkin_layer_pixels=checkin;scb.checkout_output=output;PF_SmartRenderExtra se{&si,&scb};auto b=effect(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&se);bool exact=a==0&&b==0&&pre_hits==1&&pixel_hits==1&&out_hits==1&&checkin_hits==0&&param_hits==1;for(int y=0;y<H;++y){for(int x=0;x<W;++x)exact=exact&&!std::memcmp(ob+y*RB+x*4,&S,4);for(int i=12;i<RB;++i)exact=exact&&ob[y*RB+i]==0xEE;}if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data);std::printf("{\"exact\":%s,\"pre\":%d,\"pixels\":%d,\"output\":%d,\"checkin\":%d,\"param\":%d}\n",exact?"true":"false",pre_hits,pixel_hits,out_hits,checkin_hits,param_hits);dlclose(h);return exact?0:4;}
 ''')
-  sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[compiler,"-std=c++17","-arch","arm64","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(src),"-o",str(exe)];build=subprocess.run(cmd,capture_output=True,text=True)
+  sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[_UCRT_CXX, "--compiler", compiler,"-std=c++17","-arch","arm64","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(src),"-o",str(exe)];build=subprocess.run(cmd,capture_output=True,text=True)
   if build.returncode:raise RuntimeError(build.stderr)
   run=subprocess.run([str(exe),str(BINARY)],capture_output=True,text=True)
   if run.returncode:raise RuntimeError(f"BLOCKED_FAIL_CLOSED dynamic entry: {run.stdout} {run.stderr}")

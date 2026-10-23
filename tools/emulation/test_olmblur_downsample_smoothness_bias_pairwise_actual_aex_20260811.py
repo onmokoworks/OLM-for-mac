@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -125,7 +128,7 @@ def compile_probe(directory: Path) -> Path:
     source.write_text(probe_source().replace("__OLMBLUR_MAC_SOURCE__",str(ROOT/"mac/OLMBlur/OLMBlur.cpp").replace("\\","\\\\").replace('"','\\"')))
     executable=directory/"probe"
     sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
-    command=["clang++","-std=c++17","-arch","arm64","-O2","-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,
+    command=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,
       "-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),"-I",str(ROOT/"core"),str(source),
       *[str(ROOT/p) for p in ("core/olmblur_helper.cpp","core/olmblur_fullworker_helper.cpp","core/olmblur_worker16_nonlegacy.cpp","core/olmblur_worker16_legacy.cpp","core/olmblur_worker32_nonlegacy.cpp","core/olmblur_worker32_legacy.cpp","core/olmblur_worker8_legacy.cpp","core/olmblur_worker_orchestration.cpp")],"-framework","Cocoa","-o",str(executable)]
     subprocess.run(command,cwd=ROOT,check=True)

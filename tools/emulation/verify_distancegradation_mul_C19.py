@@ -4,6 +4,9 @@
 No arithmetic detour: execute 181170f8b with original bytes and stop before
 the following instruction. The second operand is a finite field weight.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -72,7 +75,7 @@ int main(int argc,char **argv) {
         for name,flags in [('o2',['-O2','-ffp-contract=off']),('o3',['-O3','-ffp-contract=fast']),
                            ('san',['-O2','-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             exe=td/name;output=td/(name+'.bin')
-            subprocess.run(['clang++','-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
+            subprocess.run([_UCRT_CXX,'-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
                             '-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),
                             str(cpp),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],check=True)
             subprocess.run([str(exe),str(inp),str(output)],check=True)

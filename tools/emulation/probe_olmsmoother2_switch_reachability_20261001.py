@@ -7,6 +7,9 @@ center and black/white neighbors realize every index without injecting a
 class plane. Native comparisons here are classifier/worker emulation, not AE.
 """
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -48,7 +51,7 @@ def parse(result):
 
 def compile_harness(path, binary, sanitize=False):
     flags = ['-O1','-fsanitize=address,undefined','-fno-omit-frame-pointer'] if sanitize else ['-O2']
-    subprocess.run(['clang++','-std=c++17',*flags,'-Wno-deprecated-declarations','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(SOURCE.parent),str(path),'-o',str(binary)],check=True)
+    subprocess.run([_UCRT_CXX,'-std=c++17',*flags,'-Wno-deprecated-declarations','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(SOURCE.parent),str(path),'-o',str(binary)],check=True)
 
 def replay(binary, retained):
     rows = []

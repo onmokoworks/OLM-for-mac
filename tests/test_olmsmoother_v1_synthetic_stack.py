@@ -1,4 +1,7 @@
 """Exercise synthetic-address translation with fatal ASan/UBSan, including edges."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import os
 from pathlib import Path
 import subprocess
@@ -83,7 +86,7 @@ class SyntheticStack(unittest.TestCase):
             source, binary = directory / 'probe.cpp', directory / 'probe'
             source.write_text(HARNESS)
             build = subprocess.run(
-                ['clang++', '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
+                [_UCRT_CXX, '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
                  '-fsanitize=address,undefined', '-fno-sanitize-recover=all',
                  '-fno-omit-frame-pointer', '-g', '-I', str(ROOT),
                  '-I', str(ROOT / 'cli/OLMSmoother/shim'), str(source), '-o', str(binary)],

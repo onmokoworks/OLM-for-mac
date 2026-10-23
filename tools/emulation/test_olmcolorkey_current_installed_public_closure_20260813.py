@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -113,7 +116,7 @@ def run_slice(architecture: str) -> dict[str, Any]:
         transformed.write_text(source.replace(old, new))
         executable = directory / "probe"
         command = [
-            "clang++", "-std=c++17", "-arch", architecture, "-O2", "-isysroot", sdk,
+            _UCRT_CXX, "-std=c++17", "-arch", architecture, "-O2", "-isysroot", sdk,
             "-Wno-pragma-pack", "-Wno-deprecated-declarations",
         ]
         for include in ("Headers", "Headers/SP", "Util", "Resources", "mac/OLMColorKey", "tools/emulation"):

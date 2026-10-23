@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -106,7 +109,7 @@ class SourceContract(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory(prefix="olmsmoother-source-contract-")
         cls.exe = Path(cls.tmp.name) / "probe"
         subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-I", str(ROOT),
+            _UCRT_CXX, "-std=c++17", "-O2", "-I", str(ROOT),
             str(PROBE), "-o", str(cls.exe),
         ], check=True)
         lines = subprocess.run([str(cls.exe)], check=True, text=True,

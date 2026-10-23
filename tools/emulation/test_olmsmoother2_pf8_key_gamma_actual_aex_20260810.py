@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """PF8 v2 key/invert-key plus Gamma Colors: checked-in AEX versus production."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_typed_writeback_20260717 as typed
@@ -18,7 +21,7 @@ def require(ok,msg):
 def production():
     with tempfile.TemporaryDirectory(prefix='sm2_pf8_key_gamma_') as td:
         binary=Path(td)/'harness'
-        subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
+        subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
         stdout=subprocess.run([str(binary)],check=True,text=True,capture_output=True).stdout
     return {label:bytes.fromhex(raw) for label,raw in (line.split() for line in stdout.splitlines())}
 def main():

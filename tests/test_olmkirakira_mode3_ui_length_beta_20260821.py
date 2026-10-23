@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import hashlib
 import json
 import os
@@ -27,7 +30,7 @@ class KiraKiraMode3UiLengthBetaTests(unittest.TestCase):
         cls.directory = Path(cls._temporary.name)
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         common = [
-            "clang++", "-std=c++20", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++20", "-fno-fast-math", "-ffp-contract=off",
             "-isysroot", sdk, "-w", "-I", str(ROOT / "Headers"),
             "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
             "-I", str(ROOT / "Resources"), f'-DKIRA_SOURCE="{SOURCE}"',

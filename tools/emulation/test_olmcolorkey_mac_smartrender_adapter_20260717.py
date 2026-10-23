@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import os
 import re
@@ -314,7 +317,7 @@ int main(){{g_color_suite=g_color_suite_instance;g_ansi_suite=g_ansi_suite_insta
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=False)
     if sdk.returncode:
         raise RuntimeError(f"BLOCKED_FAIL_CLOSED: xcrun --show-sdk-path failed: {sdk.stderr.strip()}")
-    command = [compiler, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk.stdout.strip(), "-I", str(directory), str(probe), "-framework", "Cocoa", "-o", str(executable)]
+    command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk.stdout.strip(), "-I", str(directory), str(probe), "-framework", "Cocoa", "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=False)
     if build.returncode:
         raise RuntimeError(f"BLOCKED_FAIL_CLOSED: source-included adapter did not compile\n{build.stderr}")

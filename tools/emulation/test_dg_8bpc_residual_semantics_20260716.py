@@ -10,6 +10,9 @@ field/source witnesses.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import sys
@@ -102,7 +105,7 @@ def run_actual_aex_matrix() -> dict[str, object]:
 def run_portable_core() -> dict[str, object]:
     compiler = "clang++"
     output = Path("/tmp/dg_core_distance_stage_20260716")
-    command = [compiler, "-std=c++17", "-O2", "-Icore", "core/olmdistancegradation_fieldgen.cpp", "tools/emulation/test_dg_core_distance_stage.cpp", "-o", str(output)]
+    command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-Icore", "core/olmdistancegradation_fieldgen.cpp", "tools/emulation/test_dg_core_distance_stage.cpp", "-o", str(output)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     if build.returncode:
         return {"status": "build-failed", "stderr": build.stderr[-1200:]}

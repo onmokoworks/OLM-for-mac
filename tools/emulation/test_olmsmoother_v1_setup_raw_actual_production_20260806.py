@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Compare complete actual-AEX setup writes with production setup semantics."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -31,7 +34,7 @@ def sha256(path: Path) -> str:
 
 def compile_json(source: Path, output: Path) -> dict:
     subprocess.run([
-        "clang++", "-std=c++17", "-I" + str(ROOT / "cli/OLMSmoother/shim"),
+        _UCRT_CXX, "-std=c++17", "-I" + str(ROOT / "cli/OLMSmoother/shim"),
         str(source), "-o", str(output),
     ], cwd=ROOT, check=True, capture_output=True)
     return json.loads(subprocess.run([str(output)], check=True, capture_output=True,

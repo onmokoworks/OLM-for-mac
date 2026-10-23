@@ -2,6 +2,9 @@
 """PF8 natural classifier/c280/typed-worker chain: checked-in AEX versus production."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import subprocess
@@ -28,7 +31,7 @@ def production() -> dict[str, bytes]:
     with tempfile.TemporaryDirectory(prefix="sm2_pf8_nonuniform_") as td:
         binary = Path(td) / "harness"
         subprocess.run([
-            "clang++", "-std=c++17", "-O2",
+            _UCRT_CXX, "-std=c++17", "-O2",
             "-I", str(ROOT / "cli/OLMSmoother2/shim"),
             "-I", str(ROOT / "mac/OLMSmoother2/Mac"),
             str(HARNESS), "-o", str(binary),

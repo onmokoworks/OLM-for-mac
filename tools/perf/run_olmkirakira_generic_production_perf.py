@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import re
@@ -65,7 +68,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="kirakira_production_perf_") as raw:
         executable = Path(raw) / "driver"
         build = subprocess.run([
-            "clang++", "-std=c++20", "-arch", "arm64", "-O2", "-DNDEBUG",
+            _UCRT_CXX, "-std=c++20", "-arch", "arm64", "-O2", "-DNDEBUG",
             "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-w",
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
             "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

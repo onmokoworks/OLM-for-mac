@@ -2,6 +2,9 @@
 """Replay the current installed DistanceGradation PF32 Mode5/Power boundary."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -37,7 +40,7 @@ def ae_processes():
  return out
 def compile_run(arch):
  with tempfile.TemporaryDirectory(prefix="dg-installed-mode5-") as td:
-  exe=Path(td)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=["clang++","-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+  exe=Path(td)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in ("Headers","Headers/SP","Util","Resources","core","mac/OLMDistanceGradation"):cmd += ["-I",str(ROOT/inc)]
   cmd += [str(FILES[k]) for k in ("probe","strings","suite_cpp","missing_cpp","frontonly","rotate","rowdriver","field","fieldgen")]+["-framework","Cocoa","-o",str(exe)]
   b=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)

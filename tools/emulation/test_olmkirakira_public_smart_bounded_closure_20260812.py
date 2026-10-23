@@ -2,6 +2,9 @@
 """Build, run, write, and validate Kira's bounded public Smart closure."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -110,7 +113,7 @@ def run_harness() -> tuple[list[dict], list[dict]]:
         exe = Path(raw) / "closure"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         define = '-DKIRA_SOURCE="' + str(SOURCE) + '"'
-        cmd = ["clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        cmd = [_UCRT_CXX, "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
                "-isysroot", sdk, "-w", "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
                "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), define, str(HARNESS),
                str(resolve_asset(ROOT / str(resolve_asset("Util/AEGP_SuiteHandler.cpp")))), str(resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp")))),

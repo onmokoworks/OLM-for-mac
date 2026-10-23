@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,struct,subprocess,tempfile,sys
 from pathlib import Path
 import numpy as np
@@ -21,6 +24,6 @@ def main():
    p=ld.bump_alloc(4,align=8);ld.write_bytes(p,b'\xee'*4);ld.call_function(FUN,int_args=[ref,x,y,0,p],max_instructions=200000);out.append(tuple(ld.read_bytes(p,4)))
  source=b''.join(bytes((a,r,g,b)) for a,g,r,b in src);active=b''.join(bytes((a,r,g,b)) for a,g,r,b in out);srcpad=b''.join(source[y*68:(y+1)*68]+b'\xa5'*7 for y in range(H));expected=b''.join(active[y*68:(y+1)*68]+b'\xa5'*11 for y in range(H));field_sha=hashlib.sha256(field.astype('<f4').tobytes()).hexdigest();output_sha=hashlib.sha256(active).hexdigest();assert field_sha=='564293cbd022462e7f24a4ba689fa0fa8804c33610992f675ece73d9c13e8de9';assert output_sha=='70a2b85f348aafba232477630c32be346251b1a1c589cd5877b3dc766327aead';print('field_sha256',field_sha);print('output_active_sha256',output_sha);assert len(trace)==3
  with tempfile.TemporaryDirectory() as td:
-  t=Path(td);a=t/'s';b=t/'e';exe=t/'h';a.write_bytes(srcpad);b.write_bytes(expected);q=subprocess.run(['clang++','-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HERE/'dg_classic_pf8_inside_constant_layer_bg_harness_20260805.cpp'),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr;q=subprocess.run([str(exe),str(a),str(b)],capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='')
+  t=Path(td);a=t/'s';b=t/'e';exe=t/'h';a.write_bytes(srcpad);b.write_bytes(expected);q=subprocess.run([_UCRT_CXX,'-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HERE/'dg_classic_pf8_inside_constant_layer_bg_harness_20260805.cpp'),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr;q=subprocess.run([str(exe),str(a),str(b)],capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='')
  print('PASS_OLMDISTANCEGRADATION_CLASSIC_PF8_INSIDE_CONSTANT_LAYER_BG_EXACT')
 if __name__=='__main__':raise SystemExit(main())

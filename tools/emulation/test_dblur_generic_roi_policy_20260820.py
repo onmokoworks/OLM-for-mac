@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Hostless request/world policy test for DirectionalBlur generic full-frame lanes."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import os, shutil, subprocess, tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -37,7 +40,7 @@ int main(){{
  }}
  return 0;}}''')
   sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
-  cmd=[cxx,"-std=c++17","-O2","-ffunction-sections","-fdata-sections","-Wno-unused-function","-Wno-unused-parameter","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(src),str(ROOT/"core/dblur_frontonly.cpp"),str(ROOT/"core/dblur_rotate.cpp"),str(ROOT/"core/dblur_rowdriver.cpp"),str(ROOT/"core/dblur_field.cpp"),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
+  cmd=[_UCRT_CXX, "--compiler", cxx,"-std=c++17","-O2","-ffunction-sections","-fdata-sections","-Wno-unused-function","-Wno-unused-parameter","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(src),str(ROOT/"core/dblur_frontonly.cpp"),str(ROOT/"core/dblur_rotate.cpp"),str(ROOT/"core/dblur_rowdriver.cpp"),str(ROOT/"core/dblur_field.cpp"),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
   subprocess.run(cmd,cwd=ROOT,check=True);subprocess.run([str(exe)],cwd=ROOT,check=True)
  print("ok: Directional generic front/back/dual full/overscan normalize; partial/tile fail-close")
  return 0

@@ -9,6 +9,9 @@ so invalid strict-border samples are compared byte-for-byte as well.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import atexit
 import ctypes
@@ -67,7 +70,7 @@ def build_candidate() -> None:
     _candidate_tmp = tempfile.TemporaryDirectory(prefix="olm_dblur_rotate_")
     LIB = Path(_candidate_tmp.name) / "libdblur_rotate.so"
     subprocess.run([
-        "c++", "-std=c++17", "-O0", "-fno-fast-math", "-ffp-contract=off",
+        _UCRT_CXX, "-std=c++17", "-O0", "-fno-fast-math", "-ffp-contract=off",
         "-fPIC", "-shared", str(ROOT / "core/dblur_rotate.cpp"), "-o", str(LIB),
     ], cwd=ROOT, check=True)
 

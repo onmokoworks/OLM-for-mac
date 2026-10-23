@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Compare retained case01 PF8 AltHandler calls against the Windows AEX."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -73,7 +76,7 @@ def main() -> None:
                         "--output", str(actual_png)], cwd=ROOT, check=True,
                        stdout=subprocess.DEVNULL)
         subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-shared", "-fPIC",
+            _UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC",
             "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS),
             "-o", str(library_path),
         ], cwd=ROOT, check=True, capture_output=True, text=True)

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import struct
 import subprocess
@@ -42,7 +45,7 @@ def main() -> int:
     assert len(inputs) == len(expected) == 65
     with tempfile.TemporaryDirectory(prefix="olmkirakira_mode3_length7_exact_") as td:
         executable = Path(td) / "kirakira_gaussian"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
         lines = subprocess.check_output(
             [str(executable), "--crt-initialized-actual-aex-oracle", "13", "5", "7"],
             input="\n".join(inputs) + "\n",

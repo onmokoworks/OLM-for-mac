@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Actual exported SmartRender owner versus production on the compound 5x5 fixture."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 from PIL import Image
@@ -22,7 +25,7 @@ def req(x,m):
  if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2_owner_prod_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True,capture_output=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True,capture_output=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return {k:bytes.fromhex(v) for k,v in (line.split() for line in o.splitlines())}
 def tight(raw,depth):
  _fmt,ps,pad=DEPTHS[depth];rb=5*ps+pad

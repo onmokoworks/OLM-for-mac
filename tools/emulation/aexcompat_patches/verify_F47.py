@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Verify the explicitly load-only F47 boundary against three real bundles."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[3] / "tools/ucrt_cxx.py")
 import json
 import os
 from pathlib import Path
@@ -26,7 +29,7 @@ def main():
         rejected = subprocess.run(cmd[:-1], env=env, capture_output=True)
         assert rejected.returncode == 2, rejected
     (S / 'loader-results.json').write_text(json.dumps(results, indent=2) + '\n')
-    cmd = ['clang++', '-Wno-pragma-pack', '-I' + str(ROOT / 'Headers'),
+    cmd = [_UCRT_CXX, '-Wno-pragma-pack', '-I' + str(ROOT / 'Headers'),
            '-I' + str(ROOT / 'Headers/SP'), str(Path(__file__).with_name('F47-abi-probe.cpp')),
            '-o', str(S / 'abi')]
     subprocess.run(cmd, env=env, check=True)

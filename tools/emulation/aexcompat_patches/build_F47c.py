@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Build the isolated F47c shared-arena/native Smart bridge; cache is read-only."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[3] / "tools/ucrt_cxx.py")
 import hashlib
 import json
 import os
@@ -72,7 +75,7 @@ def main():
         (STATE/'abi.cpp').write_text('\n'.join(probe))
         with (STATE/'bridge-build.log').open('w') as log:
             for src,out in [(STATE/'abi.cpp',STATE/'abi.o'),(HERE/'F47c-native-bridge.cpp',STATE/'bridge.o')]:
-                subprocess.run(['clang++','-std=c++17','-Wno-pragma-pack','-I'+str(ROOT/'Headers'),'-I'+str(ROOT/'Headers/SP'),'-c',str(src),'-o',str(out)],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+                subprocess.run([_UCRT_CXX,'-std=c++17','-Wno-pragma-pack','-I'+str(ROOT/'Headers'),'-I'+str(ROOT/'Headers/SP'),'-c',str(src),'-o',str(out)],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
             subprocess.run(['ar','rcs',str(STATE/'libf47c.a'),str(STATE/'bridge.o')],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         build=crate/'build.rs'
         body=build.read_text().replace('fn main() {','fn main() {\n    println!("cargo:rustc-link-search=native='+str(STATE)+'");\n    println!("cargo:rustc-link-lib=static=f47c");\n    println!("cargo:rustc-link-lib=c++");',1)

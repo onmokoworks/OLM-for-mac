@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Verify and replay retained complete 16bpc Legacy OLMBlur fixtures."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -52,7 +55,7 @@ def main() -> int:
         assert sha256(directory / "expected_argb16.bin") == row["expected_sha256"]
     with tempfile.TemporaryDirectory(prefix="olmblur-worker16-legacy-") as temp:
         binary = Path(temp) / "replay"
-        subprocess.run(["c++", "-std=c++17", "-O2", "-ffp-contract=off", "-fno-fast-math", "-Icore", "core/olmblur_fullworker_helper.cpp", "core/olmblur_worker16_legacy.cpp", "tools/emulation/replay_olmblur_worker16_legacy.cpp", "-o", str(binary)], cwd=ROOT, check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-ffp-contract=off", "-fno-fast-math", "-Icore", "core/olmblur_fullworker_helper.cpp", "core/olmblur_worker16_legacy.cpp", "tools/emulation/replay_olmblur_worker16_legacy.cpp", "-o", str(binary)], cwd=ROOT, check=True)
         subprocess.run([str(binary), str(FIXTURES)], cwd=ROOT, check=True)
     print("[OK] OLMBlur 16bpc Legacy worker matches 4 retained complete AEX fixtures")
     return 0

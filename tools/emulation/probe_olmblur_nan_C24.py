@@ -4,6 +4,9 @@
 The original AEX instruction matrix is independent of the public trace.
 This diagnoses an oracle boundary; neither Rosetta nor Unicorn is Windows AE.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import hashlib
 import json
@@ -89,7 +92,7 @@ def main():
             for row in rows:f.write(struct.pack('<III',codes[row['operation']],row['left'],row['right']))
         for arch in ('arm64','x86_64'):
             binary = tmp/arch
-            cmd = ['clang++','-arch',arch,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(src),'-o',str(binary)]
+            cmd = [_UCRT_CXX,'-arch',arch,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(src),'-o',str(binary)]
             if arch == 'arm64':cmd += ['-fsanitize=address,undefined','-fno-sanitize-recover=all']
             commands.append(cmd)
             subprocess.run(cmd,check=True,capture_output=True)

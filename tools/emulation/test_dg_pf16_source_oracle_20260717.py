@@ -11,6 +11,9 @@ branch change, ``refcon+0x90 = 0``, to exercise the non-degenerate compose path.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -45,7 +48,7 @@ def build_source_oracle(tmp: Path) -> tuple[ctypes.CDLL, list[str]]:
         raise RuntimeError("clang++ is required for the independent Mac source oracle")
     dylib = tmp / "libdg_pf16_source_oracle_20260717.dylib"
     command = [
-        compiler,
+        _UCRT_CXX, "--compiler", compiler,
         "-std=c++17",
         "-O0",
         "-fno-fast-math",

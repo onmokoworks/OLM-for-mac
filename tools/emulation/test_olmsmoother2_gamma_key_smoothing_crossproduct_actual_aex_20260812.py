@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Bounded Gamma endpoint x key polarity x smoothing matrix, all depths."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_geometry_classifier_matrix_actual_aex_20260811 as base
@@ -21,7 +24,7 @@ def req(value,message):
 def main():
  with tempfile.TemporaryDirectory(prefix='sm2_gamma_cross_') as td:
   binary=Path(td)/'harness'
-  subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
+  subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
   rows=[]
   for feature in FEATURES:
    for gamma in GAMMAS:

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import re
 import struct
@@ -60,7 +63,7 @@ def main() -> int:
         executable = tmp_path / "probe_olmblur_case0004_worker16"
         make_worker_source(source)
         subprocess.run(
-            [compiler, "-std=c++17", "-O2", "-ffp-contract=off", *map(str, SOURCES), "-o", str(executable)],
+            [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-ffp-contract=off", *map(str, SOURCES), "-o", str(executable)],
             cwd=ROOT,
             check=True,
         )

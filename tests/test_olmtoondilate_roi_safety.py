@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import ast
 import shutil
 import subprocess
@@ -52,7 +55,7 @@ int main(){
         exe = temp / "probe"
         probe.write_text(prefix.replace("SOURCE_PATH", str(source)) + main)
         built = subprocess.run(
-            [compiler, "-std=c++17", "-O1", "-fsanitize=undefined,address",
+            [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", "-fsanitize=undefined,address",
              "-fno-omit-frame-pointer", "-I", str(temp), str(probe), "-o", str(exe)],
             cwd=ROOT, text=True, capture_output=True,
         )

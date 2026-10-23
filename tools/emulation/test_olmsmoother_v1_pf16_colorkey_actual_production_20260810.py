@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Close OLMSmoother v1's native PF16 Color Key first-pass boundary."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -88,7 +91,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="olmsmoother-v1-pf16-key-") as td:
         dylib = Path(td) / "lib.dylib"
         subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-shared", "-fPIC",
+            _UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC",
             "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS),
             "-o", str(dylib),
         ], cwd=ROOT, check=True, capture_output=True, text=True)

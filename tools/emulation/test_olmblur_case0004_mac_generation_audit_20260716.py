@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -122,7 +125,7 @@ def main() -> int:
     compiler = os.environ.get("CXX", "c++")
     with tempfile.TemporaryDirectory(prefix="olmblur_case0004_mac_generation_") as temporary:
         executable = Path(temporary) / "mac_generation"
-        compile_command = [compiler, "-std=c++17", "-O2", "-ffp-contract=off", str(PROBE), "-o", str(executable)]
+        compile_command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-ffp-contract=off", str(PROBE), "-o", str(executable)]
         build = subprocess.run(compile_command, cwd=ROOT, text=True, capture_output=True, check=False)
         if build.returncode:
             raise AssertionError(f"Mac generation probe compile failed: {build.stderr.strip()}")
@@ -132,7 +135,7 @@ def main() -> int:
             raise AssertionError(f"Mac generation probe failed: {run.stderr.strip()}")
     decay_bits, mac = parse_mac_output(run.stdout)
     mismatch = first_mismatch(actual, mac)
-    compiler_version = subprocess.check_output([compiler, "--version"], text=True).splitlines()[0]
+    compiler_version = subprocess.check_output([_UCRT_CXX, "--compiler", compiler, "--version"], text=True).splitlines()[0]
     report = {
         "schema": "olmblur.case0004.mac-radius-weight-generation-audit/1",
         "status": "pass_audit",
@@ -146,7 +149,7 @@ def main() -> int:
         },
         "parameters": {"blur_amount": params["blur_amount"], "blur_amount_f32_bits_hex": f"0x{amount_bits:08x}",
                        "repeat": params["repeat"]},
-        "compile_command": [compiler, "-std=c++17", "-O2", "-ffp-contract=off",
+        "compile_command": [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-ffp-contract=off",
                             str(PROBE.relative_to(ROOT)), "-o", "<temporary>/mac_generation"],
         "mac_decay_bits_hex": decay_bits,
         "actual_aex": actual,

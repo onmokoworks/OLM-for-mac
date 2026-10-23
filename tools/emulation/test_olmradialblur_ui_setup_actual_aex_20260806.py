@@ -2,6 +2,9 @@
 """Pin RadialBlur's actual-AEX setup surface and compare the Mac public UI."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -149,7 +152,7 @@ std::memset(&out,0,sizeof(out));int e=EffectMain(PF_Cmd_PARAMS_SETUP,&in,&out,nu
         directory = Path(raw)
         cpp, executable = directory / "probe.cpp", directory / "probe"
         cpp.write_text(source)
-        command = ["xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+        command = [_UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
                    "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
                    "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp", str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),
                    str(resolve_asset("Util/MissingSuiteError.cpp")), "-framework", "Cocoa", "-o", str(executable)]

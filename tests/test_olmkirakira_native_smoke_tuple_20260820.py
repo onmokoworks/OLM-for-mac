@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import importlib.util
 import os
 import subprocess
@@ -81,7 +84,7 @@ class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="kira_native_smoke_tuple_") as raw:
             executable = Path(raw) / "driver"
             build = subprocess.run([
-                "clang++", "-std=c++20", "-O2", "-DNDEBUG", "-w",
+                _UCRT_CXX, "-std=c++20", "-O2", "-DNDEBUG", "-w",
                 "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
                 "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                 "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

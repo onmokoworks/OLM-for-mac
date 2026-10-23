@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import importlib.util
@@ -67,7 +70,7 @@ def compile_harness(executable: Path) -> None:
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     define = '-DKIRA_SOURCE="' + str(SHIM) + '"'
     command = [
-        "clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        _UCRT_CXX, "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
         "-isysroot", sdk, "-w", "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
         "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), define, str(HARNESS),
         str(ROOT / "Util/AEGP_SuiteHandler.cpp"), str(ROOT / "Util/MissingSuiteError.cpp"),

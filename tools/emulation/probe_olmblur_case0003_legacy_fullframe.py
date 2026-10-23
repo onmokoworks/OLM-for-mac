@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import math
@@ -228,7 +231,7 @@ def validate_schedule(calls: list[dict]) -> list[dict]:
 
 
 def compile_runner(executable: Path) -> list[str]:
-    command = [os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off", "-fno-fast-math",
+    command = [_UCRT_CXX, "--compiler", os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off", "-fno-fast-math",
                "-Icore", str(PORTABLE_HELPER), str(PORTABLE_RUNNER), "-o", str(executable)]
     result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
     if result.returncode:

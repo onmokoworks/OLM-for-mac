@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import subprocess
@@ -76,7 +79,7 @@ def main() -> int:
         cpp.write_text(probe_source(width, height), encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-DNDEBUG", "-arch", "arm64",
+            _UCRT_CXX, "-std=c++17", "-O2", "-DNDEBUG", "-arch", "arm64",
             "-isysroot", sdk, "-Wno-pragma-pack", "-Wno-deprecated-declarations",
             "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
             str(ROOT / "mac/ColorKeep/ColorKeep_Strings.cpp"),

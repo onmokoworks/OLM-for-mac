@@ -2,6 +2,9 @@
 """Actual-AEX GLOBAL/PARAMS_SETUP parity for OLMToonDilate."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -39,7 +42,7 @@ def actual():
 def production():
  code=r'''#include <cstdio>\n#include <cstring>\n#include "mac/OLMToonDilate/OLMToonDilate.cpp"\nstatic PF_Err add(PF_ProgPtr,PF_ParamIndex,PF_ParamDefPtr d){fwrite(d,1,sizeof(*d),stdout);return 0;}\nint main(){PF_InData i{};PF_OutData o{};i.inter.add_param=add;if(EffectMain(PF_Cmd_GLOBAL_SETUP,&i,&o,nullptr,nullptr,nullptr))return 2;fwrite(&o.my_version,4,1,stderr);fwrite(&o.out_flags,4,1,stderr);fwrite(&o.out_flags2,4,1,stderr);if(EffectMain(PF_Cmd_PARAMS_SETUP,&i,&o,nullptr,nullptr,nullptr))return 3;return o.num_params==2?0:4;}'''.replace('\\n','\n')
  with tempfile.TemporaryDirectory(prefix="toon_ui_") as d:
-  p=Path(d);cpp=p/"p.cpp";exe=p/"p";cpp.write_text(code);cmd=["xcrun","clang++","-std=c++17","-O2","-D__MACH__","-Wno-pragma-pack","-I.","-IHeaders","-IHeaders/SP","-IUtil","-IResources",str(cpp),"mac/OLMToonDilate/OLMToonDilate_Strings.cpp",str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(exe)];b=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True);assert b.returncode==0,b.stderr;r=subprocess.run([str(exe)],capture_output=True);assert r.returncode==0,r.stderr;return struct.unpack("<III",r.stderr),row(r.stdout)
+  p=Path(d);cpp=p/"p.cpp";exe=p/"p";cpp.write_text(code);cmd=[_UCRT_CXX, "--xcrun","-std=c++17","-O2","-D__MACH__","-Wno-pragma-pack","-I.","-IHeaders","-IHeaders/SP","-IUtil","-IResources",str(cpp),"mac/OLMToonDilate/OLMToonDilate_Strings.cpp",str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(exe)];b=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True);assert b.returncode==0,b.stderr;r=subprocess.run([str(exe)],capture_output=True);assert r.returncode==0,r.stderr;return struct.unpack("<III",r.stderr),row(r.stdout)
 def main():
  assert hashlib.sha256(AEX.read_bytes()).hexdigest()==SHA
  ag,ar,meta=actual();pg,pr=production();assert len(ar)==1 and meta["num_params"]==2

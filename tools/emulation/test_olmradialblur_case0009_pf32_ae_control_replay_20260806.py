@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -120,7 +123,7 @@ i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_ga
 if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,32)!=PF_Err_NONE)return 3;
 std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()*sizeof(PF_PixelFloat));return 0;}}''', encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        cmd = [os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
+        cmd = [_UCRT_CXX, "--compiler", os.environ.get("CXX", "clang++"), "-std=c++17", "-arch", "arm64", "-O2",
                "-fno-fast-math", "-ffp-contract=off", "-Wno-unused-function", "-Wno-unused-parameter",
                "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
                "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), "-ffunction-sections",

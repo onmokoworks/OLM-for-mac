@@ -2,6 +2,9 @@
 """Bind the four retained Type-1 pairwise fixture sources before promotion."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import importlib.util
@@ -78,7 +81,7 @@ def run_probe(arch: str) -> list[str]:
         executable = Path(raw) / "probe"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = [
-            "clang++", "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
+            _UCRT_CXX, "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-isysroot", sdk,
             "-Wno-pragma-pack", "-Wno-deprecated-declarations",
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

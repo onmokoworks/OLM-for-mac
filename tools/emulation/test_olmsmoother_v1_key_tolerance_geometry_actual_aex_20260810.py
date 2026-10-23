@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Cross effective Color Key, smoothing range, geometry, and PF8/PF16."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -275,7 +278,7 @@ def actual(depth, payload, rowbytes, use_key, tolerance, code, diagnostics=False
 def build_production():
     temporary = tempfile.TemporaryDirectory(prefix="sm1-key-tol-prod-")
     dylib = Path(temporary.name) / "lib.dylib"
-    subprocess.run(["clang++", "-std=c++17", "-O2", "-shared", "-fPIC", "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS), "-o", str(dylib)], check=True, capture_output=True)
+    subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC", "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS), "-o", str(dylib)], check=True, capture_output=True)
     return temporary, ctypes.CDLL(str(dylib))
 
 

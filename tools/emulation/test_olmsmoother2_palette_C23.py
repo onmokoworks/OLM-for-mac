@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Bitwise original palette-worker boundary, including unordered comparisons."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, itertools, json, os, struct, subprocess, sys
 from pathlib import Path
 sys.dont_write_bytecode=True
@@ -47,7 +50,7 @@ int main() {
     expected=l.read_bytes(buf,len(raw)); results={}
     for name,flags in [('optimized',[]),('sanitized',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
         binary=s/name
-        subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',*flags,'-I',str(ROOT/'cli/OLMSmoother2/shim'),str(host),'-o',str(binary)],check=True)
+        subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',*flags,'-I',str(ROOT/'cli/OLMSmoother2/shim'),str(host),'-o',str(binary)],check=True)
         result=subprocess.run([str(binary)],input=data,text=True,capture_output=True,check=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1'))
         assert not result.stderr,result.stderr
         observed=b''.join(struct.pack('<4I',*(int(v,16) for v in line.split())) for line in result.stdout.splitlines())

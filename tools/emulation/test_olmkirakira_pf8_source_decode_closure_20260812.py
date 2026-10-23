@@ -2,6 +2,9 @@
 """Hash-bound the bounded OLMKiraKira PF8 reciprocal-multiply source decode."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import importlib.util
 import json
@@ -218,7 +221,7 @@ def compile_ray(directory: Path, seed: bytes) -> bytes:
     source = directory / "pf8-one-pass.cpp"
     source.write_text(RAY_CPP.replace("__CORE__", str(CORE)), encoding="utf-8")
     executable = directory / "pf8-one-pass"
-    subprocess.run(["c++", "-std=c++20", "-O2", "-ffp-contract=off", str(source),
+    subprocess.run([_UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off", str(source),
                     "-o", str(executable)], cwd=ROOT, check=True)
     values = struct.unpack("<15I", seed)
     output = subprocess.check_output([str(executable)], cwd=ROOT,

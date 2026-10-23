@@ -7,6 +7,9 @@ it, before polar sampling can obscure the component labelling rule.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import importlib
 import json
 import math
@@ -133,7 +136,7 @@ int main(int n,char**v){{if(n!=6)return 2;int d=atoi(v[1]),rb=atoi(v[2]);float s
  if(d==8)return Run<PF_Pixel8>(v[4],v[5],rb,sv);if(d==16)return Run<PF_Pixel16>(v[4],v[5],rb,sv);if(d==32)return Run<PF_PixelFloat>(v[4],v[5],rb,sv);return 4;}}
 ''')
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
-    cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+    cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
            "-ffp-contract=off", "-ffunction-sections", "-fdata-sections",
            "-isysroot", sdk, "-I", str(ROOT / "mac/OLMRadialBlur"),
            "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

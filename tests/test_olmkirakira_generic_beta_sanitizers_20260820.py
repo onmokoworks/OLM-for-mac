@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import os
 import subprocess
 import tempfile
@@ -17,7 +20,7 @@ class KiraKiraGenericBetaSanitizerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="kira_generic_san_") as raw:
             executable = Path(raw) / "generic"
             command = [
-                "clang++", "-std=c++20", "-O1", "-g", "-fno-omit-frame-pointer",
+                _UCRT_CXX, "-std=c++20", "-O1", "-g", "-fno-omit-frame-pointer",
                 "-fno-fast-math", "-ffp-contract=off",
                 "-fsanitize=address,undefined", "-isysroot", sdk, "-w",
                 "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

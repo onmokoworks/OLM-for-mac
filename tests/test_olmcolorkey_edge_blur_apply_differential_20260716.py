@@ -16,6 +16,9 @@ AE-exact claim.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import math
@@ -200,7 +203,7 @@ int main() {
     )
     cflags, libs, libpng_source = _libpng_flags()
     command = [
-        cxx,
+        _UCRT_CXX, "--compiler", cxx,
         "-std=c++17",
         "-O2",
         "-Wall",

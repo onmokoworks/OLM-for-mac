@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Real-SDK hostless closure for DirectionalBlur Smart WorldSuite handling."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
@@ -34,7 +37,7 @@ def run_probe():
  sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip()
  with tempfile.TemporaryDirectory(prefix="dblur-worldsuite-") as raw:
   td=Path(raw);cpp=td/"probe.cpp";exe=td/"probe";cpp.write_text(PROBE)
-  cmd=["clang++","-std=c++17","-arch","arm64","-O2","-ffp-contract=off","-isysroot",sdk,"-I",str(ROOT),"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),str(ROOT/"mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp"),str(ROOT/"core/dblur_rotate.cpp"),str(ROOT/"core/dblur_rowdriver.cpp"),str(ROOT/"core/dblur_frontonly.cpp"),str(ROOT/"core/dblur_field.cpp"),str(ROOT/"Util/AEGP_SuiteHandler.cpp"),str(ROOT/"Util/MissingSuiteError.cpp"),"-framework","Cocoa","-o",str(exe)]
+  cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-ffp-contract=off","-isysroot",sdk,"-I",str(ROOT),"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),str(ROOT/"mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp"),str(ROOT/"core/dblur_rotate.cpp"),str(ROOT/"core/dblur_rowdriver.cpp"),str(ROOT/"core/dblur_frontonly.cpp"),str(ROOT/"core/dblur_field.cpp"),str(ROOT/"Util/AEGP_SuiteHandler.cpp"),str(ROOT/"Util/MissingSuiteError.cpp"),"-framework","Cocoa","-o",str(exe)]
   b=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
   if b.returncode:raise RuntimeError(b.stdout+b.stderr)
   out=subprocess.check_output([str(exe)],text=True)

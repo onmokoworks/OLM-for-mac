@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,struct,subprocess,tempfile,sys,os
 from pathlib import Path
 import numpy as np
@@ -28,7 +31,7 @@ def actual(invert,layer=False,power=False):
 def main():
  layer=os.environ.get('OLM_DG_CLASSIC_LAYER')=='1';power=os.environ.get('OLM_DG_CLASSIC_POWER')=='1';cases=[]
  with tempfile.TemporaryDirectory() as td:
-  t=Path(td);exe=t/'h';q=subprocess.run(['clang++','-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr
+  t=Path(td);exe=t/'h';q=subprocess.run([_UCRT_CXX,'-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr
   for invert in (0,1):
    field,trace,src,out=actual(invert,layer,power);source=b''.join(bytes((a,r,g,b)) for a,g,r,b in src);active=b''.join(bytes((a,r,g,b)) for a,g,r,b in out);srcpad=b''.join(source[y*68:(y+1)*68]+b'\xa5'*7 for y in range(H));expected=b''.join(active[y*68:(y+1)*68]+b'\xa5'*11 for y in range(H));a=t/f's{invert}';b=t/f'e{invert}';a.write_bytes(srcpad);b.write_bytes(expected);args=[str(exe),str(a),str(b)]+(['invert'] if invert else [])+(['layer'] if layer else [])+(['power'] if power else []);q=subprocess.run(args,capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='');cases.append((invert,hashlib.sha256(field.astype('<f4').tobytes()).hexdigest(),hashlib.sha256(active).hexdigest(),len(trace)))
  expected_power=[(0,'b9df566485a5f2369cc8f6118c5a48290eff16f5097084a159d9d3fde7df3112','7e0dbb8fa472c312739a05818eb676142377219d969ae6028ad1ea664d4577ea',3),(1,'b9df566485a5f2369cc8f6118c5a48290eff16f5097084a159d9d3fde7df3112','8eb17bd878f953edb4139df5144bcd64a58e3bf9d80df87c67fe13236fdeea38',3)];expected_layer=[(0,'f6b4ff5a65f7b09d502c82d3e043eac3ac133069e831d27e1f686e1ac1f95229','13a74e7dc8897b6489f66b39e0e4505a4e46a943f3635b5b0c68bbe571b682cf',3),(1,'f6b4ff5a65f7b09d502c82d3e043eac3ac133069e831d27e1f686e1ac1f95229','e75997a208f073394cb11b7ce5a1f44f19f9af312f378fdcce2963c814d0d090',3)];expected_rgb=[(0,'f6b4ff5a65f7b09d502c82d3e043eac3ac133069e831d27e1f686e1ac1f95229','2a5da60c5858360fe2bb6cd34e275eab368e73eebc6d0d0dc8afb34105392d19',3),(1,'f6b4ff5a65f7b09d502c82d3e043eac3ac133069e831d27e1f686e1ac1f95229','5523ca4d6859e4c008a0c1479640f2530090fb60fd5d04b844c06bb3a7fa1c77',3)];assert cases==(expected_power if power else expected_layer if layer else expected_rgb);print('cases',cases);print('PASS_OLMDISTANCEGRADATION_CLASSIC_PF8_OUTSIDE_POWER_NOBG_RGB_BOTH_INVERT_EXACT' if power else 'PASS_OLMDISTANCEGRADATION_CLASSIC_PF8_OUTSIDE_SPHERE_NOBG_LAYER_BOTH_INVERT_EXACT' if layer else 'PASS_OLMDISTANCEGRADATION_CLASSIC_PF8_OUTSIDE_SPHERE_NOBG_BOTH_INVERT_EXACT')

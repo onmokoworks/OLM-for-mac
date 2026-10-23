@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import json,os,subprocess,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -35,6 +38,6 @@ int main(){
    for sanitize in (False,True):
     binary=Path(td)/('sanitized' if sanitize else 'o2')
     flags=['-O1','-g','-fsanitize=address,undefined,float-cast-overflow','-fno-omit-frame-pointer'] if sanitize else ['-O2']
-    subprocess.run(['clang++','-std=c++17',*flags,'-I',str(ROOT),str(src),'-o',str(binary)],check=True,capture_output=True)
+    subprocess.run([_UCRT_CXX,'-std=c++17',*flags,'-I',str(ROOT),str(src),'-o',str(binary)],check=True,capture_output=True)
     subprocess.run([str(binary)],check=True,capture_output=True,env=env)
 if __name__=='__main__':unittest.main()

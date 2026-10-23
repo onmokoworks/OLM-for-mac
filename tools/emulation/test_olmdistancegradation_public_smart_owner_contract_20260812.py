@@ -2,6 +2,9 @@
 """Corrected actual-owner and bounded public Smart contract for DistanceGradation."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -107,7 +110,7 @@ def generate()->dict:
             sum(bool(row.get("fail_closed")) for row in matrix["rows"])==8,"matrix row recount")
     with tempfile.TemporaryDirectory(prefix="dg_public_owner_contract_") as raw:
         td=Path(raw);exe=td/"harness"
-        build=subprocess.run(["clang++","-std=c++17","-O0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(HARNESS),str(FIELDGEN),"-o",str(exe)],cwd=ROOT,text=True,capture_output=True)
+        build=subprocess.run([_UCRT_CXX,"-std=c++17","-O0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(HARNESS),str(FIELDGEN),"-o",str(exe)],cwd=ROOT,text=True,capture_output=True)
         require(build.returncode==0,build.stderr);run=subprocess.run([str(exe)],text=True,capture_output=True);require(run.returncode==0,run.stderr);require("positive=9 mode5_positive=6 power_fail_closed=8 negative=21 classic_guards=4" in run.stdout,"harness marker")
         trace=natural_trace(td)
     static=json.loads(subprocess.run(["python3",str(AUDIT)],cwd=ROOT,text=True,capture_output=True,check=True).stdout)

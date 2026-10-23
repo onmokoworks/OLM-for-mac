@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Promote the proven simultaneous Front+Back tuples to padded 32x18."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import ctypes, hashlib, json, os, struct, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
@@ -32,7 +35,7 @@ def pf8_production(temp:Path,active:bytes,t:tuple[int,...])->bytes:
 #include <cstdint>
 int main(){{constexpr int W={W},H={H},RB=W*4+12;const std::uint8_t packed[]={{{array}}};std::array<std::uint8_t,RB*H> ib{{}},ob{{}};for(int y=0;y<H;y++)for(int x=0;x<W*4;x++)ib[y*RB+x]=packed[y*W*4+x];PF_EffectWorld in{{}},out{{}};in.data=(PF_PixelPtr)ib.data();in.rowbytes=RB;in.width=W;in.height=H;in.extent_hint={{0,0,W,H}};out.data=(PF_PixelPtr)ob.data();out.rowbytes=RB;out.width=W;out.height=H;out.extent_hint={{0,0,W,H}};OLMDirectionalBlurInfo i{{}};i.angle_deg=45;i.brightness_gain=1;i.front_strength=8;i.front_alpha_fade={ff};i.front_sharp_tail={fs};i.back_strength=8;i.back_alpha_fade={bf};i.back_sharp_tail={bs};i.size_variation={size};i.noise_variation={nv};i.noise_type={noise_type};i.seed=1;i.noise_offset=0;i.thickness=3;i.render_scale_x=1;i.render_scale_y=1;int exact=0;if(OLMDirectionalBlurTestRenderWorld(&in,&out,&i,8,&exact)!=PF_Err_NONE||!exact)return 2;for(int y=0;y<H;y++)for(int x=0;x<W*4;x++)std::printf("%02x",ob[y*RB+x]);}}''')
  sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip()
- cmd=[os.environ.get('CXX','clang++'),'-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-Wno-unused-function','-Wno-unused-parameter','-ffunction-sections','-fdata-sections','-isysroot',sdk,'-I',str(ROOT/'Headers'),'-I',str(ROOT/'Headers/SP'),'-I',str(ROOT/'Util'),'-I',str(ROOT/'Resources'),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-Wl,-dead_strip','-framework','Cocoa','-o',str(exe)]
+ cmd=[_UCRT_CXX, "--compiler", os.environ.get('CXX','clang++'),'-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-Wno-unused-function','-Wno-unused-parameter','-ffunction-sections','-fdata-sections','-isysroot',sdk,'-I',str(ROOT/'Headers'),'-I',str(ROOT/'Headers/SP'),'-I',str(ROOT/'Util'),'-I',str(ROOT/'Resources'),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-Wl,-dead_strip','-framework','Cocoa','-o',str(exe)]
  build=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
  if build.returncode: raise RuntimeError(build.stderr)
  run=subprocess.run([str(exe)],cwd=ROOT,capture_output=True,text=True)
@@ -51,7 +54,7 @@ def main()->int:
    else: active=active8
    lib=None; fn=None
    if depth!=8:
-    lib=temp/f'lib{depth}.dylib'; build=subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
+    lib=temp/f'lib{depth}.dylib'; build=subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
     if build.returncode: raise RuntimeError(build.stderr)
     fn=getattr(ctypes.CDLL(str(lib)),symbol); common=[ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float]; fn.argtypes=[ctypes.POINTER(ctype),ctypes.POINTER(ctype)]+common+[ctypes.POINTER(ctype),ctypes.c_int]
    for index,t in enumerate(TUPLES):
