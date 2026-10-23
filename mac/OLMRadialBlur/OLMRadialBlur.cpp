@@ -1042,10 +1042,10 @@ static bool IsGenericBaselineWorldPair(
 	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
 		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;
 	// C11: off-frame centers exercise the same original radius builder.
-	// PF32 and typed Rotation still have observed numerical residuals; keep
-	// their in-frame boundary until separately proven against the original.
+	// C33: PF32 center boundaries now match the F32 UCRT oracle. PF16
+	// Rotation retains its separate in-frame admission boundary.
 	const bool outside_center_supported =
-		std::is_same<PixelT, PF_Pixel8>::value ||
+		std::is_same<PixelT, PF_Pixel8>::value || std::is_same<PixelT, PF_PixelFloat>::value ||
 		(std::is_same<PixelT, PF_Pixel16>::value && info.blur_type == 1);
 	const bool center_supported =
 		(info.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&

@@ -1,0 +1,1803 @@
+{
+  "campaigns": {
+    "base-seed2/campaign.json": {
+      "sha256": "c67c1e400151f858b20a93d61969b255b507fa5a9a45cbea58ca75e508213851",
+      "seed": 2,
+      "count": 300,
+      "counts": {
+        "exact": 240,
+        "refusal": 60
+      },
+      "rendered_refusals": {
+        "SmartRender:smartrender-generic-budget": 10,
+        "RenderZoomTyped:unadmitted-zoom-profile": 7,
+        "RenderWorld:generic-world-not-admitted": 13,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 2,
+        "RenderWorld:type3-zero-noise": 2
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "candidate_sha256": "a478a419196eb937f5f1fb95218950c7f356fc4a062e0e56c629591ff5fcac74",
+        "candidate_source_sha256": "cd59c5834462004dc29c81fb0e75f62a7b270e395c31a21a6d74320d7e4c444b",
+        "case_timeout_seconds": 30.0,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "cd59c5834462004dc29c81fb0e75f62a7b270e395c31a21a6d74320d7e4c444b",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "sanitizer_reports": 0
+    },
+    "baseline.json": {
+      "sha256": "c1212639f2c4149776af640e7abcdfba0e7fcfa5cd0fef9654036f6c75fbb72a",
+      "seed": 1,
+      "count": 300,
+      "counts": {
+        "exact": 240,
+        "refusal": 59,
+        "uncompared": 1
+      },
+      "rendered_refusals": {
+        "RenderWorld:generic-world-not-admitted": 14,
+        "SmartRender:smartrender-generic-budget": 8,
+        "RenderZoomTyped:unadmitted-zoom-profile": 5,
+        "RenderWorld:type3-zero-noise": 4,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 1
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": false,
+        "candidate_sha256": "f9adc239a3d3f4152181c2cfa9e85ea0dc13e2994f588b448443ab9c509895e1",
+        "candidate_source_sha256": "cd59c5834462004dc29c81fb0e75f62a7b270e395c31a21a6d74320d7e4c444b",
+        "case_timeout_seconds": 10,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "cd59c5834462004dc29c81fb0e75f62a7b270e395c31a21a6d74320d7e4c444b",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "sanitizer_reports": 0
+    },
+    "center-production-seed2/campaign.json": {
+      "sha256": "0ad22cc576550ec89c0b9883d1f4d730ef13f2a42f780f51276a3efba3d299b2",
+      "seed": 2,
+      "count": 300,
+      "counts": {
+        "exact": 250,
+        "refusal": 50
+      },
+      "rendered_refusals": {
+        "SmartRender:smartrender-generic-budget": 11,
+        "RenderZoomTyped:unadmitted-zoom-profile": 2,
+        "RenderWorld:generic-world-not-admitted": 8,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 2,
+        "RenderWorld:type3-zero-noise": 2
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "candidate_sha256": "d213a3e53134a78296f3441b5c302481360ead955942e46387beb560caec7c65",
+        "source_sha256": "d70d9893a4fe6766c881c6d263a10b46a0a761b01b1daea689e0571f3b0334dc",
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "candidate_source_sha256": "d70d9893a4fe6766c881c6d263a10b46a0a761b01b1daea689e0571f3b0334dc",
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "time": {
+          "value": 0,
+          "scale": 24,
+          "step": 1,
+          "total": 1
+        },
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "calibration": [
+          {
+            "depth": 8,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "matches_retained": false
+          },
+          {
+            "depth": 8,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "matches_retained": false
+          }
+        ]
+      },
+      "sanitizer_reports": 0
+    },
+    "center-seed1/campaign.json": {
+      "sha256": "f723cdfe104db41bce37dcf1b48c73d5c50a17a546e4ed43087625a81ee111b9",
+      "seed": 1,
+      "count": 300,
+      "counts": {
+        "exact": 252,
+        "uncompared": 1,
+        "refusal": 47
+      },
+      "rendered_refusals": {
+        "RenderWorld:generic-world-not-admitted": 6,
+        "SmartRender:smartrender-generic-budget": 8,
+        "RenderZoomTyped:unadmitted-zoom-profile": 2,
+        "RenderWorld:type3-zero-noise": 4,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 1
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "candidate_sha256": "2601be158debe2a41d31276242381cca22d9b24d2add37ed47f4e71a910dae36",
+        "candidate_source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "case_timeout_seconds": 30.0,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "sanitizer_reports": 0
+    },
+    "center-seed2/campaign.json": {
+      "sha256": "81527e382bcc861a372a4d0d1c7dc408ec7461dafa0e56a7072af896b77b848e",
+      "seed": 2,
+      "count": 300,
+      "counts": {
+        "exact": 250,
+        "refusal": 50
+      },
+      "rendered_refusals": {
+        "SmartRender:smartrender-generic-budget": 11,
+        "RenderZoomTyped:unadmitted-zoom-profile": 2,
+        "RenderWorld:generic-world-not-admitted": 8,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 2,
+        "RenderWorld:type3-zero-noise": 2
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "candidate_sha256": "bf36cb4997df358a422f359cbfada500ec578dc60dcb77f47734b91322815fd1",
+        "candidate_source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "case_timeout_seconds": 30.0,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "sanitizer_reports": 0
+    },
+    "center16-seed1/campaign.json": {
+      "sha256": "672559c4ab193d1ff3afe686b11b349cb7db1ba02f74428c758774da809a4b36",
+      "seed": 1,
+      "count": 300,
+      "counts": {
+        "exact": 254,
+        "uncompared": 1,
+        "refusal": 45
+      },
+      "rendered_refusals": {
+        "RenderWorld:generic-world-not-admitted": 4,
+        "SmartRender:smartrender-generic-budget": 8,
+        "RenderZoomTyped:unadmitted-zoom-profile": 2,
+        "RenderWorld:type3-zero-noise": 4,
+        "RenderZoomTyped:zoom-noise-plane-failure": 4,
+        "host-checkout": 1
+      },
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "candidate_sha256": "ae655d7ab4c0b64cb54afa10cdc15a6c7a7d24847db6ecfc6716395cc99ba344",
+        "source_sha256": "8b534e3b43be966af8d45f60f72ffcef974f518c1632865e00eab2e8178e6e3c",
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "candidate_source_sha256": "8b534e3b43be966af8d45f60f72ffcef974f518c1632865e00eab2e8178e6e3c",
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "time": {
+          "value": 0,
+          "scale": 24,
+          "step": 1,
+          "total": 1
+        },
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "calibration": [
+          {
+            "depth": 8,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "matches_retained": false
+          },
+          {
+            "depth": 8,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "matches_retained": false
+          }
+        ]
+      },
+      "sanitizer_reports": 0
+    }
+  },
+  "matrices": {
+    "centers16-matrix/report.json": {
+      "sha256": "8bda9afa69d5dfd7e3f7ee2334688582be1969b022f094aa49e74316f35da1e2",
+      "references": 36,
+      "layouts": 108,
+      "exact": 108,
+      "clean": 108,
+      "failures": [],
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "candidate_sha256": "cf74277d758b9a67d796bb629fc68a0e3ec53c0b0f4b3c27c563190639d37812",
+        "source_sha256": "21ef1de6c64aa18c1825f2c7d01fabf7d0398268a16c24c2cf853103e7b96c17",
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "candidate_source_sha256": "21ef1de6c64aa18c1825f2c7d01fabf7d0398268a16c24c2cf853103e7b96c17",
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "time": {
+          "value": 0,
+          "scale": 24,
+          "step": 1,
+          "total": 1
+        },
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "calibration": [
+          {
+            "depth": 8,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "matches_retained": false
+          },
+          {
+            "depth": 8,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "matches_retained": false
+          }
+        ]
+      }
+    },
+    "centers32-final/report.json": {
+      "sha256": "672f661ae6065ca15000a312b2b801e9c2e4c32c7c7475d06c080b4355166e02",
+      "references": 72,
+      "layouts": 216,
+      "exact": 216,
+      "clean": 216,
+      "failures": [],
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "candidate_sha256": "699ff5438648efb8426552aae2076b9444e35824165e72822467c9577bb27063",
+        "source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "candidate_source_sha256": "319207eff4242a69efb240d33ffe057874e6ce09909a9032cd5eda8f92053afa",
+        "candidate_bypass": "",
+        "candidate_sanitize": true,
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "time": {
+          "value": 0,
+          "scale": 24,
+          "step": 1,
+          "total": 1
+        },
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "calibration": [
+          {
+            "depth": 8,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 1,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "matches_retained": false
+          },
+          {
+            "depth": 8,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "matches_retained": true
+          },
+          {
+            "depth": 16,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "matches_retained": true
+          },
+          {
+            "depth": 32,
+            "family": 2,
+            "oracle": {
+              "status": "ok",
+              "guards_intact": true,
+              "session_clean": true
+            },
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "matches_retained": false
+          }
+        ]
+      }
+    }
+  },
+  "replays": {
+    "corpus-before/replay.json": {
+      "sha256": "98e4d73d55d4a6a8c79a34d26af1628ee91ee74e04bab16e2d23891cb042c569",
+      "count": 35,
+      "saved_matches": 35,
+      "smart_counts": {
+        "exact": 35
+      }
+    },
+    "corpus-center/replay.json": {
+      "sha256": "5979e7d58045c2577d1813fb84f64a290c6a72d3e3cc903a7e14ba30b0efcbe9",
+      "count": 35,
+      "saved_matches": 35,
+      "smart_counts": {
+        "exact": 35
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "before": "baseline.json",
+      "after": "center-seed1/campaign.json",
+      "transitions": {
+        "exact -> exact": 240,
+        "refusal -> exact": 12,
+        "uncompared -> uncompared": 1,
+        "refusal -> refusal": 47
+      },
+      "lost_exact": [],
+      "changes": [
+        {
+          "index": 2,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 94 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 94 0 0"
+            },
+            "raw_sha256": "12345e22a22d6c4d9b58fe6f7160dfd3d5bcdb8f0973c3cf5cc3612f9510d284",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "12345e22a22d6c4d9b58fe6f7160dfd3d5bcdb8f0973c3cf5cc3612f9510d284",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 20,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "172.51962280273438 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "172.51962280273438 0 0 0"
+            },
+            "raw_sha256": "d5d3e48146c22fa4fd9392a03fce1a193a8ca4211c801202b2eea6e34b357538",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "d5d3e48146c22fa4fd9392a03fce1a193a8ca4211c801202b2eea6e34b357538",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 23,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "6573811becdefec3de066ab0eb158f298a19052d4b8052c6063f277b50f0fa33",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "6573811becdefec3de066ab0eb158f298a19052d4b8052c6063f277b50f0fa33",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 28,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "-607.6080322265625 10 71 2"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "-607.6080322265625 10 71 2"
+            },
+            "raw_sha256": "ccaf6f183579497e8bfcd71045c04286fd3c2e60f3641e3eea164b761a4494b7",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "ccaf6f183579497e8bfcd71045c04286fd3c2e60f3641e3eea164b761a4494b7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 52,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "-21.787322998046875 80 91 11"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "-21.787322998046875 80 91 11"
+            },
+            "raw_sha256": "d6a01bfc08f966869057f42280ed0c3fd1fdd6029edffb315c16a34f41685735",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "d6a01bfc08f966869057f42280ed0c3fd1fdd6029edffb315c16a34f41685735",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 82,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "036ccbdfd3cfaae21db16bd71188c1d82801792a4281da33603cef1b32d9c5a2",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "036ccbdfd3cfaae21db16bd71188c1d82801792a4281da33603cef1b32d9c5a2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 100,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "-411.4747314453125 83 33 11"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "-411.4747314453125 83 33 11"
+            },
+            "raw_sha256": "24330c8d5321b06803a59b36d476bf3f550c15070afed09e2d240b118e42d46b",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "24330c8d5321b06803a59b36d476bf3f550c15070afed09e2d240b118e42d46b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 106,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 6 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 6 0"
+            },
+            "raw_sha256": "98f9d694d2432b1b500a2bfec67ff7461e65f030b864d290e2e968c6314b9aa8",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "98f9d694d2432b1b500a2bfec67ff7461e65f030b864d290e2e968c6314b9aa8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 124,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "-8.70220947265625 73 66 7"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "-8.70220947265625 73 66 7"
+            },
+            "raw_sha256": "f9e920a5d4fe969580d72745d6e156e006a9d94e8d1f50e3518b606f13333f2a",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "f9e920a5d4fe969580d72745d6e156e006a9d94e8d1f50e3518b606f13333f2a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 227,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 96 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 96 0"
+            },
+            "raw_sha256": "5094172ce15a71f0806b5fb3e4c79d9d881c53955744b541de13a455f6a3e762",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "5094172ce15a71f0806b5fb3e4c79d9d881c53955744b541de13a455f6a3e762",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 295,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 12"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 12"
+            },
+            "raw_sha256": "ee8d1b73e046a3ae282b2f3ae60d029c54849232becf3ba12f6fab0b10f94b1a",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "ee8d1b73e046a3ae282b2f3ae60d029c54849232becf3ba12f6fab0b10f94b1a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 298,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "989cf91c122549ca853fb7b96fe48f872b6f36c09399eafc96cb3ba4ac23cbf2",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "989cf91c122549ca853fb7b96fe48f872b6f36c09399eafc96cb3ba4ac23cbf2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "before": "base-seed2/campaign.json",
+      "after": "center-seed2/campaign.json",
+      "transitions": {
+        "exact -> exact": 240,
+        "refusal -> refusal": 50,
+        "refusal -> exact": 10
+      },
+      "lost_exact": [],
+      "changes": [
+        {
+          "index": 29,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "154f78984c7920c5da5e1b4c8259535b20b4905471bd48a5eea799d1782481d2",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "154f78984c7920c5da5e1b4c8259535b20b4905471bd48a5eea799d1782481d2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 106,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "540.01956176757812 57 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "540.01956176757812 57 0 0"
+            },
+            "raw_sha256": "09f84a1807a2719c02485bec9fda53fbd5762157d281ed5ade7863c335458fbb",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "09f84a1807a2719c02485bec9fda53fbd5762157d281ed5ade7863c335458fbb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 125,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "db8d77042d0008bd4f83874166ed5807161a7f6abc8d465f201f69a5bbb41aee",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "db8d77042d0008bd4f83874166ed5807161a7f6abc8d465f201f69a5bbb41aee",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 141,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "0506528f985be4b1317be4a3a13dedd58b2a3a67092c5afdd04ac171b47aa3af",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "0506528f985be4b1317be4a3a13dedd58b2a3a67092c5afdd04ac171b47aa3af",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 159,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b74a566b3ce129fb701fbb1bac372229a98301ff59b16738e02e34023117bbed",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "b74a566b3ce129fb701fbb1bac372229a98301ff59b16738e02e34023117bbed",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 164,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "34.760955810546875 1 100 -10"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "34.760955810546875 1 100 -10"
+            },
+            "raw_sha256": "0fc2fc39265c775fbec2c30f2337842ebb433ba37d3e6ba69e3d48add7627704",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "0fc2fc39265c775fbec2c30f2337842ebb433ba37d3e6ba69e3d48add7627704",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 171,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "fd0df7eb1327e4080943e72d67db166901a517ba9c7aa1e2f0e8365a1464ca09",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "fd0df7eb1327e4080943e72d67db166901a517ba9c7aa1e2f0e8365a1464ca09",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 185,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "46.415634155273438 0 0 -4"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "46.415634155273438 0 0 -4"
+            },
+            "raw_sha256": "4449306efde240ce4fb52ee5ddc66b63434a7d0f1a0273b242388032210f4980",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "4449306efde240ce4fb52ee5ddc66b63434a7d0f1a0273b242388032210f4980",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 195,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "1a88a25b28f1444144f757fbe94634ad6194a40eb210af15e6f396fcc1d4da68",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "1a88a25b28f1444144f757fbe94634ad6194a40eb210af15e6f396fcc1d4da68",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        {
+          "index": 268,
+          "before": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "after": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "abd71089bfa0ede1741793adbbe381d12389339e5401498394a19095e2661eaf",
+            "status": "exact"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "abd71089bfa0ede1741793adbbe381d12389339e5401498394a19095e2661eaf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      ]
+    }
+  ],
+  "production_verify": {
+    "sha256": "0d0e6ea107d2b57cf1de35553889463ba01eda5edb7fb0cac9defde9677fb827",
+    "rows": 300,
+    "same": 300,
+    "clean": 300,
+    "smoke": {
+      "tests": 8,
+      "failures": 5,
+      "errors": 0
+    },
+    "smoke_rows": [
+      {
+        "test": "unittest.case.FunctionTestCase (test_generic_baseline_accepts_arbitrary_pixels_geometry_and_padding)",
+        "status": "failure",
+        "linker_failure": true
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_generic_baseline_parameter_range_under_asan_ubsan)",
+        "status": "failure",
+        "linker_failure": true
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_generic_radial_budget_bounds_memory_work_and_smart_staging)",
+        "status": "pass",
+        "linker_failure": false
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_generic_type3_zoom_extent_stride_alias_and_rotation_boundary)",
+        "status": "failure",
+        "linker_failure": true
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_global_polar_request_normalizes_to_full_frame_and_rejects_tiles)",
+        "status": "pass",
+        "linker_failure": false
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_smart_lifecycle_advertises_extra_pixels_and_preserves_cleanup)",
+        "status": "pass",
+        "linker_failure": false
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_size_noise_classic_effectmain_all_depths_and_families)",
+        "status": "failure",
+        "linker_failure": true
+      },
+      {
+        "test": "unittest.case.FunctionTestCase (test_typed_inner_geometry_guard_accepts_centered_padded_and_rejects_near_misses)",
+        "status": "failure",
+        "linker_failure": true
+      }
+    ]
+  }
+}
