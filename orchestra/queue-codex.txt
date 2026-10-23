@@ -54,3 +54,4 @@ F46-integrate-ucrt-pow
 C39-seed45-residual-mismatches
 C40-dg-seed45-mismatch
 C41-radial-seed45-mismatch
+C42-colorkey-pf32-nan-mismatch
