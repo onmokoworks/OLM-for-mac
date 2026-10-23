@@ -50,6 +50,12 @@ s="$PWD/orchestra/state/C38-kira-smart-r9/recheck-color"
 mkdir -p "$s"
 export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
 python3 tools/emulation/snapshot_kirakira_C34.py --revision dc116dbc --scratch "$s/base" > "$s/snapshot.log" 2>&1
+for seed in 1 24; do
+ python3 tools/emulation/verify_kirakira_admission_F10.py --campaign-source "$s/base/before.cpp" --plugin olmkirakira --n 300 --seed "$seed" --jobs 1 --shrink-attempts 0 --shrink-seconds 0 --scratch "$s/before-$seed" --report "$s/before-seed$seed.json" --corpus "$s/before-corpus$seed" > "$s/before-$seed.log" 2>&1
+ python3 tools/fuzz/run.py --plugin olmkirakira --n 300 --seed "$seed" --jobs 1 --shrink-attempts 0 --shrink-seconds 0 --scratch "$s/after-$seed" --report "$s/after-seed$seed.json" --corpus "$s/after-corpus$seed" > "$s/after-$seed.log" 2>&1
+done
+python3 tools/emulation/verify_kirakira_smart_C04.py --before-source "$s/base/before.cpp" --campaign-dir "$s" --seeds 1 24 --scratch "$s/audit" --report "$s/audit.json" > "$s/audit.log" 2>&1
+python3 tools/emulation/audit_kirakira_numeric_corpus_F09.py --both-routes --before-source "$s/base/before.cpp" --scratch "$s/samples" --report "$s/samples.json" > "$s/samples.log" 2>&1
 python3 tools/emulation/probe_kirakira_smart_C07.py --family finite-color-box --source "$s/base/before.cpp" --gate-off --scratch "$s/gate" --report "$s/gate.json" > "$s/gate.log" 2>&1
 for family in finite-color-box finite-color-boundary; do
  python3 tools/emulation/probe_kirakira_smart_C07.py --family "$family" --require-exact --scratch "$s/$family" --report "$s/$family.json" > "$s/$family.log" 2>&1

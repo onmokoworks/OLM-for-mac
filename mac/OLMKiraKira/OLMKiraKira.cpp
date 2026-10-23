@@ -2045,15 +2045,18 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
-// C38: scalar luminance/Max and four-component color constructors feed the
-// recovered box and clamp pipelines for finite PF32 HDR/signed samples. Preserve all tuple,
-// geometry, ramp and work limits; other source domains need separate proof.
-static bool SmartFiniteBoxInputIsSupported(const PF_EffectWorld *input,
+// C38: finite PF32 HDR/signed input is supported by the recovered brightness
+// and color box pipelines, and by Alpha Gaussian/approximation. Preserve
+// tuple, geometry, ramp and work limits; nonfinite input has separate guards.
+static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
-    if (!input || format != PF_PixelFormat_ARGB128 ||
-        !(IsSmartScalarBrightnessBoxTuple(info, format) ||
-          IsSmartColorBoxTuple(info, format))) return false;
+    if (!input || format != PF_PixelFormat_ARGB128) return false;
+    const bool filtered_alpha = info.channel == 1 &&
+        (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
+         IsSmartApproximationTuple(info, format, input->width, input->height));
+    if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
+          IsSmartColorBoxTuple(info, format) || filtered_alpha)) return false;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
@@ -2916,7 +2919,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
 				 SmartAlphaBoxInputIsSupported(input_world, format, info) ||
-                 SmartFiniteBoxInputIsSupported(input_world, format, info));
+                 SmartFiniteInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
