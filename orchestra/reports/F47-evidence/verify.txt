@@ -1,0 +1,11 @@
+3/3 bundles loaded and EffectMain resolved; 3/3 unsupported render invocations rejected
+PF_InData 408
+PF_OutData 408
+PF_ParamDef 176
+PF_LayerDef 120
+PF_InteractCallbacks 176
+PF_InData.utils 176
+PF_InData.effect_ref 184
+PF_InData.pica_basicP 384
+PF_ParamDef.u 56
+PF_LayerDef.data 24

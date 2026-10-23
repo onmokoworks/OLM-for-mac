@@ -1,0 +1,80 @@
+[
+  {
+    "plugin": "OLMBlur",
+    "command": [
+      "xcodebuild",
+      "-project",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMBlur/OLMBlur.xcodeproj",
+      "-configuration",
+      "Release",
+      "-jobs",
+      "1",
+      "SRCROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMBlur/Mac",
+      "INFOPLIST_FILE=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMBlur/Mac/OLMBlur.plugin-Info.plist",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "MACOSX_DEPLOYMENT_TARGET=11.0",
+      "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMBlur/obj",
+      "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMBlur/products",
+      "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMBlur/pch",
+      "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMBlur/products",
+      "GCC_OPTIMIZATION_LEVEL=2",
+      "ENABLE_TESTABILITY=NO",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ],
+    "architectures": "x86_64 arm64"
+  },
+  {
+    "plugin": "OLMColorKey",
+    "command": [
+      "xcodebuild",
+      "-project",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMColorKey/OLMColorKey.xcodeproj",
+      "-configuration",
+      "Release",
+      "-jobs",
+      "1",
+      "SRCROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMColorKey/Mac",
+      "INFOPLIST_FILE=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMColorKey/Mac/OLMColorKey.plugin-Info.plist",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "MACOSX_DEPLOYMENT_TARGET=11.0",
+      "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMColorKey/obj",
+      "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMColorKey/products",
+      "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMColorKey/pch",
+      "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMColorKey/products",
+      "GCC_OPTIMIZATION_LEVEL=2",
+      "ENABLE_TESTABILITY=NO",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ],
+    "architectures": "x86_64 arm64"
+  },
+  {
+    "plugin": "OLMRadialBlur",
+    "command": [
+      "xcodebuild",
+      "-project",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMRadialBlur/OLMRadialBlur.xcodeproj",
+      "-configuration",
+      "Release",
+      "-jobs",
+      "1",
+      "SRCROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMRadialBlur/Mac",
+      "INFOPLIST_FILE=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/mac/OLMRadialBlur/Mac/OLMRadialBlur.plugin-Info.plist",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "MACOSX_DEPLOYMENT_TARGET=11.0",
+      "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMRadialBlur/obj",
+      "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMRadialBlur/products",
+      "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMRadialBlur/pch",
+      "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47-aexcompat-native-plugin-host/orchestra/state/F47-aexcompat-native-plugin-host/xcode/OLMRadialBlur/products",
+      "GCC_OPTIMIZATION_LEVEL=2",
+      "ENABLE_TESTABILITY=NO",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ],
+    "architectures": "x86_64 arm64"
+  }
+]
