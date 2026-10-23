@@ -51,6 +51,7 @@ def adapter_class(source, gate_off=False, sanitizers=True):
                 body = body.replace('#include "OLMKiraKira.h"',
                                     '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
                 body = body.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
+                body = body.replace('#include "../../ucrtmath/', '#include "'+str(ROOT/'ucrtmath')+'/')
                 generated = host.parent/'candidate.cpp'
                 generated.write_text(body)
                 host.write_text(host.read_text().replace(str(olmkirakira.SOURCE), str(generated)))

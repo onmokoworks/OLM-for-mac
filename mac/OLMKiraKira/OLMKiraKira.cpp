@@ -5,6 +5,7 @@
 #pragma clang fp contract(off)
 #endif
 #include "../../core/kirakira_gaussian.h"
+#include "../../core/kirakira_highlight_gaussian.h"
 #include "../../core/kirakira_highlight.h"
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
@@ -730,7 +731,8 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // Keep unresolved Highlight and other resize owners outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
+	const bool directional_gaussian = info.blur_mode == 3 &&
+		(info.highlight_radius == 0 || info.channel == 1 || info.channel == 2 || info.channel == 4);
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
 		 (info.channel >= 1 && info.channel <= 6 && directional_gaussian));
@@ -874,7 +876,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
             return result;
         }
         return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			(info.channel == 1 || info.channel == 2 || info.channel == 4) && info.highlight_radius == 0 &&
+			(info.channel == 1 || info.channel == 2 || info.channel == 4) &&
 				(info.strength_multiplier == 1.0 || UsesRecoveredSeedPipeline(info)),
 			UsesRecoveredSeedPipeline(info));
 	};
@@ -906,6 +908,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
                 seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
         }
 	}
+
+    if (highlight_radius > 0 && info.blur_mode == 3 && !color_owner &&
+        (info.channel == 1 || info.channel == 2 || info.channel == 4)) {
+        highlight = olm::kirakira::highlight_gaussian(
+            seed, work_width, work_height, highlight_radius);
+    }
 
 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
 	// trailing argument of both aggregation vtable calls. Natural exported
@@ -1759,9 +1767,10 @@ static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat for
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 	PF_PixelFormat format, A_long width, A_long height)
 {
-	// The directional Mode-3 operation is independent of the Highlight branch,
-	// whose two-dimensional Gaussian is not implemented here.
-	if (info.blur_mode != 3 || info.highlight_radius != 0 ||
+	// Scalar Highlight shares the recovered constructor and adds a separable
+	// two-dimensional Gaussian. Four-component Highlight remains separate.
+	if (info.blur_mode != 3 ||
+        (info.highlight_radius != 0 && info.channel != 1 && info.channel != 2 && info.channel != 4) ||
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
@@ -1802,6 +1811,18 @@ static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 		largest_workspace = std::max(largest_workspace, pixels);
 		largest_kernel = std::max(largest_kernel, taps);
 	}
+    if (info.highlight_radius > 0) {
+        const uint64_t radius = (uint64_t)info.highlight_radius;
+        const uint64_t taps = radius * 2u + 1u;
+        const uint64_t extent = (uint64_t)std::max<A_long>(1, std::min(width, height) - 1);
+        const uint64_t folds = std::max<uint64_t>(1, (radius + extent - 1u) / extent);
+        uint64_t filter_work = 0;
+        if (!KiraCheckedMultiply(frame_pixels, taps * 2u, &filter_work) ||
+            !KiraCheckedMultiply(filter_work, folds, &filter_work) ||
+            !KiraCheckedAdd(work, filter_work, &work)) return false;
+        largest_workspace = std::max(largest_workspace, frame_pixels);
+        largest_kernel = std::max(largest_kernel, taps);
+    }
 	// Conservative peak: all retained frame planes plus the largest active
 	// helper's three float workspaces and its float/double kernel storage.
 	uint64_t bytes = frame_pixels * 92u, workspace_bytes = 0, kernel_bytes = 0;

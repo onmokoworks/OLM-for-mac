@@ -1,0 +1,51 @@
+--- before.cpp
++++ generic-highlight.cpp
+@@ -730,7 +730,7 @@
+ // Keep unresolved Highlight and other resize owners outside this recovery.
+ static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
+ {
+-	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
++	const bool directional_gaussian = info.blur_mode == 3;
+ 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
+ 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
+ 		 (info.channel >= 1 && info.channel <= 6 && directional_gaussian));
+@@ -740,7 +740,7 @@
+ {
+     return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
+         (info.blur_mode == 1 || info.blur_mode == 2 ||
+-         (info.blur_mode == 3 && info.highlight_radius == 0)) &&
++         (info.blur_mode == 3)) &&
+         (info.channel == 3 || info.channel == 5 || info.channel == 6);
+ }
+ 
+@@ -907,6 +907,30 @@
+         }
+ 	}
+ 
++
++    if (highlight_radius > 0 && info.blur_mode == 3) {
++        const int radius=highlight_radius, size=radius*2+1;
++        const double sigma=0.3*(radius-1)+0.8;
++        std::vector<double> d(size); double sum=0;
++        for(int k=0;k<size;++k) { double x=k-radius; d[k]=std::exp(-0.5*x*x/(sigma*sigma)); sum+=d[k]; }
++        std::vector<float> kernel(size);
++        for(int k=0;k<size;++k) kernel[k]=(float)(d[k]/sum);
++        if(radius==1) kernel={0.25f,0.5f,0.25f};
++        if(radius==2) kernel={0.0625f,0.25f,0.375f,0.25f,0.0625f};
++        auto reflect=[](int x,int n) { if(n==1)return 0; while((unsigned)x>=(unsigned)n) x=x<0?-x:n*2-x-2; return x; };
++        const int channels=color_owner?4:1;
++        std::vector<float> tmp(seed.size());
++        for(int y=0;y<work_height;++y) for(int x=0;x<work_width;++x) for(int c=0;c<channels;++c) {
++            float v=seed[(y*work_width+reflect(x-radius,work_width))*channels+c]*kernel[0];
++            for(int k=1;k<size;++k) { volatile float prod=seed[(y*work_width+reflect(x+k-radius,work_width))*channels+c]*kernel[k]; v=v+prod; }
++            tmp[(y*work_width+x)*channels+c]=v;
++        }
++        for(int y=0;y<work_height;++y) for(int x=0;x<work_width;++x) for(int c=0;c<channels;++c) {
++            float v=tmp[(y*work_width+x)*channels+c]*kernel[radius];
++            for(int k=1;k<=radius;++k) { float pair=tmp[(reflect(y-k,work_height)*work_width+x)*channels+c]+tmp[(reflect(y+k,work_height)*work_width+x)*channels+c]; volatile float prod=pair*kernel[radius+k]; v=v+prod; }
++            highlight[(y*work_width+x)*channels+c]=v;
++        }
++    }
+ 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
+ 	// trailing argument of both aggregation vtable calls. Natural exported
+ 	// Mode-1 capture confirms ray * Brightness Gain before composition; the

@@ -13,6 +13,7 @@ import json
 import os
 import random
 import struct
+import subprocess
 from pathlib import Path
 import shutil
 import sys
@@ -27,6 +28,37 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-highlight-negative':
+        for i, (slot, value) in enumerate(((1, 7), (4, 1), (5, 0.5),
+                                           (7, 50.0), (40, -2147483648/65536))):
+            case = next(c for c in cases(adapter, 'gaussian-highlight-scalar')
+                        if c['depth'] == 32 and any(p['slot'] == 1 and p['value'] == 2 for p in c['parameters']))
+            case['index'] = i
+            for param in case['parameters']:
+                if param['slot'] == slot: param['value'] = value
+            yield case
+        return
+    if family == 'gaussian-highlight-boundary':
+        for i, (depth, geometry, radius) in enumerate(itertools.product(
+                (8, 16, 32), ((1, 1), (1, 17), (17, 1), (2, 3), (8, 6)), (1, 2, 4, 13))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, (1, 2, 4)[i%3])
+            values = {4:0, 5:1, 6:97, 7:0.1, 8:97, 9:83,
+                      10:0, 16:0, 22:0, 28:0, 34:radius}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family == 'gaussian-highlight-scalar':
+        for i, (depth, channel, geometry, radius) in enumerate(itertools.product(
+                (8, 16, 32), (1, 2, 4), ((7, 11), (13, 9)), (1, 2, 3, 4, 6, 13, 50, 500))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {4:0, 5:(1, 1.25, 7.5)[i%3], 6:(1, 97, 100, 250)[i%4],
+                      7:(0, 0.001, 0.1)[i%3], 8:97, 9:83,
+                      10:3 if i%2 else 0, 16:0, 22:0, 28:0, 34:radius}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
     if family == 'approximation-color-highlight':
         for i, (depth, mode, channel, radius) in enumerate(itertools.product(
                 (8, 16, 32), (1, 2), (3, 5, 6), (1, 2, 3, 15, 50, 500))):
@@ -356,10 +388,11 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
+    p.add_argument('--ucrt-math', action='store_true', help='Bind trace expf/powf/atan2f to F32 UCRT FMA imports')
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--require-refusal', action='store_true')
     p.add_argument('--expect-finite-domain', action='store_true')
@@ -389,6 +422,14 @@ def main():
             (scratch / 'build').mkdir()
             adapter = adapter_class(args.source, args.gate_off)(options)
             adapter.binary, _ = adapter.build(scratch / 'build', deadline)
+        ucrt_math = None
+        if args.ucrt_math:
+            ucrt_math = scratch / 'trace-ucrt.dylib'
+            objects = sorted((scratch / 'build' / 'ucrtmath').glob('*.o'))
+            assert len(objects) == 4
+            subprocess.run(['clang', '-dynamiclib', *map(str, objects), '-o', str(ucrt_math)],
+                           check=True, capture_output=True)
+            report['trace_powf'] = 'independent UCRT expf/powf/atan2f FMA, matching F32'
         directory = scratch / 'case'
         directory.mkdir(exist_ok=True)
         selected = cases(adapter, args.family)
@@ -407,7 +448,7 @@ def main():
                        reference_sha256=sha(reference))
             report['rows'].append(row)
             if args.trace_index is not None:
-                original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
+                original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True, ucrt_math=ucrt_math)
                 row['original_trace_status'] = original['status']
                 row['original_trace_error'] = original.get('error')
                 if 'output' not in original['stages']:

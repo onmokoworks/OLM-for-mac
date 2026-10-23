@@ -25,7 +25,7 @@ from core import load_corpus, sha, raw_diff
 from run import default_worker, main_checkout
 
 
-def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
+def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False, ucrt_math=None):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
         UC_X86_REG_RSP, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
@@ -50,6 +50,21 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                     self.write_xmm_f32(0, powf(self.read_xmm_f32(0), self.read_xmm_f32(1)))
                     return 0
                 self.import_impls['powf'] = imported_powf
+            if ucrt_math is not None:
+                # F32 uses these independent UCRT implementations in FMA mode.
+                # Preserve every other import and all original numerical code.
+                import ctypes
+                library = ctypes.CDLL(str(ucrt_math))
+                for name, count in (('expf', 1), ('powf', 2), ('atan2f', 2)):
+                    function = getattr(library, 'ucrt_' + name)
+                    function.argtypes = [ctypes.c_float] * count + [ctypes.c_int]
+                    function.restype = ctypes.c_float
+                    def imported(uc, args, function=function, count=count):
+                        values = [self.read_xmm_f32(i) for i in range(count)]
+                        self.write_xmm_f32(0, function(*values, 1))
+                        return 0
+                    self.import_impls[name] = imported
+
 
         def add_code_hook(self, address, callback):
             # The base probe normally stops at Gaussian entry. Here execute
@@ -264,6 +279,7 @@ def traced_source(source_path, gate_off=True):
     source = source_path.read_text()
     source = source.replace('#include "OLMKiraKira.h"', '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
     source = source.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
+    source = source.replace('#include "../../ucrtmath/', '#include "'+str(ROOT/'ucrtmath')+'/')
     assert source.count('if (!exact_closure && !generic_beta) {') == 2
     if gate_off:
         source = source.replace('if (!exact_closure && !generic_beta) {','if (false) {')
