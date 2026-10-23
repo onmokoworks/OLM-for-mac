@@ -1033,11 +1033,8 @@ static bool IsGenericBaselineWorldPair(
 	const size_t last_row = (size_t)input->height - 1;
 	if ((last_row != 0 && input_rowbytes > std::numeric_limits<size_t>::max() / last_row) ||
 		(last_row != 0 && output_rowbytes > std::numeric_limits<size_t>::max() / last_row)) return false;
-	// Negative-phase PF32 reveals a separate Gaussian/import residual. Keep
-	// that admission closed while allowing proven integer-depth noise planes.
-	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-		if (info.noise_variation != 0.0 && info.noise_offset < 0.0f) return false;
-	}
+	// C35: defined negative-phase indices also match for PF32 with UCRT math.
+	// The Radial noise generator still rejects every out-of-table index.
 	size_t rgba_words = 0;
 	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
 		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;

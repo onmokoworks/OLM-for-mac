@@ -56,17 +56,19 @@ def index_boundary(w, h, thickness, seed):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--skip-plane-trace', action='store_true', help='Only run the public typed matrix; old F32 trace CLI cannot set AD angles')
+    ap.add_argument('--worker', type=Path, default=WORKER)
     ap.add_argument('--source', type=Path, default=public.SOURCE)
     ap.add_argument('--core', type=Path, default=ROOT/'core/dblur_noise.h')
     ap.add_argument('--all-depths', action='store_true', help='Also measure the unpromoted PF32 experiment')
     ap.add_argument('--output', type=Path, required=True)
     args = ap.parse_args()
     out = args.output.resolve()
-    assert out.is_relative_to(ROOT/'orchestra/state/C11-radial-smart-r2')
+    assert out.is_relative_to(ROOT/'orchestra/state')
     out.mkdir(parents=True, exist_ok=False)
     os.environ.update(TMPDIR=str(out), TMP=str(out), TEMP=str(out), OLM_RADIAL_CANDIDATE_SANITIZE='1')
     public.SOURCE = args.source.resolve()
-    adapter = Adapter(SimpleNamespace(main=MAIN, worker=WORKER, max_size=256, case_timeout=60))
+    adapter = Adapter(SimpleNamespace(main=MAIN, worker=args.worker, max_size=256, case_timeout=60))
     deadline = time.monotonic()+3600
     report = dict(provenance=adapter.prepare(out,deadline), core_sha256=sha(args.core.read_bytes()),
                   rows=[], failures=[])
@@ -111,13 +113,20 @@ def main():
                             trace_case = (case,domain,oracle)
                         print('ROW',row['index'],'defined',domain['defined'],[x['passed'] for x in row['layouts']],flush=True)
     (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+    if args.skip_plane_trace:
+        report['plane_trace'] = 'not requested; public raw typed matrix only'
+        report['status'] = 'pass' if not report['failures'] else 'fail'
+        (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+        shutil.rmtree(out/'build')
+        print('RESULT',report['status'],'rows',len(report['rows']),'failures',len(report['failures']),flush=True)
+        return bool(report['failures'])
     # One boundary-adjacent defined negative phase, bound to the full Smart output.
     case, domain, oracle = trace_case
     image = Image.new('RGBA',tuple(case['geometry']))
     image.putdata([(r,g,b,a) for a,r,g,b in struct.iter_unpack('4B',case['pixels'])])
     image.save(out/'input.png')
     count = domain['dimensions'][0]*domain['dimensions'][1]
-    command = [str(WORKER),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),
+    command = [str(args.worker),'render-trace-png',str(adapter.aex),str(out/'input.png'),str(out/'trace.png'),
                '--pixel-format','argb8','--watch','function=0x9680,arg=rcx,size=72,occurrence=1',
                '--watch',f'function=0x9680,arg=rcx,deref=8,size={count*4},occurrence=1',*zoom.assignments(case)]
     run = subprocess.run(command,capture_output=True,check=True,timeout=120)
