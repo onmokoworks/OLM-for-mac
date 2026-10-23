@@ -7,8 +7,10 @@ python3 tools/fuzz/run.py --plugin radialblur --n 2000 --seed 1 --jobs 4 --budge
 Requires macOS arm64, Xcode command line tools, the existing AE SDK links
 (`Headers`, `Util`, `Resources`) in MAIN, the original AEX in MAIN, and a retained
 AEXCompat worker. Set `OLM_AEX_WORKER=/absolute/path/to/aex-guest-worker` or use
-`--worker`. The workstation's retained October 6 containment worker is a fallback;
-its SHA-256 is always recorded. `--main` overrides the automatically detected MAIN
+`--worker` to select F30 or an older worker. Generation defaults to
+`~/.cache/olm-emu/worker-F32-deep/aex-guest-worker` (F30 UCRT/SSE NaN fixes plus
+legacy DEEP_PIXELS). Its SHA-256 is always recorded. Replay retains the saved
+hash-bound worker unless `--worker` explicitly overrides it. `--main` overrides the automatically detected MAIN
 checkout. Assets are read in place. Production source comes from this worktree.
 
 The runner reuses the RadialBlur public probes' parameter serializer, Point API
