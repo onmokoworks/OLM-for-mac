@@ -147,8 +147,12 @@ def campaigns():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('mode', choices=('corpus','slow','campaigns','smoke'))
+    ap.add_argument('mode', choices=('corpus','slow','campaigns','smoke','pair'))
+    ap.add_argument('--case', type=Path, help='Corpus file for a single paired replay')
+    ap.add_argument('--route', choices=('classic', 'smart'), default='smart')
     args = ap.parse_args()
+    if args.mode == 'pair' and args.case is None:
+        ap.error('pair requires --case')
     S.mkdir(parents=True, exist_ok=True)
     E.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(S), TMP=str(S), TEMP=str(S), OLM_TEST_JOBS='1', OLM_UCRT_FMA='1', PYTHONDONTWRITEBYTECODE='1')
@@ -158,7 +162,17 @@ def main():
         assert json.loads(binding.read_text())==identities
     else:
         binding.write_text(json.dumps(identities,indent=2)+'\n')
-    if args.mode=='smoke':
+    if args.mode == 'pair':
+        source = args.case.resolve()
+        data = json.loads(source.read_text())
+        a = adapter(data['plugin'], 'F50', data['max_size'])
+        case, _ = load_corpus(source, a)
+        with tempfile.TemporaryDirectory(dir=S, prefix='recheck_') as td:
+            row = pair(case, a.name, Path(td), args.route)
+        append(E/'recheck.jsonl', dict(key=str(source.relative_to(ROOT))+':'+args.route,
+            plugin=a.name, route=args.route, corpus_sha256=sha(source.read_bytes()),
+            input_sha256=sha(case['pixels']), **row))
+    elif args.mode=='smoke':
         for name in ('C49_seed1_case000117.json','C46_seed1_case000280.json'):
             source = ROOT/'tests/fuzz_corpus/radialblur'/name
             case,_ = load_corpus(source, adapter('radialblur','F50'))

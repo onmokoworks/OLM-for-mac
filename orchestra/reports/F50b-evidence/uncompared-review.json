@@ -1,0 +1,121 @@
+[
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000004_adfc483da30a.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.012971957999980077
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.012442582999938168
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000093_83728685d1c5.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.012969292001798749
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.012949915995704941
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000176_44f767dbce91.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.011723917006747797
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.011011750000761822
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.015383791003841907
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.013992541003972292
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000268_83728685d1c5.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.010919417007244192
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.0111232080089394
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/olmblur/seed1_case000270_8214084afb2c.json:classic",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.011577666999073699
+      },
+      {
+        "worker": "F50",
+        "status": "reject",
+        "cause": "allocation rejection",
+        "elapsed_seconds": 0.014132457989035174
+      }
+    ]
+  },
+  {
+    "key": "tests/fuzz_corpus/radialblur/C45_seed45102_case000052.json:smart",
+    "observations": [
+      {
+        "worker": "F46",
+        "status": "ok",
+        "cause": "normal return",
+        "elapsed_seconds": 18.08793824998429
+      },
+      {
+        "worker": "F50",
+        "status": "budget",
+        "cause": "instruction exhaustion",
+        "elapsed_seconds": 800.6014432079974
+      }
+    ]
+  }
+]
