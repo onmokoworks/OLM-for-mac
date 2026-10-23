@@ -1,0 +1,583 @@
+{
+  "sha256": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+  "file_version": "10.0.28000.2705",
+  "unicorn": "2.1.4",
+  "exports": {
+    "expf": "0xb8380",
+    "atan2f": "0x394b0",
+    "sinf": "0xbbfd0",
+    "cosf": "0xb7bb0",
+    "powf": "0xb9b90",
+    "_set_FMA3_enable": "0xd6800"
+  },
+  "status": "blocked",
+  "scope": "Smoke only; no random or exhaustive sweep; AMD not built or compared.",
+  "dispatch": {
+    "capability_rva": "0x13bdf4",
+    "active_mask_rva": "0x13bdf0",
+    "startup_executed": false,
+    "forced_capability_mask": 3
+  },
+  "dispatch_disassembly": [
+    "0xd6800: mov r8d, dword ptr [rip + 0x655ed]",
+    "0xd6807: xor edx, edx",
+    "0xd6809: test r8d, r8d",
+    "0xd680c: je 0x1800d681d",
+    "0xd680e: neg ecx",
+    "0xd6810: sbb eax, eax",
+    "0xd6812: and eax, r8d",
+    "0xd6815: mov dword ptr [rip + 0x655d5], eax",
+    "0xd681b: jmp 0x1800d6823",
+    "0xd681d: mov eax, dword ptr [rip + 0x655cd]",
+    "0xd6823: test eax, eax",
+    "0xd6825: setne dl",
+    "0xd6828: mov eax, edx",
+    "0xd682a: ret ",
+    "0xd682b: int3 ",
+    "0xd682c: int3 ",
+    "0xd682d: int3 ",
+    "0xd682e: int3 ",
+    "0xd682f: int3 ",
+    "0xd6830: int3 ",
+    "0xd6831: int3 ",
+    "0xd6832: int3 ",
+    "0xd6833: int3 ",
+    "0xd6834: mov rax, rsp",
+    "0xd6837: push rbx",
+    "0xd6838: push rbp",
+    "0xd6839: push rsi",
+    "0xd683a: push rdi",
+    "0xd683b: push r12",
+    "0xd683d: push r14"
+  ],
+  "entry_disassembly": {
+    "expf": [
+      "0xb8380: cmp dword ptr [rip + 0x83a69], 0",
+      "0xb8387: je 0x1800b8210",
+      "0xb838d: vmovd edx, xmm0",
+      "0xb8391: btr edx, 0x1f",
+      "0xb8395: cmp edx, 0x42b00000",
+      "0xb839b: jge 0x1800b8420",
+      "0xb83a1: vcvtss2sd xmm0, xmm0, xmm0",
+      "0xb83a5: vmulsd xmm3, xmm0, qword ptr [rip + 0x53903]",
+      "0xb83ad: vcvtpd2dq xmm4, xmm3",
+      "0xb83b1: lea r10, [rip + 0x58c48]",
+      "0xb83b8: vcvtdq2pd xmm1, xmm4"
+    ],
+    "atan2f": [
+      "0x394b0: mov eax, dword ptr [rip + 0x10293a]",
+      "0x394b6: and eax, 3",
+      "0x394b9: cmp al, 3",
+      "0x394bb: je 0x1800398e0",
+      "0x394c1: jmp 0x1800394d0",
+      "0x394c6: int3 ",
+      "0x394c7: int3 ",
+      "0x394c8: int3 ",
+      "0x394c9: int3 ",
+      "0x394ca: int3 ",
+      "0x394cb: int3 ",
+      "0x394cc: int3 ",
+      "0x394cd: int3 ",
+      "0x394ce: int3 ",
+      "0x394cf: int3 ",
+      "0x394d0: mov qword ptr [rsp + 8], rbx",
+      "0x394d5: mov qword ptr [rsp + 0x10], rbp",
+      "0x394da: mov qword ptr [rsp + 0x18], rsi",
+      "0x394df: push rdi",
+      "0x394e0: push r14",
+      "0x394e2: push r15",
+      "0x394e4: sub rsp, 0x40",
+      "0x394e8: movaps xmmword ptr [rsp + 0x30], xmm6"
+    ],
+    "sinf": [
+      "0xbbfd0: cmp dword ptr [rip + 0x7fe19], 0",
+      "0xbbfd7: je 0x1800bbc60",
+      "0xbbfdd: vmovd eax, xmm0",
+      "0xbbfe1: btr eax, 0x1f",
+      "0xbbfe5: cmp eax, 0x7f800000",
+      "0xbbfea: jae 0x1800bc318",
+      "0xbbff0: vcvtss2sd xmm5, xmm0, xmm0",
+      "0xbbff4: vmovq r9, xmm5",
+      "0xbbff9: btr r9, 0x3f",
+      "0xbbffe: cmp eax, 0x3f490fdb",
+      "0xbc003: jg 0x1800bc090",
+      "0xbc009: cmp eax, 0x3c000000",
+      "0xbc00e: jge 0x1800bc050"
+    ],
+    "cosf": [
+      "0xb7bb0: cmp dword ptr [rip + 0x84239], 0",
+      "0xb7bb7: je 0x1800b7900",
+      "0xb7bbd: sub rsp, 0x68",
+      "0xb7bc1: vmovd eax, xmm0",
+      "0xb7bc5: btr eax, 0x1f",
+      "0xb7bc9: cmp eax, 0x7f800000",
+      "0xb7bce: jae 0x1800b7dc5",
+      "0xb7bd4: vcvtss2sd xmm5, xmm0, xmm0",
+      "0xb7bd8: vmovq r9, xmm5",
+      "0xb7bdd: btr r9, 0x3f",
+      "0xb7be2: cmp eax, 0x3f490fdb",
+      "0xb7be7: jg 0x1800b7c90"
+    ],
+    "powf": [
+      "0xb9b90: sub rsp, 0x68",
+      "0xb9b94: movdqa xmmword ptr [rsp + 0x20], xmm6",
+      "0xb9b9a: movdqa xmmword ptr [rsp + 0x30], xmm7",
+      "0xb9ba0: cmp dword ptr [rip + 0x82249], 0",
+      "0xb9ba7: jne 0x1800ba346",
+      "0xb9bad: punpckldq xmm1, xmm0",
+      "0xb9bb1: pxor xmm5, xmm5",
+      "0xb9bb5: movd eax, xmm1",
+      "0xb9bb9: movd ecx, xmm0",
+      "0xb9bbd: mov r9d, ecx",
+      "0xb9bc0: btr eax, 0x1f",
+      "0xb9bc4: btr ecx, 0x1f",
+      "0xb9bc8: cmp eax, 0x7f800000"
+    ]
+  },
+  "smoke": [
+    {
+      "cpu": "default",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "output": "0x402df854",
+      "matches_apple": true
+    },
+    {
+      "cpu": "default",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x3eed6338",
+      "matches_apple": true
+    },
+    {
+      "cpu": "default",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "output": "0x3f576aa4",
+      "matches_apple": true
+    },
+    {
+      "cpu": "default",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "output": "0x3f0a5140",
+      "matches_apple": true
+    },
+    {
+      "cpu": "default",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    },
+    {
+      "cpu": "default",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b83bc",
+        "rva": "0xb83bc",
+        "instruction": [
+          "0xb83bc: vfnmadd231sd xmm0, xmm1, qword ptr [rip + 0x538fb]",
+          "0xb83c5: vmovd ecx, xmm4",
+          "0xb83c9: mov rax, 0x3f"
+        ]
+      }
+    },
+    {
+      "cpu": "default",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x0",
+      "matches_apple": false
+    },
+    {
+      "cpu": "default",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800bc0a8",
+        "rva": "0xbc0a8",
+        "instruction": [
+          "0xbc0a8: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x547df]",
+          "0xbc0b1: vcvttpd2dq xmm2, xmm2",
+          "0xbc0b5: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "default",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b7cac",
+        "rva": "0xb7cac",
+        "instruction": [
+          "0xb7cac: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x53dbb]",
+          "0xb7cb5: vcvttpd2dq xmm2, xmm2",
+          "0xb7cb9: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "default",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "output": "0x402df854",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x3eed6338",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "output": "0x3f576aa4",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "output": "0x3f0a5140",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    },
+    {
+      "cpu": "haswell",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b83bc",
+        "rva": "0xb83bc",
+        "instruction": [
+          "0xb83bc: vfnmadd231sd xmm0, xmm1, qword ptr [rip + 0x538fb]",
+          "0xb83c5: vmovd ecx, xmm4",
+          "0xb83c9: mov rax, 0x3f"
+        ]
+      }
+    },
+    {
+      "cpu": "haswell",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x0",
+      "matches_apple": false
+    },
+    {
+      "cpu": "haswell",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800bc0a8",
+        "rva": "0xbc0a8",
+        "instruction": [
+          "0xbc0a8: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x547df]",
+          "0xbc0b1: vcvttpd2dq xmm2, xmm2",
+          "0xbc0b5: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "haswell",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b7cac",
+        "rva": "0xb7cac",
+        "instruction": [
+          "0xb7cac: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x53dbb]",
+          "0xb7cb5: vcvttpd2dq xmm2, xmm2",
+          "0xb7cb9: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "haswell",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "output": "0x402df854",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x3eed6338",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "output": "0x3f576aa4",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "output": "0x3f0a5140",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 0,
+      "active_mask": 0,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "expf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x402df854",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b83bc",
+        "rva": "0xb83bc",
+        "instruction": [
+          "0xb83bc: vfnmadd231sd xmm0, xmm1, qword ptr [rip + 0x538fb]",
+          "0xb83c5: vmovd ecx, xmm4",
+          "0xb83c9: mov rax, 0x3f"
+        ]
+      }
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "atan2f",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3eed6338",
+      "output": "0x0",
+      "matches_apple": false
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "sinf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f576aa4",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800bc0a8",
+        "rva": "0xbc0a8",
+        "instruction": [
+          "0xbc0a8: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x547df]",
+          "0xbc0b1: vcvttpd2dq xmm2, xmm2",
+          "0xbc0b5: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "cosf",
+      "inputs": [
+        "0x3f800000"
+      ],
+      "apple": "0x3f0a5140",
+      "failure": {
+        "error": "Invalid instruction (UC_ERR_INSN_INVALID)",
+        "rip": "0x1800b7cac",
+        "rva": "0xb7cac",
+        "instruction": [
+          "0xb7cac: vfmadd213sd xmm2, xmm1, qword ptr [rip + 0x53dbb]",
+          "0xb7cb5: vcvttpd2dq xmm2, xmm2",
+          "0xb7cb9: vpmovsxdq xmm1, xmm2"
+        ]
+      }
+    },
+    {
+      "cpu": "skylake_client",
+      "mode": 1,
+      "active_mask": 3,
+      "function": "powf",
+      "inputs": [
+        "0x3f800000",
+        "0x40000000"
+      ],
+      "apple": "0x3f800000",
+      "output": "0x3f800000",
+      "matches_apple": true
+    }
+  ]
+}
