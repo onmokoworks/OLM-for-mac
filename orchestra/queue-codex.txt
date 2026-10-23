@@ -47,3 +47,5 @@ F41-relax-work-budget
 F42-ucrtmath-ms-float
 F43-ucrtmath-double
 C38-kira-smart-r9
+F43b-ucrtmath-ms-double-trig-exp
+F43c-ucrtmath-ms-pow
