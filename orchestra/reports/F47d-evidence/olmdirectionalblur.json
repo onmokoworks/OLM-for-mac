@@ -1,0 +1,3994 @@
+{
+  "summary": {
+    "route": "smart",
+    "completed": 100,
+    "depth_counts": {
+      "8": 31,
+      "16": 34,
+      "32": 35
+    },
+    "oracle_counts": {
+      "ok": 100
+    },
+    "bundle_counts": {
+      "exact": 100
+    },
+    "source_counts": {
+      "exact": 100
+    },
+    "classifications": {
+      "same-output-as-source": 100
+    },
+    "first_mismatch": null
+  },
+  "bundle_report_sha256": "ae9609ab4373e67d14d965d07942819b6e60daf74cf8d1175e183b5f2abf3c62",
+  "source_report_sha256": "ab97781054ed6f91c8bf6c1d043fec1e98fbb0150b605475100bf548d6dcbbba",
+  "bundle_provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/bundles/xcode/OLMDirectionalBlur/products/OLMDirectionalBlur.plugin",
+    "candidate_sha256": "188d9658b1489e747fe5c165b8c5ba9dc7d60c3ee628ff69d8c01a75149c2c55",
+    "case_timeout_seconds": 10.0,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "host": "F47d shared Rust ClassicHost arena; AEX setup, native candidate setup and selected render route",
+    "oracle_routes": {
+      "smart": "smart"
+    },
+    "original_routes": {
+      "smart": "render"
+    },
+    "parameter_profile": "shared declarations",
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/checked/aex-guest-worker",
+    "worker_sha256": "8057af6313d851f7e00939400b6b64a302fd00addc8f22c0812715216c49c35b",
+    "world": "same ARGB worlds: input padding rounded up to pixel alignment, 0xA5 fill; output packed in both runs; generated output_padding unused"
+  },
+  "source_provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "628288d27161ae8b797243bb317044b079d83d4394abc10e61d005ee804386ee",
+    "case_timeout_seconds": 10.0,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+      "core/dblur_rotate.cpp": "da531b705676b046221d346385c5e8664cede3986f650d4d42ecbc2e68129599",
+      "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "1b4c06d9e981b3c35e8c53da643bcda772fb57947385fb1e1894ec7855d8fb62",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47d-native-plugin-all/orchestra/state/F47d-native-plugin-all/aex-guest-worker",
+    "worker_sha256": "71fc06d07cb7b0a56efcca4f5ea6701166d26254ade88abd710db50277a0a0fd",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "cases": [
+    {
+      "index": 0,
+      "depth": 8,
+      "geometry": [
+        21,
+        19
+      ],
+      "input_sha256": "d92bed44a22b2c91863ac066e4bcf480761cd04327f74d610968d4fee9094c91",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 1,
+      "depth": 16,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "b2a3ef4799f92fc67a718a3e1a6b3e76f20e58f7867d3678b99728310d3aab4e",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ca48b1fec35bc33d07feab9c5763b21a856552fa51bbadfae3c41a4a599972b6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ca48b1fec35bc33d07feab9c5763b21a856552fa51bbadfae3c41a4a599972b6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "ca48b1fec35bc33d07feab9c5763b21a856552fa51bbadfae3c41a4a599972b6",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ca48b1fec35bc33d07feab9c5763b21a856552fa51bbadfae3c41a4a599972b6",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 2,
+      "depth": 32,
+      "geometry": [
+        10,
+        19
+      ],
+      "input_sha256": "725e09ad2d46b1b584771bf47caa4b149fe7de5422193031bf0263c08a7aefdb",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0d78b52896f1a2ebe3055689a840a80debedd3a32ab592a328233749e1085163",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0d78b52896f1a2ebe3055689a840a80debedd3a32ab592a328233749e1085163",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "0d78b52896f1a2ebe3055689a840a80debedd3a32ab592a328233749e1085163",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0d78b52896f1a2ebe3055689a840a80debedd3a32ab592a328233749e1085163",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 3,
+      "depth": 16,
+      "geometry": [
+        39,
+        45
+      ],
+      "input_sha256": "bc1f6d5c786f0a6bdc8773d674f3070690563182bc2d15e9f19f4a40022eb473",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bc1f6d5c786f0a6bdc8773d674f3070690563182bc2d15e9f19f4a40022eb473",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bc1f6d5c786f0a6bdc8773d674f3070690563182bc2d15e9f19f4a40022eb473",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "bc1f6d5c786f0a6bdc8773d674f3070690563182bc2d15e9f19f4a40022eb473",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bc1f6d5c786f0a6bdc8773d674f3070690563182bc2d15e9f19f4a40022eb473",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 4,
+      "depth": 8,
+      "geometry": [
+        117,
+        244
+      ],
+      "input_sha256": "2fd5424878430b213e540added3f6df09d39660bc1a8a0a80f2ebbcbcf3df57e",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 5,
+      "depth": 16,
+      "geometry": [
+        16,
+        67
+      ],
+      "input_sha256": "34a23ab7f65fff6afa4fe7f6f7c39ac07da6448b3295c094f6f79bad770d07ba",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a92bf25ab0a0611a9fa28806f75c54fb6715cd01a38607bdfbd441d79d4f8b63",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a92bf25ab0a0611a9fa28806f75c54fb6715cd01a38607bdfbd441d79d4f8b63",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "a92bf25ab0a0611a9fa28806f75c54fb6715cd01a38607bdfbd441d79d4f8b63",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a92bf25ab0a0611a9fa28806f75c54fb6715cd01a38607bdfbd441d79d4f8b63",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 6,
+      "depth": 8,
+      "geometry": [
+        33,
+        61
+      ],
+      "input_sha256": "5dbfee3cedb10b9f759e5a36ca06454feba5ba9e45f972774e6bfbcc342413a8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1c2eec6e56c029c932362f8317b2a022f2717b7d29ab3fd190388d539dc5b8c6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1c2eec6e56c029c932362f8317b2a022f2717b7d29ab3fd190388d539dc5b8c6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "1c2eec6e56c029c932362f8317b2a022f2717b7d29ab3fd190388d539dc5b8c6",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "1c2eec6e56c029c932362f8317b2a022f2717b7d29ab3fd190388d539dc5b8c6",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 7,
+      "depth": 32,
+      "geometry": [
+        23,
+        24
+      ],
+      "input_sha256": "bfeef77d89a999a01d3ee079a4bf3f7739168714af3fcf19aebe43115fd33db5",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 8,
+      "depth": 8,
+      "geometry": [
+        10,
+        2
+      ],
+      "input_sha256": "2c5b7602e4f5fc6f51d2cd37976774fc183a6ffc170c76e6e45867cef98d7fda",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "51c34f66e5597dc4325c59182c629af7cd33e1ec116698ecdb8a62c3ef29da87",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "51c34f66e5597dc4325c59182c629af7cd33e1ec116698ecdb8a62c3ef29da87",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "51c34f66e5597dc4325c59182c629af7cd33e1ec116698ecdb8a62c3ef29da87",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "51c34f66e5597dc4325c59182c629af7cd33e1ec116698ecdb8a62c3ef29da87",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 9,
+      "depth": 8,
+      "geometry": [
+        24,
+        5
+      ],
+      "input_sha256": "d276b8fdaf66ae3ac6aef10ca395b9075d6ed8b0ccec62efe0920cd5a94086b1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d7d51cd5ad802238c889c7b6574904d11d3bd2ea1fac4f3c7a960fd30c44b98c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d7d51cd5ad802238c889c7b6574904d11d3bd2ea1fac4f3c7a960fd30c44b98c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d7d51cd5ad802238c889c7b6574904d11d3bd2ea1fac4f3c7a960fd30c44b98c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d7d51cd5ad802238c889c7b6574904d11d3bd2ea1fac4f3c7a960fd30c44b98c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 10,
+      "depth": 8,
+      "geometry": [
+        6,
+        38
+      ],
+      "input_sha256": "e1f813115ea4a410a5e5f833cd8d8e20febe240250ea60c2030da8870d99103e",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e1f813115ea4a410a5e5f833cd8d8e20febe240250ea60c2030da8870d99103e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e1f813115ea4a410a5e5f833cd8d8e20febe240250ea60c2030da8870d99103e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "e1f813115ea4a410a5e5f833cd8d8e20febe240250ea60c2030da8870d99103e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "e1f813115ea4a410a5e5f833cd8d8e20febe240250ea60c2030da8870d99103e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 11,
+      "depth": 16,
+      "geometry": [
+        37,
+        46
+      ],
+      "input_sha256": "a74cb593835b201e2f44fcc581ad5a57acb797f277cee8b7fdf3325ff55e12b1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "119e188e26eb44d18dd5ea1002420bc2368b4e6aadfbd761821ea7382b38cd93",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "119e188e26eb44d18dd5ea1002420bc2368b4e6aadfbd761821ea7382b38cd93",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "119e188e26eb44d18dd5ea1002420bc2368b4e6aadfbd761821ea7382b38cd93",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "119e188e26eb44d18dd5ea1002420bc2368b4e6aadfbd761821ea7382b38cd93",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 12,
+      "depth": 16,
+      "geometry": [
+        2,
+        18
+      ],
+      "input_sha256": "f612291ba8c297830ff17017c985c0d4a15d93f588727b809a7c7f6458342580",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "13310c37ac613d12c885cecb0ae7d6f44d09290a7cbd17f508daa49cc1b0c0a9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "13310c37ac613d12c885cecb0ae7d6f44d09290a7cbd17f508daa49cc1b0c0a9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "13310c37ac613d12c885cecb0ae7d6f44d09290a7cbd17f508daa49cc1b0c0a9",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "13310c37ac613d12c885cecb0ae7d6f44d09290a7cbd17f508daa49cc1b0c0a9",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 13,
+      "depth": 16,
+      "geometry": [
+        24,
+        17
+      ],
+      "input_sha256": "34cf04ede148f16ec92b80d58554f54b50cd14d25a55c6857f6878c1154e4029",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "93dc9dc13536c5774d70a50c8102dda84059eeca31f05e208de00ec55c140886",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "93dc9dc13536c5774d70a50c8102dda84059eeca31f05e208de00ec55c140886",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "93dc9dc13536c5774d70a50c8102dda84059eeca31f05e208de00ec55c140886",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "93dc9dc13536c5774d70a50c8102dda84059eeca31f05e208de00ec55c140886",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 14,
+      "depth": 8,
+      "geometry": [
+        18,
+        1
+      ],
+      "input_sha256": "4e10471631851b54f684bd7b5a8c858c3ffd884b337b5457b57ec79d2dc5bf56",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f189707d47eebd66f7be6baf881282cf1f8a559a0cea45a079059f68d302ef04",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f189707d47eebd66f7be6baf881282cf1f8a559a0cea45a079059f68d302ef04",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "f189707d47eebd66f7be6baf881282cf1f8a559a0cea45a079059f68d302ef04",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f189707d47eebd66f7be6baf881282cf1f8a559a0cea45a079059f68d302ef04",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 15,
+      "depth": 32,
+      "geometry": [
+        9,
+        19
+      ],
+      "input_sha256": "0e61e6ba3b01d53dcf6232979ed0b0570e0b29ff3fd7d8b1ccd532da600129d3",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ecef240f5c0790ba8b579c43cb7008bed0acf1c1b0c804aab3f5e9cf8f29bee",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ecef240f5c0790ba8b579c43cb7008bed0acf1c1b0c804aab3f5e9cf8f29bee",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "6ecef240f5c0790ba8b579c43cb7008bed0acf1c1b0c804aab3f5e9cf8f29bee",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6ecef240f5c0790ba8b579c43cb7008bed0acf1c1b0c804aab3f5e9cf8f29bee",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 16,
+      "depth": 32,
+      "geometry": [
+        4,
+        22
+      ],
+      "input_sha256": "6e595210a07e020975da9f549f926b1d5e20f7eaa569e7aa4207604d793f063e",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "52bb55d8eb9b93d2d3bdfd55f4ce7f15cfaa95836c2ebff56ef99b66b9facd39",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "52bb55d8eb9b93d2d3bdfd55f4ce7f15cfaa95836c2ebff56ef99b66b9facd39",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "52bb55d8eb9b93d2d3bdfd55f4ce7f15cfaa95836c2ebff56ef99b66b9facd39",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "52bb55d8eb9b93d2d3bdfd55f4ce7f15cfaa95836c2ebff56ef99b66b9facd39",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 17,
+      "depth": 32,
+      "geometry": [
+        19,
+        158
+      ],
+      "input_sha256": "d7a3e6039e53f6cfc8264f35240487b33519a3a61dd190fc8faa1fbb29d7015b",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d7a3e6039e53f6cfc8264f35240487b33519a3a61dd190fc8faa1fbb29d7015b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d7a3e6039e53f6cfc8264f35240487b33519a3a61dd190fc8faa1fbb29d7015b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d7a3e6039e53f6cfc8264f35240487b33519a3a61dd190fc8faa1fbb29d7015b",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d7a3e6039e53f6cfc8264f35240487b33519a3a61dd190fc8faa1fbb29d7015b",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 18,
+      "depth": 32,
+      "geometry": [
+        1,
+        39
+      ],
+      "input_sha256": "5257675ad04c5172ddb109022df6ed24051efc4e04d320930d210c85984ccccb",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6c875048671771a5388a229ad71703bed4cafca5854156b9785e7a91dcdd8204",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6c875048671771a5388a229ad71703bed4cafca5854156b9785e7a91dcdd8204",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "6c875048671771a5388a229ad71703bed4cafca5854156b9785e7a91dcdd8204",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6c875048671771a5388a229ad71703bed4cafca5854156b9785e7a91dcdd8204",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 19,
+      "depth": 8,
+      "geometry": [
+        8,
+        21
+      ],
+      "input_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a2a85bbc2bd08ad95abbab96c8d417259c2e6574ca7ffa781367ee8e2713518c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 20,
+      "depth": 32,
+      "geometry": [
+        10,
+        22
+      ],
+      "input_sha256": "09a26773b78220c4c43d5db472c69715ae7d8b19701191dffbb319622a7e2443",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "11648d0326048849f4a0dcf2d4c91aba586fb4155a14d00578e1c67e0e8da441",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "11648d0326048849f4a0dcf2d4c91aba586fb4155a14d00578e1c67e0e8da441",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "11648d0326048849f4a0dcf2d4c91aba586fb4155a14d00578e1c67e0e8da441",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "11648d0326048849f4a0dcf2d4c91aba586fb4155a14d00578e1c67e0e8da441",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 21,
+      "depth": 16,
+      "geometry": [
+        1,
+        34
+      ],
+      "input_sha256": "45deb56d3193e63428d5b5fe921021cddb1ac899689209c51d8e265312349507",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f247bd4f0f52dd41e7e7f1009aa2879171696508502e8e9dfb784a73662bf015",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f247bd4f0f52dd41e7e7f1009aa2879171696508502e8e9dfb784a73662bf015",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "f247bd4f0f52dd41e7e7f1009aa2879171696508502e8e9dfb784a73662bf015",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f247bd4f0f52dd41e7e7f1009aa2879171696508502e8e9dfb784a73662bf015",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 22,
+      "depth": 16,
+      "geometry": [
+        4,
+        4
+      ],
+      "input_sha256": "e0cdec53ffbd7f5422190b61e8dd27113aeb5b55dfcd2499a189d8b08e226bf8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e0cdec53ffbd7f5422190b61e8dd27113aeb5b55dfcd2499a189d8b08e226bf8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e0cdec53ffbd7f5422190b61e8dd27113aeb5b55dfcd2499a189d8b08e226bf8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "e0cdec53ffbd7f5422190b61e8dd27113aeb5b55dfcd2499a189d8b08e226bf8",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "e0cdec53ffbd7f5422190b61e8dd27113aeb5b55dfcd2499a189d8b08e226bf8",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 23,
+      "depth": 32,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 24,
+      "depth": 32,
+      "geometry": [
+        50,
+        34
+      ],
+      "input_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d0618867523750e377632e657080894fb5a67faf806056c8b24d53a887a4c37f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 25,
+      "depth": 32,
+      "geometry": [
+        1,
+        91
+      ],
+      "input_sha256": "391c6f2eba97814c83061c9adebc7772dfdc538034d82cf7d4d3ef33bf6de6c8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8635b3eab928f26d1c0579610b884d16d4911dd090f65d5599aa7470f805a656",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8635b3eab928f26d1c0579610b884d16d4911dd090f65d5599aa7470f805a656",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "8635b3eab928f26d1c0579610b884d16d4911dd090f65d5599aa7470f805a656",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8635b3eab928f26d1c0579610b884d16d4911dd090f65d5599aa7470f805a656",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 26,
+      "depth": 16,
+      "geometry": [
+        7,
+        22
+      ],
+      "input_sha256": "d7b3365e734a3122a88d1b4482c790e171d2076ff844b4956e737964f85bbb77",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "05f204b235c70b0b097069b0e0b73817398f1808bba6f59f77eb19ed8dabcb82",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "05f204b235c70b0b097069b0e0b73817398f1808bba6f59f77eb19ed8dabcb82",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "05f204b235c70b0b097069b0e0b73817398f1808bba6f59f77eb19ed8dabcb82",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "05f204b235c70b0b097069b0e0b73817398f1808bba6f59f77eb19ed8dabcb82",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 27,
+      "depth": 32,
+      "geometry": [
+        5,
+        10
+      ],
+      "input_sha256": "3dd382cf23f9edc7e641f8c30e91914e6f63074a03e69cf82772df9486e1a64f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43e61a07d3bbff5ba9cc80559090073359564cab0681d90446403bdc757bb5cc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "43e61a07d3bbff5ba9cc80559090073359564cab0681d90446403bdc757bb5cc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "43e61a07d3bbff5ba9cc80559090073359564cab0681d90446403bdc757bb5cc",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "43e61a07d3bbff5ba9cc80559090073359564cab0681d90446403bdc757bb5cc",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 28,
+      "depth": 32,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "4016a155a7447ee49e949247c1d46258a169b145af163eec8271fcdc0a54ff4f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ed083fd23e3304699ed77b14b438f72148d2397b7b2cadb4512c7f9cf8a09fce",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ed083fd23e3304699ed77b14b438f72148d2397b7b2cadb4512c7f9cf8a09fce",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "ed083fd23e3304699ed77b14b438f72148d2397b7b2cadb4512c7f9cf8a09fce",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ed083fd23e3304699ed77b14b438f72148d2397b7b2cadb4512c7f9cf8a09fce",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 29,
+      "depth": 16,
+      "geometry": [
+        22,
+        42
+      ],
+      "input_sha256": "f2ae2f443b7acff798300983131887689740ea8a156e0503663756685045fc2a",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f2ae2f443b7acff798300983131887689740ea8a156e0503663756685045fc2a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f2ae2f443b7acff798300983131887689740ea8a156e0503663756685045fc2a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "f2ae2f443b7acff798300983131887689740ea8a156e0503663756685045fc2a",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f2ae2f443b7acff798300983131887689740ea8a156e0503663756685045fc2a",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 30,
+      "depth": 32,
+      "geometry": [
+        23,
+        1
+      ],
+      "input_sha256": "a69486710897ad5032839068498a100a79501d7dd4d67fcb138b06c50a602d8f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c257ceff9798182c6fc28c42f7b39f25b9f8672fdb60cc0de04f11e3deca93e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c257ceff9798182c6fc28c42f7b39f25b9f8672fdb60cc0de04f11e3deca93e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "0c257ceff9798182c6fc28c42f7b39f25b9f8672fdb60cc0de04f11e3deca93e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0c257ceff9798182c6fc28c42f7b39f25b9f8672fdb60cc0de04f11e3deca93e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 31,
+      "depth": 16,
+      "geometry": [
+        5,
+        12
+      ],
+      "input_sha256": "203bfe8ff33f5cb6cf9b3152d8ec2085567e5b0f6e00411a083719d0915961d1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "65175c55b4bd464ea947ef52022f028df0712b7263942944265aea5931115ee6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "65175c55b4bd464ea947ef52022f028df0712b7263942944265aea5931115ee6",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "65175c55b4bd464ea947ef52022f028df0712b7263942944265aea5931115ee6",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "65175c55b4bd464ea947ef52022f028df0712b7263942944265aea5931115ee6",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 32,
+      "depth": 32,
+      "geometry": [
+        14,
+        2
+      ],
+      "input_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "3f088e8801696a136d6583951bf3faf911b558d8f0cf03718c5b49051f9128fc",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 33,
+      "depth": 16,
+      "geometry": [
+        1,
+        12
+      ],
+      "input_sha256": "2a7445640f9c88db3600d177f96f914d12da7797d38648a3951aba9a3eac50ec",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "29786a4697cb8fa3ecdae341483794cf868c365e768a719520733f2b0e86e19c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "29786a4697cb8fa3ecdae341483794cf868c365e768a719520733f2b0e86e19c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "29786a4697cb8fa3ecdae341483794cf868c365e768a719520733f2b0e86e19c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "29786a4697cb8fa3ecdae341483794cf868c365e768a719520733f2b0e86e19c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 34,
+      "depth": 32,
+      "geometry": [
+        19,
+        7
+      ],
+      "input_sha256": "a60c3ca64ab5612e5f095ffacd755540d47f16eff1dd6d8b5aa4701c99bffb98",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d5bdd4a18fc191d6d8c69d5962d903023c1c97c2b1bf48921ef30e99623503f8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d5bdd4a18fc191d6d8c69d5962d903023c1c97c2b1bf48921ef30e99623503f8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d5bdd4a18fc191d6d8c69d5962d903023c1c97c2b1bf48921ef30e99623503f8",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d5bdd4a18fc191d6d8c69d5962d903023c1c97c2b1bf48921ef30e99623503f8",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 35,
+      "depth": 8,
+      "geometry": [
+        16,
+        56
+      ],
+      "input_sha256": "6c836cc3699a63eb13f8599e5f9e128fda55174c363ae6a2c856ed74c48d38e5",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b1ee8b7aa336a1d7e36289ca1689a4a7e6fed0b810829f5177576f7755f5557f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b1ee8b7aa336a1d7e36289ca1689a4a7e6fed0b810829f5177576f7755f5557f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "b1ee8b7aa336a1d7e36289ca1689a4a7e6fed0b810829f5177576f7755f5557f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b1ee8b7aa336a1d7e36289ca1689a4a7e6fed0b810829f5177576f7755f5557f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 36,
+      "depth": 16,
+      "geometry": [
+        10,
+        38
+      ],
+      "input_sha256": "1e19fd4546c6be71161456da53cc58837609d1df9cd47330c4e71e3091b6a59d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "80421111c83e1f3de0d90010429406d840098a02a626c6209e1bc8de13d131c4",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "80421111c83e1f3de0d90010429406d840098a02a626c6209e1bc8de13d131c4",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "80421111c83e1f3de0d90010429406d840098a02a626c6209e1bc8de13d131c4",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "80421111c83e1f3de0d90010429406d840098a02a626c6209e1bc8de13d131c4",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 37,
+      "depth": 8,
+      "geometry": [
+        13,
+        9
+      ],
+      "input_sha256": "bf8587da05e6444cae7c25d5fb2a1298774bcb6fb9d6aa012e3adc5dd2262f01",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bf8587da05e6444cae7c25d5fb2a1298774bcb6fb9d6aa012e3adc5dd2262f01",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "bf8587da05e6444cae7c25d5fb2a1298774bcb6fb9d6aa012e3adc5dd2262f01",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "bf8587da05e6444cae7c25d5fb2a1298774bcb6fb9d6aa012e3adc5dd2262f01",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bf8587da05e6444cae7c25d5fb2a1298774bcb6fb9d6aa012e3adc5dd2262f01",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 38,
+      "depth": 16,
+      "geometry": [
+        10,
+        7
+      ],
+      "input_sha256": "181b567c25d8b37b1e3d0d57deaf3a71deb29309d8a6e0b40e6aa4925270834d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8efb95176871aee8aedee347159a1c49dd14d79110c5e3eaad14a0836ca50f24",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8efb95176871aee8aedee347159a1c49dd14d79110c5e3eaad14a0836ca50f24",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "8efb95176871aee8aedee347159a1c49dd14d79110c5e3eaad14a0836ca50f24",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8efb95176871aee8aedee347159a1c49dd14d79110c5e3eaad14a0836ca50f24",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 39,
+      "depth": 32,
+      "geometry": [
+        21,
+        6
+      ],
+      "input_sha256": "19229190d98c4e34106102421b9e89ab85a3617cd22c86dc96b6f8aaedc03ad8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b860ebf4872eb757174fd99bbf70101beaa28cd0d7e5e89e34b7ffe9e3591003",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b860ebf4872eb757174fd99bbf70101beaa28cd0d7e5e89e34b7ffe9e3591003",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "b860ebf4872eb757174fd99bbf70101beaa28cd0d7e5e89e34b7ffe9e3591003",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b860ebf4872eb757174fd99bbf70101beaa28cd0d7e5e89e34b7ffe9e3591003",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 40,
+      "depth": 16,
+      "geometry": [
+        147,
+        169
+      ],
+      "input_sha256": "9eace852aeac1cd5a71a3464c63a128766a6ff230286cc9936c5ac7af072dfed",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5ecb05a3923f6c49d63829c46ef8461ce6778a38d70573087a2dddf6d07d8c5b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5ecb05a3923f6c49d63829c46ef8461ce6778a38d70573087a2dddf6d07d8c5b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "5ecb05a3923f6c49d63829c46ef8461ce6778a38d70573087a2dddf6d07d8c5b",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5ecb05a3923f6c49d63829c46ef8461ce6778a38d70573087a2dddf6d07d8c5b",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 41,
+      "depth": 8,
+      "geometry": [
+        20,
+        15
+      ],
+      "input_sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 42,
+      "depth": 8,
+      "geometry": [
+        8,
+        16
+      ],
+      "input_sha256": "15735e6eb76d24faa7abcaae5071f6215a2ad5d32e47d545de4d68be48cad1c1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8c98f01a49fe1e330c1a2489fc3de363c6e23b0ea94e8ac90ab93a98940a5c97",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8c98f01a49fe1e330c1a2489fc3de363c6e23b0ea94e8ac90ab93a98940a5c97",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "8c98f01a49fe1e330c1a2489fc3de363c6e23b0ea94e8ac90ab93a98940a5c97",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8c98f01a49fe1e330c1a2489fc3de363c6e23b0ea94e8ac90ab93a98940a5c97",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 43,
+      "depth": 32,
+      "geometry": [
+        5,
+        14
+      ],
+      "input_sha256": "d95a9350814120402af300fd5202c4319c769d898fabbe9e20f1882632120885",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d4f819a8e2b3d47d6a659eb188212e0cc43a8d669fc620d8d76a50865ee1d81f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d4f819a8e2b3d47d6a659eb188212e0cc43a8d669fc620d8d76a50865ee1d81f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d4f819a8e2b3d47d6a659eb188212e0cc43a8d669fc620d8d76a50865ee1d81f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d4f819a8e2b3d47d6a659eb188212e0cc43a8d669fc620d8d76a50865ee1d81f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 44,
+      "depth": 16,
+      "geometry": [
+        49,
+        6
+      ],
+      "input_sha256": "520a27e989143795620d8f71f7e801badca6b134286401349400a24cd025e88a",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "520a27e989143795620d8f71f7e801badca6b134286401349400a24cd025e88a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "520a27e989143795620d8f71f7e801badca6b134286401349400a24cd025e88a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "520a27e989143795620d8f71f7e801badca6b134286401349400a24cd025e88a",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "520a27e989143795620d8f71f7e801badca6b134286401349400a24cd025e88a",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 45,
+      "depth": 8,
+      "geometry": [
+        14,
+        20
+      ],
+      "input_sha256": "32efb8e31e5db2acf8fe2f29a81e1ab4ccd930b3a5178817239e7b38ba70e8bd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1aeb9741c0db4ce03c84a3c64d2dccf15e258387fc345540a356f24eeaef734d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1aeb9741c0db4ce03c84a3c64d2dccf15e258387fc345540a356f24eeaef734d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "1aeb9741c0db4ce03c84a3c64d2dccf15e258387fc345540a356f24eeaef734d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "1aeb9741c0db4ce03c84a3c64d2dccf15e258387fc345540a356f24eeaef734d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 46,
+      "depth": 32,
+      "geometry": [
+        2,
+        20
+      ],
+      "input_sha256": "3acc70baeac24afa64487e9b11d9c193b00cd92928cf85ff1a6bb77a9479feaa",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "3acc70baeac24afa64487e9b11d9c193b00cd92928cf85ff1a6bb77a9479feaa",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "3acc70baeac24afa64487e9b11d9c193b00cd92928cf85ff1a6bb77a9479feaa",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "3acc70baeac24afa64487e9b11d9c193b00cd92928cf85ff1a6bb77a9479feaa",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "3acc70baeac24afa64487e9b11d9c193b00cd92928cf85ff1a6bb77a9479feaa",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 47,
+      "depth": 16,
+      "geometry": [
+        22,
+        134
+      ],
+      "input_sha256": "612eba4b111cf318cea73a9e6b880eb53c59e53a333677b2cab8aa0e1fee4034",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "591d5668046747bbfaae13a044ccfe638bdfeb14a8bed3ec97cdcd07fe00e379",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "591d5668046747bbfaae13a044ccfe638bdfeb14a8bed3ec97cdcd07fe00e379",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "591d5668046747bbfaae13a044ccfe638bdfeb14a8bed3ec97cdcd07fe00e379",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "591d5668046747bbfaae13a044ccfe638bdfeb14a8bed3ec97cdcd07fe00e379",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 48,
+      "depth": 8,
+      "geometry": [
+        1,
+        65
+      ],
+      "input_sha256": "0c6d96ede055eb903884001eb849b08923ccfa01fb7735201f8b28fb93ce29d8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d4b80e21ff95bc2e136be821bcaf2726614f081f76968486acd32ad824adf57d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d4b80e21ff95bc2e136be821bcaf2726614f081f76968486acd32ad824adf57d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d4b80e21ff95bc2e136be821bcaf2726614f081f76968486acd32ad824adf57d",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d4b80e21ff95bc2e136be821bcaf2726614f081f76968486acd32ad824adf57d",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 49,
+      "depth": 16,
+      "geometry": [
+        9,
+        8
+      ],
+      "input_sha256": "0e655383379cb014d1b2ac4d17b90aa97580970949a7439956a6832b09a1317f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0e655383379cb014d1b2ac4d17b90aa97580970949a7439956a6832b09a1317f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0e655383379cb014d1b2ac4d17b90aa97580970949a7439956a6832b09a1317f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "0e655383379cb014d1b2ac4d17b90aa97580970949a7439956a6832b09a1317f",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0e655383379cb014d1b2ac4d17b90aa97580970949a7439956a6832b09a1317f",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 50,
+      "depth": 8,
+      "geometry": [
+        16,
+        5
+      ],
+      "input_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c1f1cc44bf3a9564c82aa49b756c47c316077c6dd2a1bba07b0176b6d5a8a705",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 51,
+      "depth": 32,
+      "geometry": [
+        51,
+        23
+      ],
+      "input_sha256": "8a8bb343deab786afa7fd3d34fc25f98bf47c784d94bb16fbad6010081802851",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c521cab70516c63796ace4497013a913561c7ff0d115ec6be416bcbe6386efc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c521cab70516c63796ace4497013a913561c7ff0d115ec6be416bcbe6386efc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "0c521cab70516c63796ace4497013a913561c7ff0d115ec6be416bcbe6386efc",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0c521cab70516c63796ace4497013a913561c7ff0d115ec6be416bcbe6386efc",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 52,
+      "depth": 32,
+      "geometry": [
+        3,
+        21
+      ],
+      "input_sha256": "26c987735959667003c29183d714f9e0a1a7cc9b4b582534a829a8bf6e5405c1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a3c9d5c90d899c9f0fbfa00e0018539f78616656e77e9e803a425e97391a20e9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a3c9d5c90d899c9f0fbfa00e0018539f78616656e77e9e803a425e97391a20e9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "a3c9d5c90d899c9f0fbfa00e0018539f78616656e77e9e803a425e97391a20e9",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a3c9d5c90d899c9f0fbfa00e0018539f78616656e77e9e803a425e97391a20e9",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 53,
+      "depth": 32,
+      "geometry": [
+        5,
+        18
+      ],
+      "input_sha256": "e0f473856d64d20fbfb8118852fa5a0cd59f1b74e061982acaf017586ce057e8",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 54,
+      "depth": 16,
+      "geometry": [
+        14,
+        1
+      ],
+      "input_sha256": "004b4b6e9e939665d82ed2efa7d5263b349ff9b8646004d5beedf1e10ce4e008",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "82caa62aadd93e88b3dbedcd7201feb5fc18d13110a348b52f4fba5c7cf8bd20",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "82caa62aadd93e88b3dbedcd7201feb5fc18d13110a348b52f4fba5c7cf8bd20",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "82caa62aadd93e88b3dbedcd7201feb5fc18d13110a348b52f4fba5c7cf8bd20",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "82caa62aadd93e88b3dbedcd7201feb5fc18d13110a348b52f4fba5c7cf8bd20",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 55,
+      "depth": 8,
+      "geometry": [
+        2,
+        53
+      ],
+      "input_sha256": "18f3176961e04bf6c7e4b88e7380420733143ebdd075cc5a09690aeeb617c383",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "18f3176961e04bf6c7e4b88e7380420733143ebdd075cc5a09690aeeb617c383",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "18f3176961e04bf6c7e4b88e7380420733143ebdd075cc5a09690aeeb617c383",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "18f3176961e04bf6c7e4b88e7380420733143ebdd075cc5a09690aeeb617c383",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "18f3176961e04bf6c7e4b88e7380420733143ebdd075cc5a09690aeeb617c383",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 56,
+      "depth": 8,
+      "geometry": [
+        1,
+        113
+      ],
+      "input_sha256": "2a41b3ce4ec062ec373fc2de3f279ae74e0a05f79ee12350390050ddcd0f3667",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "955c3c3a9e0a12ad2ea0f377f7e0ab6242cf6d0bbf012de14b300e1f032ae814",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "955c3c3a9e0a12ad2ea0f377f7e0ab6242cf6d0bbf012de14b300e1f032ae814",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "955c3c3a9e0a12ad2ea0f377f7e0ab6242cf6d0bbf012de14b300e1f032ae814",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "955c3c3a9e0a12ad2ea0f377f7e0ab6242cf6d0bbf012de14b300e1f032ae814",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 57,
+      "depth": 16,
+      "geometry": [
+        3,
+        35
+      ],
+      "input_sha256": "f00fb7f71bac4989ef80aba90f6d39f2b507727c323eda017154abc89e8cb764",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "76697f35fb9806ce42690c8191e5237ef411af5fbdf588c78905e44e4e53f5be",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "76697f35fb9806ce42690c8191e5237ef411af5fbdf588c78905e44e4e53f5be",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "76697f35fb9806ce42690c8191e5237ef411af5fbdf588c78905e44e4e53f5be",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "76697f35fb9806ce42690c8191e5237ef411af5fbdf588c78905e44e4e53f5be",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 58,
+      "depth": 8,
+      "geometry": [
+        1,
+        140
+      ],
+      "input_sha256": "6a25ce42b958ba50aebe7936d73fa06fa13c8b5e2136d7bdddf936b032cdad63",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8917cf448698afc29127e0b73c4f4ba628e5c9aaba1e146813cf0c0012c67942",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8917cf448698afc29127e0b73c4f4ba628e5c9aaba1e146813cf0c0012c67942",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "8917cf448698afc29127e0b73c4f4ba628e5c9aaba1e146813cf0c0012c67942",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8917cf448698afc29127e0b73c4f4ba628e5c9aaba1e146813cf0c0012c67942",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 59,
+      "depth": 32,
+      "geometry": [
+        8,
+        13
+      ],
+      "input_sha256": "5679e8c2ec8428b0f0db202679d021165739d541586e41f9d67d469e2f3f5473",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5679e8c2ec8428b0f0db202679d021165739d541586e41f9d67d469e2f3f5473",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5679e8c2ec8428b0f0db202679d021165739d541586e41f9d67d469e2f3f5473",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "5679e8c2ec8428b0f0db202679d021165739d541586e41f9d67d469e2f3f5473",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5679e8c2ec8428b0f0db202679d021165739d541586e41f9d67d469e2f3f5473",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 60,
+      "depth": 8,
+      "geometry": [
+        13,
+        23
+      ],
+      "input_sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 61,
+      "depth": 8,
+      "geometry": [
+        1,
+        1
+      ],
+      "input_sha256": "2344380cc9f3d30a2170381d401d5e203d6fb32f5634a076b521166058749069",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cedd6aafeda47b14dbf3e2056a4aee11dfe5a0b55d99213eade9a6be511419d9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "cedd6aafeda47b14dbf3e2056a4aee11dfe5a0b55d99213eade9a6be511419d9",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "cedd6aafeda47b14dbf3e2056a4aee11dfe5a0b55d99213eade9a6be511419d9",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "cedd6aafeda47b14dbf3e2056a4aee11dfe5a0b55d99213eade9a6be511419d9",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 62,
+      "depth": 16,
+      "geometry": [
+        7,
+        7
+      ],
+      "input_sha256": "d41c6fcd719456b47b6548bd4916c174944e6a1df2e5897f7066148b2b4aa617",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6fc0aff1d7d5ed41a29c09b432829e111adce6d249e1f6d8cf34c41acfd67995",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 63,
+      "depth": 32,
+      "geometry": [
+        12,
+        21
+      ],
+      "input_sha256": "6882d9c1c790aa9116d3003591a22a7ba6c0ffdd4bdc3055ad5f15e81e1f6036",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c6fba0f97d729be5c4f870e391ed780053e187751bdd8172eb400b9c2da39a4",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "0c6fba0f97d729be5c4f870e391ed780053e187751bdd8172eb400b9c2da39a4",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "0c6fba0f97d729be5c4f870e391ed780053e187751bdd8172eb400b9c2da39a4",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "0c6fba0f97d729be5c4f870e391ed780053e187751bdd8172eb400b9c2da39a4",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 64,
+      "depth": 32,
+      "geometry": [
+        12,
+        3
+      ],
+      "input_sha256": "b6843463e52ad01db9d0aeab90df8a91c685fb8be9e6c4c62bb691f6aeeb7dc7",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "95e3e7d62674ced137d6a494fe55b99a19071bd10265dbc2e108115364e7b51e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "95e3e7d62674ced137d6a494fe55b99a19071bd10265dbc2e108115364e7b51e",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "95e3e7d62674ced137d6a494fe55b99a19071bd10265dbc2e108115364e7b51e",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "95e3e7d62674ced137d6a494fe55b99a19071bd10265dbc2e108115364e7b51e",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 65,
+      "depth": 8,
+      "geometry": [
+        23,
+        6
+      ],
+      "input_sha256": "fde181dbbf48b874e45fa655f1c181ae30596c2c7d921d5ad45c4742f8fbeca7",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4ba439623a0c873f3b237c78fec4e8b6ffc9f172134f7f8940d387e3585429cb",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4ba439623a0c873f3b237c78fec4e8b6ffc9f172134f7f8940d387e3585429cb",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "4ba439623a0c873f3b237c78fec4e8b6ffc9f172134f7f8940d387e3585429cb",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4ba439623a0c873f3b237c78fec4e8b6ffc9f172134f7f8940d387e3585429cb",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 66,
+      "depth": 32,
+      "geometry": [
+        5,
+        3
+      ],
+      "input_sha256": "4883d605fa5dc90861302861360090cc8fd5727407dbdae7328bba1344fe3187",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "593e99d1219d33d0baacdfc24c38b68aa7d073d7c1910d83c3473f4922c77342",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "593e99d1219d33d0baacdfc24c38b68aa7d073d7c1910d83c3473f4922c77342",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "593e99d1219d33d0baacdfc24c38b68aa7d073d7c1910d83c3473f4922c77342",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "593e99d1219d33d0baacdfc24c38b68aa7d073d7c1910d83c3473f4922c77342",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 67,
+      "depth": 8,
+      "geometry": [
+        11,
+        8
+      ],
+      "input_sha256": "6925a2254eeb0bdc2e34fd812e8e1d5b83de8f1d75ec213d5c990e2ec22bf458",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7ab8c770569aac662fec6654581de5dea2e0a29b5f33c107d1541ee0b9cc5376",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7ab8c770569aac662fec6654581de5dea2e0a29b5f33c107d1541ee0b9cc5376",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "7ab8c770569aac662fec6654581de5dea2e0a29b5f33c107d1541ee0b9cc5376",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "7ab8c770569aac662fec6654581de5dea2e0a29b5f33c107d1541ee0b9cc5376",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 68,
+      "depth": 32,
+      "geometry": [
+        80,
+        1
+      ],
+      "input_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a2f0d579880a8442023ff07c020400177a7abb5b31521c764ebdca26a3852bbd",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 69,
+      "depth": 16,
+      "geometry": [
+        8,
+        14
+      ],
+      "input_sha256": "da44e5599be888210ad13096d5697fc50e37f617651aefd0fbedfb46e6ab2494",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "70866d6da6916d104c73ed02da460884711d28e4f0c3af66a57036f7c5df9f1b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "70866d6da6916d104c73ed02da460884711d28e4f0c3af66a57036f7c5df9f1b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "70866d6da6916d104c73ed02da460884711d28e4f0c3af66a57036f7c5df9f1b",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "70866d6da6916d104c73ed02da460884711d28e4f0c3af66a57036f7c5df9f1b",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 70,
+      "depth": 16,
+      "geometry": [
+        6,
+        17
+      ],
+      "input_sha256": "3540dedba6318fd036aa5439c818eed84ee2675d17dfeafd8e736ce4cf4f6291",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "51f5a7738f111d297f5824d680c850c88028067bc055f6cd3fee608a10ce5039",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "51f5a7738f111d297f5824d680c850c88028067bc055f6cd3fee608a10ce5039",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "51f5a7738f111d297f5824d680c850c88028067bc055f6cd3fee608a10ce5039",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "51f5a7738f111d297f5824d680c850c88028067bc055f6cd3fee608a10ce5039",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 71,
+      "depth": 32,
+      "geometry": [
+        17,
+        8
+      ],
+      "input_sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 72,
+      "depth": 8,
+      "geometry": [
+        22,
+        19
+      ],
+      "input_sha256": "18418b2f333f41b8f70230e731fc75917f5eee031789ab7b86d27b3905150240",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "96f6b11e1c2955b72a83196eed6e4338df0c30058480e78a10181a20b643fff0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "96f6b11e1c2955b72a83196eed6e4338df0c30058480e78a10181a20b643fff0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "96f6b11e1c2955b72a83196eed6e4338df0c30058480e78a10181a20b643fff0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "96f6b11e1c2955b72a83196eed6e4338df0c30058480e78a10181a20b643fff0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 73,
+      "depth": 8,
+      "geometry": [
+        12,
+        6
+      ],
+      "input_sha256": "06c8fa3b8f72822fc1732fe5bc33fc47f294083828ac6b259dc8aa521484de88",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "64afbb0d9100ab6f98087ed3259ef8f536aa55d9b227d7da302422d2af5161e0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "64afbb0d9100ab6f98087ed3259ef8f536aa55d9b227d7da302422d2af5161e0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "64afbb0d9100ab6f98087ed3259ef8f536aa55d9b227d7da302422d2af5161e0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "64afbb0d9100ab6f98087ed3259ef8f536aa55d9b227d7da302422d2af5161e0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 74,
+      "depth": 16,
+      "geometry": [
+        223,
+        1
+      ],
+      "input_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ec1dc98de2dc5547853e564d504381ad4ac78ae2e2a28e2e61cee145f8be5998",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 75,
+      "depth": 8,
+      "geometry": [
+        6,
+        28
+      ],
+      "input_sha256": "a47287b74b3a871eab7ca75c69a8475bed18dc75945112de3de9155101928edb",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "47be786a869cb8df24281ef8ecb2b55bdb5d6f9f3ded11e58351823f0fa1ab11",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "47be786a869cb8df24281ef8ecb2b55bdb5d6f9f3ded11e58351823f0fa1ab11",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "47be786a869cb8df24281ef8ecb2b55bdb5d6f9f3ded11e58351823f0fa1ab11",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "47be786a869cb8df24281ef8ecb2b55bdb5d6f9f3ded11e58351823f0fa1ab11",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 76,
+      "depth": 16,
+      "geometry": [
+        6,
+        12
+      ],
+      "input_sha256": "7ea8e78635819db56e5f8b366595530f65ca752a756ae0b5d16fec24927a7e23",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "de27cb22637dcca1123b18e155cd58094e8489208078500ca7ba71cb8e8d23a0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "de27cb22637dcca1123b18e155cd58094e8489208078500ca7ba71cb8e8d23a0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "de27cb22637dcca1123b18e155cd58094e8489208078500ca7ba71cb8e8d23a0",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "de27cb22637dcca1123b18e155cd58094e8489208078500ca7ba71cb8e8d23a0",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 77,
+      "depth": 8,
+      "geometry": [
+        18,
+        18
+      ],
+      "input_sha256": "814d37d95d6447c5d90bc6bf0f5506ad810c2a5defe6bf7d989d61b14c48754f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5d29013e3f6720e0729dbaf182d1d96fdb1903c2172c18ba6e5b05b9685b3778",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5d29013e3f6720e0729dbaf182d1d96fdb1903c2172c18ba6e5b05b9685b3778",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "5d29013e3f6720e0729dbaf182d1d96fdb1903c2172c18ba6e5b05b9685b3778",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5d29013e3f6720e0729dbaf182d1d96fdb1903c2172c18ba6e5b05b9685b3778",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 78,
+      "depth": 8,
+      "geometry": [
+        8,
+        19
+      ],
+      "input_sha256": "b14ba24e9b78e33588e369190e48815a5799a2ad4df34786fc994c521207e966",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "65d4ba3cb3049ae2398d2d551105a5f25e18ad990991d31d7b3facfdd7c992b8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "65d4ba3cb3049ae2398d2d551105a5f25e18ad990991d31d7b3facfdd7c992b8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "65d4ba3cb3049ae2398d2d551105a5f25e18ad990991d31d7b3facfdd7c992b8",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "65d4ba3cb3049ae2398d2d551105a5f25e18ad990991d31d7b3facfdd7c992b8",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 79,
+      "depth": 16,
+      "geometry": [
+        10,
+        4
+      ],
+      "input_sha256": "90cd5ab620980472e312734536c3b3dc8c30581cec20b5a6433501bbdbf0c867",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d159bb11c665903f4e913b0dbbc2912c1c9a305ee49975ed869ba8c1939ec46b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "d159bb11c665903f4e913b0dbbc2912c1c9a305ee49975ed869ba8c1939ec46b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "d159bb11c665903f4e913b0dbbc2912c1c9a305ee49975ed869ba8c1939ec46b",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "d159bb11c665903f4e913b0dbbc2912c1c9a305ee49975ed869ba8c1939ec46b",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 80,
+      "depth": 16,
+      "geometry": [
+        33,
+        59
+      ],
+      "input_sha256": "f3d7bbcb29c938bc9d1732ee5625e6f4408e9fadfd9fa77e202617c96d411ab5",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f3d7bbcb29c938bc9d1732ee5625e6f4408e9fadfd9fa77e202617c96d411ab5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "f3d7bbcb29c938bc9d1732ee5625e6f4408e9fadfd9fa77e202617c96d411ab5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "f3d7bbcb29c938bc9d1732ee5625e6f4408e9fadfd9fa77e202617c96d411ab5",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f3d7bbcb29c938bc9d1732ee5625e6f4408e9fadfd9fa77e202617c96d411ab5",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 81,
+      "depth": 8,
+      "geometry": [
+        14,
+        14
+      ],
+      "input_sha256": "58ed85c1484167089ef936120bbbdf708a7de2692511d3b3544b116d7422844c",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "58ed85c1484167089ef936120bbbdf708a7de2692511d3b3544b116d7422844c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "58ed85c1484167089ef936120bbbdf708a7de2692511d3b3544b116d7422844c",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "58ed85c1484167089ef936120bbbdf708a7de2692511d3b3544b116d7422844c",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "58ed85c1484167089ef936120bbbdf708a7de2692511d3b3544b116d7422844c",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 82,
+      "depth": 32,
+      "geometry": [
+        22,
+        13
+      ],
+      "input_sha256": "1df7bfb7dc520611dbd1d59f75c93566546faf58eef433828bc93604f98d29e1",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1df7bfb7dc520611dbd1d59f75c93566546faf58eef433828bc93604f98d29e1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "1df7bfb7dc520611dbd1d59f75c93566546faf58eef433828bc93604f98d29e1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "1df7bfb7dc520611dbd1d59f75c93566546faf58eef433828bc93604f98d29e1",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "1df7bfb7dc520611dbd1d59f75c93566546faf58eef433828bc93604f98d29e1",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 83,
+      "depth": 16,
+      "geometry": [
+        6,
+        9
+      ],
+      "input_sha256": "cfb0d49c3ef1e2b69c888c0546c1164c33b7a42496129225b77285f9181dad61",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ef444ebce5637599bba5cd835f8090dc8b94059f436c2f18dd144d9ca7e974a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6ef444ebce5637599bba5cd835f8090dc8b94059f436c2f18dd144d9ca7e974a",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "6ef444ebce5637599bba5cd835f8090dc8b94059f436c2f18dd144d9ca7e974a",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6ef444ebce5637599bba5cd835f8090dc8b94059f436c2f18dd144d9ca7e974a",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 84,
+      "depth": 16,
+      "geometry": [
+        19,
+        36
+      ],
+      "input_sha256": "15d15f91a6b5370e5fafc911ce944b024c4534d3b5c6a9698acaa62ea59fa4fc",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "64c7de64654ae40b341419308739d75f3210b5afaf33ee2b1b0fcc54535666cf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "64c7de64654ae40b341419308739d75f3210b5afaf33ee2b1b0fcc54535666cf",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "64c7de64654ae40b341419308739d75f3210b5afaf33ee2b1b0fcc54535666cf",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "64c7de64654ae40b341419308739d75f3210b5afaf33ee2b1b0fcc54535666cf",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 85,
+      "depth": 32,
+      "geometry": [
+        16,
+        3
+      ],
+      "input_sha256": "4538aea0dee55cc273d3bf57fea401199c6c683caee38d4ab4898fa1d7b4d2af",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fb4af07ef55f715793a11df10b613399358c34d4918ded2fd4218595fff83c50",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "fb4af07ef55f715793a11df10b613399358c34d4918ded2fd4218595fff83c50",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "fb4af07ef55f715793a11df10b613399358c34d4918ded2fd4218595fff83c50",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "fb4af07ef55f715793a11df10b613399358c34d4918ded2fd4218595fff83c50",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 86,
+      "depth": 32,
+      "geometry": [
+        31,
+        5
+      ],
+      "input_sha256": "b09b5eb33f0de73745786c34c45c92e9f6c90e226591e03d6bbd2906bfb1429f",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b87020295085f1a6eb3ea7d99dc667a11a9c993e00f43d2ee8d1fd8d0b0bd6e7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b87020295085f1a6eb3ea7d99dc667a11a9c993e00f43d2ee8d1fd8d0b0bd6e7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "b87020295085f1a6eb3ea7d99dc667a11a9c993e00f43d2ee8d1fd8d0b0bd6e7",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b87020295085f1a6eb3ea7d99dc667a11a9c993e00f43d2ee8d1fd8d0b0bd6e7",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 87,
+      "depth": 16,
+      "geometry": [
+        22,
+        5
+      ],
+      "input_sha256": "7fc358cccfb390787e8e4f0e7146bf4ae35f4600781e704df39d23a0f7c6ac01",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b1f0f4ca6bb0dd6206cadf6e2da45fe4895196aef360c6fd6806b14421621974",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "b1f0f4ca6bb0dd6206cadf6e2da45fe4895196aef360c6fd6806b14421621974",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "b1f0f4ca6bb0dd6206cadf6e2da45fe4895196aef360c6fd6806b14421621974",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "b1f0f4ca6bb0dd6206cadf6e2da45fe4895196aef360c6fd6806b14421621974",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 88,
+      "depth": 8,
+      "geometry": [
+        4,
+        14
+      ],
+      "input_sha256": "43b5f73c195ba37e6278a0f5f2f2270b5f7e92ba436a68ecb31dae4ad59f2847",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "32a2e6a3c684f7e6bdabf3e465c10c9b2804263dadaf3eeec527df2c34db1126",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "32a2e6a3c684f7e6bdabf3e465c10c9b2804263dadaf3eeec527df2c34db1126",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "32a2e6a3c684f7e6bdabf3e465c10c9b2804263dadaf3eeec527df2c34db1126",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "32a2e6a3c684f7e6bdabf3e465c10c9b2804263dadaf3eeec527df2c34db1126",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 89,
+      "depth": 32,
+      "geometry": [
+        17,
+        21
+      ],
+      "input_sha256": "d0deba8cdd7cbd2414a7983997138306822e857d8df644f4eb038f979c7a2517",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2ba112912adece8b8391b988cc15c5ab77126828080ee9299ca1f559c11c42e1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "2ba112912adece8b8391b988cc15c5ab77126828080ee9299ca1f559c11c42e1",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "2ba112912adece8b8391b988cc15c5ab77126828080ee9299ca1f559c11c42e1",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2ba112912adece8b8391b988cc15c5ab77126828080ee9299ca1f559c11c42e1",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 90,
+      "depth": 16,
+      "geometry": [
+        22,
+        9
+      ],
+      "input_sha256": "813ace0bc94f1a53e7aadb7b98ea15d5c99f2e9df03cb9d3118e70b3bf3bfa4d",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8a78d5df9586c0e6b8f69e48d313a95321f3e94b0cb0784891adc6ecfe4e3e49",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "8a78d5df9586c0e6b8f69e48d313a95321f3e94b0cb0784891adc6ecfe4e3e49",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "8a78d5df9586c0e6b8f69e48d313a95321f3e94b0cb0784891adc6ecfe4e3e49",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8a78d5df9586c0e6b8f69e48d313a95321f3e94b0cb0784891adc6ecfe4e3e49",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 91,
+      "depth": 8,
+      "geometry": [
+        8,
+        4
+      ],
+      "input_sha256": "088cbe2cb6a468d82f516f08ee09cdf980002212b115d1b380f9bf5f32096514",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "088cbe2cb6a468d82f516f08ee09cdf980002212b115d1b380f9bf5f32096514",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "088cbe2cb6a468d82f516f08ee09cdf980002212b115d1b380f9bf5f32096514",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "088cbe2cb6a468d82f516f08ee09cdf980002212b115d1b380f9bf5f32096514",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "088cbe2cb6a468d82f516f08ee09cdf980002212b115d1b380f9bf5f32096514",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 92,
+      "depth": 32,
+      "geometry": [
+        56,
+        44
+      ],
+      "input_sha256": "4f7455d4dbe2fabbaef50be9315c7688660d2b07e7a66f06836fc74683133afd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4d9f67afd54ab12c7cf70b9cfb07a91548475759e3bd1580eb8e4291659dc388",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "4d9f67afd54ab12c7cf70b9cfb07a91548475759e3bd1580eb8e4291659dc388",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "4d9f67afd54ab12c7cf70b9cfb07a91548475759e3bd1580eb8e4291659dc388",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4d9f67afd54ab12c7cf70b9cfb07a91548475759e3bd1580eb8e4291659dc388",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 93,
+      "depth": 16,
+      "geometry": [
+        72,
+        1
+      ],
+      "input_sha256": "2f0685c801c01ecff54aa3ae3aa5f760966e459545912c9d73b6585d0a67ee2b",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "92fc71cc57d47af92b6a74fafdb30b6065c371545923eeb69fbccb7b4172b234",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "92fc71cc57d47af92b6a74fafdb30b6065c371545923eeb69fbccb7b4172b234",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "92fc71cc57d47af92b6a74fafdb30b6065c371545923eeb69fbccb7b4172b234",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "92fc71cc57d47af92b6a74fafdb30b6065c371545923eeb69fbccb7b4172b234",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 94,
+      "depth": 32,
+      "geometry": [
+        51,
+        132
+      ],
+      "input_sha256": "610e23b3bfb603ccdc4bc5e2dc4f1106f2b47b1b68a09bfb753d834775678014",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "610e23b3bfb603ccdc4bc5e2dc4f1106f2b47b1b68a09bfb753d834775678014",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "610e23b3bfb603ccdc4bc5e2dc4f1106f2b47b1b68a09bfb753d834775678014",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "610e23b3bfb603ccdc4bc5e2dc4f1106f2b47b1b68a09bfb753d834775678014",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "610e23b3bfb603ccdc4bc5e2dc4f1106f2b47b1b68a09bfb753d834775678014",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 95,
+      "depth": 32,
+      "geometry": [
+        3,
+        3
+      ],
+      "input_sha256": "6a16fe92768c487714e9ee0d4031454c650da70fb779bdc12db4f72399c25bcd",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6a16fe92768c487714e9ee0d4031454c650da70fb779bdc12db4f72399c25bcd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "6a16fe92768c487714e9ee0d4031454c650da70fb779bdc12db4f72399c25bcd",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "6a16fe92768c487714e9ee0d4031454c650da70fb779bdc12db4f72399c25bcd",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "6a16fe92768c487714e9ee0d4031454c650da70fb779bdc12db4f72399c25bcd",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 96,
+      "depth": 16,
+      "geometry": [
+        104,
+        1
+      ],
+      "input_sha256": "37a4d6431db18a48e93635d746ee2045c9f50cf1bc708563548c4b233169d473",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "187be03bedfcf189f87b6178ea9cec6190d9d26ece5f5199a3d3a42ef2e6c897",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "187be03bedfcf189f87b6178ea9cec6190d9d26ece5f5199a3d3a42ef2e6c897",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "187be03bedfcf189f87b6178ea9cec6190d9d26ece5f5199a3d3a42ef2e6c897",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "187be03bedfcf189f87b6178ea9cec6190d9d26ece5f5199a3d3a42ef2e6c897",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 97,
+      "depth": 16,
+      "geometry": [
+        13,
+        22
+      ],
+      "input_sha256": "20b70bc3f28bc0e93b8098f3ec91ca0901d7c3d142395eb1ebf25eb14695c7ca",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7625a4ab1cc707f5780e643296529d03df7a79d11aa8c50e4d8fce5803d46134",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "7625a4ab1cc707f5780e643296529d03df7a79d11aa8c50e4d8fce5803d46134",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "7625a4ab1cc707f5780e643296529d03df7a79d11aa8c50e4d8fce5803d46134",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "7625a4ab1cc707f5780e643296529d03df7a79d11aa8c50e4d8fce5803d46134",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 98,
+      "depth": 8,
+      "geometry": [
+        23,
+        7
+      ],
+      "input_sha256": "66b5a67d0cc96672b3b2dcf201f9eda0c348231e686b69db02421ae87a508f24",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a54a4dc417f24665329bb98147fc1a851217fee982bf85d241d4a8b81a8fb3bc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "a54a4dc417f24665329bb98147fc1a851217fee982bf85d241d4a8b81a8fb3bc",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "a54a4dc417f24665329bb98147fc1a851217fee982bf85d241d4a8b81a8fb3bc",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "a54a4dc417f24665329bb98147fc1a851217fee982bf85d241d4a8b81a8fb3bc",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    },
+    {
+      "index": 99,
+      "depth": 32,
+      "geometry": [
+        1,
+        127
+      ],
+      "input_sha256": "399c97e0c770868cc276b9c50dd138195add7fe79b8bcfc8cfce91e63fe6f346",
+      "classification": "same-output-as-source",
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5b262ada44b8996fbf7cca8f79f6318a5e19f9fe66edd1903da8b00504087585",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "source_oracle": {
+        "guards_intact": true,
+        "raw_sha256": "5b262ada44b8996fbf7cca8f79f6318a5e19f9fe66edd1903da8b00504087585",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "bundle": {
+        "guards_intact": true,
+        "native_trace": "F47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nF47c selector 4 error=0\nF47c selector 5 error=0\nF47c selector 23 error=0\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 24 error=0\nF47c selector 8 error=0\nF47c selector 3 error=0\nF47c counters declarations=21 acquire=2 release=2 formats=2 checkout=21 checkin=21\n",
+        "raw_sha256": "5b262ada44b8996fbf7cca8f79f6318a5e19f9fe66edd1903da8b00504087585",
+        "session_clean": true,
+        "status": "exact"
+      },
+      "source": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5b262ada44b8996fbf7cca8f79f6318a5e19f9fe66edd1903da8b00504087585",
+        "status": "exact"
+      },
+      "refusal_guards": null
+    }
+  ]
+}

@@ -3,7 +3,6 @@
 import argparse
 import json
 import os
-import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -15,8 +14,8 @@ def main():
     global SCRATCH
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--scratch', type=Path, default=SCRATCH)
-    parser.add_argument('--plugins', nargs='+', choices=('OLMBlur', 'OLMColorKey', 'OLMRadialBlur'),
-                        default=['OLMBlur', 'OLMColorKey', 'OLMRadialBlur'])
+    parser.add_argument('--plugins', nargs='+', choices=('OLMBlur', 'ColorKeep', 'OLMColorKey', 'OLMDirectionalBlur', 'OLMDistanceGradation', 'OLMKiraKira', 'OLMSmoother2', 'OLMToonDilate', 'OLMRadialBlur', 'OLMSmoother'),
+                        default=['OLMBlur', 'ColorKeep', 'OLMColorKey', 'OLMDirectionalBlur', 'OLMDistanceGradation', 'OLMKiraKira', 'OLMSmoother2', 'OLMToonDilate', 'OLMRadialBlur', 'OLMSmoother'])
     args = parser.parse_args()
     SCRATCH = args.scratch.resolve()
     SCRATCH.mkdir(parents=True, exist_ok=True)
@@ -26,16 +25,8 @@ def main():
     for name in args.plugins:
         source = ROOT / 'mac' / name / 'Mac'
         build = SCRATCH / 'xcode' / name
-        project = build / f'{name}.xcodeproj'
-        project.mkdir(parents=True, exist_ok=True)
-        # These projects only define Debug. Rename the configuration in a disposable
-        # project, retaining all production source references and compiler options.
-        original = (source / f'{name}.xcodeproj/project.pbxproj').read_text()
-        original = re.sub(r'path = (\.\./[^;]+);',
-                          lambda m: 'path = ' + json.dumps(str((source / m[1]).resolve())) + ';', original)
-        original = re.sub(r'(?m)^(\s*)(\.\./[^,\n]+),$',
-                          lambda m: m[1] + json.dumps('"' + str((source / m[2]).resolve()) + '"') + ',', original)
-        (project / 'project.pbxproj').write_text(original.replace('Debug', 'Release'))
+        project = source / f'{name}.xcodeproj'
+        build.mkdir(parents=True, exist_ok=True)
         cmd = ['xcodebuild', '-project', str(project), '-configuration', 'Release',
                '-jobs', '1', f'SRCROOT={source}', f'INFOPLIST_FILE={source}/{name}.plugin-Info.plist', 'ARCHS=arm64 x86_64',
                'ONLY_ACTIVE_ARCH=NO', 'MACOSX_DEPLOYMENT_TARGET=11.0',
