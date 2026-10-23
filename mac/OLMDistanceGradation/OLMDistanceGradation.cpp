@@ -603,9 +603,46 @@ static void box_blur_separable(float *mat, long w, long h, int ksize, bool doubl
 // Legacy cvSmooth mode 3 (CV_MEDIAN).  The retained AEX uses replicated
 // borders and an odd square aperture.  Keep the temporary source separate:
 // OpenCV's median pass never consumes values written earlier in the scan.
+// Large replicated-border windows contain many copies of the same source
+// samples. Count their multiplicities instead of materializing every tap.
+// Finite values with no negative zero have a unique bit pattern per numeric
+// value, so selecting the weighted order statistic preserves nth_element's
+// result bits even when several source samples compare equal.
+static bool median_blur_weighted(float *mat, long w, long h, int ksize)
+{
+	const size_t count = (size_t)w*h;
+	if ((uint64_t)ksize*ksize <= (uint64_t)count*4 ||
+	    !std::all_of(mat, mat+count, [](float v) {
+	        return std::isfinite(v) && !(v == 0.0f && std::signbit(v));
+	    })) return false;
+	const std::vector<float> source(mat, mat+count);
+	std::vector<size_t> order(count);
+	for (size_t i=0; i<count; ++i) order[i]=i;
+	std::sort(order.begin(), order.end(), [&](size_t a, size_t b) {
+		return source[a] < source[b];
+	});
+	const long radius = ksize/2;
+	auto multiplicity = [=](long sample, long center, long length) -> uint64_t {
+		if (length == 1) return ksize;
+		if (sample == 0) return std::max(0L, radius-center+1);
+		if (sample == length-1) return std::max(0L, radius-(length-1-center)+1);
+		return std::abs(sample-center) <= radius ? 1 : 0;
+	};
+	const uint64_t rank = (uint64_t)ksize*ksize/2;
+	for (long y=0; y<h; ++y) for (long x=0; x<w; ++x) {
+		uint64_t cumulative=0;
+		for (size_t i:order) {
+			cumulative += multiplicity(i%w,x,w)*multiplicity(i/w,y,h);
+			if (cumulative > rank) { mat[(size_t)y*w+x]=source[i]; break; }
+		}
+	}
+	return true;
+}
+
 static void median_blur(float *mat, long w, long h, int ksize)
 {
 	if (!mat || w <= 0 || h <= 0 || ksize <= 1) return;
+	if (median_blur_weighted(mat, w, h, ksize)) return;
 	const int radius = ksize / 2;
 	std::vector<float> source(mat, mat + (size_t)w * h);
 	std::vector<float> window((size_t)ksize * ksize);
@@ -730,12 +767,19 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
+	// For finite samples, spatial-zero taps add only signed zero. Both
+	// accumulators start at +0, so removing these taps preserves their bits
+	// and the order of every nonzero addition. Retain the full traversal for
+	// nonfinite fields, where sample * 0 can produce a NaN.
+	const bool finite = std::all_of(mat, mat + (size_t)w*h,
+	    [](float value) { return std::isfinite(value); });
+	const int extent = finite ? std::min(radius, 7) : radius;
 	struct Offset { int x, y; float spatial; };
 	std::vector<Offset> offsets;
-	for (int y = -radius; y <= radius; ++y) {
-		for (int x = -radius; x <= radius; ++x) {
+	for (int y = -extent; y <= extent; ++y) {
+		for (int x = -extent; x <= extent; ++x) {
 			const int squared = x*x + y*y;
-			if (squared > radius*radius) continue;
+			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
 			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
@@ -761,13 +805,55 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 	}
 }
 
+// IPP scalar radius-two body FUN_1806bd9a0 groups taps by squared
+// distance 4, 2, 1. Its spatial multiplication follows each four-tap
+// reduction, and the center enters numerator/denominator at different
+// points. A generic row-major circular reduction has different rounding.
+static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	const int taps[3][4][2] = {
+		{{0,-2},{-2,0},{2,0},{0,2}},
+		{{-1,-1},{1,-1},{-1,1},{1,1}},
+		{{0,-1},{-1,0},{1,0},{0,1}}
+	};
+	const float spatial[3] = {bilateral_ipp_exp(-2.0f),
+	    bilateral_ipp_exp(-1.0f), bilateral_ipp_exp(-0.5f)};
+	const std::vector<float> source(mat, mat+(size_t)w*h);
+	for (long y=0; y<h; ++y) for (long x=0; x<w; ++x) {
+		const float center=source[(size_t)y*w+x];
+		float numerators[3], denominators[3];
+		for (int group=0; group<3; ++group) {
+			float weights[4], products[4];
+			for (int tap=0; tap<4; ++tap) {
+				const long sx=std::max(0L,std::min(w-1,x+taps[group][tap][0]));
+				const long sy=std::max(0L,std::min(h-1,y+taps[group][tap][1]));
+				const float sample=source[(size_t)sy*w+sx];
+				const float difference=sample-center;
+				const float exponent=(-0.5f*difference)*difference;
+				weights[tap]=exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				products[tap]=bilateral_noncontracting_product(sample,weights[tap]);
+			}
+			numerators[group]=bilateral_noncontracting_product(
+			    ((products[0]+products[1])+products[2])+products[3],spatial[group]);
+			denominators[group]=bilateral_noncontracting_product(
+			    ((weights[0]+weights[1])+weights[2])+weights[3],spatial[group]);
+		}
+		const float numerator=(center+(numerators[0]+numerators[1]))+numerators[2];
+		const float denominator=((denominators[0]+denominators[1])+1.0f)+denominators[2];
+		mat[(size_t)y*w+x]=numerator/denominator;
+	}
+}
+
 static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 {
 	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
 	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
 	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
 	// Retain PF8 dispatch; PF32 scalar tiles are verified through radius 500.
-	return radius >= 3 && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
+	return radius >= (p.pixel_size == sizeof(PF_PixelFloat) ? 2 : 3) && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
 	    (w <= 2*radius || h <= 2*radius);
 }
 
@@ -804,12 +890,19 @@ static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
+	// For finite samples, spatial-zero taps add only signed zero. Both
+	// accumulators start at +0, so removing these taps preserves their bits
+	// and the order of every nonzero addition. Retain the full traversal for
+	// nonfinite fields, where sample * 0 can produce a NaN.
+	const bool finite = std::all_of(mat, mat + (size_t)w*h,
+	    [](float value) { return std::isfinite(value); });
+	const int extent = finite ? std::min(radius, 7) : radius;
 	struct Offset { int x, y; float spatial; };
 	std::vector<Offset> offsets;
-	for (int y = -radius; y <= radius; ++y) {
-		for (int x = -radius; x <= radius; ++x) {
+	for (int y = -extent; y <= extent; ++y) {
+		for (int x = -extent; x <= extent; ++x) {
 			const int squared = x*x + y*y;
-			if (squared > radius*radius) continue;
+			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
 			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
@@ -1227,7 +1320,8 @@ static void build_distance_field(
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
 				if (is_scalar_bilateral_shape(p, w, h)) {
-					bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
+					if (bs == 2) bilateral_blur_ipp_radius_two(df.x.data(), w, h);
+					else bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
 				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) && bs > 1) ||
 				           is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
 					bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);

@@ -31,6 +31,7 @@ def main():
     p.add_argument('--allow-mismatch',action='store_true')
     p.add_argument('--vector-exp',action='store_true')
     p.add_argument('--loop-trace',action='store_true',help='Pair radius-one scalar weights and pre-divide sums')
+    p.add_argument('--radius-two',action='store_true',help='Compare the specialized scalar radius-two body')
     p.add_argument('--generic',action='store_true',help='Compare the mixed scalar/vector circular kernel')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
@@ -51,15 +52,18 @@ def main():
     exponent_inputs=set();dispatch=Counter()
     loop_words=bytearray()
     if args.loop_trace:
-        assert r==1 and (w<3 or h<3)
+        assert (r==1 and (w<3 or h<3)) or (r==2 and args.radius_two)
         import unicorn.x86_const as xc
         def capture(registers):
             def hook(loader,rip,size):
                 for reg in registers:
                     loop_words.extend((loader.uc.reg_read(getattr(xc,'UC_X86_REG_XMM'+str(reg))) & 0xffffffff).to_bytes(4,'little'))
             return hook
-        ld.add_code_hook(0x1806bd84f,capture([14,15,2,0]))
-        ld.add_code_hook(0x1806bd8aa,capture([13,14]))
+        if r==2:
+            ld.add_code_hook(0x1806be0e3,capture([13,12]))
+        else:
+            ld.add_code_hook(0x1806bd84f,capture([14,15,2,0]))
+            ld.add_code_hook(0x1806bd8aa,capture([13,14]))
     def expin(loader,rip,size):exponent_inputs.add(loader.uc.reg_read(UC_X86_REG_XMM0)&0xffffffff)
     ld.add_code_hook(0x1802997a0,expin)
     vector_calls=[]
@@ -71,7 +75,7 @@ def main():
             vector_returns.add(ret)
             loader.add_code_hook(ret,lambda loader,rip,size:vector_calls[-1].update(output=loader.uc.reg_read(UC_X86_REG_XMM0).to_bytes(16,'little').hex()))
     ld.add_code_hook(0x180ba5780,vector_in)
-    for address in (0x1806be1e0,0x1806b7d40,0x1806b6b40,0x1806bd600):
+    for address in (0x1806be1e0,0x1806b7d40,0x1806b6b40,0x1806bd600,0x1806bd9a0,0x1806b7240):
         ld.add_code_hook(address,lambda loader,rip,size:dispatch.update([hex(rip)]))
     init=ld.call_function(0x18000c280,[100,w|(h<<32),r,13,1,2,0x3f800000,0x3f800000,spec])
     assert init['rax']==0 and not ld.import_log
@@ -84,7 +88,7 @@ def main():
     assert ld.read_bytes(output,64)==ld.read_bytes(dst+len(post),64)==b'\xa5'*64
     assert ld.read_bytes(src,len(pre))==pre
     assert actual==post,raw_diff(post,actual,32)
-    report=dict(schema='olm.dg-C19-bilateral/1',kernel='generic' if args.generic else 'radius-one' if r==1 else 'scalar',aex_sha256=sha(aex.read_bytes()),
+    report=dict(schema='olm.dg-C19-bilateral/1',kernel='radius-two' if args.radius_two else 'generic' if args.generic else 'radius-one' if r==1 else 'scalar',aex_sha256=sha(aex.read_bytes()),
                 source_sha256=sha(args.source.read_bytes()),geometry=[w,h],radius=r,
                 public_output_sha256=row.get('oracle_sha256',row.get('public_callback_sha256')),
                 original_post_sha256=sha(post),original_body_sha256=sha(actual),dispatch=dict(dispatch),
@@ -119,20 +123,29 @@ def main():
     source=args.source.read_text().replace('#include "OLMDistanceGradation.h"',
         '#include "'+str(ROOT/'mac/OLMDistanceGradation/OLMDistanceGradation.h')+'"').replace('"../../core/','"'+str(ROOT/'core')+'/').replace('"../../ucrtmath/','"'+str(ROOT/'ucrtmath')+'/')
     if args.loop_trace:
-        assert len(loop_words)==w*h*6*4
+        assert len(loop_words)==w*h*(2 if r==2 else 6)*4
         report['loop_fields']=['top_weight','left_weight','right_weight','bottom_weight','numerator','denominator']
         report['loop_sites']=['0x1806bd84f','0x1806bd8aa']
         report['original_loop_hex']=loop_words.hex()
-        start=source.index('static void bilateral_blur_opencv455_f32x4(')
-        prefix,body=source[:start],source[start:]
-        body=body.replace('float weight_sum = 0.0f;', 'float weight_sum = 0.0f; float weights[4];',1)
-        body=body.replace('weight_sum += color_weight;', 'weights[k]=color_weight; weight_sum += color_weight;',1)
-        anchor='mat[(size_t)y * w + x] = (sum + center) / (weight_sum + 1.0f);'
-        body=body.replace(anchor,'''if(const char *path=getenv("OLM_C43_LOOP")) { FILE *f=fopen(path,"ab"); if(f) {
-                float words[6]={weights[1],weights[0],weights[2],weights[3],sum+center,weight_sum+1.0f};
-                fwrite(words,4,6,f); fclose(f); } }
+        if r==2:
+            report['loop_fields']=['numerator','denominator']
+            report['loop_sites']=['0x1806be0e3']
+            anchor='mat[(size_t)y*w+x]=numerator/denominator;'
+            assert anchor in source
+            source=source.replace(anchor,'''if(const char *path=getenv("OLM_C43_LOOP")) { FILE *f=fopen(path,"ab"); if(f) {
+                float words[2]={numerator,denominator}; fwrite(words,4,2,f); fclose(f); } }
             '''+anchor,1)
-        source=prefix+body
+        else:
+            start=source.index('static void bilateral_blur_opencv455_f32x4(')
+            prefix,body=source[:start],source[start:]
+            body=body.replace('float weight_sum = 0.0f;', 'float weight_sum = 0.0f; float weights[4];',1)
+            body=body.replace('weight_sum += color_weight;', 'weights[k]=color_weight; weight_sum += color_weight;',1)
+            anchor='mat[(size_t)y * w + x] = (sum + center) / (weight_sum + 1.0f);'
+            body=body.replace(anchor,'''if(const char *path=getenv("OLM_C43_LOOP")) { FILE *f=fopen(path,"ab"); if(f) {
+                    float words[6]={weights[1],weights[0],weights[2],weights[3],sum+center,weight_sum+1.0f};
+                    fwrite(words,4,6,f); fclose(f); } }
+                '''+anchor,1)
+            source=prefix+body
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as td:
         td=Path(td)
@@ -156,6 +169,11 @@ int main(int argc,char **argv) {
             'else for(float &x:data)x=bilateral_ipp_vector_exp(x);' if args.vector_exp else 'else for(float &x:data)x=bilateral_ipp_exp(x);'))
         if args.generic:
             cpp.write_text(cpp.read_text().replace('if(std::stoi(argv[5])==1)', 'if(false)').replace('else bilateral_blur_ipp_scalar(', 'else bilateral_blur_ipp_general('))
+        if args.radius_two:
+            assert r == 2 and not args.generic
+            cpp.write_text(cpp.read_text().replace(
+                'else bilateral_blur_ipp_scalar(data.data(),std::stol(argv[3]),std::stol(argv[4]),std::stoi(argv[5]));',
+                'else bilateral_blur_ipp_radius_two(data.data(),std::stol(argv[3]),std::stol(argv[4]));'))
         for name,flags in [('o2',['-O2','-ffp-contract=off']),('o3',['-O3','-ffp-contract=fast']),
                            ('san',['-O2','-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             exe=td/name;out=td/(name+'.bin');filtered=td/(name+'-plane.bin')
