@@ -1,0 +1,2248 @@
+{
+  "baseline": "f40209b85623dfeef32b650fa1d004f5c857ef99",
+  "class_a_counts": {
+    "pass": 60,
+    "runtime/contract failure": 13,
+    "stale binding": 2,
+    "numeric failure": 18
+  },
+  "all_counts": {
+    "pass": 64,
+    "runtime/contract failure": 13,
+    "stale binding": 3,
+    "numeric failure": 18
+  },
+  "class_a_links": 386,
+  "all_links": 394,
+  "results": [
+    {
+      "key": "fixture-000",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/refs/scripts/smoke_olmblur_worker_orchestration.py"
+      ],
+      "exit": 0,
+      "seconds": 2.01,
+      "log": "000.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 0,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-001",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/refs/scripts/smoke_olmblur_worker32_nonlegacy.py"
+      ],
+      "exit": 0,
+      "seconds": 1.66,
+      "log": "001.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 1,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-002",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/refs/scripts/smoke_olmblur_worker32_legacy.py"
+      ],
+      "exit": 0,
+      "seconds": 1.42,
+      "log": "002.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 2,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-003",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/smoke_olmblur_worker16_legacy.py"
+      ],
+      "exit": 0,
+      "seconds": 1.47,
+      "log": "003.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 3,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-047",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_real_sdk_suite_lifecycle_20260813",
+        "tests.test_olmcolorkey_source_bound_atomic_20260813",
+        "tests.test_olmcolorkey_public_entries_real_sdk_20260813"
+      ],
+      "exit": 1,
+      "seconds": 9.64,
+      "log": "004.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 4,
+      "outcome": "runtime/contract failure",
+      "note": "Probe exit 3; captured SOURCE_BOUND_ATOMIC pass=0 positives=0 negatives=0. First 2304-byte output matches retained SHA-256 2b05dfeed6c1385d4818cd727aabc6931581b6d39ce22f84a13461b91a33e740.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-063",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+      ],
+      "exit": 1,
+      "seconds": 5.04,
+      "log": "005.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 5,
+      "outcome": "runtime/contract failure",
+      "note": "Cleanup probe rc=134: budget err=-3 alloc=1 output=1 layer=2 out=1 checkin=1 pc=21 pi=21.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-068",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 3.78,
+      "log": "006.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 6,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-069",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_noise_type3_layer_rowbytes_pf8_production_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 4.29,
+      "log": "007.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 7,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-070",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_noise_type3_layer_origin_pf8_production_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 4.29,
+      "log": "008.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 8,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-071",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_noise_type3_layer_size_contract_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 5.25,
+      "log": "009.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 9,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-072",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_minimal_pf16_production_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 18.42,
+      "log": "010.log",
+      "links": 13,
+      "link_failures": 0,
+      "index": 10,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-073",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf16_noise_type3_production_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 3.34,
+      "log": "011.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 11,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-074",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf16_fade_sharp_families_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 17.24,
+      "log": "012.log",
+      "links": 12,
+      "link_failures": 0,
+      "index": 12,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-075",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf16_size_variation_family_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 19.02,
+      "log": "013.log",
+      "links": 13,
+      "link_failures": 0,
+      "index": 13,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-076",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 15.74,
+      "log": "014.log",
+      "links": 10,
+      "link_failures": 0,
+      "index": 14,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-077",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_size_variation_family_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 11.72,
+      "log": "015.log",
+      "links": 5,
+      "link_failures": 0,
+      "index": 15,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-078",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_front_alpha_fade_family_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 7.25,
+      "log": "016.log",
+      "links": 4,
+      "link_failures": 0,
+      "index": 16,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-079",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_fade_size_combination_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 8.53,
+      "log": "017.log",
+      "links": 5,
+      "link_failures": 0,
+      "index": 17,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-080",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_size_noise_type1_combination_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 9.41,
+      "log": "018.log",
+      "links": 6,
+      "link_failures": 0,
+      "index": 18,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-081",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_fade_noise_type1_combination_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 8.98,
+      "log": "019.log",
+      "links": 6,
+      "link_failures": 0,
+      "index": 19,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-082",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_sharp_back_families_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 15.04,
+      "log": "020.log",
+      "links": 10,
+      "link_failures": 0,
+      "index": 20,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-083",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
+      ],
+      "exit": 1,
+      "seconds": 2.64,
+      "log": "021.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 21,
+      "outcome": "runtime/contract failure",
+      "note": "Adapter exit 38: layer3 err=-1 exact=0 visible=0 pad=1.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-084",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf8_brightness_half_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 4.16,
+      "log": "022.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 22,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-085",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf8_size_variation_family_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 52.96,
+      "log": "023.log",
+      "links": 24,
+      "link_failures": 0,
+      "index": 23,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-086",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_size_back_crosses_all_depths_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 49.03,
+      "log": "024.log",
+      "links": 25,
+      "link_failures": 0,
+      "index": 24,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-087",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_noise_types23_size_matrix_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 25.71,
+      "log": "025.log",
+      "links": 17,
+      "link_failures": 0,
+      "index": 25,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-088",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_noise_public_pairwise_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 35.01,
+      "log": "026.log",
+      "links": 21,
+      "link_failures": 0,
+      "index": 26,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-089",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_pf32_size_coeff_geometry_matrix_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 54.84,
+      "log": "027.log",
+      "links": 33,
+      "link_failures": 0,
+      "index": 27,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-090",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_fade_sharp_cross_all_depths_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 63.33,
+      "log": "028.log",
+      "links": 34,
+      "link_failures": 0,
+      "index": 28,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-124",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_mode3_default50_canonical_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 1.5,
+      "log": "029.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 29,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-125",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 1.85,
+      "log": "030.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 30,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-126",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_mode3_32x18_public_failclose_20260814"
+      ],
+      "exit": 1,
+      "seconds": 3.05,
+      "log": "031.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 31,
+      "outcome": "runtime/contract failure",
+      "note": "Probe exit 1: PF8=10 PF16=10 PF32=10 (fail-close expectations).",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-131",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_mode4_production_boundary_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 1.02,
+      "log": "032.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 32,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-132",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_mode4_canonical_angles_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 1.11,
+      "log": "033.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 33,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-134",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_mode4_cropped_typed_installed_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 1.73,
+      "log": "034.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 34,
+      "outcome": "stale binding",
+      "note": "Installed Kira executable hash 69e87ce32570ebf299d8a3e94b707321b607ac51de42324e6a0444f490714c4d != d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-136",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmkirakira_warp_production_boundary_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 1.04,
+      "log": "035.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 35,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-150",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 5.46,
+      "log": "036.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 36,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-151",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_ui_selectors_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 5.37,
+      "log": "037.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 37,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-152",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810.py"
+      ],
+      "exit": 1,
+      "seconds": 19.07,
+      "log": "038.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 38,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "expected_sha256": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+          "actual_sha256": "b778e242f9a1bb63e85cf54dccf3fdd6fb5f56aebc2bac91bf291dbebe3d9342",
+          "differing_bytes": 19591,
+          "expected_word": "908ab23d",
+          "actual_word": "918ab23d",
+          "evidence": "diagnostics/38/assertion-81.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 47472,
+          "expected_sha256": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+          "actual_sha256": "1dcb15ab797a3fa7d1a4a7b791bbdb55b0f2e564effe3123a8d6d0fd870ec889",
+          "differing_bytes": 12,
+          "expected_word": "217c583e",
+          "actual_word": "227c583e",
+          "evidence": "diagnostics/38/assertion-81.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 0,
+          "expected_sha256": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+          "actual_sha256": "87cc31562a24086e546de772d83e6cffb94631e827cdf54ef0237fcc9b6167a8",
+          "differing_bytes": 83,
+          "expected_word": "15b383ba",
+          "actual_word": "16b383ba",
+          "evidence": "diagnostics/38/assertion-81.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 4,
+          "expected_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+          "actual_sha256": "640aa561344b88927b81dcd74ee51b1823acd61d5615911282fcbb4babb41cab",
+          "differing_bytes": 83,
+          "expected_word": "15b383ba",
+          "actual_word": "16b383ba",
+          "evidence": "diagnostics/38/assertion-81.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-153",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_noise_variation_type1_actual_aex_20260810.py"
+      ],
+      "exit": 1,
+      "seconds": 35.52,
+      "log": "039.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 39,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 19591,
+          "expected_sha256": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+          "actual_sha256": "b778e242f9a1bb63e85cf54dccf3fdd6fb5f56aebc2bac91bf291dbebe3d9342",
+          "expected_word": "908ab23d",
+          "actual_word": "918ab23d",
+          "evidence": "diagnostics/39/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 0,
+          "differing_bytes": 83,
+          "expected_sha256": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+          "actual_sha256": "87cc31562a24086e546de772d83e6cffb94631e827cdf54ef0237fcc9b6167a8",
+          "expected_word": "15b383ba",
+          "actual_word": "16b383ba",
+          "evidence": "diagnostics/39/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 47472,
+          "differing_bytes": 12,
+          "expected_sha256": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+          "actual_sha256": "1dcb15ab797a3fa7d1a4a7b791bbdb55b0f2e564effe3123a8d6d0fd870ec889",
+          "expected_word": "217c583e",
+          "actual_word": "227c583e",
+          "evidence": "diagnostics/39/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 4,
+          "differing_bytes": 83,
+          "expected_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+          "actual_sha256": "640aa561344b88927b81dcd74ee51b1823acd61d5615911282fcbb4babb41cab",
+          "expected_word": "15b383ba",
+          "actual_word": "16b383ba",
+          "evidence": "diagnostics/39/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-154",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_size_noise_combo_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 46.48,
+      "log": "040.log",
+      "links": 6,
+      "link_failures": 0,
+      "index": 40,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-155",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 35.13,
+      "log": "041.log",
+      "links": 6,
+      "link_failures": 0,
+      "index": 41,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 13741,
+          "expected_sha256": "1159ea655f37897304a04db663c184deaf38d401d6632cf4be021702f683f503",
+          "actual_sha256": "532cfcb08ec5af609a0597305ee251e246131fc0ba0c3b711a0059a43cb3ca41",
+          "expected_word": "908ab23d",
+          "actual_word": "918ab23d",
+          "evidence": "diagnostics/41/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 20,
+          "differing_bytes": 83,
+          "expected_sha256": "dc71d8ce7fe05123ce5fd56adb5644a9377a2607f1146372daa2d86974bf8bf8",
+          "actual_sha256": "5dcc72d2c0427b7a27a5204ed2af9047295638fffe67f33751dd2240d80bb79b",
+          "expected_word": "ed913d3d",
+          "actual_word": "ee913d3d",
+          "evidence": "diagnostics/41/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 39964,
+          "differing_bytes": 8,
+          "expected_sha256": "b3e7752fc3150f071da0fd5f9353e367678256b409409e63fc22ab20edde46ae",
+          "actual_sha256": "d5952824880c7669af2004b2aa3f50a3a18edd791438b7a4bd28ce5301715d64",
+          "expected_word": "10c2d63c",
+          "actual_word": "11c2d63c",
+          "evidence": "diagnostics/41/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 24,
+          "differing_bytes": 82,
+          "expected_sha256": "59aea010d19178344aa76a844408afb18b75a4ea906c160748d5785f2a331db2",
+          "actual_sha256": "e6beda55ffaa56a0b3397e7c5bbac3bdb4caeb9aacc71a33b5c8c641d83f35f6",
+          "expected_word": "ed913d3d",
+          "actual_word": "ee913d3d",
+          "evidence": "diagnostics/41/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-156",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_pf32_ellipse_32x18_actual_aex_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 107.95,
+      "log": "042.log",
+      "links": 12,
+      "link_failures": 0,
+      "index": 42,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 604800,
+          "actual_bytes": 604800,
+          "first_byte": 8,
+          "differing_bytes": 33426,
+          "expected_sha256": "abeb86c4c98ac539ba6a3a5e08eedbe733d21548641d4402330af3c55daac37d",
+          "actual_sha256": "8f778684058f97bc43ffca1dc5c1a273765025adea7a21c2301fa0bc664f6c4e",
+          "expected_word": "efb32a3f",
+          "actual_word": "f0b32a3f",
+          "evidence": "diagnostics/42/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 9216,
+          "actual_bytes": 9216,
+          "first_byte": 4,
+          "differing_bytes": 675,
+          "expected_sha256": "bc60503755a110a279a1c05fae54e36cffc6a37cd3262a7b1736922e4b09311f",
+          "actual_sha256": "b0b79be0342a428723e4846834ccf30c5e7a9ac08b965df164e90828c3e8b554",
+          "expected_word": "4e93ad3c",
+          "actual_word": "4f93ad3c",
+          "evidence": "diagnostics/42/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 151200,
+          "actual_bytes": 151200,
+          "first_byte": 56692,
+          "differing_bytes": 5,
+          "expected_sha256": "7606104dd9833e4d9d4cd4e2ec5d2454f64788e2864331bdfcd8197e51b9d5da",
+          "actual_sha256": "ef6967c085cf71dd37f5f8efb8c56c90e172588ba24141ce0d27a34610713bc7",
+          "expected_word": "342aab3e",
+          "actual_word": "352aab3e",
+          "evidence": "diagnostics/42/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 9504,
+          "actual_bytes": 9504,
+          "first_byte": 8,
+          "differing_bytes": 674,
+          "expected_sha256": "d66ffbb869d7fcfffe00f10067a78750cf23f9adcd2e587a19f6723f8d087ae8",
+          "actual_sha256": "569cb4667b376a6391cceaf30fd87ca69d03442339b59e95f0d6dd43baef6c0b",
+          "expected_word": "4e93ad3c",
+          "actual_word": "4f93ad3c",
+          "evidence": "diagnostics/42/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-157",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_strength5_noise_type1_actual_aex_20260810.py"
+      ],
+      "exit": 1,
+      "seconds": 30.79,
+      "log": "043.log",
+      "links": 4,
+      "link_failures": 0,
+      "index": 43,
+      "outcome": "numeric failure",
+      "note": "Also fails rejection controls strength5_nv50 and strength6_nv25.",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 20885,
+          "expected_sha256": "6bcbc088f8b6b60a56e6d9cf16d9362e5d1e62d852dc80f610a7f6beb29b7093",
+          "actual_sha256": "695e6307ebbbdf66c95c162572eb7c113689186c0273bb030d768ad2291311c2",
+          "expected_word": "908ab23d",
+          "actual_word": "918ab23d",
+          "evidence": "diagnostics/43/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 0,
+          "differing_bytes": 85,
+          "expected_sha256": "a7557e0edc408e34681c4a15554efe1ab50ed217a366260547276eb66a8f2986",
+          "actual_sha256": "55c60c87b5cb1dfb2d1cfca2699f520768f0e7b11da257b8838d464e40dc81c1",
+          "expected_word": "c5219dba",
+          "actual_word": "c4219dba",
+          "evidence": "diagnostics/43/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 47472,
+          "differing_bytes": 4,
+          "expected_sha256": "955c011149683277693f6dbcced76d1b8914640954ba3173f38452662a73769b",
+          "actual_sha256": "50f42a0368ef69ac6570e1bc4231543da632655c7e6f139d9d3425f92922e606",
+          "expected_word": "217c583e",
+          "actual_word": "227c583e",
+          "evidence": "diagnostics/43/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 4,
+          "differing_bytes": 85,
+          "expected_sha256": "eaca6d098caceec39f577743a885ce042349506627c1f2557c1220800e107cb8",
+          "actual_sha256": "e9940e055cf6b208e3e8d5f58181ee6058e75df0f3fe730f8dbb3ee888821111",
+          "expected_word": "c5219dba",
+          "actual_word": "c4219dba",
+          "evidence": "diagnostics/43/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-158",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_noise_type1_actual_aex_20260810.py"
+      ],
+      "exit": 1,
+      "seconds": 45.49,
+      "log": "044.log",
+      "links": 8,
+      "link_failures": 0,
+      "index": 44,
+      "outcome": "numeric failure",
+      "note": "Also fails rejection controls offset5_nv25 and offset2_nv50.",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 3600,
+          "expected_sha256": "3ebf1beebf56c6e5d064b6c966738b670c666096694874d3e250ad56d9d0e1c2",
+          "actual_sha256": "334962b138b508d8bf3195c54fe6e89f45045fc4ea39619f0045d3018481ee82",
+          "expected_word": "908ab23d",
+          "actual_word": "918ab23d",
+          "evidence": "diagnostics/44/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 496,
+          "differing_bytes": 4,
+          "expected_sha256": "4e2aaba81ed8cd926854841a976ed1ab7dc323e3ddbb89bf6af7d11c87201580",
+          "actual_sha256": "6cded5620f71081ab395b210b17736d1fe63907199e13ce59833358be688d566",
+          "expected_word": "00ee053f",
+          "actual_word": "ffed053f",
+          "evidence": "diagnostics/44/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 548,
+          "differing_bytes": 4,
+          "expected_sha256": "aca549cc4699ae1523f5845a29e63962cfe039c2b791d3eaa2cd9842f3d7b4bb",
+          "actual_sha256": "94b9d5f89bd1887e4bb9e96a9724d2aa460675976f53da2da03e3b20162c8bbd",
+          "expected_word": "00ee053f",
+          "actual_word": "ffed053f",
+          "evidence": "diagnostics/44/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-159",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf32_noise_inner_actual_aex_20260810.py"
+      ],
+      "exit": 1,
+      "seconds": 51.23,
+      "log": "045.log",
+      "links": 9,
+      "link_failures": 0,
+      "index": 45,
+      "outcome": "numeric failure",
+      "note": "Also fails rejection control inner50_noise50.",
+      "first_differences": [
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 28,
+          "differing_bytes": 36,
+          "expected_sha256": "5135f9bb759a527a3c7b5ccd89b65d1465f52bc47e919d1973df228205097dc0",
+          "actual_sha256": "9e55b206936fcbd143a22c6f09feb34739ed8539a04d1899adccb78bf9f3dc15",
+          "expected_word": "0e29233e",
+          "actual_word": "0d29233e",
+          "evidence": "diagnostics/45/first-differences.json"
+        },
+        {
+          "plane": "post_blur",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 16,
+          "differing_bytes": 6244,
+          "expected_sha256": "60801556dad7f60c47c191ffce1158aae2d3f4fb78a4c54e0bca6c99063f4787",
+          "actual_sha256": "4768b69c94533eb18303cd0b853f38a4b2491fab18bb026563295ff537749201",
+          "expected_word": "66ef123f",
+          "actual_word": "65ef123f",
+          "evidence": "diagnostics/45/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-160",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf32_noise_32x18_actual_aex_20260810.py"
+      ],
+      "exit": 0,
+      "seconds": 38.17,
+      "log": "046.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 46,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-161",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf32_ellipse_actual_aex_20260811.py"
+      ],
+      "exit": 0,
+      "seconds": 30.96,
+      "log": "047.log",
+      "links": 6,
+      "link_failures": 0,
+      "index": 47,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-162",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_unsupported_variation_fail_closed_20260806.py"
+      ],
+      "exit": 1,
+      "seconds": 4.76,
+      "log": "048.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 48,
+      "outcome": "runtime/contract failure",
+      "note": "Unsupported-variation probe exits 1.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-163",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_unproven_geometry_fail_closed_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 4.74,
+      "log": "049.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 49,
+      "outcome": "runtime/contract failure",
+      "note": "Unproven-geometry executable returns nonzero; unchanged r.returncode==0 assertion fails.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-164",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_case0009_pf32_ae_control_replay_20260806.py"
+      ],
+      "exit": 1,
+      "seconds": 7.32,
+      "log": "050.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 50,
+      "outcome": "runtime/contract failure",
+      "note": "Render probe exits 3: OLMRadialBlurTestRenderWorld returned nonzero before output comparison.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-165",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_case0010_rotation_mac_production_planes_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 6.03,
+      "log": "051.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 51,
+      "outcome": "numeric failure",
+      "note": "Internal arrays differ; final PF8 output remains exact: cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc.",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 0,
+          "unit": "value index",
+          "count": 1801691,
+          "evidence": "generated/51/refs/conformance/olmradialblur_case0010_rotation_mac_production_planes_20260805.json"
+        },
+        {
+          "plane": "normalized",
+          "first": 541932,
+          "unit": "value index",
+          "count": 95441,
+          "evidence": "generated/51/refs/conformance/olmradialblur_case0010_rotation_mac_production_planes_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-166",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_production_outer_inputs_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 8.19,
+      "log": "052.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 52,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-167",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf16_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 12.14,
+      "log": "053.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 53,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 8,
+          "unit": "byte",
+          "count": 19591,
+          "evidence": "generated/53/refs/conformance/olmradialblur_rotation_pf16_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 0,
+          "unit": "byte",
+          "count": 83,
+          "evidence": "generated/53/refs/conformance/olmradialblur_rotation_pf16_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "max_alpha",
+          "first": 47472,
+          "unit": "byte",
+          "count": 12,
+          "evidence": "generated/53/refs/conformance/olmradialblur_rotation_pf16_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "output",
+          "first": 274,
+          "unit": "byte",
+          "count": 2,
+          "evidence": "generated/53/refs/conformance/olmradialblur_rotation_pf16_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-168",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 11.98,
+      "log": "054.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 54,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 8,
+          "unit": "byte",
+          "count": 19591,
+          "evidence": "generated/54/refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 0,
+          "unit": "byte",
+          "count": 83,
+          "evidence": "generated/54/refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "max_alpha",
+          "first": 47472,
+          "unit": "byte",
+          "count": 12,
+          "evidence": "generated/54/refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "output",
+          "first": 4,
+          "unit": "byte",
+          "count": 83,
+          "evidence": "generated/54/refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-169",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 54.64,
+      "log": "055.log",
+      "links": 4,
+      "link_failures": 0,
+      "index": 55,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 26151,
+          "expected_sha256": "ba4bedddf8d3b9eaa25494d3b5ebe7dbe7f15cfedf8a7cc626c2ec5d963d375b",
+          "actual_sha256": "b6bc3b06d871e07f786b1f90f65d91b6fdd52e20a99c98287029cb59e547e267",
+          "expected_word": "ffa5ad3d",
+          "actual_word": "00a6ad3d",
+          "evidence": "diagnostics/55/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 8,
+          "differing_bytes": 103,
+          "expected_sha256": "dbf5dcee2cfaf929ec013c2d1808d91406bd20108a12047ad19a7264a5dfd91c",
+          "actual_sha256": "07d60761a5b14d040bb4c41776bc7d44768313ca3416ddc7a08caa75eeb4945e",
+          "expected_word": "6065ecba",
+          "actual_word": "6265ecba",
+          "evidence": "diagnostics/55/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 56,
+          "differing_bytes": 3317,
+          "expected_sha256": "88ed2a08c6a8361157a42b36f616f0ad39f0beab6eabd91165e378c2cf62584e",
+          "actual_sha256": "3387ffb54b5db48b91d6418c6de78dff001d48a611b590e7a2531aa96b346a90",
+          "expected_word": "28f8773f",
+          "actual_word": "2af8773f",
+          "evidence": "diagnostics/55/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 12,
+          "differing_bytes": 102,
+          "expected_sha256": "bc2f8399adc84515a2897b8eaee72d50626a911eadbca5e6384705826ebc4f54",
+          "actual_sha256": "8d4a0450a833313bc53c17b7cb630ab8396c84bcf559c48450c55118cf0e05f7",
+          "expected_word": "6065ecba",
+          "actual_word": "6265ecba",
+          "evidence": "diagnostics/55/first-differences.json"
+        },
+        {
+          "plane": "prepass_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 56,
+          "differing_bytes": 3310,
+          "expected_sha256": "12353dffde7679d50072204de25f927abb5975fb76fb499bf06c03aed2a752f6",
+          "actual_sha256": "ab5e80fea93b73b791529a548ada00fa17562a0b364d0b7217e124eb5aba9224",
+          "expected_word": "28f8773f",
+          "actual_word": "2af8773f",
+          "evidence": "diagnostics/55/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-170",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 40.16,
+      "log": "056.log",
+      "links": 4,
+      "link_failures": 0,
+      "index": 56,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "expected_bytes": 259200,
+          "actual_bytes": 259200,
+          "first_byte": 8,
+          "differing_bytes": 26020,
+          "expected_sha256": "1eb553583f5323d8d577d073b9057d9138026edc4fb9cbe59c4f44e27ac2b181",
+          "actual_sha256": "e93ef788d5b3fd202e4d1c220dda1d65d654db3cd060276067f39c10b42564bc",
+          "expected_word": "ffa5ad3d",
+          "actual_word": "00a6ad3d",
+          "evidence": "diagnostics/56/first-differences.json"
+        },
+        {
+          "plane": "final_rgba",
+          "expected_bytes": 1008,
+          "actual_bytes": 1008,
+          "first_byte": 0,
+          "differing_bytes": 106,
+          "expected_sha256": "3bdbd1232fa31c3f8cd2dac1f3b0da092817c604fa1f6af650d325788917ecf2",
+          "actual_sha256": "32cda940cb1fc1e7cc33cbeb9bf934f2530b301c287797395a764cd6e03e5536",
+          "expected_word": "985484ba",
+          "actual_word": "995484ba",
+          "evidence": "diagnostics/56/first-differences.json"
+        },
+        {
+          "plane": "max_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 56,
+          "differing_bytes": 3308,
+          "expected_sha256": "789f09752de56594fbae235a0d3ba4ea9c34c0df94ea4421e89ae0d07debf523",
+          "actual_sha256": "24108f1b5b275cf68a86b81d99e043a7b03e7cce5f9539a675c769c113172b56",
+          "expected_word": "28f8773f",
+          "actual_word": "2af8773f",
+          "evidence": "diagnostics/56/first-differences.json"
+        },
+        {
+          "plane": "output",
+          "expected_bytes": 1120,
+          "actual_bytes": 1120,
+          "first_byte": 4,
+          "differing_bytes": 105,
+          "expected_sha256": "d9cb4ed42d0bae8176d9de322cc646142503f0bca0549bdd8d67cc6ea76fd88e",
+          "actual_sha256": "a785c41694fda5a37f8d59dae84a110f0b250c026c97cf0fce6ade9858803481",
+          "expected_word": "985484ba",
+          "actual_word": "995484ba",
+          "evidence": "diagnostics/56/first-differences.json"
+        },
+        {
+          "plane": "prepass_alpha",
+          "expected_bytes": 64800,
+          "actual_bytes": 64800,
+          "first_byte": 56,
+          "differing_bytes": 3300,
+          "expected_sha256": "02519b2ec9b0d75ecfe4c848b4bdb997c91ba1032e817021860fd599f98ded4d",
+          "actual_sha256": "fb7f1764d37566276f21f68bd7fdfed38641ea7f82c11cce6964c77bf638dd65",
+          "expected_word": "28f8773f",
+          "actual_word": "2af8773f",
+          "evidence": "diagnostics/56/first-differences.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-171",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 12.15,
+      "log": "057.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 57,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 28960,
+          "unit": "byte",
+          "count": 2105,
+          "evidence": "generated/57/refs/conformance/olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 56,
+          "unit": "byte",
+          "count": 9,
+          "evidence": "generated/57/refs/conformance/olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "max_alpha",
+          "first": 47480,
+          "unit": "byte",
+          "count": 25,
+          "evidence": "generated/57/refs/conformance/olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "output",
+          "first": 60,
+          "unit": "byte",
+          "count": 9,
+          "evidence": "generated/57/refs/conformance/olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-172",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 12.15,
+      "log": "058.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 58,
+      "outcome": "numeric failure",
+      "note": "Internal arrays differ; retained final output matches.",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 28960,
+          "unit": "byte",
+          "count": 2105,
+          "evidence": "generated/58/refs/conformance/olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 56,
+          "unit": "byte",
+          "count": 9,
+          "evidence": "generated/58/refs/conformance/olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "max_alpha",
+          "first": 47480,
+          "unit": "byte",
+          "count": 25,
+          "evidence": "generated/58/refs/conformance/olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-173",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf16_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 10.05,
+      "log": "059.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 59,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-174",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf16_strength5_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 10.32,
+      "log": "060.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 60,
+      "outcome": "numeric failure",
+      "note": "Internal post-blur plane differs; retained final output matches.",
+      "first_differences": [
+        {
+          "plane": "post_blur",
+          "first": 48,
+          "unit": "byte",
+          "count": 10373,
+          "evidence": "generated/60/refs/conformance/olmradialblur_zoom_pf16_strength5_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-175",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf16_offset_mode3_ui2_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 10.26,
+      "log": "061.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 61,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-176",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf16_offset_mode2_ui2_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 9.99,
+      "log": "062.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 62,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-177",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 11.6,
+      "log": "063.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 63,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-178",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_ui3_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 12.01,
+      "log": "064.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 64,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 76,
+          "unit": "byte",
+          "count": 229,
+          "evidence": "generated/64/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui3_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 660,
+          "unit": "byte",
+          "count": 1,
+          "evidence": "generated/64/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui3_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "output",
+          "first": 728,
+          "unit": "byte",
+          "count": 1,
+          "evidence": "generated/64/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui3_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-179",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 12.16,
+      "log": "065.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 65,
+      "outcome": "numeric failure",
+      "note": "",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 8,
+          "unit": "byte",
+          "count": 7189,
+          "evidence": "generated/65/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 32,
+          "unit": "byte",
+          "count": 41,
+          "evidence": "generated/65/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "output",
+          "first": 36,
+          "unit": "byte",
+          "count": 41,
+          "evidence": "generated/65/refs/conformance/olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-180",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf16_offset_mode3_ui2_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 11.36,
+      "log": "066.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 66,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-181",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_rotation_pf16_offset_mode3_ui3_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 11.74,
+      "log": "067.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 67,
+      "outcome": "numeric failure",
+      "note": "Internal arrays differ; retained final output matches.",
+      "first_differences": [
+        {
+          "plane": "accum",
+          "first": 76,
+          "unit": "byte",
+          "count": 229,
+          "evidence": "generated/67/refs/conformance/olmradialblur_rotation_pf16_offset_mode3_ui3_small_actual_aex_20260805.json"
+        },
+        {
+          "plane": "final_rgba",
+          "first": 660,
+          "unit": "byte",
+          "count": 1,
+          "evidence": "generated/67/refs/conformance/olmradialblur_rotation_pf16_offset_mode3_ui3_small_actual_aex_20260805.json"
+        }
+      ]
+    },
+    {
+      "key": "fixture-182",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf8_small_actual_aex_20260805.py"
+      ],
+      "exit": 0,
+      "seconds": 10.1,
+      "log": "068.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 68,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-183",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_zoom_pf32_small_actual_aex_20260805.py"
+      ],
+      "exit": 1,
+      "seconds": 10.35,
+      "log": "069.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 69,
+      "outcome": "stale binding",
+      "note": "All compared pixels/planes and fixture hashes match; installed Radial hash 0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9 != 9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5.",
+      "first_differences": []
+    },
+    {
+      "key": "fixture-184",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_type3_host_plumbing_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 9.49,
+      "log": "070.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 70,
+      "outcome": "runtime/contract failure",
+      "note": "Host mock exits 10 (SmartPreRender/event contract).",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmblur_generic_beta_sanitizers_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmblur_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 6.18,
+      "log": "071.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 71,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmcolorkey_generic_pixel_local_beta.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmcolorkey_generic_pixel_local_beta.py"
+      ],
+      "exit": 0,
+      "seconds": 3.44,
+      "log": "072.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 72,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmcolorkey_generic_pixel_local_pairwise.py"
+      ],
+      "exit": 0,
+      "seconds": 17.76,
+      "log": "073.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 73,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmcolorkey_generic_roi_tile.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmcolorkey_generic_roi_tile.py"
+      ],
+      "exit": 0,
+      "seconds": 5.64,
+      "log": "074.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 74,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 12.1,
+      "log": "075.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 75,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 15.98,
+      "log": "076.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 76,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_dblur_generic_backonly_beta_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.05,
+      "log": "077.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 77,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+      ],
+      "exit": 1,
+      "seconds": 7.58,
+      "log": "078.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 78,
+      "outcome": "runtime/contract failure",
+      "note": "EffectMain probe rc=10; FAIL code=1568 line=704; FAIL code=10 line=808.",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_admission_budget_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_dblur_generic_admission_budget_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.17,
+      "log": "079.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 79,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+      ],
+      "exit": 1,
+      "seconds": 4.8,
+      "log": "080.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 80,
+      "outcome": "runtime/contract failure",
+      "note": "Cleanup probe rc=134: budget err=-3 alloc=1 output=1 layer=2 out=1 checkin=1 pc=21 pi=21.",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmdistancegradation_generic_production_beta_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmdistancegradation_generic_production_beta_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 9.34,
+      "log": "081.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 81,
+      "outcome": "runtime/contract failure",
+      "note": "Both normal and sanitizer probes exit 75: pf32_blurred_budget_rejects expectation.",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmdistancegradation_smart_transactional_20260822.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmdistancegradation_smart_transactional_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 3.38,
+      "log": "082.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 82,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmkirakira_generic_beta_sanitizers_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmkirakira_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 44.16,
+      "log": "083.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 83,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmkirakira_native_smoke_tuple_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmkirakira_native_smoke_tuple_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 5.44,
+      "log": "084.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 84,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmkirakira_mode3_ui_length_beta_20260821.py"
+      ],
+      "exit": 1,
+      "seconds": 40.61,
+      "log": "085.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 85,
+      "outcome": "runtime/contract failure",
+      "note": "Three failures: MODE3_UI_REJECT length=0 reports ok=0 at depths 8/16/32; length=301 reports ok=1.",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmradialblur_generic_baseline_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 5.17,
+      "log": "086.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 86,
+      "outcome": "runtime/contract failure",
+      "note": "Baseline probe exit 38.",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 41.85,
+      "log": "087.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 87,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmradialblur_generic_type3_sanitizers_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 17.96,
+      "log": "088.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 88,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmradialblur_size_noise_effectmain_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 5.8,
+      "log": "089.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 89,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmsmoother2_default_beta_lane_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmsmoother2_default_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.06,
+      "log": "090.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 90,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmsmoother2_gamma_colors_beta_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 6.0,
+      "log": "091.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 91,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_olmsmoother2_roi_fullframe_contract_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_olmsmoother2_roi_fullframe_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 2.94,
+      "log": "092.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 92,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "generic:tests/test_generic_beta_perf_smoke_runner.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tests/test_generic_beta_perf_smoke_runner.py"
+      ],
+      "exit": 1,
+      "seconds": 18.17,
+      "log": "093.log",
+      "links": 2,
+      "link_failures": 0,
+      "index": 93,
+      "outcome": "stale binding",
+      "note": "EvidenceBindingError: invocation executable prefix mismatch; command mismatch OLMDistanceGradation/uhd. Both compiler invocations succeed.",
+      "first_differences": []
+    },
+    {
+      "key": "F20",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-c",
+        "import sys; from pathlib import Path; sys.path.insert(0,'tools/fuzz'); import test_colorkey_existing_F20 as m; m.SCRATCH=Path('/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/orchestra/state/R03-harness-ucrt-link/f20-tests'); m.main()"
+      ],
+      "exit": 0,
+      "seconds": 20.48,
+      "log": "094.log",
+      "links": 3,
+      "link_failures": 0,
+      "index": 94,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "parameter-ui-OLMDirectionalBlur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 3.68,
+      "log": "095.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 95,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "parameter-ui-OLMDistanceGradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmdistancegradation_ui_setup_actual_aex_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 3.13,
+      "log": "096.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 96,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    },
+    {
+      "key": "parameter-ui-OLMRadialBlur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R03-harness-ucrt-link/tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py"
+      ],
+      "exit": 0,
+      "seconds": 5.22,
+      "log": "097.log",
+      "links": 1,
+      "link_failures": 0,
+      "index": 97,
+      "outcome": "pass",
+      "note": "",
+      "first_differences": []
+    }
+  ]
+}

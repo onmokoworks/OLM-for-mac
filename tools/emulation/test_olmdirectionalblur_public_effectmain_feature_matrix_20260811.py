@@ -2,6 +2,9 @@
 """Public EffectMain SmartPreRender/SmartRender featureful six-case matrix."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -47,7 +50,7 @@ std::printf("]}");return 0;}'''
  text=text.replace('q->alpha=(x+y)%5?255:96;q->red=(x*13+y*3)&255;q->green=(x*5+y*17)&255;q->blue=(x*19+y*7)&255;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=g_rgba[z+3];q->red=g_rgba[z];q->green=g_rgba[z+1];q->blue=g_rgba[z+2];')
  text=text.replace('q->alpha=(x+y)%5?32768:12288;q->red=(x*701+y*101)&32767;q->green=(x*211+y*907)&32767;q->blue=(x*997+y*307)&32767;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=(g_rgba[z+3]*32768+127)/255;q->red=(g_rgba[z]*32768+127)/255;q->green=(g_rgba[z+1]*32768+127)/255;q->blue=(g_rgba[z+2]*32768+127)/255;')
  text=text.replace('q->alpha=(x+y)%5?1.0f:0.375f;q->red=(x*13+y*3)/255.0f;q->green=(x*5+y*17)/255.0f;q->blue=(x*19+y*7)/255.0f;', f'int z=(y*{DUAL_W}+x)*4;q->alpha=g_rgba[z+3]/255.0f;q->red=g_rgba[z]/255.0f;q->green=g_rgba[z+1]/255.0f;q->blue=g_rgba[z+2]/255.0f;')
- cpp.write_text(text); exe=temp/'feature_probe'; sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip(); cmd=['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-isysroot',sdk,'-I',str(resolve_asset(ROOT/'Headers')),'-I',str(resolve_asset(ROOT/'Headers/SP')),'-I',str(resolve_asset(ROOT/'Util')),'-I',str(resolve_asset(ROOT/'Resources')),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-framework','Cocoa','-o',str(exe)]; run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
+ cpp.write_text(text); exe=temp/'feature_probe'; sdk=subprocess.run(['xcrun','--show-sdk-path'],capture_output=True,text=True,check=True).stdout.strip(); cmd=[_UCRT_CXX,'-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off','-isysroot',sdk,'-I',str(resolve_asset(ROOT/'Headers')),'-I',str(resolve_asset(ROOT/'Headers/SP')),'-I',str(resolve_asset(ROOT/'Util')),'-I',str(resolve_asset(ROOT/'Resources')),str(cpp),str(ROOT/'core/dblur_frontonly.cpp'),str(ROOT/'core/dblur_rotate.cpp'),str(ROOT/'core/dblur_rowdriver.cpp'),str(ROOT/'core/dblur_field.cpp'),'-framework','Cocoa','-o',str(exe)]; run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
  if run.returncode: raise RuntimeError(run.stderr)
  return exe
 

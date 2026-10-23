@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -137,7 +140,7 @@ def production_effectmain() -> tuple[list[dict[str, object]], dict[str, object]]
     with tempfile.TemporaryDirectory(prefix="sm2_gamma18_effectmain_") as raw:
         executable = Path(raw) / "effectmain"
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
             "-I", str(ROOT / "cli/OLMSmoother2/shim"),
             "-I", str(ROOT / "mac/OLMSmoother2/Mac"), str(HARNESS),
             "-o", str(executable),

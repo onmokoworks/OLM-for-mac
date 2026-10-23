@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """V2 natural classifier + typed worker versus production, including runtime LUTs."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,re,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_nonuniform_geometry_actual_aex_20260805 as v1
@@ -39,7 +42,7 @@ def actual(depth,encoded,pad,gamma_all=False,gamma_value=2.4,gamma_colors=False,
     return raw,plane,linear,cr['instructions'],rr['instructions']
 def production():
     with tempfile.TemporaryDirectory(prefix='sm2v2_') as td:
-        b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],text=True,capture_output=True,check=True).stdout
+        b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],text=True,capture_output=True,check=True).stdout
     return dict(x.split() for x in o.splitlines())
 def main():
     encoded=[(0.,0.,0.,1.),(0.,1.,1.,1.),(1.,0.,1.,1.),(1.,1.,0.,1.),(.25,.25,.25,1.),(.75,.75,.75,1.)];prod=production();rows=[]

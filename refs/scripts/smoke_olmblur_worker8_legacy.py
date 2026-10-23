@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -44,7 +47,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmblur-worker8-legacy-") as temp:
         binary = Path(temp) / "replay"
         subprocess.run([
-            "c++", "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
+            _UCRT_CXX, "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
             "core/olmblur_fullworker_helper.cpp", "core/olmblur_worker8_legacy.cpp",
             "tools/emulation/replay_olmblur_worker8_legacy.cpp", "-o", str(binary),
         ], cwd=ROOT, check=True)

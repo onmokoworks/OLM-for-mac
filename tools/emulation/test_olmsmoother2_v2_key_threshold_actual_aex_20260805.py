@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """V2 non-invert key threshold branch through actual AEX and production."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,struct,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_nonuniform_actual_aex_20260805 as v2
@@ -37,7 +40,7 @@ def actual(depth,encoded,pad,invert=False,gamma_palette=None,gamma_value=2.4,key
  return raw,plane,keyed,kr['instructions'],cr['instructions'],rr['instructions']
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2key_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],text=True,capture_output=True,check=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],text=True,capture_output=True,check=True).stdout
  return dict(x.split() for x in o.splitlines())
 def f(u):return struct.unpack('<f',struct.pack('<I',u))[0]
 def main():

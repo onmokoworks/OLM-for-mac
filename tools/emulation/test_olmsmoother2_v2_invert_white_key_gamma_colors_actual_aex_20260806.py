@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """V2 invert-white key plus Gamma Colors owner/classifier/typed interaction."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_key_threshold_actual_aex_20260805 as key
@@ -20,7 +23,7 @@ def require(value,message):
 def production():
     with tempfile.TemporaryDirectory(prefix='sm2_iwkg_') as directory:
         binary=Path(directory)/'harness'
-        subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
+        subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True)
         output=subprocess.run([str(binary)],check=True,text=True,capture_output=True).stdout
     return dict(line.split() for line in output.splitlines())
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,struct,subprocess,tempfile,sys,os
 from pathlib import Path
 import numpy as np
@@ -20,6 +23,6 @@ def main():
  actual_words=[call_compose(ld,ref,x,y) for y in range(H) for x in range(W)];active=b''.join(struct.pack('<4H',a,r,g,b) for a,g,r,b in actual_words);source=b''.join(struct.pack('<4H',a,r,g,b) for a,g,r,b in (src.get((x,y),(0,0,0,0)) for y in range(H) for x in range(W)));srcpad=b''.join(source[y*W*8:(y+1)*W*8]+b'\xa5'*(IRB-W*8) for y in range(H));expected=b''.join(active[y*W*8:(y+1)*W*8]+b'\xa5'*(ORB-W*8) for y in range(H))
  field_sha=hashlib.sha256(field.astype('<f4').tobytes()).hexdigest();output_sha=hashlib.sha256(active).hexdigest();assert field_sha=='f6b4ff5a65f7b09d502c82d3e043eac3ac133069e831d27e1f686e1ac1f95229';expected_sha=('ef941acc83ffe9432b37d5307d0143a8a374711853a0d422c72e1235de7963df' if invert else '71b62987c22b93b09db49b238a767eac6797686f1cab365baed15aac0997f391');assert output_sha==expected_sha;print('field_sha256',field_sha);print('output_active_sha256',output_sha);assert len(trace)>0
  with tempfile.TemporaryDirectory() as td:
-  t=Path(td);a=t/'src';b=t/'exp';exe=t/'h';a.write_bytes(srcpad);b.write_bytes(expected);q=subprocess.run(['clang++','-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr;args=[str(exe),str(a),str(b)]+(['invert'] if invert else []);q=subprocess.run(args,capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='')
+  t=Path(td);a=t/'src';b=t/'exp';exe=t/'h';a.write_bytes(srcpad);b.write_bytes(expected);q=subprocess.run([_UCRT_CXX,'-std=c++17','-O0','-I',str(HERE/'dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],capture_output=True,text=True);assert q.returncode==0,q.stderr;args=[str(exe),str(a),str(b)]+(['invert'] if invert else []);q=subprocess.run(args,capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='')
  print('PASS_OLMDISTANCEGRADATION_CLASSIC_PF16_OUTSIDE_SPHERE_NOBG_INVERT_EXACT' if invert else 'PASS_OLMDISTANCEGRADATION_CLASSIC_PF16_OUTSIDE_SPHERE_NOBG_EXACT')
 if __name__=='__main__':raise SystemExit(main())

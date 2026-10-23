@@ -2,6 +2,9 @@
 """Prove the unique straight-PF32 preimage of the Windows case-07 EXR."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -63,7 +66,7 @@ def compile_and_run(directory: Path) -> tuple[bytes, dict[str, str]]:
     binary = directory / "case07_direct"
     output = directory / "direct.raw"
     build = subprocess.run([
-        "clang++", "-std=c++17", "-O2",
+        _UCRT_CXX, "-std=c++17", "-O2",
         "-I", str(ROOT / "cli/OLMSmoother2/shim"),
         "-I", str(ROOT / "mac/OLMSmoother2/Mac"),
         str(HARNESS), "-lz", "-o", str(binary),

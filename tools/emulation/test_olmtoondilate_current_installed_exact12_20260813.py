@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import importlib.util
@@ -75,7 +78,7 @@ def compile_and_run(arch: str) -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="toon_installed_exact12_") as temporary:
         probe = Path(temporary) / "probe"
         build = subprocess.run([
-            compiler, "-std=c++17", "-O2", "-arch", arch, "-isysroot", sdk,
+            _UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-arch", arch, "-isysroot", sdk,
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
             "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
             str(PROBE_SOURCE), "-o", str(probe),

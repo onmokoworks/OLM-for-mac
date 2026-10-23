@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """PF16 RadialBlur Type-1 pairwise actual-AEX/production matrix."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -65,7 +68,7 @@ def production(cell,expected):
    writes="Put(2,ob);Put(3,a);Put(4,b);Put(5,c);Put(6,d);Put(7,e);Put(8,f);"; names=("output","polar","source_scalar","accum","max_alpha","final_rgba","coordinates")
   cpp.write_text(f'''#define OLM_RADIALBLUR_TEST_SEAM 1\n#include "{src}"\n#include <fstream>\n#include <vector>\nint main(int argc,char**q){{constexpr int W={w},H={h},RB={rb},C={cells};std::vector<unsigned char>ib(RB*H),ob(RB*H);std::ifstream(q[1],std::ios::binary).read((char*)ib.data(),ib.size());for(int y=0;y<H;y++)for(int x=W*8;x<RB;x++)ob[y*RB+x]=(0xa0+y)&255;PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;{arrays}OLMRadialBlurInfo i{{}};i.blur_type={1 if mode=="zoom" else 2};i.center_x={float(w//2)};i.center_y={float(h//2)};i.outer_strength=4;i.outer_offset_mode=1;i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_variation={nv};i.noise_type=1;i.seed={seed};i.noise_offset={offset};i.thickness={thickness};i.comp_width=W;i.comp_height=H;{call}auto Put=[&](int x,auto&v){{std::ofstream(q[x],std::ios::binary).write((char*)v.data(),v.size()*sizeof(v[0]));}};{writes}}}''')
   sdk=subprocess.run(["xcrun","--show-sdk-path"],text=True,capture_output=True,check=True).stdout.strip()
-  cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"mac/OLMRadialBlur"),"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
+  cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"mac/OLMRadialBlur"),"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
   b=subprocess.run(cmd,capture_output=True,text=True); assert b.returncode==0,b.stderr
   paths=[td/x for x in names]; r=subprocess.run([str(exe),str(inp),*map(str,paths)])
   if r.returncode: return {"_returncode":r.returncode}

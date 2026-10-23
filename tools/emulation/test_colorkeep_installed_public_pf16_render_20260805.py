@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import subprocess
@@ -51,7 +54,7 @@ PF_LayerDef dst{{}};dst.data=reinterpret_cast<PF_PixelPtr>(output);dst.rowbytes=
         cpp, exe = directory / "probe.cpp", directory / "probe"
         cpp.write_text(code, encoding="utf-8")
         build = subprocess.run([
-            "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+            _UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp), "-o", str(exe),
         ], cwd=ROOT, capture_output=True, text=True)
         assert build.returncode == 0, build.stderr

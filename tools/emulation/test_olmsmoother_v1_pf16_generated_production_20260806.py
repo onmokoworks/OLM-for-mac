@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare generated PF16 EdgeWalker/SubHandler with the pinned actual AEX."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import ctypes
 import hashlib
 import json
@@ -24,7 +27,7 @@ DIRECTIONS = (1, 3, 5, 7)
 
 def build() -> None:
     subprocess.run([
-        "clang++", "-std=c++17", "-fPIC", "-shared",
+        _UCRT_CXX, "-std=c++17", "-fPIC", "-shared",
         "-I" + str(ROOT / "cli/OLMSmoother/shim"),
         str(ROOT / "tools/emulation/olmsmoother_v1_pf16_control_ctypes_harness_20260806.cpp"),
         "-o", str(LIB),

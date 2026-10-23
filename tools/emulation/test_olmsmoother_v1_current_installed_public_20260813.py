@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -73,7 +76,7 @@ def compile_and_run(arch: str) -> str:
     with tempfile.TemporaryDirectory(prefix="olmsmoother-v1-installed-") as temporary:
         executable = Path(temporary) / "probe"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        command = ["clang++", "-std=c++17", "-arch", arch, "-O2", "-isysroot", sdk,
+        command = [_UCRT_CXX, "-std=c++17", "-arch", arch, "-O2", "-isysroot", sdk,
                    "-Wno-pragma-pack", "-Wno-deprecated-declarations"]
         for include in ("Headers", "Headers/SP", "Util", "Resources", "mac/OLMSmoother", "mac/OLMSmoother/Mac"):
             command += ["-I", str(ROOT / include)]

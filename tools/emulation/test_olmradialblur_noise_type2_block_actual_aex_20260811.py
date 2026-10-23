@@ -2,6 +2,9 @@
 """Bounded 9x7 RadialBlur Noise Type 2 (Block) actual-AEX matrix."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib, importlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -113,7 +116,7 @@ def production(cell, expected):
         center_x,center_y=(4.5,3.5) if depth==8 else (4.0,3.0)
         cpp.write_text(f'''#define OLM_RADIALBLUR_TEST_SEAM 1\n#include "{source}"\n#include <fstream>\n#include <vector>\nint main(int n,char**q){{constexpr int W=9,H=7,RB={rb},C={cells};std::vector<unsigned char>ib(RB*H),ob(RB*H);std::ifstream(q[1],std::ios::binary).read((char*)ib.data(),ib.size());for(int y=0;y<H;y++)for(int x={visible};x<RB;x++)ob[y*RB+x]=(0xa0+y)&255;PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;{arrays}OLMRadialBlurInfo i{{}};i.blur_type={1 if mode=='zoom' else 2};i.center_x={center_x};i.center_y={center_y};i.outer_strength=4;i.outer_offset_mode=1;i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_variation={nv};i.noise_type=2;i.seed=1;i.thickness={thickness};i.comp_width=W;i.comp_height=H;{call}auto Put=[&](int x,auto&v){{std::ofstream(q[x],std::ios::binary).write((char*)v.data(),v.size()*sizeof(v[0]));}};{writes}}}''')
         sdk=subprocess.run(["xcrun","--show-sdk-path"],text=True,capture_output=True,check=True).stdout.strip()
-        cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
+        cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
         built=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True); assert built.returncode==0,built.stderr
         paths=[td/n for n in names]; run=subprocess.run([str(exe),str(inp),*map(str,paths)]); assert run.returncode==0,run.returncode
         return {n:p.read_bytes() for n,p in zip(names,paths)}

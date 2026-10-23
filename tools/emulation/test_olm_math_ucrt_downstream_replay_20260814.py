@@ -7,6 +7,9 @@ tool never edits production admission and never launches After Effects.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -117,7 +120,7 @@ def compile_directional(temp: Path, census, interposer: Path) -> Path:
     cpp = temp / "olmdirectionalblur_mac_smartrender_adapter_probe.cpp"
     executable = temp / "directional-table"
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-    command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+    command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-fno-builtin-expf", "-fno-builtin-powf", "-isysroot", sdk,
                "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
                "-I", str(resolve_asset(ROOT / "Resources")), str(cpp), str(interposer),
@@ -154,7 +157,7 @@ def replay_directional(temp: Path, table: Path) -> dict[str, object]:
 def replay_distance(temp: Path, table: Path) -> dict[str, object]:
     executable = temp / "distance-table"
     interposer = build_interposer(temp)
-    command = ["clang++", "-std=c++17", "-O0", "-fno-builtin-powf",
+    command = [_UCRT_CXX, "-std=c++17", "-O0", "-fno-builtin-powf",
                "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
                str(DG_HARNESS), str(DG_FIELD), str(interposer), "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)

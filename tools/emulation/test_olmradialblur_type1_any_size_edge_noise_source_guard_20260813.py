@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
@@ -27,7 +30,7 @@ def run(arch: str) -> list[str]:
     with tempfile.TemporaryDirectory(prefix=f"radial-any-size-edge-{arch}.") as raw:
         exe = Path(raw) / "probe"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        cmd = ["clang++", "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
+        cmd = [_UCRT_CXX, "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-isysroot", sdk, "-Wno-pragma-pack",
                "-Wno-deprecated-declarations", "-I", str(ROOT / "Headers"),
                "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),

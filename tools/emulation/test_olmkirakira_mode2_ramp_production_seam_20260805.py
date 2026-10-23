@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import hashlib
 import os
@@ -27,7 +30,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="olmkirakira_merge2_ramp_seam_") as td:
         executable = Path(td) / "merge2"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
         lines = subprocess.check_output([str(executable)], text=True).splitlines()
     actual = [[f"0x{word}" for word in line.split()[1:]] for line in lines]
     assert actual == expected

@@ -9,6 +9,9 @@ is hash-bound.  Production is compiled through EffectMain(PF_Cmd_RENDER).
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import math
@@ -227,7 +230,7 @@ def compile_production(directory: Path) -> Path:
         "__OLMBLUR_MAC_SOURCE__", str(SOURCE).replace("\\", "\\\\").replace('"', '\\"')))
     executable = directory / "probe"
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
-    command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
+    command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
         "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-I", str(ROOT/"Headers"),
         "-I", str(ROOT/"Headers/SP"), "-I", str(ROOT/"Util"), "-I", str(ROOT/"Resources"),
         "-I", str(ROOT/"core"), str(source), *[str(ROOT/item) for item in (

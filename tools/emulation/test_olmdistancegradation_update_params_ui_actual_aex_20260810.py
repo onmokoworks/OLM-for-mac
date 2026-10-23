@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import itertools
 import json
@@ -97,7 +100,7 @@ def run_actual(case: tuple[int, int, int, int, int]) -> list[list[int]]:
 def build_production(directory: Path) -> Path:
     executable = directory / "probe"
     command = [
-        "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+        _UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
         "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(HARNESS),
         "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.cpp",
         "core/olmdistancegradation_fieldgen.cpp", "Util/AEGP_SuiteHandler.cpp",

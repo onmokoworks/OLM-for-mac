@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Verify the built test-only PF16 source through its exported EffectMain."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, hashlib, json, struct, subprocess, tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -15,7 +18,7 @@ using Fn=PF_Err(*)(PF_Cmd,PF_InData*,PF_OutData*,PF_ParamDef**,PF_LayerDef*,void
 int main(int n,char**v){void*h=dlopen(v[1],RTLD_NOW);if(!h)return 2;auto f=(Fn)dlsym(h,"EffectMain");if(!f)return 3;unsigned char raw[3*40];memset(raw,0xee,sizeof(raw));PF_LayerDef w{};w.data=reinterpret_cast<PF_PixelPtr>(raw);w.width=4;w.height=3;w.rowbytes=40;w.world_flags=PF_WorldFlag_DEEP;PF_OutData o{};if(f(PF_Cmd_GLOBAL_SETUP,nullptr,&o,nullptr,nullptr,nullptr)||!(o.out_flags&PF_OutFlag_DEEP_COLOR_AWARE))return 4;if(f(PF_Cmd_RENDER,nullptr,&o,nullptr,&w,nullptr))return 5;fwrite(raw,1,sizeof(raw),stdout);return 0;}'''
  with tempfile.TemporaryDirectory(prefix="ck_pf16_source_test_") as raw:
   d=Path(raw);src=d/"test.cpp";exe=d/"test";src.write_text(code)
-  subprocess.run(["clang++","-std=c++17","-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),str(src),"-o",str(exe)],check=True)
+  subprocess.run([_UCRT_CXX,"-std=c++17","-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),str(src),"-o",str(exe)],check=True)
   got=subprocess.run([str(exe),str(binary)],check=True,capture_output=True).stdout
  expected=b"".join(b"".join(struct.pack("<4H",*PIXELS[y*4+x]) for x in range(4))+b"\xee"*8 for y in range(3))
  if got!=expected: raise RuntimeError("exported PF16 payload mismatch")

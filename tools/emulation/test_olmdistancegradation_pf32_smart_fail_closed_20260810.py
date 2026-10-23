@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Production regression for an unadmitted PF32 Smart Mode 5 tuple."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 from pathlib import Path
 import subprocess
 import tempfile
@@ -10,7 +13,7 @@ HARNESS = ROOT / "tools/emulation/dg_pf32_smart_fail_closed_harness_20260810.cpp
 with tempfile.TemporaryDirectory(prefix="olmdg_pf32_smart_guard_") as raw:
     executable = Path(raw) / "probe"
     build = subprocess.run([
-        "clang++", "-std=c++17", "-O0",
+        _UCRT_CXX, "-std=c++17", "-O0",
         "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
         str(HARNESS), str(ROOT / "core/olmdistancegradation_fieldgen.cpp"),
         "-o", str(executable),

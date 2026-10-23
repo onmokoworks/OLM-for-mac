@@ -2,6 +2,9 @@
 """Hash-bound direct-owner closure for the bounded PF32 Zoom Type-3 layer lane."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -208,7 +211,7 @@ i=base;i.repeat_border=FALSE;if(!reject(&nw,32))return 32;i=base;i.ratio=2;if(!r
 std::ofstream(argv[7])<<"null_layer,layer_size,layer_origin,layer_rowbytes,layer_data,input_size,input_rowbytes,input_data,output_size,output_rowbytes,depth,blur_type,center_x,center_y,outer_strength,outer_fade,outer_mode,outer_offset,inner_strength,inner_fade,inner_mode,inner_offset,repeat,ratio,angle,quality,brightness,size_variation,nv26,nv0,noise_type,seed,noise_offset,thickness,comp_width,comp_height";return 0;}}
 ''')
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        cmd = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+        cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
                "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
                "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),

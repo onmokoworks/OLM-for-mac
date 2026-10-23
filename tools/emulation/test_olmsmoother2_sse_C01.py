@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare scalar helpers to individual original-AEX SSE instructions, bitwise."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import json, os, struct, subprocess, sys
 from pathlib import Path
 sys.dont_write_bytecode=True
@@ -21,7 +24,7 @@ def main():
  } }
 ''')
     binary=SCRATCH/'test'
-    subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',
+    subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',
         '-I',str(ROOT/'cli/OLMSmoother2/shim'),str(host),'-o',str(binary)],check=True)
     values=[0,0x80000000,0x3f800000,0xbf800000,0x3f000000,0xbf000000,0x7f800000,0xff800000,
         0x7fc00000,0xffc00000,0x7fc12345,0xffc54321,0x7f812345,0xff812346,0x7f7fffff,0xff7fffff,1,0x80000001,0x00800000,0x80800000]

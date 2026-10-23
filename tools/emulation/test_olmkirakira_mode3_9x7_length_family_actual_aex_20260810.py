@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -34,7 +37,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="olmkirakira_mode3_9x7_family_") as td:
         executable = Path(td) / "kirakira_gaussian"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
         result = {}
         for length in LENGTHS:
             report = json.loads(FIXTURES[length].read_text(encoding="utf-8"))

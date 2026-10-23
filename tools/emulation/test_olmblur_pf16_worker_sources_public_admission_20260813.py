@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -73,7 +76,7 @@ def run() -> str:
             resolve_asset(ROOT / str(resolve_asset("Util/MissingSuiteError.cpp"))),
         ]
         command = [
-            "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+            _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
             "-Wno-pragma-pack", "-Wno-deprecated-declarations",
             *[item for directory in ("Headers", "Headers/SP", "Util", "Resources", "core", "mac/OLMBlur") for item in ("-I", str(ROOT / directory))],

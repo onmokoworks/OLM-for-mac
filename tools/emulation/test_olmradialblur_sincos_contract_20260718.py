@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -116,7 +119,7 @@ def mac_words(step_bits: int) -> list[tuple[int, int]]:
         binary = directory_path / "sincos"
         source.write_text(HELPER_SOURCE, encoding="ascii")
         compile_result = subprocess.run(
-            ["clang++", "-std=c++17", "-O2", "-fno-fast-math", str(source), "-o", str(binary)],
+            [_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", str(source), "-o", str(binary)],
             text=True,
             capture_output=True,
             check=False,

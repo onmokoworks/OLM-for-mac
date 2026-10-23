@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import subprocess
@@ -29,7 +32,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmdg_case0023_") as temp:
         binary = Path(temp) / "triplet"
         compile_result = subprocess.run([
-            "clang++", "-std=c++17", "-O0", "-Wall", "-Wextra", "-pedantic",
+            _UCRT_CXX, "-std=c++17", "-O0", "-Wall", "-Wextra", "-pedantic",
             "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
             str(ROOT / "tools/emulation/dg_case0023_triplet_production_harness_20260805.cpp"),
             str(ROOT / "core/olmdistancegradation_fieldgen.cpp"), "-o", str(binary),

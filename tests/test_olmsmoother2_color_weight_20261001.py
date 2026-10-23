@@ -1,4 +1,7 @@
 """Current-source replay of colored AEX scans and the exported Smart owner."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import importlib
 import json
 import os
@@ -137,7 +140,7 @@ int main() {
             (path / 'production_under_test.cpp').write_text(campaign.SOURCE.read_text())
             source = path / 'probe.cpp'; source.write_text(program)
             binary = path / 'probe'
-            subprocess.run(['clang++', '-std=c++17', '-O1', '-g', '-fsanitize=address,undefined',
+            subprocess.run([_UCRT_CXX, '-std=c++17', '-O1', '-g', '-fsanitize=address,undefined',
                             '-fno-omit-frame-pointer', '-Wno-deprecated-declarations',
                             '-I', str(path), '-I', str(ROOT / 'cli/OLMSmoother2/shim'),
                             '-I', str(campaign.SOURCE.parent), str(source), '-o', str(binary)], check=True)

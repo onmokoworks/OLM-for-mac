@@ -2,6 +2,9 @@
 """Actual-AEX/full-production RadialBlur Edge Fade x procedural Noise endpoints."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -211,7 +214,7 @@ for(int y=0;y<18;y++)for(int x=0;x<32;x++){float z=olm::dblur::sample_radial_noi
                        + ("true" if noise_type == 1 else "false") + ''');
 float qv=(float)''' + repr(nv * .01) + ''';out[y*32+x]=(float)((float)(z*qv)+(float)(1.0f-qv));}
 std::ofstream(q[1],std::ios::binary).write((char*)out,sizeof(out));}''')
-        subprocess.run(["c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
                         "-I", str(ROOT), str(cpp), "-o", str(exe)], check=True)
         subprocess.run([str(exe), str(out)], check=True)
         return out.read_bytes()

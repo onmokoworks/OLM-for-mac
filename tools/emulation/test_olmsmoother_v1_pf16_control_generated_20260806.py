@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare generated PF16 walker/sub-handler with the pinned Windows AEX."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import ctypes, hashlib, struct, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
@@ -35,7 +38,7 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as directory:
         library = Path(directory) / "pf16_control.dylib"
-        subprocess.run(["clang++", "-std=c++17", "-O2", "-fPIC", "-shared",
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-fPIC", "-shared",
                         "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS),
                         "-o", str(library)], check=True, capture_output=True)
         port = ctypes.CDLL(str(library)); pixels = (ctypes.c_uint16 * len(words))(*words)

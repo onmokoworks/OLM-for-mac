@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Build the opt-in F47b OLMBlur lifecycle probe in ticket-local scratch."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[3] / "tools/ucrt_cxx.py")
 import difflib
 import hashlib
 import json
@@ -54,7 +57,7 @@ def verify_abi(env):
     lines.append('}')
     probe = STATE / 'abi.cpp'
     probe.write_text('\n'.join(lines) + '\n')
-    cmd = ['clang++', '-Wno-pragma-pack', '-I' + str(ROOT / 'Headers'),
+    cmd = [_UCRT_CXX, '-Wno-pragma-pack', '-I' + str(ROOT / 'Headers'),
            '-I' + str(ROOT / 'Headers/SP'), str(probe), '-o', str(STATE / 'abi')]
     with (STATE / 'abi-build.log').open('w') as log:
         subprocess.run(cmd, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)

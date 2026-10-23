@@ -2,6 +2,9 @@
 """Compile/run current OLMBlur Classic PF_Cmd_RENDER through the real SDK ABI."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -19,7 +22,7 @@ def main():
   with tempfile.TemporaryDirectory(prefix="olmblur-classic-real-sdk.") as td:
     exe=Path(td)/"probe";sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
     core=[str(ROOT/"core"/name) for name in ("olmblur_helper.cpp","olmblur_fullworker_helper.cpp","olmblur_worker16_nonlegacy.cpp","olmblur_worker16_legacy.cpp","olmblur_worker32_nonlegacy.cpp","olmblur_worker32_legacy.cpp","olmblur_worker8_legacy.cpp","olmblur_worker_orchestration.cpp")]
-    cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1","-Wno-pragma-pack","-Wno-deprecated-declarations","-isysroot",sdk,"-IHeaders","-IHeaders/SP","-IUtil","-IResources","-Icore","-Imac/OLMBlur",str(PROBE),"mac/OLMBlur/OLMBlur_Strings.cpp",*core,str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(exe)]
+    cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1","-Wno-pragma-pack","-Wno-deprecated-declarations","-isysroot",sdk,"-IHeaders","-IHeaders/SP","-IUtil","-IResources","-Icore","-Imac/OLMBlur",str(PROBE),"mac/OLMBlur/OLMBlur_Strings.cpp",*core,str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(exe)]
     subprocess.run(cmd,cwd=ROOT,check=True)
     run=subprocess.run([str(exe),str(FIXTURE)],cwd=ROOT,capture_output=True,text=True)
     if run.returncode: raise RuntimeError(run.stdout+run.stderr)

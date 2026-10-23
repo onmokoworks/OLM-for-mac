@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -108,7 +111,7 @@ class Buffer:
 def run_portable(data: dict[str, bytes], directory: Path) -> dict[str, bytes]:
     library_path = directory / "rowdriver.dylib"
     subprocess.run(
-        ["c++", "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
+        [_UCRT_CXX, "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
          "-ffp-contract=off", str(ROOT / "core/dblur_rowdriver.cpp"),
          "-o", str(library_path)], cwd=ROOT, check=True)
     library = ctypes.CDLL(str(library_path))

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Validate the actual-AEX forward-warp contract evidence."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import shutil
@@ -55,7 +58,7 @@ int main() {{
         cpp = tmp_path / "fixture.cpp"
         binary = tmp_path / "fixture"
         cpp.write_text(harness, encoding="utf-8")
-        subprocess.run([compiler, "-std=c++17", "-O2", str(cpp), "-o", str(binary)], check=True)
+        subprocess.run([_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", str(cpp), "-o", str(binary)], check=True)
         proc = subprocess.run([str(binary)], check=True, text=True, capture_output=True)
     return proc.stdout.splitlines()
 

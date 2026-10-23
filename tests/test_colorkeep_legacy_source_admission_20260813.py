@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -14,7 +17,7 @@ def load():s=importlib.util.spec_from_file_location("matrix",MATRIX);m=importlib
 class ColorKeepLegacySourceAdmission(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.tmp=tempfile.TemporaryDirectory(prefix="colorkeep-legacy-source-");cls.exe=Path(cls.tmp.name)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=["clang++","-std=c++17","-O2","-arch","arm64","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+  cls.tmp=tempfile.TemporaryDirectory(prefix="colorkeep-legacy-source-");cls.exe=Path(cls.tmp.name)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[_UCRT_CXX,"-std=c++17","-O2","-arch","arm64","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in("Headers","Headers/SP","Util","Resources","mac/ColorKeep"):cmd += ["-I",str(ROOT/inc)]
   cmd += [str(PROBE),str(ROOT/"mac/ColorKeep/ColorKeep_Strings.cpp"),str(resolve_asset(ROOT/"Util/AEGP_SuiteHandler.cpp")),str(resolve_asset(ROOT/"Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(cls.exe)];p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True);assert p.returncode==0,p.stderr;cls.matrix=load()
  @classmethod

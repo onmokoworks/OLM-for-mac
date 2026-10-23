@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Prove the bounded PF16 Outside/RGB/no-bg interpolation x invert family."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import os
 import struct
@@ -108,7 +111,7 @@ def main() -> int:
         source_path, expected_path, executable = temp / "source", temp / "expected", temp / "harness"
         source_path.write_bytes(source_padded)
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O0", "-I", str(HERE / "dg_renderbits_real_harness_20260716"),
+            _UCRT_CXX, "-std=c++17", "-O0", "-I", str(HERE / "dg_renderbits_real_harness_20260716"),
             str(HARNESS), str(ROOT / "core/olmdistancegradation_fieldgen.cpp"), "-o", str(executable),
         ], capture_output=True, text=True)
         assert build.returncode == 0, build.stderr

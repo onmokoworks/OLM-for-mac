@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -20,7 +23,7 @@ EXPECTED_AEX = "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7
 
 def compile_adapter(path: Path) -> None:
     command = [
-        "clang++", "-std=c++17", "-O2", "-Icli/OLMSmoother2/shim",
+        _UCRT_CXX, "-std=c++17", "-O2", "-Icli/OLMSmoother2/shim",
         "-Imac/OLMSmoother2/Mac", str(ADAPTER), "-o", str(path),
     ]
     subprocess.run(command, cwd=ROOT, check=True)

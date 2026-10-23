@@ -2,6 +2,9 @@
 """Replay the complete bounded OLMSmoother v1 Classic admission union."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -57,7 +60,7 @@ def cases():
  assert len(rows)==67
  return rows
 def compile_probe(arch,td):
- exe=td/f"probe-{arch}";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=["clang++","-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+ exe=td/f"probe-{arch}";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
  for inc in("Headers","Headers/SP","Util","Resources","mac/OLMSmoother","mac/OLMSmoother/Mac"):cmd += ["-I",str(ROOT/inc)]
  cmd += [str(PROBE),str(STRINGS),str(SUITE_CPP),str(MISSING_CPP),"-framework","Cocoa","-o",str(exe)];p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
  if p.returncode:raise RuntimeError(p.stdout+p.stderr)

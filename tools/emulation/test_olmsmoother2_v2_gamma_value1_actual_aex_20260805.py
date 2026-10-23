@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Natural AE Gamma Value lower/identity endpoint 1.0 in Gamma Colors mode."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,re,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_nonuniform_actual_aex_20260805 as v2
@@ -10,7 +13,7 @@ def req(x,m):
  if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2g1_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return dict(x.split() for x in o.splitlines())
 def main():
  req(re.search(r'PF_ADD_FLOAT_SLIDERX\([^;]*?1\.0, 2\.4, 1\.0, 2\.4, 2\.4,',SOURCE.read_text(),re.S),'Gamma Value AE range/default drift');px=[(1,1,1,1),(1,0,0,1),(0,0,1,1),(0,1,0,1),(.5,.75,.25,1),(.875,.125,.625,1)];px=[tuple(typed.f32(v) for v in q) for q in px];prod=production();rows=[]

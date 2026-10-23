@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -91,7 +94,7 @@ def main() -> int:
         assert needle in mac
     with tempfile.TemporaryDirectory(prefix="kk_ramp_event_") as td:
         exe = Path(td) / "event"
-        subprocess.run(["c++", "-std=c++17", str(CPP), "-o", str(exe)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", str(CPP), "-o", str(exe)], check=True)
         subprocess.run([str(exe)], check=True)
     report = {
         "schema": "olmkirakira-ramp-event-contract/5",

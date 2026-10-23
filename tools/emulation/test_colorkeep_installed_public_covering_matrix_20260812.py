@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -188,7 +191,7 @@ int main(int argc,char**argv){s8.iterate=i8;s16.iterate=i16;sf.iterate=iff;sc.PF
         directory = Path(raw); source = directory / "probe.cpp"; executable = directory / "probe"
         source.write_text(code, encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        build = subprocess.run([compiler, "-std=c++17", "-arch", arch, "-isysroot", sdk,
+        build = subprocess.run([_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-arch", arch, "-isysroot", sdk,
                                 "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources",
                                 str(source), "-o", str(executable)], cwd=ROOT, capture_output=True, text=True)
         assert build.returncode == 0, build.stderr

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Natural v2 Smooth Range=255 internal out-of-UI-range fixture."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,re,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_v2_nonuniform_actual_aex_20260805 as v2
@@ -10,7 +13,7 @@ def req(x,m):
  if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2r255_') as td:
-  b=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
+  b=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True);o=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return dict(x.split() for x in o.splitlines())
 def main():
  req(re.search(r'PF_ADD_SLIDER\(GetStringPtr\(StrID_SmoothRange_Param_Name\),\s*0, 100, 0, 100, 2,',SOURCE.read_text()),'Smooth Range public UI range drift');px=[(0,0,0,1),(0,1,1,1),(1,0,1,1),(1,1,0,1),(.25,.25,.25,1),(.75,.75,.75,1)];px=[tuple(typed.f32(v) for v in q) for q in px];prod=production();old0={x['depth']:x for x in json.loads(R0.read_text())['fixtures']};old1={x['depth']:x for x in json.loads(R1.read_text())['fixtures']};rows=[]

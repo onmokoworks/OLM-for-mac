@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -168,7 +171,7 @@ int main(){{int counts[]={{{counts}}};for(int c:counts){{PF_InData in{{}};PF_Out
         directory = Path(raw)
         cpp, exe = directory / "probe.cpp", directory / "probe"
         cpp.write_text(code, encoding="utf-8")
-        build = subprocess.run(["xcrun", "clang++", "-std=c++17", "-O2", str(cpp), "-o", str(exe)], cwd=ROOT, capture_output=True, text=True)
+        build = subprocess.run([_UCRT_CXX, "--xcrun", "-std=c++17", "-O2", str(cpp), "-o", str(exe)], cwd=ROOT, capture_output=True, text=True)
         assert build.returncode == 0, build.stderr
         run = subprocess.run([str(exe)], cwd=ROOT, capture_output=True)
         assert run.returncode == 0, run.stderr.decode(errors="replace")

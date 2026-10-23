@@ -4,6 +4,9 @@
 This diagnoses an oracle boundary, not a portable renderer implementation or
 a Windows AE reference. On the Apple Silicon workstation x86_64 uses Rosetta.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import os
@@ -67,7 +70,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='sse_',dir=scratch) as tmp:
         tmp=Path(tmp);source=tmp/'probe.cpp';source.write_text(CPP)
         binary=tmp/'x86'
-        cmd=['clang++','-arch','x86_64','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(source),'-o',str(binary)]
+        cmd=[_UCRT_CXX,'-arch','x86_64','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(source),'-o',str(binary)]
         commands.append(cmd);subprocess.run(cmd,check=True,capture_output=True)
         command=['/usr/bin/arch','-x86_64',str(binary)];commands.append(command)
         raw=subprocess.run(command,input=bytes(payload),check=True,capture_output=True).stdout

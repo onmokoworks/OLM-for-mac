@@ -8,6 +8,9 @@ directly for comparison and may fail closed until the bounded family is added.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib, json, pickle, struct, subprocess, sys, tempfile
 from concurrent.futures import ThreadPoolExecutor
@@ -145,7 +148,7 @@ olm::dblur::NoisePlaneView v{p.data(),w,10.0f};float out[32*18];
 for(int y=0;y<18;y++)for(int x=0;x<32;x++)out[y*32+x]=olm::dblur::sample_radial_noise_plane(v,x,y,'''
                        + ("true" if noise_type == 1 else "false") + ''');
 std::ofstream(q[1],std::ios::binary).write((char*)out,sizeof(out));}''')
-        subprocess.run(["c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
                         "-I", str(ROOT), str(cpp), "-o", str(exe)], check=True)
         subprocess.run([str(exe), str(out)], check=True)
         return np.frombuffer(out.read_bytes(), dtype="<f4").copy()

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -105,7 +108,7 @@ def generate() -> dict:
     with tempfile.TemporaryDirectory(prefix="olmsmoother2-pf8-legacy12.") as td:
         work = Path(td); input_raw = work / "source.argb8"; input_raw.write_bytes(source)
         direct_bin = work / "direct"
-        subprocess.run(["clang++","-std=c++17","-O2","-I","cli/OLMSmoother2/shim",str(DIRECT),"-o",str(direct_bin)],cwd=ROOT,check=True,capture_output=True,text=True)
+        subprocess.run([_UCRT_CXX,"-std=c++17","-O2","-I","cli/OLMSmoother2/shim",str(DIRECT),"-o",str(direct_bin)],cwd=ROOT,check=True,capture_output=True,text=True)
         rows=[]
         for index, case in enumerate(cases):
             output = work / f"case{index+1:02d}.argb8"
@@ -119,7 +122,7 @@ def generate() -> dict:
                 "presentation_mismatches":0,"max_byte_delta":0})
         public_bin=work/"public"
         sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
-        command=["clang++","-std=c++17","-arch","arm64","-O2","-Wno-pragma-pack","-Wno-deprecated-declarations","-isysroot",sdk,
+        command=[_UCRT_CXX,"-std=c++17","-arch","arm64","-O2","-Wno-pragma-pack","-Wno-deprecated-declarations","-isysroot",sdk,
             "-IHeaders","-IHeaders/SP","-IUtil","-IResources","-Imac/OLMSmoother2",str(PUBLIC),
             "mac/OLMSmoother2/OLMSmoother2_Strings.cpp",str(resolve_asset("Util/AEGP_SuiteHandler.cpp")),str(resolve_asset("Util/MissingSuiteError.cpp")),"-framework","Cocoa","-o",str(public_bin)]
         subprocess.run(command,cwd=ROOT,check=True,capture_output=True,text=True)

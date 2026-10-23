@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compile and execute the production Mac PF32 Smart owner adapter."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib, json, subprocess, tempfile
 from pathlib import Path
 
@@ -14,7 +17,7 @@ def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
     with tempfile.TemporaryDirectory(prefix="dg_mac_pf32_smart_") as temporary:
         executable = Path(temporary) / "harness"
-        build = subprocess.run(["clang++", "-std=c++17", "-O0",
+        build = subprocess.run([_UCRT_CXX, "-std=c++17", "-O0",
             "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
             str(HARNESS), str(ROOT / "core/olmdistancegradation_fieldgen.cpp"), "-o", str(executable)],
             text=True, capture_output=True)

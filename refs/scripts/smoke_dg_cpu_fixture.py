@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import subprocess
 import tempfile
@@ -65,7 +68,7 @@ def main() -> int:
         assert_fixture_matches(COMMITTED_COMPOSE, generated_compose)
 
         run([
-            "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
+            _UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
             "core/olmdistancegradation_fieldgen.cpp",
             "tools/emulation/replay_dg_fieldgen_fixture.cpp",
             "-o", str(replay_fieldgen),
@@ -77,7 +80,7 @@ def main() -> int:
             str(generated_fieldgen / "field_f32.bin"),
         ])
         run([
-            "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
+            _UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
             "core/olmdistancegradation_fieldgen.cpp",
             "tools/emulation/replay_dg_compose_fixture.cpp",
             "-o", str(replay_compose),
@@ -89,7 +92,7 @@ def main() -> int:
             str(generated_compose / "output_triplet_agrb16.bin"),
         ])
         run([
-            "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
+            _UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
             "core/olmdistancegradation_fieldgen.cpp",
             "tools/emulation/test_dg_core_distance_stage.cpp",
             "-o", str(distance_stage_test),

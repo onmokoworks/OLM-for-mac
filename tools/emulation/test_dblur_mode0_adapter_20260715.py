@@ -10,6 +10,9 @@ proven; no PNG-derived diagonal behavior is asserted here.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import math
 import struct
@@ -28,7 +31,7 @@ def build() -> ctypes.CDLL:
     directory = Path(tempfile.mkdtemp(prefix="olm_dblur_mode0_"))
     library = directory / "libdblur_mode0.so"
     subprocess.run([
-        "c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
         "-fPIC", "-shared", str(ROOT / "core/dblur_rotate.cpp"),
         str(ROOT / "core/dblur_rowdriver.cpp"), "-o", str(library),
     ], cwd=ROOT, check=True)

@@ -2,6 +2,9 @@
 """Bounded PF32 Front Alpha Fade x Type-1 Noise Variation differential."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -42,7 +45,7 @@ def main() -> int:
         )
         library = temp / "libdblur_pf32_fade_noise1.dylib"
         build = subprocess.run([
-            "clang++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
             "-shared", "-fPIC", "core/dblur_frontonly.cpp", "core/dblur_rotate.cpp",
             "core/dblur_rowdriver.cpp", "core/dblur_field.cpp", "-o", str(library),
         ], cwd=ROOT, capture_output=True, text=True)

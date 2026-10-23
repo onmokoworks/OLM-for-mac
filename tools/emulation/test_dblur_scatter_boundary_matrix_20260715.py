@@ -7,6 +7,9 @@ keeps the inputs synthetic so the touched destination set is observable.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import struct
@@ -125,7 +128,7 @@ def call_aex(data: dict[str, bytes], case: dict[str, float | int]) -> dict[str, 
 def build_current(directory: Path) -> Path:
     library = directory / "libdblur_rowdriver.so"
     subprocess.run([
-        "c++", "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
+        _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math", "-ffp-contract=off",
         "-fPIC", "-shared", str(ROOT / "core/dblur_rowdriver.cpp"), "-o", str(library),
     ], cwd=ROOT, check=True)
     return library

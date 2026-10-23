@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import base64
 import hashlib
 import json
@@ -517,7 +520,7 @@ def build(directory: Path, sanitize: bool) -> Path:
     ).stdout.strip()
     flags = ["-O1", "-g", "-fsanitize=address,undefined", "-fno-omit-frame-pointer"] if sanitize else ["-O2"]
     command = [
-        compiler, "-std=c++17", *flags, "-fno-fast-math", "-ffp-contract=off",
+        _UCRT_CXX, "--compiler", compiler, "-std=c++17", *flags, "-fno-fast-math", "-ffp-contract=off",
         "-ffunction-sections", "-fdata-sections", "-Wno-unused-function",
         "-Wno-unused-parameter", "-Wno-pragma-pack", "-isysroot", sdk,
         "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),

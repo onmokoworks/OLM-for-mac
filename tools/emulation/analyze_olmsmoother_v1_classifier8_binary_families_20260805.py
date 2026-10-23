@@ -1,4 +1,7 @@
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -20,7 +23,7 @@ SIZES={}
 def main():
  assert hashlib.sha256(AEX.read_bytes()).hexdigest()==SHA
  with tempfile.TemporaryDirectory() as td:
-  exe=Path(td)/'patterns';subprocess.run(['clang++','-std=c++17','-I'+str(ROOT/'cli/OLMSmoother/shim'),str(SRC),'-o',str(exe)],check=True,capture_output=True)
+  exe=Path(td)/'patterns';subprocess.run([_UCRT_CXX,'-std=c++17','-I'+str(ROOT/'cli/OLMSmoother/shim'),str(SRC),'-o',str(exe)],check=True,capture_output=True)
   prod={int(a[0]):list(map(int,a[1:])) for line in subprocess.run([str(exe)],text=True,capture_output=True,check=True).stdout.splitlines() if (a:=line.split())}
  l=AexLoader(str(AEX),verbose=False,fast=True);s=l.host_alloc(64,align=16);l.write_bytes(s,b'\0'*64);l.write_bytes(s+8,struct.pack('<i',6));ps=[l.host_alloc(4,align=4) for _ in range(9)];n=l.host_alloc(72,align=16);l.write_bytes(n,struct.pack('<9Q',*ps));trace=[]
  def hook(uc,address,size,user):trace.append(address);SIZES[address]=size

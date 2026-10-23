@@ -8,6 +8,9 @@ corresponding Mac helper call.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import re
@@ -101,7 +104,7 @@ def compile_bridge(tmp: Path) -> ctypes.CDLL:
     dylib = tmp / "libdg_raw_threshold_contract_20260716.dylib"
     subprocess.run(
         [
-            compiler,
+            _UCRT_CXX, "--compiler", compiler,
             "-std=c++17",
             "-O2",
             "-arch",

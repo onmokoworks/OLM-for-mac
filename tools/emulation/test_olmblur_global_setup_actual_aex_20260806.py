@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -63,7 +66,7 @@ int main() {
             "core/olmblur_worker8_legacy.cpp", "core/olmblur_worker_orchestration.cpp",
         ]
         command = [
-            "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__",
+            _UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__",
             "-Wno-pragma-pack", "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil",
             "-IResources", "-Icore", str(cpp), *(str(ROOT / p) for p in workers),
             "mac/OLMBlur/OLMBlur_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",

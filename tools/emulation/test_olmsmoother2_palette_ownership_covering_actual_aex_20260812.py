@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Palette ownership x closed Gamma/key/smoothing covering matrix."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
 import test_olmsmoother2_geometry_classifier_matrix_actual_aex_20260811 as base
@@ -11,7 +14,7 @@ def req(x,m):
  if not x:raise RuntimeError('FAIL CLOSED: '+m)
 def main():
  with tempfile.TemporaryDirectory(prefix='sm2_palette_cover_') as td:
-  binary=Path(td)/'h';subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True);rows=[]
+  binary=Path(td)/'h';subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(binary)],check=True);rows=[]
   for ti,(name,count,palette,key_mode,gamma,s,r,e) in enumerate(TUPLES):
    pal=palette[:count]
    for depth,(pixel_size,pad) in base.DEPTHS.items():

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -143,7 +146,7 @@ int main() {
         cpp, exe = directory / "probe.cpp", directory / "probe"
         cpp.write_text(code, encoding="utf-8")
         command = [
-            "xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+            _UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
             "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
             "core/dblur_frontonly.cpp", "core/dblur_rotate.cpp", "core/dblur_rowdriver.cpp",
             "core/dblur_field.cpp", "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",

@@ -2,6 +2,9 @@
 """Build and audit the non-installed Universal PF32 Power candidate."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -99,7 +102,7 @@ def runtime() -> dict[str, dict]:
         public = temp / "public"
         for source, output in ((DIRECT, direct), (PUBLIC, public)):
             build = subprocess.run([
-                "clang++", "-std=c++17", "-O0", "-arch", "arm64", "-arch", "x86_64",
+                _UCRT_CXX, "-std=c++17", "-O0", "-arch", "arm64", "-arch", "x86_64",
                 "-mmacosx-version-min=11.0", "-I", str(include), str(source), str(FIELD), "-o", str(output),
             ], cwd=ROOT, text=True, capture_output=True)
             require(build.returncode == 0, build.stderr)

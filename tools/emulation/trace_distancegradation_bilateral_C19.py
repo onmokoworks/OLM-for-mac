@@ -4,6 +4,9 @@
 No numerical detours/imports. Original IPP init/filter executes with its own
 dispatch table. The selected exp interval is tested independently in three builds.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 from collections import Counter
 import hashlib
@@ -177,7 +180,7 @@ int main(int argc,char **argv) {
         for name,flags in [('o2',['-O2','-ffp-contract=off']),('o3',['-O3','-ffp-contract=fast']),
                            ('san',['-O2','-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             exe=td/name;out=td/(name+'.bin');filtered=td/(name+'-plane.bin')
-            subprocess.run(['clang++','-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
+            subprocess.run([_UCRT_CXX,'-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
                 '-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),str(cpp),
                 str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),str(td/'ucrtmath/libucrtmath.a'),'-o',str(exe)],check=True)
             loop=td/(name+'-loop.bin')

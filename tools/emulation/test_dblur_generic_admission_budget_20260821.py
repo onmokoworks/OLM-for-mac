@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import shutil
 import subprocess
@@ -284,7 +287,7 @@ int main() {{
             ["xcrun", "--show-sdk-path"], check=True, capture_output=True, text=True
         ).stdout.strip()
         command = [
-            cxx, "-std=c++17", "-O1", "-g", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "--compiler", cxx, "-std=c++17", "-O1", "-g", "-fno-fast-math", "-ffp-contract=off",
             "-fsanitize=address,undefined", "-fno-omit-frame-pointer", "-isysroot", sdk,
             "-ffunction-sections", "-fdata-sections",
             "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-pragma-pack",

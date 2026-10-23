@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Build a Universal plugin-only F47d suite host (no Rust or Unicorn)."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[3] / "tools/ucrt_cxx.py")
 import hashlib
 import argparse
 import json
@@ -22,7 +25,7 @@ def main():
     dest.mkdir(exist_ok=True)
     worker = dest/'plugin-host'
     env = dict(os.environ, TMPDIR=str(STATE), TMP=str(STATE), TEMP=str(STATE))
-    command = ['clang++', '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
+    command = [_UCRT_CXX, '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
         '-arch', 'arm64', '-arch', 'x86_64', '-mmacosx-version-min=11.0',
         '-Wno-pragma-pack', '-I'+str(ROOT/'Headers'), '-I'+str(ROOT/'Headers/SP'),
         str(HERE/'F51-plugin-host.cpp'), '-o', str(worker)]

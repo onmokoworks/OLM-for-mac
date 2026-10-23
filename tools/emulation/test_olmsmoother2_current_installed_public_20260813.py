@@ -2,6 +2,9 @@
 """Replay a representative bounded OLMSmoother2 Smart cell through the installed Mach-O."""
 
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, hashlib, importlib.util, json, os, subprocess, sys, tempfile
 from pathlib import Path
 from PIL import Image
@@ -61,7 +64,7 @@ def ae_processes():
 def compile_and_run(arch,probe=PROBE):
  with tempfile.TemporaryDirectory(prefix="olmsmoother2-installed-") as td:
   exe=Path(td)/"probe"; sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip()
-  cmd=["clang++","-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+  cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in ("Headers","Headers/SP","Util","Resources","mac/OLMSmoother2","mac/OLMSmoother2/Mac"): cmd += ["-I",str(ROOT/inc)]
   cmd += [str(probe),str(STRINGS),str(SUITE_CPP),str(MISSING_CPP),"-framework","Cocoa","-o",str(exe)]
   build=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)
@@ -75,7 +78,7 @@ def load_pf16():
 def compile_public(arch,harness,input_path):
  with tempfile.TemporaryDirectory(prefix="olmsmoother2-installed-public-") as td:
   exe=Path(td)/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip()
-  cmd=["clang++","-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+  cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in ("Headers","Headers/SP","Util","Resources","mac/OLMSmoother2","mac/OLMSmoother2/Mac"):cmd += ["-I",str(ROOT/inc)]
   cmd += [str(harness),str(STRINGS),str(SUITE_CPP),str(MISSING_CPP),"-framework","Cocoa","-lz","-o",str(exe)]
   build=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)

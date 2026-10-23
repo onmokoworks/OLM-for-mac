@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Validate bounded public admissions and fail-closed owner/lifecycle guards."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, hashlib, json, subprocess, tempfile
 from pathlib import Path
 
@@ -48,7 +51,7 @@ def sha(p:Path)->str:return hashlib.sha256(p.read_bytes()).hexdigest()
 def run_harness(source:Path,shim:Path)->list[str]:
  with tempfile.TemporaryDirectory(prefix='smoother-guard-') as td:
   exe=Path(td)/'h'
-  subprocess.run(['clang++','-std=c++17','-O2','-I',str(shim),'-I',str(source.parent.parent),str(source),'-o',str(exe)],check=True)
+  subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(shim),'-I',str(source.parent.parent),str(source),'-o',str(exe)],check=True)
   out=subprocess.run([str(exe)],check=True,text=True,capture_output=True).stdout.splitlines()
  return out
 def cases(lines:list[str],expected:int)->list[str]:

@@ -4,6 +4,9 @@
 Read the plane at the first sampler call: a constructor-entry pointer is still
 uninitialized, and the trace worker resolves dereferences at entry.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 from pathlib import Path
@@ -52,7 +55,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='radial_offset_field_') as directory:
         temp = Path(directory)
         binary = temp/'plane'
-        subprocess.run(['clang++', '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
+        subprocess.run([_UCRT_CXX, '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
                         str(HARNESS), '-o', str(binary)], check=True)
         for family in (1, 2):
             for geometry in GEOMETRIES:

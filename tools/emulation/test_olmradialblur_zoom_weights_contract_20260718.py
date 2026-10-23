@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -103,7 +106,7 @@ def build_probe(directory: Path, arch: str, compiler: str, sdk: str) -> dict[str
     binary = directory / f"olmradialblur_zoom_weights_probe_{arch}"
     write_probe(probe)
     command = [
-        compiler,
+        _UCRT_CXX, "--compiler", compiler,
         "-std=c++17",
         "-O2",
         "-fno-fast-math",

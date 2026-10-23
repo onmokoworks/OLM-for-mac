@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -22,7 +25,7 @@ def main() -> int:
     raw_hex = fixture["ramp_abi"]["consumed_prefix_hex"]
     with tempfile.TemporaryDirectory(prefix="olmkirakira_ramp_adapter_") as td:
         executable = Path(td) / "adapter"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
         output = subprocess.check_output(
             [str(executable)], input=" ".join(raw_hex[i:i + 2] for i in range(0, len(raw_hex), 2)), text=True
         ).splitlines()

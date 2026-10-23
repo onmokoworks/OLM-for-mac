@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -131,7 +134,7 @@ def run_public_harness() -> tuple[list[dict], list[dict], list[dict]]:
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         define = '-DKIRA_SOURCE="' + str(SOURCE) + '"'
         command = [
-            "clang++", "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
+            _UCRT_CXX, "-std=c++20", "-O2", "-fno-fast-math", "-ffp-contract=off",
             "-isysroot", sdk, "-w", "-I", str(resolve_asset(ROOT / "Headers")),
             "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
             "-I", str(resolve_asset(ROOT / "Resources")), define, str(cpp),

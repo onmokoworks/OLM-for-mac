@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare finite zero-tap elision with the retained Bilateral operations."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import os
@@ -66,7 +69,7 @@ int main() {
         d=Path(d);cpp=d/'probe.cpp';cpp.write_text(code)
         for name,flags in [('O2',[]),('san',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             binary=d/name
-            subprocess.run(['clang++','-std=c++17','-O2','-ffp-contract=off',*flags,str(cpp),'-o',str(binary)],check=True)
+            subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-ffp-contract=off',*flags,str(cpp),'-o',str(binary)],check=True)
             r=subprocess.run([str(binary)],check=False,capture_output=True,text=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1'))
             assert r.returncode == 0 and not r.stderr, (r.returncode,r.stdout,r.stderr)
             report['builds'].append(dict(name=name,output=r.stdout.strip()));print(name,r.stdout.strip())

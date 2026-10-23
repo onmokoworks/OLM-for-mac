@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -24,7 +27,7 @@ class ColorKeyRealSdkSuiteLifecycle(unittest.TestCase):
                 text=True, check=True,
             ).stdout.strip()
             command = [
-                "clang++", "-std=c++17", "-arch", "arm64", "-O2",
+                _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2",
                 "-Wno-pragma-pack", "-Wno-deprecated-declarations",
                 "-isysroot", sdk, "-IHeaders", "-IHeaders/SP", "-IUtil",
                 "-IResources", "-Imac/OLMColorKey", str(PROBE),

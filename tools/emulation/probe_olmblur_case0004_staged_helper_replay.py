@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -285,7 +288,7 @@ def run_actual_helper_micro(direction: str, flags: bytes, source: bytes, weights
 
 def compile_portable(executable: Path) -> list[str]:
     command = [
-        os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
+        _UCRT_CXX, "--compiler", os.environ.get("CXX", "c++"), "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
         str(PORTABLE_HELPER), str(PORTABLE_RUNNER), "-o", str(executable),
     ]
     result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)

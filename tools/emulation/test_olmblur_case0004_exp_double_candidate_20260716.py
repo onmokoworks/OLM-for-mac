@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import os
@@ -112,7 +115,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmblur_case0004_exp_double_candidate_") as temporary:
         temp = Path(temporary)
         generation_executable = temp / "exp_double_candidate"
-        generation_compile = [compiler, "-std=c++17", "-O2", "-ffp-contract=off",
+        generation_compile = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-ffp-contract=off",
                               str(PROBE), "-o", str(generation_executable)]
         build = subprocess.run(generation_compile, cwd=ROOT, text=True, capture_output=True, check=False)
         if build.returncode:
@@ -137,7 +140,7 @@ def main() -> int:
             "pre_store_bits_hex": bits,
             "standard_writer_predicted_rgb_words": predict_standard_writer(bits),
         }
-    compiler_version = subprocess.check_output([compiler, "--version"], text=True).splitlines()[0]
+    compiler_version = subprocess.check_output([_UCRT_CXX, "--compiler", compiler, "--version"], text=True).splitlines()[0]
     report = {
         "schema": "olmblur.case0004.exp-double-candidate-gate/1",
         "status": "pass_candidate_gate",
@@ -149,7 +152,7 @@ def main() -> int:
                      "production_source": str(PRODUCTION_SOURCE.relative_to(ROOT)),
                      "production_source_sha256": PRODUCTION_SOURCE_SHA256},
         "candidate": "current powf/pow/radius/sigma/denom order; x_f32 unchanged; weight=static_cast<float>(std::exp(static_cast<double>(x_f32)))",
-        "generation_compile_command": [compiler, "-std=c++17", "-O2", "-ffp-contract=off",
+        "generation_compile_command": [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-ffp-contract=off",
                                        str(PROBE.relative_to(ROOT)), "-o",
                                        "<temporary>/exp_double_candidate"],
         "portable_compile_command": portable_compile,

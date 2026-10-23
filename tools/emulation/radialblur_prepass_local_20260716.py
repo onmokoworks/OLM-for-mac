@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import ast
 import hashlib
@@ -323,7 +326,7 @@ def build_adapter(temp: Path) -> dict[str, Any]:
     binary = temp / f"{NAME}_adapter"
     source.write_text(adapter_source(), encoding="utf-8")
     compiler = os.environ.get("CXX", "clang++")
-    command = [compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic", str(source), *png_flags(), "-o", str(binary)]
+    command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic", str(source), *png_flags(), "-o", str(binary)]
     completed = subprocess.run(command, check=False, capture_output=True, text=True)
     durable_command = [
         "<compiler>" if Path(compiler).is_absolute() else compiler,

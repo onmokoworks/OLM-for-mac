@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """FUN_18000cee0 scan-boundary differential against original AEX instructions."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse, json, os, random, struct, subprocess, sys
 from pathlib import Path
 sys.dont_write_bytecode=True
@@ -32,7 +35,7 @@ int main() {
 }
 ''')
     binary=SCRATCH/'test'
-    subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',
+    subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-Wno-deprecated-declarations',
         '-fsanitize=address,undefined','-fno-sanitize-recover=all',
         '-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(source.parent),str(host),'-o',str(binary)],check=True)
     rng=random.Random(1901)

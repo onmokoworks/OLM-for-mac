@@ -6,6 +6,9 @@ the C++ port. Each signed-fixed boundary is found by binary search, then both
 adjacent values are exercised. Undefined original table reads never justify
 admission; those cases must refuse cleanly without publishing output.
 """
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import json
 import os
@@ -142,7 +145,7 @@ def main():
     harness = (ROOT/'tools/emulation/radialblur_noise_plane_harness_20261001.cpp').read_text()
     harness = harness.replace('../../core/dblur_noise.h',str(header))
     (out/'plane.cpp').write_text(harness)
-    subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(out/'plane.cpp'),'-o',str(out/'plane')],capture_output=True,check=True)
+    subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',str(out/'plane.cpp'),'-o',str(out/'plane')],capture_output=True,check=True)
     fields = {p['slot']:p['value'] for p in case['parameters']}
     mac = subprocess.run([str(out/'plane'),*map(str,case['geometry']),f'{struct.unpack("<I",struct.pack("<f",fields[29]))[0]:08x}',
                           f'{int.from_bytes(bytes.fromhex(domain["phase_le_hex"]),"little"):08x}',str(fields[27])],capture_output=True,check=True)

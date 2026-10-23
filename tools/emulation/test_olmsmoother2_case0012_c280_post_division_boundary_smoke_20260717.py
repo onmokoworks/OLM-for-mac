@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import sys
@@ -21,7 +24,7 @@ def main() -> int:
         adapter = work / "adapter"
         report = work / "report.json"
         build_command = [
-            "clang++", "-std=c++17", "-O2",
+            _UCRT_CXX, "-std=c++17", "-O2",
             "-I", "cli/OLMSmoother2/shim",
             "-I", "mac/OLMSmoother2",
             str(ADAPTER_SOURCE), "-o", str(adapter),

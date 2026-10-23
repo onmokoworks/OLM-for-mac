@@ -7,6 +7,9 @@ worker without duplicating it in Python or depending on an installed plug-in.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib
 import json
@@ -139,7 +142,7 @@ def _compile_and_run(extra_flags: list[str], source_text: str = STUB) -> subproc
         (directory / "AEFX_SuiteHelper.h").write_text("#pragma once\n", encoding="utf-8")
         probe.write_text(source_text.replace("SOURCE_PATH", str(SOURCE)), encoding="utf-8")
         build = subprocess.run(
-            [compiler, "-std=c++17", "-O1", *extra_flags, "-I", str(directory), str(probe), "-o", str(exe)],
+            [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", *extra_flags, "-I", str(directory), str(probe), "-o", str(exe)],
             cwd=ROOT, capture_output=True, text=True, check=False,
         )
         assert build.returncode == 0, build.stdout + build.stderr

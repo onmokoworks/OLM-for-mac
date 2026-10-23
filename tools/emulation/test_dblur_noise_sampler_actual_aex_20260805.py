@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -43,7 +46,7 @@ def build(directory: Path) -> ctypes.CDLL:
     )
     library = directory / "noise_sampler.dylib"
     subprocess.run(
-        ["c++", "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
+        [_UCRT_CXX, "-std=c++17", "-dynamiclib", "-O2", "-fno-fast-math",
          "-ffp-contract=off", "-I", str(ROOT), "-x", "c++", "-",
          "-o", str(library)],
         check=True,

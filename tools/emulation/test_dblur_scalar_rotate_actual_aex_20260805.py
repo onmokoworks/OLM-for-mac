@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -69,7 +72,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="dblur_scalar_rotate_") as name:
         library_path = Path(name) / "libdblur_scalar_rotate.dylib"
         subprocess.run(
-            ["c++", "-std=c++17", "-O0", "-fno-fast-math",
+            [_UCRT_CXX, "-std=c++17", "-O0", "-fno-fast-math",
              "-ffp-contract=off", "-dynamiclib", str(ROOT / "core/dblur_rotate.cpp"),
              "-o", str(library_path)],
             cwd=ROOT, check=True,

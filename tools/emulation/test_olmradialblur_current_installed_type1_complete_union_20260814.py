@@ -2,6 +2,9 @@
 """Replay the complete proven Radial Type1 union through installed public entries."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -198,7 +201,7 @@ def run_family(architecture: str, probe_path: Path, source_report: Path) -> dict
         executable = temp / "probe"
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = [
-            "clang++", "-std=c++17", "-arch", architecture, "-O2", "-fno-fast-math",
+            _UCRT_CXX, "-std=c++17", "-arch", architecture, "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-isysroot", sdk, "-Wno-pragma-pack",
             "-Wno-deprecated-declarations", "-I", str(ROOT / "Headers"),
             "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),

@@ -13,10 +13,10 @@ def load():s=importlib.util.spec_from_file_location("ck9",UPSTREAM);m=importlib.
 def load_for_arch(arch):
  if arch=="arm64":return load()
  if arch!="x86_64":raise RuntimeError(f"unsupported architecture: {arch}")
- text=UPSTREAM.read_text();needle='cmd=["clang++","-std=c++17","-arch","arm64",'
+ text=UPSTREAM.read_text();needle='cmd=[_UCRT_CXX,"-std=c++17","-arch","arm64",'
  if text.count(needle)!=1:raise RuntimeError("upstream architecture anchor drift")
  module=types.ModuleType("ck9_x86_64");module.__file__=str(UPSTREAM)
- exec(compile(text.replace(needle,'cmd=["clang++","-std=c++17","-arch","x86_64",'),str(UPSTREAM),"exec"),module.__dict__)
+ exec(compile(text.replace(needle,'cmd=[_UCRT_CXX,"-std=c++17","-arch","x86_64",'),str(UPSTREAM),"exec"),module.__dict__)
  return module
 def ae():
  out=[]

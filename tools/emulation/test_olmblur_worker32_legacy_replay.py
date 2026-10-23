@@ -1,5 +1,8 @@
 """Compile and run the portable OLMBlur 32bpc Legacy replay."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 from pathlib import Path
 import subprocess
 import tempfile
@@ -11,7 +14,7 @@ def test_worker32_legacy_replay() -> None:
     with tempfile.TemporaryDirectory() as temp:
         binary = Path(temp) / "replay"
         subprocess.run([
-            "c++", "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
+            _UCRT_CXX, "-std=c++17", "-O2", "-ffp-contract=off", "-Icore",
             "core/olmblur_fullworker_helper.cpp",
             "core/olmblur_worker32_legacy.cpp",
             "tools/emulation/replay_olmblur_worker32_legacy.cpp",

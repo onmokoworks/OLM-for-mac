@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Compare generated portable SubHandler8 against the original AEX."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -19,7 +22,7 @@ DIRS=(5,3,1,7)
 LIB=Path('/tmp/olmsmoother_subhandler8_generated.dylib')
 
 def build():
- subprocess.run(['clang++','-std=c++17','-fPIC','-shared','-I'+str(ROOT/'cli/OLMSmoother/shim'),
+ subprocess.run([_UCRT_CXX,'-std=c++17','-fPIC','-shared','-I'+str(ROOT/'cli/OLMSmoother/shim'),
   str(ROOT/'tools/emulation/olmsmoother_v1_classifier8_ctypes_harness_20260805.cpp'),'-o',str(LIB)],check=True)
 
 def oracle_fixture(loader,raw):

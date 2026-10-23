@@ -2,6 +2,9 @@
 """Actual-AEX Zoom Edge Fade x ignored Offset x procedural Noise matrix."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import os
 import hashlib
 import json
@@ -150,7 +153,7 @@ int main(int n,char**q){{constexpr int W=32,H=18,RB={rowbytes},C={cells};std::ve
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True,
                              capture_output=True, check=True).stdout.strip()
-        command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2",
+        command = [_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2",
                    "-fno-fast-math", "-ffp-contract=off", "-ffunction-sections",
                    "-fdata-sections", "-isysroot", sdk,
                    "-I", str(ROOT / "mac/OLMRadialBlur"), "-I", str(ROOT / "Headers"),

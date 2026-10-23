@@ -2,6 +2,9 @@
 """Front/back Fade x Sharp Tail boundary crosses at PF8/PF16/PF32."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -45,7 +48,7 @@ def typed_rows(temp:Path,depth:int)->list[dict]:
   active=b''.join(struct.pack('<4H',p[3]*128,p[0]*128,p[1]*128,p[2]*128) for p in image.get_flattened_data()); ctype=ctypes.c_uint16; symbol='olm_dblur_full_argb16'; pad=16; callbacks=['0x1800068e0','0x180006a90']
  else:
   active=b''.join(struct.pack('<4f',p[3]/255,p[0]/255,p[1]/255,p[2]/255) for p in image.get_flattened_data()); ctype=ctypes.c_float; symbol='olm_dblur_full_argb32'; pad=32; callbacks=['0x180006a20','0x180006bd0']
- lib=temp/f'lib{depth}.dylib'; build=subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
+ lib=temp/f'lib{depth}.dylib'; build=subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
  if build.returncode: raise RuntimeError(build.stderr)
  fn=getattr(ctypes.CDLL(str(lib)),symbol); common=[ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float]
  fn.argtypes=[ctypes.POINTER(ctype),ctypes.POINTER(ctype)]+common+[ctypes.POINTER(ctype),ctypes.c_int]

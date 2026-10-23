@@ -7,6 +7,9 @@ does not involve After Effects, Windows, image files, or production sources.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import math
@@ -272,7 +275,7 @@ def run_cpp_probe(report: dict) -> dict:
         vector = directory_path / "fixtures.bin"
         binary = directory_path / "radialblur_scatter_tail_probe"
         write_cpp_fixture_vector(report, vector)
-        command = [compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
+        command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror",
                    "-fno-fast-math", "-ffp-contract=off", "-Icore",
                    "core/radialblur_scatter_tail.cpp", str(source), "-o", str(binary)]
         build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
@@ -280,7 +283,7 @@ def run_cpp_probe(report: dict) -> dict:
             return {"status": "build-fail", "command": command, "stderr": build.stderr}
         probe = subprocess.run([str(binary), str(vector)], cwd=ROOT, capture_output=True, text=True)
         ubsan_binary = directory_path / "radialblur_scatter_tail_probe_ubsan"
-        ubsan_command = [compiler, "-std=c++17", "-O1", "-g", "-Wall", "-Wextra", "-Werror",
+        ubsan_command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", "-g", "-Wall", "-Wextra", "-Werror",
                          "-fno-fast-math", "-ffp-contract=off", "-fsanitize=undefined",
                          "-fno-sanitize-recover=undefined", "-Icore",
                          "core/radialblur_scatter_tail.cpp", str(source), "-o", str(ubsan_binary)]

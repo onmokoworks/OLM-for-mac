@@ -2,6 +2,9 @@
 """Semi-transparent straight/premultiplied worlds through actual AEX core and production."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -25,7 +28,7 @@ def req(x,m):
  if not x: raise RuntimeError('FAIL CLOSED: '+m)
 def production():
  with tempfile.TemporaryDirectory(prefix='sm2_alpha_') as td:
-  b=Path(td)/'h'; subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True)
+  b=Path(td)/'h'; subprocess.run([_UCRT_CXX,'-std=c++17','-O2','-I',str(ROOT/'cli/OLMSmoother2/shim'),'-I',str(ROOT/'mac/OLMSmoother2/Mac'),str(HARNESS),'-o',str(b)],check=True)
   out=subprocess.run([str(b)],check=True,text=True,capture_output=True).stdout
  return {k:bytes.fromhex(v) for k,v in (line.split() for line in out.splitlines())}
 def native(depth,n,premul):

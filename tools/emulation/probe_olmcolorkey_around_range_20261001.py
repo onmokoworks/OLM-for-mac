@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Recover Around across legal Blur amounts/metrics with the exported owner."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse,json,subprocess,tempfile
 from pathlib import Path
 from PIL import Image
@@ -28,7 +31,7 @@ def compile_public(directory,body,sanitize=False):
     finally:thin_owner.HARNESS=saved
     if sanitize:
         sdk=subprocess.check_output(['xcrun','--show-sdk-path'],text=True).strip()
-        subprocess.run(['clang++','-std=c++17','-arch','arm64','-O1','-g','-fno-fast-math','-ffp-contract=off','-fsanitize=address,undefined','-fno-omit-frame-pointer','-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,'-IHeaders','-IHeaders/SP','-IUtil','-IResources','-Imac/OLMColorKey',str(directory/'public.cpp'),'mac/OLMColorKey/OLMColorKey_Strings.cpp','Util/AEGP_SuiteHandler.cpp','Util/MissingSuiteError.cpp','-framework','Cocoa','-o',str(exe)],cwd=ROOT,check=True,capture_output=True)
+        subprocess.run([_UCRT_CXX,'-std=c++17','-arch','arm64','-O1','-g','-fno-fast-math','-ffp-contract=off','-fsanitize=address,undefined','-fno-omit-frame-pointer','-Wno-pragma-pack','-Wno-deprecated-declarations','-isysroot',sdk,'-IHeaders','-IHeaders/SP','-IUtil','-IResources','-Imac/OLMColorKey',str(directory/'public.cpp'),'mac/OLMColorKey/OLMColorKey_Strings.cpp','Util/AEGP_SuiteHandler.cpp','Util/MissingSuiteError.cpp','-framework','Cocoa','-o',str(exe)],cwd=ROOT,check=True,capture_output=True)
     return exe
 
 def mac_render(exe,fixture,depth,thin,thin_type,keep,route,blur,premultiplied,replace,blur_type,env=None):

@@ -1,3 +1,6 @@
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 import subprocess
 import tempfile
 from pathlib import Path
@@ -36,7 +39,7 @@ int main(){{
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
         build = subprocess.run([
-            "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+            _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
             "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

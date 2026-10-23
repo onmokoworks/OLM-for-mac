@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -24,7 +27,7 @@ def main() -> int:
     assert all(case["compare_source"] == 3 and case["compare_two_stop"] == 3 for case in actual.values())
     with tempfile.TemporaryDirectory(prefix="kk_ramp_interp_") as td:
         exe = Path(td) / "interp"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(exe)], check=True)
         subprocess.run([str(exe)], check=True)
     mac = MAC.read_text(encoding="utf-8")
     assert "interpolate_merge2_ramps(" in mac

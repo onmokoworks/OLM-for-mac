@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Actual-AEX PARAMS_SETUP fixture against source-included production."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib,json,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -14,7 +17,7 @@ def main():
  sig=lambda s:(s['params_setup_error'],s['advertised_num_params'],s['parameters'])
  if any(sig(s)!=sig(setups[0]) for s in setups):raise RuntimeError('unstable actual setup')
  with tempfile.TemporaryDirectory() as td:
-  b=Path(td)/'p';subprocess.run(['clang++','-std=c++17','-I'+str(ROOT/'cli/OLMSmoother/shim'),str(SRC),'-o',str(b)],check=True)
+  b=Path(td)/'p';subprocess.run([_UCRT_CXX,'-std=c++17','-I'+str(ROOT/'cli/OLMSmoother/shim'),str(SRC),'-o',str(b)],check=True)
   prod=json.loads(subprocess.run([str(b)],capture_output=True,text=True,check=True).stdout)
  expected={'error':0,'num_params':4,'parameters':[
   {'name':'Use Color Key','kind':'checkbox','a':0,'b':1,'c':0,'d':1,'value':0,'disk_id':1,'flags':0,'ui_flags':0},

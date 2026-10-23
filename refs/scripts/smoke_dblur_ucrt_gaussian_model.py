@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import tempfile
@@ -16,7 +19,7 @@ def main() -> int:
         binary = Path(temp) / "test_dblur_gaussian_ucrt"
         subprocess.run(
             [
-                "c++", "-std=c++17", "-O2", "-fno-fast-math",
+                _UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math",
                 "-ffp-contract=off",
                 str(ROOT / "tools/emulation/test_dblur_gaussian_ucrt.cpp"),
                 "-o", str(binary),

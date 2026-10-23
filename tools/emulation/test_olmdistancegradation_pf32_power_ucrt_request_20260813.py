@@ -8,6 +8,9 @@ vectors for later native Windows ucrtbase.dll!powf evaluation.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import csv
 import hashlib
 import io
@@ -75,7 +78,7 @@ def run_census() -> tuple[list[dict[str, object]], list[dict[str, object]], dict
         executable = work / "census"
         build = subprocess.run(
             [
-                "clang++", "-std=c++17", "-O0",
+                _UCRT_CXX, "-std=c++17", "-O0",
                 "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
                 str(HARNESS), str(FIELDGEN), "-o", str(executable),
             ],

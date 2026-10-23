@@ -9,6 +9,9 @@ to replace the JSON and Markdown artifacts.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -192,7 +195,7 @@ def fresh_report() -> dict:
         raise RuntimeError("BLOCKED_FAIL_CLOSED: arm64 macOS required")
     if sha256(SOURCE) != SOURCE_SHA256:
         raise RuntimeError("BLOCKED_FAIL_CLOSED: frozen source identity drifted")
-    compiler, xcodebuild, xcrun = map(shutil.which, ("clang++", "xcodebuild", "xcrun"))
+    compiler, xcodebuild, xcrun = map(shutil.which, (_UCRT_CXX, "xcodebuild", "xcrun"))
     if not all((compiler, xcodebuild, xcrun)):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: build tools unavailable")
     sdk = run_checked([xcrun, "--show-sdk-path"], "SDK lookup").stdout.strip()
@@ -203,7 +206,7 @@ def fresh_report() -> dict:
                      f"CONFIGURATION_BUILD_DIR={product}", f"SYMROOT={tmp/'sym'}", f"OBJROOT={tmp/'obj'}",
                      f"SHARED_PRECOMPS_DIR={tmp/'precomp'}", "build"], "isolated bundle build")
         candidate = product / "OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
-        run_checked([compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
+        run_checked([_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
                      "-I", str(resolve_asset(ROOT/"Headers")), "-I", str(resolve_asset(ROOT/"Headers/SP")), "-I", str(resolve_asset(ROOT/"Util")),
                      "-I", str(resolve_asset(ROOT/"Resources")), str(PROBE), "-o", str(probe_bin)], "real-SDK probe build")
         execution = run_checked([str(probe_bin), str(candidate)], "public negative replay")

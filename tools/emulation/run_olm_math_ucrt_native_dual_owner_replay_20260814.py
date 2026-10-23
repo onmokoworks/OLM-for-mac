@@ -2,6 +2,9 @@
 """Run the accepted native UCRT table through exported AEX and Mac direct owners."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import importlib.util
@@ -122,7 +125,7 @@ def distance_aex(worker: Path, table: Path, root: Path, matrix, dg_plumbing) -> 
 def distance_mac(table: Path, root: Path, downstream) -> list[dict[str, Any]]:
     executable = root / "distance-table"
     interposer = downstream.build_interposer(root)
-    command = ["clang++", "-std=c++17", "-O0", "-fno-builtin-powf",
+    command = [_UCRT_CXX, "-std=c++17", "-O0", "-fno-builtin-powf",
                "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
                str(downstream.DG_HARNESS), str(downstream.DG_FIELD), str(interposer), "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import shutil
@@ -202,14 +205,14 @@ def run_cpp() -> dict:
     if compiler is None: return {"status": "blocked-no-compiler"}
     with tempfile.TemporaryDirectory(prefix="olm-radialblur-caller-") as directory:
         binary = Path(directory) / "probe"
-        base = [compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-fast-math", "-ffp-contract=off", "-Icore",
+        base = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-fast-math", "-ffp-contract=off", "-Icore",
                 "core/radialblur_scatter_tail.cpp", "core/radialblur_scatter_caller.cpp",
                 "tools/emulation/radialblur_scatter_caller_probe_20260717.cpp", "-o", str(binary)]
         build = subprocess.run(base, cwd=ROOT, capture_output=True, text=True)
         if build.returncode: return {"status": "build-fail", "stderr": build.stderr}
         run = subprocess.run([str(binary)], cwd=ROOT, capture_output=True, text=True)
         ubsan_binary = Path(directory) / "probe-ubsan"
-        ubsan = [compiler, "-std=c++17", "-O1", "-g", "-Wall", "-Wextra", "-Werror", "-fno-fast-math", "-ffp-contract=off",
+        ubsan = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", "-g", "-Wall", "-Wextra", "-Werror", "-fno-fast-math", "-ffp-contract=off",
                  "-fsanitize=undefined", "-fno-sanitize-recover=undefined", "-Icore",
                  "core/radialblur_scatter_tail.cpp", "core/radialblur_scatter_caller.cpp",
                  "tools/emulation/radialblur_scatter_caller_probe_20260717.cpp", "-o", str(ubsan_binary)]

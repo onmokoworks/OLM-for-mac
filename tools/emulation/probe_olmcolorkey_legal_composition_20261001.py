@@ -7,6 +7,9 @@ this is explicitly not an exported-owner or native AE conformance claim.
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -106,7 +109,7 @@ def production(depths: tuple[str, ...]) -> bytes:
         source.write_text(replace_once(source.read_text(), "int main(){", "int legacy_main(){") + main)
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
         exe = directory / "composition"
-        subprocess.run(["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
                         "-ffp-contract=off", "-isysroot", sdk, "-I", str(directory), str(source),
                         "-framework", "Cocoa", "-o", str(exe)], check=True, capture_output=True)
         return subprocess.run([str(exe)], check=True, capture_output=True).stdout

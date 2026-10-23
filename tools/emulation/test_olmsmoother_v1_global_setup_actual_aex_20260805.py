@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Actual-AEX GLOBAL_SETUP fixture against production EffectMain."""
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import hashlib, json, subprocess, tempfile
 from pathlib import Path
 
@@ -22,7 +25,7 @@ def main() -> int:
         raise RuntimeError("actual-AEX GLOBAL_SETUP fixture is not stable across cases")
     with tempfile.TemporaryDirectory(prefix="olmsmoother_v1_setup_") as td:
         binary = Path(td) / "probe"
-        subprocess.run(["clang++", "-std=c++17", "-I" + str(ROOT / "cli/OLMSmoother/shim"), "-I" + str(ROOT / "mac/OLMSmoother/Mac"), str(SOURCE), "-o", str(binary)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-I" + str(ROOT / "cli/OLMSmoother/shim"), "-I" + str(ROOT / "mac/OLMSmoother/Mac"), str(SOURCE), "-o", str(binary)], check=True)
         run = subprocess.run([str(binary)], text=True, capture_output=True, check=True)
     production = json.loads(run.stdout)
     report = {

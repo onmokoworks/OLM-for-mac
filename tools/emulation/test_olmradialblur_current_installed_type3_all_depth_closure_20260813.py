@@ -78,10 +78,10 @@ def load_base_for_arch(arch: str):
     if arch != "x86_64":
         raise RuntimeError(f"unsupported probe architecture: {arch}")
     text = BASE.read_text()
-    needle = 'cmd = ["clang++", "-std=c++17", "-arch", "arm64",'
+    needle = 'cmd = [_UCRT_CXX, "-std=c++17", "-arch", "arm64",'
     if text.count(needle) != 1:
         raise RuntimeError("base probe architecture anchor drift")
-    text = text.replace(needle, 'cmd = ["clang++", "-std=c++17", "-arch", "x86_64",')
+    text = text.replace(needle, 'cmd = [_UCRT_CXX, "-std=c++17", "-arch", "x86_64",')
     module = types.ModuleType("radial_installed_base_x86_64")
     module.__file__ = str(BASE)
     exec(compile(text, str(BASE), "exec"), module.__dict__)

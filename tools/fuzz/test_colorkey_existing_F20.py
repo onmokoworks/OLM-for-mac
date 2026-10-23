@@ -22,7 +22,7 @@ def main():
     def run(argv,*args,**kwargs):
         # Tests historically assume the SDK is in their checkout. Resolve only
         # those external SDK inputs; production source remains in this worktree.
-        if isinstance(argv,list) and argv and argv[0]=='clang++':
+        if isinstance(argv,list) and argv and Path(str(argv[0])).name in ('clang++', 'ucrt_cxx.py'):
             argv = [('-I'+str(MAIN/str(a)[2:])) if str(a) in
                     ('-IHeaders','-IHeaders/SP','-IUtil','-IResources') else
                     str(MAIN/a) if str(a) in ('Util/AEGP_SuiteHandler.cpp','Util/MissingSuiteError.cpp')

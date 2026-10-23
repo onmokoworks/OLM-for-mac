@@ -1,4 +1,7 @@
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -14,7 +17,7 @@ def main():
  p=json.loads(r.stdout[r.stdout.index('{'):]);c=p['smart_capture'];assert p['failure'] is None and p['typed_wrapper_reached'];assert c['active_sha256']=='4ae34c2cfbdf2ccfa6d3fa18887ec36b0f5e3582166c148a7cf7c1a346fe9fc3';assert c['input_padding_unchanged'] and c['output_padding_unchanged'];assert c['input_rowbytes']==75 and c['output_rowbytes']==79;assert sum(e.get('pixels',0) for e in p['events'] if e.get('callback')=='PF_Iterate8')==187
  with tempfile.TemporaryDirectory() as td:
   t=Path(td);src=t/'src';seed=t/'seed';exp=t/'exp';bin=t/'h';src.write_bytes(padded(c['input_active_hex'],75));seed.write_bytes(padded(c['field_seed_active_hex'],79));exp.write_bytes(padded(c['active_hex'],79))
-  q=subprocess.run(['clang++','-std=c++17','-O0','-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(bin)],capture_output=True,text=True);assert q.returncode==0,q.stderr
+  q=subprocess.run([_UCRT_CXX,'-std=c++17','-O0','-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),str(HARNESS),str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(bin)],capture_output=True,text=True);assert q.returncode==0,q.stderr
   q=subprocess.run([str(bin),str(src),str(seed),str(exp)],capture_output=True,text=True);assert q.returncode==0,q.stderr;print(q.stdout,end='')
  print('PASS_OLMDISTANCEGRADATION_PF8_SMART_ACTUAL_AEX_EXACT')
 if __name__=='__main__':raise SystemExit(main())

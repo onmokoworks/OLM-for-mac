@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Audit actual Universal binary codegen and run both slices for all Mode5 cells."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse,hashlib,json,os,re,stat,struct,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];BINARY=ROOT/"handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation";PROJECT=ROOT/"mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj/project.pbxproj";SOURCE=ROOT/"mac/OLMDistanceGradation/OLMDistanceGradation.cpp";HARNESS=ROOT/"tools/emulation/dg_exported_typed_owner_compare_harness_20260811.cpp";FIELDGEN=ROOT/"core/olmdistancegradation_fieldgen.cpp";REPORT=ROOT/"refs/conformance/olmdistancegradation_pf32_mode5_universal_codegen_20260812.json";DOC=REPORT.with_suffix(".md")
@@ -28,7 +31,7 @@ def runtime():
   td=Path(raw);exe=td/"h";src=td/"src";data=bytearray()
   for y in range(11):
    for x in range(17):data.extend(struct.pack("<4f",0.0 if 4<=x<13 and 2<=y<9 else 1.0,(x*613+y*1231)%256/255,(x*997+y*211)%256/255,(x*1499+y*307)%256/255))
-  src.write_bytes(data);r=subprocess.run(["clang++","-std=c++17","-O0","-arch","arm64","-arch","x86_64","-mmacosx-version-min=11.0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(HARNESS),str(FIELDGEN),"-o",str(exe)],cwd=ROOT,text=True,capture_output=True);assert r.returncode==0,r.stderr;result={}
+  src.write_bytes(data);r=subprocess.run([_UCRT_CXX,"-std=c++17","-O0","-arch","arm64","-arch","x86_64","-mmacosx-version-min=11.0","-I",str(ROOT/"tools/emulation/dg_renderbits_real_harness_20260716"),str(HARNESS),str(FIELDGEN),"-o",str(exe)],cwd=ROOT,text=True,capture_output=True);assert r.returncode==0,r.stderr;result={}
   for arch in("arm64","x86_64"):
    rows=[]
    for (interp,bg),expected in HASHES.items():

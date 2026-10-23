@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -57,7 +60,7 @@ int main(){{if(run<PF_Pixel8>(8))return 1;if(run<PF_Pixel16>(16))return 2;if(run
 ''', encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = [
-            "clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+            _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
             "-ffp-contract=off", "-ffunction-sections", "-fdata-sections", "-isysroot", sdk,
             "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
             "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),

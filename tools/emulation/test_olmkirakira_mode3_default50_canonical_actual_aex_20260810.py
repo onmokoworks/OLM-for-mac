@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import math
 import subprocess
@@ -53,7 +56,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="kira_mode3_default50_") as td:
         executable = Path(td) / "mode3"
-        subprocess.run(["c++", "-std=c++20", "-O2", "-ffp-contract=off",
+        subprocess.run([_UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
                         str(CPP), "-o", str(executable)], check=True)
         finals = set()
         for case in report["cases"]:

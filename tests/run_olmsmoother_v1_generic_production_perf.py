@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import argparse
 import subprocess
 import tempfile
@@ -32,7 +35,7 @@ def main() -> int:
         binary = Path(tmp) / "production"
         source.write_text(HARNESS)
         subprocess.run([
-            "clang++", "-std=c++17", "-O2",
+            _UCRT_CXX, "-std=c++17", "-O2",
             "-I", str(ROOT / "cli/OLMSmoother/shim"), "-I", str(ROOT),
             str(source), "-o", str(binary),
         ], cwd=ROOT, check=True)

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import re
 import subprocess
 import sys
@@ -294,8 +297,7 @@ int main()
             harness_path.write_text(harness, encoding="utf-8")
             compile_result = subprocess.run(
                 [
-                    "xcrun",
-                    "clang++",
+                    _UCRT_CXX, "--xcrun",
                     "-std=c++17",
                     "-D__MACH__",
                     "-Wno-pragma-pack",

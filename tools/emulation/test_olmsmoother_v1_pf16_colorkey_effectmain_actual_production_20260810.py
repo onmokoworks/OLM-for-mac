@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Actual exported PF16 Render session versus production EffectMain."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -190,7 +193,7 @@ def actual(payload):
 def production(payload):
     with tempfile.TemporaryDirectory(prefix="sm1-prod-effectmain-") as td:
         dylib = Path(td) / "lib.dylib"
-        subprocess.run(["clang++", "-std=c++17", "-O2", "-shared", "-fPIC", "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS), "-o", str(dylib)], check=True, capture_output=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC", "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS), "-o", str(dylib)], check=True, capture_output=True)
         lib = ctypes.CDLL(str(dylib)); fn = lib.olmsmoother_v1_effectmain_render16_colorkey
         fn.argtypes = [ctypes.POINTER(ctypes.c_uint16), ctypes.POINTER(ctypes.c_uint16), ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.c_uint8, ctypes.c_uint8, ctypes.c_uint8, ctypes.c_int32]
         words = struct.unpack("<%dH" % (len(payload)//2), payload)

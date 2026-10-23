@@ -6,6 +6,9 @@ through the lower original API, and checks the restored exp operation separately
 No code detours or imported exp implementations are installed for this body.
 """
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import argparse
 import ctypes
 import hashlib
@@ -87,7 +90,7 @@ int main(int argc,char **argv) {
         for name,flags in [('o2',['-O2','-ffp-contract=off']),('o3_contract',['-O3','-ffp-contract=fast']),
                            ('san',['-O2','-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:
             exe=tmp/name;out=tmp/(name+'.bin')
-            subprocess.run(['clang++','-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
+            subprocess.run([_UCRT_CXX,'-std=c++17',*flags,'-I',str(ROOT/'tools/emulation'),
                             '-I',str(ROOT/'tools/emulation/dg_renderbits_real_harness_20260716'),str(cpp),
                             str(ROOT/'core/olmdistancegradation_fieldgen.cpp'),'-o',str(exe)],check=True,capture_output=True)
             env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1')

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Compare deterministic PF16 row-major production output with Windows AE."""
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import ctypes
 import struct
 import subprocess
@@ -49,7 +52,7 @@ def main():
         assert (width, height) == (target_width, target_height) == (960, 540)
 
         library = directory / "pf16_rowmajor.dylib"
-        subprocess.run(["clang++", "-std=c++17", "-O2", "-fPIC", "-shared",
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", "-fPIC", "-shared",
                         "-I" + str(ROOT / "cli/OLMSmoother/shim"), str(HARNESS),
                         "-o", str(library)], check=True, capture_output=True)
         port = ctypes.CDLL(str(library))

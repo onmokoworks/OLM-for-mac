@@ -9,6 +9,9 @@ emulation boundary, not a live-Windows or AE-render claim.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import subprocess
@@ -69,7 +72,7 @@ def main() -> int:
         assert all(int(word, 16) != 0 for word in output_words)
 
         executable = temp / "kirakira_gaussian"
-        subprocess.run(["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
+        subprocess.run([_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)], check=True)
         emitted = subprocess.check_output(
             [str(executable), "--actual-aex-oracle"],
             text=True,

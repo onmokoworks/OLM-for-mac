@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -146,7 +149,7 @@ def main() -> int:
         source_path.write_bytes(source)
         write_probe(probe_path)
         build = subprocess.run(
-            ["clang++", "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic",
+            [_UCRT_CXX, "-std=c++17", "-O2", "-Wall", "-Wextra", "-pedantic",
              "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
              "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
              "-I", str(ROOT / "cli/OLMSmoother/shim"),

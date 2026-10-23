@@ -2,6 +2,9 @@
 """Fail-close the six residual dual-side Smart routes on x86_64 only."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -95,7 +98,7 @@ def build_probe(directory: Path, width: int, height: int, tuple_index: int,
     exe = directory / "dual_side_public_owner_boundary"
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = [
-        "clang++", "-std=c++17", "-arch", "x86_64", "-O2", "-fno-fast-math",
+        _UCRT_CXX, "-std=c++17", "-arch", "x86_64", "-O2", "-fno-fast-math",
         "-ffp-contract=off", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")),
         "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")),
         "-I", str(resolve_asset(ROOT / "Resources")), str(cpp),

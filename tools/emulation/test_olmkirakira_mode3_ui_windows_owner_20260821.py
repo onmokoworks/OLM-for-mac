@@ -9,6 +9,9 @@ the current Mac production source is exercised by the public hostless harness.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import binascii
 import hashlib
@@ -835,7 +838,7 @@ def _compile_and_run_mac_matrix(directory: Path) -> dict[tuple[int, int, str], d
     source = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
     harness = ROOT / "tests/olmkirakira_generic_beta_sanitizer_harness.cpp"
     command = [
-        "clang++", "-std=c++20", "-O2", "-DNDEBUG", "-fno-fast-math",
+        _UCRT_CXX, "-std=c++20", "-O2", "-DNDEBUG", "-fno-fast-math",
         "-ffp-contract=off", "-isysroot", sdk_run.stdout.strip(), "-w",
         "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
         "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

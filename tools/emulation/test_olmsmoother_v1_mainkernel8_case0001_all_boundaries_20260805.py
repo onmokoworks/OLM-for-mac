@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Compare MainInterpKernel8 CFG interpretation on every case_0001 edge call."""
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -90,7 +93,7 @@ def load_production_harness():
     temporary = tempfile.TemporaryDirectory()
     library_path = Path(temporary.name) / "libolmsmoother_mainkernel8.dylib"
     command = [
-        "clang++", "-std=c++17", "-O2", "-shared", "-fPIC",
+        _UCRT_CXX, "-std=c++17", "-O2", "-shared", "-fPIC",
         "-I" + str(ROOT / "cli/OLMSmoother/shim"),
         str(PRODUCTION_HARNESS), "-o", str(library_path),
     ]

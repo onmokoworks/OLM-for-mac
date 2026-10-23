@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -105,7 +108,7 @@ int main(int argc, char **argv) {
         encoding="utf-8",
     )
     command = [
-        "clang++",
+        _UCRT_CXX,
         "-std=c++17",
         "-O2",
         "-fno-fast-math",

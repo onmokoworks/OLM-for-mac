@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import json
 import shutil
 import subprocess
@@ -105,7 +108,7 @@ int main() {{
             binary = Path(tmp) / "probe"
             source.write_text(program, encoding="utf-8")
             subprocess.run(
-                [compiler, "-std=c++17", "-O1", "-g", "-fno-omit-frame-pointer",
+                [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", "-g", "-fno-omit-frame-pointer",
                  "-fsanitize=address,undefined",
                  "-I", str(ROOT / "cli/OLMSmoother2/shim"),
                  "-I", str(ROOT / "mac/OLMSmoother2"), str(source), "-o", str(binary)],
@@ -235,7 +238,7 @@ int main() {{
             binary = Path(tmp) / "probe"
             source.write_text(program, encoding="utf-8")
             subprocess.run(
-                [compiler, "-std=c++17", "-O1", "-g", "-fno-omit-frame-pointer",
+                [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O1", "-g", "-fno-omit-frame-pointer",
                  "-fsanitize=address,undefined",
                  "-I", str(ROOT / "cli/OLMSmoother2/shim"),
                  "-I", str(ROOT / "mac/OLMSmoother2"), str(source), "-o", str(binary)],

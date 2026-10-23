@@ -6,6 +6,9 @@ installation, reference-worker rebuild, source-included Mac substitute, or rende
 """
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 from collections import Counter
 from dataclasses import asdict
@@ -250,7 +253,7 @@ def main():
         r'(PF_OutFlag2?_\w+)\s*=\s*1L\s*<<\s*(\d+)', header.read_text())}
     host = scratch/'route_flags_mac'
     host_source = ROOT/'tools/emulation/route_flags_mac_F18.cpp'
-    run(['xcrun', 'clang++', '-std=c++17', '-arch', 'arm64', '-arch', 'x86_64',
+    run([_UCRT_CXX, "--xcrun", '-std=c++17', '-arch', 'arm64', '-arch', 'x86_64',
          '-D__MACH__', '-IHeaders', '-IHeaders/SP', host_source, '-o', host], scratch/'host-build.log', env)
     report = {'schema': 'olm.route-flags.F18/1', 'native_ae_trace': False,
               'abi_control': abi_control(args.main),

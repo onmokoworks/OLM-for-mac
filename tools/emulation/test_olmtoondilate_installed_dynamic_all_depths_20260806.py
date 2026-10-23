@@ -2,6 +2,9 @@
 """Run the bounded ToonDilate matrix through the installed public EffectMain."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -174,7 +177,7 @@ def main() -> int:
         source, executable = temp_path / "probe.cpp", temp_path / "probe"
         source.write_text(PROBE, encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
-        build = subprocess.run([compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(source), "-o", str(executable)], capture_output=True, text=True)
+        build = subprocess.run([_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk, "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(source), "-o", str(executable)], capture_output=True, text=True)
         if build.returncode:
             raise RuntimeError(f"BLOCKED_FAIL_CLOSED: probe build failed\n{build.stderr}")
         run = subprocess.run([str(executable), str(binary)], capture_output=True, text=True)

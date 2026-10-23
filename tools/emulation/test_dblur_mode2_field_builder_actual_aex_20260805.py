@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import ctypes
 import hashlib
 import json
@@ -67,7 +70,7 @@ def main() -> int:
 
         library_path = directory / "libdblur_field.dylib"
         subprocess.run(
-            ["c++", "-std=c++17", "-O2", "-fno-fast-math",
+            [_UCRT_CXX, "-std=c++17", "-O2", "-fno-fast-math",
              "-ffp-contract=off", "-dynamiclib",
              str(ROOT / "core/dblur_field.cpp"), str(ROOT / "core/dblur_rotate.cpp"),
              str(ROOT / "core/dblur_rowdriver.cpp"),

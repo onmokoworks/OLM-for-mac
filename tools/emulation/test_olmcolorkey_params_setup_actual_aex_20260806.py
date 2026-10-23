@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import hashlib
 import json
 import struct
@@ -133,7 +136,7 @@ int rc=EffectMain(PF_Cmd_PARAMS_SETUP,&in,&out,nullptr,nullptr,nullptr);return r
     with tempfile.TemporaryDirectory(prefix="olmck_params_") as raw:
         directory = Path(raw); cpp, exe = directory / "probe.cpp", directory / "probe"
         cpp.write_text(code)
-        cmd = ["xcrun", "clang++", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
+        cmd = [_UCRT_CXX, "--xcrun", "-std=c++17", "-O2", "-D__MACH__", "-Wno-pragma-pack",
                "-I.", "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources", str(cpp),
                "mac/OLMColorKey/OLMColorKey_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",
                "Util/MissingSuiteError.cpp", "-framework", "Cocoa", "-o", str(exe)]

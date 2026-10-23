@@ -2,6 +2,9 @@
 """Replay DirectionalBlur's fixed dual-side Type2 route through the installed Mach-O."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -23,7 +26,7 @@ def ae():
  return out
 def compile_run(arch):
  with tempfile.TemporaryDirectory(prefix="directional-installed-") as td:
-  d=Path(td);rgba=d/"rgba.bin";rgba.write_bytes(Image.open(FILES["fixture_png"]).convert("RGBA").crop((472,262,504,280)).tobytes());exe=d/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=["clang++","-std=c++17","-arch",arch,"-O2","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
+  d=Path(td);rgba=d/"rgba.bin";rgba.write_bytes(Image.open(FILES["fixture_png"]).convert("RGBA").crop((472,262,504,280)).tobytes());exe=d/"probe";sdk=subprocess.check_output(["xcrun","--show-sdk-path"],text=True).strip();cmd=[_UCRT_CXX,"-std=c++17","-arch",arch,"-O2","-fno-fast-math","-ffp-contract=off","-isysroot",sdk,"-Wno-pragma-pack","-Wno-deprecated-declarations"]
   for inc in ("Headers","Headers/SP","Util","Resources","core","mac/OLMDirectionalBlur"):cmd += ["-I",str(ROOT/inc)]
   cmd += [str(FILES[k]) for k in ("probe","strings","suite_cpp","missing_cpp","frontonly","rotate","rowdriver","field")]+["-framework","Cocoa","-o",str(exe)]
   b=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True)

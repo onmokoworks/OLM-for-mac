@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
+
 import os
 import importlib.util
 import json
@@ -295,7 +298,7 @@ int main() {{
         cpp.write_text(probe, encoding="utf-8")
         sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
         command = [
-            "clang++", "-std=c++17", "-O1", "-g", "-arch", "arm64", "-isysroot", sdk,
+            _UCRT_CXX, "-std=c++17", "-O1", "-g", "-arch", "arm64", "-isysroot", sdk,
             "-fsanitize=address,undefined", "-fno-omit-frame-pointer",
             "-Wno-pragma-pack", "-Wno-deprecated-declarations",
             "-IHeaders", "-IHeaders/SP", "-IUtil", "-IResources",

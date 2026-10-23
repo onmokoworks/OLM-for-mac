@@ -2,6 +2,9 @@
 """Close the fixed public 32x18 dual-side Type-2 tuple over source/layout."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -253,7 +256,7 @@ def build_negative_probe(temp: Path, width: int, height: int, tuple_index: int,
         ["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True
     ).stdout.strip()
     command = [
-        "clang++", "-std=c++17", "-arch", "arm64", "-O2",
+        _UCRT_CXX, "-std=c++17", "-arch", "arm64", "-O2",
         "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
         "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
         "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),

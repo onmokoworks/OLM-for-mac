@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import json
 import subprocess
@@ -62,7 +65,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="kirakira_gaussian_") as temporary:
         executable = Path(temporary) / "test_kirakira_gaussian"
         subprocess.run(
-            ["c++", "-std=c++17", "-O2", str(CPP), "-o", str(executable)],
+            [_UCRT_CXX, "-std=c++17", "-O2", str(CPP), "-o", str(executable)],
             cwd=ROOT, check=True,
         )
         lines = subprocess.check_output([str(executable)], cwd=ROOT, text=True).splitlines()

@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import json
 import subprocess
 import sys
@@ -19,7 +22,7 @@ def main() -> int:
         adapter = Path(temp) / "second_leaf_adapter"
         output = Path(temp) / "second_leaf.json"
         build = subprocess.run(
-            ["clang++", "-std=c++17", "-O2", "-I", "cli/OLMSmoother2/shim", "-I", "mac/OLMSmoother2", str(ADAPTER_SOURCE), "-o", str(adapter)],
+            [_UCRT_CXX, "-std=c++17", "-O2", "-I", "cli/OLMSmoother2/shim", "-I", "mac/OLMSmoother2", str(ADAPTER_SOURCE), "-o", str(adapter)],
             cwd=ROOT, text=True, capture_output=True,
         )
         if build.returncode != 0:

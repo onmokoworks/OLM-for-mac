@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -347,7 +350,7 @@ def build_rotate_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDLL, 
     library_path = Path(temp_dir.name) / "libdblur_rotate.dylib"
     subprocess.run(
         [
-            "c++",
+            _UCRT_CXX,
             "-std=c++17",
             "-O0",
             "-fno-fast-math",
@@ -380,7 +383,7 @@ def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDL
     library_path = Path(temp_dir.name) / "libdblur_rowdriver.dylib"
     subprocess.run(
         [
-            "c++",
+            _UCRT_CXX,
             "-std=c++17",
             "-O2",
             "-fno-fast-math",

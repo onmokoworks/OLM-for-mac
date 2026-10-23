@@ -8,6 +8,9 @@ bundle, and fail-closes unless all twelve shared-source cells are byte exact.
 
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -228,7 +231,7 @@ def main() -> int:
         if not binary.is_file():
             raise RuntimeError("BLOCKED_FAIL_CLOSED: isolated candidate binary absent")
         compile_command = [
-            compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
+            _UCRT_CXX, "--compiler", compiler, "-std=c++17", "-O2", "-arch", "arm64", "-isysroot", sdk,
             "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")),
             "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")),
             str(PROBE_SOURCE), "-o", str(probe),
@@ -271,7 +274,7 @@ def main() -> int:
                 "OBJROOT=<tmp>/obj", "SHARED_PRECOMPS_DIR=<tmp>/precomp", "build",
             ],
             "probe": [
-                "clang++", "-std=c++17", "-O2", "-arch", "arm64",
+                _UCRT_CXX, "-std=c++17", "-O2", "-arch", "arm64",
                 "-isysroot", "<xcrun --show-sdk-path>", "-I", "Headers", "-I", "Headers/SP",
                 "-I", "Util", "-I", "Resources",
                 "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp",

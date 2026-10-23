@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
 import importlib.util
 import struct
 import subprocess
@@ -11,7 +14,7 @@ WRITERS = ROOT / "tools/emulation/test_olmkirakira_typed_writers_actual_aex_2026
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmkira-mode4-tail-") as tmp:
         binary = Path(tmp) / "tail"
-        subprocess.run(["c++", "-std=c++20", "-O2", "-ffp-contract=off",
+        subprocess.run([_UCRT_CXX, "-std=c++20", "-O2", "-ffp-contract=off",
                         str(ROOT / "tools/emulation/test_kirakira_mode4_cropped_typed.cpp"),
                         "-o", str(binary)], check=True)
         lines = dict(line.split("=", 1) for line in subprocess.check_output([str(binary)], text=True).splitlines())

@@ -2,6 +2,9 @@
 """Compare exported PF16/PF32 Smart owner buffers with production RenderBits."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -79,7 +82,7 @@ def main() -> int:
         td = Path(temporary); source_png = td / "input.png"; executable = td / "harness"
         pixels = rgba_fixture(); image = Image.new("RGBA", (17, 11)); image.putdata(pixels); image.save(source_png)
         input_png_sha256 = sha(source_png)
-        build = subprocess.run(["clang++", "-std=c++17", "-O0",
+        build = subprocess.run([_UCRT_CXX, "-std=c++17", "-O0",
             "-I", str(ROOT / "tools/emulation/dg_renderbits_real_harness_20260716"),
             str(HARNESS), str(ROOT / "core/olmdistancegradation_fieldgen.cpp"), "-o", str(executable)],
             text=True, capture_output=True)

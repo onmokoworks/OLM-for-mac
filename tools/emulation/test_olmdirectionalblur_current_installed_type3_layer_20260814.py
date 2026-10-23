@@ -2,6 +2,9 @@
 """Replay the installed DirectionalBlur Type-3 Layer admission on both slices."""
 from __future__ import annotations
 
+from pathlib import Path as _HarnessPath
+_UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[2] / "tools/ucrt_cxx.py")
+
 import argparse
 import hashlib
 import json
@@ -42,7 +45,7 @@ def ae_processes() -> list[str]:
 def compile_probe(output: Path, arch: str) -> None:
     sdk = subprocess.check_output(["xcrun", "--show-sdk-path"], text=True).strip()
     command = [
-        "clang++", "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
+        _UCRT_CXX, "-std=c++17", "-arch", arch, "-O2", "-fno-fast-math",
         "-ffp-contract=off", "-isysroot", sdk, "-Wno-pragma-pack",
         "-Wno-deprecated-declarations",
     ]
