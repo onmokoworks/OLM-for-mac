@@ -15,6 +15,7 @@ from verify_kirakira_admission_F10 import (
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     args = p.parse_args()
@@ -23,9 +24,9 @@ def main():
     s.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(s), TMP=str(s), TEMP=str(s))
     options = SimpleNamespace(max_size=256, case_timeout=180, main=main_checkout(), worker=default_worker())
-    a = adapter_class(olmkirakira.SOURCE)(options)
+    a = adapter_class(args.source)(options)
     d = time.monotonic()+3600
-    r = dict(status='running', source_sha256=sha(olmkirakira.SOURCE.read_bytes()),
+    r = dict(status='running', source_sha256=sha(args.source.read_bytes()),
              worker_sha256=sha(options.worker.read_bytes()), rows=[], histories={})
     def save():
         r['counts'] = dict(Counter(x['status'] for x in r['rows']))

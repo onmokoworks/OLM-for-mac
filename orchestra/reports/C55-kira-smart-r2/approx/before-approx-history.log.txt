@@ -1,0 +1,4 @@
+101 {'exact': 289, 'refusal': 11}
+102 {'exact': 576, 'refusal': 24}
+103 {'exact': 864, 'refusal': 36}
+104 {'exact': 1159, 'refusal': 41}

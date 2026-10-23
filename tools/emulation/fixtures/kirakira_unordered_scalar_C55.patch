@@ -1,0 +1,12 @@
+--- before.cpp
++++ candidate.cpp
+@@ -795 +795 @@
+-		if (value == 0.0f) return 0.0f;
++		if (value == 0.0f || (recovered_seed && std::isnan(value))) return 0.0f;
+@@ -814 +814,5 @@
+-				v = apply_fade(std::max({p.r, p.g, p.b})) * p.a;
++				// Original COMISS/CMOVB selects the second operand when
++                // unordered, and compares G/B before R/the selected value.
++                const float gb = p.g >= p.b ? p.g : p.b;
++                const float maximum = p.r >= gb ? p.r : gb;
++                v = apply_fade(recovered_seed ? maximum : std::max({p.r, p.g, p.b})) * p.a;

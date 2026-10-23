@@ -1,0 +1,37 @@
+24 {'exact': 24}
+48 {'exact': 48}
+72 {'exact': 72}
+96 {'exact': 96}
+120 {'exact': 120}
+144 {'exact': 144}
+168 {'exact': 168}
+192 {'exact': 192}
+216 {'exact': 216}
+240 {'exact': 240}
+264 {'exact': 264}
+288 {'exact': 288}
+312 {'exact': 312}
+336 {'exact': 336}
+360 {'exact': 360}
+384 {'exact': 384}
+408 {'exact': 408}
+432 {'exact': 432}
+456 {'exact': 456}
+480 {'exact': 480}
+504 {'exact': 504}
+528 {'exact': 528}
+552 {'exact': 550, 'mismatch': 2}
+576 {'exact': 574, 'mismatch': 2}
+600 {'exact': 598, 'mismatch': 2}
+624 {'exact': 622, 'mismatch': 2}
+648 {'exact': 646, 'mismatch': 2}
+672 {'exact': 667, 'mismatch': 5}
+696 {'exact': 691, 'mismatch': 5}
+720 {'exact': 713, 'mismatch': 7}
+744 {'exact': 737, 'mismatch': 7}
+768 {'exact': 761, 'mismatch': 7}
+792 {'exact': 783, 'mismatch': 9}
+816 {'exact': 806, 'mismatch': 10}
+840 {'exact': 830, 'mismatch': 10}
+864 {'exact': 854, 'mismatch': 10}
+COMPLETE {'exact': 854, 'mismatch': 10}
