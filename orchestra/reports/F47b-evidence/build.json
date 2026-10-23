@@ -1,0 +1,32 @@
+{
+  "worker_sha256": "7d5e5e276dc19798dae3a99ce400ae892711ed7ebe263380a328d47f404adf6f",
+  "shared_abi_sha256": "fee54058ff074eacf72913669235974d76eaf8a65cad406d6454a9a10ad43ec1",
+  "native_host_sha256": "2788c2eda0196d6423a0dfdbe8a656f0be0cd80208871cc11b6b29329f02d056",
+  "parent_loader_sha256": "034cfbe7e90af3cf0f586bf346d3672511b45d602c9395d0bf47b2b54f7f3389",
+  "native_main_sha256": "2d30e5ab17b10c3253c88c8136eb6296ad82b3dd95ea9ee069c455fc151501dc",
+  "integration_patch_sha256": "eab1bb2650cbd30808bc30fef92386fcd57385031bf8cec36403e6e6457ace42",
+  "recipe_sha256": "acbdbf79572cbb201b4550af29a965f66d0c37504ef6905ede6ad6a0bce672a2",
+  "sdk_hashes": {
+    "Headers/AE_Effect.h": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "Headers/AE_EffectCB.h": "1b380add9dd0b67f42ecff6438ce2424e7f4af335d1793af27910e285997a178",
+    "Headers/SP/SPErrorCodes.h": "59d3eb25efe60209efc91442124a570392170b5ab28b68b475ac675065707ee5"
+  },
+  "checked_abi_constants": 37,
+  "memory_free_percent": 53,
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/Users/onmk/.cache/olm-emu/F47b-scratch-link/source/Cargo.toml",
+    "--release",
+    "--offline",
+    "--locked",
+    "-j",
+    "1",
+    "-p",
+    "aex-guest-worker",
+    "--bin",
+    "aex-guest-worker"
+  ],
+  "capability": "olmblur-lifecycle-only"
+}

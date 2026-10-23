@@ -1,0 +1,91 @@
+{
+  "native": {
+    "acquire_suite_calls": [],
+    "advertised_num_params": 6,
+    "architecture": "aarch64",
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47b-native-plugin-host-render/orchestra/state/F47b-native-plugin-host-render/bundles/xcode/OLMBlur/products/OLMBlur.plugin",
+    "capability": "olmblur-lifecycle-only",
+    "entrypoint": "EffectMain",
+    "entrypoint_resolved": true,
+    "executable": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F47b-native-plugin-host-render/orchestra/state/F47b-native-plugin-host-render/bundles/xcode/OLMBlur/products/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "executable_sha256": "eedc0b44753b83455f7719ce817671af62a7d69827ac38f57c7cada62bb2dd64",
+    "mode": "native-plugin",
+    "out_flags": 100663360,
+    "out_flags2": 134222848,
+    "parameters": [
+      {
+        "disk_id": 5,
+        "flags": 0,
+        "index": -1,
+        "name": "Blur Amount",
+        "param_type": 10,
+        "slot": 1
+      },
+      {
+        "disk_id": 6,
+        "flags": 0,
+        "index": -1,
+        "name": "Blur Smoothness",
+        "param_type": 2,
+        "slot": 2
+      },
+      {
+        "disk_id": 3,
+        "flags": 0,
+        "index": -1,
+        "name": "Number of Repeat",
+        "param_type": 1,
+        "slot": 3
+      },
+      {
+        "disk_id": 4,
+        "flags": 0,
+        "index": -1,
+        "name": "Bias Direction",
+        "param_type": 7,
+        "slot": 4
+      },
+      {
+        "disk_id": 7,
+        "flags": 128,
+        "index": -1,
+        "name": "Legacy",
+        "param_type": 4,
+        "slot": 5
+      }
+    ],
+    "pipl_sha256": "873511a3179f961b4a5db05d25121255e4cc5923d27632bdc5746423dde30bd6",
+    "render_supported": false,
+    "selectors_executed": [
+      {
+        "error": 0,
+        "selector": "GLOBAL_SETUP"
+      },
+      {
+        "error": 0,
+        "selector": "PARAMS_SETUP"
+      },
+      {
+        "error": 0,
+        "selector": "SEQUENCE_SETUP"
+      },
+      {
+        "error": 0,
+        "selector": "SEQUENCE_SETDOWN"
+      },
+      {
+        "error": 0,
+        "selector": "GLOBAL_SETDOWN"
+      }
+    ],
+    "session_supported": false,
+    "setup_ok": true
+  },
+  "setup_differences": {},
+  "repeated_native_setup": 2,
+  "aex_setup_bytes": 2044,
+  "aex_setup_sha256": "c63311fd43a44ed140a7fe3cb0dbf2d9cbee5a1dfae4cfccd3dea05b7a8dfc19",
+  "aex_setup_unchanged": true,
+  "render_cases": 0,
+  "note": "Sequence selectors return success; OLMBlur has no sequence-specific switch cases."
+}
