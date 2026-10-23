@@ -66,3 +66,10 @@ C45-original-oob-noise-table
 F47c-native-plugin-smart-render
 C46-radial-smart-r8
 F47d-native-plugin-all
+C47-dg-s01-mismatch
+C48-radial-s01-pf32-mismatch
+F48-fuzz-killpg-permission
+C50-kira-smart-r1
+C51-dblur-smart-r1
+C49-radial-smart-r9
+C52-dg-smart-r1
