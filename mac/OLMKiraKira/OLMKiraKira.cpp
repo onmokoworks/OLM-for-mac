@@ -2115,16 +2115,17 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
 // the original scalar aggregator clamps NaN ray amounts to zero, and the
 // typed writer clamps composition. NaN sign/payload differences inside the
 // filters do not survive those original operations. C50 also validates the
-// full-resolution Gaussian path, whose finite-versus-NaN boundary is local to
-// each convolution window. Other constructors and approximation keep their
-// existing source validation paths.
+// full-resolution Gaussian path and recovered approximation (including its
+// one-axis IPP edge operations). Other constructors retain their existing
+// source validation paths.
 static bool SmartAlphaInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
     return input && format == PF_PixelFormat_ARGB128 &&
         (IsAlphaBoxTuple(info, format, true, true, true) ||
-         (info.channel == 1 && IsSmartDirectionalGaussianTuple(
-             info, format, input->width, input->height)));
+         (info.channel == 1 &&
+          (IsSmartDirectionalGaussianTuple(info, format, input->width, input->height) ||
+           IsSmartApproximationTuple(info, format, input->width, input->height))));
 }
 
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)

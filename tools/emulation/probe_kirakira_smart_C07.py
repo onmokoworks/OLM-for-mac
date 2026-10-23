@@ -641,7 +641,7 @@ def main():
                               main=main_checkout(), worker=default_worker())
     deadline = time.monotonic() + 7200
     report = dict(schema='olm-kira-C07/1', family=args.family, rows=[], status='running',
-                  gate_off=args.gate_off, trace_powf='host float powf, matching retained worker; not native UCRT', source_sha256=sha(args.source.read_bytes()),
+                  gate_off=args.gate_off, trace_powf='legacy host powf diagnostic; require public-output binding for stage claims', source_sha256=sha(args.source.read_bytes()),
                   worker_sha256=sha(options.worker.read_bytes()),
                   aex_sha256=sha((options.main / 'plugins_2025/OLMKiraKira.aex').read_bytes()))
     report['headers_sha256'] = {}

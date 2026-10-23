@@ -40,8 +40,8 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
         def register_libm_impls(self, max_threads=1):
             super().register_libm_impls(max_threads)
             if host_powf:
-                # Match the retained worker's f32::powf import, not the
-                # historical Python double-pow substitute. Not native UCRT.
+                # Legacy host-powf diagnostic, not the F46 UCRT import.
+                # Require final public-output binding before stage claims.
                 import ctypes
                 powf = ctypes.CDLL(None).powf
                 powf.argtypes = (ctypes.c_float, ctypes.c_float)
