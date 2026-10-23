@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "execution_backend": "unicorn-x86_64",
+  "global_setup_error": 0,
+  "params_setup_error": 0,
+  "advertised_num_params": 0,
+  "out_flags": 0,
+  "out_flags2": 0,
+  "parameters": [],
+  "suite_requests": [],
+  "unsupported_suite_calls": [],
+  "dropped_unsupported_suite_calls": 0
+}

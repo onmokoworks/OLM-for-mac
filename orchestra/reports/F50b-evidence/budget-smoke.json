@@ -1,0 +1,23 @@
+[
+  {
+    "name": "return",
+    "returncode": 0,
+    "elapsed_seconds": 0.32093499999609776
+  },
+  {
+    "name": "exhaustion1",
+    "returncode": 1,
+    "elapsed_seconds": 709.0059554159961,
+    "rax": 1000000000,
+    "rip": 6442455045,
+    "instruction_rva": 4101
+  },
+  {
+    "name": "exhaustion2",
+    "returncode": 1,
+    "elapsed_seconds": 679.5839078330027,
+    "rax": 1000000000,
+    "rip": 6442455045,
+    "instruction_rva": 4101
+  }
+]

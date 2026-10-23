@@ -1,0 +1,90 @@
+{
+  "campaigns": {},
+  "corpus_by_plugin": {
+    "olmblur": {
+      "identical": 72,
+      "uncompared": 6
+    },
+    "olmcolorkey": {
+      "identical": 18
+    },
+    "olmdirectionalblur": {
+      "identical": 166
+    },
+    "olmdistancegradation": {
+      "identical": 294
+    },
+    "olmkirakira": {
+      "identical": 140
+    },
+    "olmsmoother": {
+      "identical": 29
+    },
+    "olmsmoother2": {
+      "identical": 16
+    },
+    "olmtoondilate": {
+      "identical": 646
+    },
+    "radialblur": {
+      "identical": 1
+    }
+  },
+  "corpus_nonidentical": [
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000004_adfc483da30a.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    },
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000093_83728685d1c5.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    },
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000176_44f767dbce91.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    },
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    },
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000268_83728685d1c5.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    },
+    {
+      "comparison": "uncompared",
+      "first_difference": null,
+      "key": "tests/fuzz_corpus/olmblur/seed1_case000270_8214084afb2c.json:classic",
+      "statuses": [
+        "reject",
+        "reject"
+      ]
+    }
+  ],
+  "s01_transitions": {}
+}
