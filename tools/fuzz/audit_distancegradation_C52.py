@@ -78,7 +78,7 @@ def main():
             assert hashlib.sha256((EVIDENCE / name).read_bytes()).hexdigest() == digest, name
         paths = sorted(EVIDENCE.glob('seed*.json.gz'))
     if not args.campaign:
-        for name in ('scalar', 'scalar-linear', 'power', 'box'):
+        for name in ('scalar', 'scalar-linear', 'power', 'power-extreme', 'box'):
             path = EVIDENCE / (name+'.json.gz')
             if path.exists():
                 data = read(path)

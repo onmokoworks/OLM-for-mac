@@ -45,13 +45,20 @@ def candidate(source, mode):
     raise ValueError(mode)
 
 
-def matrix(a, mode, linear=False):
+def matrix(a, mode, linear=False, extreme=False):
     profiles = {
         'rgb-hdr': ([0., .5, 1., 0., .25, 1., 0.], [2., 8., 1.0000001192092896]),
         'rgb-signed': ([0., .5, 1., 0., .25, 1., 0.], [-4., -.0, -1.e-38]),
         'alpha-hdr': ([0., .5, 2., 0., 8., .25, 1.], [2., 8., .25]),
         'alpha-signed': ([0., -.5, 1., -4., 0., .25, 1.], [-4., .5, 2.]),
     }
+    if extreme:
+        maximum=struct.unpack('<f',struct.pack('<I',0x7f7fffff))[0]
+        profiles = {
+            'rgb-extreme': ([0.,.5,1.,0.,.25,1.,0.],[maximum,-maximum,1.e-40]),
+            'alpha-edge': ([0.,8421504.,1.,-maximum,-0.,.25,.5],[.25,.5,.75]),
+            'alpha-subnormal': ([-1.e-40,0.,1.,-.0,.005882352590560913,.0058823530562222,.5],[-1.e-40,.5,-.0]),
+        }
     shapes = [(7,1,3),(1,7,8),(7,3,32)]
     powers = [.01, 2.25, 5.]
     if mode == 'bilateral-gate':
@@ -102,6 +109,7 @@ def main():
     p.add_argument('--source',type=Path,default=SOURCE);p.add_argument('--write-source',type=Path)
     p.add_argument('--require-exact',action='store_true');p.add_argument('--limit',type=int)
     p.add_argument('--negative', action='store_true')
+    p.add_argument('--extreme', action='store_true')
     p.add_argument('--linear', action='store_true', help='Exercise Constant/Linear/Sphere instead of Power')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
@@ -110,7 +118,7 @@ def main():
     source=candidate(args.source.read_text(),args.mode)
     if args.write_source:args.write_source.write_text(source)
     a=Adapter(argparse.Namespace(max_size=256,case_timeout=180,main=main_checkout(),worker=default_worker()))
-    report=dict(mode=args.mode,linear=args.linear,negative=args.negative,base_source_sha256=sha(args.source.read_bytes()),candidate_sha256=sha(source.encode()),rows=[])
+    report=dict(mode=args.mode,linear=args.linear,negative=args.negative,extreme=args.extreme,base_source_sha256=sha(args.source.read_bytes()),candidate_sha256=sha(source.encode()),rows=[])
     deadline=time.monotonic()+5400
     try:
       with tempfile.TemporaryDirectory(dir=args.scratch) as td:
@@ -118,7 +126,7 @@ def main():
         current=variant(a,td/'candidate',deadline,source)
         san=variant(a,td/'san',deadline,source,sanitized=True)
         wd=td/'case';wd.mkdir()
-        cases = negatives(a,args.mode) if args.negative else matrix(a,args.mode,args.linear)
+        cases = negatives(a,args.mode) if args.negative else matrix(a,args.mode,args.linear,args.extreme)
         for index,(label,c) in enumerate(cases):
             if args.limit is not None and index>=args.limit:break
             oracle,reference=a.oracle(c,wd,deadline,'smart')

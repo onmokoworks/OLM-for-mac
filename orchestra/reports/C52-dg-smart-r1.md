@@ -3,7 +3,7 @@ status: partial
 summary:
 - Re-measured seed1 and seed105, n300: Smart290/280 exact, zero mismatches; every historical exact hash preserved.
 - S01 unresolved counts mix original Median assertions, original timeouts and Mac timeouts; attribution is retained separately.
-- Closed bounded scalar Bilateral finite-source admission: seed105 case214 refusal→exact, zero admitted mismatches.
+- Closed scalar Bilateral and unblurred Power finite-source admission: seed105 exact280→282, zero admitted mismatches.
 
 facts:
 - Base HEAD `59b4273d640e30d23fc76ea58374c59874af609c`; branch `orch/C52-dg-smart-r1`.
@@ -105,3 +105,38 @@ ln -sf "$PWD/tools/ucrt_cxx.py" "$s/bin/clang++"
 PATH="$s/bin:$PATH" python3 tools/fuzz/check_distancegradation_beta_C52.py --ref 59b4273d640e30d23fc76ea58374c59874af609c --scratch "$s/base-beta" > "$s/base-beta.log" 2>&1
 ```
 Expected exit1,9 tests/4 baseline failures described above. Repairing historical cap tests is a separate follow-up. Retained C52 audit exits0 and `git diff --check` passes.
+
+
+Cluster2 — finite unblurred Power sources (base `b6be4869`):
+
+facts:
+- Remeasured full seed1 after cluster1:290 exact/0 mismatch/3 refusal/1 budget/6 uncompared; all300 Smart result dictionaries equal the initial campaign, not just the exact count.
+- Reuse the finite Power admission copy for the existing unblurred/identity-filter predicate. Only the finite extended-sample check changes. Actual UCRT Power rendering, nonfinite and positive alpha-conversion-overflow restrictions remain unchanged.
+- Independent ordinary HDR/signed matrix432/432 exact; extreme matrix324/324 exact, all sanitizer-identical. Extreme cases include maximum finite positive/negative RGB, subnormals, alpha8421504 at the mask conversion edge, maximum negative alpha, signed zero and ownership-cutoff neighbors. Main matrix covers three geometries, all ownership/render/background combinations, inversion and exponent0.01/2.25/5.
+- Seven negative controls retain refusals with sanitizer equality: exponent0.005/5.01, positive alpha conversion overflow, RGB infinity/NaN, active Median3 and radius-one Bilateral Power.
+- Base/current/sanitized verification on185 PF32 campaign cases plus147 corpus cases: seed1 unchanged91 exact+4 nonexact; seed10585 unchanged exact+4 unchanged nonexact+case293 newly exact. The first cluster's case214 remains exact. Corpus147 exact with identical hashes; no expectation edit. No sanitizer diagnostic (leak detection disabled).
+
+|Smart result, fixed initial oracle set|Before cluster2|After cluster2|
+|---|---|---|
+|seed1 exact/mismatch/refusal/budget/uncompared|290/0/3/1/6|290/0/3/1/6|
+|seed105 exact/mismatch/refusal/budget/uncompared|281/0/5/3/11|282/0/4/3/11|
+|corpus exact|147|147, same hashes|
+
+inference:
+- UCRT Power was already implemented; this residual was an admission restriction on finite input channels, not an arithmetic discrepancy. Infinite/NaN sources and positive mask-conversion overflow are intentionally outside this new rule.
+
+verify (cluster2):
+```sh
+git show b6be4869:mac/OLMDistanceGradation/OLMDistanceGradation.cpp > "$s/scalar.cpp"
+for kind in ordinary extreme negative; do
+  extra=""
+  if [ "$kind" = extreme ]; then extra="--extreme"; fi
+  if [ "$kind" = negative ]; then extra="--negative"; fi
+  python3 tools/fuzz/probe_distancegradation_C52.py --mode finite-power --source "$s/scalar.cpp" $extra --scratch "$s/power-$kind-work" --report "$s/power-$kind.json" --write-source "$s/power.cpp" --require-exact > "$s/power-$kind.log" 2>&1
+done
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref b6be4869 --candidate-source "$s/power.cpp" --campaign "$s/seed1.json" --campaign "$s/seed105.json" --campaign-pf32-only --corpus --strict-admission --case-timeout 180 --scratch "$s/power-verify-work" --report "$s/power-verify.json" > "$s/power-verify.log" 2>&1
+```
+Expected:432+324 exact,7 unchanged refusals; only case293 newly exact versus cluster1, corpus147 unchanged. Run the shell loop in a POSIX shell (or issue each explicit flag separately).
+
+next:
+- Investigate large-Box admission; retain larger-radius Bilateral refusal until independently justified. Historical resource-cap beta tests remain the same documented baseline failures.

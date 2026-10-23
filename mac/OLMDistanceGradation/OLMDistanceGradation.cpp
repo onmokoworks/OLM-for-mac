@@ -1870,7 +1870,8 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
 				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)) &&
 				    !is_admitted_pf32_smart_bilateral_beta(p) &&
-				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height)) return false;
+				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) &&
+				    !is_admitted_pf32_smart_unblurred_beta(finite_admission)) return false;
 			}
 		}
 	}
