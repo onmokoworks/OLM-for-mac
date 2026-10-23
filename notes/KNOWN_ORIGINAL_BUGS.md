@@ -30,3 +30,31 @@ and are not classified as this original bug.
 INFERENCE: Deterministic zero semantics remove allocator dependence in the
 port. Passing finite emulation campaigns does not establish equality to every
 native Windows heap layout or exhaustive parameter coverage.
+
+## RadialBlur Type 3 with zero Noise Variation and no layer (C46)
+
+The deterministic Mac contract initializes the **scatter span to positive
+zero** when Noise Type is 3 and Noise Variation is zero (no layer checkout).
+The size-factor plane remains separate: Zoom's B150 prepass uses its sampled
+size factor when enabled, and literal one when disabled. Rotation likewise
+retains its existing size-factor prepass. This is not a neutral procedural
+noise substitution and does not change positive-amount layer checkout errors.
+
+FACT: Original `FUN_1800065c0` skips the span writes when Type 3's layer
+pointer at owner +0xA8 is null. `FUN_1800045a0` allocates handle storage without
+explicit initialization. C17 established this allocation boundary. C46's F46
+trace of the committed 7x1 PF8 fixture compares 4096-byte prefixes: polar and
+scatter span match, but substituting the zero scatter span for the prepass
+factor differs in 442/1024 floats (first AEX 1.0, candidate 0.0). Keeping the
+size plane separately makes all three prefixes equal and the public output
+exact. Prefix equality is not a claim of a complete intermediate-plane trace.
+
+FACT: The independent C46 matrix's AEX-rendered cases and seed campaigns have
+no admitted Smart mismatches with the final rule. Some Type-3 matrix inputs
+make the original emulator stop with an invalid memory write; those are
+uncompared, not evidence of exactness or a diagnosed non-zero allocation.
+See `orchestra/reports/C46-radial-smart-r8.md` and its bound evidence.
+
+INFERENCE: Zero initialization removes dependence on uninitialized allocation
+contents, consistent with observed emulator values. Native Windows allocator
+contents remain undefined; no native Windows/AE parity is claimed for this bug.
