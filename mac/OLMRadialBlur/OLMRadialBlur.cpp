@@ -1,6 +1,7 @@
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
 #include "../../core/dblur_noise.h"
+#include "../../core/x86_float.h"
 #include "../../core/olm_sha256_rows.h"
 
 #include <AEFX_SuiteHandlerTemplate.h>
@@ -105,28 +106,26 @@ struct RadialBlurOuterSampleState {
 	float final_rgb[3] = {0.0f, 0.0f, 0.0f};
 };
 
+// Keep SSE destination/source NaN selection and generated-invalid sign.
+// C53b binds these operations to the original public renderer's full planes.
 static float RadialF32Mul(float lhs, float rhs)
 {
-	volatile float result = lhs * rhs;
-	return result;
+	return olm::x86_float::sse_mul(lhs, rhs);
 }
 
 static float RadialF32Add(float lhs, float rhs)
 {
-	volatile float result = lhs + rhs;
-	return result;
+	return olm::x86_float::sse_add(lhs, rhs);
 }
 
 static float RadialF32Div(float lhs, float rhs)
 {
-	volatile float result = lhs / rhs;
-	return result;
+	return olm::x86_float::sse_div(lhs, rhs);
 }
 
 static float RadialF32Sub(float lhs, float rhs)
 {
-	volatile float result = lhs - rhs;
-	return result;
+	return olm::x86_float::sse_sub(lhs, rhs);
 }
 
 static float SampleRadialNoisePlaneAEX(
@@ -406,23 +405,23 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	const float w10 = RadialF32Mul(one_minus_fy, fx);
 	const float w01 = RadialF32Mul(one_minus_fx, fy);
 	const float w11 = RadialF32Mul(fy, fx);
-	const float a00 = RadialF32Mul(sample(x0, y0, 3), w00);
-	const float a10 = RadialF32Mul(sample(x1, y0, 3), w10);
-	const float a01 = RadialF32Mul(sample(x0, y1, 3), w01);
-	const float a11 = RadialF32Mul(sample(x1, y1, 3), w11);
+	const float a00 = RadialF32Mul(w00, sample(x0, y0, 3));
+	const float a10 = RadialF32Mul(w10, sample(x1, y0, 3));
+	const float a01 = RadialF32Mul(w01, sample(x0, y1, 3));
+	const float a11 = RadialF32Mul(w11, sample(x1, y1, 3));
 
 	RadialBlurOuterSampleState state;
 	// FUN_180001000 walks the first angular/radius coordinate's two rows
 	// before advancing to its neighbor: 00, 01, 10, 11.  The order is
 	// observable at PF8 quantization boundaries.
 	if (aex_column_major_taps) {
-		float alpha = RadialF32Add(0.0f, a00);
-		alpha = RadialF32Add(alpha, a01);
-		alpha = RadialF32Add(alpha, a10);
-		state.alpha = RadialF32Add(alpha, a11);
+		float alpha = RadialF32Add(a00, 0.0f);
+		alpha = RadialF32Add(a01, alpha);
+		alpha = RadialF32Add(a10, alpha);
+		state.alpha = RadialF32Add(a11, alpha);
 	} else {
 		// Original Zoom 9d80 zeroes its output before accumulating 00,10,01,11.
-		state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(RadialF32Add(0.0f, a00), a10), a01), a11);
+		state.alpha = RadialF32Add(a11, RadialF32Add(a01, RadialF32Add(a10, RadialF32Add(a00, 0.0f))));
 	}
 	if (aex_column_major_taps) {
 		state.validity_alpha = RadialF32Add(
@@ -443,22 +442,24 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	// Both original samplers accumulate RGB even when alpha cancels or
 	// underflows to zero; only reciprocal normalization is then skipped.
 	if (strict_nonzero_alpha || state.alpha > 1.0e-8f) {
-		const float reciprocal_alpha = state.alpha != 0.0f ? RadialF32Div(1.0f, state.alpha) : 1.0f;
+		// 1000/9D80 UCOMISS + JZ skips normalization for zero or unordered alpha.
+		const float reciprocal_alpha = state.alpha != 0.0f && !std::isnan(state.alpha)
+			? RadialF32Div(1.0f, state.alpha) : 1.0f;
 		for (int c = 0; c < 3; ++c) {
 			if (aex_column_major_taps) {
-				float accumulated = RadialF32Add(0.0f, RadialF32Mul(a00, sample(x0, y0, c)));
-				accumulated = RadialF32Add(accumulated, RadialF32Mul(a01, sample(x0, y1, c)));
-				accumulated = RadialF32Add(accumulated, RadialF32Mul(a10, sample(x1, y0, c)));
-				state.accum_rgb[c] = RadialF32Add(accumulated, RadialF32Mul(a11, sample(x1, y1, c)));
+				float accumulated = RadialF32Add(RadialF32Mul(a00, sample(x0, y0, c)), 0.0f);
+				accumulated = RadialF32Add(RadialF32Mul(a01, sample(x0, y1, c)), accumulated);
+				accumulated = RadialF32Add(RadialF32Mul(a10, sample(x1, y0, c)), accumulated);
+				state.accum_rgb[c] = RadialF32Add(RadialF32Mul(a11, sample(x1, y1, c)), accumulated);
 			} else {
-				state.accum_rgb[c] = RadialF32Add(
-					RadialF32Add(RadialF32Add(
-						RadialF32Add(0.0f, RadialF32Mul(sample(x0, y0, c), a00)),
-						RadialF32Mul(sample(x1, y0, c), a10)),
-					RadialF32Mul(sample(x0, y1, c), a01)),
-					RadialF32Mul(sample(x1, y1, c), a11));
+				float accumulated = RadialF32Add(RadialF32Mul(a00, sample(x0, y0, c)), 0.0f);
+				accumulated = RadialF32Add(RadialF32Mul(a10, sample(x1, y0, c)), accumulated);
+				accumulated = RadialF32Add(RadialF32Mul(a01, sample(x0, y1, c)), accumulated);
+				state.accum_rgb[c] = RadialF32Add(RadialF32Mul(a11, sample(x1, y1, c)), accumulated);
 			}
-			state.normalized_rgb[c] = RadialF32Mul(state.accum_rgb[c], reciprocal_alpha);
+			state.normalized_rgb[c] = c == 2
+				? RadialF32Mul(reciprocal_alpha, state.accum_rgb[c])
+				: RadialF32Mul(state.accum_rgb[c], reciprocal_alpha);
 			state.final_rgb[c] = RadialF32Mul(state.normalized_rgb[c], brightness_gain);
 		}
 	}
@@ -1209,22 +1210,6 @@ static bool CheckedRadialGenericBudget(
 		(smart_render || work <= kMaxWork);
 }
 
-// Called only after IsGenericBaselineWorldPair validates aligned storage.
-template <typename PixelT>
-static bool GenericRadialInputIsFinite(const PF_EffectWorld *input)
-{
-	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-		for (A_long y = 0; y < input->height; ++y) {
-			for (A_long x = 0; x < input->width; ++x) {
-				const PixelT pixel = LoadPixel<PixelT>(input, x, y);
-				if (!std::isfinite(pixel.alpha) || !std::isfinite(pixel.red) ||
-					!std::isfinite(pixel.green) || !std::isfinite(pixel.blue)) return false;
-			}
-		}
-	}
-	return true;
-}
-
 template <typename PixelT>
 static bool GenericRadialInputIsSDR(const PF_EffectWorld *input)
 {
@@ -1452,14 +1437,15 @@ static AEXPolarSample SampleRGBAAEXAlpha(const FloatImage &image, float x, float
 	float alpha_sum = 0.0f;
 	float weight_sum = 0.0f;
 	auto tap = [&](A_long px, A_long py, float weight) {
-		if (weight == 0.0f) return;
+		// The original evaluates in-bounds zero-weight taps (0 * Inf is observable).
+
 		if (px < 0 || px >= w || py < 0 || py >= h) return;
 		const size_t idx = ((size_t)py * w + px) * 4;
-		const float alpha_weight = RadialF32Mul(image.rgba[idx + 3], weight);
-		alpha_sum = RadialF32Add(alpha_sum, alpha_weight);
+		const float alpha_weight = RadialF32Mul(weight, image.rgba[idx + 3]);
+		alpha_sum = RadialF32Add(alpha_weight, alpha_sum);
 		weight_sum = RadialF32Add(weight_sum, weight);
 		for (int c = 0; c < 3; ++c) {
-			rgb_sum[c] = RadialF32Add(rgb_sum[c], RadialF32Mul(image.rgba[idx + c], alpha_weight));
+			rgb_sum[c] = RadialF32Add(RadialF32Mul(alpha_weight, image.rgba[idx + c]), rgb_sum[c]);
 		}
 	};
 
@@ -1473,11 +1459,17 @@ static AEXPolarSample SampleRGBAAEXAlpha(const FloatImage &image, float x, float
 	tap(x1, y0, w10);
 	tap(x0, y1, w01);
 	tap(x1, y1, w11);
-	if (alpha_sum != 0.0f) {
+	if (alpha_sum != 0.0f && !std::isnan(alpha_sum)) {
 		const float inverse_alpha = RadialF32Div(1.0f, alpha_sum);
-		for (int c = 0; c < 3; ++c) result.rgba[c] = RadialF32Mul(rgb_sum[c], inverse_alpha);
+		for (int c = 0; c < 3; ++c) {
+			result.rgba[c] = c == 2 ? RadialF32Mul(inverse_alpha, rgb_sum[c])
+				: RadialF32Mul(rgb_sum[c], inverse_alpha);
+		}
 		result.rgba[3] = repeat ? alpha_sum : RadialF32Div(alpha_sum, weight_sum);
 		result.eligible = coordinate_gate ? 1 : 0;
+	} else {
+		for (int c = 0; c < 3; ++c) result.rgba[c] = rgb_sum[c];
+		result.rgba[3] = alpha_sum;
 	}
 	return result;
 }
@@ -2109,7 +2101,11 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 							: 1.0f)
 						: span_plane[cell];
 					float source_scalar = source_scalar_plane[cell];
-					if ((factor == 0.0f && !preserve_noise_zero_seed) ||
+					// B25A/B26B: UCOMISS + JZ clears all channels on unordered.
+					const bool zero_seed = polar.rgba[rgba + 3] == 0.0f ||
+						std::isnan(polar.rgba[rgba + 3]) || std::isnan(factor) ||
+						(factor == 0.0f && !preserve_noise_zero_seed);
+					if (zero_seed ||
 						((outer_fade_span > 0 || inner_fade_span > 0) &&
 						(polar.rgba[rgba + 3] == 0.0f || source_scalar == 0.0f))) {
 						source_scalar = 0.0f;
@@ -2139,8 +2135,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					}
 					faded_source_scalar[(size_t)ri] = source_scalar;
 					for (int c = 0; c < 3; ++c) {
-						normalized.rgba[rgba + c] = RadialF32Mul(
-							polar.rgba[rgba + c], source_scalar);
+						normalized.rgba[rgba + c] = zero_seed ? 0.0f
+							: RadialF32Mul(source_scalar, polar.rgba[rgba + c]);
 					}
 					accum_alpha[cell] = source_scalar;
 					max_alpha[cell] = source_scalar;
@@ -2150,7 +2146,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					const size_t source_cell = row_cell + source_ri;
 					const float source_scalar = faded_source_scalar[(size_t)source_ri];
 					const float span = span_plane[source_cell];
-					if (eligibility[source_cell] == 0 || source_scalar == 0.0f || span == 0.0f) continue;
+					if (eligibility[source_cell] == 0 || source_scalar == 0.0f ||
+						std::isnan(source_scalar) || span == 0.0f || std::isnan(span)) continue;
 					const A_long strength_limit = (A_long)RadialF32Mul((float)outer_strength, span);
 					const A_long limit = std::min<A_long>(radius_count - source_ri, strength_limit);
 					const float inverse_span = RadialF32Div(1.0f, span);
@@ -2166,10 +2163,10 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 							const float contribution = RadialF32Mul(
 								alpha_weight, polar.rgba[source_rgba + c]);
 							normalized.rgba[destination_rgba + c] = RadialF32Add(
-								normalized.rgba[destination_rgba + c], contribution);
+								contribution, normalized.rgba[destination_rgba + c]);
 						}
 						accum_alpha[destination_cell] = RadialF32Add(
-							accum_alpha[destination_cell], alpha_weight);
+							alpha_weight, accum_alpha[destination_cell]);
 						if (max_alpha[destination_cell] < alpha_weight) {
 							max_alpha[destination_cell] = alpha_weight;
 						}
@@ -2190,10 +2187,10 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 								const float contribution = RadialF32Mul(
 									alpha_weight, polar.rgba[source_rgba + c]);
 								normalized.rgba[destination_rgba + c] = RadialF32Add(
-									normalized.rgba[destination_rgba + c], contribution);
+									contribution, normalized.rgba[destination_rgba + c]);
 							}
 							accum_alpha[destination_cell] = RadialF32Add(
-								accum_alpha[destination_cell], alpha_weight);
+								alpha_weight, accum_alpha[destination_cell]);
 							if (max_alpha[destination_cell] < alpha_weight) {
 								max_alpha[destination_cell] = alpha_weight;
 							}
@@ -2205,7 +2202,7 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					const size_t cell = row_cell + ri;
 					const size_t rgba = cell * 4;
 					const float denominator = accum_alpha[cell];
-					if (max_alpha[cell] == 0.0f) {
+					if (max_alpha[cell] == 0.0f || std::isnan(max_alpha[cell])) {
 						for (int c = 0; c < 3; ++c) normalized.rgba[rgba + c] = 0.0f;
 					} else {
 						for (int c = 0; c < 3; ++c) {
@@ -2675,14 +2672,10 @@ static PF_Err RenderZoomTyped(
 	, PF_EffectWorld *noise_world = nullptr
 )
 {
-	// The Offset fallback can reach this function outside RenderWorld's SDR
-	// contract. Preserve finite signed/HDR inputs, but do not let the expanded
-	// generic profile admit unproven NaN/Inf arithmetic. Nonfinite input must
-	// still qualify through the older typed profiles below (no-op copies are
-	// handled before this path and preserve their original payload bytes).
+	// C53b: the generic PF32 path uses the original SSE NaN/Inf semantics.
+	// Storage and parameter admission remain owned by the world-pair predicate.
 	const bool use_generic_baseline =
-		info.blur_type == 1 && IsGenericBaselineWorldPair<PixelT>(input, output, info) &&
-		GenericRadialInputIsFinite<PixelT>(input);
+		info.blur_type == 1 && IsGenericBaselineWorldPair<PixelT>(input, output, info);
 	const bool use_generic_size_noise =
 		info.blur_type == 1 && IsGenericSizeNoiseWorldPair<PixelT>(input, output, info);
 	const bool use_generic_type3 =
@@ -4787,7 +4780,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t cell = (size_t)ri * angular_count + ai;
 				const size_t dst = cell * 4;
-				if (polar.rgba[dst + 3] == 0.0f) {
+				if (polar.rgba[dst + 3] == 0.0f || std::isnan(polar.rgba[dst + 3])) {
 					prepass_alpha[cell] = 0.0f;
 					for (int c = 0; c < 4; ++c) accum.rgba[dst + c] = 0.0f;
 					max_alpha[cell] = 0.0f;
@@ -4908,7 +4901,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const size_t source = source_cell * 4;
 				const float seed_alpha = prepass_alpha[source_cell];
 				const float span_factor = rotation_source_scalar[source_cell];
-				if (!polar_valid[source_cell] || seed_alpha == 0.0f || span_factor == 0.0f) continue;
+				if (!polar_valid[source_cell] || seed_alpha == 0.0f || std::isnan(seed_alpha) ||
+					span_factor == 0.0f || std::isnan(span_factor)) continue;
 				const A_long effective_span = std::max<A_long>(0,
 					(A_long)RadialF32Mul((float)std::min<A_long>(outer_span, 3000), span_factor));
 				if (effective_span > 1) {
@@ -4925,9 +4919,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					const float contribution = RadialF32Mul(seed_alpha, row_weights[(size_t)offset]);
 					for (int c = 0; c < 3; ++c) {
 						accum.rgba[dst + c] = RadialF32Add(
-							accum.rgba[dst + c], RadialF32Mul(polar.rgba[source + c], contribution));
+							RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
 					}
-					accum.rgba[dst + 3] = RadialF32Add(accum.rgba[dst + 3], contribution);
+					accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
 					if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 						max_alpha[dst_cell] = contribution;
 					}
@@ -4953,10 +4947,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 						const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
 						const size_t dst = dst_cell * 4;
 						const float contribution = RadialF32Mul(seed_alpha, inner_weights[(size_t)offset]);
-						accum.rgba[dst + 3] = RadialF32Add(accum.rgba[dst + 3], contribution);
+						accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
 						for (int c = 2; c >= 0; --c) {
 							accum.rgba[dst + c] = RadialF32Add(
-								accum.rgba[dst + c], RadialF32Mul(polar.rgba[source + c], contribution));
+								RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
 						}
 						if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 							max_alpha[dst_cell] = contribution;
@@ -4968,7 +4962,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		blurred.rgba.assign((size_t)radius_count * angular_count * 4, 0.0f);
 		for (size_t cell = 0; cell < max_alpha.size(); ++cell) {
 			const size_t dst = cell * 4;
-			if (max_alpha[cell] != 0.0f) {
+			if (max_alpha[cell] != 0.0f && !std::isnan(max_alpha[cell])) {
 				for (int c = 0; c < 3; ++c) {
 					blurred.rgba[dst + c] = RadialF32Div(accum.rgba[dst + c], accum.rgba[dst + 3]);
 				}
@@ -5498,10 +5492,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			IsGenericSizeNoiseWorldPair<PF_Pixel16>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
 		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
-			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
-			// Both typed paths preserve finite signed/HDR values. Rotation
-			// retains zero-alpha RGB accumulation before its original clamp.
-			GenericRadialInputIsFinite<PF_PixelFloat>(input);
+			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info));
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached
