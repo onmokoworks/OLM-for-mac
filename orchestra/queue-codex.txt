@@ -41,3 +41,5 @@ C35-radial-smart-r6
 C36-dblur-smart-r6
 C37-dg-smart-r7
 F40-stale-bindings-adjudication
+F41-relax-work-budget
+F42-ucrtmath-ms-float
