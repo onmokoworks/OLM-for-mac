@@ -190,18 +190,10 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdistancegradation_pf32_effectmain_fixture_20260805.py"),
             (sys.executable, "tools/emulation/probe_olmdistancegradation_pf16_smartpre_param_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmdistancegradation_pf16_smart_natural_capture_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_outside_power_nobg_rgb_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_inside_constant_layer_bg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_both_linear_layer_nobg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_both_linear_layer_nobg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_both_power_layer_nobg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_both_power_layer_nobg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_inside_constant_blur_nobg_20260805.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_background_combos_20260810.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_blur_background_family_20260810.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_blur_background_family_20260810.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_blur_modes45_family_20260810.py"),
-            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_blur_background_family_20260810.py"),
+            # F18 (orchestra/reports/F18-route-target-per-plugin.md) establishes
+            # that AE selects Smart for DG. Legacy Classic probes remain on disk
+            # as historical diagnostics, outside this public AE regression.
+            # In particular, Classic zero buffers are not Smart expectations.
             (sys.executable, "tools/emulation/audit_olmdistancegradation_exported_render_owner_boundary_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", "--validate-only"),
             (sys.executable, "-m", "unittest", "tests.test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812"),
