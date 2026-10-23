@@ -1,0 +1,424 @@
+{
+  "status": "blocked",
+  "amd_commit": "29fd054f383e6c5e2dec2fce781d5220059f1836",
+  "dll_sha256": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)",
+  "engine_indices": {
+    "0": "UCRT non-FMA",
+    "1": "UCRT FMA",
+    "3": "AMD variant contraction-off",
+    "4": "AMD variant contraction-fast with -mfma"
+  },
+  "campaigns": [
+    {
+      "name": "baseline-random-100000000",
+      "count": 100000000,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 275,
+          "finite_input_mismatches": 263,
+          "first": [
+            "4af491eedc5e5b0a",
+            "c0173ef560c4bc83",
+            "00021a62ea4eeb21",
+            "00021a62ea4eeb20"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 267,
+          "finite_input_mismatches": 255,
+          "first": [
+            "4af491eedc5e5b0a",
+            "c0173ef560c4bc83",
+            "00021a62ea4eeb21",
+            "00021a62ea4eeb20"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "8066cee893747d1abb82a5a4d74517c1da8668ee631a5148dea2b17ea692dfd2",
+      "binary_sha256": {
+        "amd-off.dylib": "7fc7abdac883a15f8d389c87adecefde9d3745e466a155ab45c0a446c0ee194e",
+        "amd-fma.dylib": "19e5f18a3ef56900151ba82fbfdde2d8d5eec8e785b554527042528fc18a8aca"
+      }
+    },
+    {
+      "name": "top20-random-100000000",
+      "count": 100000000,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 271,
+          "finite_input_mismatches": 259,
+          "first": [
+            "4af491eedc5e5b0a",
+            "c0173ef560c4bc83",
+            "00021a62ea4eeb21",
+            "00021a62ea4eeb20"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 266,
+          "finite_input_mismatches": 254,
+          "first": [
+            "4af491eedc5e5b0a",
+            "c0173ef560c4bc83",
+            "00021a62ea4eeb21",
+            "00021a62ea4eeb20"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "5c3bd1373b2c13e27ff5a805bb93b65e6cb7704c299bd843238b13634a2e5d44",
+      "binary_sha256": {
+        "amd-off.dylib": "eed6223b6e9c6df78d7385fce6968823407ebb3256ee760a8a6176d4652cec01",
+        "amd-fma.dylib": "a0a3cdd80b14d18537e97cf5b3a0face2d30e123f95acfca08b0a4126fbd4f22"
+      }
+    },
+    {
+      "name": "scaled-random-100000000",
+      "count": 100000000,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 311,
+          "finite_input_mismatches": 299,
+          "first": [
+            "17db023316630462",
+            "3f89997eeda3c17f",
+            "3f6fa8d8ddaac688",
+            "3f6fa8d8ddaac689"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 303,
+          "finite_input_mismatches": 291,
+          "first": [
+            "17db023316630462",
+            "3f89997eeda3c17f",
+            "3f6fa8d8ddaac688",
+            "3f6fa8d8ddaac689"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "1f453ced3d5961a4b6ace4f30f11132e4c02dff416e30d60a07179acd0785b8b",
+      "binary_sha256": {
+        "amd-off.dylib": "009b632cad7b1c221777ade02f55c43290a39471240d8bca32536c020189d150",
+        "amd-fma.dylib": "ad832fb37b47dc2d6cd71f55f6fb51abf1074564fc05fe1d64ebe239529b0a82"
+      }
+    },
+    {
+      "name": "combined-random-100000000",
+      "count": 100000000,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 307,
+          "finite_input_mismatches": 295,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 302,
+          "finite_input_mismatches": 290,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "68964857876ce59154459e6398cf2a6cb6ad995d14ed617b99da0ec69a33741c",
+      "binary_sha256": {
+        "amd-off.dylib": "56964c8b7fb0796e5dbcb71dfa9bf71965df42642c82adbb174d926edd646c66",
+        "amd-fma.dylib": "32e2eed4622737bc44a5565a23c1e5d64a75afd702700eb4b45c82e94068bc73"
+      }
+    },
+    {
+      "name": "tail-fma-witness3-1",
+      "count": 1,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 1,
+          "finite_input_mismatches": 1,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 1,
+          "finite_input_mismatches": 1,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "a91ed23ee276c2bd03eebf9c6d849efa01d5ce97d96d8aedc24732e47e431cf0",
+      "binary_sha256": {
+        "amd-off.dylib": "aaee18cc1eb44d5fd71305eaf7b94265f31bb7732cf2367f59d1360c0128823c",
+        "amd-fma.dylib": "8d906d1f589bac4e8491a56a0f6229782f973fc0d395873bb22ac363be4e844f"
+      }
+    },
+    {
+      "name": "horner-witness3-1",
+      "count": 1,
+      "pairs": [
+        {
+          "a": 0,
+          "b": 3,
+          "mismatches": 1,
+          "finite_input_mismatches": 1,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "mismatches": 1,
+          "finite_input_mismatches": 1,
+          "first": [
+            "300422d9a042d15f",
+            "3efb46f239a9a9c7",
+            "3fefda7803f095f0",
+            "3fefda7803f095f1"
+          ]
+        }
+      ],
+      "candidate_source_sha256": "74320cd44e16dad201a3bdb24ef43ea1d8bfafc16ffab229c98703293911d31a",
+      "binary_sha256": {
+        "amd-off.dylib": "c306dc9909c5d903d10cf5e44de4c2dea4996d018bc95ed0b698150e08df07f6",
+        "amd-fma.dylib": "fd90b07502f27ff240fed1478dcbc2f29bd1d3862fa901397fabd29e568a1458"
+      }
+    }
+  ],
+  "isolated": {
+    "baseline": [
+      {
+        "input": [
+          "4af491eedc5e5b0a",
+          "c0173ef560c4bc83"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "4af491eedc5e5b0a",
+              "c0173ef560c4bc83",
+              "00021a62ea4eeb21",
+              "00021a62ea4eeb20"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "4af491eedc5e5b0a",
+              "c0173ef560c4bc83",
+              "00021a62ea4eeb21",
+              "00021a62ea4eeb20"
+            ]
+          }
+        ]
+      },
+      {
+        "input": [
+          "17db023316630462",
+          "3f89997eeda3c17f"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "17db023316630462",
+              "3f89997eeda3c17f",
+              "3f6fa8d8ddaac688",
+              "3f6fa8d8ddaac689"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "17db023316630462",
+              "3f89997eeda3c17f",
+              "3f6fa8d8ddaac688",
+              "3f6fa8d8ddaac689"
+            ]
+          }
+        ]
+      }
+    ],
+    "top20": [
+      {
+        "input": [
+          "4af491eedc5e5b0a",
+          "c0173ef560c4bc83"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "4af491eedc5e5b0a",
+              "c0173ef560c4bc83",
+              "00021a62ea4eeb21",
+              "00021a62ea4eeb20"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "4af491eedc5e5b0a",
+              "c0173ef560c4bc83",
+              "00021a62ea4eeb21",
+              "00021a62ea4eeb20"
+            ]
+          }
+        ]
+      },
+      {
+        "input": [
+          "17db023316630462",
+          "3f89997eeda3c17f"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 0,
+            "finite_input_mismatches": 0,
+            "first": [
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 0,
+            "finite_input_mismatches": 0,
+            "first": [
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ]
+          }
+        ]
+      }
+    ],
+    "scaled": [
+      {
+        "input": [
+          "4af491eedc5e5b0a",
+          "c0173ef560c4bc83"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 0,
+            "finite_input_mismatches": 0,
+            "first": [
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 0,
+            "finite_input_mismatches": 0,
+            "first": [
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ]
+          }
+        ]
+      },
+      {
+        "input": [
+          "17db023316630462",
+          "3f89997eeda3c17f"
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "b": 3,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "17db023316630462",
+              "3f89997eeda3c17f",
+              "3f6fa8d8ddaac688",
+              "3f6fa8d8ddaac689"
+            ]
+          },
+          {
+            "a": 1,
+            "b": 4,
+            "mismatches": 1,
+            "finite_input_mismatches": 1,
+            "first": [
+              "17db023316630462",
+              "3f89997eeda3c17f",
+              "3f6fa8d8ddaac688",
+              "3f6fa8d8ddaac689"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
