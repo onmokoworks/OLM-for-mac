@@ -54,3 +54,4 @@ write and commit the report with `status: blocked` before ending. Never end sile
 - Use `--jobs 1` for fuzz/regression runs (`OLM_TEST_JOBS=1` is preset); never more than 2 parallel emulator/build processes per worker.
 - Do not keep large outputs in RAM; stream to files. Kill any background process you started before finishing.
 - Delete regenerable build trees in your scratch dir when you are done (keep logs/reports).
+- Durable artifacts that later tickets need (built reference workers, bundles used as oracles) must be installed under `~/.cache/olm-emu/<name>/` and registered in `INDEX.json`, never left only in your worktree scratch: worktrees are deleted after merge.
