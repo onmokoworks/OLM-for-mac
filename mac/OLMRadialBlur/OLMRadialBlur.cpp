@@ -891,16 +891,22 @@ UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
 	return err;
 }
 
+// AE rowbytes are byte strides: odd padding must not create typed references
+// into unaligned storage. Keep channel arithmetic on aligned local pixels.
 template <typename PixelT>
-static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
+static PixelT LoadPixel(const PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<PixelT *>(reinterpret_cast<char *>(world->data) + y * world->rowbytes) + x;
+	PixelT pixel;
+	const auto *bytes = reinterpret_cast<const unsigned char *>(world->data);
+	std::memcpy(&pixel, bytes + (ptrdiff_t)y * world->rowbytes + (ptrdiff_t)x * sizeof(PixelT), sizeof(pixel));
+	return pixel;
 }
 
 template <typename PixelT>
-static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
+static void StorePixel(PF_EffectWorld *world, A_long x, A_long y, const PixelT &pixel)
 {
-	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + y * world->rowbytes) + x;
+	auto *bytes = reinterpret_cast<unsigned char *>(world->data);
+	std::memcpy(bytes + (ptrdiff_t)y * world->rowbytes + (ptrdiff_t)x * sizeof(PixelT), &pixel, sizeof(pixel));
 }
 
 static bool CheckedCellProduct(A_long width, A_long height, size_t channels, size_t *words)
@@ -1190,11 +1196,10 @@ static bool GenericRadialInputIsFinite(const PF_EffectWorld *input)
 {
 	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
 		for (A_long y = 0; y < input->height; ++y) {
-			const PixelT *row = reinterpret_cast<const PixelT *>(
-				reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes);
 			for (A_long x = 0; x < input->width; ++x) {
-				if (!std::isfinite(row[x].alpha) || !std::isfinite(row[x].red) ||
-					!std::isfinite(row[x].green) || !std::isfinite(row[x].blue)) return false;
+				const PixelT pixel = LoadPixel<PixelT>(input, x, y);
+				if (!std::isfinite(pixel.alpha) || !std::isfinite(pixel.red) ||
+					!std::isfinite(pixel.green) || !std::isfinite(pixel.blue)) return false;
 			}
 		}
 	}
@@ -1207,14 +1212,13 @@ static bool GenericRadialInputIsSDR(const PF_EffectWorld *input)
 	if (!input || !input->data || input->width <= 0 || input->height <= 0 ||
 		input->rowbytes < input->width * (A_long)sizeof(PixelT)) return false;
 	for (A_long y = 0; y < input->height; ++y) {
-		const PixelT *row = reinterpret_cast<const PixelT *>(
-			reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes);
 		for (A_long x = 0; x < input->width; ++x) {
+			const PixelT pixel = LoadPixel<PixelT>(input, x, y);
 			if constexpr (std::is_same<PixelT, PF_Pixel16>::value) {
-				if (row[x].alpha > 32768 || row[x].red > 32768 ||
-					row[x].green > 32768 || row[x].blue > 32768) return false;
+				if (pixel.alpha > 32768 || pixel.red > 32768 ||
+					pixel.green > 32768 || pixel.blue > 32768) return false;
 			} else if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-				const float values[4] = {row[x].alpha, row[x].red, row[x].green, row[x].blue};
+				const float values[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 				for (float value : values) if (!std::isfinite(value) || value < 0.0f || value > 1.0f)
 					return false;
 			}
@@ -1252,7 +1256,7 @@ static void CopyWorld(PF_EffectWorld *input, PF_EffectWorld *output)
 {
 	for (A_long y = 0; y < output->height; ++y) {
 		for (A_long x = 0; x < output->width; ++x) {
-			*PixelAt<PixelT>(output, x, y) = *PixelAtConst<PixelT>(input, x, y);
+			StorePixel(output, x, y, LoadPixel<PixelT>(input, x, y));
 		}
 	}
 }
@@ -1777,7 +1781,7 @@ static bool BuildRadialSizeFactorPlaneAEX(
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
-				*PixelAtConst<PixelT>(input, x, y), 3);
+				LoadPixel<PixelT>(input, x, y), 3);
 			// NaN is accepted by the AEX's COMISS/SETC predicate, but it is not
 			// part of this bounded admission.  Label visible cells with four-neighbor
 			// connectivity, then reproduce the run scanner's right-edge count/write.
@@ -1879,7 +1883,7 @@ static bool MatchesRadialSizeComponentFixture(
 				   (x >= 13 && x <= 14 && y >= 9 && y <= 10) ||
 				   (x == 27 && y == 14));
 			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
-				*PixelAtConst<PixelT>(input, x, y), 3);
+				LoadPixel<PixelT>(input, x, y), 3);
 			if (!std::isfinite(alpha) || (alpha > 0.0f) != expected) return false;
 		}
 	}
@@ -2505,7 +2509,8 @@ static bool MatchesType3SmallSourceFixture(const PF_EffectWorld *world)
 		world->rowbytes < 9 * (A_long)sizeof(PixelT)) return false;
 	for (A_long y = 0; y < 7; ++y) {
 		for (A_long x = 0; x < 9; ++x) {
-			const PixelT *pixel = PixelAtConst<PixelT>(world, x, y);
+			const PixelT pixel_value = LoadPixel<PixelT>(world, x, y);
+			const PixelT *pixel = &pixel_value;
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
 				if (pixel->alpha != ((x + y) % 5 ? 255 : 127) ||
 					pixel->red != (A_u_char)((x * 31 + y * 7) % 256) ||
@@ -2536,7 +2541,8 @@ static bool MatchesType3SmallLayerFixture(const PF_EffectWorld *world)
 		world->rowbytes < 9 * (A_long)sizeof(PixelT)) return false;
 	for (A_long y = 0; y < 7; ++y) {
 		for (A_long x = 0; x < 9; ++x) {
-			const PixelT *pixel = PixelAtConst<PixelT>(world, x, y);
+			const PixelT pixel_value = LoadPixel<PixelT>(world, x, y);
+			const PixelT *pixel = &pixel_value;
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
 				if (pixel->alpha != 191 || pixel->red != (A_u_char)((x * 255) / 8) ||
 					pixel->green != (A_u_char)((y * 255) / 6) ||
@@ -2675,7 +2681,8 @@ static PF_Err RenderZoomTyped(
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT);
 	for (A_long y = 0; source_alpha_strictly_positive && y < input->height; ++y) {
 		for (A_long x = 0; x < input->width; ++x) {
-			const PixelT *pixel = PixelAtConst<PixelT>(input, x, y);
+			const PixelT pixel_value = LoadPixel<PixelT>(input, x, y);
+			const PixelT *pixel = &pixel_value;
 			if (!(RadialZoomPixelTraits<PixelT>::Read(*pixel, 3) > 0.0f)) {
 				source_alpha_strictly_positive = false;
 				break;
@@ -2689,11 +2696,13 @@ static PF_Err RenderZoomTyped(
 			&component_size_factor, &component_areas);
 	const bool source_general_topology = component_fixture_safe;
 	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
-		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
+		const PixelT right_value = LoadPixel<PixelT>(input, input->width - 1, y);
+		const PixelT *right = &right_value;
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
-		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
+		const PixelT bottom_value = LoadPixel<PixelT>(input, x, input->height - 1);
+		const PixelT *bottom = &bottom_value;
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
 	}
 	const bool source_components_area_profile = component_fixture_safe &&
@@ -3169,7 +3178,8 @@ static PF_Err RenderZoomTyped(
 	src.rgba.resize((size_t)w * h * 4);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *p = PixelAtConst<PixelT>(input, x, y);
+			const PixelT p_value = LoadPixel<PixelT>(input, x, y);
+			const PixelT *p = &p_value;
 			size_t idx = ((size_t)y * w + x) * 4;
 			for (int c = 0; c < 4; ++c) src.rgba[idx + c] = RadialZoomPixelTraits<PixelT>::Read(*p, c);
 		}
@@ -3543,7 +3553,8 @@ static PF_Err RenderZoomTyped(
 				}
 			}
 
-			PixelT *out = PixelAt<PixelT>(output, x, y);
+			PixelT output_pixel{};
+			PixelT *out = &output_pixel;
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_pf8_zoom_small || use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
@@ -3579,6 +3590,7 @@ static PF_Err RenderZoomTyped(
 				RadialZoomPixelTraits<PixelT>::WriteZoom(
 					*out, output_state, use_fft_convolution || exact_pf8_ellipse_store);
 			}
+			StorePixel(output, x, y, output_pixel);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
@@ -3688,7 +3700,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT);
 	for (A_long y = 0; source_alpha_strictly_positive && y < input->height; ++y) {
 		for (A_long x = 0; x < input->width; ++x) {
-			const PixelT *pixel = PixelAtConst<PixelT>(input, x, y);
+			const PixelT pixel_value = LoadPixel<PixelT>(input, x, y);
+			const PixelT *pixel = &pixel_value;
 			if (!(RadialZoomPixelTraits<PixelT>::Read(*pixel, 3) > 0.0f)) {
 				source_alpha_strictly_positive = false;
 				break;
@@ -3702,11 +3715,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			&component_size_factor, &component_areas);
 	const bool source_general_topology = component_fixture_safe;
 	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
-		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
+		const PixelT right_value = LoadPixel<PixelT>(input, input->width - 1, y);
+		const PixelT *right = &right_value;
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
-		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
+		const PixelT bottom_value = LoadPixel<PixelT>(input, x, input->height - 1);
+		const PixelT *bottom = &bottom_value;
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
 	}
 	const bool source_components_area_profile = component_fixture_safe &&
@@ -4502,7 +4517,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	src.rgba.resize((size_t)w * h * 4);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *p = PixelAtConst<PixelT>(input, x, y);
+			const PixelT p_value = LoadPixel<PixelT>(input, x, y);
+			const PixelT *p = &p_value;
 			const size_t idx = ((size_t)y * w + x) * 4;
 			if (use_aex_case0010) {
 				const float inv_255 = (float)(1.0 / 255.0);
@@ -5122,7 +5138,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
 				use_aex_two_stage,
 				(use_aex_exact || use_generic_two_stage));
-			PixelT *out = PixelAt<PixelT>(output, x, y);
+			PixelT output_pixel{};
+			PixelT *out = &output_pixel;
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 			if (g_rotation_test_capture && g_rotation_test_capture->final_rgba &&
 			    g_rotation_test_capture->capacity_output_pixels >= (size_t)w * h) {
@@ -5203,6 +5220,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			} else {
 				RadialZoomPixelTraits<PixelT>::Write(*out, outer_state, false);
 			}
+			StorePixel(output, x, y, output_pixel);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * angular_count + px) * 4 + c];
@@ -5324,9 +5342,7 @@ static PF_Err ComposeType3LayerSpanAEX(
 			float luminance = 0.0f;
 			if (layer_x >= 0 && layer_x < noise_world->width &&
 				layer_y >= 0 && layer_y < noise_world->height) {
-				const A_u_char *row = reinterpret_cast<const A_u_char *>(noise_world->data) +
-					(size_t)layer_y * noise_world->rowbytes;
-				const PixelT &pixel = reinterpret_cast<const PixelT *>(row)[(size_t)layer_x];
+				const PixelT pixel = LoadPixel<PixelT>(noise_world, (A_long)layer_x, (A_long)layer_y);
 				const float alpha = RadialZoomPixelTraits<PixelT>::Read(pixel, 3);
 				const float red = RadialF32Mul(
 					RadialZoomPixelTraits<PixelT>::Read(pixel, 0), alpha);
