@@ -1,5 +1,11 @@
 # ucrtmath
 
+The `ms/` additions are **OLM-internal**, derived from UCRT behavior/disassembly,
+and **must not be published standalone**. They provide `ucrt_sinf`, `ucrt_cosf`,
+and `ucrt_log2f`; see [their provenance and validation](ms/README.md). This
+restriction applies to the combined library built by `build.sh`. The AMD-derived
+sources retain their separate attribution in `NOTICE`.
+
 The requested expf exhaustive and atan2f/powf random campaigns pass in both
 modes. Targeted results and the remaining-import survey are recorded in
 `tests/results/` and the F28 report. Binary-function sampling is not a proof
@@ -89,7 +95,8 @@ Read-only UCRT observations checked the intended fused-operation boundaries:
   x NaNs have priority over y NaNs.
 
 These are operation observations, not a proof of equivalence. No Microsoft
-machine code, disassembly listing, or extracted constants are vendored.
+machine code or disassembly listing is vendored. The OLM-internal `ms/`
+functional constants are separately documented in its README.
 
 ## Resume corrections
 

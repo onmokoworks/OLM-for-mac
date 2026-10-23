@@ -12,10 +12,13 @@ int main(int argc,char **argv){
  uint32_t rows[4096][4];size_t n=0;uint64_t i=0;
  while(1){uint32_t a,b;
   if(!strcmp(argv[2],"file")){if(scanf("%x %x",&a,&b)!=2)break;}
-  else {if(i==count)break;uint64_t r=mix(i^0xf27c);a=!strcmp(fn,"expf")?(uint32_t)i:(uint32_t)r;b=!strcmp(fn,"expf")?0:(uint32_t)(r>>32);}
+  else {if(i==count)break;uint64_t r=mix(i^0xf27c);a=(!strcmp(fn,"expf")||!strcmp(fn,"sinf")||!strcmp(fn,"cosf")||!strcmp(fn,"log2f"))?(uint32_t)i:(uint32_t)r;b=!strcmp(fn,"expf")?0:(uint32_t)(r>>32);}
   rows[n][0]=a;rows[n][1]=b;
   for(int m=0;m<2;m++) {float z;
    if(!strcmp(fn,"expf"))z=ucrt_expf(val(a),m);
+   else if(!strcmp(fn,"sinf"))z=ucrt_sinf(val(a),m);
+   else if(!strcmp(fn,"cosf"))z=ucrt_cosf(val(a),m);
+   else if(!strcmp(fn,"log2f"))z=ucrt_log2f(val(a),m);
    else if(!strcmp(fn,"powf"))z=ucrt_powf(val(a),val(b),m);
    else if(!strcmp(fn,"atan2f"))z=ucrt_atan2f(val(a),val(b),m);
    else return 2;
