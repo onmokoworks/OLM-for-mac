@@ -2099,13 +2099,17 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
 // source lanes. Row/column state preserves the finite-versus-NaN boundary;
 // the original scalar aggregator clamps NaN ray amounts to zero, and the
 // typed writer clamps composition. NaN sign/payload differences inside the
-// filters do not survive those original operations. Keep other constructors,
-// approximation and Gaussian on their existing source validation paths.
-static bool SmartAlphaBoxInputIsSupported(const PF_EffectWorld *input,
+// filters do not survive those original operations. C50 also validates the
+// full-resolution Gaussian path, whose finite-versus-NaN boundary is local to
+// each convolution window. Other constructors and approximation keep their
+// existing source validation paths.
+static bool SmartAlphaInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
     return input && format == PF_PixelFormat_ARGB128 &&
-        IsAlphaBoxTuple(info, format, true, true, true);
+        (IsAlphaBoxTuple(info, format, true, true, true) ||
+         (info.channel == 1 && IsSmartDirectionalGaussianTuple(
+             info, format, input->width, input->height)));
 }
 
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
@@ -2947,7 +2951,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputIsSupported(input_world, format, info) ||
+				 SmartAlphaInputIsSupported(input_world, format, info) ||
                  SmartFiniteInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
