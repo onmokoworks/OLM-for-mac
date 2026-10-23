@@ -713,7 +713,7 @@ static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
 	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
 		(info.blur_mode == 1 || info.blur_mode == 2 ||
-         (info.blur_mode == 3 && info.highlight_radius == 0));
+         info.blur_mode == 3);
 }
 
 template <typename PixelT>
@@ -1752,8 +1752,8 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height);
 
-// C22/C28/C29: recovered scalar/four-component resize retains full-resolution
-// source composition for box and directional Gaussian owners.
+// C22/C28/C29/C34: recovered scalar/four-component resize retains full-resolution
+// source composition for box, directional Gaussian and Gaussian Highlight.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)

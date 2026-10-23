@@ -1,8 +1,8 @@
 status: partial
 
 summary:
-- First cluster closed: four-component Gaussian Highlight.
-- Seed1 Smart275/0/25 →277/0/23; fresh seed20 280/0/20 →281/0/19.
+- Two clusters closed: four-component Gaussian Highlight and Gaussian Highlight approximation.
+- Seed1 Smart275/0/25 →279/0/21; fresh seeds20 and21 each improve one refusal to exact.
 - Existing exact outputs, Classic results and corpus samples preserved; sanitizers pass.
 
 facts:
@@ -15,10 +15,10 @@ inference:
 - Bounded original-AEX emulation evidence; native AE and unrestricted input domains remain unproved.
 
 changed_files:
-- See the linked cluster report.
+- See the linked cluster reports.
 
 verify:
-- Run the exact commands in the linked cluster report; expected seed1=277/0/23, seed20=281/0/19.
+- Run the exact commands in [Highlight approximation report](C34-kira-smart-r8-highlight-approximation.md); expected seed1=279/0/21, seed21=280/0/20.
 
 next:
-- Continue to Gaussian Highlight approximation; two more clusters or the ticket stop condition remain.
+- Continue to nonfinite inputs; one more cluster or the ticket stop condition remains.
