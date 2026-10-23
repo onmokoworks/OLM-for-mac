@@ -34,7 +34,7 @@ changed_files:
 - tools/emulation/aexcompat_patches/verify_F47b.py
 - tools/fuzz/build_F47_bundles.py
 - orchestra/reports/F47b-native-plugin-host-render.md
-- orchestra/reports/F47b-evidence/{build.json,verification.json,mac-abi.txt,verify.log,integration.patch,bundle-builds.json}
+- orchestra/reports/F47b-evidence/{build.json,verification.json,mac-abi.txt,verify.txt,bundle-builds.json}
 
 verify:
 ```sh
