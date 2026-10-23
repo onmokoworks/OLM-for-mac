@@ -28,6 +28,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
     p.add_argument('--source',type=Path);p.add_argument('--index',type=int,action='append',default=[])
     p.add_argument('--seed',type=int,default=1)
+    p.add_argument('--plane-prefix-bytes',type=int,help='Capture a bounded PF8 plane prefix when the full plane exceeds the worker watch limit')
     args=p.parse_args();args.scratch=args.scratch.resolve()
     assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True,exist_ok=True)
@@ -45,6 +46,9 @@ def main():
       for index in args.index or [45,200]:
         c=a.generate(args.seed,index);assert c['depth'] in (8,16)
         w,h=c['geometry'];n=w*h*4;depth=c['depth']
+        capture_n=args.plane_prefix_bytes or n
+        assert 0<capture_n<=n and capture_n%4==0
+        if args.plane_prefix_bytes:assert depth==8
         im=Image.new('RGBA',(w,h))
         im.putdata([(r,g,b,al) for al,r,g,b in struct.iter_unpack('<4B',c['pixels'])] if depth==8 else
                    [(64,128,192,255 if al/32768*255>=1.5 else 0) for al,r,g,b in struct.iter_unpack('<4H',c['pixels'])])
@@ -54,7 +58,7 @@ def main():
             name=next(d['name'] for d in a.binding['parameters'] if d['slot']==q['slot'])
             params.append(name+'='+(','.join(map(str,q['value'])) if isinstance(q['value'],list) else str(q['value'])))
         site='0x1172901' if depth==8 else '0x1171bf1'
-        watches=[f'rva={site},arg=rcx,deref=88,size={n}',f'rva={site},arg=rdx,deref=88,size={n}']
+        watches=[f'rva={site},arg=rcx,deref=88,size={capture_n}',f'rva={site},arg=rdx,deref=88,size={capture_n}']
         if depth==16:
             watches+=['function=0x1170ff0,arg=stack6,size=224']
             watches+=[f'rva=0x1171c65,arg=rdx,size={w*8},occurrence={y+1}' for y in range(h)]
@@ -91,9 +95,11 @@ def main():
         path=td/'mac.bin';path.unlink(missing_ok=True);a.env['OLM_DG_C14_BLUR']=str(path)
         status,mac,_=a.candidate(c,td,'smart',deadline);assert status['status']=='ok'
         planes=path.read_bytes();assert len(planes)==n*2
+        assert len(pre)==len(post)==capture_n
         row=dict(index=index,geometry=[w,h],depth=depth,proxy_callback_sha256=callback_hash,input_sha256=sha(c['pixels']),oracle_sha256=sha(public),mac_sha256=sha(mac),
-                 aex_pre_hex=pre.hex(),aex_post_hex=post.hex(),mac_pre_hex=planes[:n].hex(),mac_post_hex=planes[n:].hex(),
-                 pre_diff=raw_diff(pre,planes[:n],32),post_diff=raw_diff(post,planes[n:],32),output_diff=raw_diff(public,mac,depth),watches=watches)
+                 captured_plane_bytes=capture_n,full_plane_bytes=n,
+                 aex_pre_hex=pre.hex(),aex_post_hex=post.hex(),mac_pre_hex=planes[:capture_n].hex(),mac_post_hex=planes[n:n+capture_n].hex(),
+                 pre_diff=raw_diff(pre,planes[:capture_n],32),post_diff=raw_diff(post,planes[n:n+capture_n],32),output_diff=raw_diff(public,mac,depth),watches=watches)
         report['rows'].append(row);print('CASE',index,'PRE',row['pre_diff'],'POST',row['post_diff'],'OUTPUT',row['output_diff'],flush=True)
     args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
 
