@@ -658,14 +658,16 @@ static std::vector<FloatRGBA> ResizeNearestRGBA(
 
 // Original typed owners pass interpolation=1 at [RSP+0x28] to 1812639f0.
 // Embedded IPP 1803238a0 / 1806e6e80 use separate SUB/MUL/ADD.
-// Fractional coordinates narrow only after subtracting the integer index.
+// IPP coefficients use src_size/dst_size directly, not the reciprocal of
+// dst_size/src_size: the latter can select the preceding cell at an integer
+// boundary. Fractional coordinates narrow after subtracting the integer index.
 // C22 public-bound traces pair the reduced source and enlarged glow.
 static std::vector<FloatRGBA> ResizeLinearRGBA(
 	const std::vector<FloatRGBA> &input, A_long sw, A_long sh, A_long dw, A_long dh)
 {
 	if (sw == dw && sh == dh) return input;
-	const double sx_scale = 1.0 / ((double)dw / sw);
-	const double sy_scale = 1.0 / ((double)dh / sh);
+	const double sx_scale = (double)sw / dw;
+	const double sy_scale = (double)sh / dh;
 	std::vector<FloatRGBA> output((size_t)dw * dh);
 	auto blend = [](const FloatRGBA &a, const FloatRGBA &b, float y) {
 		return FloatRGBA{a.r+(b.r-a.r)*y, a.g+(b.g-a.g)*y,
@@ -698,7 +700,7 @@ static std::vector<FloatRGBA> ResizeLinearRGBA(
 
 static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
-	return info.approximated_input && info.channel == 1 &&
+	return info.approximated_input && (info.channel == 1 || info.channel == 2 || info.channel == 4) &&
 		(info.blur_mode == 1 || info.blur_mode == 2);
 }
 
@@ -1711,14 +1713,16 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.highlight_use_ramp, info.highlight_ramp);
 }
 
-// C22: active Alpha box resize retains full-resolution source composition.
+// C22: scalar Alpha/luminance/max box resize retains full-resolution source composition.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)
 {
     if (!UsesRecoveredApproximation(info) || width < 4 || height < 4) return false;
+    if (info.channel != 1 && !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
     OLMKiraKiraInfo full = info;
     full.approximated_input = FALSE;
+    full.channel = 1;
     return IsAlphaBoxTuple(full, format, true, true, true);
 }
 

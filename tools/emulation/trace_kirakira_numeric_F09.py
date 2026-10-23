@@ -28,7 +28,7 @@ from run import default_worker, main_checkout
 def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
-        UC_X86_REG_RSP, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
+        UC_X86_REG_RSP, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
     p = {v['slot']: v['value'] for v in case['parameters']}
     fw, fh = case['geometry']; fn = fw*fh
     w, h = (fw//2, fh//2) if p[4] else (fw, fh)
@@ -93,6 +93,13 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 b = alloc(struct.pack('<IIQQ', 0x2010000,0,mats[1],0))
                 writers = {}
                 interpolation_rows = []
+                horizontal_coefficients = []
+                def horizontal_row(ld, _addr, _size):
+                    count = ld.uc.reg_read(UC_X86_REG_RDX) & 0xffffffff
+                    value = dict(count=count, indices_hex=ld.read_bytes(ld.uc.reg_read(UC_X86_REG_R8),count*4).hex(),
+                        weights_hex=ld.read_bytes(ld.uc.reg_read(UC_X86_REG_R9),count*4).hex())
+                    if value not in horizontal_coefficients: horizontal_coefficients.append(value)
+                horizontal_hook = self.uc.hook_add(UC_HOOK_CODE, lambda uc,addr,size,user: horizontal_row(self,addr,size), begin=0x1806e7d20, end=0x1806e7d20)
                 def vertical_row(ld, _addr, _size):
                     count = ld.uc.reg_read(UC_X86_REG_RDX) & 0xffffffff
                     stack = ld.uc.reg_read(UC_X86_REG_RSP)
@@ -115,7 +122,8 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 finally:
                     self.uc.hook_del(hook)
                     self.uc.hook_del(row_hook)
-                resize_writers.append(dict(source=[sw,sh], destination=[dw,dh], interpolation=1, writers=writers, vertical_rows=interpolation_rows))
+                    self.uc.hook_del(horizontal_hook)
+                resize_writers.append(dict(source=[sw,sh], destination=[dw,dh], interpolation=1, writers=writers, vertical_rows=interpolation_rows, horizontal_coefficients=horizontal_coefficients))
                 return output
             if p[4]: pixels = resize(pixels,fw,fh,w,h)
             stages['source'] = words(pixels,n*4)

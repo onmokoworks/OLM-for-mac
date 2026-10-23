@@ -1,9 +1,6 @@
 --- before.cpp
 +++ difference.cpp
-@@ -656,6 +656,43 @@
- 	return output;
- }
- 
+@@ -658,0 +659,37 @@
 +// Original typed owners pass interpolation=1 at [RSP+0x28] to 1812639f0.
 +// Explicit dsize yields double reciprocal scales, float coefficients and
 +// separate float horizontal/vertical products. Border rows are replicated.
@@ -41,31 +38,13 @@
 +	return output;
 +}
 +
- template <typename PixelT>
- static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
- {
-@@ -682,7 +719,7 @@
- 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
- 		info.vertical_length != 1 && info.horizontal_length != 1 &&
- 		info.diagonal_length != 1 && info.diagonal2_length != 1;
+@@ -685 +722 @@
 -	return !info.approximated_input &&
 +	return (!info.approximated_input || info.channel == 1) &&
- 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
- 		 (info.channel == 1 && directional_gaussian));
- }
-@@ -799,7 +836,7 @@
- 
- 	const std::vector<FloatRGBA> source_pixels = ReadPixels<PixelT>(input);
- 	const std::vector<FloatRGBA> working_pixels = use_approximated_input
+@@ -802 +839 @@
 -		? ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)
 +		? ResizeLinearRGBA(source_pixels, w, h, work_w, work_h)
- 		: source_pixels;
- 	const A_long work_width = work_w;
- 	const A_long work_height = work_h;
-@@ -947,19 +984,13 @@
- 	std::vector<FloatRGBA> glow_full;
- 	std::vector<FloatRGBA> output_pixels;
- 	if (use_approximated_input) {
+@@ -950,13 +987,7 @@
 -		glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h);
 -		output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h);
 -		if (HasZeroRays(info)) {
@@ -86,6 +65,3 @@
 +                ? ComposeMerge2Pixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity)
 +                : ComposePremultiplyPixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity);
 +        }
- 	} else {
- 		glow_full = std::move(glow);
- 		output_pixels = std::move(composed);
