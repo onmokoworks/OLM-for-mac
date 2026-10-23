@@ -19,6 +19,7 @@ facts:
 - The exact fuzz command in `verify` below completed seed 1/n100, jobs 1, in 2.7492 seconds: 100 AEX successes and 100 native byte-exact outputs. Depth counts: 8=31, 16=34, 32=35. All cases carry native selector/callback traces and both output hashes. Four outputs equal their inputs; 96 do not. First mismatch: none. Classification for every case: raw-byte exact; no differing case requires numerical attribution.
 - Retained full fuzz report SHA-256 `73df0fefc08778693c356efe6eb9477f50d019016e07f48233744ed50db14ec0`. Evidence lives in `orchestra/reports/F47c-evidence/`.
 - `OLM_FUZZ_TEST_SCRATCH="$PWD/orchestra/state/F47c-native-plugin-smart-render/tests" TMPDIR="$PWD/orchestra/state/F47c-native-plugin-smart-render" python3 tools/fuzz/test_framework.py`: 14 tests, OK, 1 skipped. Python compilation of the five touched/new Python modules and `git diff --check` pass.
+- Final staged diff check found trailing spaces in the verbatim memory_pressure log; the retained text was whitespace-normalized without changing its values, and the final full-ticket diff check passes.
 - Scratch is about 10 MiB. Rust source/target trees, no-space cache symlink, native object/archive files and generated Xcode project were removed. The worker, bundle, logs and small evidence remain. No background process is retained.
 
 inference:
