@@ -19,11 +19,11 @@ inline bool mode3_gaussian_admitted(int width, int height, int length)
 }
 
 // C04: the scalar Alpha owner constructs each workspace as at least
-// source_extent + 4. Length 1 selects the separate five-tap optimized row
-// dispatch and remains outside this additional tiny contract.
+// source_extent + 4. C22 recovers the five-tap symmetric scalar tail,
+// so Length 1 shares this positive workspace contract.
 inline bool mode3_scalar_gaussian_workspace_admitted(int width, int height, int length)
 {
-    return width >= 5 && height >= 5 && length >= 2 && length <= 1000;
+    return width >= 5 && height >= 5 && length >= 1 && length <= 1000;
 }
 
 // Recovered CV_32FC1 Gaussian primitive
@@ -125,6 +125,17 @@ public:
                     continue;
                 }
 
+                // SSE4.1 SymmRowSmallFilter 1812f9a70 pairs symmetric
+                // taps in both the two-sample tail and final scalar sample.
+                if (actual_aex_small5_profile_ && radius_ == 2) {
+                    total = source_row[x] * kernel_[2];
+                    const float pair1 = source_row[reflect101(x - 1, width)] + source_row[reflect101(x + 1, width)];
+                    const float pair2 = source_row[reflect101(x - 2, width)] + source_row[reflect101(x + 2, width)];
+                    total = multiply_add_nonfused(pair1, kernel_[1], total);
+                    total = multiply_add_nonfused(pair2, kernel_[0], total);
+                    destination_row[x] = total;
+                    continue;
+                }
                 int k = -radius_;
                 total = source_row[reflect101(x + k, width)] * kernel_[0];
                 for (++k; k <= radius_; ++k) {

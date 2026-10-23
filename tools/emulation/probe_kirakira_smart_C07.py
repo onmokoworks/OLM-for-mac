@@ -27,6 +27,37 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family in ('approximation-scalar', 'approximation-scalar-boundary'):
+        base_family = 'approximation-active' if family == 'approximation-scalar' else 'approximation-boundary'
+        for base in cases(adapter, base_family):
+            for j, channel in enumerate((2,4)):
+                case = copy.deepcopy(base)
+                case['index'] = base['index']*2+j
+                for param in case['parameters']:
+                    if param['slot'] == 1: param['value'] = channel
+                    if param['slot'] == 7: param['value'] = (0,0.001,0.1,0.5,1)[case['index']%5]
+                yield case
+        return
+    if family == 'approximation-scalar-negative':
+        for case in cases(adapter, 'approximation-active-negative'):
+            for param in case['parameters']:
+                if case['index'] == 15 and param['slot'] == 1: param['value'] = 6
+            yield case
+        return
+    if family == 'gaussian-one-negative':
+        yield from (case for case in cases(adapter, 'gaussian-negative') if case['index'] != 0)
+        return
+    if family == 'gaussian-length1':
+        from verify_kirakira_smart_C04 import cases as old_cases
+        yield from old_cases(adapter, family)
+        return
+    if family == 'gaussian-one-controls':
+        for case in cases(adapter, 'gaussian-controls'):
+            for param in case['parameters']:
+                if param['slot'] in (10,16,22,28) and param['value'] > 0:
+                    param['value'] = 1
+            yield case
+        return
     if family == 'color-lengths':
         for i, (depth, mode, length) in enumerate(itertools.product(
                 (8,16,32), (1,2), (1,2,3,5,7,15,50,1000))):
@@ -87,6 +118,27 @@ def cases(adapter, family):
                 if param['slot'] in (13,19,25,31,37): param['value'] = 0
             yield case
         return
+    if family == 'approximation-boundary':
+        for i, (geometry, depth, mode, length) in enumerate(itertools.product(
+                ((4,4), (4,9), (9,4), (31,23)), (8,16,32), (1,2), (1,2,50,1000))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, mode, 1)
+            controls = {4:1, 6:(0,97,537,1000)[i%4], 8:1703, 9:97,
+                        10:length, 16:0, 22:0, 28:0, 34:0,
+                        40:(-31,0,22,359)[i%4]/65536}
+            for param in case['parameters']:
+                if param['slot'] in controls: param['value'] = controls[param['slot']]
+            yield case
+        return
+    if family == 'approximation-active-negative':
+        for case in cases(adapter, 'approximation-zero-negative'):
+            if case['index'] >= 15:
+                i = case['index']
+                for param in case['parameters']:
+                    if param['slot'] == 10: param['value'] = 7
+                    if i == 15 and param['slot'] == 1: param['value'] = 2
+                    if i == 16 and param['slot'] == 9: param['value'] = 101
+            yield case
+        return
     if family == 'approximation-zero-negative':
         for i, (geometry, depth) in enumerate(itertools.product(
                 ((1, 1), (1, 9), (2, 2), (2, 9), (3, 3)), (8, 16, 32))):
@@ -112,10 +164,12 @@ def cases(adapter, family):
                 if param['slot'] == 4: param['value'] = 1
             yield case
         return
-    if family == 'approximation':
+    if family in ('approximation', 'approximation-active'):
         for i, (geometry, depth, mode, merge, rays) in enumerate(itertools.product(
                 ((2, 2), (2, 9), (9, 2), (6, 8), (7, 11), (9, 7), (17, 13)),
                 (8, 16, 32), (1, 2), (1, 2), (0, 1, 2))):
+            if family == 'approximation-active' and min(geometry) < 4:
+                continue
             case = matrix_case(adapter, i, geometry, depth, merge, mode, 1)
             controls = {4: 1, 5: (1, 1.25, 100)[i % 3],
                         6: (0, 1, 97, 100, 537, 1000)[i % 6],
@@ -226,7 +280,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

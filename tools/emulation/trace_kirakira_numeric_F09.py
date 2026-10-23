@@ -28,7 +28,7 @@ from run import default_worker, main_checkout
 def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=False):
     import probe_olmkirakira_mode3_actual_aex as base
     from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
-        UC_X86_REG_RSP, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
+        UC_X86_REG_RSP, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
     p = {v['slot']: v['value'] for v in case['parameters']}
     fw, fh = case['geometry']; fn = fw*fh
     w, h = (fw//2, fh//2) if p[4] else (fw, fh)
@@ -80,7 +80,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
             full_pixels = pixels
             stages['source_full'] = words(pixels, fn*4)
             def resize(data, sw, sh, dw, dh):
-                from unicorn import UC_HOOK_MEM_WRITE
+                from unicorn import UC_HOOK_MEM_WRITE, UC_HOOK_CODE
                 from unicorn.x86_const import UC_X86_REG_RIP
                 output = alloc(bytes(dw*dh*16))
                 mats = []
@@ -92,6 +92,25 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 a = alloc(struct.pack('<IIQQ', 0x1010000,0,mats[0],0))
                 b = alloc(struct.pack('<IIQQ', 0x2010000,0,mats[1],0))
                 writers = {}
+                interpolation_rows = []
+                horizontal_coefficients = []
+                def horizontal_row(ld, _addr, _size):
+                    count = ld.uc.reg_read(UC_X86_REG_RDX) & 0xffffffff
+                    value = dict(count=count, indices_hex=ld.read_bytes(ld.uc.reg_read(UC_X86_REG_R8),count*4).hex(),
+                        weights_hex=ld.read_bytes(ld.uc.reg_read(UC_X86_REG_R9),count*4).hex())
+                    if value not in horizontal_coefficients: horizontal_coefficients.append(value)
+                horizontal_hook = self.uc.hook_add(UC_HOOK_CODE, lambda uc,addr,size,user: horizontal_row(self,addr,size), begin=0x1806e7d20, end=0x1806e7d20)
+                def vertical_row(ld, _addr, _size):
+                    count = ld.uc.reg_read(UC_X86_REG_RDX) & 0xffffffff
+                    stack = ld.uc.reg_read(UC_X86_REG_RSP)
+                    second = struct.unpack("<Q", ld.read_bytes(stack+0x28,8))[0]
+                    interpolation_rows.append(dict(
+                        destination_word=(ld.uc.reg_read(UC_X86_REG_RCX)-output)//4,
+                        count=count,
+                        weight_hex=(ld.uc.reg_read(UC_X86_REG_XMM2)&0xffffffff).to_bytes(4,"little").hex(),
+                        a_hex=ld.read_bytes(ld.uc.reg_read(UC_X86_REG_R9),count*4).hex(),
+                        b_hex=ld.read_bytes(second,count*4).hex()))
+                row_hook = self.uc.hook_add(UC_HOOK_CODE, lambda uc,addr,size,user: vertical_row(self,addr,size), begin=0x1806e6e80, end=0x1806e6e80)
                 def wrote(uc, access, address, size, value, user):
                     pc = hex(uc.reg_read(UC_X86_REG_RIP))
                     writers[pc] = writers.get(pc, 0) + 1
@@ -102,7 +121,9 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                         int_args=[a,b,dw+(dh<<32),0,0,1], float_args={3:0.0},max_instructions=200000000)
                 finally:
                     self.uc.hook_del(hook)
-                resize_writers.append(dict(source=[sw,sh], destination=[dw,dh], interpolation=1, writers=writers))
+                    self.uc.hook_del(row_hook)
+                    self.uc.hook_del(horizontal_hook)
+                resize_writers.append(dict(source=[sw,sh], destination=[dw,dh], interpolation=1, writers=writers, vertical_rows=interpolation_rows, horizontal_coefficients=horizontal_coefficients))
                 return output
             if p[4]: pixels = resize(pixels,fw,fh,w,h)
             stages['source'] = words(pixels,n*4)
@@ -119,7 +140,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 channels = struct.unpack('<I', ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP) + 0x28, 4))[0]
                 key = f'{_addr:x}/{kernel}/{width}/{channels}'
                 row_filters[key] = row_filters.get(key, 0) + 1
-            for row_entry in (0x18127f3c0, 0x1812d6690):
+            for row_entry in (0x18127f3c0, 0x1812d6690, 0x1812adaa0, 0x1812f9a70, 0x1813183d0):
                 super().add_code_hook(row_entry, row_filter_entry)
             ray_number = [-1]
             op_number = [0]
@@ -145,7 +166,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                         active[0] = False
                         stages[name+'_out'],_ = read_wrapper(dest_wrapper)
                 super(Loader,self).add_code_hook(ret, returned)
-            for addr in (0x181297ac0,0x181280bc0):
+            for addr in (0x181297ac0,0x181280bc0,0x181272ec0):
                 super().add_code_hook(addr, op_entry)
             def seed(ld, _addr, _size):
                 mat = base.read_mat(ld, ld.uc.reg_read(UC_X86_REG_RBP))
@@ -271,6 +292,8 @@ static void F09Dump(const char *name, const void *data, size_t size) {
         '\tF09Dump(("helper"+std::to_string(F09Ray)+"_op0_out").c_str(),temp_a.data(),temp_a.size()*4);')
     insert('\t\tsrc.swap(dst);',
         '\t\tF09Dump(("helper"+std::to_string(F09Ray)+"_op"+std::to_string(pass+1)+"_out").c_str(),dst.data(),dst.size()*4);')
+    insert('\ttemp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);',
+        '\tif (blur_mode == 3) F09Dump(("helper"+std::to_string(F09Ray)+"_op1_out").c_str(),temp_b.data(),temp_b.size()*4);')
     return source
 
 

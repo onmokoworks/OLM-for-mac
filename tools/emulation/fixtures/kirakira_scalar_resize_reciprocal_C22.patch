@@ -1,0 +1,9 @@
+--- before.cpp
++++ candidate.cpp
+@@ -701 +701 @@
+-	return info.approximated_input && info.channel == 1 &&
++	return info.approximated_input && (info.channel == 1 || info.channel == 2 || info.channel == 4) &&
+@@ -1719,0 +1720 @@
++    if (info.channel != 1 && !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+@@ -1721,0 +1723 @@
++    full.channel = 1;

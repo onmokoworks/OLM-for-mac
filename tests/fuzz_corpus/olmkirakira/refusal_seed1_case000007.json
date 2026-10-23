@@ -1,4 +1,50 @@
 {
+  "C22_scalar_approximation_expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "1982ade863e27ab9376483231271f2fc16a7267fd7f1b18393326073733bf0bf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 27 27",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "reason": "Recovered scalar luminance approximation now equals original public Smart at every paired stage and output.",
+    "report": "orchestra/reports/C22-kira-smart-r5-scalar-approx.md"
+  },
   "case": {
     "depth": 32,
     "geometry": [
@@ -253,12 +299,13 @@
         "status": "refusal"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 27 27",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

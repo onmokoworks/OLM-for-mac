@@ -568,7 +568,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// C04 additionally restores the tiny scalar Alpha/Length>=2 operation.
+	// C22 includes the recovered symmetric tail for scalar Alpha Length 1.
 	// Keep the historical boundary for other seed/Highlight pipelines until
 	// their upstream and aggregation stages are reconciled.
 	const bool mode3_admitted =
@@ -656,6 +656,54 @@ static std::vector<FloatRGBA> ResizeNearestRGBA(
 	return output;
 }
 
+// Original typed owners pass interpolation=1 at [RSP+0x28] to 1812639f0.
+// Embedded IPP 1803238a0 / 1806e6e80 use separate SUB/MUL/ADD.
+// IPP coefficients use src_size/dst_size directly, not the reciprocal of
+// dst_size/src_size: the latter can select the preceding cell at an integer
+// boundary. Fractional coordinates narrow after subtracting the integer index.
+// C22 public-bound traces pair the reduced source and enlarged glow.
+static std::vector<FloatRGBA> ResizeLinearRGBA(
+	const std::vector<FloatRGBA> &input, A_long sw, A_long sh, A_long dw, A_long dh)
+{
+	if (sw == dw && sh == dh) return input;
+	const double sx_scale = (double)sw / dw;
+	const double sy_scale = (double)sh / dh;
+	std::vector<FloatRGBA> output((size_t)dw * dh);
+	auto blend = [](const FloatRGBA &a, const FloatRGBA &b, float y) {
+		return FloatRGBA{a.r+(b.r-a.r)*y, a.g+(b.g-a.g)*y,
+			a.b+(b.b-a.b)*y, a.a+(b.a-a.a)*y};
+	};
+	for (A_long y = 0; y < dh; ++y) {
+		const double cy = ((double)y + 0.5) * sy_scale - 0.5;
+		float fy;
+		A_long iy = (A_long)std::floor(cy);
+		fy = (float)(cy - (double)iy);
+		if (iy < 0) { iy = 0; fy = 0.0f; }
+		if (iy >= sh-1) { iy = sh-1; fy = 0.0f; }
+		const A_long y0 = std::max<A_long>(0, std::min<A_long>(sh-1, iy));
+		const A_long y1 = std::max<A_long>(0, std::min<A_long>(sh-1, iy+1));
+		for (A_long x = 0; x < dw; ++x) {
+			const double cx = ((double)x + 0.5) * sx_scale - 0.5;
+			float fx;
+			A_long ix = (A_long)std::floor(cx);
+			fx = (float)(cx - (double)ix);
+			if (ix < 0) { ix = 0; fx = 0.0f; }
+			if (ix >= sw-1) { ix = sw-1; fx = 0.0f; }
+			const A_long x1 = std::min<A_long>(sw-1, ix+1);
+			const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], fx);
+			const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], fx);
+			output[(size_t)y*dw+x] = blend(a, b, fy);
+		}
+	}
+	return output;
+}
+
+static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
+{
+	return info.approximated_input && (info.channel == 1 || info.channel == 2 || info.channel == 4) &&
+		(info.blur_mode == 1 || info.blur_mode == 2);
+}
+
 template <typename PixelT>
 static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 {
@@ -675,14 +723,11 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // scalar box pipeline. The four-component color box owner also uses the
 // recovered percentage parameters (C16). C07 pairs
 // the box pipeline; C13 pairs the directional Gaussian pipeline with the
-// same constructor, percentage materialization and aggregation. Keep the
-// unresolved Length-1, Highlight and resize operations outside this recovery.
+// same constructor, percentage materialization and aggregation. Keep unresolved Highlight and other resize owners outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
-		info.vertical_length != 1 && info.horizontal_length != 1 &&
-		info.diagonal_length != 1 && info.diagonal2_length != 1;
-	return !info.approximated_input &&
+	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
+	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
 		 (info.channel == 1 && directional_gaussian));
 }
@@ -799,7 +844,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 	const std::vector<FloatRGBA> source_pixels = ReadPixels<PixelT>(input);
 	const std::vector<FloatRGBA> working_pixels = use_approximated_input
-		? ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)
+		? (UsesRecoveredApproximation(info)
+			? ResizeLinearRGBA(source_pixels, w, h, work_w, work_h)
+			: ResizeNearestRGBA(source_pixels, w, h, work_w, work_h))
 		: source_pixels;
 	const A_long work_width = work_w;
 	const A_long work_height = work_h;
@@ -946,7 +993,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 	std::vector<FloatRGBA> glow_full;
 	std::vector<FloatRGBA> output_pixels;
-	if (use_approximated_input) {
+	if (use_approximated_input && UsesRecoveredApproximation(info)) {
+		glow_full = ResizeLinearRGBA(glow, work_width, work_height, w, h);
+		output_pixels.resize((size_t)w*h);
+		for (size_t i=0; i<output_pixels.size(); ++i) {
+			output_pixels[i] = info.merge_mode == 2
+				? ComposeMerge2Pixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity)
+				: ComposePremultiplyPixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity);
+		}
+	} else if (use_approximated_input) {
 		glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h);
 		output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h);
 		if (HasZeroRays(info)) {
@@ -1658,6 +1713,19 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.highlight_use_ramp, info.highlight_ramp);
 }
 
+// C22: scalar Alpha/luminance/max box resize retains full-resolution source composition.
+// Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
+static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
+    PF_PixelFormat format, A_long width, A_long height)
+{
+    if (!UsesRecoveredApproximation(info) || width < 4 || height < 4) return false;
+    if (info.channel != 1 && !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+    OLMKiraKiraInfo full = info;
+    full.approximated_input = FALSE;
+    full.channel = 1;
+    return IsAlphaBoxTuple(full, format, true, true, true);
+}
+
 // C16: scalar constructors 181150600 (luminance) and 18114ec60 (RGB max)
 // share FLOAT32 fade/powf and box operations paired to public Smart.
 // Retain SDR, default-ramp and workload boundaries.
@@ -1701,7 +1769,6 @@ static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
 	for (int ray = 0; ray != 4; ++ray) {
 		const A_long length = lengths[ray];
 		if (length == 0) continue;
-		if (length == 1) return false;
 		const auto trig = olm::kirakira::extent_sincos(info.glow_rotation + offsets[ray]);
 		const A_long rw = AexRotatedExtent(width, height,
 			std::abs(trig.cosine), std::abs(trig.sine));
@@ -2768,6 +2835,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 					info, input_world->width, input_world->height) ||
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
 				 IsSmartScalarBrightnessBoxTuple(info, format) ||
+				 IsSmartApproximationTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartColorBoxTuple(info, format) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
