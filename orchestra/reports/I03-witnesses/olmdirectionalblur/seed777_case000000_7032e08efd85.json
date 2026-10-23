@@ -1,0 +1,203 @@
+{
+  "case": {
+    "depth": 16,
+    "geometry": [
+      17,
+      9
+    ],
+    "index": 0,
+    "input_padding": 16,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 28.733016967773438
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 72
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 0.0
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": 191.062255859375
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 10.0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 777
+  },
+  "generator_version": 1,
+  "index": 0,
+  "input_sha256": "75d263cae0fbadd4ed52f6b578c2df821da5673cb66d1adef429cd6fe61575ce",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoVlH9Q0ncYx98qKCr+iExFIIUSwh+JIGooipCIpOQP3PyBmYgTIVEENKn0s7o121rL9Gpba9cPb9W61V3Xstp2dWcbtWqWa83TupbtNmutpS3bVdftuz+f57n3Pfd+Xu/PZ3jNYYW0c6wR2GLMDX3AA/naaKFtLgD5UcyIfVmvrZbEVrHdcSA220zmkHPCTq94Hfc+C2R+ycPOompgp5sltMQkO0VvzMZbqyh93jzTmwJMJW6uHC4H+Yyp8C/rAP4wixn7XevcXRad1uEETmv3NrOEId1f0B5w6hKAieIl1fNakNdtxkUM1ohja8iZuoN9IGeTFnDoNZ96reHjyXoZyGxBq65/MXDNkFP0KhCYC3yVIY0Cedszw1R7dKWDb5Ua7tMpnU0s2yMDOCl7QxWdIJ9ohNE6TZrkSTdMhTnAe23BWZN04KJwWvIsH7ibz2KUuRK08oZRw04b8LPuEcMXDJIlnzVXpIOIC6ZZgxHAoRi2+J3YmMD5jbsN/iZa4r3kSa01z+fix1vELyoBR/qYvd3Zb7qaeYF7yTaXfqDdJojOv9Izb/b5P28G6fL8oglX7RFtyhpVHmM9jAqpSOEcbTrl9l+6pH05U5LkjDpYVVoG0kJjCiYBclkdJGLKHyzdbgluSGeDXEndRlNJgTtB/PVckTHkrLrJvVUJEr5hoTg7FmTAvG6lnwL4nreeE8rOzRxXXq+xeoET6i/b6TzKt/6++ZYT5OZilfVYLYi0ckh+hw/807NLVs0FMpQnygt5+8MbmYzUv3Qgk365cc4wd/LW3CMiAbX3z4Azif0OkDUhX9EHwixBnNaAmi1hAEPiK+tqB/H1PrVLVcD5qNuuxUZ+rJUdzT1p32bdh8fxjf4gz0qK4oco3qmq5o6LLlHLo55s7pgRhF63IehVNMg1YYLnKcX9gJ1lMi0DPsy6oVcXg9zbGOsoKaE4VHR6zoe8Lvk76UmYiWZPvCnZ7Rim9EdyY0zsOpB1nQbP1P85ZHByUvNArtZ/a14RQPmyr1LcqgLEbcH1SQGLtImFsqQfqBxXFJ5u6a8F9KKRZgFVn2gyGIWrQSzCC6hMpubd97jlMcBRvkR5mPKtaRxpmw2K6uHXV5inTICnplctMkSY19c/ah+I3r7AZ0xR8INAVOxa9WUqX7821RbRFWlFXpGoMK4GOJ51I4GXBlLsGKbVU1x8AS/UYvqcnrdw0J6ZBuywv6z5fON1Q8bquwveNFG8V+yIaKXe52iF3JPqAbkr+M1bymZmVa467hVEgpjyCd1WMCBT9soaJipnkhh6m+hjJTDjN9YtWFms3aR9nBJRcEf+ruOp4BJ/l74/8JvKceqeGmPE2vBIgMeYajmZ81FLmLTENUr1u5JPqWnUvnPBdYw8C6Au18h6QoFyzzj9KJWTuBZ/5UMzvfpF34aifRm/S+bLA1geF7Csr0OSlwGwO3rTx7SAoLAxdEgBInLP8SbWAArNqsgR5XCy2K8n8gNqPr1peWi8COSYtzRb0Qp8Rz9kqBICP+VnlaVxQf5lzFX5NQBc9ZhcRf0Lt0tpunNrs0XT/CDOAQ0wyK+xPKfuSWMJl0rF/wFMwY/o",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "5d93a5307c7d45a8fc6c6106191ddb698b8aad870cb215cbc7ed4ad67ad23a96",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "6f3207c4b4fd5ec8b4630c9b2755bc9f692ba6256f47041c10ba9e2e1cb7457b",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {}
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "90e560966cb7d0e1b9537da65b6645d0800d7febe500585427eb0362e33b8053",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "e28b98a94e0077340a3aece749f2d400c3f06890cec9447f4c2567bd1e7a5839",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "90e560966cb7d0e1b9537da65b6645d0800d7febe500585427eb0362e33b8053",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1224,
+          "actual_word_hex": "e50e",
+          "different_bytes": 805,
+          "different_words": 404,
+          "expected_bytes": 1224,
+          "expected_word_hex": "0000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "90e560966cb7d0e1b9537da65b6645d0800d7febe500585427eb0362e33b8053",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "90e560966cb7d0e1b9537da65b6645d0800d7febe500585427eb0362e33b8053",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 777
+}
