@@ -1,0 +1,91 @@
+--- before.cpp
++++ linear.cpp
+@@ -656,6 +656,43 @@
+ 	return output;
+ }
+ 
++// Original typed owners pass interpolation=1 at [RSP+0x28] to 1812639f0.
++// Explicit dsize yields double reciprocal scales, float coefficients and
++// separate float horizontal/vertical products. Border rows are replicated.
++static std::vector<FloatRGBA> ResizeLinearRGBA(
++	const std::vector<FloatRGBA> &input, A_long sw, A_long sh, A_long dw, A_long dh)
++{
++	if (sw == dw && sh == dh) return input;
++	const double sx_scale = 1.0 / ((double)dw / sw);
++	const double sy_scale = 1.0 / ((double)dh / sh);
++	std::vector<FloatRGBA> output((size_t)dw * dh);
++	auto blend = [](const FloatRGBA &a, const FloatRGBA &b, float x, float y) {
++		return FloatRGBA{a.r*x + b.r*y, a.g*x + b.g*y,
++			a.b*x + b.b*y, a.a*x + b.a*y};
++	};
++	for (A_long y = 0; y < dh; ++y) {
++		float fy = (float)(((double)y + 0.5) * sy_scale - 0.5);
++		A_long iy = (A_long)std::floor(fy);
++		fy -= (float)iy;
++		if (iy < 0) { iy = 0; fy = 0.0f; }
++		if (iy >= sh-1) { iy = sh-1; fy = 0.0f; }
++		const A_long y0 = std::max<A_long>(0, std::min<A_long>(sh-1, iy));
++		const A_long y1 = std::max<A_long>(0, std::min<A_long>(sh-1, iy+1));
++		for (A_long x = 0; x < dw; ++x) {
++			float fx = (float)(((double)x + 0.5) * sx_scale - 0.5);
++			A_long ix = (A_long)std::floor(fx);
++			fx -= (float)ix;
++			if (ix < 0) { ix = 0; fx = 0.0f; }
++			if (ix >= sw-1) { ix = sw-1; fx = 0.0f; }
++			const A_long x1 = std::min<A_long>(sw-1, ix+1);
++			const FloatRGBA a = blend(input[(size_t)y0*sw+ix], input[(size_t)y0*sw+x1], 1.0f-fx, fx);
++			const FloatRGBA b = blend(input[(size_t)y1*sw+ix], input[(size_t)y1*sw+x1], 1.0f-fx, fx);
++			output[(size_t)y*dw+x] = blend(a, b, 1.0f-fy, fy);
++		}
++	}
++	return output;
++}
++
+ template <typename PixelT>
+ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
+ {
+@@ -682,7 +719,7 @@
+ 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
+ 		info.vertical_length != 1 && info.horizontal_length != 1 &&
+ 		info.diagonal_length != 1 && info.diagonal2_length != 1;
+-	return !info.approximated_input &&
++	return (!info.approximated_input || info.channel == 1) &&
+ 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
+ 		 (info.channel == 1 && directional_gaussian));
+ }
+@@ -799,7 +836,7 @@
+ 
+ 	const std::vector<FloatRGBA> source_pixels = ReadPixels<PixelT>(input);
+ 	const std::vector<FloatRGBA> working_pixels = use_approximated_input
+-		? ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)
++		? ResizeLinearRGBA(source_pixels, w, h, work_w, work_h)
+ 		: source_pixels;
+ 	const A_long work_width = work_w;
+ 	const A_long work_height = work_h;
+@@ -947,19 +984,13 @@
+ 	std::vector<FloatRGBA> glow_full;
+ 	std::vector<FloatRGBA> output_pixels;
+ 	if (use_approximated_input) {
+-		glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h);
+-		output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h);
+-		if (HasZeroRays(info)) {
+-			// Original typed owners resize glow, then compose with the original
+-			// full-resolution source. With all rays disabled, 18114f4a0 leaves
+-			// every glow lane zero; neither resize can affect that invariant.
+-			// Active-ray IPP interpolation remains a separate proof boundary.
+-			for (size_t i = 0; i < output_pixels.size(); ++i) {
+-				output_pixels[i] = info.merge_mode == 2
+-					? ComposeMerge2Pixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity)
+-					: ComposePremultiplyPixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity);
+-			}
+-		}
++		glow_full = ResizeLinearRGBA(glow, work_width, work_height, w, h);
++        output_pixels.resize((size_t)w*h);
++        for (size_t i=0; i<output_pixels.size(); ++i) {
++            output_pixels[i] = info.merge_mode == 2
++                ? ComposeMerge2Pixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity)
++                : ComposePremultiplyPixel(glow_full[i], source_pixels[i], (float)info.glow_opacity, (float)info.source_opacity);
++        }
+ 	} else {
+ 		glow_full = std::move(glow);
+ 		output_pixels = std::move(composed);

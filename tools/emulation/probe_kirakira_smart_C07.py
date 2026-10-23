@@ -87,6 +87,27 @@ def cases(adapter, family):
                 if param['slot'] in (13,19,25,31,37): param['value'] = 0
             yield case
         return
+    if family == 'approximation-boundary':
+        for i, (geometry, depth, mode, length) in enumerate(itertools.product(
+                ((4,4), (4,9), (9,4), (31,23)), (8,16,32), (1,2), (1,2,50,1000))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, mode, 1)
+            controls = {4:1, 6:(0,97,537,1000)[i%4], 8:1703, 9:97,
+                        10:length, 16:0, 22:0, 28:0, 34:0,
+                        40:(-31,0,22,359)[i%4]/65536}
+            for param in case['parameters']:
+                if param['slot'] in controls: param['value'] = controls[param['slot']]
+            yield case
+        return
+    if family == 'approximation-active-negative':
+        for case in cases(adapter, 'approximation-zero-negative'):
+            if case['index'] >= 15:
+                i = case['index']
+                for param in case['parameters']:
+                    if param['slot'] == 10: param['value'] = 7
+                    if i == 15 and param['slot'] == 1: param['value'] = 2
+                    if i == 16 and param['slot'] == 9: param['value'] = 101
+            yield case
+        return
     if family == 'approximation-zero-negative':
         for i, (geometry, depth) in enumerate(itertools.product(
                 ((1, 1), (1, 9), (2, 2), (2, 9), (3, 3)), (8, 16, 32))):
@@ -112,10 +133,12 @@ def cases(adapter, family):
                 if param['slot'] == 4: param['value'] = 1
             yield case
         return
-    if family == 'approximation':
+    if family in ('approximation', 'approximation-active'):
         for i, (geometry, depth, mode, merge, rays) in enumerate(itertools.product(
                 ((2, 2), (2, 9), (9, 2), (6, 8), (7, 11), (9, 7), (17, 13)),
                 (8, 16, 32), (1, 2), (1, 2), (0, 1, 2))):
+            if family == 'approximation-active' and min(geometry) < 4:
+                continue
             case = matrix_case(adapter, i, geometry, depth, merge, mode, 1)
             controls = {4: 1, 5: (1, 1.25, 100)[i % 3],
                         6: (0, 1, 97, 100, 537, 1000)[i % 6],
@@ -226,7 +249,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
