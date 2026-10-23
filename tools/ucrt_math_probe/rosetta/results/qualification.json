@@ -1,0 +1,47 @@
+[
+  {
+    "function": "expf",
+    "count": 100000,
+    "native_exit": 0,
+    "compared": 100000,
+    "mismatches": 0,
+    "first_mismatch": null,
+    "seconds": 1.873704124998767
+  },
+  {
+    "function": "atan2f",
+    "count": 100000,
+    "native_exit": 0,
+    "compared": 100000,
+    "mismatches": 0,
+    "first_mismatch": null,
+    "seconds": 2.3501854579953942
+  },
+  {
+    "function": "sinf",
+    "count": 100000,
+    "native_exit": 0,
+    "compared": 100000,
+    "mismatches": 0,
+    "first_mismatch": null,
+    "seconds": 2.015178166999249
+  },
+  {
+    "function": "cosf",
+    "count": 100000,
+    "native_exit": 0,
+    "compared": 100000,
+    "mismatches": 0,
+    "first_mismatch": null,
+    "seconds": 2.0838151249918155
+  },
+  {
+    "function": "powf",
+    "count": 100000,
+    "native_exit": 0,
+    "compared": 100000,
+    "mismatches": 0,
+    "first_mismatch": null,
+    "seconds": 2.4374927090102574
+  }
+]

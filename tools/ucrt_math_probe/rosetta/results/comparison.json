@@ -1,0 +1,821 @@
+{
+  "apple_arch": "x86_64 under Rosetta",
+  "scope": "100k qualified samples/function, NOT exhaustive",
+  "results": [
+    {
+      "function": "expf",
+      "count": 100000,
+      "seconds": 1.3742938750074245,
+      "pairs": [
+        {
+          "pair": [
+            "native",
+            "fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "apple"
+          ],
+          "matches": 99885,
+          "rate": 0.99885,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "apple"
+            ],
+            "inputs": "c268a99a 00000000",
+            "outputs": [
+              "1587be54",
+              "1587be55"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-off"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "fma",
+            "apple"
+          ],
+          "matches": 99885,
+          "rate": 0.99885,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "apple"
+            ],
+            "inputs": "c268a99a 00000000",
+            "outputs": [
+              "1587be54",
+              "1587be55"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-off"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-off"
+          ],
+          "matches": 99885,
+          "rate": 0.99885,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-off"
+            ],
+            "inputs": "c268a99a 00000000",
+            "outputs": [
+              "1587be55",
+              "1587be54"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-fma"
+          ],
+          "matches": 99885,
+          "rate": 0.99885,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-fma"
+            ],
+            "inputs": "c268a99a 00000000",
+            "outputs": [
+              "1587be55",
+              "1587be54"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "amd-off",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        }
+      ]
+    },
+    {
+      "function": "atan2f",
+      "count": 100000,
+      "seconds": 0.41254437499446794,
+      "pairs": [
+        {
+          "pair": [
+            "native",
+            "fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "apple"
+          ],
+          "matches": 79483,
+          "rate": 0.79483,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "apple"
+            ],
+            "inputs": "3696b1cc e2b87ab0",
+            "outputs": [
+              "40490fdb",
+              "40490fda"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-off"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "fma",
+            "apple"
+          ],
+          "matches": 79483,
+          "rate": 0.79483,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "apple"
+            ],
+            "inputs": "3696b1cc e2b87ab0",
+            "outputs": [
+              "40490fdb",
+              "40490fda"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-off"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-off"
+          ],
+          "matches": 79483,
+          "rate": 0.79483,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-off"
+            ],
+            "inputs": "3696b1cc e2b87ab0",
+            "outputs": [
+              "40490fda",
+              "40490fdb"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-fma"
+          ],
+          "matches": 79483,
+          "rate": 0.79483,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-fma"
+            ],
+            "inputs": "3696b1cc e2b87ab0",
+            "outputs": [
+              "40490fda",
+              "40490fdb"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "amd-off",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        }
+      ]
+    },
+    {
+      "function": "sinf",
+      "count": 100000,
+      "seconds": 0.3533706670132233,
+      "pairs": [
+        {
+          "pair": [
+            "native",
+            "fma"
+          ],
+          "matches": 99995,
+          "rate": 0.99995,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "fma"
+            ],
+            "inputs": "4b387bd4 f87b3fce",
+            "outputs": [
+              "bf61ba6a",
+              "bf61ba69"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "apple"
+          ],
+          "matches": 99906,
+          "rate": 0.99906,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "apple"
+            ],
+            "inputs": "ec678b0d 9d7795f6",
+            "outputs": [
+              "bf083d1a",
+              "bf083d19"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-off"
+          ],
+          "matches": 99130,
+          "rate": 0.9913,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-off"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-fma"
+          ],
+          "matches": 99130,
+          "rate": 0.9913,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-fma"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "apple"
+          ],
+          "matches": 99911,
+          "rate": 0.99911,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "apple"
+            ],
+            "inputs": "ec678b0d 9d7795f6",
+            "outputs": [
+              "bf083d1a",
+              "bf083d19"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-off"
+          ],
+          "matches": 99135,
+          "rate": 0.99135,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-off"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-fma"
+          ],
+          "matches": 99135,
+          "rate": 0.99135,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-fma"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-off"
+          ],
+          "matches": 99114,
+          "rate": 0.99114,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-off"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-fma"
+          ],
+          "matches": 99114,
+          "rate": 0.99114,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-fma"
+            ],
+            "inputs": "bee5220e 3590ff18",
+            "outputs": [
+              "bedd8f93",
+              "bedd8f92"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "amd-off",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        }
+      ]
+    },
+    {
+      "function": "cosf",
+      "count": 100000,
+      "seconds": 0.4139474999974482,
+      "pairs": [
+        {
+          "pair": [
+            "native",
+            "fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "apple"
+          ],
+          "matches": 99919,
+          "rate": 0.99919,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "apple"
+            ],
+            "inputs": "6b874d5e f6b62cbb",
+            "outputs": [
+              "3f2af0f4",
+              "3f2af0f3"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-off"
+          ],
+          "matches": 99159,
+          "rate": 0.99159,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-off"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-fma"
+          ],
+          "matches": 99159,
+          "rate": 0.99159,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-fma"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "apple"
+          ],
+          "matches": 99919,
+          "rate": 0.99919,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "apple"
+            ],
+            "inputs": "6b874d5e f6b62cbb",
+            "outputs": [
+              "3f2af0f4",
+              "3f2af0f3"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-off"
+          ],
+          "matches": 99159,
+          "rate": 0.99159,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-off"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-fma"
+          ],
+          "matches": 99159,
+          "rate": 0.99159,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-fma"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-off"
+          ],
+          "matches": 99130,
+          "rate": 0.9913,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-off"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-fma"
+          ],
+          "matches": 99130,
+          "rate": 0.9913,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-fma"
+            ],
+            "inputs": "cc43326e 68c99190",
+            "outputs": [
+              "3f349893",
+              "3f349892"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "amd-off",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        }
+      ]
+    },
+    {
+      "function": "powf",
+      "count": 100000,
+      "seconds": 0.41168529199785553,
+      "pairs": [
+        {
+          "pair": [
+            "native",
+            "fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        },
+        {
+          "pair": [
+            "native",
+            "apple"
+          ],
+          "matches": 99992,
+          "rate": 0.99992,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "apple"
+            ],
+            "inputs": "3ad5198a 4008d130",
+            "outputs": [
+              "359276d9",
+              "359276da"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-off"
+          ],
+          "matches": 99984,
+          "rate": 0.99984,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-off"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "native",
+            "amd-fma"
+          ],
+          "matches": 99984,
+          "rate": 0.99984,
+          "first_mismatch": {
+            "pair": [
+              "native",
+              "amd-fma"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "apple"
+          ],
+          "matches": 99992,
+          "rate": 0.99992,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "apple"
+            ],
+            "inputs": "3ad5198a 4008d130",
+            "outputs": [
+              "359276d9",
+              "359276da"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-off"
+          ],
+          "matches": 99984,
+          "rate": 0.99984,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-off"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "fma",
+            "amd-fma"
+          ],
+          "matches": 99984,
+          "rate": 0.99984,
+          "first_mismatch": {
+            "pair": [
+              "fma",
+              "amd-fma"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-off"
+          ],
+          "matches": 99980,
+          "rate": 0.9998,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-off"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "apple",
+            "amd-fma"
+          ],
+          "matches": 99980,
+          "rate": 0.9998,
+          "first_mismatch": {
+            "pair": [
+              "apple",
+              "amd-fma"
+            ],
+            "inputs": "418d701a c0eea6d2",
+            "outputs": [
+              "3008a876",
+              "3008a875"
+            ]
+          }
+        },
+        {
+          "pair": [
+            "amd-off",
+            "amd-fma"
+          ],
+          "matches": 100000,
+          "rate": 1.0,
+          "first_mismatch": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,537 @@
+[
+  {
+    "function": "expf",
+    "a": "00000000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "3f800000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "expf",
+    "a": "42b00000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7ef882b7",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7ef882b7",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7ef882b7",
+    "unicorn_imports": []
+  },
+  {
+    "function": "expf",
+    "a": "42c80000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=expf a=42c80000 b=00000000"
+      },
+      {
+        "mode": 1,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=expf a=42c80000 b=00000000"
+      }
+    ],
+    "unicorn_failure": "{\"error\": \"instruction limit\", \"rip\": \"0x72000040\", \"rva\": \"-0x10dffffc0\", \"instruction\": [\"-0x10dffffc0: add byte ptr [rax], al\", \"-0x10dffffbe: add byte ptr [rax], al\", \"-0x10dffffbc: add byte ptr [rax], al\", \"-0x10dffffba: add byte ptr [rax], al\", \"-0x10dffffb8: add byte ptr [rax], al\", \"-0x10dffffb6: add byte ptr [rax], al\", \"-0x10dffffb4: add byte ptr [rax], al\", \"-0x10dffffb2: add byte ptr [rax], al\", \"-0x10dffffb0: add byte ptr [rax], al\", \"-0x10dffffae: add byte ptr [rax], al\"]}",
+    "unicorn_imports": [
+      "api-ms-win-core-errorhandling-l1-1-0.dll!b'GetLastError'"
+    ]
+  },
+  {
+    "function": "expf",
+    "a": "c2c80000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "0000001b",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "0000001b",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "0000001b",
+    "unicorn_imports": []
+  },
+  {
+    "function": "expf",
+    "a": "7f800000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7f800000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7f800000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7f800000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "expf",
+    "a": "7fc00001",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "atan2f",
+    "a": "00000000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "00000000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "atan2f",
+    "a": "00000001",
+    "b": "7f7fffff",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "00000000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "atan2f",
+    "a": "7f800000",
+    "b": "7f800000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "3f490fdb",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "3f490fdb",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "3f490fdb",
+    "unicorn_imports": []
+  },
+  {
+    "function": "atan2f",
+    "a": "7fc00001",
+    "b": "3f800000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "sinf",
+    "a": "00000000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "00000000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "00000000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "sinf",
+    "a": "7f7fffff",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "bf0599b3",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "bf0599b3",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "bf0599b3",
+    "unicorn_imports": []
+  },
+  {
+    "function": "sinf",
+    "a": "7f800000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=sinf a=7f800000 b=00000000"
+      },
+      {
+        "mode": 1,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=sinf a=7f800000 b=00000000"
+      }
+    ],
+    "unicorn_failure": "{\"error\": \"instruction limit\", \"rip\": \"0x72000040\", \"rva\": \"-0x10dffffc0\", \"instruction\": [\"-0x10dffffc0: add byte ptr [rax], al\", \"-0x10dffffbe: add byte ptr [rax], al\", \"-0x10dffffbc: add byte ptr [rax], al\", \"-0x10dffffba: add byte ptr [rax], al\", \"-0x10dffffb8: add byte ptr [rax], al\", \"-0x10dffffb6: add byte ptr [rax], al\", \"-0x10dffffb4: add byte ptr [rax], al\", \"-0x10dffffb2: add byte ptr [rax], al\", \"-0x10dffffb0: add byte ptr [rax], al\", \"-0x10dffffae: add byte ptr [rax], al\"]}",
+    "unicorn_imports": [
+      "api-ms-win-core-errorhandling-l1-1-0.dll!b'GetLastError'"
+    ]
+  },
+  {
+    "function": "sinf",
+    "a": "7fc00001",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "sinf",
+    "a": "7f800001",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "cosf",
+    "a": "00000000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "3f800000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "cosf",
+    "a": "7f7fffff",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "3f5a5f96",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "3f5a5f96",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "3f5a5f96",
+    "unicorn_imports": []
+  },
+  {
+    "function": "cosf",
+    "a": "7f800000",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=cosf a=7f800000 b=00000000"
+      },
+      {
+        "mode": 1,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=cosf a=7f800000 b=00000000"
+      }
+    ],
+    "unicorn_failure": "{\"error\": \"instruction limit\", \"rip\": \"0x72000040\", \"rva\": \"-0x10dffffc0\", \"instruction\": [\"-0x10dffffc0: add byte ptr [rax], al\", \"-0x10dffffbe: add byte ptr [rax], al\", \"-0x10dffffbc: add byte ptr [rax], al\", \"-0x10dffffba: add byte ptr [rax], al\", \"-0x10dffffb8: add byte ptr [rax], al\", \"-0x10dffffb6: add byte ptr [rax], al\", \"-0x10dffffb4: add byte ptr [rax], al\", \"-0x10dffffb2: add byte ptr [rax], al\", \"-0x10dffffb0: add byte ptr [rax], al\", \"-0x10dffffae: add byte ptr [rax], al\"]}",
+    "unicorn_imports": [
+      "api-ms-win-core-errorhandling-l1-1-0.dll!b'GetLastError'"
+    ]
+  },
+  {
+    "function": "cosf",
+    "a": "7fc00001",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "cosf",
+    "a": "7f800001",
+    "b": "00000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  },
+  {
+    "function": "powf",
+    "a": "3f800000",
+    "b": "40000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "3f800000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "3f800000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "powf",
+    "a": "bf800000",
+    "b": "3f000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=powf a=bf800000 b=3f000000"
+      },
+      {
+        "mode": 1,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=powf a=bf800000 b=3f000000"
+      }
+    ],
+    "unicorn_failure": "{\"error\": \"instruction limit\", \"rip\": \"0x72000040\", \"rva\": \"-0x10dffffc0\", \"instruction\": [\"-0x10dffffc0: add byte ptr [rax], al\", \"-0x10dffffbe: add byte ptr [rax], al\", \"-0x10dffffbc: add byte ptr [rax], al\", \"-0x10dffffba: add byte ptr [rax], al\", \"-0x10dffffb8: add byte ptr [rax], al\", \"-0x10dffffb6: add byte ptr [rax], al\", \"-0x10dffffb4: add byte ptr [rax], al\", \"-0x10dffffb2: add byte ptr [rax], al\", \"-0x10dffffb0: add byte ptr [rax], al\", \"-0x10dffffae: add byte ptr [rax], al\"]}",
+    "unicorn_imports": [
+      "api-ms-win-core-errorhandling-l1-1-0.dll!b'GetLastError'"
+    ]
+  },
+  {
+    "function": "powf",
+    "a": "00000000",
+    "b": "bf800000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=powf a=00000000 b=bf800000"
+      },
+      {
+        "mode": 1,
+        "exit": 86,
+        "stdout": "",
+        "stderr": "IMPORT_ABORT api-ms-win-core-errorhandling-l1-1-0.dll!GetLastError function=powf a=00000000 b=bf800000"
+      }
+    ],
+    "unicorn_failure": "{\"error\": \"instruction limit\", \"rip\": \"0x72000040\", \"rva\": \"-0x10dffffc0\", \"instruction\": [\"-0x10dffffc0: add byte ptr [rax], al\", \"-0x10dffffbe: add byte ptr [rax], al\", \"-0x10dffffbc: add byte ptr [rax], al\", \"-0x10dffffba: add byte ptr [rax], al\", \"-0x10dffffb8: add byte ptr [rax], al\", \"-0x10dffffb6: add byte ptr [rax], al\", \"-0x10dffffb4: add byte ptr [rax], al\", \"-0x10dffffb2: add byte ptr [rax], al\", \"-0x10dffffb0: add byte ptr [rax], al\", \"-0x10dffffae: add byte ptr [rax], al\"]}",
+    "unicorn_imports": [
+      "api-ms-win-core-errorhandling-l1-1-0.dll!b'GetLastError'"
+    ]
+  },
+  {
+    "function": "powf",
+    "a": "40000000",
+    "b": "43000000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7f800000",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7f800000",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7f800000",
+    "unicorn_imports": []
+  },
+  {
+    "function": "powf",
+    "a": "7fc00001",
+    "b": "3f800000",
+    "native": [
+      {
+        "mode": 0,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      },
+      {
+        "mode": 1,
+        "exit": 0,
+        "stdout": "7fc00001",
+        "stderr": ""
+      }
+    ],
+    "unicorn_result": "7fc00001",
+    "unicorn_imports": []
+  }
+]
