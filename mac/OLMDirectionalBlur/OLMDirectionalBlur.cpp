@@ -916,7 +916,7 @@ static bool IsGenericNeutralDeepParameters(const OLMDirectionalBlurInfo &info)
 
 static bool CanUseGenericNeutral8(const PF_EffectWorld *input,
 	                              const PF_EffectWorld *output,
-	                              const OLMDirectionalBlurInfo &info)
+	                              const OLMDirectionalBlurInfo &info, bool smart_render = false)
 {
 	int effective_front_strength = 0, effective_back_strength = 0;
 	if (!input || !output || !input->data || !output->data ||
@@ -937,14 +937,14 @@ static bool CanUseGenericNeutral8(const PF_EffectWorld *input,
 	olm::dblur::generic::RenderEstimate estimate = {};
 	return diagonal_squared <= std::numeric_limits<int>::max() &&
 		olm::dblur::generic::EstimateRender(input->width, input->height, 8,
-			effective_front_strength, effective_back_strength, 0, &estimate);
+			effective_front_strength, effective_back_strength, 0, &estimate, false, smart_render);
 }
 
 template <typename PixelT>
 static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	                              const PF_EffectWorld *output,
 	                              const OLMDirectionalBlurInfo &info,
-	                              bool allow_zero_strength = false)
+	                              bool allow_zero_strength = false, bool smart_render = false)
 {
 	int effective_front_strength = 0, effective_back_strength = 0;
 	if (!input || !output || !input->data || !output->data || input->width <= 0 ||
@@ -963,7 +963,7 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	olm::dblur::generic::RenderEstimate estimate = {};
 	return input->rowbytes >= active && output->rowbytes >= active &&
 		olm::dblur::generic::EstimateRender(input->width, input->height, depth,
-			effective_front_strength, effective_back_strength, 0, &estimate, allow_zero_strength);
+			effective_front_strength, effective_back_strength, 0, &estimate, allow_zero_strength, smart_render);
 }
 
 template <typename WorldT>
@@ -1017,7 +1017,8 @@ static OLMDirectionalBlurInfo NeutralStrengthView(const OLMDirectionalBlurInfo &
 static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
     A_long width, A_long height, short depth, std::size_t staging_bytes,
     olm::dblur::generic::RenderEstimate *estimate,
-    double layer_coefficient_bound = std::numeric_limits<double>::infinity())
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity(),
+    bool smart_render = false)
 {
     int front = 0, back = 0;
     const auto percent = [](PF_FpLong value) {
@@ -1036,24 +1037,25 @@ static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
         info.size_variation != 0.0 || info.front_sharp_tail != 0.0 || info.back_sharp_tail != 0.0,
         info.noise_variation > 0.0 && info.noise_type != 3,
         static_cast<float>(info.thickness), staging_bytes, estimate,
-        info.noise_variation > 0.0 && info.noise_type == 3, layer_coefficient_bound);
+        info.noise_variation > 0.0 && info.noise_type == 3, layer_coefficient_bound, smart_render);
 }
 
 template <typename PixelT>
 static bool GenericDeepFeatureWorldsSafe(const PF_EffectWorld *input,
     const PF_EffectWorld *output, const OLMDirectionalBlurInfo &info, std::size_t staging_bytes = 0,
-    double layer_coefficient_bound = std::numeric_limits<double>::infinity())
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity(),
+    bool smart_render = false)
 {
     constexpr short depth = sizeof(PixelT) == 8 ? 16 : 32;
     olm::dblur::generic::RenderEstimate estimate = {};
-    return GenericDeepWorldsSafe<PixelT>(input, output, NeutralStrengthView(info), true) &&
+    return GenericDeepWorldsSafe<PixelT>(input, output, NeutralStrengthView(info), true, smart_render) &&
         GenericDeepFeatureEstimate(info, input->width, input->height, depth, staging_bytes,
-            &estimate, layer_coefficient_bound);
+            &estimate, layer_coefficient_bound, smart_render);
 }
 
 static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
     const PF_EffectWorld *output, const OLMDirectionalBlurInfo &info,
-    std::size_t staging_bytes = 0)
+    std::size_t staging_bytes = 0, bool smart_render = false)
 {
     // F06: the AEX PF8 work predicate at 0x180004b50 includes both Fades.
     // The component-map row bounds now match the AEX, including single-row
@@ -1069,9 +1071,9 @@ static bool CanUsePF8FeatureFallback(const PF_EffectWorld *input,
     olm::dblur::generic::RenderEstimate estimate = {};
     // PF8 uses the same float workspace and tables as deep rendering. The PF16
     // estimate conservatively overcounts its packed source/destination bytes.
-    return GenericDeepWorldsSafe<PF_Pixel8>(input, output, NeutralStrengthView(info), true) &&
+    return GenericDeepWorldsSafe<PF_Pixel8>(input, output, NeutralStrengthView(info), true, smart_render) &&
         GenericDeepFeatureEstimate(info, input->width, input->height, 16,
-            staging_bytes, &estimate);
+            staging_bytes, &estimate, std::numeric_limits<double>::infinity(), smart_render);
 }
 
 static bool GenericPF32FiniteInput(const PF_EffectWorld *input)
@@ -1444,7 +1446,7 @@ static void ObserveDirectionalRenderRoute(int *observed_route,
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                           PF_EffectWorld *noise_layer,
                           const OLMDirectionalBlurInfo &requested_info, short bitdepth,
-                          int *observed_route = nullptr)
+                          int *observed_route = nullptr, bool smart_render = false)
 {
     const auto info = DirectionalDeepLayerInfo(requested_info, input, noise_layer, bitdepth);
 	ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteOther);
@@ -1527,7 +1529,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 			return RenderExact8(input, output, nullptr, info);
 		}
-		if (CanUseGenericNeutral8(input, output, info)) {
+		if (CanUseGenericNeutral8(input, output, info, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
 			// Native owners schedule min(height,32) equal integer row ranges.
@@ -1549,7 +1551,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			// dimensions/origin boundary.
 			return OLM_DIRECTIONAL_REFUSAL("pf8-layer-unadmitted");
 		}
-		if (CanUsePF8FeatureFallback(input, output, info)) {
+		if (CanUsePF8FeatureFallback(input, output, info, 0, smart_render)) {
 			return RenderExact8(input, output, nullptr, info);
 		}
 		return OLM_DIRECTIONAL_REFUSAL("pf8-feature-unadmitted");
@@ -1561,13 +1563,13 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 		}
         if (!retained_exact && IsGenericDeepFeatureShape(info)) {
-            if (!GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info, 0, 1.0) ||
+            if (!GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info, 0, 1.0, smart_render) ||
                 !GenericDeepLayerWorldSafe<PF_Pixel16>(input, output, noise_layer, info))
                 return OLM_DIRECTIONAL_REFUSAL("pf16-feature-world-or-budget");
             if (info.noise_variation > 0.0 && info.noise_type == 3) {
                 double layer_bound = std::numeric_limits<double>::infinity();
                 if (!GenericDeepLayerCoefficientBound<PF_Pixel16>(noise_layer, info, &layer_bound) ||
-                    !GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info, 0, layer_bound))
+                    !GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info, 0, layer_bound, smart_render))
                     return OLM_DIRECTIONAL_REFUSAL("pf16-layer-budget");
             }
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
@@ -1575,7 +1577,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
         }
 		if (!retained_exact &&
 			IsGenericNeutralDeepParameters(info) &&
-			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info)) {
+			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info, false, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
 			return RenderGenericNeutral16(input, output, info);
@@ -1793,12 +1795,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
         if (!retained_exact && IsGenericDeepFeatureShape(info)) {
             // First reserve the complete workspace using unamplified Strength,
             // before reading even a potentially invalid Layer payload.
-            if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, 1.0) ||
+            if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, 1.0, smart_render) ||
                 !GenericDeepLayerWorldSafe<PF_PixelFloat>(input, output, noise_layer, info)) return OLM_DIRECTIONAL_REFUSAL("pf32-feature-world-or-budget");
             double layer_bound = std::numeric_limits<double>::infinity();
             if (info.noise_variation > 0.0 && info.noise_type == 3 &&
                 (!GenericPF32LayerCoefficientBound(noise_layer, info, &layer_bound) ||
-                 !GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, layer_bound))) {
+                 !GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, layer_bound, smart_render))) {
                 return OLM_DIRECTIONAL_REFUSAL("pf32-layer-budget");
             }
             if (!GenericPF32FiniteInput(input)) return OLM_DIRECTIONAL_REFUSAL("pf32-nonfinite-input");
@@ -1807,7 +1809,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
         }
 		if (!retained_exact &&
 			IsGenericNeutralDeepParameters(info) &&
-			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info)) {
+			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info, false, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
 			return GenericPF32FiniteInput(input)
@@ -2629,20 +2631,20 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 					&effective_back_strength, generic_features);
 				const bool worlds_safe = extra->input->bitdepth == 8
 					? (pf8_feature_fallback
-                        ? CanUsePF8FeatureFallback(input_world, output_world, info, output_end - output_begin)
-                        : CanUseGenericNeutral8(input_world, output_world, info))
+                        ? CanUsePF8FeatureFallback(input_world, output_world, info, output_end - output_begin, true)
+                        : CanUseGenericNeutral8(input_world, output_world, info, true))
 					: (extra->input->bitdepth == 16
-						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features)
+						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features, true)
 						: (extra->input->bitdepth == 32 &&
-							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info, generic_features)));
+							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info, generic_features, true)));
 				olm::dblur::generic::RenderEstimate smart_estimate = {};
 				bool estimate_safe = generic_features
 					? GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
 						pf8_feature_fallback ? 16 : extra->input->bitdepth,
-                        output_end - output_begin, &smart_estimate, 1.0)
+                        output_end - output_begin, &smart_estimate, 1.0, true)
 					: olm::dblur::generic::EstimateRender(input_world->width, input_world->height,
 						extra->input->bitdepth, effective_front_strength, effective_back_strength,
-						output_end - output_begin, &smart_estimate);
+						output_end - output_begin, &smart_estimate, false, true);
                 if (parameters_safe && worlds_safe && estimate_safe && generic_features &&
                     (extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
                     info.noise_variation > 0.0 && info.noise_type == 3) {
@@ -2652,7 +2654,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
                         : GenericPF32LayerCoefficientBound(noise_world, info, &layer_bound);
                     estimate_safe = bound_safe &&
                         GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
-                            extra->input->bitdepth, output_end - output_begin, &smart_estimate, layer_bound);
+                            extra->input->bitdepth, output_end - output_begin, &smart_estimate, layer_bound, true);
                 }
 				if (!parameters_safe || !worlds_safe || !estimate_safe ||
 					(pre && pre->full_width > 0 && pre->full_height > 0 &&
@@ -2669,7 +2671,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				staged_world = *output_world;
 				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
 				err = RenderWorld(input_world, &staged_world, noise_world, info,
-				                  extra->input->bitdepth);
+				                  extra->input->bitdepth, nullptr, true);
 				render_complete = err == PF_Err_NONE;
 			}
 		}
