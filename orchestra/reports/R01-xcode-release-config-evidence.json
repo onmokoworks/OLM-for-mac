@@ -1,0 +1,2078 @@
+{
+  "build": [
+    {
+      "plugin": "ColorKeep",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/ColorKeep/Mac/ColorKeep.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/ColorKeep/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/ColorKeep/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/ColorKeep/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/ColorKeep/products/Release/ColorKeep.plugin/Contents/MacOS/ColorKeep are: x86_64 arm64",
+      "project_sha256": "7cb9b19ba2cb31aaeabd3b90f77f7610dd6dcc49391894928cd70cbc34035640",
+      "settings_log_sha256": {
+        "Debug": "ae8bab1d9beecb757d4ce5cc0c2cb2726fb8650328bdca5a2d63c6ef6f1a2fe2",
+        "Release": "e64e479cb3d9b138a52f875efbc2db13d34b29dac4a45be9e38ffdc6a393ded9"
+      }
+    },
+    {
+      "plugin": "OLMBlur",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMBlur/Mac/OLMBlur.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMBlur/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMBlur/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMBlur/products/Release/OLMBlur.plugin/Contents/MacOS/OLMBlur are: x86_64 arm64",
+      "project_sha256": "2856d2cf1c4dbab24c2ca0b459b5d837fc06a7d5f3ebcf77424749b1d2105f8d",
+      "settings_log_sha256": {
+        "Debug": "56ad816b99075f5d5d5701a21835e0c84aefb90869b323cf363720893e65c6be",
+        "Release": "1277ae4d651f62b29f529cb538e4947ec5d5c43264797f574477e02146ae8b59"
+      }
+    },
+    {
+      "plugin": "OLMColorKey",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMColorKey/Mac/OLMColorKey.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMColorKey/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMColorKey/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMColorKey/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMColorKey/products/Release/OLMColorKey.plugin/Contents/MacOS/OLMColorKey are: x86_64 arm64",
+      "project_sha256": "62c708cf1e988b080cd7124950c979ebe9384c89471bac1d6a23cf6294397824",
+      "settings_log_sha256": {
+        "Debug": "608d714783e8ea2c6092d90410bfef96691fb23d0fad5db5529b5cf057a61b00",
+        "Release": "bb324ab141da0f39079c0c348662142714d9e687ca773545a5979f08e98e76ec"
+      }
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMDirectionalBlur/Mac/OLMDirectionalBlur.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDirectionalBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDirectionalBlur/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDirectionalBlur/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDirectionalBlur/products/Release/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur are: x86_64 arm64",
+      "project_sha256": "ee60c520cf577a12ca6d6c374788d74e853db8d80e3009e0e302b95eae69c7ae",
+      "settings_log_sha256": {
+        "Debug": "743fcde2de7bd6b5b2d467c713dbf68d34a18816dddc4ed2f41102d38d96310f",
+        "Release": "09fc432605a9e67616badb7556e459a186b6c6108b07d640bcb195bbbed2eacb"
+      }
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDistanceGradation/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDistanceGradation/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDistanceGradation/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMDistanceGradation/products/Release/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation are: x86_64 arm64",
+      "project_sha256": "5036dc81b03faafc4fc02adf5adf691f870153ea7c8a1aa9909b868d60c84032",
+      "settings_log_sha256": {
+        "Debug": "2b311a9109144b4befdb46567e9b7a7785cde28f16b870494134b1857a541508",
+        "Release": "d2de5b5afa4ba1607b59f190d7bff963843a78ece48e0cc9ebc92061dd51c9b2"
+      }
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMKiraKira/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMKiraKira/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMKiraKira/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMKiraKira/products/Release/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira are: x86_64 arm64",
+      "project_sha256": "bd35217e7d96ddfcd2767e4cc71c2312b3a77284d4d3b2c606bcff93224ff6ad",
+      "settings_log_sha256": {
+        "Debug": "3c9332bf0d48b0394d2066e64ddf251945612bbba42c32e7ebc64da2a7db917d",
+        "Release": "c061b3b5be4b8a62d1b275c67c885e74c7508fa5030606713b3a6bde8bbb773b"
+      }
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMRadialBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMRadialBlur/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMRadialBlur/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMRadialBlur/products/Release/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur are: x86_64 arm64",
+      "project_sha256": "9b908f7d8b2f5ff29eb916f88771e06ed45e5e22560351443be068587fce40b8",
+      "settings_log_sha256": {
+        "Debug": "225f9ddefd252d2935cb05d0998a7b64499086c169a403b171878f75cefc341a",
+        "Release": "82b7906cb0767aeba608d333f40b8bab07d1b0981cfd7f2da96d08bdb3af4d4b"
+      }
+    },
+    {
+      "plugin": "OLMSmoother",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMSmoother/Mac/OLMSmoother.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother/products/Release/OLMSmoother.plugin/Contents/MacOS/OLMSmoother are: x86_64 arm64",
+      "project_sha256": "688d060e59da6c7d77c7554204a5b2af7253a439aea3a6300a3701f38cc19d46",
+      "settings_log_sha256": {
+        "Debug": "7ce73cbba57662947aa91057d00cba26bb3c9f91fafbaababd267bf51e3cddd8",
+        "Release": "4a27b95145ddb158f8c84792ca846b8177e500acfe7c53cef538fc0d1b757ec2"
+      }
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMSmoother2/Mac/OLMSmoother2.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother2/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother2/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother2/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMSmoother2/products/Release/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2 are: x86_64 arm64",
+      "project_sha256": "dff3f6a959d0ab3f228128d3bb5a87e5480b02755bf71ed3c44433e09afd534e",
+      "settings_log_sha256": {
+        "Debug": "9884c64acb4b8e8e2f72f3727b71906a95a41c4d63b65115455b0099eef6be08",
+        "Release": "e74df53eecf28371124bb0fed1696f72834c7463c0f9c7619865960f40d12502"
+      }
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "effective_flags": {
+        "Debug": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "0",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "NO",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        },
+        "Release": {
+          "GCC_INLINES_ARE_PRIVATE_EXTERN": "YES",
+          "GCC_INPUT_FILETYPE": "sourcecode.cpp.objcpp",
+          "GCC_MODEL_TUNING": "G5",
+          "GCC_OPTIMIZATION_LEVEL": "2",
+          "GCC_PFE_FILE_C_DIALECTS": "c objective-c c++ objective-c++",
+          "GCC_PREFIX_HEADER": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h",
+          "GCC_REUSE_STRINGS": "NO",
+          "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+          "GCC_THREADSAFE_STATICS": "NO",
+          "GCC_TREAT_WARNINGS_AS_ERRORS": "NO",
+          "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+          "GCC_VERSION_IDENTIFIER": "com_apple_compilers_llvm_clang_1_0",
+          "GCC_WARN_64_TO_32_BIT_CONVERSION": "NO",
+          "GCC_WARN_ABOUT_RETURN_TYPE": "YES",
+          "GCC_WARN_CHECK_SWITCH_STATEMENTS": "YES",
+          "GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS": "NO",
+          "GCC_WARN_MISSING_PARENTHESES": "YES",
+          "GCC_WARN_SHADOW": "NO",
+          "GCC_WARN_UNKNOWN_PRAGMAS": "YES",
+          "GCC_WARN_UNUSED_FUNCTION": "YES",
+          "GCC_WARN_UNUSED_LABEL": "YES",
+          "GCC_WARN_UNUSED_VARIABLE": "YES",
+          "OTHER_CFLAGS": " -ffp-contract=off -fno-fast-math",
+          "OTHER_CPLUSPLUSFLAGS": " -ffp-contract=off -fno-fast-math"
+        }
+      },
+      "flag_differences": {
+        "GCC_OPTIMIZATION_LEVEL": [
+          "0",
+          "2"
+        ],
+        "GCC_SYMBOLS_PRIVATE_EXTERN": [
+          "NO",
+          "YES"
+        ]
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj",
+        "-jobs",
+        "1",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMToonDilate/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMToonDilate/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMToonDilate/pch",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-configuration",
+        "Release",
+        "build"
+      ],
+      "exit_code": 0,
+      "lipo": "Architectures in the fat file: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/build/OLMToonDilate/products/Release/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate are: x86_64 arm64",
+      "project_sha256": "9656a175bfce30b939b84eeffa337c11cbadf489dcb78a4dc341d28c956511ce",
+      "settings_log_sha256": {
+        "Debug": "a0e374953a40e9c835ebdb4155b47e75756153a56219af880c9266532697e721",
+        "Release": "7cd9513513b9f998364cdaa9e60d5b8e6e02bc70f454464d750a0a8d7cf5310f"
+      }
+    }
+  ],
+  "fuzz": [
+    {
+      "plugin": "ColorKeep",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/colorkeep",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/colorkeep-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/colorkeep",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 22,
+        "classic_exact": 22,
+        "classic_mismatch": 43,
+        "classic_refusal": 35,
+        "pixel_mismatch_cases": 43,
+        "smart_exact": 100
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/ColorKeep.aex",
+        "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+        "candidate_sha256": "e07cabc6d29fbac2c1fbd6e3c0da6c4b618f045184f2203d103de3356e015098",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "0b2011534d05ef459a23d85f06a7f0dbf347a331005b01a498300d236c4c925c",
+        "dependencies_sha256": {
+          "mac/ColorKeep/ColorKeep.cpp": "8ee2aff5145528ffb7347f0db0760eb6aeb090c14b012b8e3cbf235f53d6cfb5",
+          "mac/ColorKeep/ColorKeep.h": "db7922d80175d608d662ed954a284a61ad32a126e102300d7388e9ed29f3c7a0",
+          "tools/emulation/test_colorkeep_installed_public_covering_matrix_20260812.py": "5c6fcda47bf849162ba29aac0865da558750fcf8ab09b9e3e7a2aee72c35e907",
+          "tools/fuzz/harnesses/colorkeep_main.cpp": "e35aff64dfcab10fb3a0109e2febbb8d31d9b821bfc156ab4849aa5b1d7da8d6",
+          "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_host": "retained real-SDK public covering host callbacks, linked to worktree production EffectMain",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "palette": "all 100 public colors supplied; counts 1/4/5/99/100 and random 1..100; mixed palette-member pixels",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "triage": {
+          "bypass": false,
+          "host_flags_control": false,
+          "sanitizers": false,
+          "trace": true
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 0,
+          "input_sha256": "e99780567c9ce233fe369420cc46337c417a13979476627be276756b8371b886",
+          "depth": 8,
+          "geometry": [
+            21,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 1596,
+              "actual_word_hex": "ff",
+              "different_bytes": 191,
+              "different_words": 191,
+              "expected_bytes": 1596,
+              "expected_word_hex": "00",
+              "first_byte": 8,
+              "first_word": 8
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "7f7bec60ea3ac177715f65c77d665bdff3c5e644344cb314d9634f0d136bb1c6",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "be5b86a6fc54049650f4bd248939c4edbe6b67d66f8bc3e36af5d483fafe0fbc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "0e852ed9e7b92a5bb6e41219b94ac71b4e8da73bcc21aab91f15b6dee53d0040"
+    },
+    {
+      "plugin": "OLMBlur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmblur",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmblur-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmblur",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 75,
+        "aex_classic_reject": 25,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 3,
+        "classic_exact": 3,
+        "classic_refusal": 97,
+        "pixel_mismatch_cases": 0,
+        "smart_exact": 100
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+        "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+        "candidate_sha256": "671fb8033e8c9825bd90e4b6dec0b2b15c66b3976285b3a5a289076dd10089c3",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+        "dependencies_sha256": {
+          "core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+          "core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+          "core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+          "core/olmblur_worker16_nonlegacy.cpp": "2a64c0b999acb347e4a9c5d99faee97491a9b1b7db89372e5251f852b5b60c3e",
+          "core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+          "core/olmblur_worker32_nonlegacy.cpp": "993e119bde5c877a8086fda37dd3bd0aa69a88f3ab7ed8ca32baf9fdf17db3e4",
+          "core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+          "core/olmblur_worker_orchestration.cpp": "c36db12f84bfd78ba425f4196dcddaedc5c87bc207ac2d3ca707a9dcb0f29023",
+          "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+          "mac/OLMBlur/OLMBlur.cpp": "b91706aff22b1aae3c2f4c7bfec719a73c27647b4f65f5739deb0f2f502fc08b",
+          "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+          "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+          "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+          "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {},
+      "full_report_sha256": "11cc9a896743f728eac0c9bfc4fde6e213c0163433fb11e70cdfdc1183ccf87e"
+    },
+    {
+      "plugin": "OLMColorKey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmcolorkey",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmcolorkey-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmcolorkey",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 0,
+        "classic_mismatch": 100,
+        "pixel_mismatch_cases": 100,
+        "smart_exact": 100
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+        "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+        "candidate_sha256": "31985fd8326a95a19820816c9f5ab4698802588c0ece1add235e8cab4351520f",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+        "dependencies_sha256": {
+          "core/x86_float.h": "326110099b50e5f62b79e5a69f12991e01782ba7d283b48b2972a1ec35e64bba",
+          "mac/OLMColorKey/OLMColorKey.cpp": "8dcf692569fbcd03269a509930a9a577ee1149234d3b9e962d711c616f9ef175",
+          "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+          "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+          "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "triage": {
+          "bypass": false,
+          "host_flags_control": false,
+          "sanitizers": false,
+          "trace": true
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 0,
+          "input_sha256": "8d00d974de497f8bf84256d0e8f3b0ebe26b5f5ba7bd41d0d1f6d219d3c8ba07",
+          "depth": 8,
+          "geometry": [
+            21,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 1596,
+              "actual_word_hex": "93",
+              "different_bytes": 1461,
+              "different_words": 1461,
+              "expected_bytes": 1596,
+              "expected_word_hex": "00",
+              "first_byte": 1,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "8d00d974de497f8bf84256d0e8f3b0ebe26b5f5ba7bd41d0d1f6d219d3c8ba07",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "bfd6d535131a45e8a31340082147c4928edd44f2e05fe127081a1900b3cc0edc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "b22455acf67f8a0cd902284acfa06beaadf2a40de30beaa94693345024d5c5e0"
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmdirectionalblur",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmdirectionalblur-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmdirectionalblur",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 0,
+        "classic_mismatch": 98,
+        "classic_refusal": 2,
+        "pixel_mismatch_cases": 98,
+        "smart_exact": 98,
+        "smart_refusal": 2
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+        "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "candidate_sha256": "877a4581e1192b081b4f6939bcbe7f0a86c3563f0ee668e207d72c16d32e4bfe",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+        "dependencies_sha256": {
+          "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+          "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+          "core/dblur_rotate.cpp": "da531b705676b046221d346385c5e8664cede3986f650d4d42ecbc2e68129599",
+          "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "1b4c06d9e981b3c35e8c53da643bcda772fb57947385fb1e1894ec7855d8fb62",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+          "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 0,
+          "input_sha256": "d92bed44a22b2c91863ac066e4bcf480761cd04327f74d610968d4fee9094c91",
+          "depth": 8,
+          "geometry": [
+            21,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 1596,
+              "actual_word_hex": "a9",
+              "different_bytes": 382,
+              "different_words": 382,
+              "expected_bytes": 1596,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "b00fc2b2d7915cc603b7c203c0c31d551258cdbb5170e550ba6e0a6c0169cc83",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "bfd6d535131a45e8a31340082147c4928edd44f2e05fe127081a1900b3cc0edc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "5feda463a70b79c016adbe884c1bab8138c3c4c00d01d2f82d1c94a2701f3a67"
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmdistancegradation",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmdistancegradation-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmdistancegradation",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_budget": 2,
+        "aex_classic_ok": 100,
+        "aex_ok": 95,
+        "aex_reject": 3,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 95,
+        "aex_smart_reject": 3,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 99,
+        "pixel_mismatch_cases": 99,
+        "smart_exact": 93,
+        "smart_refusal": 3,
+        "smart_uncompared": 4
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+        "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+        "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+        "candidate_sha256": "f92b5c063bbcfc2f8347fc59381d7945275c6417eccfe51efbe95a7fa109b55a",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+        "dependencies_sha256": {
+          "core/olmdistancegradation_fieldgen.cpp": "c4daf41e1aed3653cc5645345c2d4f8c5be3bed3c2e28c37de9a47f10df76510",
+          "core/olmdistancegradation_fieldgen.h": "04957938492a046e638f2bf54f9ae346b1fd7bbd8abd675da13372267ed6608b",
+          "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "93e70987a6f0eabc36bda4f351a6d8d8972e8fe6b61cf81add876119e4eff7a0",
+          "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+          "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+          "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+          "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+          "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [
+          {
+            "builder_default": 0.0,
+            "sampled_default": 1,
+            "slot": 2
+          }
+        ],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 0,
+          "input_sha256": "32a8b9221baa3614ad4df2573cfcb85b783b705ebb7886345dea471b08f30c71",
+          "depth": 8,
+          "geometry": [
+            21,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 1596,
+              "actual_word_hex": "b4",
+              "different_bytes": 1065,
+              "different_words": 1065,
+              "expected_bytes": 1596,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "ffa38849ddf355ff0469f36588a62c547b8564db93446f1f490c168c9ca9454b",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "5a345b75f2476093daf0c22154c5849b06c12dfa080b8c2cc5a7e9e772a70023",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "65a9e6084272381f8c6027de16971ebe8554cabd9a276b00e2d3457ec527e7f1"
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmkirakira",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmkirakira-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmkirakira",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 97,
+        "aex_reject": 3,
+        "aex_smart_ok": 97,
+        "aex_smart_reject": 3,
+        "both_routes_exact": 0,
+        "classic_mismatch": 16,
+        "classic_refusal": 84,
+        "pixel_mismatch_cases": 16,
+        "smart_exact": 97,
+        "smart_refusal": 3
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+        "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+        "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+        "candidate_sha256": "02f39ef0b805c97692a55707defe1dde401236134bfdcfb7dfb4b6510932a153",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+        "dependencies_sha256": {
+          "mac/OLMKiraKira/OLMKiraKira.cpp": "8502957bb0d7f31edc5f616b0415aefd33a9f0af36d28d6170edef49f9819072",
+          "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+          "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+          "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+          "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [
+          {
+            "builder_default": 0.10000000149011612,
+            "sampled_default": 1.0,
+            "slot": 5
+          }
+        ],
+        "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 2,
+          "input_sha256": "e1555855b414b299e3598fe9bce776291bd9842184b93b599cbd98c7fcacb2f4",
+          "depth": 32,
+          "geometry": [
+            10,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 3040,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 2023,
+              "different_words": 760,
+              "expected_bytes": 3040,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0",
+              "ERROR": "0"
+            },
+            "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "26574bb8c82e7538c09b9ff1524706bd5088c740c6a080af83db4d8bf2e5255e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "45d0a135757eeb21be4c980d445a7cd5dcef1044454a79d66d5485f6ed2b3043"
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/radialblur",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/radialblur-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/radialblur",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_budget": 2,
+        "aex_classic_ok": 100,
+        "aex_ok": 84,
+        "aex_reject": 14,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 84,
+        "aex_smart_reject": 14,
+        "both_routes_exact": 0,
+        "classic_mismatch": 36,
+        "classic_refusal": 64,
+        "pixel_mismatch_cases": 36,
+        "smart_exact": 77,
+        "smart_refusal": 21,
+        "smart_uncompared": 2
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+        "calibration": [
+          {
+            "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "depth": 8,
+            "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "depth": 16,
+            "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+            "family": 1,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+            "depth": 32,
+            "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+            "family": 1,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "depth": 8,
+            "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "depth": 16,
+            "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+            "family": 2,
+            "matches_retained": true,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          },
+          {
+            "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+            "depth": 32,
+            "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+            "family": 2,
+            "matches_retained": false,
+            "oracle": {
+              "guards_intact": true,
+              "session_clean": true,
+              "status": "ok"
+            }
+          }
+        ],
+        "candidate_bypass": "",
+        "candidate_sanitize": false,
+        "candidate_sha256": "a2a048773d5779c22ef899586f34b2b3fdc8b959a73d08d5532e23307d8e3638",
+        "candidate_source_sha256": "ec002eced181a0fcbda78cb8f1242ab9a9958df08697b716b80053b59de3242f",
+        "case_timeout_seconds": 10,
+        "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+        "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+        "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+        "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+        "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+        "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+        "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+        "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+        "source_sha256": "ec002eced181a0fcbda78cb8f1242ab9a9958df08697b716b80053b59de3242f",
+        "stage_support": "session protocol + public EffectMain harness expose final raw only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "ucrtmath_sha256": {
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+      },
+      "first_mismatches": {
+        "classic": {
+          "index": 0,
+          "input_sha256": "ea60db2901eda70ba05587cf93b9897127ef0fa55bd6dc3231484f0084d231f3",
+          "depth": 8,
+          "geometry": [
+            21,
+            19
+          ],
+          "result": {
+            "diff": {
+              "actual_bytes": 1596,
+              "actual_word_hex": "1a",
+              "different_bytes": 1589,
+              "different_words": 1589,
+              "expected_bytes": 1596,
+              "expected_word_hex": "00",
+              "first_byte": 4,
+              "first_word": 4
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "c7f4fcec3264b34396cdaa0e5584b6cb715e402d24412cb27dcac1dc8b89515b",
+            "status": "mismatch"
+          },
+          "oracle": {
+            "guards_intact": true,
+            "raw_sha256": "bfd6d535131a45e8a31340082147c4928edd44f2e05fe127081a1900b3cc0edc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      },
+      "full_report_sha256": "86019a0cf39f3edb2c724501997d4d624358a6a7a81362efc3d3d492a26cba3b"
+    },
+    {
+      "plugin": "OLMSmoother",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmsmoother",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmsmoother-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmsmoother",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_ok": 65,
+        "aex_reject": 35,
+        "both_routes_exact": 65,
+        "classic_exact": 65,
+        "classic_refusal": 35,
+        "pixel_mismatch_cases": 0,
+        "smart_exact": 65,
+        "smart_refusal": 35
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+        "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+        "candidate_sha256": "0cb1ff8e8f31ea22f6b9fa787c505c1e221e2ac675b7052641772f48d83eb905",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+        "dependencies_sha256": {
+          "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+          "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+          "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "6b64edfc16c5e513ca9fe9e6bdffe83bbb7c8debac80082668ff14c33b80a129",
+          "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+          "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+        "mac_stride": "shared randomly padded input/output stride",
+        "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+        "oracle_render_path": "classic",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "classic"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "absent; Mac Smart wrapper is explicitly compared to original Classic"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {},
+      "full_report_sha256": "bed4c8e5f1bc95ee314b0561e05bce6ed41e6c3590ff01e5bfd0f4d4858a15da"
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmsmoother2",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmsmoother2-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmsmoother2",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 0,
+        "classic_refusal": 100,
+        "pixel_mismatch_cases": 0,
+        "smart_exact": 100
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother2.aex",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "candidate_sha256": "1f3c1cbe39154fe6049f383fee44498f987e5db9e55f0104d82f063f4891b541",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "f07c33d4026db5e63ab823f7831f49a0992e889836a2161e6712990bad91587f",
+        "dependencies_sha256": {
+          "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
+          "mac/OLMSmoother2/Mac/OLMSmoother2_decode_lut_10000.h": "3f42b42800e4ea1542210f4a678e36777d8707132b13c9447213a18f2e9e3ba2",
+          "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
+          "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "5834807da2874ea641b6e01b8cade7ffe084a06bff1d25e785163c8d778cff5e",
+          "tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp": "22636eb61f2893fbc6b644b6326410a61a6b7eb6b0487e057d774cb3558fe3bc",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "mac_host": "existing public key/gamma CLI SDK shim, production EffectMain; Classic added using same params/worlds",
+        "mac_stride": "shared randomly padded input/output stride plus 32-byte guards",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "no-write",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {},
+      "full_report_sha256": "5cdcd789a4986ff9e35468f2ee18c00739d2db59d2817aeed357df94ddb4b30b"
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--seed",
+        "1",
+        "--n",
+        "100",
+        "--jobs",
+        "1",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/fuzz/olmtoondilate",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/olmtoondilate-fuzz.json",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R01-xcode-release-config/orchestra/state/R01-xcode-release-config/corpus/olmtoondilate",
+        "--shrink-attempts",
+        "0"
+      ],
+      "exit_code": 0,
+      "status": "complete",
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 0,
+        "classic_no_write": 100,
+        "pixel_mismatch_cases": 0,
+        "smart_exact": 100
+      },
+      "cases": 100,
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+        "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+        "candidate_sha256": "608cb4d56f2b3624a209871ea71511f65b6d814f21ad2fea02f9118af57e7ed8",
+        "case_timeout_seconds": 10,
+        "classic_owner": "Production PF_Cmd_RENDER is an intentional successful no-op. Compare untouched destinations against their own initial fill (Mac 0xee, AEX zero); no numerical Classic output exists.",
+        "classic_owner_evidence": "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub",
+        "declarations_sha256": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc",
+        "dependencies_sha256": {
+          "mac/OLMToonDilate/OLMToonDilate.cpp": "6be071fd3fb875b1189281cc0c74058b981e421cc01b339b1069e8423ca0c2fb",
+          "mac/OLMToonDilate/OLMToonDilate.h": "40eef7a6c652dbd3ef77bc3a5a0eddcc3cf59796599ab53f2c245f8c6770ff70",
+          "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp": "17fcace86b9d5c95fe6d4d136a5df04f7659f60d39ac45296e8ecf335df10f00",
+          "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+          "tools/fuzz/harnesses/toondilate_main.cpp": "0d0704935eb0aa31d4d6e8dcc70a633648ebe79479ddb3c463d017577bacad51",
+          "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+          "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "no-write",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+        "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "first_mismatches": {},
+      "full_report_sha256": "811247b31239f9197db29778210441814381248e502e60c226a9106072779f34"
+    }
+  ]
+}
