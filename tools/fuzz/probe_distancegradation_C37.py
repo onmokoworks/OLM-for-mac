@@ -68,6 +68,19 @@ static bool is_admitted_pf32_smart_bilateral_general_beta(const DGParams &p, lon
 
 
 def matrix(a, mode):
+    if mode == 'vector-radius':
+        for w,h,radius in ((7,7,3),(15,9,3),(16,9,3),(17,9,3),(33,19,4),(56,42,12),(67,65,32)):
+          pixels=b''.join(struct.pack('<4f',(0,.5,1,0,.25,1,0)[(x+2*y)%7],.25,.5,.75) for y in range(h) for x in range(w))
+          for owner in (1,2,3):
+           for render in (1,2):
+            for bg in (0,1):
+             for interp in (1,2,3):
+                c=dict(geometry=[w,h],depth=32,profile='sdr',parameters=a.defaults(w,h),pixels=pixels,input_padding=3,output_padding=5)
+                values={1:(owner+bg)%2,2:owner,3:4,4:3,5:render,6:bg,7:[255,28,53,238],8:[255,16,160,48],9:interp,10:2.25,11:5,12:radius}
+                for q in c['parameters']:
+                    if q['slot'] in values:q['value']=values[q['slot']]
+                yield f'{w}x{h}/r{radius}/owner{owner}/render{render}/bg{bg}/interp{interp}',c
+        return
     if mode == 'finite-bilateral':
         for label, c in extended_matrix(a, True):
             # Finite domains, all ownership/compose states; vary bilateral geometry.
@@ -102,7 +115,9 @@ def negative(a, mode):
              ('radius-two',{12:2},None),('radius-33',{12:33},None),
              ('infinity',{},(1,0x7f800000)),('nan',{},(1,0x7fc12345)),
              ('mask-overflow',{},(0,0x4b008081))]
-    if mode=='finite-bilateral':
+    if mode=='vector-radius':
+        changes=[('power',{9:4,10:2.25},None),('radius-two',{12:2},None),('radius-33',{12:33},None),*changes[4:],('extended',{},(1,0xc0800000))]
+    elif mode=='finite-bilateral':
         changes=[('power',{9:4,10:2.25},None),('radius-two',{12:2},None),
                  ('median',{11:4,12:1},None),*changes[4:]]
     else:changes.append(('extended',{},(1,0xc0800000)))
@@ -113,6 +128,11 @@ def negative(a, mode):
         if word:
             data=bytearray(cc['pixels']);struct.pack_into('<I',data,word[0]*4,word[1]);cc['pixels']=bytes(data)
         yield label,cc
+    if mode=='vector-radius':
+        cc=copy.deepcopy(c);cc['geometry']=[512,512];cc['pixels']=struct.pack('<4f',.5,.25,.5,.75)*(512*512)
+        for q in cc['parameters']:
+            if q['slot']==12:q['value']=32
+        yield 'work-budget',cc
 
 
 def main():
@@ -145,7 +165,7 @@ def main():
         wd=td/'case';wd.mkdir()
         cases=((i,a.generate(args.seed,i)) for i in args.index) if args.index else (negative(a,args.mode) if args.negative else matrix(a,args.mode))
         for label,c in cases:
-            oracle,expected=a.oracle(c,wd,deadline,'smart')
+            oracle,expected=({'status':'not_requested'},b'') if args.negative else a.oracle(c,wd,deadline,'smart')
             bs,br,bg=old.candidate(c,wd,'smart',deadline)
             ns,nr,ng=cur.candidate(c,wd,'smart',deadline)
             ss,sr,sg=san.candidate(c,wd,'smart',deadline)

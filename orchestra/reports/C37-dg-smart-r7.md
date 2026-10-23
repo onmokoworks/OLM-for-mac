@@ -1,9 +1,9 @@
 status: partial
 
 summary:
-- Closed scalar Bilateral Power admission; no rendering arithmetic changed in cluster 1.
+- Closed two admission clusters: scalar Bilateral Power and finite radius-one Bilateral.
 - Seed1 remains 290 exact / 0 mismatch / 3 refusal / 7 uncompared, all prior exact bytes preserved.
-- Fresh seed37 case73 improves refusal→exact; independent300 exact, negative8 unchanged refusals, sanitizer equality throughout.
+- Fresh seed37 cases73/22 improve refusal→exact; independent300+1944 exact, negative8+6 unchanged refusals, sanitizer equality throughout.
 - Corpus145 remains exact without expectation edits. Other Bilateral domains remain under investigation.
 
 facts:
@@ -55,3 +55,43 @@ Campaign reruns on promoted source measure current counts; the committed evidenc
 
 next:
 - Continue finite-input radius-one Bilateral matrix and generic-radius first-stage investigation. No production gate or work budget is relaxed for these pending domains.
+
+Cluster 2 — finite radius-one Bilateral (base `99b73247`):
+
+facts:
+- Re-measured seed1 after cluster1:290/0/3/7. All300 Smart result dictionaries remain identical to the initial campaign, not just the exact count.
+- Gate-off seed37 case22 (15x4, signed samples, Linear, Bilateral Size0) equals the original output with sanitizer equality. Radius0 is the original effective radius1 operation, already restored by C14/C27.
+- General input-domain rule now permits finite extended samples through the existing radius-one Bilateral admission predicate. Positive mask-conversion overflow and nonfinite samples remain refused; Power and larger Bilateral radii retain their previous source-domain guards. No output arithmetic or filter dispatch changes in this cluster.
+- Independent1944 cases all change refusal→exact and are sanitizer-identical. Nine finite profiles include signed/HDR RGB and alpha, uniform masks, maximum finite RGB/negative alpha, mask-conversion edge8421504, subnormals/cutoff neighbors;7x1/1x7/17x9 geometries; all ownership/RGB-or-Layer/background states; Constant/Linear/Sphere; Size0/1; odd padding. Both source pattern geometries from the existing C14 matrix are retained.
+- Six unchanged-refusal controls:Power2.25, radius2, effective Median, infinity, NaN and positive mask overflow. Negative controls test admission only and intentionally do not invoke an original that supplies no required reference.
+- All600 campaign and145 corpus before/current/sanitized comparisons pass. Seed1:290 unchanged exact/10 unchanged nonexact. Seed37:281 unchanged exact/18 unchanged nonexact/1 newly exact(case22). This is the180-second verification reference set; initial10-second timeout201 is separately accounted for above. Corpus145 remains byte/status-identical and exact; no rebaseline edits.
+- Existing beta tests:9 run, OK (16.687s). No sanitizer diagnostic or disagreement. `git diff --check` passes.
+
+| Cluster2 Smart corpus | Before | After | Expectation edits |
+|---|---|---|---|
+| Saved145 |145 exact|145 exact, identical bytes/status|None|
+
+inference:
+- The finite-source restriction was conservative after ownership/mask and radius-one filter repairs. This promotion reuses those general operations; it does not justify nonfinite effective filters, larger-radius extended inputs or Power source-domain promotion.
+
+changed_files (cluster2):
+- `mac/OLMDistanceGradation/OLMDistanceGradation.cpp`
+- `tools/fuzz/probe_distancegradation_C37.py`
+- `reports/fuzz/olmdistancegradation_C37_finite.json`
+- `orchestra/reports/C37-dg-smart-r7.md`
+
+verify (additional executed commands):
+```sh
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 1 --jobs 1 --shrink-attempts 0 --scratch "$s/after-power" --corpus "$s/after-power-corpus" --report "$s/after-power.json"
+python3 tools/fuzz/probe_distancegradation_C37.py --mode finite-bilateral --scratch "$s/finite" --report "$s/finite.json" --write-source "$s/finite.cpp" --require-exact
+python3 tools/fuzz/probe_distancegradation_C37.py --mode finite-bilateral --before-ref 99b73247 --negative --scratch "$s/finite-negative" --report "$s/finite-negative.json"
+```
+For the combined cluster1+2 source, the executed generation was `candidate(SOURCE.read_text(),'finite-bilateral')` from `probe_distancegradation_C37` while HEAD was99b73247, written to `$s/finite-final.cpp`. Reproduce it by adding `--before-ref 99b73247 --write-source "$s/finite-final.cpp"` to the independent matrix command (same domain and expected1944 exact).
+```sh
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --before-ref 99b73247 --candidate-source "$s/finite-final.cpp" --campaign "$s/base.json" --campaign "$s/fresh.json" --corpus --strict-admission --case-timeout 180 --scratch "$s/finite-verify" --report "$s/finite-verify.json"
+PATH="$s/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_olmdistancegradation_*beta_20260820.py'
+```
+Expected:only seed37 case22 changes in this verification; corpus145 unchanged; tests9 pass.
+
+next:
+- Generic-radius scalar/vector candidate has passed its independent matrix and import-free IPP leaf check; full campaign regression and negative admission checks are pending. No existing work budget has changed.
