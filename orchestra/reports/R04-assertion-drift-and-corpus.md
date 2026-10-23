@@ -128,3 +128,5 @@ Expected: pytest 39 tests pass; stdlib loader 21 tests pass; corpus audit `chang
 next:
 
 Orchestrator: merge alongside R03's link repairs and rerun the aggregate generic gate. Resolve the Radial original-worker guest-stop boundary and complete the supplemental exact-output assertions before marking R04 done. Existing Kira Classic mismatches require a separate ticket; no production fixes or evidence suppression belong to R04.
+
+orchestrator note: the supplemental driver now asserts Radial seed1/148 (C49) exact under F46 and accepts only an original guest stop for 62/104/235. Orchestrator run: 148/104/235 exact, 62 uncompared (oracle stop); ColorKeep 48, Blur 1, Distance 1 exact. Unblocked.
