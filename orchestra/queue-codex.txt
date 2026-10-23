@@ -63,3 +63,4 @@ F47b-native-plugin-host-render
 R01-xcode-release-config
 C45-original-oob-noise-table
 F47c-native-plugin-smart-render
+C46-radial-smart-r8
