@@ -55,3 +55,9 @@ OLM plugin code, because it may become its own repo later.
 - Never commit Microsoft binaries or code derived from disassembling them. This ticket is
   AMD-derived only; for UCRT, observe its behaviour, do not copy its code.
 - Keep committed results under 5 MB. Stop rule applies.
+
+## Resume note (orchestrator, 2026-10-23)
+The previous run stopped at the first atan2f mismatch because of the old step-2 wording. That wording has changed: debug and fix now.
+- atan2f: 650/9178 mismatches; the first is (00000001, 00000001), candidate e12aaaab vs UCRT 3f490fdb. Your own candidate cause is unsigned negation; check it.
+- Then continue with steps 2-4: the powf targeted run, the full sweeps (expf 2^32, atan2f/powf 10^8, both modes), and the survey.
+- Rebuild the AMD checkout in scratch if you need it (pinned commit). Keep everything you already committed.
