@@ -52,3 +52,5 @@ F43c-ucrtmath-ms-pow
 F45-integrate-ms-double
 F46-integrate-ucrt-pow
 C39-seed45-residual-mismatches
+C40-dg-seed45-mismatch
+C41-radial-seed45-mismatch
