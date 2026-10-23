@@ -1,0 +1,5819 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "cases": [
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000001",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000001",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "40000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "40000000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "00000000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "c0000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "c0000000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "3f800000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "bf800000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000002",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000002",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": false,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "add",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000001",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000001",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ff7fffff",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000001",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000001",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ff7fffff",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "40000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "40000000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff7fffff",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "c0000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "c0000000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff7fffff",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "bf800000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "3f800000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff7fffff",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "00000000",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": false,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "sub",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "bf800000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000001",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "3f800000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000001",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "80000001",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff7fffff",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "80000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "80000001",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "34ffffff",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "34ffffff",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "00000000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "80000000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff7fffff",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "34ffffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "34ffffff",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7f800000",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": false,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "mul",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "bf800000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "00200000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00200000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "3f800000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "80200000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "80200000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "80000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "80000001",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "3f800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff7fffff",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "3f800000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "00000000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "80000000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7f800000",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc00000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc00000",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": false,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "00000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "80000000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "00000001"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": false,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "div",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "00000000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "80000000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "3f800000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "bf800000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "00000001",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "7f7fffff",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "7f800000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "ff800000",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "7fc12345",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "7f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "ffc12346",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "7f812345",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    },
+    {
+      "aex": "00000000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "00000000",
+      "operation": "min",
+      "right": "00000000"
+    },
+    {
+      "aex": "80000000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "80000000",
+      "operation": "min",
+      "right": "80000000"
+    },
+    {
+      "aex": "3f800000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "3f800000",
+      "operation": "min",
+      "right": "3f800000"
+    },
+    {
+      "aex": "bf800000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "bf800000",
+      "operation": "min",
+      "right": "bf800000"
+    },
+    {
+      "aex": "00000001",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "00000001",
+      "operation": "min",
+      "right": "00000001"
+    },
+    {
+      "aex": "7f7fffff",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "7f7fffff",
+      "operation": "min",
+      "right": "7f7fffff"
+    },
+    {
+      "aex": "7f800000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "7f800000",
+      "operation": "min",
+      "right": "7f800000"
+    },
+    {
+      "aex": "ff800000",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ff800000",
+      "operation": "min",
+      "right": "ff800000"
+    },
+    {
+      "aex": "7fc12345",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "7fc12345",
+      "operation": "min",
+      "right": "7fc12345"
+    },
+    {
+      "aex": "ffc12346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ffc12346",
+      "operation": "min",
+      "right": "ffc12346"
+    },
+    {
+      "aex": "7f812345",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "7f812345",
+      "operation": "min",
+      "right": "7f812345"
+    },
+    {
+      "aex": "ff812346",
+      "exact": true,
+      "left": "ff812346",
+      "macos_x86_64": "ff812346",
+      "operation": "min",
+      "right": "ff812346"
+    }
+  ],
+  "commands": [
+    [
+      "clang++",
+      "-arch",
+      "x86_64",
+      "-std=c++17",
+      "-O2",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C25-dblur-smart-r4/orchestra/state/C25-dblur-smart-r4/sse_egqmsdtc/probe.cpp",
+      "-o",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C25-dblur-smart-r4/orchestra/state/C25-dblur-smart-r4/sse_egqmsdtc/x86"
+    ],
+    [
+      "/usr/bin/arch",
+      "-x86_64",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C25-dblur-smart-r4/orchestra/state/C25-dblur-smart-r4/sse_egqmsdtc/x86"
+    ]
+  ],
+  "instructions": [
+    {
+      "address": "0x1800020f0",
+      "bytes": "f30f58de",
+      "mnemonic": "addss",
+      "operands": "xmm3, xmm6"
+    },
+    {
+      "address": "0x180002055",
+      "bytes": "f30f5ceb",
+      "mnemonic": "subss",
+      "operands": "xmm5, xmm3"
+    },
+    {
+      "address": "0x180002113",
+      "bytes": "f30f59fe",
+      "mnemonic": "mulss",
+      "operands": "xmm7, xmm6"
+    },
+    {
+      "address": "0x180002103",
+      "bytes": "f30f5ef3",
+      "mnemonic": "divss",
+      "operands": "xmm6, xmm3"
+    },
+    {
+      "address": "0x180006c21",
+      "bytes": "f30f5dd9",
+      "mnemonic": "minss",
+      "operands": "xmm3, xmm1"
+    }
+  ],
+  "probe_sha256": "64cadb386c0944ceaedfdd8f536ef9184fe4dc2e657d2bc444b24f9da1bc8f1e",
+  "scope": "Original AEX instructions in Python Unicorn vs macOS x86_64 execution on Apple Silicon (Rosetta); no native Windows claim",
+  "source_sha256": "b0a2546601d89a2e1ad7bc861e39246d006d0dc0690c291a30d3c68bba3479f4"
+}

@@ -36,8 +36,10 @@ int main(){
 '''
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--report',type=Path,required=True);args=p.parse_args()
-    scratch=ROOT/'orchestra/state/C02-dblur-smart';scratch.mkdir(parents=True,exist_ok=True)
+    p=argparse.ArgumentParser();p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--scratch',type=Path,default=ROOT/'orchestra/state/C02-dblur-smart')
+    args=p.parse_args()
+    scratch=args.scratch.resolve();scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),
         ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1')
     aex=ROOT.parent.parent/'plugins_2025/OLMDirectionalBlur.aex'

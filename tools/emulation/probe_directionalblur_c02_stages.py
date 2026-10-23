@@ -158,8 +158,11 @@ def run_fixture(case, directory, aex, expf_leaf='double-round',powf_leaf='double
                 original=impl
                 def impl(uc,args):
                     argument=struct.pack('<f',self.read_xmm_f32(0)).hex()
+                    return_address=struct.unpack('<Q',self.read_bytes(
+                        uc.reg_read(UC_X86_REG_RSP),8))[0]
                     result=original(uc,args)
                     trace.setdefault('expf_calls',[]).append({'argument':argument,
+                        'return_address':hex(return_address),
                         'result':struct.pack('<f',self.read_xmm_f32(0)).hex()})
                     return result
             return super().register_import_impl(name,impl)
