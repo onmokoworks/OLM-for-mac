@@ -1,0 +1,42 @@
+{
+  "function": "pow",
+  "count": 100000000,
+  "modes": [
+    {
+      "mode": 0,
+      "mismatches": 0,
+      "first_a_b_oracle_native": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ]
+    },
+    {
+      "mode": 1,
+      "mismatches": 0,
+      "first_a_b_oracle_native": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ]
+    }
+  ],
+  "seconds": 7.657,
+  "exits": [
+    0,
+    0
+  ],
+  "sha256": {
+    "/Users/onmk/.cache/olm-emu/ucrt/10.0.28000.2705/ucrtbase.dll": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+    "ucrtmath/ms/pow.c": "b39a37d25a68aed0dbb40d1660487462c96e4cdf086d3a55a1d7bfe98ec33121",
+    "ucrtmath/ms/pow_tables.h": "b1fcbc68a82bcce87ba3de206df62b3b6e2c00e5d93815fe6c4ce955933154b8",
+    "ucrtmath/ms/pow_native.c": "8fff2861df33990041977e4e7ea7a04c9a4632306c5977bb025a5df76a181c10",
+    "ucrtmath/ms/pow_compare.c": "bb6e039f50f11ba3ed76996e3c0155efcf9650adae887b4839c19cb8cb30d859",
+    "ucrtmath/ms/pow_check.py": "bfc72cb246aca27bfd69929ca5e30f89428afca4df621abf6b313bc4b28bbfb4",
+    "tools/ucrt_math_probe/rosetta/oracle.c": "6f7abbc223a2df9fa40c7d9b1f9c5f6b4ca00964050df57ac6a836f9f2513035",
+    "orchestra/state/F43c-ucrtmath-ms-pow/build/native": "83e65d90cb8e955056a590fadd7354443494778ad583d75cd3d395f1c64964d4",
+    "orchestra/state/F43c-ucrtmath-ms-pow/build/compare": "a9cbbf9abf5db324cae44a6a391597f4a42a6c93708f7b635717f972296afea3"
+  }
+}

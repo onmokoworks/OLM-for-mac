@@ -1,4 +1,4 @@
-# OLM-internal UCRT float math
+# OLM-internal UCRT math
 
 The double sin/cos/exp implementation is documented in [README-double.md](README-double.md).
 
@@ -108,3 +108,6 @@ observations alone, is the numerical justification for the retained constants.
 
 Follow-up tickets must add the worker import shim (F30-style) and then the Mac
 call sites (F31-style), with AEX boundary and plugin regression evidence.
+
+Double `ucrt_pow` is documented separately in [pow.md](pow.md), including both
+mode algorithms, table provenance, boundary corpus, and qualification commands.

@@ -10,6 +10,8 @@ typedef enum { UCRT_NOFMA = 0, UCRT_FMA = 1 } ucrt_mode;
 double ucrt_sin(double x, ucrt_mode mode);
 double ucrt_cos(double x, ucrt_mode mode);
 double ucrt_exp(double x, ucrt_mode mode);
+/* Raw binary64 return bits, same floating-point environment contract. */
+double ucrt_pow(double x, double y, ucrt_mode mode);
 float ucrt_sinf(float x, ucrt_mode mode);
 float ucrt_cosf(float x, ucrt_mode mode);
 float ucrt_log2f(float x, ucrt_mode mode);

@@ -10,4 +10,5 @@ for f in expf powf atan2f tables; do
 done
 clang -arch "$arch" -std=c11 -O2 -ffp-contract=off -fno-fast-math -I"$src/include" -c "$src/ms/float.c" -o "$out/ms-float.o"
 clang -arch "$arch" -std=c11 -O2 -ffp-contract=off -fno-fast-math -I"$src/include" -c "$src/ms/double.c" -o "$out/ms-double.o"
-ar rcs "$out/libucrtmath.a" "$out/expf.o" "$out/powf.o" "$out/atan2f.o" "$out/tables.o" "$out/ms-float.o" "$out/ms-double.o"
+clang -arch "$arch" -std=c11 -O2 -ffp-contract=off -fno-fast-math -I"$src/include" -c "$src/ms/pow.c" -o "$out/ms-pow.o"
+ar rcs "$out/libucrtmath.a" "$out/expf.o" "$out/powf.o" "$out/atan2f.o" "$out/tables.o" "$out/ms-float.o" "$out/ms-double.o" "$out/ms-pow.o"

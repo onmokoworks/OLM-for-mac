@@ -1,0 +1,117 @@
+[
+  {
+    "test": "correct",
+    "exit": 0,
+    "result": {
+      "function": "pow",
+      "count": 1,
+      "modes": [
+        {
+          "mode": 0,
+          "mismatches": 0,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000"
+          ]
+        },
+        {
+          "mode": 1,
+          "mismatches": 0,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000"
+          ]
+        }
+      ]
+    },
+    "error": ""
+  },
+  {
+    "test": "truncated",
+    "exit": 2,
+    "result": null,
+    "error": "loader: truncated record"
+  },
+  {
+    "test": "count",
+    "exit": 2,
+    "result": null,
+    "error": "loader: wrong stream count"
+  },
+  {
+    "test": "empty",
+    "exit": 2,
+    "result": null,
+    "error": "loader: wrong stream count"
+  },
+  {
+    "test": "both_results_corrupt",
+    "exit": 1,
+    "result": {
+      "function": "pow",
+      "count": 1,
+      "modes": [
+        {
+          "mode": 0,
+          "mismatches": 1,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "3ff0000000000000",
+            "0000000000000000"
+          ]
+        },
+        {
+          "mode": 1,
+          "mismatches": 1,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "3ff0000000000000",
+            "0000000000000000"
+          ]
+        }
+      ]
+    },
+    "error": "mode 0: 0000000000000000 0000000000000000 oracle 3ff0000000000000 native 0000000000000000\nmode 1: 0000000000000000 0000000000000000 oracle 3ff0000000000000 native 0000000000000000"
+  },
+  {
+    "test": "second_mode_corrupt",
+    "exit": 1,
+    "result": {
+      "function": "pow",
+      "count": 1,
+      "modes": [
+        {
+          "mode": 0,
+          "mismatches": 0,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000"
+          ]
+        },
+        {
+          "mode": 1,
+          "mismatches": 1,
+          "first_a_b_oracle_native": [
+            "0000000000000000",
+            "0000000000000000",
+            "3ff0000000000000",
+            "0000000000000000"
+          ]
+        }
+      ]
+    },
+    "error": "mode 1: 0000000000000000 0000000000000000 oracle 3ff0000000000000 native 0000000000000000"
+  },
+  {
+    "test": "producer_missing_input",
+    "exit": 2
+  }
+]
