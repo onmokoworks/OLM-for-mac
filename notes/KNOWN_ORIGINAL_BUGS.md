@@ -78,3 +78,40 @@ whether AE displays an error, aborts a frame, or handles the exception another
 way. No native AE UI/crash behavior is claimed. Mac output in this domain is
 not labelled AEX exact. C56's Median optimization preserves the previous Mac
 bytes and does not convert the original exception into an exact reference.
+
+## RadialBlur Smart missing Layer (C57)
+
+FACT: In the original Smart callback `0x40F0`, the context at `RSP+0x40`
+receives no initialization of its Layer pointer at offset `0xA8`. Builder
+`0x8690` reads that pointer at `0x88B6` and passes it to Layer getter `0xD9D0`.
+That getter checks out the parameter and copies its 120-byte Layer descriptor
+through the pointer (`0x19F20`), then checks the parameter in. The Smart callback
+checks out input id 0 twice; it does not check out a separate noise pixel world.
+This is an uninitialized stack pointer use, in addition to the uninitialized
+span allocation described in C46. A literal null pointer is not a safe branch.
+
+FACT: C57 captures of seed1/index248 and seed105/index158/214 bind to their
+saved F46 public output hashes. Before and after the builder, the Layer pointer
+is respectively `0x10000002c`, `0x100000016`, `0x100000001` (the packed width and
+height of these one-row inputs). The getter copies an all-zero descriptor into
+that address. The typed owner compares descriptor dimensions and clears the
+pointer (`0x7910` PF8, `0x7100` PF16, `0x8120` PF32). It has allocated source,
+output, size and scatter planes through `0x45A0`/HandleSuite without clearing
+the scatter plane. Helpers `0x6830`/`0x65C0`/`0x6AA0` return on null Layer without
+writing that plane. All 67 captured source scatter cells are positive zero
+before and after the helper and renderer; the independent size plane is retained.
+The full-plane captures are bound to unchanged public outputs, not PNGs.
+
+INFERENCE: The pointer value is stale stack content; its valid mapping and the
+zero allocation contents in the emulator do not establish native Windows/AE
+behavior. Reproducing the invalid write or reading uninitialized C++ storage
+would not define a deterministic port.
+
+The deterministic Mac policy for a successful Smart checkout returning a
+non-null, zero-width/zero-height descriptor with no pixel data reuses C46's
+positive-zero scatter span and preserves the size/fade plane. Noise Variation
+is unused by the original's skipped helper, so its effective render value is
+zero in this state. Checkout/checkin remains balanced. True null descriptors,
+nonzero-sized descriptors with missing data, checkout errors, and independent
+nonempty Layer handling are not promoted by C57. See the C57 report for finite
+oracle qualification and remaining native-host limitations.
