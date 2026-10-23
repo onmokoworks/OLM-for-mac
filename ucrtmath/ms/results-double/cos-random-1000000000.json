@@ -1,0 +1,35 @@
+{
+  "function": "cos",
+  "count": 1000000000,
+  "modes": [
+    {
+      "mode": 0,
+      "mismatches": 0,
+      "first_input_oracle_native": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ]
+    },
+    {
+      "mode": 1,
+      "mismatches": 0,
+      "first_input_oracle_native": [
+        "0000000000000000",
+        "0000000000000000",
+        "0000000000000000"
+      ]
+    }
+  ],
+  "kind": "random",
+  "seconds": 65.38247391699406,
+  "producer_exit": 0,
+  "comparator_exit": 0,
+  "sha256": {
+    "/Users/onmk/.cache/olm-emu/ucrt/10.0.28000.2705/ucrtbase.dll": "385a6d73a50063a4c760bdb2ee59e575de7ff350a2e3b214ea491d08358484f3",
+    "orchestra/state/F43b-ucrtmath-ms-double-trig-exp/build/double_native": "34919ecfcc2c0ce068ffc2dc2bbcbf0b1e00b83feedbfc6e944460044b2766fe",
+    "orchestra/state/F43b-ucrtmath-ms-double-trig-exp/build/double_compare": "773b76534d48ee392004cceedd882f01d32f8f13a6faf3c83ac567747a18e1ba",
+    "ucrtmath/ms/double.c": "f3723a4f13c8196e82961e775af6f101759b13f0197f633f747817050c4566ab",
+    "ucrtmath/ms/double_tables.h": "83e6edb40d1c252daeebdf188f27604a92c2ba8394428a370a2e1faad54c9d61"
+  }
+}

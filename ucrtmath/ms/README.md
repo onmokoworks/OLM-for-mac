@@ -1,5 +1,7 @@
 # OLM-internal UCRT float math
 
+The double sin/cos/exp implementation is documented in [README-double.md](README-double.md).
+
 This directory is **OLM-internal**. It is derived from the behavior and
 read-only disassembly of ucrtbase 10.0.28000.2705 for OLM interoperability.
 It **must not be published standalone**, including as part of a standalone
