@@ -41,6 +41,29 @@ def matrix(a):
 
 
 
+def mask_source(source):
+    return replace_once(source,
+        'const float scaled = alpha * 255.0f;',
+        '// FUN_1811749a0 scales raw PF16 alpha by 1/128 (181504a98),\n\t\t// while PF32 uses 255. Undoing PF16 normalization therefore uses 256.\n\t\tconst float scaled = alpha * (pixel_size == sizeof(PF_Pixel16) ? 256.0f : 255.0f);')
+
+
+def mask_matrix(a):
+    for w,h in ((7,3),(17,9)):
+      for owner in (1,2,3):
+       for invert in (0,1):
+        for mode in (1,2):
+         for bg in (0,1):
+          for interp in (1,2,4):
+           for blur,size in ((1,0),(2,2),(3,1),(4,1)):
+            alphas=(0,191,192,193,32768,32768,192,192,0,32767,1)
+            pixels=b''.join(struct.pack('<4H',alphas[(x+3*y)%len(alphas)],12345,32768,27160) for y in range(h) for x in range(w))
+            c=dict(geometry=[w,h],depth=16,profile='pf16-mask-boundary',pixels=pixels,
+                   parameters=a.defaults(w,h),input_padding=3,output_padding=5)
+            values={1:invert,2:owner,3:4,4:3,5:mode,6:bg,7:[255,28,53,238],8:[255,16,160,48],9:interp,10:2.25,11:blur,12:size}
+            for q in c['parameters']:
+                if q['slot'] in values:q['value']=values[q['slot']]
+            yield f'{w}x{h}/owner{owner}/invert{invert}/mode{mode}/bg{bg}/interp{interp}/blur{blur}',c
+
 def main():
     import argparse
     from collections import Counter

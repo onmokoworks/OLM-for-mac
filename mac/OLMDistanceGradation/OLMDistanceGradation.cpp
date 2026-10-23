@@ -917,7 +917,9 @@ static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size, bool s
 	if (smart_owner) {
 		// cvConvertScale first rounds to signed int32. Overflow/NaN uses
 		// the SSE invalid integer and saturates to byte zero, including +inf.
-		const float scaled = alpha * 255.0f;
+		// FUN_1811749a0 scales raw PF16 alpha by 1/128 (181504a98),
+		// while PF32 uses 255. Undoing PF16 normalization therefore uses 256.
+		const float scaled = alpha * (pixel_size == sizeof(PF_Pixel16) ? 256.0f : 255.0f);
 		return scaled >= 1.5f && scaled < 2147483648.0f;
 	}
 	if (pixel_size == sizeof(PF_Pixel8)) return alpha > 0.0f;

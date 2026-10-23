@@ -26,6 +26,9 @@ def candidate_source(experiment, source=None):
     if experiment in ('power-ucrt', 'power-ucrt-bilateral'):
         from probe_distancegradation_C31 import power_source
         return power_source(source, bilateral=experiment.endswith("-bilateral"))
+    if experiment == 'mask-pf16':
+        from probe_distancegradation_C31 import mask_source
+        return mask_source(source)
     if experiment == 'power-one':
         return replace_once(source, 'p.smart_owner = smart_owner;', '''p.smart_owner = smart_owner;
 \t// Power with exponent exactly one is the same finite-field operation as
@@ -352,9 +355,9 @@ def main():
     p.add_argument('--seed', type=int, default=1)
     p.add_argument('--before-ref', default='0e3481cb')
     p.add_argument('--index', type=int, action='append', default=[])
-    p.add_argument('--experiment', choices=['power-ucrt-bilateral', 'power-ucrt', 'gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable','vector-one','vector-one-v1'], default='gate-off')
+    p.add_argument('--experiment', choices=['mask-pf16', 'power-ucrt-bilateral', 'power-ucrt', 'gate-off', 'mask-overflow','identity','identity-mul','all-restored','production','power-one','bilateral-scalar','finite-filter','finite-separable','vector-one','vector-one-v1'], default='gate-off')
     p.add_argument('--matrix', action='store_true')
-    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable','vector-one','power-ucrt'],default='nonfinite')
+    p.add_argument('--matrix-family',choices=['nonfinite','power','power-negative','bilateral','finite-filter','separable','vector-one','power-ucrt','mask-pf16'],default='nonfinite')
     p.add_argument('--write-source', type=Path)
     p.add_argument('--require-exact', action='store_true')
     p.add_argument('--strict-admission', action='store_true')
@@ -382,8 +385,8 @@ def main():
         current = variant(a, td/'candidate', deadline, source)
         san = variant(a, td/'san', deadline, source, sanitized=True)
         wd = td/'case'; wd.mkdir()
-        from probe_distancegradation_C31 import matrix as ucrt_matrix
-        families={'power-ucrt':ucrt_matrix,'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix,'vector-one':vector_one_matrix}
+        from probe_distancegradation_C31 import matrix as ucrt_matrix, mask_matrix
+        families={'mask-pf16':mask_matrix,'power-ucrt':ucrt_matrix,'nonfinite':matrix,'power':power_matrix,'power-negative':power_negative,'bilateral':bilateral_matrix,'finite-filter':finite_filter_matrix,'separable':separable_matrix,'vector-one':vector_one_matrix}
         cases = families[args.matrix_family](a) if args.matrix else ((index,a.generate(args.seed,index)) for index in args.index or [94,116,126,223,255,263,283,299])
         for index,c in cases:
             oracle, reference = a.oracle(c, wd, deadline, 'smart')

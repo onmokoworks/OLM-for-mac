@@ -4,7 +4,7 @@ summary:
 - Cluster 1: admit finite-SDR PF32 Smart Power through the already-supported identity/Box/Gaussian/small-Median filter rules using shared UCRT math.
 - Seed 1 Smart exact 287→290; fresh seed 32 exact 281→282. No prior exact changes, no admitted mismatch.
 - All 1260 independent Power cases match AEX and ASan/UBSan; five excluded controls remain refused; corpus 145 remains exact.
-- PF16 mask conversion is under separate investigation; no PF16 production change in this commit.
+- Cluster2 restores original PF16 raw-alpha/128 mask conversion; fresh seed32 now283 exact/0 mismatch, seed1 remains290 exact.
 
 facts:
 - Initial HEAD `3781f6320be08bb475dbbc39d2cb192808ce7c40`, branch `orch/C31-dg-smart-r6`. Read shared guide, GOTCHAS, plugin forbidden-action row, compatibility plan and T07/C03/C08/C14/C19/C27/F10/F12/F31/F37 reports. MAIN and emulator sources remain read-only; no worker rebuild, push, stash or history rewrite.
@@ -53,3 +53,38 @@ The first two commands on the updated source measure the updated counts; origina
 
 next:
 - Continue the independent PF16 first-stage mask discrepancy and inspect remaining fresh-seed refusals. Bilateral Power remains excluded. Original exceptions/time budgets are not exact outputs.
+
+Cluster 2 — PF16 alpha-mask conversion (base `6f1cddb3`):
+
+facts:
+- Re-measured production seed1 after Power: 290 exact/0 mismatch/3 refusal/7 uncompared, AEX290 success/8 rejection/2 budget. All300 Classic result dictionaries and all287 initial exact Smart dictionaries are unchanged; only124/125/180 change refusal→exact.
+- Fresh seed32 case96 first diverges at the source mask. Original `FUN_1811749a0` selects coefficient `0x181504a98` for IPL16U (instructions181174a4d..181174a6d). Its bytes are `000000000000803f`, DOUBLE1/128. PF32 instead selects255 at181504ab0, PF8 selects1 at181504aa0. The former shared normalized-alpha*255 rule was wrong for PF16.
+- Executed the original cvConvertScale body18117c580 on the actual174x189 raw PF16 alpha plane without imports: 32886 mask bytes, one difference at index25427 (source alpha192), original01/Mac00. Scalar/vector-width boundary probes at1/7/8/16/17 show191→1,192→2 under nearest-even conversion. Original-AEX public case96 final diff is4 words/7 bytes, first byte202024/word101012, expected `5027`, actual `d332`.
+- Correct the common Smart mask predicate to multiply normalized PF16 alpha by256 (equivalent to raw/128); PF8/PF32 remain255, Classic remains unchanged. This also corrects the degenerate-mask census using that same predicate. No EDT, field packing, or output rounding change.
+- Original leaf versus production trace after correction: all32886 mask bytes equal and the complete263088-byte public output equals AEX. Evidence includes original coefficient bytes, both mask hashes, full input hash and all boundary probes.
+- Independent SDR matrix576/576 exact, all sanitizer-identical:384 mismatch→exact and192 unchanged exact. Covers7x3/17x9, alpha191/192/193 and endpoints, all ownership modes, inversion, RGB/Layer, backgrounds, Constant/Linear/Power, identity/Box/Gaussian/Median and odd padding.
+- A broader HDR matrix exposed a separate writer residual after correcting the mask: 7x3 Inside/RGB/Linear/Box2 first byte72/word36, expected `1d8e`, candidate `0080` (two bytes/one word). Both old and candidate were nonexact. The mask correction does not claim to close HDR output; this remaining boundary is investigated separately in cluster3.
+- Beta tests run9, OK, including existing sanitizer coverage. Before/current/sanitized checks complete all600 campaign cases and all145 corpus cases. Seed1 remains290/0/3/7 with no changed Smart result. Seed32 changes only case96 mismatch→exact, yielding283/0/11/6; all282 prior exacts remain byte-identical. Corpus145 remains exact/identical, zero expectation edits. 180-second per-render limit; no sanitizer diagnostic or timeout in this verification.
+
+| Cluster2 Smart corpus | Before | After | Expectation edits |
+|---|---|---|---|
+| Saved145 cases |145 exact|145 exact, identical status and bytes|None|
+
+inference:
+- The depth-specific coefficient is the cause of the single mask boundary error. Its downstream output closure and independent matrix support the general PF16 conversion restoration; the remaining HDR store behavior is a distinct operation.
+
+changed_files (cluster2 additions):
+- `tools/emulation/trace_distancegradation_mask_C31.py`
+- `reports/fuzz/olmdistancegradation_C31_mask.json`
+- Existing plugin, C19/C31 probes, evidence summarizer and this report updated.
+
+verify (cluster2):
+```sh
+python3 tools/fuzz/probe_distancegradation_C19.py --scratch "$s/mask" --report "$s/mask.json" --before-ref 6f1cddb3 --experiment mask-pf16 --matrix --matrix-family mask-pf16 --strict-improvement --require-exact --write-source "$s/mask.cpp"
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_mask_C31.py --scratch "$s/mask-trace-after" --report "$s/mask-trace-after.json"
+python3 tools/fuzz/verify_distancegradation_smart_C14.py --scratch "$s/mask-verify" --report "$s/mask-verify.json" --before-ref 6f1cddb3 --candidate-source "$s/mask.cpp" --campaign "$s/after-power.json" --campaign "$s/fresh.json" --corpus --strict-improvement --case-timeout 180
+```
+Expected: matrix576 exact; mask32886/32886 and case96 output exact; only fresh-seed32 case96 changes, corpus145 unchanged. The earlier full seed1 remeasurement is `$s/after-power.json`; regenerate with the usual run.py command at the Power commit if necessary. Baseline-count remeasurement at later commits naturally reflects later fixes.
+
+next:
+- Close the independently located Smart PF16 HDR integer-store operation. Original-rejected and timed-out cases remain unclosed.
