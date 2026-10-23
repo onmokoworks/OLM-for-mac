@@ -57,3 +57,5 @@ C41-radial-seed45-mismatch
 C42-colorkey-pf32-nan-mismatch
 F47-aexcompat-native-plugin-host
 C43-dg-bilateral-last-bit
+S01-wide-mismatch-sweep
+C44-radial-smart-r7
