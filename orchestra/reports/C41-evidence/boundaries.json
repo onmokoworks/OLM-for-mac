@@ -1,0 +1,1139 @@
+{
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F45-msdouble/aex-guest-worker",
+    "worker_sha256": "8849565128e4147bb39b145bf392e20da1983c476498ca4448001ea278a38409",
+    "candidate_sha256": "a2a048773d5779c22ef899586f34b2b3fdc8b959a73d08d5532e23307d8e3638",
+    "source_sha256": "ec002eced181a0fcbda78cb8f1242ab9a9958df08697b716b80053b59de3242f",
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "candidate_source_sha256": "ec002eced181a0fcbda78cb8f1242ab9a9958df08697b716b80053b59de3242f",
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "oracle_routes": {
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "calibration": [
+      {
+        "depth": 8,
+        "family": 1,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "matches_retained": true
+      },
+      {
+        "depth": 16,
+        "family": 1,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "matches_retained": true
+      },
+      {
+        "depth": 32,
+        "family": 1,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "matches_retained": false
+      },
+      {
+        "depth": 8,
+        "family": 2,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "matches_retained": true
+      },
+      {
+        "depth": 16,
+        "family": 2,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "matches_retained": true
+      },
+      {
+        "depth": 32,
+        "family": 2,
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true
+        },
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "matches_retained": false
+      }
+    ]
+  },
+  "rows": [
+    {
+      "depth": 8,
+      "size": 0.0,
+      "noise": 0.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "2cfd304fa0a28d532a9a3de6762db0867ad401eb1f223ffe0c8f19e132d0a9a8"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "2cfd304fa0a28d532a9a3de6762db0867ad401eb1f223ffe0c8f19e132d0a9a8"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "2cfd304fa0a28d532a9a3de6762db0867ad401eb1f223ffe0c8f19e132d0a9a8"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 0.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "f80ab7f39d0625301e790077571e34e4e2d6a0f88e5b7b38c7b738e8abee1b9a"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "0b94e6485d2e9ca0426329b351388815ceaf16a371ab35c2d1c3af8e04e13c9d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "0b94e6485d2e9ca0426329b351388815ceaf16a371ab35c2d1c3af8e04e13c9d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 0.0,
+      "noise": 100.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "a9df12838f5e98f627bc211e39d566a240fdc0bf8676545b14ca677c1729a47e"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "ee9cdb906d93ca2ac05138bee56a7e78060a9e37fd6a0e49b1bb3a980c508494"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "ee9cdb906d93ca2ac05138bee56a7e78060a9e37fd6a0e49b1bb3a980c508494"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 7.330033396545429,
+      "noise": 0.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "f7e829e490c306e95a801bb7efc1c5bcef98b855ff4ee5ccebf06b7a2a646812"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "f7e829e490c306e95a801bb7efc1c5bcef98b855ff4ee5ccebf06b7a2a646812"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "f7e829e490c306e95a801bb7efc1c5bcef98b855ff4ee5ccebf06b7a2a646812"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 7.330033396545429,
+      "noise": 81.07550549292704,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "9578c539714e8ef47a83c67acd6806cc674097b7158c5904947c271e0f382ea4"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "9238ffef5cad5f2efe79b29bcf349cc34cc532ac563b2d4289d9729ec5f56049"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "9238ffef5cad5f2efe79b29bcf349cc34cc532ac563b2d4289d9729ec5f56049"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 7.330033396545429,
+      "noise": 100.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "9a79b2d0a4ca462527df929a8b91bb9e27ec0e5590f91c27d31a0b1e50f7e45c"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "4a966e49ad26db54f2ef42eb03d4274f2a83ccb2dfb04584449e893365313a91"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "4a966e49ad26db54f2ef42eb03d4274f2a83ccb2dfb04584449e893365313a91"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 100.0,
+      "noise": 0.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "8f87123a971fea2523c77387c9b0c50a7c0e18c17e727ba26e21122d24bcd79a"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 100.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "c8a2c6bd9ee50cf1fee06291a96f89266e438edae1fdc95ed999a57cba48afc3"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 8,
+      "size": 100.0,
+      "noise": 100.0,
+      "input_sha256": "5acba6dd9f4fe278c3efd3ceed3a84a2dd465b8153b86b61539c24881768349a",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "4fef5beca37b01452bad9551a2724f67d57c8d5141d16e7613989f31b3b4c913"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 0.0,
+      "noise": 0.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "0bae7f0cd1eb7a9efb6ccf8e94fe523a43e8bba51c6edd1f3f39941bb9d99426"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "0bae7f0cd1eb7a9efb6ccf8e94fe523a43e8bba51c6edd1f3f39941bb9d99426"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "0bae7f0cd1eb7a9efb6ccf8e94fe523a43e8bba51c6edd1f3f39941bb9d99426"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 0.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "ceb4ef5edb52f8d07ea1aec2ad878a6748448a301935b358fadaf28cc9083583"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "7d978782b4d3b69678a024d4724be2491830895a0ab4a4862dd5d4c89902e1db"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "7d978782b4d3b69678a024d4724be2491830895a0ab4a4862dd5d4c89902e1db"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 0.0,
+      "noise": 100.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "544ef7d3633ca170b5869dfe4e585a9ed4369919ad41c58f4b943ddc585be9c9"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "8a5ed47aaccdb94c5c3cb538493caa891568bacca6dafff101ca1908f833648e"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "8a5ed47aaccdb94c5c3cb538493caa891568bacca6dafff101ca1908f833648e"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 7.330033396545429,
+      "noise": 0.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "a767d955bc1dea02ceeb1f2ab1ba4c2b49f35de71d114d39359d7dabb9b95629"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "a767d955bc1dea02ceeb1f2ab1ba4c2b49f35de71d114d39359d7dabb9b95629"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "a767d955bc1dea02ceeb1f2ab1ba4c2b49f35de71d114d39359d7dabb9b95629"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 7.330033396545429,
+      "noise": 81.07550549292704,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "c4156a9624626653f501abd0052d322029503f7894afd54dcafb0ebeb76a6f08"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "81352ef0f2425fd54246409dfca562fbd48106d5ceed7355e3db1a1d42f88f74"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "81352ef0f2425fd54246409dfca562fbd48106d5ceed7355e3db1a1d42f88f74"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 7.330033396545429,
+      "noise": 100.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "4468c5eea966a77cc2ecdc64846e5000ddcacfadbd52b23862bb39d49a4c650d"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "3ca7c62873ee8e1ad8d9ca3f5c29ccf801bbc0d82a1832c87ee526cf0ea82c80"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "3ca7c62873ee8e1ad8d9ca3f5c29ccf801bbc0d82a1832c87ee526cf0ea82c80"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 100.0,
+      "noise": 0.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "5e374cb293bedf9d725c60324d6537c632ea13f49b827dab65a17e4b288a89db"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 100.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "563176a737febef36cf3d6166600dd39af0fb3ae22f685f89275508f9d1ea87a"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 16,
+      "size": 100.0,
+      "noise": 100.0,
+      "input_sha256": "808b4564f4438b94740aa473b29c8e8753d552514d1e5d5856406812c87c4749",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "66465fdb06b2cfa86e22838465795ec84b25b4078aff73b4687f078a3d8cc429"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 0.0,
+      "noise": 0.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "a3353295c51d60d515fe5e3e6d847d6ca676ae27cfadb4cf20c356f63428d3e5"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "a3353295c51d60d515fe5e3e6d847d6ca676ae27cfadb4cf20c356f63428d3e5"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "a3353295c51d60d515fe5e3e6d847d6ca676ae27cfadb4cf20c356f63428d3e5"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 0.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "2b97db80a0a304ec5795014a7499495d18a015a5f9630f8923d2e8acb23cf7c2"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "496eadb4de0cad206d51f7865ece94e45e992b08bcbfc175fe8f90f81d8938e5"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "496eadb4de0cad206d51f7865ece94e45e992b08bcbfc175fe8f90f81d8938e5"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 0.0,
+      "noise": 100.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "25f9b768a84fac8577e360c864ab2c4965d62af8c3c15dac6cda64dab3dd0c5e"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "b71fbb0d66d1f356d679b6a26b6c5885a7c2448fddcc4e5736c747499d1b5933"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b71fbb0d66d1f356d679b6a26b6c5885a7c2448fddcc4e5736c747499d1b5933"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 7.330033396545429,
+      "noise": 0.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "exact",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "fb5a565585a4e9ef59b55237b84dbf1c165ff898ebbaf4695f06fb0d5655b8ea"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "fb5a565585a4e9ef59b55237b84dbf1c165ff898ebbaf4695f06fb0d5655b8ea"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "fb5a565585a4e9ef59b55237b84dbf1c165ff898ebbaf4695f06fb0d5655b8ea"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 7.330033396545429,
+      "noise": 81.07550549292704,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "25615184c0efba4af6f37c6a5e5fc5bd5a7287adadbd554c465b144efe022656"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "ba03c73efd09ab32117d3e912e448a25f10a2d06a0840825afd7421b12008488"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "ba03c73efd09ab32117d3e912e448a25f10a2d06a0840825afd7421b12008488"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 7.330033396545429,
+      "noise": 100.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "mismatch",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "5ffe7a22d783d73022d25edfe56eaed7959b9f5efc6567df64a2facd748e2f0f"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "87ec04b555d61cabb748463543f53bbe2c3295164017d2559ce6c7890c8cc349"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "87ec04b555d61cabb748463543f53bbe2c3295164017d2559ce6c7890c8cc349"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 100.0,
+      "noise": 0.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "c4c7b97f15f2a29b945eb2310684818cce548100d1aae1bd823edeaccf4c2af2"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 100.0,
+      "noise": 81.07550549292704,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "ccb35336515847a18010d79edc520b663773d4dfb402bf55dd3ed4b00c7f8a44"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "depth": 32,
+      "size": 100.0,
+      "noise": 100.0,
+      "input_sha256": "b557a2b2e803e46122d7b791569e51757000c7a7d78d3c861d45e4b57a11a037",
+      "baseline": {
+        "status": "refusal",
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "COUNTS": "1 32 32 1 1 1 1",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "result": {
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "14b41123afb15a6eb5163d9d2fa55b0418f7342daf0878fda99df8cdfc810b33"
+        },
+        "routes": {
+          "smart": {
+            "status": "refusal",
+            "error": 516,
+            "metadata": {
+              "ERROR": "516",
+              "COUNTS": "1 32 32 1 1 1 1",
+              "INFO": "0 0 0 0"
+            }
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ]
+}

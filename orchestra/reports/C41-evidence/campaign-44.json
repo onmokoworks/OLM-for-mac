@@ -1,0 +1,4486 @@
+{
+  "seed": 44,
+  "completed": 300,
+  "requested": 300,
+  "status": "complete",
+  "summary": {
+    "aex_budget": 2,
+    "aex_classic_ok": 300,
+    "aex_ok": 276,
+    "aex_reject": 22,
+    "aex_smart_budget": 2,
+    "aex_smart_ok": 276,
+    "aex_smart_reject": 22,
+    "both_routes_exact": 2,
+    "classic_exact": 2,
+    "classic_mismatch": 126,
+    "classic_refusal": 172,
+    "pixel_mismatch_cases": 126,
+    "smart_exact": 264,
+    "smart_refusal": 35,
+    "smart_uncompared": 1
+  },
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "cd284696970c996970a51763b72ee8e12723753510922a7b7f83af1e825dc767",
+    "candidate_source_sha256": "fef4d95a18fa9006c7c19ba6366dce9ebb63e58abd752ae7f815e4daf83381fe",
+    "case_timeout_seconds": 10,
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "ae09e69d79b74eb3f3938448a1998465b4ca20cc9561941a492dd52d2ad6b8bb",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "fef4d95a18fa9006c7c19ba6366dce9ebb63e58abd752ae7f815e4daf83381fe",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F45-msdouble/aex-guest-worker",
+    "worker_sha256": "8849565128e4147bb39b145bf392e20da1983c476498ca4448001ea278a38409",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "case_timeout_seconds": 10,
+  "jobs": 1,
+  "framework_sha256": {
+    "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+    "tools/fuzz/adapters/color_triage.py": "3f6a5422a7493155ba2ed0159d67a9037c763c0340f3ec22c1acbd8b19893b7a",
+    "tools/fuzz/adapters/colorkeep.py": "b04f2d140487414a132de25222ed6292b29d8c2c74c12cf2b8f8c631e72e96df",
+    "tools/fuzz/adapters/olmblur.py": "de1142334ce5ff9dca1a4ea77c8ded9711586271356bec0e5a78a179f6beedc9",
+    "tools/fuzz/adapters/olmcolorkey.py": "01ad703b69f2e925056fd179d24616233db2b2807fc0f449d3ed1acae407d6b3",
+    "tools/fuzz/adapters/olmdirectionalblur.py": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+    "tools/fuzz/adapters/olmdistancegradation.py": "2e58d20d22b65e07fc16c2d59157ae113620fec8ad154a51d62d759323b1e4c1",
+    "tools/fuzz/adapters/olmkirakira.py": "84c38bf2abf6268bc1cf98c20a2af4d7160f6f616eccc8b69bf42e8970f4f3c0",
+    "tools/fuzz/adapters/olmsmoother.py": "a4807fba3ba5eb998e3e9ac48e93bb7aab29131faec1da5d2abb2e1627fdaf0c",
+    "tools/fuzz/adapters/olmsmoother2.py": "d210e4f3a1647b9489ba373bde284c6d6e093b7e366a1e2910ad04d50ccde202",
+    "tools/fuzz/adapters/olmtoondilate.py": "c495c5e5984bcdfc1d8967328087ae6367e08ae00dd1d346c76d2785b62fe094",
+    "tools/fuzz/adapters/public.py": "2452352d4d36774b342db351c349a6fe4dc80475c1ab5ba416cb623b586a26f4",
+    "tools/fuzz/adapters/radialblur.py": "f78a0f4a3e601e1f587d27b866efb2d5b6f3340235a26792a6d5920c3ba877e7",
+    "tools/fuzz/analyze_colors_T12.py": "056d7d3ec098fd3ebacfc7dbcf161727a5f276019464935694830e196898c941",
+    "tools/fuzz/apply_rebaseline_F23.py": "5d47336625dce969194509f7a94bf6d868646992ae83fa5d2e2b9127962cdbdf",
+    "tools/fuzz/audit_radialblur_C17.py": "ca5f37482e33c708aff548af05447324b347c0ddd069b8bc35bdf1d7b3c945c9",
+    "tools/fuzz/audit_radialblur_C26.py": "e96c480b96e62a9dad1becd91789b610129f0d76081c41756b02c7cf4770cd3d",
+    "tools/fuzz/audit_smart_abort_F41b.py": "d4bf722a3f2773dbc6937a75794ce420bc591715b20090f886102477f0c7fc2b",
+    "tools/fuzz/before_F31.py": "c8f0f2e74f2fb35f6c52da024a6295e722c446ec33d5f781f611e54321145f8c",
+    "tools/fuzz/before_F44.py": "a1a1f673e7c4d165767feb246039d8328de05a2bbe9943d41dc6c03f02a96f76",
+    "tools/fuzz/before_F45.py": "58c5821ac03843423ab44477d9c1911b40d94eef4ca31cffa29c91f6407248ad",
+    "tools/fuzz/blur_admission_campaign_C05.py": "3ca6fcb6fac1f36c1f763d85833ed311e8a1346e71e8364e7825d88fd80cb329",
+    "tools/fuzz/blur_admission_campaign_C10.py": "0d7921363cb58468296610ee4ed56d6676732b0488eb98eb7f57e153407d51e1",
+    "tools/fuzz/blur_admission_campaign_F17.py": "6eb1a42b30a78e4149a3d9fdacc3f472bf03ed4085f8a404a34e50a5fb7d2b15",
+    "tools/fuzz/blur_campaign_C12.py": "61a32f048b5ffc6cba1e8603809d88c4a8b245d926c7b97c6bf02514a5936be9",
+    "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
+    "tools/fuzz/check_colorkey_boundaries_F20.py": "14f6f52777162214c7bae139b7366e2f16cca4922f5d5f60a5662dd7029a4b5d",
+    "tools/fuzz/check_fixture_F31.py": "de71d1edc4be4123c06d5c5199823358117eab6ca57a5bb8104f6cd9ec25ae09",
+    "tools/fuzz/check_radialblur_exp_C11.py": "5b7f5a9062e6f62f374d2327e46b29a779a23b82f5324fc4bb649068b0084e0e",
+    "tools/fuzz/classify_rebaseline_F23.py": "c814190e3e222bed8a1a235b98d15d50e834b99e4c854b22901e96e007cac3a7",
+    "tools/fuzz/compare_olmsmoother_classifier8.py": "de2ca98d8f11bdbfe7f886f1bc4f43127ae33702d4fc20e23a33e97df2a41bfd",
+    "tools/fuzz/compare_radialblur_admission_F13.py": "7dc2a9fbbf6d199d8dbf427c439795c6d6d3baf863bf0061f49d0db75034541c",
+    "tools/fuzz/compare_radialblur_round6_T01.py": "99ff78cbbfa71acd3ed11c26d44d569099345e82b0d356b8fbbd7bf208779e7d",
+    "tools/fuzz/core.py": "79b697cdbfa6faa8c6c22429d947cbf50f8807899c7d8ebd74a6c85c9aabcf36",
+    "tools/fuzz/kirakira_triage_summary.py": "36340cb869e8bb40601190519a9efa321c15ecf16418eda380fc3a3f91119131",
+    "tools/fuzz/legacy_campaign_F17.py": "e05ff45258fdfcf25bae9e3cd9b6c76ff2a44b7429a7a819387f912761f8edbf",
+    "tools/fuzz/measure_F31.py": "5f94b4c81790ea54feee4f02eeb18e6c3e63c081c76f44ed264c7cf58c2382fd",
+    "tools/fuzz/measure_F37.py": "7234734eef49efbc1ca40869be1214a4da0898b1f679bd5e93ae2bff0c6c145e",
+    "tools/fuzz/measure_F38.py": "48042cf86233cced1ddaf023040661dc5554b09f7458695e03334c80cc21f537",
+    "tools/fuzz/measure_F44.py": "23ecaf21fa742ab6050333bba31b3df8022a7f77287e56911e59670cdb654cf3",
+    "tools/fuzz/measure_F45.py": "d9b1243dd44483aff20d8ab7bc2b5a66c4a276869ec730954747e2745e45d29c",
+    "tools/fuzz/probe_blur_expf_C15.py": "b7a7d12e41cfa758f2cac15938c7a2c093dd7e85b0643e29220b5ae2c006f506",
+    "tools/fuzz/probe_blur_expf_C21.py": "ffbddf05a3ef121de8e276417bc66fc5c28ea69e4a98ad11253ffcba08cfc60f",
+    "tools/fuzz/probe_colorkey_stages_F20.py": "ba81b9e995169e3244c0ecb7f656e811516ac18bf16ee7eaf7371094bf829743",
+    "tools/fuzz/probe_directionalblur_c02_admission.py": "8566ec1296ac8564111589e3b300cc126c8db4255980d907cd87c43ae986552b",
+    "tools/fuzz/probe_directionalblur_c09_admission.py": "48578b1d08df4e83e7a640193ce0f89ae17c947db6229fb6d84c67ee372f3e8b",
+    "tools/fuzz/probe_directionalblur_c30_nonfinite.py": "731d16227417a534b754512f28af78aac7dbe4ae04a35692d596195a33be5e2c",
+    "tools/fuzz/probe_directionalblur_c36_nan.py": "7e88de86b8e264a962da880d571900ee70feabf5bef8bf37998521442bdf25cb",
+    "tools/fuzz/probe_directionalblur_pf8_dispatch.py": "7966348a84bd7945e16f1efbe0a5aaa35816a582817186835b787c21955a8472",
+    "tools/fuzz/probe_directionalblur_zero_strength.py": "547bd8a58c2b24bfe1714a29b31f62427b04494a2872e142dea379d659d58c95",
+    "tools/fuzz/probe_distancegradation_C19.py": "5f7b54483515e56f9ab42c3700455c474f4e11fc79706c158fe936eb86e29de1",
+    "tools/fuzz/probe_distancegradation_C31.py": "b89002c058c41e2f01ef5b7207da62f4122982bb6f3b9e9166ec50c2918e804c",
+    "tools/fuzz/probe_distancegradation_C37.py": "36a68479faeef1152314af7ecc884767c7446eca047ad628a83d5ab2b829bd53",
+    "tools/fuzz/probe_distancegradation_C39.py": "22f2ee7ff45cffd8dd854e1dbf621b47dc02ceca81e5b47b4e173e1207e8b531",
+    "tools/fuzz/probe_distancegradation_default_owner.py": "d5dd94587b38db929d8e2ebd6bd4a92fe4e6ecd1e869ea3a25c75b97c6626702",
+    "tools/fuzz/probe_distancegradation_smart_C03.py": "06a330cd9ca8e6adc1e171ec78ba4ffb42375b60f853d6c615099154c9a03eb3",
+    "tools/fuzz/probe_distancegradation_writer_C31.py": "ba3d47b7394354b7c66fff12c76d26e0e7d2deda80d968424ded9f961f3f633f",
+    "tools/fuzz/probe_kirakira_tiny_owner_F04.py": "7ce9a4ab424387ab54f902f96575e8490f277928dd1a5cdd671d8ff7737c7c24",
+    "tools/fuzz/probe_radialblur_C33.py": "94bfa40150e801b2f6a065ea79d7f3ac52d13343c71fe6138dddbee3ead4f4b0",
+    "tools/fuzz/probe_radialblur_C35.py": "79ffdf8a44cde3a89c4bb51e8e610e24a475876a9c992ca5fd47f24019c75583",
+    "tools/fuzz/probe_radialblur_offset_refusal_T01.py": "ae28d861c77a2021eb97cf4ffdb6d00a842b10e3d19cd6f6aaad289d084b44c8",
+    "tools/fuzz/probe_radialblur_smart_C11.py": "752315479949fe5ad5d3f18aceb1ee08f70dff41fcf5f218e61be2252a1167db",
+    "tools/fuzz/probe_radialblur_smart_C17.py": "a9bd26a931c378fb3a11424cf917b18c7b65c17fb0c4755e426d19a5eba5c0f6",
+    "tools/fuzz/probe_radialblur_smart_C26.py": "1019bd56e3562a4f54eea94353fa418d45264e85f35542cd2c114cfa2bbb3f85",
+    "tools/fuzz/probe_radialblur_zoom_F08.py": "8075b52a12015545c2656e592d1155e64d56ce902ea399a7bed8ef39c6967b97",
+    "tools/fuzz/probe_work_budget_F41.py": "5d82a0db62a1b4a25545bfcc051bb33f4e421d2e4085aefdb9d81db93b37392c",
+    "tools/fuzz/rebaseline_F31.py": "bc3558bb547b80569a3b9a3b38aa3649dbc048add5a8983257b282e3fc9fea02",
+    "tools/fuzz/rebaseline_F44.py": "3e88ecb06ece374d55eacc3079e503edce034cb7353b304ac0cbee9af81bd33b",
+    "tools/fuzz/rebaseline_F45.py": "dc7a7065db84c04a2385fdc51b541a31775ce2a58d4a95ddfc6d87df6290ed15",
+    "tools/fuzz/rebaseline_corpus.py": "1d8dc6955f27e895cccfa918634c29935b938706f6199d243871b372cd47fb60",
+    "tools/fuzz/recheck_F44.py": "6a25e4ad54c50e5bd036d470112f4fcfa40a82231708d024a19c2955b376c42c",
+    "tools/fuzz/recheck_F45.py": "36cc26cdd41d6515d31dbb7feb49627d98cb5e5e9222cedcf5581023b64d3163",
+    "tools/fuzz/refusal_census.py": "741ee0f8ad24acde87a77af8ce63cc63f142ebb24167eb821e0d63b568302152",
+    "tools/fuzz/replay_all_F23.py": "881c751a03019699d9fa9ded248a5eb80a4ec29d30292db7e40152d5f68f2641",
+    "tools/fuzz/replay_olmsmoother_sanitized.py": "03f2af241e6f577ca58c55b8a5fbbc760e82845c358679c1987aea542337cf3e",
+    "tools/fuzz/reproduce_C39.py": "6778902229ac87f01f7ea1ff3ee38f2621a784f54e4f44c614c75ef5191a9e36",
+    "tools/fuzz/run.py": "19226e24b2860c238a563174da637291f67a2e298a50b597481bce6723926179",
+    "tools/fuzz/run_F38.py": "e4969c959f484bdb8b2dd01a52a4b8c8041990e2a1622d1a5ef247ae2922b010",
+    "tools/fuzz/run_colorkey_revision_F20.py": "83e9b46f63acc34ac049b838e0372d8c5594dbca906530b913d234ef8f409a58",
+    "tools/fuzz/run_radialblur_baseline_T01.py": "3fd8d256f0e3e520212c4eee1fca6b02316f1329dfb8b0f1a2c2775e076742f3",
+    "tools/fuzz/run_smart_budget_F41b.py": "ac9df666acabd8de8787f78d8b0b67783ccf35d60be79d2b67d709537b0f464b",
+    "tools/fuzz/summarize_C23_fresh.py": "60d8355afc102e4240422f742cc9536aa11f471162c99b6dc616c0c5f66c3b3f",
+    "tools/fuzz/summarize_F31.py": "18ba11aba14dee81a93c4be28e2c321d4c3e855d876c86d7fca166c65091c791",
+    "tools/fuzz/summarize_F37.py": "cf4e8ddd3a550baa44939c7e9d2a992662728e3d6c81f757255fc8a1e6ecf6d9",
+    "tools/fuzz/summarize_F38.py": "fe0c801956952da4a375f56e08f8a8b31d59f6b8e71b6dec3787ea498390710b",
+    "tools/fuzz/summarize_F44.py": "84d776bdcf420c60338dd77bd93493a616a09db4650fd6d9bb37e50be4cc1fe5",
+    "tools/fuzz/summarize_F45.py": "fb4efe5d1aabfd083691c9b66da64935cd0a9e3b1998487bb9e0df49f604404b",
+    "tools/fuzz/summarize_blur_C32.py": "8f5fe5d9d4d127a86477e0dbabc5a739ca88549641a567c5ac2908da84c89fc3",
+    "tools/fuzz/summarize_blur_admission_F17.py": "2b89ed140129b49d73084661355c2a2f50035cb3b46b2c5c8f495030c94dac6a",
+    "tools/fuzz/summarize_colorkey_C20.py": "e42ea8dcc1fed2e85ba49f6d18f2bd45a6953eba17afb56e53f16050d368ddfa",
+    "tools/fuzz/summarize_colorkey_F20.py": "0d6042f3779ef7b57997e2d9457e0abe91ec0d4c311bd28ddbf651b3c8ea8708",
+    "tools/fuzz/summarize_directionalblur_c30.py": "2a0fffcfed4cd95785c63a2bdb5f7f61a673db62fb80335c4a775b749f87a5ab",
+    "tools/fuzz/summarize_distancegradation_C31.py": "dc6ff5aa6170e21b388a58dd57b32f0e70a4abfd7fd801c1843a17f095dbea5b",
+    "tools/fuzz/summarize_distancegradation_C37.py": "73630e5b98f52bd89665521343a3bc01a54f58045076c079f220cdea3f69611d",
+    "tools/fuzz/summarize_kirakira_tiny_owner_F04.py": "9c30e52a8eebb40d8370adda1e52e512fa42f6ca2d3176b310560f2cb1638588",
+    "tools/fuzz/summarize_radialblur_C33.py": "1e595ce8c84c755596149b5b684a0eab8621951d7e4296138905e3e9d861f617",
+    "tools/fuzz/summarize_radialblur_C35.py": "7a90ecef0b1af2693bc32ad0139fccf4f708aad702cd5ef24ebac4775b7c74a5",
+    "tools/fuzz/summarize_radialblur_smart_C06.py": "c2049dfabc17f76e8f4b52872ab225131094e3ec2eb2962ecd0e889cc8d7ffb1",
+    "tools/fuzz/summarize_routes_F17.py": "6b4fd8b76689a53b2d9df5ac503859064a51160bf61df8f98eb0e1162bc50066",
+    "tools/fuzz/summarize_smart_budget_F41b.py": "22152e97e0d7f30f9b28b6fc8ad005fab8691e4f753be256ad2d2b1f6d5f036a",
+    "tools/fuzz/summarize_work_budget_F41.py": "555ca5b06535c94088322792b6a35b9014b2cd5b56247e8e0dac27eb12320fbd",
+    "tools/fuzz/t05_bypass_summary.py": "6c04612b712f336c7d1f1e77e7bf88ec938d4868fb79d7fddba4478f2e8ca3d6",
+    "tools/fuzz/test_adapters.py": "44188e3340302712145e2521eaa42901fd82f890fb1dc97d934cbbab65846ac6",
+    "tools/fuzz/test_colorkey_existing_F20.py": "d271caca8ecec332dad98093608612bc4b7c426cb6ea805d748b26068cdc322c",
+    "tools/fuzz/test_framework.py": "f506e2dcfd656de738788fbcdde2864c856a27f683cfa82794462a37c2929276",
+    "tools/fuzz/test_rebaseline_production.py": "20c5a014329e5dfaaa4a29b81283a5cee65a89a3cff4de04849cef3dd612b127",
+    "tools/fuzz/test_route_oracles.py": "a9ed98cbaae6a2479e24e88719fdb25bce3fc819181db5f3f53b89bb2ba948e0",
+    "tools/fuzz/trace_colorkey_alpha_F20.py": "12b74061c5f4a0b2ea5ceda368ad6dfa9422fd0e888bda340a70efd57bcefdeb",
+    "tools/fuzz/trace_radialblur_C39.py": "3fe607a1bd8c6708882a148ea3ff4d3457ebc5e990498d19558635a65558bdea",
+    "tools/fuzz/trace_radialblur_inverse_C35.py": "690fe6802056266b7ec0c07697864f8879dddb3a1263a08c39896385863924a3",
+    "tools/fuzz/trace_radialblur_rotation_C11.py": "511af77d15426197bc2eb7d8bdbfbe16c18821824c19a85f5041b3d6d9e91c29",
+    "tools/fuzz/trace_radialblur_smart_C06.py": "6a50d2dc7b1e4a7ff6bb93f98535952bf1d3623b92cf0d73fb5d97f130617273",
+    "tools/fuzz/trace_radialblur_source_C35.py": "bf05bec9ada8adb411579464491de77d65234b45910e8bbe364e90c0d2a88be9",
+    "tools/fuzz/transport_radialblur_C11.py": "db92d031b1f36c0db17546913d7b2f853c897819622b3b38dbae6e9d42160657",
+    "tools/fuzz/transport_radialblur_rotation_C17.py": "dafdaa709e40164efd61abb028e0009be5ae57046ed4030a7dd64cd1d36822be",
+    "tools/fuzz/triage_colors_T12.py": "f58d4dff53aabe0c37481f38a9a2e671f51f1d6b74965024d50413a233061664",
+    "tools/fuzz/triage_directionalblur.py": "6a563f9ccadf1bc7ed515ade56c032ab2c0a0c9df68b49c14a31b591315b409a",
+    "tools/fuzz/triage_distancegradation.py": "5910d6f2495c3cc7745f7aafb5f6b321b3da32ced0327bb0006271dbab685939",
+    "tools/fuzz/triage_kirakira.py": "2839a2425f43ed943c79799377fc2e7ca6ab487da5abebcc06e18ffc92bf84ce",
+    "tools/fuzz/triage_olmblur.py": "8af7e5c38cb059b171bae47c117f14166f34ba587c9f84fe803f8e2343726a41",
+    "tools/fuzz/triage_olmsmoother.py": "6fff3fd79358ff6e4039eb4ef84e263c979150e44098423740c378bf2398e7f0",
+    "tools/fuzz/triage_olmsmoother2.py": "227209086ba97c08717deb0bce9a42705cce0108bca7c0c164a30d9ee5948f8a",
+    "tools/fuzz/triage_toondilate_T13.py": "e2f20f550f5bde47d5b256e1d5f1d569e93a37a778d5fa606cf8da901c17d85a",
+    "tools/fuzz/verify_blur_C12.py": "4369d4de0f75f148e08d619145be7fae9071a59c5a70ddfc1641fef11887badf",
+    "tools/fuzz/verify_blur_C15.py": "83aaa865da8cff8c5d5cc8284648d0de8599f6a3eeddd46a8d3cff1ac93b9428",
+    "tools/fuzz/verify_blur_C21.py": "282329312a764a680f736e8d342b325d518c0a9abcdad25917143f8ecdef9de5",
+    "tools/fuzz/verify_blur_C24.py": "f1403cf4e3f547873e688771f1844cec2bf63cf318f1b5b5b327e43fb242e190",
+    "tools/fuzz/verify_blur_C32.py": "fad1bc1468a8c389a0afe47788ab25dab6b717954013683c6386cfcd28cff1be",
+    "tools/fuzz/verify_blur_admission_C10.py": "50e0fcc34758fc5e6114cf31170b37b5cfc705e970ffb8b5ab1b9fef04c504a9",
+    "tools/fuzz/verify_blur_legacy_C15.py": "3eca71a6f352ae17ad43f90cdb3cf61ecd8d3d89070ba6a8cb3ac2ff27c31429",
+    "tools/fuzz/verify_blur_radius_C12.py": "e25aa5e3209df3f4f48c03cf904daa20b6d03fb7addd0182923b532f6240ed80",
+    "tools/fuzz/verify_blur_retained_C12.py": "4237cbcba34787e32c7588700f5a0c97d564149587a8e7ea03f42d4fc646e277",
+    "tools/fuzz/verify_blur_retained_F17.py": "4c972864d80b042663f3ea341870878337bf151b38d099217baf4c8fb88e8f75",
+    "tools/fuzz/verify_blur_small_C10.py": "473cfb98292bd39c0e311d827b965b1420c59454ea3bacbef04fc6cac8abdda5",
+    "tools/fuzz/verify_blur_small_F17.py": "7a648f678a43dacdd3298fbc5efdf4357db12a76b5221a065b87c9ba2340e471",
+    "tools/fuzz/verify_blur_smart_C05.py": "ff5d415cce81bc902be9f9954c61f0f233131aac215bb47c8beb9d4a5ac5295d",
+    "tools/fuzz/verify_colorkeep_F19.py": "4586276fc7c217a9191840d8b44e4e30eab0c4384847ea56dd580f4b44306ecd",
+    "tools/fuzz/verify_directionalblur_c02.py": "f4564018765000b4f0862260b3c4b46d28f67db0b900097501583609df87910b",
+    "tools/fuzz/verify_directionalblur_c09_evidence.py": "1a2691c772a64bfd2ca53cdfef582964a0b5af8c6bc2c01ea8dd70b5c9b99e98",
+    "tools/fuzz/verify_directionalblur_c09_matrix.py": "527d785892ba4875a1b70e1515c727475efb4cf52500296a8030e3a2935a6082",
+    "tools/fuzz/verify_directionalblur_c18_demand.py": "3529a02f15e03ea7195b8c25224a14ea3561fa9c66fc1dca3a369e3b7e963d0d",
+    "tools/fuzz/verify_directionalblur_c18_evidence.py": "fb7e314eec50a811904f2dc9b27c4f2547b3d30f3298a77961260b92599f2942",
+    "tools/fuzz/verify_directionalblur_c30_angles.py": "d93ed515e9cec0581a7bf2362f13f934ca819e3c909a33c421726dc3cc0d04cc",
+    "tools/fuzz/verify_directionalblur_pf8_dispatch.py": "63b1d81c06e5516226391a27ef02615067b526497f12584ebded70e716d253f8",
+    "tools/fuzz/verify_distancegradation_smart_C03.py": "be10db9f72cf7c7f2e0f5f19c2638350b8981f33e1cc752de18a85acef6ee18d",
+    "tools/fuzz/verify_distancegradation_smart_C08.py": "db2678844fc22bbd40d3bacbcc8410b962ba588234964d7c7488eb9f366279cb",
+    "tools/fuzz/verify_distancegradation_smart_C14.py": "325c1db241a381801d29b71479d45e537a9ba31bb2b6754714ff55250109106e",
+    "tools/fuzz/verify_olmsmoother2_C01.py": "2d193dd84a5edd4f91b236bb50890fa1c2345f9f98e839e9db6cb66ef69cdc66",
+    "tools/fuzz/verify_radialblur_alignment_F07.py": "150758427ab11534db3eb1c0d6f0d1ab0f35f96c6aa987383f2e02b048c1ed1a",
+    "tools/fuzz/verify_radialblur_centers_C17.py": "75860007bda4e8cd752583d870a2b15dbfddcf03bcab70f94732789e73a15b6c",
+    "tools/fuzz/verify_radialblur_centers_C26.py": "21fafd7d6e80d66ed5ccb3a363653e86cddee7d9452e5da967beb1066b70dc28",
+    "tools/fuzz/verify_radialblur_negative_C11.py": "6600828584b14ab5852027ce145995bd805d2dcaaca529915ee563ae72826e09",
+    "tools/fuzz/verify_radialblur_offset_admission_F13.py": "7aba35b090806243bbc62ffc0f8397e43fcf9c4cb454e355f4b19efdf2582460",
+    "tools/fuzz/verify_radialblur_offset_round5_T01.py": "d0a5db74f4436b140004820946cd2818234f83ed100ec5660399b2002d311655",
+    "tools/fuzz/verify_radialblur_round6_witnesses_T01.py": "b3be7d479ae3a4e9a01551fc9bff03ff81402161ec439f7643411d73e4b7df33",
+    "tools/fuzz/verify_radialblur_smart_C06.py": "71327d3a14860a85579b3057aae0abc958d6fddefc4e24dfe1adb6316dac6206",
+    "tools/fuzz/verify_radialblur_smart_C11.py": "53bbed4ccb9bafe646702a222651beabb99972b9f2c221a83b7a86398b526dba",
+    "tools/fuzz/verify_toondilate_F21.py": "a5c6717ab7b31e49b81c779b5e0c706ea3acf40353431e2b1fdf13beecdd3c01"
+  },
+  "full_report_sha256": "e0ef70ff59b0ae37a3d5dafbcb3ac1d5ba45f04e569eced208d1c4afebcbcce0",
+  "cases": [
+    {
+      "index": 0,
+      "input_sha256": "ac79df1bf66944c57c1939995ab6da3ef5ce19a8baac65f38985a3a170c5dc62",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "702f7068f7533fbc9a83aed96a0153d186a1d29b5583103da86e33e8698396b0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 1,
+      "input_sha256": "4eb8f8124b5cb643d18b7b73a8cbb7ba7045246107500039ee82b86c9546dc7f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 2,
+      "input_sha256": "63916a0f97d3ddc3874a3b06b12cd7b4f256b19ccea56eb9ff94ef9f2bf5f5a3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cf71b9a2a22cad1ed2ed44d14d241a6231003efce0d03a0c1273aac3d373c101",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 3,
+      "input_sha256": "d6398d36429586748bd92114290e1d5646b47a5728017ea7991beee52232194f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b0e18355af0c84c02ccc0c01cc2536350e32b7095681abc5fa542e36f3294b84",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 4,
+      "input_sha256": "8fd6ca9bf31da1ab8e3cf97d19c457b849af6c87edb9d4fae4c8e13a72f97121",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8fd6ca9bf31da1ab8e3cf97d19c457b849af6c87edb9d4fae4c8e13a72f97121",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 5,
+      "input_sha256": "faaac77ca8d4d0db3c1d8a7f822aca4e901d72e26a1e1a98ad05e789f96f4f2c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "46a3a96c27690363b3f502e08735b150f630c1ff0a4819990a1c1304d84470c3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 6,
+      "input_sha256": "f4b5b7662248dfc807ce6e7725cb9c9670705f78bb8524e32d873450cca16d4a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8f8bb989601926dd900b115790397df10da87353de71ea76dd09821ab3747573",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 7,
+      "input_sha256": "00bd46a00d23c50ac109838721fcdae870a3291974d5fe9f147907399ceaf509",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "53e249c87a7c1232fcb172eaded286503d7ca7eed2f0c9f56abdf5568ff85e95",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 8,
+      "input_sha256": "9368127b77f16b67543598cd9781519327d7db24d819c8a39db51a649fa1a4b9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3116aa683020b4e6b39afdbb37880d5f16cbaf1f4cc182b2856960781e552b70",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 9,
+      "input_sha256": "0492081e315ef926ac73dd77578c6726ceb4c47511cd790f7fa26d84581e9a82",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "15cb19a0358fc07bb982679177d33204b08c4e6181999dec0e0172ed605fb9b5",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 10,
+      "input_sha256": "114e3c8153864aabf8cfccf5e3e468c7b35b533c972dfa2baa905d5dbe297d4b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "679bdd3c618490f41bcb3c6b2b858e749cb46bae1deeedb6a713b8dd95e7859c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 11,
+      "input_sha256": "0f92872aab6acf985d69ec3324d763e9ca497b3ae314fc1da291fcc0d9b18269",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6ae4d7572c2162d09d50f8320a62a48cdc41862c9ef17fc2e5d66995675f8517",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 12,
+      "input_sha256": "6d816b39eb09bbd96dd71581a3fc254032d449b1e19ecd24799cbe865bfafcdb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "adf928fa4ef7da84d49a99bf2c3955415a5ff5219b1487b3de7cda4fbbf4de61",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 13,
+      "input_sha256": "88b8495fcb4be2db73f5ae900cc6293284ad3fc271b63319263b427008de018a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e7fba572dd1c81501bb9811666dfb471b8913896b001b30e3a98a3d0b65f9197",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 14,
+      "input_sha256": "cc10c01971c74ac95a2f9b7cb51835457a62d0e69d4b3b759f8393b683156cfa",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fa8baf6e26abcda9f2f22a5d71b00911580ccb6a81f42b566ca32bc8d17b84b7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 15,
+      "input_sha256": "f5ecad30e1042515296380e905679954f145af2b639c775e89efd5e0f6adacd5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "441d388ce57fcfb024d9291cb5642edaf3e9fac9a348cd47355ce872b70ede12",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 16,
+      "input_sha256": "c4fbe63e20df6c8f50f8fca9ccc1a6a80568c91f305e36966e3d940695688d75",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a8ea3c47556be26cd4e5a4dba4fdfee427cdfd92eb994272970b5041aca99d95",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 17,
+      "input_sha256": "94a2c31c400ec0dfab5923f22f5030807dd837a1a57f2a7c8008a0260c806e66",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c4990bc67cd9c62c607ae7108b7a77add9c33fc117e9233805650251fa0017e4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 18,
+      "input_sha256": "18697db274cb2a17a951cd8739dfc38590a86e7d166a9f79a8c81c1d425d24fd",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "91e34afc297d1e4461ab985a2ff538f975ad7803a9b51e732b577683d3abb4b0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 19,
+      "input_sha256": "773a04f2cb6bb8d1d3e1d6f215c5a0b7983cad2ceba609dfb65aba8994c925c8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c685ff427ec3d2ccf3f541c5adffe6d4d7c939b1c4ecb278bf5de08fd4fb3540",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 20,
+      "input_sha256": "296bce94bc395e5cb73269492b18a4902e9ebce26faf3b10125901b120270613",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "16bbf13fe597753da2d6d2b18a71d7a434756112880a9d1371c39e60c99f26a8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 21,
+      "input_sha256": "ef51e6f47c1de1a199a3f45023d0669852b2ed14c4068858d7dfc8fb491d16e5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a1ec4f85405e268c951b96ac91f0e323b853a161a946ba5198bc37e78157740f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 22,
+      "input_sha256": "0d5cd959eafb9c8f491f8469f83d4c009d0cb49a5882392f9b8a7cb456f013d3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7470da647722709c5a0ea5d3291bd1b1fad6fb6b6a4d618cbbb7bc1881c494b2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 23,
+      "input_sha256": "109df37747be2dafae9279e0a5221c15d6e0b3e3cde51551334dc4e9a1c4ff72",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "17c636a9f7e71426740a9062b660a26a4a8fa75706e9b037d9b036d3469e458b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 24,
+      "input_sha256": "3ebcda44647e6ac8ae03df66f4b0175e5699a64ec73bcb28003a45c4a80f0d53",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "645b3b128d9fe54497337f4aa01b6d7704564fa6124c00427250bcc3cbe1d438",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 25,
+      "input_sha256": "e5df96dc1e16ce62daac1bb70350c516cbf795853c074a869d86da93b8447388",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f31bd5ff0d4f800ac1fa7c59d924cf372c7e27fecd7d84e23a490252cf32ecb3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 26,
+      "input_sha256": "2ccfbf3dc965528f4ca862f498d04823d0c99edc89a9d8282667a6f9a299ae53",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "19168faa116cda6821ec5a27f1403596f8957f358cf89579c1527767321bbb2f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 27,
+      "input_sha256": "cd1dc073c9a418e6b6e50a439c94a85f754d5b3184febd5c6b30a88d1b1390e2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "aa3491ec511eea2ef48017b92919416bbf3f4356ff1ab82f9a66a85423f5d10f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 28,
+      "input_sha256": "8b6bff11e90f3eeebf56c8f1dc93bcd29a39ffdfdde27a764432f45f701d2375",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "04291bf33086a92c311b3300c5c4323aa5fa874baf94055bf8555be6fadd28fd",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 29,
+      "input_sha256": "afe53d39e31815f3b860f2f7c23cf8f75243725703d230febe7dcba1926cb0d1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c7f241f7e44f1c108d6493b93f745c23626ce47fa2ded4a7b8730bbf7232bfbf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 30,
+      "input_sha256": "cc57634798586f2c1ce13023ce712ad8b6c7141f20f665d2175e3e8ee053755e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4f511353f497374632b70f9cbd502d9cc94f5e83848036a89e4ce6a6d1a921bb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 31,
+      "input_sha256": "44e032474242a0c8b6665b998bc2033b8f168338a79c291ec2b4e29bc157e1d6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3c4f5dcd96c7a1a1b660b3e5c45e988a8fa1cf203351a4c7fe8d17b18d6f451d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 32,
+      "input_sha256": "277cf6da60f1a4262ac68b70b21773cba5d44d27f3e520f21ba76345573b717a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 33,
+      "input_sha256": "3eb570525c061979755b8a431371380a47034a06c6f71c376028b678bcbef646",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "75080e1577153bbbbd150976ea9313d293f0c75aab24a5386456af5bbff4f0c8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 34,
+      "input_sha256": "13f631ec5c1647172a107084e3bc71f7be72c24de20ceab4ac5913bc2782993a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "895fb0392fdc155b833f6d2834f7fb18da91ea2b4dc10bf93659a9efdcef96f5",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 35,
+      "input_sha256": "97d4e28ea62a05fe7925f87aba3ee38060efbb383332d4d6444657c26d2e3bc9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c520aa9c3b69286719c20918a7856973eb492e0fd09b5f79c4a2a0f75e84ed6a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 36,
+      "input_sha256": "954707044a044dc347129c0d2799dc11236047e1c62eb08f5b157236c89c04a9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cff7ad6c91be2535ed7b044c8573505d9c849ce08b8d4467ecd5dc960499d746",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 37,
+      "input_sha256": "8b720b39524b4c7e4f93d94df2480d8c532deaabb82e9bb8a812a14c1277bcdb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0a51f6a8ac388e0ebc1bd1b72eab014775e3af162c5112a4bdb9d6aec12642ed",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 38,
+      "input_sha256": "a83abe84a6ddd2bed2af2b665f33a4e5c937c520dd54bc34ca2c35689b21c2b0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "632ddb21c0d70e4890047a18c327b47141f24794910d1497bf91fb3e7e463291",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 39,
+      "input_sha256": "7349b889dab7d8e3b37f6d5e5ae15fe03d3f6866da4fca2741a910c0c85145f2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b31233bcd736129af6eb6677d234cd2c293791b3af8a15cc09c1cc4b74121fd2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 40,
+      "input_sha256": "bbf15185e91f78380f3346844dab1e1236161cf4de0cb6f7483708f03daa7ecf",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e90cfa45d518d655f80a83a0fdd228166e53838e8c9012b565df9225f1dd2f18",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 41,
+      "input_sha256": "2f666bc9ef277c99ff9fb86b564a9c0131ebbf75e632033af350570fb1dc8574",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "60b7612b0c5287b5fc777b5c228463dd8a4319e1c90823ca31c18491036ea555",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 42,
+      "input_sha256": "a99a6f438eb5e851529794ac1c7df711a6070bc2572058579ba9bd85396b5fad",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "23a309dd65e4cb7e9d103f80346a4ba670c2f74f0a85cfe8b910abf738602e1f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 43,
+      "input_sha256": "950d322e07a127865eb65b2bcc5cea787f573329479c0d2dcbebf19284c0501b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fce5e88eb6af35afc5323e00d303bfe8e205f1e6fb9e0f07518fa5e2cedc86d8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 44,
+      "input_sha256": "ff246334b54e60b3a1b2bdb82b29129016f235fd65f5aa9fecf7635d4d2d45f6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "bd0521a5cc29c1c9771b9c0ae90745d4eae430d19760df15548b1f8cebcd0fd2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 45,
+      "input_sha256": "fe287167fde8764516ec014d8e56d806bd6df7cad2fe61ac9061bfe4f083d22e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8ff75e4c3c9c7498b73992f56bdabef1de011bc91b1e1670afd45f8d17679e98",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 46,
+      "input_sha256": "d8279e0af4d8a01d206cc31d6568720774cbe980c3dc4777f9ab4935439311e2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d8279e0af4d8a01d206cc31d6568720774cbe980c3dc4777f9ab4935439311e2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 47,
+      "input_sha256": "8ad278140eb2f19e8fba846307f623deff2ec75451f939c4da140377c0b335bf",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "826906576ac79274c87d7c3027cb3b3f09b0bc7eb3b2b33de39692e6f026205a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 48,
+      "input_sha256": "c0f79ac43f955708d8760710aa502d16f6690e893f6ed857a3f27595903135ea",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "41c98b4b62d68ce94aba0a327aee875ee248600b3ff40a3f2df139df7066e20f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 49,
+      "input_sha256": "7d9742919eebabbbe1242ef8373bcabfba3062ca4270e3b441588f25a4c54110",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4596647cdfc199beb095baf0d61c5a92459b032821582a34d4676145e6495f3b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 50,
+      "input_sha256": "903edf9a5db87f91a7c438e891fa2446cf26f1e60334a6231dbfd1b6f68cae51",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        }
+      }
+    },
+    {
+      "index": 51,
+      "input_sha256": "86f7a7e02567d74edec1aab1311f4c44c3eea79b49d7365c619e045f6f276b82",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fd226494102245f365f6e184ecafb2ee183078cdc37e6fee078889ad21392c07",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 52,
+      "input_sha256": "7d15546b749ac5d8c448ebe6bbf58d5865278a754f8a628f3eb0ebda45b204d5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fa9f9a52e17679c3f095891f180752f6de57332af3735f31d5cdd21d44952e21",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 53,
+      "input_sha256": "4e8cc90ced50d6f16007cffeb4f902f93bc813c3d78d96d05984577b8401166f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "87c7d45466684a8b6ab72d0217630fffa5dade7d932aad1be01c7f1c91a81dcf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 54,
+      "input_sha256": "f1f00cc0cb0d14c2b77662c6658a3508a752f53aabd7ca256324bde03a9eaf44",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":193273528372,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":193273528372,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000a0d44a400000000000000000\",\"f32_la ... 378486,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073824480,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4632776476809232384,4632748950363832320,4575657222494448601,5346871691,0,12884901891,8589934618,115964117003,17179869325,74,849116099772416,1020458838,1,24,1881144960,0,193273528372,0,0,0,0,0,193273528372,0,6442548698,4294967297,223338299392,45,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 55,
+      "input_sha256": "a7ebf3c4bfdbcc23584dac7a047ac8051c6939c3a7498a7274b2d8aa45cc3db7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e20acf78294502a9266924789785a474b0848da4b7f6445b5e9ba9c0db27856e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 56,
+      "input_sha256": "e52047d873dd9f4dfdc3387576124d462b3abc1d25550e158b571a1326369329",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cb9972be0399ed1d98dafb8b0cdf929743b640a0e597aa42e16d4f9779f57d78",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 57,
+      "input_sha256": "bd7069aafb59b6d8780cf4922d1df75f6e70f1666aa3ac906cde06d0fccec6bd",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "31c531e6d48ceb2659dd17e26ee3a258135c08dde52412f05afe107812aca573",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 58,
+      "input_sha256": "14d720a53714d9b7c87f1a8a038ec25f4acfe425ebb309afb741a38b0da1725b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c7e4b19014ed24a4284070829e66bff99fe355eec70b1fe34fd19e1000639e35",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 59,
+      "input_sha256": "7eb9c3a8204dcfcebc7e69cbdff9677d5dde384a84c4fc681c1dc2d390687667",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8f2d94231860aff8507a44a99dc5557caf3ac4db9af3e360d1e4dbef99e5d76e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 60,
+      "input_sha256": "6135008a8d75f922f788821ec9d0e3a2b99748c97a84979855cb7725e1972e21",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "083c2a4e66209a92f3d9c4a137f5e377d052d29ba82f230705fa88322ed9708d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 61,
+      "input_sha256": "e1df8d11f15f0d1ce94392a8ec83ba4cc56178ad31353d2cc40a303c5d1cff5c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5d0cf5c5fbce32de960f2c61f1120947c63693e7f93a3ea6c9074a3bfc277f80",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 62,
+      "input_sha256": "4a98844e25ab384f8dd5d2f835f31176d7e96a821585446f2c78bcf12d8761b3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4a98844e25ab384f8dd5d2f835f31176d7e96a821585446f2c78bcf12d8761b3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 63,
+      "input_sha256": "7f04282e6bf90e13ef3fe30baef975fee5f0b979fa064cf184699f5975b6789f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3215069ed5d752fde8afbbee7abc731d8ed4c889e84d5c5e7f8bbe1f1f39fbd1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 64,
+      "input_sha256": "97689602cad5742dd72746be850a219b9bad3d1f9ddf6d5ba8751880fe4e75c7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "67def09de411d5dac915bfa53bfd6543d3a7e06124c58ae8bd0aff0dfe30c8f8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 65,
+      "input_sha256": "3c784f1c62c949f2d6deaaddee54369d4e8f8b9605194ba6f1f9e0a5bcb085b1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "957b7bf05cc48f4566b17651cdba991c6476e181e7878c60ab87569ffaf0351b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 66,
+      "input_sha256": "c16cc1565dbae9c832c1e037fc037befa6867deb944b35ad683c010d3e1d8191",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f64897f14ee1ef6100fc4a264b4ed7c88c44a4e5af89d73e27fd8420916b8e2c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 67,
+      "input_sha256": "38f65adb7cce17af4e30137714cc8422a554ddc540997a6a6910976eb34163c9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2f93d1140326ac26a231e7079e15b11a927d0cf2e0d42095248288e0e5592446",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 68,
+      "input_sha256": "c2c4d380f859ef40fc48e4f29a083c18f1d660f57d814dc2f206d21f00361e05",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "619cf4653bcc8a426f71bf63c8a1f3ae89003b6347b7dd6b1bae2e0158d95254",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 69,
+      "input_sha256": "4eca8a829e7e3ce9a27c2cf82dab88c3909622f05a2f0deca4335708764c90a1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "58392b58c25bae332c323db496948d02d716f40597a6a6b7c42ed0350f34c259",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 70,
+      "input_sha256": "2eb9f2c429b224967b1383f24eb6c4b2e152968b3378e91858a3e0e37ac01a5a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fcb9ff4cfdfc81ea7ac5c53919d48b9151033466641d1756710b2130990d14b8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 71,
+      "input_sha256": "4b44de3f83ed4049a7ef3d284bae7ecb6b1e2f0722b03199e8f30a5e664aa74f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "97af6f639f7927501c6de3c4c564b2d3fdc10f41a137d4cdb7c661a3720b7641",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 72,
+      "input_sha256": "e52726fd306e20b64f04679a60ecd464a92839e0439ebaf29a57f39ced7da64f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e3c27d501eaa89901faeb83e8ae806335bad9f35883ae0e30377e0b3cd5d4377",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 73,
+      "input_sha256": "86a83b5cc31bac1994c2141837f47ff574b6ee76ca191309a3597e1445a31a9c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":94489280525,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":94489280525,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000026400000000000000000\",\"f32_lane ... ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,108815630443572,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073758784,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4619004367821864960,4622382067542392832,1065353216,0,0,4294967299,4294967301,0,0,4294967368,1065353216,1065353216,1,24,1881144960,0,94489280525,0,0,0,0,0,94489280525,0,6442548698,4294967297,55834574848,22,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 74,
+      "input_sha256": "d5e4b869afc2fdeaaea5bda5c1cf9862ab687d83370df16125d04dd9d61df473",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3f8a4cbc49cbc96e2d01a9290a67a49cb2577e8170a6ad8e246ce34ed030fa31",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 75,
+      "input_sha256": "15288e7897c6a04f2d767be95b83334240a56aa2070b8579334dbd1e25e30745",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "15288e7897c6a04f2d767be95b83334240a56aa2070b8579334dbd1e25e30745",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 76,
+      "input_sha256": "350ccdf20ab2222ed0a791669e5dcbf83cb1d8aa1b9e09d116a42525fcccfcd9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2e6e7488ad34d8d00dac8ed0417c97e10e7f78429971079d2ddf45a353ea34b7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 77,
+      "input_sha256": "c09b047a4b23f72460378b3be29c552cf9778b08154acee350a13e88d6a6ffb2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d3ff35c759cb811f6922498ae428537568680ad69230c1b8b50ca9cb1bd203bb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 78,
+      "input_sha256": "a6bcdcbeba681a7c3c5cbcfdc563b23878b258ff0b903afb4c9ded525482c047",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "abc5dac41ea67329df4099ea800c28c23deef3df2a48556027452eb3431e050c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 79,
+      "input_sha256": "385955aae7fbd69f530c7ac51d953ed3f5e80da9b189f00782ddb81e64ab0ed7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0f53cb82d3f708b2e165352276e322c11b430b9937a3b610b0ee3a263a66e9c2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 80,
+      "input_sha256": "849874219035a201b3b9b32e3dcdf7800e50df5a57aa677c2b1495b731577959",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4516675cb646dab356d94613eb9efa49004f1286456c26cdd4f697f75b4965b5",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 81,
+      "input_sha256": "f6b6d80cee567bce2a0fa20b66bbb6e83b98aeda968f6fb8309ab837f1bbf281",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "42ce93b0a182a307cf95d6a42ae099d6ffc88b98a9aedfa14312d0ef76241e78",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 82,
+      "input_sha256": "50f55c9a1d6fa882b370b730d77c250833eba755a6af858695d3901c5fc0f5e2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "034924bf833b27bba7b7dcc9fca2da2a1f8eb6a88db5a63d1f8d5d282832cd4c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 83,
+      "input_sha256": "3c1125735788c8ebf6e4ce45659a452868784e99657d5bf575039389761e093f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7888e850e2711ab8bbaffd03abd4322a3cf4d1facd189557000d7434fb1d13a3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 84,
+      "input_sha256": "a5c8665121e6905591b9b4853bdf0744d5f097d94875d9ee7ce48a647200606a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a5c8665121e6905591b9b4853bdf0744d5f097d94875d9ee7ce48a647200606a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 85,
+      "input_sha256": "99afbbb3421669235f8d14386b0f274e8f72844bb64f06f8d512f7c8822db5c3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "dfc1b6e714f102fad71d900d39a060b54351001ef9cbd60128d53b46a6795f7e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 86,
+      "input_sha256": "28ba823b53df64e7cd5801e47e04e7123032cec770e88e839b0c86a6dea3ea98",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cf7fa8fd5e592fa59bb2528a797496c192d0a3929ca3f87d5b43fd9e9ecbfb70",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 87,
+      "input_sha256": "dcd18047bdbd0d7f80ea94ebcba62ef5b8d84ad89e67c2515bfa1bd0400532c5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ba931e694beb47d52f190f10b3e4ddd1e79428aa49c4742d8c420befe3ff1cd1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 88,
+      "input_sha256": "ef7fa40d032bd5a916129a109f06b018f8be6664b2de93a4be33730a6a1a1540",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ef7fa40d032bd5a916129a109f06b018f8be6664b2de93a4be33730a6a1a1540",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 89,
+      "input_sha256": "99a2724eac4345f846bdb354d22f0c249027f18853a17f05a880b48ba16dc473",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "612403fa72574703c8dc5368c11a8f422ffb8d5a593bf3397f037babb8c4f759",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 90,
+      "input_sha256": "4a5e0027d2c73f91bc4c69824254c425ded1e99207ef77246857917c57010338",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4904eedc10fa23c770c267c3f93290b3129b6f159e73351176f83df4e91d002e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 91,
+      "input_sha256": "28398ef9749cfc09fc74c12b13c56b87d6b17910364b87fd02c3fd1dc5b6851f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "28398ef9749cfc09fc74c12b13c56b87d6b17910364b87fd02c3fd1dc5b6851f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 92,
+      "input_sha256": "3a0392fc31349da08936d7cfaca7a23647d0debeea4c5aac65905d66aa492d4d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":42949672981,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":42949672981,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000e44d10c00000000000000000\",\"f32_lane ... 5528,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073756352,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4629837336199299072,13839647296557416448,4570289023389532160,5352516797,0,4294967299,4294967325,283467841552,420906796039,6,18446529751611867136,1024244214,1,24,1881144960,0,42949672981,0,0,0,0,0,42949672981,0,6442548698,4294967297,90194313216,10,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 93,
+      "input_sha256": "fbc5cacad861dd68c2c3ebc150771834ef17dca85b13c47352093e3e3f45ddd0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a0a37be043ede537a283d41ccd02159be5be9bb19d58ba25bc4bcb7d04b6045c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 94,
+      "input_sha256": "96915e3d41165139752ff40c947648098d4c620cc1c20c20f7bc69ab61f202cb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7ee51496373e834d005d6a878e2fec720be2a39fe23957ca013d5301443baa99",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 95,
+      "input_sha256": "5b185170fc5e80701145df9883d3d9458c17c89d7978983697857c3d8f4298d8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d54b56c8cb64c2f87a96cb9db8ed229d5f74c19c989d00c565d8aa5e2428f2d0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 96,
+      "input_sha256": "0c1243655b9a039f57e945fd74f15ce5ca278243cb912b5bea10007887d68613",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "21a35433d44aaf995a35d48a1dafd6ee6638dfb72ab6b5399723888b9a46f13a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 97,
+      "input_sha256": "bd4e44fccef17c61dee936fd2823bba935c875a3dacb2c5a755bed3c9a59ebc2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8d1caa1de5be1b7922efd4fe2b1311cdcec93dd80c736a5e7f40f2fc14bf3c9e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 98,
+      "input_sha256": "380c4d850544efa6a8f053d52c5a4396a8ffa45673ee12d61a9cbc0325a5eef7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "bedbb3c962d06ce3487c2b2cea5f2e364e058fa2eba56e3f2c880732ca45a639",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 99,
+      "input_sha256": "e56ecc8d4919bbf2cab6ab320493fda7f5496b6b060b54005fd67e229bbd9c15",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e56ecc8d4919bbf2cab6ab320493fda7f5496b6b060b54005fd67e229bbd9c15",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 100,
+      "input_sha256": "814edd546e683859a40791f16c87aeb0c524bd2d5dfc0918d4ffe0ddcef27768",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5526ea66016235b1635d0d39d6b2f4f4bbd3b9cbe3260a761160e39ba62a1847",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 101,
+      "input_sha256": "0915a06a69191be291b0fde57130e28347d56aca09b16d78844145eb78da31f6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "926c56bb17622aac61d02a98340f74f7d45a12d869684f3fc5b3611bfdf9d7b4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 102,
+      "input_sha256": "fd2988c06278cfa6654295ba12c25c68039673de558332329c99437db109334a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "68c483661af0372e9a94c19aa9c0ac46bde623f90231e20dfe80124ae5a3c028",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 103,
+      "input_sha256": "fda34a0d1699e03277ed0da53802a21ea838dd85bea92873ce60f80caafd14df",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9d2dc1f41ee9140b4cb0a314e74aa3260730dd23051fb04118f230ecb7b189d4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 104,
+      "input_sha256": "00919d06045af284c6dbfc6cb0a225759ef682950e2f8741261f3fa92c7d0af4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f4207805787eb7d7374a444399d5b569fd17b1bbbfc0a95e9e7917c11a2f3f2e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 105,
+      "input_sha256": "aa53d3fa253b956b713b3c158ae092c7cd98acb8c6e0fe0742efaf3b177802ef",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c6edcd7f092541ef2562a17d6de412bfa8ce0c3c81d6de227d7c8ad8269b473a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 106,
+      "input_sha256": "fdc99a554cd8e85541a09ac3056d703ec51b18e47ff20ac9c57857bc0c11f6eb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e75cab53dd92c43acef161937648421483f39baa231f40d82fa7d4995260dcea",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 107,
+      "input_sha256": "e9f70c41e11688835121ee8cb6271cf4f2db86d4004880b2bbdba7a48e537719",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "424d34ea5fbd61e153d1af4a84e56afc5e412a344b701af88f661dac656a59ce",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 108,
+      "input_sha256": "74776865ff4bc4cae0c78c7b6e7e468f8b2a92aaabd7c28ac68e0ef00b699432",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0a48c21a73a8f858c1ebd4252d8496cacc11c40a0f04adca56985bef3c26c88b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 109,
+      "input_sha256": "4893c447daa4a858174dd6b13e5cd5b1977045ece36aa98b84b8fe6a5476d3bf",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2cb926d8fd5adfee4b433c3a64f23d27b4c4fa1d66fc269a8e0e75bed9595d22",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 110,
+      "input_sha256": "9cbe6c5da68251f5ad4a0058ad7d318b1841f0944551d9b8c5a31b497e97078f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "31b8e9ef088ab043e64a47e36187e92e15611adf1f268cd03754934e22f4033f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 111,
+      "input_sha256": "b4a9b6e3bae4f87fb88bdb3c9ec402e9604f88bfe33f82c12fb7f07f94dbe3a8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "448a594e9d56a17f193e977e6b2bbadc4a42d9bbbba337fbba1d4726a61c3265",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 112,
+      "input_sha256": "801252cd2a0312bfc598afce1599c556cc7d06c5a83c6f75f5e276f731e8e7fc",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c1177c3ebe17375229f148db8a8e7c8063150caea783136504a461872cb3a3b4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 113,
+      "input_sha256": "8a738a1352bc55eb978850d60e53f8a25cf1d4a295c26710c62be1601d171053",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "067bf5fe9173ff78df79b009de89a4c9be445522172f7e1265dc973a6f5bfcde",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 114,
+      "input_sha256": "48e7d6c92933ade59544626bb6111ada56106cade369841b5998aac48867be18",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "395626527a48fa1ddbdc25b6b7f99f67981c2e4ddd3cca7c6e92d3791c52c411",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 115,
+      "input_sha256": "d8788cd58e61bb77f779976136a33f384c7d8f9ba0ea4fd5e49b4e73a96cb24f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0f1ace14f4daab3fa4342d4266c4a50604ba1bf092aa14c540f73d3f32eb7518",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 116,
+      "input_sha256": "d68fe3dc1935135c1dcea88bdb0fd0365a0b0f346ac8b4641e22f925d847e50e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":8,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":17179869196,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":17179869196,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"000000007021f73f0000000000000000\",\"f32_lanes ... 108815697756796,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073749984,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,13840610881060208640,4609189508557045760,4527793960924250405,0,0,12884901891,4294967369,47244640267,8589935992,80,18446301916500590592,1065353216,1,24,1881144960,0,17179869196,0,0,0,0,0,17179869196,0,6442548698,4294967297,51539607552,4,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 117,
+      "input_sha256": "6db15ef4847892bfb86980297659110230fd48429e3ea44d81e94a5a53cdec12",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "1ab9844c2113fa7a3dff8ef940c4de838823fa9af8b6648d57538888dd466cd4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 118,
+      "input_sha256": "bdb28a0870df703d41f6187eb56c6a698ac2592c791f9bf37dc6aa147ec42871",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":77309411343,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":77309411343,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000022400000000000000000\",\"f32_lane ... 0,0,0,0,0,0,0,0,0,0,108815699045002,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073753936,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4620130267728707584,4621256167635550208,1065353216,0,0,4294967299,4294967301,0,360777252864,4294967296,1065353216,1045220557,1,24,1881144960,0,77309411343,0,0,0,0,0,77309411343,0,6442548698,4294967297,64424509440,18,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 119,
+      "input_sha256": "f2078b4590798c31141c51d729928f0b35005605a982596cc04fdaa30a6f8e8a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "06148a7b4974814ab2152fcd8010be24093c026070d98ea8ca3bd15ec51c92e6",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 120,
+      "input_sha256": "2172aa6f97f23692a8f83b7a1ecc3aac99b38cd49d96634820c3054695a41cfc",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "356339433d1dc1f8c144a3c7d8d3113bcabe20c0f9f691904278b2d93c755735",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 121,
+      "input_sha256": "82d94162961136a2d4a9ca589144affafb95d8476effcd9aed1228ab46da26dc",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5069693b05760ba0809371994dbb3e4bab362f3968dd970cccb64fb560fbbcc8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 122,
+      "input_sha256": "1836cc978c86e136d859a651f9e67b83fe2768396598622e68d412db110146f4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fcd7cbd17e51d9fda913e87d2f6bde843df3de94f5bf832e839ac7f738fdcfe1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 123,
+      "input_sha256": "7597b5e8a2170b66eb00e8f8511a578f0c61106707c5f30b651027aaab95bc49",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "88f981cb7989963c86050ed8f067ed5f1d7b11f18d1bde0bef2eb958056a1484",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 124,
+      "input_sha256": "a21240d88f2a4cd258ad9c3a8420422ac18369dd8edb2874c12d5a5a01ba0452",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6a790fb0fcca35f7cc0571194399ab4bca8003e4a53dba324d0747ac60eead3d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 125,
+      "input_sha256": "8e01b83f8308aaca69441cde9d8c8dc3223c4956116823817b99e588d5ae5e1c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":8,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":94489280527,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":94489280527,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"000000002c0b40400000000000000000\",\"f32_lanes ... 4402,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073752264,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4621278862242742272,4629712700543336448,4548988915858180063,5356929080,0,12884901891,4294967316,73014444442,193273528551,84,18445005368953143296,1024164546,1,24,1881144960,0,94489280527,0,0,0,0,0,94489280527,0,6442548698,4294967297,64424509440,22,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 126,
+      "input_sha256": "8cf409ca4574e13070b313e4cbf10bc786e8fcbc48d91fe25e29c1874fb2ff61",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a59a23133912ddb8e6c4599318931e455912cfc433ab0d91fd3fff9e8301d35f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 127,
+      "input_sha256": "d2165cd353c689936a25afc740f1d87023313b2243ceadcd101ed8ca20c003c2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f2e2177e4a7b10c1e3286185d80d4e08bd471dd23c61007abb43634ebd3eb540",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 128,
+      "input_sha256": "fd9022003104894590b09dc882b86999065730962a2481e273a2bfe961c28658",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5cee2359e9f40f2c0334a7a954de8a8a3da2532e80cefe1fe98948429e30c871",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 129,
+      "input_sha256": "2ef83fc850b1f875d09b43c0b18fad87dbb393af14fa9af6218851ad5f0663e8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6abc435ca881ce4446c79a25026aace1eaef9f750db17755ee996d8aad25a7a1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 130,
+      "input_sha256": "515fff38d90058545230334f87d48cbc229af318a21b156c526f85205a9adeb5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4de7ceb1e1c336451bc22327d523faaef784b68982477b48c95db186527ac89c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 131,
+      "input_sha256": "188634679d3723b5b304f3ed30dad412b71979de1331dab6f679134f9a3c93fc",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2c3b782f5df6d535526be7adc513a36363d4103cd7de65389db7d33e4815bf4a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 132,
+      "input_sha256": "eb7489a17d7fc2a8f36ac28437fe1697be26bc74192617bb4007e8dcf2fde416",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cdd5a8d89d9ad7826ec7e9940976d559fa1b3aed20f94f857ffd65f637fd3c8f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 133,
+      "input_sha256": "796f759bb8cefe47b1f8b98cec552dab2b10aa4ca1211360a33343c43e79a33d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":73014444038,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":73014444038,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000e4432bc00000000000000000\",\"f32_lane ... 8815713398528,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073751248,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4621810209826799616,13847236125812326400,4565701797514737556,0,0,4294967299,8589934614,81604378855,425201762487,87,18443396457019805023,1019815639,1,24,1881144960,0,73014444038,0,0,0,0,0,73014444038,0,6442548698,4294967297,25769803776,17,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 134,
+      "input_sha256": "265c735f4a63fb2991a88bfcb2d018723270deb808f7cf2cf7098c8fb6971ca2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c561cf8ecffe05a6bc5e8910a88e9f7b7fe9667caa965924156f44629b33f6fd",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 135,
+      "input_sha256": "f671eed8d40fc46385bbb2b050b322201476f150206c4396b836767ed346fd64",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9a84f26715205c7f90ec3cd1139f8bccf64ba6213f38c7837d5149a716bcba11",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 136,
+      "input_sha256": "acd14e14c629d0739d418619225f8bd8269278a25d6d71e7326fcfa994ffe52b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d827506201190d212c377d81758b4dfa063a013221bf4ea4ff8c086e97968fe1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 137,
+      "input_sha256": "f90168cbf08e1332d2f1d12c709069ec538db19c9f5981ac2bf5845f8a8fcfae",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "63f40e85b7bb46f18bd0522ee831f531d7e84025313d868962e21a0e40e302d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 138,
+      "input_sha256": "3977dbfdb293103c5c00688ee189b56be053276b6856eb1296737053d98ee93c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4a17577823072f9fb8c5bd823171fa938f34f0fc9568bd4b1c35f184174b2eee",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 139,
+      "input_sha256": "54b4a0600d5493c4e1e40ff645f928be3dd9baa08d6187a9656b60cbbd9d15ea",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5337d7e8a2c95f17faafbef2ab7ad34b09d5dc28606f129ee3bda87e21b6f95b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 140,
+      "input_sha256": "136fbfcda8a1fe802a6c35469759fee9c4baeb6d611b146cdf95c9cbc1fdac67",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "136fbfcda8a1fe802a6c35469759fee9c4baeb6d611b146cdf95c9cbc1fdac67",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 141,
+      "input_sha256": "bca6c6624d905132b004c74ce729394128db152d2c0ea5d078c1d4a771fa19dd",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ed7e04d940534639d7595173c2215fb6f37ff234198423e908b9e3a399a81bcb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 142,
+      "input_sha256": "e500fb4992f6b124821080b750f9e8c3465ab547bd85c3a1a4cd16424a0251ac",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "63775f6130ac427c8345a06049819bd62f8012c5d6123dc14aad25f890a21502",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 143,
+      "input_sha256": "c5e07cf3b925eaae2327e80d63a9df97e534cafe1d7fa34357fe3b670bb1f7d1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":8589934601,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":8589934601,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000000020a3ffbf0000000000000000\",\"f32_lanes\" ... 50,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073749936,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4624936911658549248,13834955938139734016,4475434375397244928,5350762841,0,8589934595,8589934592,120259084318,253403072319,4294967314,3515075333718016,1034849635,1,24,1881144960,0,8589934601,0,0,0,0,0,8589934601,0,6442548698,4294967297,38654705664,2,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 144,
+      "input_sha256": "b19d03a59d4693e62d4344dd9c32edf89419a4e468ac6a4be8637c4ec77c0201",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a03d74e0e13cbfb5721bde4c9ce7da9ac38c27abe2dbbc57ab105f79b5ecb681",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 145,
+      "input_sha256": "539a37c43a520337c552ed200e1d4eff07f48d81ffde0c6cf9bc6c7d990b98a6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "647c6321de5fb96816c543b6caf0b9630f9144f3a73d1d0fad15a5c17caaf24f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 146,
+      "input_sha256": "d5dd0213f3022352cad624c4f6fbf8739a4052e882e5fd58e9d09a85712a179b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8bcdb33386f23107748f4babf1cb5f68ff7e1e35e2c0b86c25e55a221535b51d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 147,
+      "input_sha256": "83f50a4112c524ca5bb3fcbab0b52f410f830eee2f33b3cf31936989f703991a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":42949672974,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":42949672974,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000000086322c400000000000000000\",\"f32_lane ... 42504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073754080,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4625451921187012608,4624126468509663232,4295978993800080651,5360320512,0,4294967299,12884902080,77309411335,38654705671,4294967384,18445742243590694713,1017370378,1,24,1881144960,0,42949672974,0,0,0,0,0,42949672974,0,6442548698,4294967297,60129542144,10,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 148,
+      "input_sha256": "d969e1a5e4dee7ddf642b478684245d95bf821c1c6ffbd8bb0b9b06d5a4179b6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0709f3625e07f9e2daf51314a2102a9b95c250d01b525e2658080e137a235b70",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 149,
+      "input_sha256": "40afffd72013c2e3de115b878cd7d798157d1dc370d10c4074751fcf328c82f5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9083bba5ca39c7bb42eecf80ece919ae468302c55466c3d156af354e589402d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 150,
+      "input_sha256": "777c7112906a497b823c92dc62fc7068f943b7c8061a88514cc9fa6347a98ca9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "887805c95a5f2529430dc6a245a23df05e271c579b85410a780337cbd7a58239",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 151,
+      "input_sha256": "eb8863135ad91d1a513d4155b52470a1dd9d1d0fc3df7af3ea8a03cd54333073",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b081aeb851cb41303dc096c3742dbc0331d46282cc96fe3cb6d0982f75131d94",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 152,
+      "input_sha256": "e1f76e568bfb60793899e0e152b397fe4aa6d3c9f7a40cfe3668ffde720094b5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "baad69daaf6f04eed5169728d13554a349e455c440da441e690d26dbd0523057",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 153,
+      "input_sha256": "45b029bd1d9f2969ec44184744cc914dbc3781e68aea5c2b5ae457c1f36d0ab4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b39e0506d4e30aca3354c8a3aaa057c0603e58182d4f2bb2fa9c915d9002eb0e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 154,
+      "input_sha256": "b904c3def26d1f91d51cbbce94ce593eaf5318c9fb6a2c148f3fa72319753f00",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d937249d1ea63fd0195228cc98a9061726a14a2afbc9701114e732adc9b0180f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 155,
+      "input_sha256": "752fcd353f745e426d2f1f079a7de0ecbc660863c1dcb0e7083c19846cedc106",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "58e446a6408c179195e330d145c724f98c39e9c93e68df6b74c00bd09a7f9636",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 156,
+      "input_sha256": "866e6b3d27fde024ecb9e802e0eb67219de063d5c3f65b5d7b017c9fb03e33a9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c0b913fc9cff4f5869c35ba8aaef3b88c6552124e57a564f5e9698cd12e7426f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 157,
+      "input_sha256": "2e1bded2eaede0085e7d4899b75d2240d9ac47f6793e04308937c3452fd15939",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2e1bded2eaede0085e7d4899b75d2240d9ac47f6793e04308937c3452fd15939",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 158,
+      "input_sha256": "fa2300ef9d1964d807f860c20534438e94760cb0357733a313db4be6f0bc2e24",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "59564844f42be0a118d1e7a63b988ff3b3fb844c24a0a20bf453a1484ca6af05",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 159,
+      "input_sha256": "23dae2362888322bea9f165ff82bff461f0c49e3b356e077d8aac23a832bb8b5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8e881ed64d5ffcc460fc9458ce7f97b7dbad62a74085d0b2dbcd599bd470df75",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 160,
+      "input_sha256": "04120aedbf08c4b52817797f51f7fdbcc57aa475291a1c2a2ec7a0070b5844a0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":64424509462,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":64424509462,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000f56935400000000000000000\",\"f32_lane ... ,0,0,0,0,0,0,0,0,0,108815749962286,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073760192,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4624432476339568640,4626720693180956672,1065353216,0,0,4294967299,8589934592,4883377815568,0,4294967296,1084227584,1045220557,1,24,1881144960,0,64424509462,0,0,0,0,0,64424509462,0,6442548698,4294967297,94489280512,15,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 161,
+      "input_sha256": "846f9603c11ff475656033c127fb42161550cb99c9db49106c0dff894411dae2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6e8d35b6b953059f612712b3d3f6e153bc27799545160bec41f4c354c2906286",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 162,
+      "input_sha256": "68af7ef9081a25a6729229e9d3a32ffa3b036099d7454cef35f18e14ee10abfa",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "76d507b766d312d0f515de6ce3a7cd89c183175977b675118cba57cc5a5cabb7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 163,
+      "input_sha256": "7d9d11d170ae8d1646da80f8cf4f993ad1da91e99e1362b8741907b081a7fe7a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6f78767c9de86e915805b448dbca3bb641a52e407c7b3dcb9b56979b2e0d01a6",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 164,
+      "input_sha256": "13a21fc7b74c4344b099eb3474e333a14dd81746cfcbdc301fd6aefb245e91d4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "84ef969af56a5b401a6ef49a1607f41360545c8f756ce1458d3e31952456e75a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 165,
+      "input_sha256": "ff68a37326ad9b3e68b3ebe850d2fccf0a419ed3de3c5a8165d506116d40fd65",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9cd70ed1a28152e2f008b8422bf2f47df368cb98475bd380ac0673db29341998",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 166,
+      "input_sha256": "f521b1850e8c5de2d83a22d4fcdbd4aa1abbf2ce61f5cf7c8c37851df169e426",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ef67c08132f68464ce197464d91acbec0733318ac22cbd8516ec23f93116e83a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 167,
+      "input_sha256": "9192fbd285fad91286ff29368f9f2e703b8e8417d386981f1cbbd2a7ebaf97b7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4160f33b5d600f99a181fb388d251fe5ad78c6a5492c77e37fc89e436cff052e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 168,
+      "input_sha256": "7774dffd570a4e49994f8dd945e71fc9296ef87ec0c66ba577988d3c8264996c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8c29e75c1c1af42d7827ab211882ae295400bedb3137cb3ae7a4095e2e6451de",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 169,
+      "input_sha256": "f7f1ca7a492bcfbb3c6ebf17d61a1a7a7b08f13e288d0e8407a95dd9d6de6bdd",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f7f1ca7a492bcfbb3c6ebf17d61a1a7a7b08f13e288d0e8407a95dd9d6de6bdd",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 170,
+      "input_sha256": "fcb5a273c6183a83fd5d12d6a086ae7ae90054093c5ea0063b972305010d9e66",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7750f8c950e4edf4b58eac38c18be660a12671926ee1dbb02001d2257df0628b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 171,
+      "input_sha256": "50a64cdb093e8dfef70368f6978a2a4641780cc11d9add273e5b5122d4db576e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e2f5e1d6b7fae031743b5408264969a75538be41c93d376b61a5ac25d8d8b53c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 172,
+      "input_sha256": "5e5c573bee44fd5b8cc8f92d9e6a719fbfe9e9ee6f1fc79a6681f7767353829f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "97cb77f5e37c67e38c3a2bcaee6c4c6351f8dfd45ca586bdd6da08dbb732f1f7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 173,
+      "input_sha256": "f6476de8fef0c345734f4daf051135cdd19ef271b29698c9bbfccffc4821695a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "21826cbcf0a5cbc859c2268bed1e99ad4cd2472f9c56823949e9c19dbbc56076",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 174,
+      "input_sha256": "4e3afea5ea729a190b29bc0d3a54bbc70a91099f9d692d5e5e54810b38f3f837",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":34359738376,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":34359738376,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000e80010c00000000000000000\",\"f32_lane ... ,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073750624,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4624791088928915456,13839562651341946880,4575657222498219391,5360320512,0,4294967299,4294967767,115964117301,111669150868,4294967352,1323014220152832,1042184934,1,24,1881144960,0,34359738376,0,0,0,0,0,34359738376,0,6442548698,4294967297,34359738368,8,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 175,
+      "input_sha256": "52be7bd702a12883434b0d750679dfcb2d6883750cb821a611f84dbbf25597ad",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7ad02e3aceb0c7a16862b57cbfc7b1a89a591da8b5990d24c9187d091cd0ea33",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 176,
+      "input_sha256": "3efc3c0c4309dec3c1945f54d84e0ee352384f9118b782024d88ea00df369cb8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e0da7f6fc33f7f26f51693856670d3dc908415ea2ede4596341933ae901617b4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 177,
+      "input_sha256": "91a147c77df4e03435a0a3853a74094ce56fd553be2ae995b02e66ed188c029f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5999a25528fe1d4095627af72f8da5e7b66534b1d6d230416ab3273357e43a13",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 178,
+      "input_sha256": "aad0fc028b21f3c8eec1ac0f8616640d17d4ee9e04b80ad2f0df6c117bf0afd4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "475f39b3bc6405bf6be2bc77ab6df2eb0d72090aaef7cb1212dd7904c71de0da",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 179,
+      "input_sha256": "6aecb9c7086f756f964bd828008b21433c20ed58f220933aa52bca66acf5437b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "168beef590a25083273c4b64e8ac688c937041f5eedb43d7ef0c5e107fa2614c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 180,
+      "input_sha256": "196eb06c075c70b93b3070666b4e4b2d9a3ffcd2517011487fe4ebe0a35d452c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0047bded076d96c50261ba8606889c26b8c4965ed36633236d8dab228dd9a442",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 181,
+      "input_sha256": "e1134c6278796986e935355a1cba6744101da3cae3eb194b529b87e4d2476027",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b7854acff04da2797e029103f3ff7384e81a985bc14cdea211fd70a971656632",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 182,
+      "input_sha256": "73a3d30418b51cfd681a1408e26912120da6ab5bbecc78dd139b072d89e992c7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fcd2612cf9c931396439d4a9ffeb2bfbd55635051b257c5a3a791f1537c85404",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 183,
+      "input_sha256": "df8b606cf77fc73f78a76f0c284c43d1d1b317e3bc5714f32681e229a0983698",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":287762808833,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":287762808833,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000000000c040400000000000000000\",\"f32_la ... ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,108815834532678,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073751760,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4602678819172646912,4629911523169402880,1065353216,0,0,4294967299,4294967296,0,18,4294967296,1065353216,1045220557,1,24,1881144960,0,287762808833,0,0,0,0,0,287762808833,0,6442548698,4294967297,4294967296,67,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 184,
+      "input_sha256": "eed1de5361f08b382c10a2d076fabf8018d22e005e13e966f684740a956638c2",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "06a1775512835426f156a37aea4e7829760a70d97884e9cccb4a4256126f78b0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 185,
+      "input_sha256": "09ceb9f0f8385816cb21b22af29a39cf839c5b50892e965de88d43fbbc7d7922",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 186,
+      "input_sha256": "d30944a40e9d8bd37feeedf355a8274921a0b8181edaa6ca24b6d18be9ddfd47",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d70a5b1fea9e415660ca91de9afbe40138279570177f06c700ff094df5158d6e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 187,
+      "input_sha256": "491c3ba23efb0bf5ace7d537b96b73607602ad3a9a57fb8ede2e569a4180f528",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "be0c635ee589f22efb13e7cea58fcd23553e6c06ee02bf4103d54df647783ab5",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 188,
+      "input_sha256": "827063d5b1c88126f6be933e5dd187220a097b111ee22f8b756c34841340e900",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "01898567002dcb76cebd7300c0f97efdf260552ab7e60e262dcfb15834d52b33",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 189,
+      "input_sha256": "4a8943d2f8c93c49424f0c2d3f2a0b511554ba363011dc308780735eade325e9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0e792e3a109cc363f484c382010bcd9c3819b79b84db081245cd4a33ab75eca2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 190,
+      "input_sha256": "8bcedbcf5c4fa88efd4489ac5fc32b4b59fb20f0ad335b272dc3cb5c9f896c6e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":73014444038,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":73014444038,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000021400000000000000000\",\"f32_lane ... ,0,0,0,0,0,0,0,0,0,0,108815851468028,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073751248,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4613937818241073152,4620974692658839552,4434592973006569472,0,0,4294967299,4294967296,0,10,4294967296,1065353216,1045220557,1,24,1881144960,0,73014444038,0,0,0,0,0,73014444038,0,6442548698,4294967297,25769803776,17,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 191,
+      "input_sha256": "f050132e946fc0bd8164537a47309b86babbacda9545548eeef2c283e501ae5d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":64424509443,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":64424509443,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000a60836400000000000000000\",\"f32_lane ... ,108815851827212,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073751088,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4599441856940474368,4626895176227356672,1077667895,5353280519,0,8589934595,12884901888,7795365642254,60129542155,84,2263831082434560,1065353216,1,24,1881144960,0,64424509443,0,0,0,0,0,64424509443,0,6442548698,4294967297,12884901888,15,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 192,
+      "input_sha256": "8ebe492255028fbf1e0dd9edadd9c82b0d896fe4d7bfdb2e4edb33795281cfed",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "89bb1847efb5089a08bf7ecd4e0dc581e5fee85db0a6965897904b5f9c72047b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 193,
+      "input_sha256": "0cb9820bc1dcfdad54ab9a42ee09a5e99a323782aff221d8a4ee253a2ff48643",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0cb9820bc1dcfdad54ab9a42ee09a5e99a323782aff221d8a4ee253a2ff48643",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 194,
+      "input_sha256": "db6c0fd631695b57b27f02b6134c0c219107bb324d60c89415d8bca605161c1f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e5b26b79c616b6133486d4e280e200f2c8f7e94b8557c2bc704bb8b4c1d6d683",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 195,
+      "input_sha256": "7b7bc4098ba95c5d824dc0a41de14061463d8b52197524c5e2413fa0a219a6f8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "dc79e9914f53bd8495d44ac8f1926b48a4c6dd84d458251553412b89951f34dc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 196,
+      "input_sha256": "448d6b55401d7d0c551471fead8bebb676377a6f4c701f2d208c9f08cdcc0176",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "28a86b3e8596831df0135f19fdb6cea8fedda1b1b779e19befc1bde51b40bd08",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 197,
+      "input_sha256": "d2303e9b668482c0089b415d0012a714b8270f06b8f381dc452ebb641cc4f751",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d2303e9b668482c0089b415d0012a714b8270f06b8f381dc452ebb641cc4f751",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 198,
+      "input_sha256": "2ecf6031ea2de07c8b1335b22132331d9a29bf711ca0e01f25ca39fe4cdc5725",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3d8e4bb42aeeeae02807943c24e56a08672430db836bd8b3c38f38e8ebc5b07b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 199,
+      "input_sha256": "86fdc3ddf449b9de031ee65cfeacf7d3072988f2f62495c8c16d63ca4e150f2b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "86fdc3ddf449b9de031ee65cfeacf7d3072988f2f62495c8c16d63ca4e150f2b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 200,
+      "input_sha256": "06f54999dc357c59ca47232083e337f11a4550a4e07a7cd40d45483587603503",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "91ad4f40fbeec47df8aaf8093fc5188427f92ad25d4e348c5a955bade56e38bf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 201,
+      "input_sha256": "0572ea18e3e67cafae216b9644604c646b41368a8ae4d849bbdf937ec71ed03d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "549cbac159addaacc4b02ad07a5ba16a55b06bf765aba2f4c64d97bb93b2d1ef",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 202,
+      "input_sha256": "03f817cc0e38864df66a60a1433ba23256903c8f3c372dab694e3564d84822c3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c450bfcdc03b371c5a8f6ac0daffce87b61429e1ef741e0f914cbbd63841ce28",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 203,
+      "input_sha256": "e7f3de732af885bba81c7b831a0252c96ad4bf32b3bc2aa0d265d76732b576c7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "47d524421239b68321f638d8313f7d90b7a8b48fea4ab0b71bce24e7fcf66806",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 204,
+      "input_sha256": "cf95bb6b94bf7fae9427689d18b88b63b178807b40212fbf2cc331dfaa76a4a1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":154618822665,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":154618822665,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000032400000000000000000\",\"f32_la ... 0,0,98,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,108815893304448,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073759968,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4616752568008179712,4625759767262920704,0,0,0,4294967299,4294967296,55834574848,0,0,1065353216,1045220557,1,24,1881144960,0,154618822665,0,0,0,0,0,154618822665,0,6442548698,4294967297,38654705664,36,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 205,
+      "input_sha256": "837a5753d2c9c7e3b07e957571200b546a961767413ec06955b31677318a388f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e2c40394a1f651200f8d6ffdf9293c4f01071d11cb5624d7737dc26dba03d745",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 206,
+      "input_sha256": "69e9e8ff5c6366ca38645e002c40138c8d3ce94defa1a3729cc1c85fbcc2cc0a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "85a498b20a5ddec1b3005c7a5e1b3beba4503856b81c77a5fa992ceab9102a1e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 207,
+      "input_sha256": "7a90a4c010b8eaad65947ab77b6cbc11c6607186819c1f5ec6ee985e0700d93d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2fe9a00bf80ad579c48cf67cbb3ec3531da03669838fa0a8aaea06907990fea4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 208,
+      "input_sha256": "70632c615561002644d8c82e3e167c6df89873aafd25b7a784f2ffc3a9f004b1",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d102efaf57dd56833cf33d00d1b73761e710b372e8406a6878a2aaa7d9019d18",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 209,
+      "input_sha256": "0696f62247d2289e45bd6f0f9236fd43342f7da41990c3a84daee02ad5e03668",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "0696f62247d2289e45bd6f0f9236fd43342f7da41990c3a84daee02ad5e03668",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 210,
+      "input_sha256": "272683458df846ab35197e5b68e06537d2c5260059ff8c06c8ae1484efe2c5b7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4bbafae52b5e91e459ac47b28c7d0732bb9065b217859b7cbe44c389f1d41a78",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 211,
+      "input_sha256": "beee51a23346567fd219ee74b1101cd1b0c0a366b74a0131c7706ab359466f8f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b7eda7f330f4b31a57cdd5ccf14cb4e25db38549885cf8d91da2a6d275764cbf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 212,
+      "input_sha256": "b3862376b5b3e5a3a7ba0669311e24cfddba5b9db91ed2bace3175d9f036d128",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b3862376b5b3e5a3a7ba0669311e24cfddba5b9db91ed2bace3175d9f036d128",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 213,
+      "input_sha256": "f0d1e01edce38ea1a9d698d3c09d2a48f22de0be2f33b6925e268a4667e92dfc",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "1b85f8042ce6f23e261d19fa98b49ff12c96efba497f240b6ebe25d1a2eb73b2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 214,
+      "input_sha256": "fbc9271c1391a6570c9d3a86c66ba619c4e8df1f6ec63aa7395595de5e373650",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9b5e5831a5c31f17a797d542ae6ffb83ce963bb844f3857f229d58bde591cace",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 215,
+      "input_sha256": "7beea5ddf9a6cf58b704652bff1bbfb8875b782721788ede1020be80513db2be",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2ab6161601a04ec577c9f9a06e357bc34a0e5a40e610d749ae9c3bdf87bf0c69",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 216,
+      "input_sha256": "ff320cdf8495e0f98ac752b0866da50e64b0e4b8fe2f0c4e286f08417aad3d75",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "079a9c2a853f83800d88edb83ebb30b1654c7737e0ec508e66712ee2fd86599a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 217,
+      "input_sha256": "9e761db5779b34a03cedba00d172b8a5211d03bb5b9a6ae0c7e28e23e1f03a21",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e03f52d3dc876406a965a219aa0038c05666c2545877b1eb3daa30589d1c382e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 218,
+      "input_sha256": "1c3561aca922ef3a82205e521cf9bc00d05eeca9d5f86dbe9bb9d2e44dcd871e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f301af16549398d480e51ffe8090a8db4d9c5c36e5ef332163fc13f256830cfa",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 219,
+      "input_sha256": "dec3577aba3e6380e7a86bbde8b96d50bd25d3742af0360c99de3b5233d7ba10",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "dec3577aba3e6380e7a86bbde8b96d50bd25d3742af0360c99de3b5233d7ba10",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 220,
+      "input_sha256": "47e522592a5f26b6bb5d8296cfb90901615e9eb090ad17ab4f577ec7dcb58fea",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "7acda03bb47401a95fecdc091948f67886451d5bd3a466b845cafa6ca4c126e9",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 221,
+      "input_sha256": "511edd79113487a4392051ecffbb4d1f303acf3719cfabc67c6ad86348764360",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4fe6f84e0f80b46a4abcb94672136219333b8b72fc6afe0527373db557431c3f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 222,
+      "input_sha256": "452dbb94576cb49c51cad448be6ca37eec581a0512e8080acc186d91197d71c6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5cc0a2c05abef71b3e69f0ec7d2b5a8e5d2ac9b9e97a8ed2d327b4b3fb853c2b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 223,
+      "input_sha256": "30da691632a162d8c7a457223a59edcbb2e700315a739ac92220edfabb7d614b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":12884901889,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":12884901889,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000205e04c00000000000000000\",\"f32_lane ... 08815923271256,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073749712,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,13818744051505037312,13836287446720970752,1090741772,5328499374,0,8589934595,8589934765,17179869203,253403070493,84,18444699743368539416,1018297848,1,24,1881144960,0,12884901889,0,0,0,0,0,12884901889,0,6442548698,4294967297,4294967296,3,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 224,
+      "input_sha256": "cacaa34bc0105a07897e020d89b2947079539dac8fa74f5b7254c27eb1b5aaa4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f6c8d730b91c2950b08ebc31d2e02836e410ab844376a688a36aa26da009bc6a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 225,
+      "input_sha256": "1f6958018d2c3d3e85bc2397cb4fc7c99104aa0cb86dcf76222fb7006da9b8b6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "3141f04cede4d0e86a0e1d9853392d0bfac80a19cd05123cce1d19d07ecbcce9",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 226,
+      "input_sha256": "dafb696e38ee08458df1c52f93eb7e0a03cded546a25e8639e120df8945208a5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "dafb696e38ee08458df1c52f93eb7e0a03cded546a25e8639e120df8945208a5",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 227,
+      "input_sha256": "006e92644f1a1c944a8aba56c8005b1df00fc3a188814c464f47bc476d408d29",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f000db85b3829e47add8c8c0d525117e9d24048b19dfdfd7ecf950b6c20ac35b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 228,
+      "input_sha256": "171426bfeae50ed4689d2023528c5a873c8679e8c31c7245f72717149d314f2e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c69bc68a47e28e96a301ba07b1a0f3fc1c410854f68f6113e56580b87fdbe19a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 229,
+      "input_sha256": "bce10acaf676951b5afad4204f24aeeda92225cedec244a24fc20a4c6e5d13cf",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a4edcf5960b8c520a25f0021c7e0b6420f3b6f62df24e1f5497be8e57c5ce441",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 230,
+      "input_sha256": "e7bea538611652c3a737a65969396e2ef2b0616cc7114ec718f3851ce517c22c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b7681c868ee7b9b658b861812a320e501c05103c17dcb52b2e6da503acbf039c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 231,
+      "input_sha256": "986ed9ae077c3e4fd1012d2841d89120b750e9331e8e439230ca7d27e9035e94",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "df949e0bc90418b80190cab772fbb0d6ac69c1b37c214cb9e89a86d1e169dfcc",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 232,
+      "input_sha256": "477cc6a2af3302d5654b48ed6960011170c965d853a1f012ee894bf2f6688760",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6b67593f40d897d20c883fa1406c907b2ee38ef5f1464ab1720603f0c096ed7b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 233,
+      "input_sha256": "8ce274e3e47eeabd894d916530098318f17314d9c6d0b0c65a63386e04196f13",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "954b5381c27af919529e1a9f7121ed2750ebede29892b870b7bb14d250196fe9",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 234,
+      "input_sha256": "c4280b933b0801c03e1142ebf7d703b868c3be7c56917c205ccd02cb5eaf8b5d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "c7403d653060cfaa8478c2b4504263f817bcc1ac9846db4a6cfe2b97705c42d3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 235,
+      "input_sha256": "1a824ef1514e82e158f8d3ef3f1e9a713c42462d0aa9fbf5f147d9ea9d6d13ee",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "1a824ef1514e82e158f8d3ef3f1e9a713c42462d0aa9fbf5f147d9ea9d6d13ee",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 236,
+      "input_sha256": "ce42f63c6d030e91a12fe99925969c7feed98390c2c238baa6d7a46a422a89b6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "53d1d36fe5e30607d2faa48bce6d5c55107c815eae01e5c3aaffcd5414899305",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 237,
+      "input_sha256": "2d8ee470e78c50404925a3c823d0349b6a7b7af03047e8e3c81dd87fcfc02efb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "68ec768abca890e08c41dbd56e9ec02c79203c07302b92dbcc96c6914367ec6b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 238,
+      "input_sha256": "4e410db15d9a64260748646aff2d832f465df3be9feba370094fda039ba22d39",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "5da8f67597b5739282ad7b3ccd2367bcd0789d72b9067e08b31c9a960e3d02e4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 239,
+      "input_sha256": "c73983169132f8173510fb2d07a88a122372b613436fc2710af65c3782516506",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "73d8cf62f33e68159efbd6786911334a74963c23a4be8b2b37a733f94afb8376",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 240,
+      "input_sha256": "4187ae2f25517aa49c8747ee80607b8520a37610c676a8e20ae4b14247280405",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fde9b4625f47a01cc0acb977b3dc68e48dd2c63e5996015a61f0060020c57ad8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 241,
+      "input_sha256": "b7242c0221985df0184df23cee689ad78eddb4f953e0bd938889ca09f58278d8",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "62d04800f2b6a5c0a6d061444f1ed5d535dbb877c58cd5a8bca1311b7d0f4b8f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 242,
+      "input_sha256": "9dc8a9f1358b424ba93d5589a814585cfdc942ad7ad573b17848f4d1f97076b3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9dc8a9f1358b424ba93d5589a814585cfdc942ad7ad573b17848f4d1f97076b3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 243,
+      "input_sha256": "43bc985e81d349371868635ae8fe0c64ee1c37d3c9d95d95aecebf4ed85e4040",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "43bc985e81d349371868635ae8fe0c64ee1c37d3c9d95d95aecebf4ed85e4040",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 244,
+      "input_sha256": "678c9e581578df8b361f4ad411b90db40047d78d59a8349b8ba026d0067fe389",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "354d340b085b091a009f89196dfef8b021e67e55a547f28161d8d99e80449ca2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 245,
+      "input_sha256": "fbdad35ff7b12c04a3a3e62f298afd22cf36f3e9534ca916bfc9141d2c6ea093",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "42ce1ee50334c91eb2a9fcc773b88dd9da417133a46f6702a1a304bf4e1c82ff",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 246,
+      "input_sha256": "79107d50b5ab33fbf252fa1ab81a3281b7eff43eeb5057c19edcc3e0c0f8ce1d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "79107d50b5ab33fbf252fa1ab81a3281b7eff43eeb5057c19edcc3e0c0f8ce1d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 247,
+      "input_sha256": "8f0f548f2404c5a6f27f45f82c46bb0287d5252dfe1ef3cb1cbb9aac86745c07",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cb31d988f61e415341a1360e83b7a4bb85aa8eb2841749c760facff7706fe31b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 248,
+      "input_sha256": "14d008731fd0f905b40876210354e0ef80f8c9beb15e864a3994c7d800d1f2c7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8bb674577fa5e0171877330ce4808d36444fc646dd4f529995544662f30484c4",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 249,
+      "input_sha256": "3dafdaefa7281188b794583b77e79a9873f71f5bdad79832fa250c20d198ea67",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4ff0f4e14c2d8f2b0ef24ca7e1a03cd558c4075039510e5d76c5e8265b79fe2a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 250,
+      "input_sha256": "9e198447e8cdef7009ead9e5cede325c1db9d7c48c9afa1a9f65067e589ffc1b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9e198447e8cdef7009ead9e5cede325c1db9d7c48c9afa1a9f65067e589ffc1b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 251,
+      "input_sha256": "7a0c95ea6b09d5f2348669371c649b6b4eb7581c37a4403ddf2ede368c5096ef",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2bf699481b486914fb001025ebcfc8cdc8f59d6d57e35ec31fa75feee7a41d37",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 252,
+      "input_sha256": "9540ab5babdd884cef6b30c2bb6f1732af69441b6051190cc0dc5b7095a532e7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "235d4bd23a1f4124014baa6c4bb3883ead232a253e9ebc73ba02e855bdd51009",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 253,
+      "input_sha256": "d89136dfa62b7027dc2a49fc13780dd9a317248a1aa5c51c097a71f616d59c8c",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "bdf9628b4a235bfab8a83fd55f174064d6bc9ad523a6cff834429f16d1eb212c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 254,
+      "input_sha256": "9478cf923ccfbacea519d16e478bda4cb6c6f2d067f953f0fbc83257844924e4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":1022202216449,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":1022202216449,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000010518870400000000000000000\",\"f32_ ... 108816011927020,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073753424,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4609387626808475648,4643361097561145344,4565143670828229162,0,0,4294967299,12884901902,4294967492,304942679745,76,798508518998016,1040744931,1,24,1881144960,0,1022202216449,0,0,0,0,0,1022202216449,0,6442548698,4294967297,4294967296,238,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 255,
+      "input_sha256": "22f131391083da1e569f200e7b8f8b981c435e118743561535e77092bf621996",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "869eb57f823aabd903eaabfc90c19b1790d63e7a9f36ba441e8c31e0396324e6",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 256,
+      "input_sha256": "3f52f02f4e95fd4380c1ff91f9e47080a05414a13e7ffb4fbbfa90e0f9426dc5",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "da54aea9c727af05212750c3b339114293a9948aba7bc9290089e9caa84936d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 257,
+      "input_sha256": "f6719d8c8f62288dee92faff2c88e4c988b551b9614f1fc779c1b589d5b5dcdb",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a4bbdffcf00ad7548f2ab1f3e1e72a9472a0c48c5793bef6d55c8d867a6f4bac",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 258,
+      "input_sha256": "2bbfcb4b39b75c79fcd6b2183d593316381073f34544d5e2e83a612230b25529",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "08dc211b68612d9d42941e4d0cc2b966a5d69d5c1c0296b44a081612b393d018",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 259,
+      "input_sha256": "cb6586c17d819ba4c93578dc4cc80dab4450f3f66aab1fd90fcca657965cdb86",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":12884901904,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":12884901904,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000501c03400000000000000000\",\"f32_lane ... ,0,0,108816088341036,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073751136,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,2,4593075684615651328,4612561573280481280,4523806988936675328,0,0,8589934595,4294967316,47244640264,141733920796,35,209685682585600,1017370378,1,24,1881144960,0,12884901904,0,0,0,0,0,12884901904,0,6442548698,4294967297,68719476736,3,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 260,
+      "input_sha256": "46ea862a01cd9266b65ee9ffcefad26ff46f2e9e01fcd33c84dc6d6022f0f405",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "b5729fca0373774daa82758bcc81fd9b1f0657b9ba062176597defbbf1965512",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 261,
+      "input_sha256": "a7e321d48e553c91ee6f9d43d9db7bbac598f3f9b51ec1953416e90ed322815a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ddbe8f5a025695760c6f4c96baf08be735792d227f4ee1cd6d870d10e51ae100",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 262,
+      "input_sha256": "354bd3a69acc572afb7ff13e3d78bccbf9205f85ae3708592b2eb926b0705a4d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a5f51f9bc1c089faed26a71f500ccf907f7687f246486688f2f58b4424b6492c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 263,
+      "input_sha256": "aea9254c0535c59efed3afa3a2573630492b36db11db463fbd634e895978268e",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "77ce8989819156dc31f04bcd1ab1101c0e4e4f49f2a82cbc6b8c6adf6f3b71d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 264,
+      "input_sha256": "25d461e26468dc1978ab154ba24a95e7e51f19b7ccf8fdf27a677d61bf8f1d43",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ac2275851071c1a41a1de9375d0208a586ad23d769e564ceeb6fef4ca360df42",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 265,
+      "input_sha256": "72e8151b3e759fe5420cea75d5474e711259679d54570ce915f3379a05cbfea0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        }
+      }
+    },
+    {
+      "index": 266,
+      "input_sha256": "35c64d83a51f51d2a8ed8156a650da80294c63aa27e6350a24fc19424193daaa",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9b9437dec4d842ec2d3f29ab49e373ef79bbb3a3ad9e0297350667baba4ed1fd",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 267,
+      "input_sha256": "8d63e5956760558cbcf1d77ace24b242e4de1a8a59ce450e446518c21c091a0b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "940864d6898c6960dd6b2bdc2ee1ef1c9371c20161c804c146ca6501617e2032",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 268,
+      "input_sha256": "a0ea564662af23bd79db4ac7ede882ef8cd71b7c41863d6406eec018db4b4a9a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2bc39f78e019b0dc8993de76d3eabf792e054027f72c8591336b3ac863260208",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 269,
+      "input_sha256": "57183b08e599088a61a12c744973db9b344b1368879e69c650ba2a1b26246cd0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "bee21e8da15a7c46ead9538664753888da8aa586a14011e5e163b5633f9be906",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 270,
+      "input_sha256": "5945a299b4264eb34c9f88421d50284e0f5780d816d0e33bbb70e19bbf7b4d34",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":176093659194,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":176093659194,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000080136143400000000000000000\",\"f32_la ... 42504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073787696,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4625564165862326272,4630651578246758400,4575657222501040128,5329157380,0,8589934595,8589934609,124554051775,326417515553,4294967305,1374072785817456,1021274836,1,24,1881144960,0,176093659194,0,0,0,0,0,176093659194,0,6442548698,4294967297,249108103168,41,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 271,
+      "input_sha256": "530aa084bd2d7416b9ad1c6ad3d290b50b8d1d1b72670602db33ea6a4bbf3098",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cda8d73edede8e91eb567231fb5c469ad4a70aae3bd356369a54ca1f1834f3d3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 272,
+      "input_sha256": "ea5483e8b2e557debb3e6d7ecc59a58d8d12c6af3881772962291ddccc1672d7",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "79da9e00e89075d962bea5e129b0577400df72d4603affbc38bd7d8c1ddc1aa8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 273,
+      "input_sha256": "0fbdcb4aa26554c58b5c6883e6a12e302f55be0c92535a7087fe2b2d881f26b3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "f810fcf7460274cca7325dc6eeccbfa52fea9d5a5fde19d7eeefbaa7ab2ba426",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 274,
+      "input_sha256": "f7cf2633058baedf5ea7e1e60f10a8f95be7e4ebefec4b2bb23885be157d193f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":51539607565,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":51539607565,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000018400000000000000000\",\"f32_lane ... 0,0,0,0,0,0,0,0,0,0,0,108816204356702,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073752128,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4619004367821864960,4618441417868443648,1092568989,0,0,4294967299,4294967296,8589934852,0,4294967296,1065353216,1045220557,1,24,1881144960,0,51539607565,0,0,0,0,0,51539607565,0,6442548698,4294967297,55834574848,12,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 275,
+      "input_sha256": "e9418a779670439a49069c57122f41c361f9c83b8bdf16fc43cbe0e6902ece9d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4fe7935259261459f2da347a53f7e5478db0a0b2ec05e43ba0e82fc28da23d68",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 276,
+      "input_sha256": "93725d99c79f7fcce59536da9f0e5e38c1298df03e6aa4de3e5fefc52120eef0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d5449ee3bec6a8a596ad58654a8f5f6fe0f981f58c0d68ad6b457b2bf5cdfb61",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 277,
+      "input_sha256": "35367ecacd008cfbda9c71c8bbe512743ff50fffaef33ceae5e4ca664677b9bf",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "d2a2942af016cf841867b48ea1526df3977c0bc57804824d0a370f588367b851",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 278,
+      "input_sha256": "09d925489c8b60e5bde3c07ddaf5a45adf8945ed207de16ebdc2f981b32e0792",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":962072674307,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":962072674307,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000008069fe50c00000000000000000\",\"f32_la ... ,0,0,0,0,0,0,0,108816206693392,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073760352,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,13836614963747094528,13857855782491521024,1068906988,0,0,4294967299,8589934592,0,261993005056,4294967296,1065353216,1045220557,1,24,1881144960,0,962072674307,0,0,0,0,0,962072674307,0,6442548698,4294967297,12884901888,224,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 279,
+      "input_sha256": "28d29ef15be2386cc97e558287e34c7b17fd43fa96b43ea432a5e259974b3fa4",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "1c2254898a3e347cc2005ec0609a7a0ae185cd82253feab6dbd89a97217d6d9f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 280,
+      "input_sha256": "458deda6affe82e852417b70184f4bbd4bd8c67a2ad9568587938026e3022702",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fd9c3ca01c915fc564bf01f4a2c598d3a9a7f79efc1f230ce7efbba0ae141981",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 281,
+      "input_sha256": "1c6fb58ba2bde07db7adc2462254ff3729ba414c9378cc43e55223ee9a979f55",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cda50f913e9d385985402fe46224fd3e290d20c3cca6da2eab3a920d4f9df8dd",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 282,
+      "input_sha256": "647cd7d7c7e4b7c6a9935568a755e71cc6354465576d61e8ed73d2e6020e6d48",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "948dce6ba1314bf9103207f62f1ce9e3ed9799eff759c7d21dac395fea12f68f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 283,
+      "input_sha256": "8940d5b89f4698e9ef2e9cf01ab7315aabd5ce7f4f4354f99491bdc7908481ca",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "64984cd4d2e80cd1e7a471b97c1f236a51726f5cb3928cb13d67209448d8d7aa",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 284,
+      "input_sha256": "5900eb5b7abf532e85580a5a470b597654c9308bf4788c7bf19bedf6ae635830",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ada1fb8a95d6c70cfcd4c921016908a55d304b25ac5fcbb9cd4f7c2f843d1a73",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 285,
+      "input_sha256": "c8726998a50b27d0af8d3cab713013a94069f4430ccd6a5476277315059cf8ec",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "95c12a27986b44e8c0f38eed61c0abc6d35e9cf325f791137c2a1a7c81456038",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 286,
+      "input_sha256": "bec57f216d9b2ab3356cbbc90881378fa0d87a32fa7752256f650f421abb497a",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "1cd90126e1a939c863d65ef9a304d4b92146d47f1ff52f0e58cb66881bab84f1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 287,
+      "input_sha256": "b591fe2901c32e8fdcea9a86237ca26ecb64fa0e8e9335bfc668620a4e8e3bb0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fb76c365625dc5c641a7af9abfec2b8f0454cccdb2d2ce3c5dd327be106345c6",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 288,
+      "input_sha256": "8b0a13ba66e07a533c24e65d53bb82c3e49df182f79fe49ff5a983951c03e989",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6a50ca4a5ab0737774cd741999d9435f804e778f03c52cf9d099f098a6e072d0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 289,
+      "input_sha256": "e575043f54b84cda26620c7d53b8cb9584afcb1d806a6a32a2da215651d3bf69",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "031f969f73128ad7cce9560a8ed4484ef12f5e8e86abb0ab15f457c665ec3245",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 290,
+      "input_sha256": "bc44c38c43fa4745c28fb978669f4db86ead380233b4a1a2f1602d42eea8cddd",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "37c9da15e56cf462d11fa6ac01773b625ee64a35a5c19132e22a689fcc1698a9",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 291,
+      "input_sha256": "5edfd47cf4b14357620bfbaeb1ca08bd5907c01e7b3252d5736b1b65e17fcd82",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "485c5ea50b51d096863857b272bacb1a5c2e977b6315b35e3ddd81447d049a60",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 292,
+      "input_sha256": "6d5abadc51659e6ef384da089d89786b3e00636fb4e252fd27d5ee903f93db9d",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "26e2daae2d698e631c21ae4fa330008575423f028c33b7ef56cd461339bc44e9",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 293,
+      "input_sha256": "b0c8e1a610b39a60da002ca7b69a75894848da059d86bfe17f777d5b438795f6",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "76b604eaf4c1475b1a66b9b11ba4dfc9e6603d4e4af6fd16cfd40f3d80a188e2",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 294,
+      "input_sha256": "23ccc1baa946e2d1aebfbdc7ae359b2d981c1f1f7f00c20b059ef794e6c725c0",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "fe066f41373ee274e4004bac961ef49cfa8ca3b6234f858f18bf128f0f03e7c3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 295,
+      "input_sha256": "8dd4f0990da2cd5157789fcc7c5c603d1bd1e1ebb898257eca761a7804b73d01",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4ed6cf9572e178b0f0b900da23b06e0c2a74daf3af5cb9ef7a67235fb65631aa",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 296,
+      "input_sha256": "c6bfca70e8a513252b6b7115ef2b9e50133e61bc5253a99a1176c130e18be068",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "140d48a9326f9c1c992a1be0d1453c31a5bd07b9187558cff9baf5758127aa26",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 297,
+      "input_sha256": "c2d91aacc496050c7d3c8302602c0b411ab0a3ad5924d6f37e20adb1da180795",
+      "result": {
+        "oracles": {
+          "smart": {
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":16,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":992137445377,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":992137445377,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"000000b07e0975400000000000000000\",\"f32_la ... 67244,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073753304,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,13823357602295185408,4644629030425853952,1075500585,5360320512,0,8589934595,4294967387,3809635991555,343597385296,4294967380,2189854584602624,1019961635,1,24,1881144960,0,992137445377,0,0,0,0,0,992137445377,0,6442548698,4294967297,4294967296,231,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n",
+            "returncode": 1,
+            "status": "reject"
+          }
+        }
+      }
+    },
+    {
+      "index": 298,
+      "input_sha256": "b4f6f87fa3c5a2764e95dc2e187159c5a3d99a7b710178c41916222cb718ed7b",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "6553d77dee53fd6981886e547f25effb1189f4573200d6ac21d3d747b39b4d3c",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    },
+    {
+      "index": 299,
+      "input_sha256": "2f4c9e69e7471a7e916cf495f0d59f6640e95783ec6c821d38d4caf65d44d15f",
+      "result": {
+        "oracles": {
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "769d4803e267afc7e8f666a77ac0672f2c5d4d778599e57e02b4961510988ed1",
+            "session_clean": true,
+            "status": "ok"
+          }
+        }
+      }
+    }
+  ]
+}

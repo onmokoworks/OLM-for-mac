@@ -4592,8 +4592,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_fade_factor((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
-	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation) &&
-		(info.outer_edge_fade != 0 || info.inner_edge_fade != 0);
+	// Rotation prepass (2780) tests the size-only factor even with both
+	// fade spans zero. Noise belongs only to the scatter-span plane.
+	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation);
 	std::vector<float> rotation_fade_source_with_guard;
 	rotation_scalar_source_with_guard.back() = 0.0f;
 	if (((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
