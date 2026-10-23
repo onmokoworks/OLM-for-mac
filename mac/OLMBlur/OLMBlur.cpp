@@ -1591,7 +1591,6 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	if (raw.bias < 1 || raw.bias > 2) return "generic-bias-range";
 	if (raw.legacy != 0 && raw.legacy != 1) return "generic-legacy-range";
 	if (width <= 0 || height <= 0) return "generic-size-invalid";
-	if (width > 4096 || height > 2160) return "generic-size-too-large";
 	// F17: the non-Legacy single-pass branch avoids repeated-radius decay;
 	// a singleton has no neighbouring samples on either axis. Both integer
 	// depths are exact in the public AEX seed and boundary matrices. Execute
@@ -1617,19 +1616,11 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
 	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
 	const size_t pixels = usize_width * usize_height;
-	// PF32 is the worst case: packed source/destination plus two RGB float
-	// planes and flags approach 57 bytes/pixel.  Leave allocator headroom while
-	// admitting a full UHD frame at ordinary settings.
-	if (pixels > (640u * 1024u * 1024u) / 64u) return "generic-pixels-budget";
-	// The current workers are synchronous and have no host abort callback.
-	// Bound their dominant O(pixels * radius * repeat) cost before entering the
-	// worker; host/perf timeouts remain an outer watchdog, never a cancellation
-	// mechanism for an already-running render.
-	const size_t radius=(size_t)ceil(raw.amount);
-	const size_t max_work=3600u*1000u*1000u;
-	if (!radius) return "generic-zero-radius";
-	if (pixels > max_work/radius) return "generic-work-budget";
-	if (pixels*radius > max_work/(size_t)raw.repeat) return "generic-repeat-work-budget";
+	// Smart admission is limited by actual buffer representability, not an
+	// estimated live-memory or synchronous-work policy. The PF32 packed
+	// world is the largest individual vector (four floats per pixel).
+	if (pixels > std::vector<float>().max_size() / 4u)
+		return "generic-vector-size-overflow";
 	return NULL;
 }
 
