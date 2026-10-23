@@ -34,3 +34,5 @@ F39-radial-fixture-oracle-recheck
 C29-kira-smart-r7
 C30-dblur-smart-r5
 C31-dg-smart-r6
+C32-olmblur-smart-r7
+C33-radial-smart-r5
