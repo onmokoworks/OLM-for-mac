@@ -1,0 +1,2298 @@
+{
+  "baseline_commit": "7f9c2ae051394482a2eae609ccca838e63dd67a8",
+  "driver_sha256": "7e88de86b8e264a962da880d571900ee70feabf5bef8bf37998521442bdf25cb",
+  "nonfinite": {
+    "builds": [
+      {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+        "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "candidate_sha256": "4a830ae9190d856a44d626f28ebf1fd4d135c8fa1e0a2e88e77927cab2a31ede",
+        "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+        "dependencies_sha256": {
+          "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+          "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+          "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+          "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+          "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+          "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+          "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+        "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "candidate_sha256": "693f9d6138836a32274604ab67f11e00d58c21bd27fdca8217e4a24de409b1d5",
+        "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+        "dependencies_sha256": {
+          "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+          "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+          "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+          "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+          "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+          "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+          "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      }
+    ],
+    "cases": [
+      {
+        "candidate": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "0"
+          },
+          "status": "ok"
+        },
+        "candidate_sha256": "5a6a4020b2d4503e7b99bbacc8b3274683b20a1852573ff1f4c5fefc05446db5",
+        "diff": {
+          "actual_bytes": 4224,
+          "actual_word_hex": "0000c07f",
+          "different_bytes": 2808,
+          "different_words": 969,
+          "expected_bytes": 4224,
+          "expected_word_hex": "0000803f",
+          "first_byte": 6,
+          "first_word": 1
+        },
+        "index": 109,
+        "nan_sign_only_words": 89,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        },
+        "other_different_words": 880,
+        "reference_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+        "sanitizer_same": true,
+        "seed": 1
+      },
+      {
+        "candidate": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "0"
+          },
+          "status": "ok"
+        },
+        "candidate_sha256": "9b896db4f11b97b4b22bdc08dbd56d043c81b1d4e1120f03791c6308a20fa11d",
+        "diff": {
+          "actual_bytes": 3136,
+          "actual_word_hex": "4523c17f",
+          "different_bytes": 1919,
+          "different_words": 728,
+          "expected_bytes": 3136,
+          "expected_word_hex": "0000803f",
+          "first_byte": 20,
+          "first_word": 5
+        },
+        "index": 299,
+        "nan_sign_only_words": 94,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        },
+        "other_different_words": 634,
+        "reference_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+        "sanitizer_same": true,
+        "seed": 1
+      }
+    ],
+    "commands": [
+      [
+        [
+          "xcrun",
+          "--show-sdk-path"
+        ],
+        [
+          "clang++",
+          "-std=c++17",
+          "-arch",
+          "arm64",
+          "-O2",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-Wno-deprecated-declarations",
+          "-Wno-pragma-pack",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-isysroot",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/0/host.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_frontonly.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rotate.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rowdriver.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_field.cpp",
+          "-Wl,-dead_strip",
+          "-framework",
+          "Cocoa",
+          "-o",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/0/mac"
+        ],
+        [
+          "sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/ucrtmath/build.sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/0/ucrtmath"
+        ]
+      ],
+      [
+        [
+          "xcrun",
+          "--show-sdk-path"
+        ],
+        [
+          "clang++",
+          "-std=c++17",
+          "-arch",
+          "arm64",
+          "-O2",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-Wno-deprecated-declarations",
+          "-Wno-pragma-pack",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-isysroot",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/1/host.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_frontonly.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rotate.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rowdriver.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_field.cpp",
+          "-Wl,-dead_strip",
+          "-framework",
+          "Cocoa",
+          "-o",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/1/mac",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-g"
+        ],
+        [
+          "sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/ucrtmath/build.sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_sxj5q6oy/1/ucrtmath"
+        ]
+      ]
+    ],
+    "probe_sha256": "731d16227417a534b754512f28af78aac7dbe4ae04a35692d596195a33be5e2c",
+    "source_sha256": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09"
+  },
+  "production_changed": false,
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "c709bb0366246095dc4c90082cbdd4004a70457df5ed71b4f930fb507d1c09ab",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+      "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+      "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+      "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+    "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "raw_report_sha256": {
+    "baseline.json": "28acf66b64fdb750d54916efa239ab23e7498202e76e22f219117e3b4c83b31c",
+    "nonfinite.json": "be80745ecb4670b1a40b8815b71ef0a3cb2e07b6d47662eaea927c785744e6eb",
+    "rotation-nan.json": "c65895ca6cbd9108a0453587fb3a18795f0cb1ef4221e6cc41deed67689633b5",
+    "stages.json": "40f36f21e1347f26c39f7d7eb12c15681af51ad186cb0285c06e54a1635f4fac"
+  },
+  "residual_cases": [
+    {
+      "depth": 8,
+      "elapsed_seconds": 0.3095,
+      "geometry": [
+        117,
+        244
+      ],
+      "index": 4,
+      "input_padding": 3,
+      "input_sha256": "2fd5424878430b213e540added3f6df09d39660bc1a8a0a80f2ebbcbcf3df57e",
+      "output_padding": 1,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 6
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 85
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 42.684051513671875
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -95.51692199707031
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 10.0
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderExact8:core-result--1@1269"
+        ],
+        "smart": [
+          "RenderExact8:core-result--1@1269"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "f4a05e7d0fdc076209495f3fa899b99317347e0704446a81141025f926c2cfa8",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "depth": 32,
+      "elapsed_seconds": 0.0425,
+      "geometry": [
+        23,
+        24
+      ],
+      "index": 7,
+      "input_padding": 1,
+      "input_sha256": "bfeef77d89a999a01d3ee079a4bf3f7739168714af3fcf19aebe43115fd33db5",
+      "output_padding": 0,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 640.8397216796875
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 51.41914367675781
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 50
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 52.92079162597656
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 12
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 87
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 1.8985137939453125
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 67.063232421875
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 2
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 614
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -573.5778198242188
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 1.0
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ],
+        "smart": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "1982ade863e27ab9376483231271f2fc16a7267fd7f1b18393326073733bf0bf",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "4c776c0f7674fdf3bc27c6abd1db1def67c9e15bc54446c3d4a563721dc5fd43",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "depth": 32,
+      "elapsed_seconds": 0.0427,
+      "geometry": [
+        24,
+        11
+      ],
+      "index": 109,
+      "input_padding": 3,
+      "input_sha256": "e457e4b4fc9edc78588fff2df8ccb79c3d032119ee49d9e97fb6f15c9f1a3247",
+      "output_padding": 5,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 17
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 27
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 35
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 55.7236328125
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 100.0
+        }
+      ],
+      "profile": "nonfinite",
+      "refusal_guards": {
+        "classic": [
+          "RenderWorld:pf32-nonfinite-input@1804"
+        ],
+        "smart": [
+          "RenderWorld:pf32-nonfinite-input@1804"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "0d71643bfaa0cd6f10b638daa12819f01a0f6a53a07835eb11532b45ed90a244",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "depth": 16,
+      "elapsed_seconds": 0.0468,
+      "geometry": [
+        3,
+        61
+      ],
+      "index": 127,
+      "input_padding": 16,
+      "input_sha256": "917f4606b09664a0e04852814178ce107ace5a9013e8c77f4c95fc0f8554560f",
+      "output_padding": 5,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 10.0072021484375
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 15.918609619140625
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 91
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 14.632186889648438
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 518
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -399.5963134765625
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 10.0
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ],
+        "smart": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "ad0bf5709cffb3acb2891388e5d7b989edd80e906189743556353456d58a13c0",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "dd937d8f8dd2dfd0cf74561abb3026161720ecc94f5524bf8548d01e861ff4e3",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "depth": 8,
+      "elapsed_seconds": 0.0387,
+      "geometry": [
+        9,
+        1
+      ],
+      "index": 246,
+      "input_padding": 1,
+      "input_sha256": "718a2d445097b642c14539191ce26a1685197b0580456814d684e5b3d7b2a22f",
+      "output_padding": 0,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 382.94578552246094
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 4.482094133315964
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 82.13359069824219
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 30
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 52
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 93.89054870605469
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 5
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 52
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 2.349609375
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 2.909942626953125
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 2
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 197
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -484.95741271972656
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 1.0
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderExact8:core-result--1@1269"
+        ],
+        "smart": [
+          "RenderExact8:core-result--1@1269"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "be1f9251f8d37f06d08a04af83c3a2a617996691a695a9681147cd820a459596",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "6db65fd59fd356f6729140571b5bcd6bb3b83492a16e1bf0a3884442fc3c8a0e",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "be1f9251f8d37f06d08a04af83c3a2a617996691a695a9681147cd820a459596",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "cluster": "[\"raw-output\",[6,7,11,19],16]",
+      "corpus": null,
+      "corpus_omission": "byte cap",
+      "corpus_retained": false,
+      "depth": 16,
+      "elapsed_seconds": 10.216,
+      "geometry": [
+        139,
+        240
+      ],
+      "index": 274,
+      "input_padding": 7,
+      "input_sha256": "c279f094bdc4085796df0b54718aabb1914d5e26ee3bd08922e3df3a8ce8edd9",
+      "output_padding": 0,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 12
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 27.784332275390625
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 89
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 0.0
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -666.8232879638672
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 10.0
+        }
+      ],
+      "profile": "sdr",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "diagnostic": "",
+          "limit_seconds": 10,
+          "reason": "wall timeout",
+          "status": "budget"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "b8f0effc0bace0a402b0b12991852c5daebcdd1bb506abb7dae26d8bf9f2f144",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 266880,
+              "actual_word_hex": "940f",
+              "different_bytes": 180303,
+              "different_words": 90595,
+              "expected_bytes": 266880,
+              "expected_word_hex": "0000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "937af8f4a4355fb525d33d3db02239ef4eb597b06a38917a4a275cf1aafeb054",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "937af8f4a4355fb525d33d3db02239ef4eb597b06a38917a4a275cf1aafeb054",
+            "status": "uncompared"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1,
+      "shrink_accepted": 0,
+      "shrink_attempts": 0,
+      "shrunk_geometry": [
+        139,
+        240
+      ]
+    },
+    {
+      "depth": 32,
+      "elapsed_seconds": 0.138,
+      "geometry": [
+        248,
+        1
+      ],
+      "index": 280,
+      "input_padding": 7,
+      "input_sha256": "1ccd21d9f82fa92807d2d1f06a19078412afad736d30c39177751164878a4e4b",
+      "output_padding": 1,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": -485.75006103515625
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 40.318756103515625
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 28
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 73
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 74.75027465820312
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 16
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 32
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 52.47001647949219
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 57.62254333496094
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 2
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 726
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -598.6020660400391
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 48.876736685321234
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ],
+        "smart": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "8db14a8f015b12875c70f51a656ac2b8dea6a58d39c112ef89ff0cb2f82fd6c0",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "12525d303b667ee3d0917d8257a21fa0ae80a706be72d4fe8fa4b06739bdbe38",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8db14a8f015b12875c70f51a656ac2b8dea6a58d39c112ef89ff0cb2f82fd6c0",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "depth": 16,
+      "elapsed_seconds": 0.0426,
+      "geometry": [
+        21,
+        11
+      ],
+      "index": 284,
+      "input_padding": 7,
+      "input_sha256": "f91fc0a99382069d6b014abdb3c65e674d933cf836182160e7c2b0eae37d89ab",
+      "output_padding": 0,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 6.877511711527038
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 42.992889404296875
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 8
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 5.094970703125
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": -498.6664276123047
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 26.470369712852126
+        }
+      ],
+      "profile": "sdr",
+      "refusal_guards": {
+        "classic": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ],
+        "smart": [
+          "RenderGenericDeepFeatures:core-result--1@1428"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "e85c2fd58676965ad45abbe75005df6bf4461ef7e8c7aeb32696bdeb2c8860ac",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "98dab977a35bca3d7d9bf351f9a2bc8696aa82a9ecaa346a7440d5f51c9987a8",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "e85c2fd58676965ad45abbe75005df6bf4461ef7e8c7aeb32696bdeb2c8860ac",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 512,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "512"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    },
+    {
+      "cluster": "[\"raw-output\",[2,7,10],16]",
+      "corpus": null,
+      "corpus_omission": "byte cap",
+      "corpus_retained": false,
+      "depth": 16,
+      "elapsed_seconds": 10.4408,
+      "geometry": [
+        238,
+        251
+      ],
+      "index": 289,
+      "input_padding": 1,
+      "input_sha256": "6d226935828c157b40b471a132c3a7e05e466528ced2b99e17a4c83086e36b33",
+      "output_padding": 11,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 4.513834131867288
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 68.33576965332031
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 1791
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 0.0
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 10.0
+        }
+      ],
+      "profile": "sdr",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "diagnostic": "",
+          "limit_seconds": 10,
+          "reason": "wall timeout",
+          "status": "budget"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "67a7d2faac348e45fc3ce83630106f0e8cbd49fe33bcdd0b9eca10c2cc429dcf",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 477904,
+              "actual_word_hex": "2d1b",
+              "different_bytes": 280604,
+              "different_words": 238648,
+              "expected_bytes": 477904,
+              "expected_word_hex": "0000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e1f3b88210436cb3a426ddfdb7bfdccd3271aa6d2818e176d9d369cf0d1c7d6",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e1f3b88210436cb3a426ddfdb7bfdccd3271aa6d2818e176d9d369cf0d1c7d6",
+            "status": "uncompared"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1,
+      "shrink_accepted": 0,
+      "shrink_attempts": 0,
+      "shrunk_geometry": [
+        238,
+        251
+      ]
+    },
+    {
+      "depth": 32,
+      "elapsed_seconds": 0.0395,
+      "geometry": [
+        14,
+        14
+      ],
+      "index": 299,
+      "input_padding": 16,
+      "input_sha256": "dac20e12247bfa44e5926b52489812b7da093c962c9655501594bf5325a2ef6b",
+      "output_padding": 5,
+      "parameters": [
+        {
+          "kind": "a",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "kind": "f",
+          "slot": 3,
+          "value": 15.097274780273438
+        },
+        {
+          "kind": "i",
+          "slot": 5,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "f",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 8
+        },
+        {
+          "kind": "i",
+          "slot": 11,
+          "value": 36
+        },
+        {
+          "kind": "f",
+          "slot": 12,
+          "value": 49.85498046875
+        },
+        {
+          "kind": "f",
+          "slot": 15,
+          "value": 0.0
+        },
+        {
+          "kind": "u",
+          "slot": 16,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 18,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 100.0
+        }
+      ],
+      "profile": "nonfinite",
+      "refusal_guards": {
+        "classic": [
+          "RenderWorld:pf32-nonfinite-input@1804"
+        ],
+        "smart": [
+          "RenderWorld:pf32-nonfinite-input@1804"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 1 1",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "516"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "seed": 1
+    }
+  ],
+  "rotation-nan": {
+    "builds": [
+      {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+        "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "candidate_sha256": "22c91c216c723c73957de821ad6cd57d31aef229233a5ec85c85586a1d033649",
+        "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+        "dependencies_sha256": {
+          "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+          "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+          "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+          "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+          "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+          "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+          "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+        "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "candidate_sha256": "fda7c06dad3c079aca622e1686b79594690b1585ed53f10d82989c4b5213f54e",
+        "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+        "dependencies_sha256": {
+          "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+          "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+          "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+          "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+          "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+          "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+          "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+          "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+          "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+          "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+          "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+          "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+          "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+          "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [],
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+        "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      }
+    ],
+    "cases": [
+      {
+        "candidate": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "0"
+          },
+          "status": "ok"
+        },
+        "candidate_sha256": "bec60e521f7ae94dd9c4d17e3b99de8d4201e978f6865354b7cc258a9ef32ee4",
+        "diff": {
+          "actual_bytes": 4224,
+          "actual_word_hex": "0000c0ff",
+          "different_bytes": 2680,
+          "different_words": 880,
+          "expected_bytes": 4224,
+          "expected_word_hex": "0000803f",
+          "first_byte": 6,
+          "first_word": 1
+        },
+        "index": 109,
+        "nan_sign_only_words": 0,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        },
+        "other_different_words": 880,
+        "reference_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+        "sanitizer_same": true,
+        "seed": 1
+      },
+      {
+        "candidate": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "21 21 1 1 1",
+            "ERROR": "0"
+          },
+          "status": "ok"
+        },
+        "candidate_sha256": "2cc6c1bb72fe90f1e273b945b45309487fe4d8aab90e2902eae8b131ce16411d",
+        "diff": {
+          "actual_bytes": 3136,
+          "actual_word_hex": "4523c17f",
+          "different_bytes": 1834,
+          "different_words": 634,
+          "expected_bytes": 3136,
+          "expected_word_hex": "0000803f",
+          "first_byte": 20,
+          "first_word": 5
+        },
+        "index": 299,
+        "nan_sign_only_words": 0,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        },
+        "other_different_words": 634,
+        "reference_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+        "sanitizer_same": true,
+        "seed": 1
+      }
+    ],
+    "commands": [
+      [
+        [
+          "xcrun",
+          "--show-sdk-path"
+        ],
+        [
+          "clang++",
+          "-std=c++17",
+          "-arch",
+          "arm64",
+          "-O2",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-Wno-deprecated-declarations",
+          "-Wno-pragma-pack",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-isysroot",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/0/host.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_frontonly.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/0/rotate_nan.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rowdriver.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_field.cpp",
+          "-Wl,-dead_strip",
+          "-framework",
+          "Cocoa",
+          "-o",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/0/mac",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core"
+        ],
+        [
+          "sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/ucrtmath/build.sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/0/ucrtmath"
+        ]
+      ],
+      [
+        [
+          "xcrun",
+          "--show-sdk-path"
+        ],
+        [
+          "clang++",
+          "-std=c++17",
+          "-arch",
+          "arm64",
+          "-O2",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-Wno-deprecated-declarations",
+          "-Wno-pragma-pack",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-isysroot",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Resources",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/1/host.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_frontonly.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/1/rotate_nan.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_rowdriver.cpp",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core/dblur_field.cpp",
+          "-Wl,-dead_strip",
+          "-framework",
+          "Cocoa",
+          "-o",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/1/mac",
+          "-I",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/core",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-g"
+        ],
+        [
+          "sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/ucrtmath/build.sh",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C36-dblur-smart-r6/orchestra/state/C36-dblur-smart-r6/nonfinite_w5bamqoi/1/ucrtmath"
+        ]
+      ]
+    ],
+    "probe_sha256": "731d16227417a534b754512f28af78aac7dbe4ae04a35692d596195a33be5e2c",
+    "source_sha256": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09"
+  },
+  "stages": {
+    "cases": [
+      {
+        "cluster": 109,
+        "corpus": null,
+        "final": {
+          "a_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+          "b_sha256": "5a6a4020b2d4503e7b99bbacc8b3274683b20a1852573ff1f4c5fefc05446db5",
+          "different_units": 2808,
+          "first": {
+            "a": "80",
+            "b": "c0",
+            "byte_offset": 6
+          },
+          "unit_bytes": 1
+        },
+        "fixture_session": {
+          "a_sha256": "f18ab500751394bec3ac904c0d58a268184f6d833936bd460596b89dbc7c9064",
+          "b_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+          "different_units": 421,
+          "first": {
+            "a": "46",
+            "b": "00",
+            "byte_offset": 32
+          },
+          "unit_bytes": 1
+        },
+        "generated": true,
+        "seed": 1,
+        "stages": {
+          "alpha-max": {
+            "a_sha256": "be996d3d6d5c20b7472e6687af10591c25054a880008ae3ce9d27658a30faf2e",
+            "b_sha256": "33dd34dd144c862272edb8cbd5e2f8dbaf486ad11542e5177bbdbf1cba10af3b",
+            "different_units": 151,
+            "first": {
+              "a": "4623c1ff",
+              "b": "0000c07f",
+              "byte_offset": 520
+            },
+            "unit_bytes": 4
+          },
+          "denominator": {
+            "a_sha256": "c1e1d89356a4f8827c59991d626bec7dd1afcc8e6caf8a861344baf33ae73ed8",
+            "b_sha256": "2be0d34e03ae85da21e7ba89a2ae8e397d992f6b8e137cc0fe8a93d18bfe33aa",
+            "different_units": 280,
+            "first": {
+              "a": "4623c1ff",
+              "b": "0000c07f",
+              "byte_offset": 484
+            },
+            "unit_bytes": 4
+          },
+          "populated": {
+            "a_sha256": "4228129b544ce04adec4b1a2804168b0b6105956e33cfedf359721134e778a27",
+            "b_sha256": "4228129b544ce04adec4b1a2804168b0b6105956e33cfedf359721134e778a27",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "rotated": {
+            "a_sha256": "6e9bcfedd8d209211a0cf90c798c47293b0a703553bf5f8fbb1d901412bf7a33",
+            "b_sha256": "1b657bfda97977349fd017ab8f5e19efe20cc15977fe5ae26018e3d12ba9a404",
+            "different_units": 440,
+            "first": {
+              "a": "0000c0ff",
+              "b": "0000c07f",
+              "byte_offset": 2084
+            },
+            "unit_bytes": 4
+          },
+          "row-output": {
+            "a_sha256": "4dd4100d1cecb57d4dcba73cdff35a010c7bcf32b581ae74ea6e6c80df32ad41",
+            "b_sha256": "0591d55962b7a5b8e5451da1c1f6fecd2dc5f1ec9dd921b02e851520bd770e00",
+            "different_units": 1330,
+            "first": {
+              "a": "4623c1ff",
+              "b": "4523c17f",
+              "byte_offset": 1936
+            },
+            "unit_bytes": 4
+          },
+          "weights-17": {
+            "a_sha256": "2010b40878ff7034274dd9b9e74cfc78dc4b30ad35ee459e5dede5a0ecc8bdc5",
+            "b_sha256": "2010b40878ff7034274dd9b9e74cfc78dc4b30ad35ee459e5dede5a0ecc8bdc5",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "weights-27": {
+            "a_sha256": "595b74abf45b29967276448dde86968429af83278ecc15e3a2bbb168a9ae4fab",
+            "b_sha256": "595b74abf45b29967276448dde86968429af83278ecc15e3a2bbb168a9ae4fab",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "weights-35": {
+            "a_sha256": "52b1e1f836a85edb4806889aa9ce3f15fcc2338070ecf7e38e9a803fcf1aca72",
+            "b_sha256": "52b1e1f836a85edb4806889aa9ce3f15fcc2338070ecf7e38e9a803fcf1aca72",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "writer-plane": {
+            "a_sha256": "6a6d295d61021424fbe52b3a7eb3704a6973e74b48622ae3b996da2516ba7d29",
+            "b_sha256": "f0d766c89d8945549b29d2ee1a8229b17c409c2abcdab51c8b47170a1ddc40be",
+            "different_units": 1464,
+            "first": {
+              "a": "4623c1ff",
+              "b": "0000c07f",
+              "byte_offset": 528
+            },
+            "unit_bytes": 4
+          }
+        }
+      },
+      {
+        "cluster": 299,
+        "corpus": null,
+        "final": {
+          "a_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+          "b_sha256": "9b896db4f11b97b4b22bdc08dbd56d043c81b1d4e1120f03791c6308a20fa11d",
+          "different_units": 1919,
+          "first": {
+            "a": "00",
+            "b": "45",
+            "byte_offset": 20
+          },
+          "unit_bytes": 1
+        },
+        "fixture_session": {
+          "a_sha256": "95574e6d2fe3ae87cf126d16fe778dd253cf7b1021bf21018c992f25d44119e0",
+          "b_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+          "different_units": 312,
+          "first": {
+            "a": "45",
+            "b": "00",
+            "byte_offset": 32
+          },
+          "unit_bytes": 1
+        },
+        "generated": true,
+        "seed": 1,
+        "stages": {
+          "alpha-max": {
+            "a_sha256": "41b971af3e5406ae6e97bc5dca778acc1e7a1e325f1ff70eb887b4186a217425",
+            "b_sha256": "819f1544a172a45b836b93c24dc24b69acd7c7afa79d3348f548af427516cf3c",
+            "different_units": 95,
+            "first": {
+              "a": "fdbba83e",
+              "b": "1b07a23e",
+              "byte_offset": 476
+            },
+            "unit_bytes": 4
+          },
+          "denominator": {
+            "a_sha256": "bcba4053a1214f03fa49a50274f08ba518c0c05c80571c89bc8110e30cb344db",
+            "b_sha256": "21081a393ec510d87a1e37f99fdce1852921d437bd40635a2d9bbb9145af21f8",
+            "different_units": 192,
+            "first": {
+              "a": "408e013e",
+              "b": "418e013e",
+              "byte_offset": 456
+            },
+            "unit_bytes": 4
+          },
+          "divisor": {
+            "a_sha256": "be01c89f95c0f5b35606087fc7cc3e2ec8f5ab70bf897d50bd27a9330f7920d4",
+            "b_sha256": "9b85883e116a79ec65a15b86d1f3d25874c19e437deced6381ca193f55240419",
+            "different_units": 1,
+            "first": {
+              "a": "00008841",
+              "b": "00003143",
+              "byte_offset": 0
+            },
+            "unit_bytes": 4
+          },
+          "map": {
+            "a_sha256": "362e76da20df0e9445b3c954bf0bb3b2d3c2a98fd90776bc1da351e616f53014",
+            "b_sha256": "29eef30d9da46d906f379960d7fdfb3712234154ee608459a660d1b1dfdfb712",
+            "different_units": 688,
+            "first": {
+              "a": "0000e040",
+              "b": "00003143",
+              "byte_offset": 1808
+            },
+            "unit_bytes": 4
+          },
+          "populated": {
+            "a_sha256": "e42fc02120856d28440b0d1789a8b7ca0a1f4a38139250bc898dee61d64c7425",
+            "b_sha256": "e42fc02120856d28440b0d1789a8b7ca0a1f4a38139250bc898dee61d64c7425",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "rotated": {
+            "a_sha256": "68770e1b4600de04da6b8f339460e103dfe428b556409d6923ee42bb45931341",
+            "b_sha256": "b368b5553eb8d964dffb7ed4081832d26ad917a8f7ec8efc4dc9f87276e2a910",
+            "different_units": 310,
+            "first": {
+              "a": "0000c0ff",
+              "b": "0000c07f",
+              "byte_offset": 1824
+            },
+            "unit_bytes": 4
+          },
+          "row-output": {
+            "a_sha256": "7f84ee0caba37af9b463893c896b3e107b91ca88094d3d53b18bb8a9672253ab",
+            "b_sha256": "52628626e374b4a348ce350332fa9432874c77d954528d34ba05ebfbd11f30a3",
+            "different_units": 727,
+            "first": {
+              "a": "0000c0ff",
+              "b": "0000c07f",
+              "byte_offset": 1824
+            },
+            "unit_bytes": 4
+          },
+          "weights-36": {
+            "a_sha256": "b57d2240b423195c9267ff4e8e6d02743205f0865e13524b16dbeeab5e26724c",
+            "b_sha256": "13b33b68e38b9cfcca0cab5aa78ea2e90fba3f9235da27fbd8da42550c662e2a",
+            "different_units": 1,
+            "first": {
+              "a": "3b9d113d",
+              "b": "3c9d113d",
+              "byte_offset": 124
+            },
+            "unit_bytes": 4
+          },
+          "weights-8": {
+            "a_sha256": "4bc91efeb66a2f56dd1f18a7623fb8cb5a6799e3bdeab60cf6a8e20913720be6",
+            "b_sha256": "4bc91efeb66a2f56dd1f18a7623fb8cb5a6799e3bdeab60cf6a8e20913720be6",
+            "different_units": 0,
+            "first": null,
+            "unit_bytes": 4
+          },
+          "writer-plane": {
+            "a_sha256": "8d5956833b9dfa677225651f552151c1b674e584e6d82916908ed04ae11d99ac",
+            "b_sha256": "d9354fe35cbffc0c5fe92d5570993b7268a96a796fc907e157abb2beda520505",
+            "different_units": 787,
+            "first": {
+              "a": "0000c0ff",
+              "b": "0000c07f",
+              "byte_offset": 928
+            },
+            "unit_bytes": 4
+          }
+        }
+      }
+    ],
+    "core_ref": null,
+    "expf_leaf": "native-f32",
+    "fixture_sha256": "1b79852156a2d7fb9d03abf628ca686e4df5a1ad9a340253bf116052fb20342a",
+    "gate_off": false,
+    "nonfinite_off": true,
+    "powf_leaf": "native-f32",
+    "probe_sha256": "f710399ee1c70deb1fa8e9820f32ac5af42b621306fe2ba2f26e8fab5af4ddf4",
+    "provenance": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "candidate_sha256": "c3cb8ed2367462447a4c0e21aa64f815f6d6ac1ebe69ca1fdc45ff95a949daef",
+      "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+      "dependencies_sha256": {
+        "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+        "core/dblur_frontonly.cpp": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2",
+        "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+        "core/dblur_rowdriver.cpp": "380f42748fe85caf96b30f568858200e2f856c77e78f18825728112d58ebaa42",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c3540d49c22f84233649956ae3d64241a8c16a4c8d3e2a34c59074986dc3fb09",
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+        "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+        "ucrtmath/build.sh": "44e5a08bc9e83815cc7a41eed6fcab62945f506321d7c12c8b3a31357581fce2",
+        "ucrtmath/include/ucrtmath.h": "1857906f4bac7650268d42cb28a3021a231b47d1c77a03d8376e394f2325463e",
+        "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+        "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+        "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+        "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+        "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+        "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [],
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F32-deep/aex-guest-worker",
+      "worker_sha256": "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "traced_core_sha256": "9cd51016edbd2ef0933d98c2c6495f99dbe50d748a8ce45e8d6e574b7f0f33b2"
+  },
+  "summary": {
+    "aex_budget": 2,
+    "aex_classic_ok": 300,
+    "aex_ok": 298,
+    "aex_smart_budget": 2,
+    "aex_smart_ok": 298,
+    "both_routes_exact": 4,
+    "classic_exact": 4,
+    "classic_mismatch": 288,
+    "classic_refusal": 8,
+    "pixel_mismatch_cases": 288,
+    "smart_exact": 290,
+    "smart_refusal": 8,
+    "smart_uncompared": 2
+  }
+}
