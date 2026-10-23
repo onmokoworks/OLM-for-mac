@@ -1,0 +1,21 @@
+--- before.cpp
++++ column-persistent.cpp
+@@ -462,6 +462,7 @@
+ 	const A_long right = length - left - 1;
+ 	for (A_long pass = 0; pass < passes; ++pass) {
+ 		std::fill(dst.begin(), dst.end(), 0.0f);
++        std::vector<double> column_sum(width, 0.0);
+ 		for (A_long y = 0; y < height; ++y) {
+ 			// C07: original 18127f3c0 RowSum<float,double> order.
+ 			if (recovered_scalar_box && dx == 1 && dy == 0) {
+@@ -482,7 +483,9 @@
+ 							sum += (double)src[(size_t)y * width + sx];
+ 						}
+ 					}
+-					dst[(size_t)y * width + x] = (float)(sum * scale);
++                    const double total = column_sum[x] + sum;
++                    dst[(size_t)y * width + x] = (float)(total * scale);
++                    column_sum[x] = total - sum;
+ 					if (x + 1 < width && length != 3 && length != 5) {
+ 						const A_long incoming = Reflect101Index((int)(x + right + 1), (int)width);
+ 						const A_long outgoing = Reflect101Index((int)(x - left), (int)width);

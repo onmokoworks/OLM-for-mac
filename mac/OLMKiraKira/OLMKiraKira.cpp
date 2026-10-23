@@ -462,7 +462,14 @@ static std::vector<float> DirectionBoxBlur(
 	const A_long right = length - left - 1;
 	for (A_long pass = 0; pass < passes; ++pass) {
 		std::fill(dst.begin(), dst.end(), 0.0f);
+        // The original height-one ColumnSum is called by FilterEngine in
+        // four-row batches. Its sumCount stays zero, so each call clears SUM.
+        // Finite rows cancel to zero; NaNs persist only inside that batch.
+        constexpr A_long column_batch_rows = 4;
+        std::vector<double> column_sum(width, 0.0);
 		for (A_long y = 0; y < height; ++y) {
+            if (y % column_batch_rows == 0)
+                std::fill(column_sum.begin(), column_sum.end(), 0.0);
 			// C07: original 18127f3c0 RowSum<float,double> order.
 			if (recovered_scalar_box && dx == 1 && dy == 0) {
 				double sum = 0.0;
@@ -482,7 +489,9 @@ static std::vector<float> DirectionBoxBlur(
 							sum += (double)src[(size_t)y * width + sx];
 						}
 					}
-					dst[(size_t)y * width + x] = (float)(sum * scale);
+                    const double total = column_sum[x] + sum;
+                    dst[(size_t)y * width + x] = (float)(total * scale);
+                    column_sum[x] = total - sum;
 					if (x + 1 < width && length != 3 && length != 5) {
 						const A_long incoming = Reflect101Index((int)(x + right + 1), (int)width);
 						const A_long outgoing = Reflect101Index((int)(x - left), (int)width);
@@ -2018,12 +2027,13 @@ static bool GenericBetaInputIsFiniteSDR(
 }
 
 // Smart's recovered Alpha box pipeline accepts finite floating source
-// colors beyond SDR when its scalar powf seed remains finite. C13 also pairs
-// signed seeds through the original warp/RowSum/aggregation operations.
-// Negative alpha with a fractional exponent and powf overflow still produce
-// NaN/Inf filtering families outside this recovery. Admission tests the
-// constructor's domain, never a final-output value.
-static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
+// colors beyond SDR. C13 pairs finite signed seeds through the original
+// warp/RowSum/aggregation operations.
+// C29 recovers ColumnSum's per-call state for canonical NaN seeds from
+// negative alpha and fractional exponents. Source samples must stay finite;
+// powf overflow (infinite seeds) remains outside this admission. Validation
+// tests the constructor's domain, never a final-output value.
+static bool SmartAlphaBoxInputHasSupportedSeed(const PF_EffectWorld *input,
 	PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
 	if (!input || format != PF_PixelFormat_ARGB128 ||
@@ -2034,7 +2044,7 @@ static bool SmartAlphaBoxInputHasFiniteSeed(const PF_EffectWorld *input,
 			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
 			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
 				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
-				!std::isfinite(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
+				std::isinf(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
 		}
 	}
 	return true;
@@ -2878,7 +2888,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
+				 SmartAlphaBoxInputHasSupportedSeed(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,

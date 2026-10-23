@@ -28,6 +28,44 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'nan-alpha-opacity':
+        for i, (mode, merge, glow, source) in enumerate(itertools.product(
+                (1, 2), (1, 2), (0, 1, 100, 10000), (0, 100))):
+            case = matrix_case(adapter, i, (13, 9), 32, merge, mode, 1)
+            values = {6:97, 8:glow, 9:source, 10:2, 16:7, 34:3}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            pixels = bytearray(case['pixels'])
+            for pixel in range(13*9):
+                struct.pack_into('<f', pixels, pixel*16, -0.5 if pixel%3 else 0.75)
+            case['pixels'] = bytes(pixels)
+            yield case
+        return
+    if family == 'nan-alpha-negative':
+        yield from (case for case in cases(adapter, 'invalid-input') if case['index'] != 0)
+        return
+    if family in ('nan-alpha', 'nan-alpha-lengths'):
+        powf = ctypes.CDLL(None).powf
+        powf.argtypes = (ctypes.c_float, ctypes.c_float)
+        powf.restype = ctypes.c_float
+        f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+        for case in cases(adapter, 'finite-alpha'):
+            params = {p['slot']: p['value'] for p in case['parameters']}
+            exponent = max(f32(0.001), f32(f32(params[6]) * f32(0.01)))
+            if any(math.isinf(powf(struct.unpack_from('<f', case['pixels'], i)[0], exponent))
+                   for i in range(0, len(case['pixels']), 16)):
+                continue
+            if family.endswith('-lengths'):
+                lengths = (1, 2, 3, 4, 5, 6, 7, 15, 50, 1000)
+                i = case['index']
+                values = {10:lengths[i%10], 16:lengths[(i+1)%10],
+                          34:(0, 1, 2, 3, 15, 50, 500)[i%7],
+                          40:(0, 1, 22, 90, -31, 359)[i%6]/65536}
+                for param in case['parameters']:
+                    if param['slot'] in values: param['value'] = values[param['slot']]
+                    if param['slot'] in (13, 19, 37): param['value'] = i%2
+            yield case
+        return
     if family == 'gaussian-highlight-negative':
         for i, (slot, value) in enumerate(((1, 7), (4, 1), (5, 0.5),
                                            (7, 50.0), (40, -2147483648/65536))):
@@ -388,7 +426,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -455,6 +493,7 @@ def main():
                     save()
                     raise RuntimeError('Original trace has no output: ' + str(original.get('error')))
                 row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
+                row['aex_column_filters'] = original.get('column_filters', [])
                 row['aex_resize_writers'] = original.get('resize_writers', [])
                 row['aex_normalizers_f32_hex'] = original['stages'].get('normalizers')
                 stages = original['stages']

@@ -1,10 +1,10 @@
 status: partial
 summary:
-- Scalar Highlight Gaussian closed; seed1 Smart269/0/31 →272/0/28.
-- Fresh seed17 improves264/0/36 →266/0/34, with previous exact outputs preserved.
-- One of three requested clusters completed; investigation continues.
-facts: See [scalar Highlight report](C29-kira-smart-r7-scalar-highlight.md) for exact commands, hashes, first divergences and validations.
-inference: Bounded CPU-emulation closure only; remaining refusals remain unproved.
-changed_files: Listed in the linked cluster report.
-verify: Run the linked report's commands; expected seed1=272/0/28, seed17=266/0/34, matrices204 exact, corpus saved8/8 and zero changes away from exact.
-next: Investigate the non-SDR box residual before further Gaussian/approximation owners.
+- Two clusters closed separately: scalar Highlight Gaussian and Alpha box canonical-NaN seeds.
+- Seed1 Smart269/0/31 →272/0/28 →274/0/26, no mismatch or previous-exact regression.
+- Fresh-seed, sanitizer and corpus monotonicity checks pass for each cluster.
+facts: See [scalar Highlight](C29-kira-smart-r7-scalar-highlight.md) and [Alpha NaN seed](C29-kira-smart-r7-nan-alpha.md) reports for commands, hashes, first divergences and counts.
+inference: These are bounded CPU-emulation closures; remaining refusals are unproved.
+changed_files: Listed in the linked cluster reports.
+verify: Run each report at its cluster commit. Current seed1=274/0/26, seed18=276/0/24; final matrices562 exact; saved corpus8/8; zero sample changes away from exact.
+next: Investigate the four Approximation residuals for the third cluster.
