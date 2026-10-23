@@ -1,0 +1,16 @@
+{
+  "cases": 57,
+  "fresh_exact": 56,
+  "retained_reference_exact": [
+    {
+      "name": "C46_seed1_case000280.json",
+      "input_sha256": "7e1bd292812937f1a7f3bfd31d9fcdf48b50cb05165638728e4b0bd2db608b3f",
+      "reference_sha256": "5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8",
+      "candidate_sha256": "5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8",
+      "fresh_oracle_status": "reject"
+    }
+  ],
+  "previous_exact_preserved": 56,
+  "lost_exact": 0,
+  "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903"
+}
