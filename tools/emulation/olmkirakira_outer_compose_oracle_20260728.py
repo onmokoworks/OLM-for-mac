@@ -30,12 +30,12 @@ def f32(value: float) -> float:
 
 
 def clamp_fun_181156740(value: float) -> float:
-    """Finite-value model of FUN_181156740, with a binary32 result."""
+    """FUN_181156740: ordered upper selection, then MAXSS(value, +0)."""
 
     value = f32(value)
     if value >= f32(1.0):
         value = f32(1.0)
-    if value <= f32(0.0):
+    if not value > f32(0.0):
         value = f32(0.0)
     return value
 

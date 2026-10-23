@@ -28,6 +28,11 @@ struct Merge2RampView {
 
 inline float clamp_merge2_channel(float value)
 {
+    // Original 18115676a MAXSS(value, +0) maps every NaN to +0.
+    // Inspect the operand bits: ARM FMAXNM can quiet an sNaN instead.
+    std::uint32_t word;
+    std::memcpy(&word, &value, sizeof(word));
+    if ((word & 0x7fffffffu) > 0x7f800000u) return 0.0f;
     if (value >= 1.0f) return 1.0f;
     if (value <= 0.0f) return 0.0f;
     return value;

@@ -76,8 +76,17 @@ inline std::vector<float> highlight_isotropic_box_blur(
 				sum += result[static_cast<std::size_t>(y) * width + sx];
 			}
 			for (int x = 0; x < width; ++x) {
+                // Original RowSum<float,double> recomputes 3/5-tap rows.
+                // Sliding state is only used for the other kernel sizes.
+                if (kernel_size == 3 || kernel_size == 5) {
+                    sum = static_cast<double>(result[static_cast<std::size_t>(y) * width +
+                        highlight_reflect101(x - left, width)]);
+                    for (int offset = -left + 1; offset <= right; ++offset)
+                        sum += static_cast<double>(result[static_cast<std::size_t>(y) * width +
+                            highlight_reflect101(x + offset, width)]);
+                }
 				horizontal[static_cast<std::size_t>(y) * width + x] = sum;
-				if (x + 1 < width) {
+				if (x + 1 < width && kernel_size != 3 && kernel_size != 5) {
 					const int outgoing = highlight_reflect101(x - left, width);
 					const int incoming = highlight_reflect101(x + right + 1, width);
 					sum += static_cast<double>(

@@ -79,8 +79,16 @@ class OLMKiraKiraOuterComposeOracleTests(unittest.TestCase):
             source_opacity=0.0,
             merge_mode=1,
         )
-        self.assertTrue(all(math.isnan(channel) for channel in actual[:3]))
+        self.assertEqual(rgba_bits(actual), (0, 0, 0, 0))
         self.assertEqual(bits(actual[3]), 0)
+
+    def test_nan_scaled_source_alpha_is_clamped_before_composition(self) -> None:
+        for mode in (1, 2):
+            actual = oracle.compose_pixel(
+                (1.0, 1.0, 1.0, 1.0), (0.1, 0.2, 0.3, math.inf),
+                glow_opacity=1.0, source_opacity=0.0, merge_mode=mode,
+            )
+            self.assertEqual(rgba_bits(actual), rgba_bits((1.0, 1.0, 1.0, 1.0)))
 
     def test_binary_scalar_steps_preserve_discriminating_float32_bits(self) -> None:
         actual = oracle.compose_pixel(

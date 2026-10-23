@@ -2043,28 +2043,17 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
-// Smart's recovered Alpha box pipeline accepts finite floating source
-// colors beyond SDR. C13 pairs finite signed seeds through the original
-// warp/RowSum/aggregation operations.
-// C29 recovers ColumnSum's per-call state for canonical NaN seeds from
-// negative alpha and fractional exponents. Source samples must stay finite;
-// powf overflow (infinite seeds) remains outside this admission. Validation
-// tests the constructor's domain, never a final-output value.
-static bool SmartAlphaBoxInputHasSupportedSeed(const PF_EffectWorld *input,
-	PF_PixelFormat format, const OLMKiraKiraInfo &info)
+// C34: the recovered PF32 Alpha box pipeline handles finite and nonfinite
+// source lanes. Row/column state preserves the finite-versus-NaN boundary;
+// the original scalar aggregator clamps NaN ray amounts to zero, and the
+// typed writer clamps composition. NaN sign/payload differences inside the
+// filters do not survive those original operations. Keep other constructors,
+// approximation and Gaussian on their existing source validation paths.
+static bool SmartAlphaBoxInputIsSupported(const PF_EffectWorld *input,
+    PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
-	if (!input || format != PF_PixelFormat_ARGB128 ||
-		!IsAlphaBoxTuple(info, format, true, true, true)) return false;
-	const float exponent = std::max(0.001f, (float)info.strength_multiplier);
-	for (A_long y = 0; y < input->height; ++y) {
-		for (A_long x = 0; x < input->width; ++x) {
-			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
-			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
-				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
-				std::isinf(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
-		}
-	}
-	return true;
+    return input && format == PF_PixelFormat_ARGB128 &&
+        IsAlphaBoxTuple(info, format, true, true, true);
 }
 
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
@@ -2905,7 +2894,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputHasSupportedSeed(input_world, format, info));
+				 SmartAlphaBoxInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
