@@ -21,6 +21,7 @@ def main():
     parser.add_argument('--after-replay', type=Path, required=True)
     parser.add_argument('--scratch', type=Path, required=True)
     parser.add_argument('--apply', action='store_true')
+    parser.add_argument('--ticket', default='C29-kira-smart-r7', help='Production rebaseline history ticket')
     args = parser.parse_args()
     scratch = args.scratch.resolve()
     assert scratch.is_relative_to(ROOT / 'orchestra/state')
@@ -63,7 +64,7 @@ def main():
         subprocess.run([sys.executable, str(ROOT / 'tools/fuzz/rebaseline_corpus.py'),
                         '--plugin', 'olmkirakira', '--corpus', str(corpus),
                         '--report', str(proposal_path),
-                        '--production-rebaseline', 'C29-kira-smart-r7'], check=True)
+                        '--production-rebaseline', args.ticket], check=True)
         for path, expected in inputs.items():
             saved = json.loads(Path(path).read_text())
             assert expected == {k: v for k, v in saved.items()

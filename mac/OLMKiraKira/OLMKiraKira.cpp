@@ -713,7 +713,7 @@ static bool UsesRecoveredApproximation(const OLMKiraKiraInfo &info)
 {
 	return info.approximated_input && info.channel >= 1 && info.channel <= 6 &&
 		(info.blur_mode == 1 || info.blur_mode == 2 ||
-         (info.blur_mode == 3 && info.highlight_radius == 0));
+         info.blur_mode == 3);
 }
 
 template <typename PixelT>
@@ -739,11 +739,10 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // luminance/max and four-component directional Gaussian after pairing
 // their FLOAT32 seeds, rays and aggregation.
 // C29 adds scalar Highlight and directional Gaussian approximation.
-// Keep the unresolved four-component Highlight owner outside this recovery.
+// C34 pairs the four-component Highlight owner through the same Gaussian.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool gaussian_seed = info.blur_mode == 3 &&
-		(info.highlight_radius == 0 || info.channel == 1 || info.channel == 2 || info.channel == 4);
+	const bool gaussian_seed = info.blur_mode == 3;
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
 		 (info.channel >= 1 && info.channel <= 6 && gaussian_seed));
@@ -753,7 +752,7 @@ static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
 {
     return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
         (info.blur_mode == 1 || info.blur_mode == 2 ||
-         (info.blur_mode == 3 && info.highlight_radius == 0)) &&
+         info.blur_mode == 3) &&
         (info.channel == 3 || info.channel == 5 || info.channel == 6);
 }
 
@@ -920,10 +919,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
         }
 	}
 
-    if (highlight_radius > 0 && info.blur_mode == 3 && !color_owner &&
-        (info.channel == 1 || info.channel == 2 || info.channel == 4)) {
-        highlight = olm::kirakira::highlight_gaussian(
-            seed, work_width, work_height, highlight_radius);
+    if (highlight_radius > 0 && info.blur_mode == 3) {
+        if (color_owner) {
+            std::vector<float> plane((size_t)work_width * work_height);
+            for (int c = 0; c < 4; ++c) {
+                for (size_t i = 0; i < plane.size(); ++i) plane[i] = seed[i*4+c];
+                const auto ray = olm::kirakira::highlight_gaussian(
+                    plane, work_width, work_height, highlight_radius);
+                for (size_t i = 0; i < plane.size(); ++i) highlight[i*4+c] = ray[i];
+            }
+        } else {
+            highlight = olm::kirakira::highlight_gaussian(
+                seed, work_width, work_height, highlight_radius);
+        }
     }
 
 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
@@ -1744,8 +1752,8 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height);
 
-// C22/C28/C29: recovered scalar/four-component resize retains full-resolution
-// source composition for box and directional Gaussian owners.
+// C22/C28/C29/C34: recovered scalar/four-component resize retains full-resolution
+// source composition for box, directional Gaussian and Gaussian Highlight.
 // Keep the finite-SDR caller guard and exclude one-pixel IPP workspaces.
 static bool IsSmartApproximationTuple(const OLMKiraKiraInfo &info,
     PF_PixelFormat format, A_long width, A_long height)
@@ -1786,10 +1794,9 @@ static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat for
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 	PF_PixelFormat format, A_long width, A_long height)
 {
-	// Scalar Highlight shares the recovered constructor and adds a separable
-	// two-dimensional Gaussian. Four-component Highlight remains separate.
+	// Scalar and four-component Highlight use the separable Gaussian with
+	// the original area normalizer retained by the color aggregator.
 	if (info.blur_mode != 3 ||
-        (info.highlight_radius != 0 && info.channel != 1 && info.channel != 2 && info.channel != 4) ||
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
@@ -2036,28 +2043,17 @@ static bool GenericBetaInputIsFiniteSDR(
 	return true;
 }
 
-// Smart's recovered Alpha box pipeline accepts finite floating source
-// colors beyond SDR. C13 pairs finite signed seeds through the original
-// warp/RowSum/aggregation operations.
-// C29 recovers ColumnSum's per-call state for canonical NaN seeds from
-// negative alpha and fractional exponents. Source samples must stay finite;
-// powf overflow (infinite seeds) remains outside this admission. Validation
-// tests the constructor's domain, never a final-output value.
-static bool SmartAlphaBoxInputHasSupportedSeed(const PF_EffectWorld *input,
-	PF_PixelFormat format, const OLMKiraKiraInfo &info)
+// C34: the recovered PF32 Alpha box pipeline handles finite and nonfinite
+// source lanes. Row/column state preserves the finite-versus-NaN boundary;
+// the original scalar aggregator clamps NaN ray amounts to zero, and the
+// typed writer clamps composition. NaN sign/payload differences inside the
+// filters do not survive those original operations. Keep other constructors,
+// approximation and Gaussian on their existing source validation paths.
+static bool SmartAlphaBoxInputIsSupported(const PF_EffectWorld *input,
+    PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
-	if (!input || format != PF_PixelFormat_ARGB128 ||
-		!IsAlphaBoxTuple(info, format, true, true, true)) return false;
-	const float exponent = std::max(0.001f, (float)info.strength_multiplier);
-	for (A_long y = 0; y < input->height; ++y) {
-		for (A_long x = 0; x < input->width; ++x) {
-			const PF_PixelFloat p = LoadWorldPixel<PF_PixelFloat>(input, x, y);
-			if (!std::isfinite(p.alpha) || !std::isfinite(p.red) ||
-				!std::isfinite(p.green) || !std::isfinite(p.blue) ||
-				std::isinf(ucrt_powf(p.alpha, exponent, UCRT_FMA))) return false;
-		}
-	}
-	return true;
+    return input && format == PF_PixelFormat_ARGB128 &&
+        IsAlphaBoxTuple(info, format, true, true, true);
 }
 
 static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
@@ -2898,7 +2894,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartDirectionalGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
-				 SmartAlphaBoxInputHasSupportedSeed(input_world, format, info));
+				 SmartAlphaBoxInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,

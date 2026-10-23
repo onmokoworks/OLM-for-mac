@@ -12,6 +12,7 @@ import math
 import json
 import os
 import random
+import re
 import struct
 import subprocess
 from pathlib import Path
@@ -28,6 +29,75 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'nonfinite-alpha-negative':
+        for i, (slot, value) in enumerate(((1, 2), (1, 3), (1, 4), (2, 3),
+                                           (4, 1), (40, -2147483648/65536))):
+            case = next(c for c in cases(adapter, 'nonfinite-alpha-box') if c['geometry'] == [7, 11])
+            case['index'] = i
+            for param in case['parameters']:
+                if param['slot'] == slot: param['value'] = value
+            yield case
+        return
+    if family == 'nonfinite-alpha-lengths':
+        for case in cases(adapter, 'nonfinite-alpha-box'):
+            i = case['index']
+            values = {10:(1, 2, 3, 4, 5, 6, 7, 15, 50, 1000)[i%10],
+                      16:0, 34:(0, 1, 2, 3, 15, 50, 500)[i%7],
+                      40:(0, 1, 22, 90, -31, 359)[i%6]/65536,
+                      8:(0, 1, 97, 100, 10000)[i%5], 9:(0, 1, 100)[i%3]}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+                if param['slot'] in (13, 37): param['value'] = i%2
+            yield case
+        return
+    if family == 'nonfinite-alpha-box':
+        words = (0x7f800000, 0xff800000, 0x7fc00000, 0xffc00000,
+                 0x7fc12345, 0xffc12346, 0x7f812345, 0xff812346)
+        for i, (geometry, mode, merge, strength, pattern) in enumerate(itertools.product(
+                ((1, 1), (1, 9), (9, 1), (7, 11)), (1, 2), (1, 2),
+                (1, 97, 100, 537), range(8))):
+            case = matrix_case(adapter, i, geometry, 32, merge, mode, 1)
+            values = {5:1.25, 6:strength, 8:97, 9:83, 40:22/65536,
+                      10:7, 16:2, 22:0, 28:0, 34:3}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            data = bytearray(case['pixels'])
+            for pixel in range(geometry[0]*geometry[1]):
+                if pixel % 5 == 0:
+                    struct.pack_into('<I', data, pixel*16, words[pattern])
+                if pixel % 7 == 0:
+                    struct.pack_into('<I', data, pixel*16+4, words[(pattern+3)%8])
+            case.update(pixels=bytes(data), profile='nonfinite-alpha-box')
+            yield case
+        return
+    if family == 'approximation-gaussian-highlight-negative':
+        yield from (case for case in cases(adapter, 'approximation-gaussian-negative') if case['index'] != 0)
+        return
+    if family == 'approximation-gaussian-highlight':
+        for j, base in enumerate(('gaussian-highlight-scalar', 'gaussian-highlight-color')):
+            for case in cases(adapter, base):
+                case['index'] += j * 1000
+                for param in case['parameters']:
+                    if param['slot'] == 4: param['value'] = 1
+                yield case
+        return
+    if family == 'approximation-gaussian-highlight-boundary':
+        for i, (depth, channel, geometry, radius) in enumerate(itertools.product(
+                (8, 16, 32), (1, 3), ((4, 4), (4, 9), (9, 4)), (1, 2, 3, 500))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {4:1, 5:1.25, 6:97, 7:0.1, 8:97, 9:83,
+                      10:1, 16:0, 22:0, 28:0, 34:radius}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family in ('gaussian-highlight-color', 'gaussian-highlight-color-boundary'):
+        base = 'gaussian-highlight-boundary' if family.endswith('-boundary') else 'gaussian-highlight-scalar'
+        for case in cases(adapter, base):
+            for param in case['parameters']:
+                if param['slot'] == 1: param['value'] = {1:3, 2:5, 4:6}[param['value']]
+            yield case
+        return
     if family in ('approximation-gaussian', 'approximation-gaussian-boundary'):
         boundary = family.endswith('-boundary')
         geometries = ((4, 4), (4, 9), (9, 4)) if boundary else ((4, 4), (7, 11), (17, 13))
@@ -456,7 +526,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('nonfinite-alpha-negative', 'nonfinite-alpha-lengths', 'nonfinite-alpha-box', 'approximation-gaussian-highlight-negative', 'approximation-gaussian-highlight', 'approximation-gaussian-highlight-boundary', 'gaussian-highlight-color', 'gaussian-highlight-color-boundary', 'approximation-gaussian', 'approximation-gaussian-boundary', 'approximation-gaussian-negative', 'nan-alpha-opacity', 'nan-alpha-negative', 'nan-alpha', 'nan-alpha-lengths', 'gaussian-highlight-negative', 'gaussian-highlight-boundary', 'gaussian-highlight-scalar', 'approximation-color-highlight', 'approximation-color', 'approximation-color-boundary', 'approximation-color-negative', 'gaussian-color', 'gaussian-color-boundary', 'gaussian-color-negative', 'gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -479,6 +549,11 @@ def main():
                   gate_off=args.gate_off, trace_powf='host float powf, matching retained worker; not native UCRT', source_sha256=sha(args.source.read_bytes()),
                   worker_sha256=sha(options.worker.read_bytes()),
                   aex_sha256=sha((options.main / 'plugins_2025/OLMKiraKira.aex').read_bytes()))
+    report['headers_sha256'] = {}
+    for include in re.findall(r'^#include "([^"]+)"', args.source.read_text(), re.MULTILINE):
+        header = ROOT / include.removeprefix('../../') if include.startswith('../../core/') else Path(include)
+        if header.is_absolute() and header.is_file():
+            report['headers_sha256'][str(header)] = sha(header.read_bytes())
     def save():
         args.report.parent.mkdir(parents=True, exist_ok=True)
         report['counts'] = dict(Counter(r['result']['status'] for r in report['rows']))
@@ -537,6 +612,26 @@ def main():
                     actual = (directory / (name + '.raw')).read_bytes()
                     paired[name] = dict(exact=expected == actual, aex_sha256=sha(expected),
                         mac_sha256=sha(actual), diff=None if expected == actual else raw_diff(expected, actual, 32))
+                # Keep raw exactness unchanged; classify payload/sign-only
+                # ray differences separately from finite/NaN boundary errors.
+                row['ray_nan_differences'] = {}
+                for name in ('ray0', 'ray1', 'ray2', 'ray3', 'ray4'):
+                    expected = bytes.fromhex(stages[name])
+                    actual = (directory / (name + '.raw')).read_bytes()
+                    if len(expected) != len(actual): continue
+                    both_nan = other = 0
+                    for (a,), (b,) in zip(struct.iter_unpack('<I', expected), struct.iter_unpack('<I', actual)):
+                        if a == b: continue
+                        if (a & 0x7fffffff) > 0x7f800000 and (b & 0x7fffffff) > 0x7f800000:
+                            both_nan += 1
+                        else:
+                            other += 1
+                    row['ray_nan_differences'][name] = dict(both_nan=both_nan, other=other)
+                if case['depth'] == 32 and result['status'] != 'refusal':
+                    stored_rgba = b''.join(raw[i+4:i+16] + raw[i:i+4] for i in range(0, len(raw), 16))
+                    expected = bytes.fromhex(stages['composed'])
+                    row['post_clamp_store'] = dict(exact=stored_rgba == expected,
+                        aex_sha256=sha(expected), mac_sha256=sha(stored_rgba))
                 row['helper_paired'] = {}
                 for name, data in stages.items():
                     file = directory / (name + '.raw')
