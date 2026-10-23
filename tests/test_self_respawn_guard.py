@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 import ast
+import importlib.util
 import os
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 SEARCH_ROOTS = ("tools", "tests", "scripts", "refs/scripts", "handoffs")
@@ -115,6 +118,57 @@ class SelfRespawnGuardTests(unittest.TestCase):
             "test_olmradialblur_rotation_pf32_ellipse_actual_aex_20260811.py",
             "test_olmradialblur_zoom_pf32_ellipse_actual_aex_20260811.py",
         } <= paths)
+
+    def test_gate_self_test_in_child_process(self):
+        script = ROOT / "scripts/run_olm_generic_beta_gate.py"
+        # Exercise the real child dispatcher and existing I02/independent-tool
+        # cases without requiring SDK assets used by other gate self-tests.
+        with tempfile.TemporaryDirectory(prefix="gate_child_") as raw:
+            probe = Path(raw) / "test_gate_child.py"
+            probe.write_text(
+                "import importlib.util, os, unittest\n"
+                "def test_child_dispatch():\n"
+                f"    assert {CHILD!r} not in os.environ\n"
+                f"    spec = importlib.util.spec_from_file_location('gate_tests', {str(ROOT / 'tests/test_run_olm_generic_beta_gate.py')!r})\n"
+                "    module = importlib.util.module_from_spec(spec)\n"
+                "    spec.loader.exec_module(module)\n"
+                "    suite = unittest.TestSuite(module.GenericBetaGateTests(name) for name in (\n"
+                "        'test_main_publishes_running_before_execution_then_final_same_run_id',\n"
+                "        'test_optimized_interpreter_is_rejected_before_evidence_collection'))\n"
+                "    assert unittest.TextTestRunner().run(suite).wasSuccessful()\n"
+            )
+            result = subprocess.run(
+                [sys.executable, str(script), "--run-test-file", str(probe)],
+                env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1", PYTHONDONTWRITEBYTECODE="1"),
+                capture_output=True, text=True, timeout=30,
+            )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_i02_explicit_main_call_under_child_environment(self):
+        spec = importlib.util.spec_from_file_location(
+            "f33_gate_tests", ROOT / "tests/test_run_olm_generic_beta_gate.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        case = module.GenericBetaGateTests(
+            "test_main_publishes_running_before_execution_then_final_same_run_id"
+        )
+        with mock.patch.dict(os.environ, {CHILD: "1"}):
+            result = unittest.TestResult()
+            case.run(result)
+        self.assertTrue(result.wasSuccessful(), result.errors + result.failures)
+
+    def test_gate_cli_rejects_unmatched_child_before_launch(self):
+        for args in ((), ("--unknown-child-mode",)):
+            with self.subTest(args=args):
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "scripts/run_olm_generic_beta_gate.py"), *args],
+                    env=dict(os.environ, OLM_SELF_SPAWN_CHILD="1", PYTHONDONTWRITEBYTECODE="1"),
+                    capture_output=True, text=True, timeout=10,
+                )
+                self.assertEqual(result.returncode, 2, result.stderr)
+                if not args:
+                    self.assertIn("refusing child invocation", result.stderr)
 
     def test_ellipse_parent_rejects_malformed_actions(self):
         # Three fast affected-script smoke tests: no emulator or campaign runs.
