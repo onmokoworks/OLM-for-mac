@@ -32,7 +32,8 @@ def main():
             result['campaigns'][name] = dict(sha256=sha(path), seed=p['seed'], count=len(rows), counts=counts,
                 rendered_refusals=refusal, provenance=p.get('provenance'),
                 verifier_failures=p.get('failures', []), refusal_error_changes=p.get('refusal_error_changes', []),
-                sanitizer_reports=sum(bool(r['result']['routes']['smart'].get('sanitizer')) for r in rows))
+                sanitizer_reports=sum(bool(r['result']['routes']['smart'].get('sanitizer')) for r in rows),
+                mismatches=[r for r in rows if r['result']['routes']['smart']['status'] == 'mismatch'])
         elif p.get('independent'):
             rows = p['independent']
             result['matrices'][name] = dict(sha256=sha(path), references=len(rows),
@@ -68,6 +69,23 @@ def main():
                 changes.append(dict(index=a['index'], before=x, after=y, oracle=b['result']['oracles']['smart']))
         result['comparisons'].append(dict(before=before, after=after, transitions=transitions,
                                           lost_exact=lost, changes=changes, refusal_error_changes=error_changes))
+    final = args.state/'remeasure16/campaign.json'
+    qualified = args.state/'center16-seed1/campaign.json'
+    baseline = args.state/'baseline.json'
+    if all(p.exists() for p in (final, qualified, baseline)):
+        a, q, b = [json.loads(p.read_text())['cases'] for p in (final, qualified, baseline)]
+        assert len(a) == len(q) == len(b) == 300
+        lost, drift = [], []
+        for after, expected, before in zip(a, q, b):
+            assert after['index'] == expected['index'] == before['index']
+            x, y, z = [r['result']['routes']['smart'] for r in (before, after, expected)]
+            if x['status'] == 'exact' and (y['status'] != 'exact' or x['raw_sha256'] != y['raw_sha256']):
+                lost.append(before['index'])
+            if y.get('raw_sha256') != z.get('raw_sha256') and not (y['status'] == z['status'] == 'refusal'):
+                drift.append(after['index'])
+        result['final_ordinary'] = dict(lost_baseline_exact=lost, qualified_output_drift=drift,
+            uncompared=[r['index'] for r in a if r['result']['routes']['smart']['status'] == 'uncompared'])
+        assert not lost and not drift, result['final_ordinary']
     prod = args.state/'production-verify/report.json'
     if prod.exists():
         p = json.loads(prod.read_text())

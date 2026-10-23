@@ -1,11 +1,11 @@
-status: partial
+status: blocked
 
 summary:
 - Closed PF32 off-frame-center and PF16 Rotation off-frame-center admissions against F32.
 - Seed 1 Smart: 240/0/59/1 -> 252/0/47/1 -> 254/0/45/1; fresh seed 2: 240/0/60/0 -> 250/0/50/0 -> 253/0/47/0 (E/M/R/U).
 - All baseline-exact campaign hashes and all 35 saved corpus results are preserved; 27 newly admitted rows are exact.
 - Independent center matrices: PF32 216/216 and PF16 Rotation 108/108 exact, sanitizer-clean layouts.
-- Remaining source-profile investigation continues; resource limits are unchanged.
+- Stopped after nonfinite Zoom and finite Rotation admission hypotheses failed without a new intermediate-stage boundary; two clusters closed, not three.
 
 facts:
 
@@ -91,6 +91,47 @@ still-refused error transitions separately, while continuing to reject every
 lost exact hash, new pixel mismatch, unverified admission, or sanitizer finding.
 No output was published for this budget refusal. This is not an exact gain.
 
+FACT: After the two center commits, a scratch-only bypass of
+`GenericRadialInputIsFinite` tests the four AEX-rendered nonfinite Zoom
+refusals. All four newly rendered cases mismatch; all 300 Smart executions
+are sanitizer-clean. The production finite-input guard remains unchanged.
+
+| Seed-1 index | Differing words / bytes | First word | AEX -> candidate (little-endian hex) |
+|---:|---:|---:|---|
+| 17 | 1262 / 3043 | 0 | `0000807f` -> `4623c1ff` |
+| 89 | 324 / 759 | 0 | `00000000` -> `4623c1ff` |
+| 238 | 237 / 397 | 40 | `9beb483e` -> `4623c1ff` |
+| 247 | 562 / 1728 | 4 | `68e9513d` -> `4623c1ff` |
+
+FACT: The distinct finite-Rotation hypothesis replaces its SDR check with a
+finite-input check. The independent C11/C26 matrix yields 207/216 exact and
+216/216 sanitizer-clean layouts. Inputs 44/45/46 (3x5 subnormal/tiny Rotation)
+fail in all three layouts. Each differs in 3 words / 6 bytes; first word 25,
+AEX `0000803f`, Mac `00000000`, first differing byte 102. The prior HDR/fade
+input 62 now matches, but the subnormal counterexamples remain. This rule is
+not promoted and no special subnormal exclusion is invented.
+
+FACT: Neither rejected hypothesis obtained a new first-divergent intermediate
+stage. The ticket's two-refuted-hypotheses stop condition therefore fires.
+No third production cluster is claimed. These final-pixel differences do not
+establish an imported-math cause, so they are not labeled `ucrt-math-pending`.
+No arbitrary typed input was rounded into PNG and called an equivalent trace.
+The source remains the two qualified center edits, SHA256
+`e8c4ab8d1c577aac225b5009061ab3b33808ea8b69c829d299c11db43f4f7b74`.
+
+FACT: Final ordinary seed-1 remeasurement (default 10-second case budget)
+is 253 exact / 0 mismatch / 45 refusal / 2 uncompared, with original Smart
+276 ok / 20 reject / 4 budget. Uncompared indices are 4 and 298. Every one
+of the 240 starting exact rows remains exact, and all final rendered hashes
+match the 30-second qualified 254-exact result. Case 298 is an oracle-time
+limit variation, not a changed Mac output. The summary tool asserts both
+zero lost baseline exact and zero qualified-output hash drift.
+
+FACT: All started renders completed. Two abandoned diagnostic build trees were
+removed; remaining scratch is 28 MiB (logs, reports, generated reproducible
+inputs/source snapshots), below 5 GiB. `git diff --check` passes. No permission
+rejection occurred. Final production code contains only the two center rules.
+
 inference:
 
 INFERENCE: The earlier center-matrix rejection no longer applies to the current
@@ -119,6 +160,7 @@ mkdir -p "$S"
 export TMPDIR="$S" TMP="$S" TEMP="$S" PYTHONDONTWRITEBYTECODE=1
 B=c1d1f1943e2e3c9ab6e62e1094ba279643f73385
 python3 tools/fuzz/probe_radialblur_C33.py --experiment production --source-revision "$B" --seed 1 --output "$S/base-seed1" > "$S/base-seed1.log" 2>&1
+cp "$S/base-seed1/campaign.json" "$S/baseline.json"
 python3 tools/fuzz/probe_radialblur_C33.py --experiment production --source-revision "$B" --seed 2 --output "$S/base-seed2" > "$S/base-seed2.log" 2>&1
 python3 tools/fuzz/probe_radialblur_C33.py --experiment centers32 --source-revision "$B" --output "$S/centers32-final" > "$S/centers32-final.log" 2>&1
 python3 tools/fuzz/probe_radialblur_C33.py --experiment centers32 --source-revision "$B" --seed 1 --output "$S/center-seed1" > "$S/center-seed1.log" 2>&1
@@ -135,9 +177,10 @@ original baseline used `python3 tools/fuzz/run.py --plugin radialblur --n 300
 orchestra/state/C33-radial-smart-r5/baseline.json`, redirected to baseline.log.
 
 next:
-- PF32 cluster commit: `cdf295eb`; PF16 Rotation is the second separate promotion. Continue with the largest eligible source-profile residual.
-- Keep work-budget refusals unchanged. Type3 missing-layer allocation/prepass remains C17's host-contract boundary.
-- Investigate the remaining source-profile/noise-plane refusals under the ticket stop rule.
+- Accepted cluster commits: `cdf295eb` (PF32), `3dff678e` (PF16 Rotation). Review/merge independently of the blocked residual investigation.
+- Add a lossless typed-raw paired trace for nonfinite Zoom and subnormal Rotation. Compare source unpack/polar construction, prepass, accumulation and normalization before changing arithmetic. Existing PNG-only transport cannot preserve these witnesses.
+- Keep work-budget refusals unchanged; Type3 missing-layer allocation/prepass remains C17's host-contract boundary. Noise-plane invalid-index refusals also remain unpromoted.
+- Repair the five legacy standalone test link commands in a separate infrastructure ticket; the numerical public harness already links ucrtmath.
 
 Additional second-cluster reproduction (after the first-cluster commands above):
 
@@ -152,3 +195,29 @@ results; zero failures. The source-revision option reproduces the historical
 PF32-only stage without reverting the checkout. Original second-cluster
 campaign commands used `--experiment centers16` against the then-PF32-only
 source and the same hash-bound references.
+
+Rejected-hypothesis reproduction (expected exit 1 for each; run separately):
+
+```sh
+python3 tools/fuzz/probe_radialblur_C33.py --experiment nonfinite-zoom --admission-campaign "$S/center16-seed1/campaign.json" --output "$S/nonfinite-zoom" > "$S/nonfinite-zoom.log" 2>&1
+python3 tools/fuzz/probe_radialblur_C33.py --experiment finite-rotation --output "$S/finite-rotation" > "$S/finite-rotation.log" 2>&1
+```
+
+Expected: nonfinite mismatch indices 17/89/238/247, and finite matrix
+207/216 exact / 216/216 clean with indices 44/45/46 failing. Do not promote
+these scratch source files. The committed summary tool binds report hashes,
+keeps first-mismatch values, and records refused error-code transitions.
+
+Final ordinary remeasurement and evidence extraction:
+
+```sh
+python3 tools/fuzz/run.py --plugin radialblur --n 300 --seed 1 --jobs 1 --shrink-attempts 0 --shrink-seconds 0 --scratch "$S/remeasure16" --corpus "$S/remeasure16-corpus" --report "$S/remeasure16/campaign.json" > "$S/remeasure16.log" 2>&1
+python3 tools/fuzz/summarize_radialblur_C33.py --state "$S" --output "$S/evidence.json" > "$S/summary.log" 2>&1
+git diff --check
+```
+
+Observed final ordinary result: 253/0/45/2; qualification with retained
+30-second references: 254/0/45/1. Keep oracle timeouts visible when rechecking.
+The summary accepts missing optional historical runs but includes and verifies
+all available reports; original full evidence contains 11 campaigns, three
+independent matrices and three corpus replays.
