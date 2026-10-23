@@ -30,5 +30,5 @@ while true; do
   echo "$engine ${model:-default} $(date +%s)" > "$MAIN/orchestra/state/$next.meta"  # claim before launch (avoid double start)
   # own process group per worker so procguard/run.sh can kill the whole subtree; cap user processes
   python3 -c 'import os,sys; os.setsid(); os.execvp(sys.argv[1], sys.argv[1:])' "$MAIN/orchestra/run.sh" "$next" "$engine" $model &
-  sleep 20
+  sleep ${LAUNCH_GAP:-240}  # let the new worker ramp up before the memory gate is read again
 done

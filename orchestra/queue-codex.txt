@@ -1,5 +1,4 @@
 F26-test-pool-cap-and-ellipse
-I02-integration-finish
 F27-ucrt-math-probe
 F25-self-respawn-guard
 F24-colorkey-hostless-roi-flag
@@ -11,3 +10,4 @@ C20-colorkey-smart
 C21-olmblur-smart-r5
 C22-kira-smart-r5
 C23-smoother2-colorkeep-toondilate-fresh
+I02-integration-finish

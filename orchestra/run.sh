@@ -22,6 +22,7 @@ $(cat "$ticket")"
 log="$MAIN/orchestra/logs/$id.log"
 echo "$engine ${model:-default} $(date +%s)" > "$MAIN/orchestra/state/$id.meta"
 cd "$wt"
+export OLM_TEST_JOBS=${OLM_TEST_JOBS:-1}  # up to 5 workers share 16 GB
 # limit runaway process creation: allow ~400 more processes than the user has now
 ulimit -u $(( $(ps -axo user= | grep -c "^$(whoami)") + 400 )) 2>/dev/null
 marg=(); [[ -n $model ]] && marg=(-m "$model")

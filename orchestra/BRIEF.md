@@ -50,7 +50,7 @@ next: what remains / suggested follow-up ticket
 If any tool call is rejected (permissions) or you must stop for any reason, still
 write and commit the report with `status: blocked` before ending. Never end silently.
 
-## Machine limits (16 GB RAM, shared by 2 workers)
-- Use `--jobs 2` for fuzz/regression runs; never more than 2 parallel emulator/build processes.
+## Machine limits (16 GB RAM, shared by up to 5 workers)
+- Use `--jobs 1` for fuzz/regression runs (`OLM_TEST_JOBS=1` is preset); never more than 2 parallel emulator/build processes per worker.
 - Do not keep large outputs in RAM; stream to files. Kill any background process you started before finishing.
 - Delete regenerable build trees in your scratch dir when you are done (keep logs/reports).
