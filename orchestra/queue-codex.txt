@@ -84,3 +84,6 @@ C53b-radial-trace-worker
 F51-x86_64-slice-equivalence
 I03-integration-check
 C57-radial-missing-layer
+R03-harness-ucrt-link
+R04-assertion-drift-and-corpus
+R05-regenerate-stale-bindings
