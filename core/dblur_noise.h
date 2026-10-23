@@ -14,6 +14,13 @@ struct NoisePlaneView {
     float cell_size;
 };
 
+// Known original bug: an invalid table index reads unrelated heap bytes.
+// The Mac contract is a zero read, without padding or changing valid indices.
+inline float read_noise_table(const std::vector<float>& table, std::int64_t index) {
+    return index >= 0 && static_cast<std::uint64_t>(index) < table.size()
+        ? table[static_cast<std::size_t>(index)] : 0.0f;
+}
+
 // Typed candidate for OLMDirectionalBlur FUN_180003370. The interpolated
 // branch deliberately preserves the AEX's float smoothstep and mixed
 // float/double accumulation order.
@@ -86,19 +93,15 @@ inline bool generate_noise_plane(int source_width, int source_height,
             table_position -= 100.0f;
         }
         const int table_index = static_cast<int>(table_position);
-        // The AEX folds only the upper bound. Negative Offset can leave a
-        // negative signed index and read before its 101-entry allocation.
-        // Preserve defined samples; reject that state before indexing rather
-        // than inventing a wrap/clamp and calling it Windows-equivalent.
-        if (table_index < 0 || table_index >= 100) {
-            return false;
-        }
+        // Original RVA 37F3/37F8 can read outside the 101-entry table.
+        // C45 defines those otherwise heap-dependent reads as zero, separately
+        // for each interpolation endpoint (index -1 still has a valid right).
         const float fraction = table_position - static_cast<float>(table_index);
         float smooth = ucrt_powf(fraction, 2.0f, UCRT_FMA);
         smooth *= 3.0f - (fraction + fraction);
         const float interpolated =
-            (1.0f - smooth) * table[static_cast<std::size_t>(table_index)] +
-            smooth * table[static_cast<std::size_t>(table_index + 1)];
+            (1.0f - smooth) * read_noise_table(table, table_index) +
+            smooth * read_noise_table(table, static_cast<std::int64_t>(table_index) + 1);
         const float combined = static_cast<float>(
             static_cast<double>(interpolated) * 0.5 +
             static_cast<double>(base));
@@ -184,21 +187,17 @@ inline bool generate_radial_noise_plane(int source_width, int source_height,
             table_position -= 100.0f;
         }
         const int table_index = static_cast<int>(table_position);
-        // RadialBlur 9590..95D8 folds only the upper bound, then truncates
-        // toward zero and reads table[index] and table[index+1]. A negative
-        // phase can still produce valid indices (including a negative
-        // fraction at index zero). Refuse an out-of-allocation read rather
-        // than inventing a lower-bound wrap or clamp.
-        if (table_index < 0 || table_index >= 100) return false;
+        // Original RVA 95CD/95D8 folds only the upper bound. Apply the same
+        // deterministic zero-read policy as DirectionalBlur at each endpoint.
         const float fraction = table_position - static_cast<float>(table_index);
         const float square = fraction * fraction;
         const float smooth = (3.0f - (fraction + fraction)) * square;
         // Preserve the two separate 0.5f products used by FUN_180009380.
         // Factoring the half out after interpolation is not bit-equivalent.
         const float left = ((1.0f - smooth) *
-                            table[static_cast<std::size_t>(table_index)]) * 0.5f;
+                            read_noise_table(table, table_index)) * 0.5f;
         const float right = (smooth *
-                             table[static_cast<std::size_t>(table_index + 1)]) * 0.5f;
+                             read_noise_table(table, static_cast<std::int64_t>(table_index) + 1)) * 0.5f;
         const float combined = base + (left + right);
         value = combined < 0.0f ? 0.0f : (combined > 1.0f ? 1.0f : combined);
     }
