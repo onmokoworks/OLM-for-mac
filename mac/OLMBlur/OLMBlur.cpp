@@ -1602,11 +1602,11 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// NaN payload propagation is not established by the finite-input evidence.
 	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
 		raw.amount == 5.0 && raw.repeat == 2;
-	// C12: the non-Legacy workers materialize the radius as float before
-	// integer truncation. PF16/PF32 admission stays at Repeat <= 2: higher-repeat
-	// coefficient/import residuals remain outside this new rule.
+	// C21: PF32 non-Legacy now uses the original binary32 expf coefficients
+	// at every repeated radius. Its bounded source scan remains below.
+	// PF16 higher-repeat coefficient residuals remain outside this rule.
 	const bool radius_small = raw.legacy == 0 &&
-		(bpc == 8 || ((bpc == 16 || bpc == 32) && raw.repeat <= 2));
+		(bpc == 8 || bpc == 32 || (bpc == 16 && raw.repeat <= 2));
 	// C15: Legacy integer writers preserve the AEX low-word/byte conversion.
 	// PF8 uses all legal schedules; PF16 stays at one/two passes.
 	const bool legacy_small = raw.legacy == 1 &&
@@ -1635,7 +1635,7 @@ static bool
 SmallDefaultPF32Source(const PF_EffectWorld *world)
 {
 	// Called only after GenericBetaWorld validates the full active storage.
-	// C15: small non-Legacy one/two-pass sources include bounded signed HDR.
+	// Small non-Legacy sources include bounded signed HDR.
 	// Keep nonfinite and larger finite values outside the verified domain.
 	for (A_long y=0; y<world->height; ++y) {
 		const unsigned char *row=(const unsigned char*)world->data+(size_t)y*world->rowbytes;

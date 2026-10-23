@@ -48,7 +48,7 @@ def main():
     p.add_argument('--source-revision')
     p.add_argument('--matrix-depth',type=int,choices=(8,16,32))
     p.add_argument('--seed',type=int,default=1);p.add_argument('--indices',type=int,nargs='+',default=[19,13,66,196])
-    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state/C12-olmblur-smart-r3')
+    args=p.parse_args();s=args.scratch.resolve();assert s.is_relative_to(ROOT/'orchestra/state')
     s.mkdir(parents=True,exist_ok=True);os.environ.update(TMPDIR=str(s),TMP=str(s),TEMP=str(s))
     a=olmblur.Adapter(argparse.Namespace(max_size=256,case_timeout=60,main=run.main_checkout(),worker=WORKER))
     libm=ctypes.CDLL('/usr/lib/libSystem.B.dylib')
@@ -95,6 +95,12 @@ def main():
             (work/'input.bin').write_bytes(c['pixels']);(work/'expected.bin').write_bytes(reference)
             stages=[];imports=[]
             class Traced(original_loader):
+                def register_libm_impls(self, *args, **kwargs):
+                    super().register_libm_impls(*args, **kwargs)
+                    # The base loader installs expf directly in its table.
+                    # Bind after table creation, as in the corrected C15 trace.
+                    for name in ('pow', 'powf', 'expf'):
+                        self.register_import_impl(name, self.import_impls[name])
                 def register_import_impl(self,name,impl):
                     if name in ('pow','powf','expf'):
                         def observed(uc,unused):
