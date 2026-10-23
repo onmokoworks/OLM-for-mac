@@ -59,3 +59,5 @@ F47-aexcompat-native-plugin-host
 C43-dg-bilateral-last-bit
 S01-wide-mismatch-sweep
 C44-radial-smart-r7
+F47b-native-plugin-host-render
+R01-xcode-release-config
