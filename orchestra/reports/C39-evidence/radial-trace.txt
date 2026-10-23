@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C39-seed45-residual-mismatches/orchestra/state/C39-seed45-residual-mismatches/radial-trace.py", line 10, in <module>
+    t.main()
+    ~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C39-seed45-residual-mismatches/tools/fuzz/trace_radialblur_rotation_C11.py", line 108, in main
+    watches = trace(['--watch','function=0x4640,arg=rcx,size=64,occurrence=1'],'config_trace')
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C39-seed45-residual-mismatches/tools/fuzz/trace_radialblur_rotation_C11.py", line 99, in trace
+    run = subprocess.run(command+options+zoom.assignments(case), capture_output=True, check=True, timeout=120)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/.cache/olm-emu/worker-F45-msdouble/aex-guest-worker', 'render-trace-png', '/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C39-seed45-residual-mismatches/orchestra/state/C39-seed45-residual-mismatches/radial-trace/input.png', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C39-seed45-residual-mismatches/orchestra/state/C39-seed45-residual-mismatches/radial-trace/trace.png', '--pixel-format', 'argb8', '--watch', 'function=0x4640,arg=rcx,size=64,occurrence=1', 'param_1@1=2', 'param_2@2=50.0,50.0', 'param_4@4=0', 'param_5@5=1', 'param_6@6=0', 'param_7@7=0', 'param_10@10=10', 'param_11@11=1', 'param_12@12=0', 'param_13@13=0', 'param_15@15=1', 'param_17@17=1.0', 'param_18@18:angle=0.0', 'param_20@20=5.0', 'param_21@21=7.330033396545429', 'param_22@22=81.07550549292704', 'param_24@24=100.0', 'param_25@25=1', 'param_27@27=1', 'param_28@28:angle=0.0', 'param_29@29=10.0']' returned non-zero exit status 1.
