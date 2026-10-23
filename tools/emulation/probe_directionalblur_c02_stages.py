@@ -89,6 +89,9 @@ static void c02_dump(const char* name, const float* data, size_t count) {
                 '              c02_dump("denominator",denominator.data(),denominator.size());\n'
                 '              c02_dump("alpha-max",alpha_max.data(),alpha_max.size());\n'
                 '            }\n            const float divisor = denominator[pixel];')
+            body = replace_once(body, '        olm_dblur_rotate_rgba_f32(b.data(), a.data(), ww, wh, -angle);',
+                '        c02_dump("inverse-input",b.data(),b.size());\n'
+                '        olm_dblur_rotate_rgba_f32(b.data(), a.data(), ww, wh, -angle);')
             target.write_text(prefix+body)
             argv = [target if x == original else x for x in argv]+['-I',ROOT/'core']
         return super().compile(argv, deadline)

@@ -1,3 +1,4 @@
+#include "x86_float.h"
 #include "dblur_rotate.h"
 #include "../ucrtmath/include/ucrtmath.h"
 
@@ -6,22 +7,22 @@
 namespace {
 
 __attribute__((noinline)) float fmul(float a, float b) {
-    volatile float result = a * b;
+    volatile float result = olm::x86_float::sse_mul(a, b);
     return result;
 }
 
 __attribute__((noinline)) float fadd(float a, float b) {
-    volatile float result = a + b;
+    volatile float result = olm::x86_float::sse_add(a, b);
     return result;
 }
 
 __attribute__((noinline)) float fsub(float a, float b) {
-    volatile float result = a - b;
+    volatile float result = olm::x86_float::sse_sub(a, b);
     return result;
 }
 
 __attribute__((noinline)) float fdiv(float a, float b) {
-    volatile float result = a / b;
+    volatile float result = olm::x86_float::sse_div(a, b);
     return result;
 }
 
@@ -133,9 +134,10 @@ extern "C" void olm_dblur_rotate_rgba_f32_trig(const float* source,
                 w_bottom_right = fdiv(w_bottom_right, alpha);
             }
 
+            // AEX 0x2113..0x21b2 operand order also determines NaN payloads.
             volatile float red_tl = fmul(source[top], w_top_left);
-            volatile float red_bl = fmul(source[bottom], w_bottom_left);
-            volatile float red_tr = fmul(source[top + 4], w_top_right);
+            volatile float red_bl = fmul(w_bottom_left, source[bottom]);
+            volatile float red_tr = fmul(w_top_right, source[top + 4]);
             volatile float red_br = fmul(source[bottom + 4], w_bottom_right);
             volatile float red = red_tl;
             red = fadd(red, red_tr);
@@ -145,16 +147,16 @@ extern "C" void olm_dblur_rotate_rgba_f32_trig(const float* source,
             volatile float green_bl = fmul(source[bottom + 1], w_bottom_left);
             volatile float green_tr = fmul(source[top + 5], w_top_right);
             volatile float green_br = fmul(source[bottom + 5], w_bottom_right);
-            volatile float green = green_tl;
-            green = fadd(green, green_tr);
+            volatile float green = green_tr;
+            green = fadd(green, green_tl);
             green = fadd(green, green_bl);
             green = fadd(green, green_br);
             volatile float blue_tl = fmul(source[top + 2], w_top_left);
             volatile float blue_bl = fmul(source[bottom + 2], w_bottom_left);
             volatile float blue_tr = fmul(source[top + 6], w_top_right);
             volatile float blue_br = fmul(source[bottom + 6], w_bottom_right);
-            volatile float blue = blue_tl;
-            blue = fadd(blue, blue_tr);
+            volatile float blue = blue_tr;
+            blue = fadd(blue, blue_tl);
             blue = fadd(blue, blue_bl);
             blue = fadd(blue, blue_br);
 

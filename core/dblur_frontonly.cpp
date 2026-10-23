@@ -1,3 +1,4 @@
+#include "x86_float.h"
 #include "dblur_frontonly.h"
 #include "dblur_field.h"
 #include "dblur_gaussian.h"
@@ -83,7 +84,8 @@ float build_component_map(const std::vector<float>& image, int width, int height
             continue;
         }
         visited[static_cast<std::size_t>(start)] = 1;
-        if (image[static_cast<std::size_t>(start) * 4 + 3] <= 0.0f) {
+        // AEX 0x618a COMISS/SETA forms an ordered-positive alpha mask.
+        if (!(image[static_cast<std::size_t>(start) * 4 + 3] > 0.0f)) {
             continue;
         }
         pending.clear();
@@ -99,7 +101,7 @@ float build_component_map(const std::vector<float>& image, int width, int height
         while (!pending.empty()) {
             const int pixel = pending.back();
             pending.pop_back();
-            if (image[static_cast<std::size_t>(pixel) * 4 + 3] <= 0.0f) {
+            if (!(image[static_cast<std::size_t>(pixel) * 4 + 3] > 0.0f)) {
                 continue;
             }
             component.push_back(pixel);
@@ -732,9 +734,10 @@ static int render_minimal_argb32(const float* input_argb,
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
             const std::size_t si = rgba_index(ww, x + ox, y + oy), di = rgba_index(width, x, y);
             output_argb[di] = a[si + 3];
-            output_argb[di + 1] = std::min(a[si] * brightness_gain, 1.0f);
-            output_argb[di + 2] = std::min(a[si + 1] * brightness_gain, 1.0f);
-            output_argb[di + 3] = std::min(a[si + 2] * brightness_gain, 1.0f);
+            // AEX 0x6c0d..0x6c34: gain first, then MINSS(value, 1).
+            output_argb[di + 1] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si]), 1.0f);
+            output_argb[di + 2] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si + 1]), 1.0f);
+            output_argb[di + 3] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si + 2]), 1.0f);
         }
         return 0;
     } catch (const std::bad_alloc&) { return -5; }
