@@ -154,6 +154,8 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 stages['seed'] = b''.join(ld.read_bytes(int(mat['data'],16)+y*mat['step_bytes'], w*mat['channels']*4) for y in range(h)).hex()
             super().add_code_hook(0x18114f589, seed)
             def aggregate(ld, _addr, _size):
+                norms = struct.unpack('<Q',ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP)+0x30,8))[0]
+                stages['normalizers'] = words(norms,5)
                 ptrs = struct.unpack('<5Q',ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RDX),40))
                 for i, ptr in enumerate(ptrs):
                     stages[f'ray{i}'] = words(ptr,n*stages['seed_channels'])
@@ -176,10 +178,19 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
             super().call_function(ctor,int_args=[obj],max_instructions=1000)
             angles = alloc(struct.pack('<5i',*[a+round(p[40]*65536) for a in (90,0,45,135)],0))
             lengths = alloc(struct.pack('<5i',*[p[s]//2 if p[4] else p[s] for s in (10,16,22,28,34)]))
-            assert all(p[flag] == 0 or p[length] == 0
-                       for flag, length in zip((13,19,25,31,37), (10,16,22,28,34)))
             colors = alloc(struct.pack('<20f',*[v/255 for s in (11,17,23,29,35) for v in p[s]]))
-            ramps = alloc(bytes(5*0x144)); flags = alloc(bytes(5)); glow = alloc(bytes(n*16))
+            # Drive the original default-handle producer using the grounded
+            # ABI from the default-handle/relocation probes. Custom handles
+            # are not modeled; public final-output binding is still required.
+            handler = alloc(struct.pack('<2Q', 0x18148d818, 0))
+            output_handle = alloc(bytes(8))
+            super().call_function(0x18123abf0,
+                int_args=[handler,host,output_handle],max_instructions=500000)
+            handle = struct.unpack('<Q',self.read_bytes(output_handle,8))[0]
+            payload = self.read_bytes(handle+16,0x144)
+            ramps = alloc(payload * 5)
+            flags = alloc(bytes(int(bool(p[s])) for s in (13,19,25,31,37)))
+            glow = alloc(bytes(n*16))
             bits = lambda f: struct.unpack('<I',struct.pack('<f',f))[0]
             def percent(value):
                 if not aex_percent_materialization:
@@ -190,8 +201,12 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
                 scale = struct.unpack('<f', self.read_bytes(0x181486c10, 4))[0]
                 assert struct.pack('<f', scale).hex() == '0ad7233c'
                 return f32(f32(value) * scale)
+            # FUN_18114e860 materializes the slider as FLOAT32 then MULSS
+            # with DAT_181486c18, not a double product narrowed afterwards.
+            f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+            fade_scale = struct.unpack('<f', self.read_bytes(0x181486c18,4))[0]
             result = super().call_function(0x18114f4a0,
-                int_args=[obj,host,pixels,glow,angles,lengths,colors,ramps,flags,p[2],w,h,bits(percent(p[6])),bits(p[7]),1,bits(p[5])],
+                int_args=[obj,host,pixels,glow,angles,lengths,colors,flags,ramps,p[2],w,h,bits(percent(p[6])),bits(f32(p[7])*fade_scale),1,bits(p[5])],
                 max_instructions=200_000_000)
             stages['glow'] = words(glow,n*4)
             if p[4]: glow = resize(glow,w,h,fw,fh)

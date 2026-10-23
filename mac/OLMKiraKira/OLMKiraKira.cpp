@@ -670,7 +670,9 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 	return pixels;
 }
 
-// Original Alpha constructor 18114edf0 owns a scalar powf seed. C07 pairs
+// Original Alpha constructor 18114edf0 owns a scalar powf seed. Channel 2
+// constructor 181150600 shares the box pipeline with double luma and float
+// fade/powf operations (C16). C07 pairs
 // the box pipeline; C13 pairs the directional Gaussian pipeline with the
 // same constructor, percentage materialization and aggregation. Keep the
 // unresolved Length-1, Highlight and resize operations outside this recovery.
@@ -679,7 +681,7 @@ static bool UsesRecoveredScalarAlphaPipeline(const OLMKiraKiraInfo &info)
 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0 &&
 		info.vertical_length != 1 && info.horizontal_length != 1 &&
 		info.diagonal_length != 1 && info.diagonal2_length != 1;
-	return info.channel == 1 && !info.approximated_input &&
+	return (info.channel == 1 || (info.channel == 2 && (info.blur_mode == 1 || info.blur_mode == 2))) && !info.approximated_input &&
 		(info.blur_mode == 1 || info.blur_mode == 2 || directional_gaussian);
 }
 
@@ -698,9 +700,10 @@ static std::vector<float> MakeSeed(
 	const float fade_threshold = (float)info.fade_out;
 	auto apply_fade = [&](float value) -> float {
 		if (value == 0.0f) return 0.0f;
-		if (fade_threshold < value) return (float)std::pow(value, exponent);
+		if (fade_threshold < value) return recovered_scalar_alpha ? std::pow(value, (float)exponent) : (float)std::pow(value, exponent);
 		const float normalized = value / fade_threshold;
-		return normalized * normalized * (float)std::pow(fade_threshold, exponent);
+		return recovered_scalar_alpha ? std::pow(normalized, 2.0f) * std::pow(fade_threshold, (float)exponent)
+			: normalized * normalized * (float)std::pow(fade_threshold, exponent);
 	};
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -710,7 +713,9 @@ static std::vector<float> MakeSeed(
 				v = recovered_scalar_alpha ? std::pow(p.a, (float)exponent)
 					: (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
-				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
+				float luma = recovered_scalar_alpha
+					? (float)((double)p.g * 0.7152 + (double)p.r * 0.2126 + (double)p.b * 0.0722)
+					: p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
 				v = apply_fade(luma) * p.a;
 			} else if (info.channel == 4) {
 				v = apply_fade(std::max({p.r, p.g, p.b})) * p.a;
@@ -952,6 +957,12 @@ static void KiraDiagnosticInfo(const char *label, const OLMKiraKiraInfo &info)
 // FUN_18114e860 uses CVTDQ2PS/MULSS with float constant 0x3c23d70a
 // for Strength and both Opacity controls. Keep unresolved color/resize/Gaussian
 // pipelines outside this recovery until their upstream boundaries are closed.
+// Original builder 18114e860: FLOAT32 getter followed by MULSS 0.2f.
+static PF_FpLong ReadScalarFade(PF_FpLong value, const OLMKiraKiraInfo &info)
+{
+    return UsesRecoveredScalarAlphaPipeline(info) ? (PF_FpLong)((float)value * 0.2f) : value * 0.2;
+}
+
 static PF_FpLong ReadScalarAlphaPercent(A_long value, const OLMKiraKiraInfo &info)
 {
 	if (UsesRecoveredScalarAlphaPipeline(info)) return (float)value * 0.01f;
@@ -963,7 +974,6 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	AEFX_CLR_STRUCT(*info);
 	info->glow_rotation = params[OLMKIRAKIRA_GLOW_ROTATION]->u.fs_d.value;
 	info->brightness_gain = params[OLMKIRAKIRA_BRIGHTNESS_GAIN]->u.fs_d.value;
-	info->fade_out = params[OLMKIRAKIRA_FADE_OUT]->u.fs_d.value * 0.2;
 	info->vertical_length = params[OLMKIRAKIRA_VERTICAL_LENGTH]->u.sd.value;
 	info->horizontal_length = params[OLMKIRAKIRA_HORIZONTAL_LENGTH]->u.sd.value;
 	info->diagonal_length = params[OLMKIRAKIRA_DIAGONAL_LENGTH]->u.sd.value;
@@ -973,6 +983,7 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
 	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
 	info->approximated_input = params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value;
+	info->fade_out = ReadScalarFade(params[OLMKIRAKIRA_FADE_OUT]->u.fs_d.value, *info);
 	info->strength_multiplier = ReadScalarAlphaPercent(params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value, *info);
 	info->glow_opacity = ReadScalarAlphaPercent(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
 	info->source_opacity = ReadScalarAlphaPercent(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
@@ -1075,7 +1086,8 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_BRIGHTNESS_GAIN, info->brightness_gain = param->u.fs_d.value);
 	A_long raw_strength = 0;
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_STRENGTH_MULTIPLIER, raw_strength = param->u.sd.value);
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_FADE_OUT, info->fade_out = param->u.fs_d.value * 0.2);
+	PF_FpLong raw_fade = 0.0;
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_FADE_OUT, raw_fade = param->u.fs_d.value);
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_VERTICAL_LENGTH, info->vertical_length = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_VERTICAL_COLOR,
@@ -1131,6 +1143,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_MERGE_MODE, info->merge_mode = param->u.pd.value);
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_APPROX_INPUT, info->approximated_input = param->u.bd.value);
 
+	info->fade_out = ReadScalarFade(raw_fade, *info);
 	info->strength_multiplier = ReadScalarAlphaPercent(raw_strength, *info);
 	info->glow_opacity = ReadScalarAlphaPercent(raw_glow_opacity, *info);
 	info->source_opacity = ReadScalarAlphaPercent(raw_source_opacity, *info);
@@ -1572,6 +1585,17 @@ static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
 			info.diagonal2_use_ramp, info.diagonal2_ramp) &&
 		ray_is_admitted(info.highlight_radius, 500, info.highlight_color,
 			info.highlight_use_ramp, info.highlight_ramp);
+}
+
+// C16: Channel 2 constructor 181150600 uses a scalar luminance seed.
+// Its FLOAT64 weighted sum, FLOAT32 fade/powf, and box operations are
+// paired to public Smart; retain SDR, default-ramp and workload boundaries.
+static bool IsSmartLuminanceBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+{
+    if (info.channel != 2 || !(info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+    OLMKiraKiraInfo alpha = info;
+    alpha.channel = 1;
+    return IsAlphaBoxTuple(alpha, format, true, true, true);
 }
 
 static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
@@ -2662,6 +2686,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
 				 IsAlphaBoxTuple(info, format, true, true, true) ||
+				 IsSmartLuminanceBoxTuple(info, format) ||
 				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||

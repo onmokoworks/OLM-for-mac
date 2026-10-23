@@ -27,10 +27,11 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
-    if family == 'luminance-controls':
+    if family in ('luminance-controls', 'color-controls'):
         for case in cases(adapter, 'strength-combined'):
             i = case['index']
-            values = {1: 2, 7: (0.0, 0.001, 0.1, 0.5, 1.0)[i % 5]}
+            values = {1: 6 if family == 'color-controls' else 2,
+                      7: (0.0, 0.001, 0.1, 0.5, 1.0)[i % 5]}
             for param in case['parameters']:
                 if param['slot'] in values: param['value'] = values[param['slot']]
             yield case
@@ -215,7 +216,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')
@@ -267,6 +268,11 @@ def main():
             report['rows'].append(row)
             if args.trace_index is not None:
                 original = original_trace(case, adapter.aex, aex_percent_materialization=True, host_powf=True)
+                row['original_trace_status'] = original['status']
+                row['original_trace_error'] = original.get('error')
+                if 'output' not in original['stages']:
+                    save()
+                    raise RuntimeError('Original trace has no output: ' + str(original.get('error')))
                 row['aex_row_filter_calls_kernel_width_channels'] = original['row_filters']
                 row['aex_resize_writers'] = original.get('resize_writers', [])
                 stages = original['stages']
