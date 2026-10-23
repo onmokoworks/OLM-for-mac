@@ -355,6 +355,98 @@
     }
   },
   "cluster": "scalar-approx",
+  "corpus_rebaseline": {
+    "after": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "1982ade863e27ab9376483231271f2fc16a7267fd7f1b18393326073733bf0bf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 1 1 27 27",
+            "ERROR": "0"
+          },
+          "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+          "status": "exact"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "before": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "1982ade863e27ab9376483231271f2fc16a7267fd7f1b18393326073733bf0bf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 27 27",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "input_and_provenance_unchanged": true,
+    "matches_saved_after": 8,
+    "matches_saved_before": 7,
+    "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json",
+    "retained_previous_result": true
+  },
   "evidence": {
     "audit": {
       "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
@@ -278871,6 +278963,667 @@
       "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261"
     },
     "replay": {
+      "budget_minutes": 30,
+      "case_timeout_seconds": 10,
+      "cases": [],
+      "claims_not_made": [
+        "Signature clusters are not proven root causes.",
+        "Finite random coverage is not all-input compatibility.",
+        "This is CPU AEX emulation vs a fake SDK host, not native AE/Windows UCRT validation.",
+        "AEX packed strides vs Mac random padding does not establish AEX odd-stride support."
+      ],
+      "completed": 8,
+      "corpus_max_bytes": 2000000,
+      "deadline_reached": false,
+      "elapsed_seconds": 7.8685,
+      "framework_sha256": {
+        "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+        "tools/fuzz/adapters/color_triage.py": "3f6a5422a7493155ba2ed0159d67a9037c763c0340f3ec22c1acbd8b19893b7a",
+        "tools/fuzz/adapters/colorkeep.py": "b04f2d140487414a132de25222ed6292b29d8c2c74c12cf2b8f8c631e72e96df",
+        "tools/fuzz/adapters/olmblur.py": "c0b0501aa49f1706f70c2b6d06a7fb580ec1a9255110bab2238894e110868b84",
+        "tools/fuzz/adapters/olmcolorkey.py": "01ad703b69f2e925056fd179d24616233db2b2807fc0f449d3ed1acae407d6b3",
+        "tools/fuzz/adapters/olmdirectionalblur.py": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+        "tools/fuzz/adapters/olmdistancegradation.py": "2e58d20d22b65e07fc16c2d59157ae113620fec8ad154a51d62d759323b1e4c1",
+        "tools/fuzz/adapters/olmkirakira.py": "84c38bf2abf6268bc1cf98c20a2af4d7160f6f616eccc8b69bf42e8970f4f3c0",
+        "tools/fuzz/adapters/olmsmoother.py": "a4807fba3ba5eb998e3e9ac48e93bb7aab29131faec1da5d2abb2e1627fdaf0c",
+        "tools/fuzz/adapters/olmsmoother2.py": "d210e4f3a1647b9489ba373bde284c6d6e093b7e366a1e2910ad04d50ccde202",
+        "tools/fuzz/adapters/olmtoondilate.py": "c495c5e5984bcdfc1d8967328087ae6367e08ae00dd1d346c76d2785b62fe094",
+        "tools/fuzz/adapters/public.py": "36d08c20f92fb9449f5402d703e9723dba227ee11acb72166ee8895e7076ba26",
+        "tools/fuzz/adapters/radialblur.py": "5db64501c6b6d894500b26ad1cab15d7794561b2c5cebde75b6274ecfba701ce",
+        "tools/fuzz/analyze_colors_T12.py": "056d7d3ec098fd3ebacfc7dbcf161727a5f276019464935694830e196898c941",
+        "tools/fuzz/apply_rebaseline_F23.py": "5d47336625dce969194509f7a94bf6d868646992ae83fa5d2e2b9127962cdbdf",
+        "tools/fuzz/audit_radialblur_C17.py": "ca5f37482e33c708aff548af05447324b347c0ddd069b8bc35bdf1d7b3c945c9",
+        "tools/fuzz/blur_admission_campaign_C05.py": "3ca6fcb6fac1f36c1f763d85833ed311e8a1346e71e8364e7825d88fd80cb329",
+        "tools/fuzz/blur_admission_campaign_C10.py": "0d7921363cb58468296610ee4ed56d6676732b0488eb98eb7f57e153407d51e1",
+        "tools/fuzz/blur_admission_campaign_F17.py": "6eb1a42b30a78e4149a3d9fdacc3f472bf03ed4085f8a404a34e50a5fb7d2b15",
+        "tools/fuzz/blur_campaign_C12.py": "3ac9dc2617a87fe6ed4e869f2b67f1ffb448ae6c8bc83d0e92c2eebda1124e94",
+        "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
+        "tools/fuzz/check_colorkey_boundaries_F20.py": "14f6f52777162214c7bae139b7366e2f16cca4922f5d5f60a5662dd7029a4b5d",
+        "tools/fuzz/check_radialblur_exp_C11.py": "5b7f5a9062e6f62f374d2327e46b29a779a23b82f5324fc4bb649068b0084e0e",
+        "tools/fuzz/classify_rebaseline_F23.py": "c814190e3e222bed8a1a235b98d15d50e834b99e4c854b22901e96e007cac3a7",
+        "tools/fuzz/compare_olmsmoother_classifier8.py": "162367013446d3202ec8340c4492fcf7ad530d04032e823a9cd16a7b38e62604",
+        "tools/fuzz/compare_radialblur_admission_F13.py": "7dc2a9fbbf6d199d8dbf427c439795c6d6d3baf863bf0061f49d0db75034541c",
+        "tools/fuzz/compare_radialblur_round6_T01.py": "99ff78cbbfa71acd3ed11c26d44d569099345e82b0d356b8fbbd7bf208779e7d",
+        "tools/fuzz/core.py": "79b697cdbfa6faa8c6c22429d947cbf50f8807899c7d8ebd74a6c85c9aabcf36",
+        "tools/fuzz/kirakira_triage_summary.py": "36340cb869e8bb40601190519a9efa321c15ecf16418eda380fc3a3f91119131",
+        "tools/fuzz/legacy_campaign_F17.py": "e05ff45258fdfcf25bae9e3cd9b6c76ff2a44b7429a7a819387f912761f8edbf",
+        "tools/fuzz/probe_blur_expf_C15.py": "b7a7d12e41cfa758f2cac15938c7a2c093dd7e85b0643e29220b5ae2c006f506",
+        "tools/fuzz/probe_colorkey_stages_F20.py": "ba81b9e995169e3244c0ecb7f656e811516ac18bf16ee7eaf7371094bf829743",
+        "tools/fuzz/probe_directionalblur_c02_admission.py": "8566ec1296ac8564111589e3b300cc126c8db4255980d907cd87c43ae986552b",
+        "tools/fuzz/probe_directionalblur_c09_admission.py": "132c4aaf10b09f43d5d2d074f804c35dd163b928ec287d869616213ea1e750a3",
+        "tools/fuzz/probe_directionalblur_pf8_dispatch.py": "7966348a84bd7945e16f1efbe0a5aaa35816a582817186835b787c21955a8472",
+        "tools/fuzz/probe_directionalblur_zero_strength.py": "547bd8a58c2b24bfe1714a29b31f62427b04494a2872e142dea379d659d58c95",
+        "tools/fuzz/probe_distancegradation_default_owner.py": "d5dd94587b38db929d8e2ebd6bd4a92fe4e6ecd1e869ea3a25c75b97c6626702",
+        "tools/fuzz/probe_distancegradation_smart_C03.py": "06a330cd9ca8e6adc1e171ec78ba4ffb42375b60f853d6c615099154c9a03eb3",
+        "tools/fuzz/probe_kirakira_tiny_owner_F04.py": "7ce9a4ab424387ab54f902f96575e8490f277928dd1a5cdd671d8ff7737c7c24",
+        "tools/fuzz/probe_radialblur_offset_refusal_T01.py": "ae28d861c77a2021eb97cf4ffdb6d00a842b10e3d19cd6f6aaad289d084b44c8",
+        "tools/fuzz/probe_radialblur_smart_C11.py": "752315479949fe5ad5d3f18aceb1ee08f70dff41fcf5f218e61be2252a1167db",
+        "tools/fuzz/probe_radialblur_smart_C17.py": "a9bd26a931c378fb3a11424cf917b18c7b65c17fb0c4755e426d19a5eba5c0f6",
+        "tools/fuzz/probe_radialblur_zoom_F08.py": "8075b52a12015545c2656e592d1155e64d56ce902ea399a7bed8ef39c6967b97",
+        "tools/fuzz/rebaseline_corpus.py": "1d8dc6955f27e895cccfa918634c29935b938706f6199d243871b372cd47fb60",
+        "tools/fuzz/refusal_census.py": "741ee0f8ad24acde87a77af8ce63cc63f142ebb24167eb821e0d63b568302152",
+        "tools/fuzz/replay_all_F23.py": "881c751a03019699d9fa9ded248a5eb80a4ec29d30292db7e40152d5f68f2641",
+        "tools/fuzz/replay_olmsmoother_sanitized.py": "03f2af241e6f577ca58c55b8a5fbbc760e82845c358679c1987aea542337cf3e",
+        "tools/fuzz/run.py": "c46ccba942bae44361991795169f7ef1355205618d58e8ae7e79c7d8f2c4109e",
+        "tools/fuzz/run_colorkey_revision_F20.py": "83e9b46f63acc34ac049b838e0372d8c5594dbca906530b913d234ef8f409a58",
+        "tools/fuzz/run_radialblur_baseline_T01.py": "3fd8d256f0e3e520212c4eee1fca6b02316f1329dfb8b0f1a2c2775e076742f3",
+        "tools/fuzz/summarize_blur_admission_F17.py": "2b89ed140129b49d73084661355c2a2f50035cb3b46b2c5c8f495030c94dac6a",
+        "tools/fuzz/summarize_colorkey_C20.py": "e42ea8dcc1fed2e85ba49f6d18f2bd45a6953eba17afb56e53f16050d368ddfa",
+        "tools/fuzz/summarize_colorkey_F20.py": "0d6042f3779ef7b57997e2d9457e0abe91ec0d4c311bd28ddbf651b3c8ea8708",
+        "tools/fuzz/summarize_kirakira_tiny_owner_F04.py": "9c30e52a8eebb40d8370adda1e52e512fa42f6ca2d3176b310560f2cb1638588",
+        "tools/fuzz/summarize_radialblur_smart_C06.py": "c2049dfabc17f76e8f4b52872ab225131094e3ec2eb2962ecd0e889cc8d7ffb1",
+        "tools/fuzz/summarize_routes_F17.py": "6b4fd8b76689a53b2d9df5ac503859064a51160bf61df8f98eb0e1162bc50066",
+        "tools/fuzz/t05_bypass_summary.py": "6c04612b712f336c7d1f1e77e7bf88ec938d4868fb79d7fddba4478f2e8ca3d6",
+        "tools/fuzz/test_adapters.py": "44188e3340302712145e2521eaa42901fd82f890fb1dc97d934cbbab65846ac6",
+        "tools/fuzz/test_colorkey_existing_F20.py": "d271caca8ecec332dad98093608612bc4b7c426cb6ea805d748b26068cdc322c",
+        "tools/fuzz/test_framework.py": "f506e2dcfd656de738788fbcdde2864c856a27f683cfa82794462a37c2929276",
+        "tools/fuzz/test_rebaseline_production.py": "20c5a014329e5dfaaa4a29b81283a5cee65a89a3cff4de04849cef3dd612b127",
+        "tools/fuzz/test_route_oracles.py": "a9ed98cbaae6a2479e24e88719fdb25bce3fc819181db5f3f53b89bb2ba948e0",
+        "tools/fuzz/trace_colorkey_alpha_F20.py": "12b74061c5f4a0b2ea5ceda368ad6dfa9422fd0e888bda340a70efd57bcefdeb",
+        "tools/fuzz/trace_radialblur_rotation_C11.py": "cbdb96520c0dadc910afb3fd51ae137da97443ce48672611b63d01fa0cc0e1b8",
+        "tools/fuzz/trace_radialblur_smart_C06.py": "6a50d2dc7b1e4a7ff6bb93f98535952bf1d3623b92cf0d73fb5d97f130617273",
+        "tools/fuzz/transport_radialblur_C11.py": "db92d031b1f36c0db17546913d7b2f853c897819622b3b38dbae6e9d42160657",
+        "tools/fuzz/transport_radialblur_rotation_C17.py": "dafdaa709e40164efd61abb028e0009be5ae57046ed4030a7dd64cd1d36822be",
+        "tools/fuzz/triage_colors_T12.py": "f58d4dff53aabe0c37481f38a9a2e671f51f1d6b74965024d50413a233061664",
+        "tools/fuzz/triage_directionalblur.py": "6a563f9ccadf1bc7ed515ade56c032ab2c0a0c9df68b49c14a31b591315b409a",
+        "tools/fuzz/triage_distancegradation.py": "5910d6f2495c3cc7745f7aafb5f6b321b3da32ced0327bb0006271dbab685939",
+        "tools/fuzz/triage_kirakira.py": "2839a2425f43ed943c79799377fc2e7ca6ab487da5abebcc06e18ffc92bf84ce",
+        "tools/fuzz/triage_olmblur.py": "fb45daaba2237cface0eb235fbbb47efcf6fff996ad41d2c77192e14b2bc428e",
+        "tools/fuzz/triage_olmsmoother.py": "6fff3fd79358ff6e4039eb4ef84e263c979150e44098423740c378bf2398e7f0",
+        "tools/fuzz/triage_olmsmoother2.py": "227209086ba97c08717deb0bce9a42705cce0108bca7c0c164a30d9ee5948f8a",
+        "tools/fuzz/triage_toondilate_T13.py": "e2f20f550f5bde47d5b256e1d5f1d569e93a37a778d5fa606cf8da901c17d85a",
+        "tools/fuzz/verify_blur_C12.py": "4369d4de0f75f148e08d619145be7fae9071a59c5a70ddfc1641fef11887badf",
+        "tools/fuzz/verify_blur_C15.py": "83aaa865da8cff8c5d5cc8284648d0de8599f6a3eeddd46a8d3cff1ac93b9428",
+        "tools/fuzz/verify_blur_admission_C10.py": "50e0fcc34758fc5e6114cf31170b37b5cfc705e970ffb8b5ab1b9fef04c504a9",
+        "tools/fuzz/verify_blur_legacy_C15.py": "ada7460d59f2d2c49357b8908b80d755ae3cd7848d168b79487a80353afd38c0",
+        "tools/fuzz/verify_blur_radius_C12.py": "0471e80ccd32518529dc03d5ab3d10e8e2fbe72d4d6eb3ed03da06d14b75e46a",
+        "tools/fuzz/verify_blur_retained_C12.py": "4237cbcba34787e32c7588700f5a0c97d564149587a8e7ea03f42d4fc646e277",
+        "tools/fuzz/verify_blur_retained_F17.py": "4c972864d80b042663f3ea341870878337bf151b38d099217baf4c8fb88e8f75",
+        "tools/fuzz/verify_blur_small_C10.py": "473cfb98292bd39c0e311d827b965b1420c59454ea3bacbef04fc6cac8abdda5",
+        "tools/fuzz/verify_blur_small_F17.py": "7a648f678a43dacdd3298fbc5efdf4357db12a76b5221a065b87c9ba2340e471",
+        "tools/fuzz/verify_blur_smart_C05.py": "ff5d415cce81bc902be9f9954c61f0f233131aac215bb47c8beb9d4a5ac5295d",
+        "tools/fuzz/verify_colorkeep_F19.py": "4586276fc7c217a9191840d8b44e4e30eab0c4384847ea56dd580f4b44306ecd",
+        "tools/fuzz/verify_directionalblur_c02.py": "f4564018765000b4f0862260b3c4b46d28f67db0b900097501583609df87910b",
+        "tools/fuzz/verify_directionalblur_c09_evidence.py": "1a2691c772a64bfd2ca53cdfef582964a0b5af8c6bc2c01ea8dd70b5c9b99e98",
+        "tools/fuzz/verify_directionalblur_c09_matrix.py": "9057cb44a810ea1a9b79a152543bc495d105f7da6c69e8658b418b4cbcd5e008",
+        "tools/fuzz/verify_directionalblur_c18_demand.py": "3529a02f15e03ea7195b8c25224a14ea3561fa9c66fc1dca3a369e3b7e963d0d",
+        "tools/fuzz/verify_directionalblur_c18_evidence.py": "fb7e314eec50a811904f2dc9b27c4f2547b3d30f3298a77961260b92599f2942",
+        "tools/fuzz/verify_directionalblur_pf8_dispatch.py": "63b1d81c06e5516226391a27ef02615067b526497f12584ebded70e716d253f8",
+        "tools/fuzz/verify_distancegradation_smart_C03.py": "be10db9f72cf7c7f2e0f5f19c2638350b8981f33e1cc752de18a85acef6ee18d",
+        "tools/fuzz/verify_distancegradation_smart_C08.py": "2eb63daf5882847387e63382ce9704914a16abaf164c3670e11c9267fc6ee6e5",
+        "tools/fuzz/verify_distancegradation_smart_C14.py": "b7e5ad9e4a5d8e97c9e0215316f7b3a22fd11a31e919d5bf473d0958e98ea7d9",
+        "tools/fuzz/verify_olmsmoother2_C01.py": "49e53953d64b9edb83d3c9762f61808ed377ad2d4b718dedea29339124dd9918",
+        "tools/fuzz/verify_radialblur_alignment_F07.py": "150758427ab11534db3eb1c0d6f0d1ab0f35f96c6aa987383f2e02b048c1ed1a",
+        "tools/fuzz/verify_radialblur_centers_C17.py": "75860007bda4e8cd752583d870a2b15dbfddcf03bcab70f94732789e73a15b6c",
+        "tools/fuzz/verify_radialblur_negative_C11.py": "1cb37fc1ef3df24de9a86caf4c26643a733c3bc20d84fdea6fcd16d22f0d29a5",
+        "tools/fuzz/verify_radialblur_offset_admission_F13.py": "7aba35b090806243bbc62ffc0f8397e43fcf9c4cb454e355f4b19efdf2582460",
+        "tools/fuzz/verify_radialblur_offset_round5_T01.py": "d0a5db74f4436b140004820946cd2818234f83ed100ec5660399b2002d311655",
+        "tools/fuzz/verify_radialblur_round6_witnesses_T01.py": "b3be7d479ae3a4e9a01551fc9bff03ff81402161ec439f7643411d73e4b7df33",
+        "tools/fuzz/verify_radialblur_smart_C06.py": "71327d3a14860a85579b3057aae0abc958d6fddefc4e24dfe1adb6316dac6206",
+        "tools/fuzz/verify_radialblur_smart_C11.py": "53bbed4ccb9bafe646702a222651beabb99972b9f2c221a83b7a86398b526dba",
+        "tools/fuzz/verify_toondilate_F21.py": "a5c6717ab7b31e49b81c779b5e0c706ea3acf40353431e2b1fdf13beecdd3c01"
+      },
+      "generator_version": 1,
+      "jobs": 1,
+      "max_size": 256,
+      "plugin": "olmkirakira",
+      "provenance": {
+        "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+        "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+        "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+        "candidate_sha256": "455506895a57e90dfcaebb4451d46e8ef225b4a770fc116b39ceac5d799c7aa2",
+        "case_timeout_seconds": 10,
+        "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+        "dependencies_sha256": {
+          "mac/OLMKiraKira/OLMKiraKira.cpp": "84e79d8b823789594e7723b55793a6e4c322e7765a5c3132cb4801c1153de732",
+          "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+          "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+          "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+          "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+        },
+        "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+        "layer": "None; independent layer worlds outside this adapter",
+        "oracle_render_path": "smartfx",
+        "oracle_routes": {
+          "classic": "classic",
+          "smart": "smart"
+        },
+        "original_routes": {
+          "classic": "render",
+          "smart": "render"
+        },
+        "out_of_range_builder_defaults": [
+          {
+            "builder_default": 0.10000000149011612,
+            "sampled_default": 1.0,
+            "slot": 5
+          }
+        ],
+        "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+        "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+        "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+        "stage_support": "existing public replay helpers expose final raw output only",
+        "time": {
+          "scale": 24,
+          "step": 1,
+          "total": 1,
+          "value": 0
+        },
+        "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+        "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+        "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+      },
+      "replay": "tests/fuzz_corpus/olmkirakira",
+      "replay_groups": [
+        {
+          "paths": [
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000000.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000001.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000002.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000003.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000008.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000016.json",
+            "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000038.json"
+          ],
+          "provenance": {
+            "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+            "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+            "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+            "candidate_sha256": "455506895a57e90dfcaebb4451d46e8ef225b4a770fc116b39ceac5d799c7aa2",
+            "case_timeout_seconds": 10,
+            "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+            "dependencies_sha256": {
+              "mac/OLMKiraKira/OLMKiraKira.cpp": "84e79d8b823789594e7723b55793a6e4c322e7765a5c3132cb4801c1153de732",
+              "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+              "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+              "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+              "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+            },
+            "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+            "layer": "None; independent layer worlds outside this adapter",
+            "oracle_render_path": "smartfx",
+            "oracle_routes": {
+              "classic": "classic",
+              "smart": "smart"
+            },
+            "original_routes": {
+              "classic": "render",
+              "smart": "render"
+            },
+            "out_of_range_builder_defaults": [
+              {
+                "builder_default": 0.10000000149011612,
+                "sampled_default": 1.0,
+                "slot": 5
+              }
+            ],
+            "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+            "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+            "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+            "stage_support": "existing public replay helpers expose final raw output only",
+            "time": {
+              "scale": 24,
+              "step": 1,
+              "total": 1,
+              "value": 0
+            },
+            "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+            "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+            "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+          }
+        }
+      ],
+      "replay_matches_saved": true,
+      "replays": [
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000000.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "bfd6d535131a45e8a31340082147c4928edd44f2e05fe127081a1900b3cc0edc",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "error": 516,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "516"
+                },
+                "status": "refusal"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 26 26",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "aafaf5cef5813f380698f0a4b2c8399667981229b9d9cec7be65d263b789a1c0",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000001.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "error": 516,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "516"
+                },
+                "status": "refusal"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 25 25",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000002.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "26574bb8c82e7538c09b9ff1524706bd5088c740c6a080af83db4d8bf2e5255e",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "diff": {
+                  "actual_bytes": 3040,
+                  "actual_word_hex": "0000803f",
+                  "different_bytes": 2023,
+                  "different_words": 760,
+                  "expected_bytes": 3040,
+                  "expected_word_hex": "00000000",
+                  "first_byte": 2,
+                  "first_word": 0
+                },
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+                "status": "mismatch"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 25 25",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000003.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "4ba7ff962215656f13e77538c39b743747cae3718284184c984da77ebd60a575",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "e7bb776d8d5c87363c629d9c8920b3f6b996a8f2a4a1940e7a48f06a7b4ad227",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "4ba7ff962215656f13e77538c39b743747cae3718284184c984da77ebd60a575",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "diff": {
+                  "actual_bytes": 14040,
+                  "actual_word_hex": "5f60",
+                  "different_bytes": 11727,
+                  "different_words": 7020,
+                  "expected_bytes": 14040,
+                  "expected_word_hex": "0000",
+                  "first_byte": 0,
+                  "first_word": 0
+                },
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "4ba7ff962215656f13e77538c39b743747cae3718284184c984da77ebd60a575",
+                "status": "mismatch"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 26 26",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "4ba7ff962215656f13e77538c39b743747cae3718284184c984da77ebd60a575",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "1982ade863e27ab9376483231271f2fc16a7267fd7f1b18393326073733bf0bf",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "error": 516,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "516"
+                },
+                "status": "refusal"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 27 27",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000008.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "error": 516,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "516"
+                },
+                "status": "refusal"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 25 25",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000016.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "bffeeb2d12ba6108806a508082dee2f5ce23d1edeaf81acd4feb8c0d08038978",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "error": 516,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "516"
+                },
+                "status": "refusal"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 25 25",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        },
+        {
+          "group": 0,
+          "matches_saved": true,
+          "path": "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000038.json",
+          "result": {
+            "first_mismatching_stage": null,
+            "oracle": {
+              "guards_intact": true,
+              "raw_sha256": "dc1f53a1188bef8f7391b7f0856a98b98fc74e806335150ab60211d9e79f43bb",
+              "session_clean": true,
+              "status": "ok"
+            },
+            "oracles": {
+              "classic": {
+                "guards_intact": true,
+                "raw_sha256": "738c079dff6c9b77a0891ac42db1cabcab933a672b14aed8ecfcf94c0e77bb40",
+                "session_clean": true,
+                "status": "ok"
+              },
+              "smart": {
+                "guards_intact": true,
+                "raw_sha256": "dc1f53a1188bef8f7391b7f0856a98b98fc74e806335150ab60211d9e79f43bb",
+                "session_clean": true,
+                "status": "ok"
+              }
+            },
+            "routes": {
+              "classic": {
+                "diff": {
+                  "actual_bytes": 560,
+                  "actual_word_hex": "0080",
+                  "different_bytes": 393,
+                  "different_words": 208,
+                  "expected_bytes": 560,
+                  "expected_word_hex": "0000",
+                  "first_byte": 17,
+                  "first_word": 8
+                },
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "0 0 0 0 0",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "dc1f53a1188bef8f7391b7f0856a98b98fc74e806335150ab60211d9e79f43bb",
+                "status": "mismatch"
+              },
+              "smart": {
+                "error": 0,
+                "metadata": {
+                  "COUNTS": "1 1 1 26 26",
+                  "ERROR": "0"
+                },
+                "raw_sha256": "dc1f53a1188bef8f7391b7f0856a98b98fc74e806335150ab60211d9e79f43bb",
+                "status": "exact"
+              }
+            },
+            "stage_observation": "paired stages unavailable; final raw output only"
+          }
+        }
+      ],
+      "requested": 8,
+      "schema": "olm-fuzz-report/1",
+      "scratch_bytes_before_cleanup": 0,
+      "seed": 1,
+      "shrink_attempts": 32,
+      "shrink_seconds": 10,
+      "started_utc": "2026-10-23T07:37:25.831337+00:00",
+      "status": "replay_complete"
+    },
+    "replay_before_rebaseline": {
       "budget_minutes": 30,
       "case_timeout_seconds": 10,
       "cases": [],

@@ -3,7 +3,7 @@ status: done
 summary:
 - Connect recovered luminance/max scalar constructors to active box approximation and restore IPP's direct dimension ratio.
 - Seed1 Smart260/0/40→263/0/37; fresh seed12 262/0/38→264/0/36.
-- Every previous Smart exact and Classic campaign record persists; saved corpus expectations/samples are unchanged.
+- Every previous Smart exact and Classic campaign record persists; one saved refusal is explicitly rebased to exact, retaining its prior result.
 - Final576 independent conditions and600 campaign renders pass ASan/UBSan; strict saved replay8/8.
 
 facts:
@@ -28,13 +28,13 @@ Smart admission adds Channels2/4 to the recovered Alpha/box approximation contro
 | Alpha boundary regression after direct-ratio correction |96 exact, ASan/UBSan|
 | Negative conditions |18 refusals|
 | Campaign verifier |600 sanitized Smart renders, previous exact unchanged|
-| Production corpus verifier |70 inputs, unchanged|
+| Production corpus verifier |69 unchanged; saved index7 Smart refusal→exact|
 | Sample audit |140 route replays,0 changed samples|
-| Strict production saved replay |8/8|
+| Strict production saved replay |7/8 before explicit rebaseline;8/8 after|
 | Fast tests |25 passed|
 | Compiled generic sanitizer |54 rows includingHD,1 test passed in46.022s|
 
-No corpus rebaseline is needed. The first cluster's two diagnostic patch fixtures were converted to zero-context unified diffs to avoid whitespace warnings from embedded context; all three diagnostic patches reconstruct the recorded candidate source bytes exactly. This is a fixture representation change, not a renderer change. Final staged diff check passes.
+The final integrity check found saved production index7 still expected refusal. Its new output SHA256 `592333999e132e87356b646d51f182d4765d153d219215685f033f3b55cbacf3` equals original Smart and its bound trace. Only its Smart result is rebased refusal→exact; the complete previous result is retained under `C22_scalar_approximation_expectation_update`. Input, original-oracle records, provenance and Classic result remain unchanged. The initial replay was7/8 (the replay command exits successfully even with a saved-result difference); the explicit `matches_saved` audit caught this before handoff. The follow-up replay is8/8. The140-route sample count excludes newly admitted empty→rendered arrays: no previously rendered sample changes, and one newly admitted array is fully exact. The first cluster's two diagnostic patch fixtures were converted to zero-context unified diffs to avoid whitespace warnings from embedded context; all three diagnostic patches reconstruct the recorded candidate source bytes exactly. This is a fixture representation change, not a renderer change. Final staged diff check passes.
 
 inference:
 
@@ -47,6 +47,7 @@ changed_files:
 - `tools/emulation/check_kirakira_resize_coefficients_C22.py`
 - `tools/emulation/fixtures/kirakira_scalar_resize_reciprocal_C22.patch`
 - `tools/emulation/fixtures/kirakira_resize_{linear,difference}_C22.patch` (representation only)
+- `tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json`
 - `reports/fuzz/olmkirakira_smart_C22_scalar_approx.json`
 - `orchestra/reports/C22-kira-smart-r5{,-scalar-approx}.md`
 
@@ -72,6 +73,13 @@ py='/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/pyt
 python3 tools/emulation/check_kirakira_resize_coefficients_C22.py --trace "$s/trace.json" --report "$s/coefficients.json" > "$s/coefficients.log" 2>&1
 "$py" tools/emulation/probe_kirakira_smart_C07.py --family approximation-scalar --trace-index 323 --require-exact --scratch "$s/max-trace" --report "$s/max-trace.json" > "$s/max-trace.log" 2>&1
 python3 tools/fuzz/run.py --plugin olmkirakira --jobs 1 --replay tests/fuzz_corpus/olmkirakira --scratch "$s/replay" --report "$s/replay.json" --corpus "$s/replay-corpus" > "$s/replay.log" 2>&1
+python3 - "$s/replay.json" <<'PYCODE'
+import json, sys
+r=json.load(open(sys.argv[1]))
+assert r['completed']==8 and len(r['replays'])==8
+assert all(row['matches_saved'] for row in r['replays'])
+print('strict saved replay 8/8')
+PYCODE
 git diff --check
 ```
 
