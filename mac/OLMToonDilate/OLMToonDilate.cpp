@@ -379,9 +379,6 @@ static PF_Err ValidateToonBetaAdmission(
 	}
 	const size_t input_span = input_height * static_cast<size_t>(input->rowbytes);
 	const size_t staged_span = output_height * static_cast<size_t>(output->rowbytes);
-	static constexpr size_t kMaxRenderWorkingSet = (size_t)3 * 1024 * 1024 * 1024;
-	if (input_span > kMaxRenderWorkingSet || staged_span > kMaxRenderWorkingSet - input_span)
-		return OLM_TOON_ERROR("beta-working-set", PF_Err_OUT_OF_MEMORY);
 	if (!ToonWorldRangesDoNotOverlap(input, output, input_span, staged_span))
 		return OLM_TOON_ERROR("beta-overlap", PF_Err_BAD_CALLBACK_PARAM);
 	*output_span = staged_span;
@@ -390,7 +387,7 @@ static PF_Err ValidateToonBetaAdmission(
 
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output,
-	const OLMToonDilateInfo &info);
+	const OLMToonDilateInfo &info, bool smart_render = false);
 
 template <typename PixelT>
 static PF_Err RenderTileTyped(PF_EffectWorld *input, PF_EffectWorld *output,
@@ -398,7 +395,7 @@ static PF_Err RenderTileTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 {
 	if (input->width == output->width && input->height == output->height &&
 		input->origin_x == output->origin_x && input->origin_y == output->origin_y) {
-		return RenderTyped<PixelT>(input, output, info);
+		return RenderTyped<PixelT>(input, output, info, true);
 	}
 	if (input->width <= 0 || input->height <= 0 || output->width <= 0 || output->height <= 0)
 		return OLM_TOON_ERROR("tile-dimensions", PF_Err_BAD_CALLBACK_PARAM);
@@ -416,7 +413,7 @@ static PF_Err RenderTileTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	PF_EffectWorld halo_world = *input;
 	halo_world.data = reinterpret_cast<PF_PixelPtr>(rendered.data());
 	halo_world.rowbytes = static_cast<A_long>(rowbytes);
-	PF_Err err = RenderTyped<PixelT>(input, &halo_world, info);
+	PF_Err err = RenderTyped<PixelT>(input, &halo_world, info, true);
 	if (err) return err;
 	for (A_long y = 0; y < output->height; ++y) {
 		const uint8_t *src = rendered.data() + static_cast<size_t>(y + oy) * rowbytes +
@@ -463,7 +460,8 @@ static PF_Err ValidateWorlds(const PF_EffectWorld *input, const PF_EffectWorld *
 }
 
 template <typename PixelT>
-static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDilateInfo &info)
+static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDilateInfo &info,
+	bool smart_render)
 {
 	if (!input || !output) return OLM_TOON_ERROR("render-inputs", PF_Err_BAD_CALLBACK_PARAM);
 	const A_long w = output->width;
@@ -486,7 +484,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (!std::isfinite(info.search_radius) || info.search_radius < 0.0 ||
 		!std::isfinite(comp_width) || comp_width <= 0.0 ||
 		!std::isfinite(scaled_radius) || scaled_radius < 0.0 ||
-		scaled_radius > (PF_FpLong)kMaxEffectiveRadius) {
+		(!smart_render && scaled_radius > (PF_FpLong)kMaxEffectiveRadius) ||
+		(smart_render && std::ceil(scaled_radius) > (PF_FpLong)std::numeric_limits<A_long>::max())) {
 		return OLM_TOON_ERROR("render-effective-radius", PF_Err_BAD_CALLBACK_PARAM);
 	}
 	const A_long r_eff = (A_long)std::ceil(scaled_radius);
@@ -624,7 +623,6 @@ static void DeletePreRenderData(void *data)
 static bool ToonCheckedHalo(PF_FpLong radius, A_long scale_num, A_long scale_den,
 	A_long *halo_out)
 {
-	static constexpr A_long kMaxEffectiveRadius = 4096;
 	if (!halo_out || !std::isfinite(radius) || radius < 0.0 || radius > 100.0)
 		return false;
 	PF_FpLong scale = 1.0;
@@ -637,7 +635,7 @@ static bool ToonCheckedHalo(PF_FpLong radius, A_long scale_num, A_long scale_den
 	}
 	const PF_FpLong scaled = radius * scale;
 	if (!std::isfinite(scale) || !std::isfinite(scaled) || scaled < 0.0 ||
-		scaled > (PF_FpLong)kMaxEffectiveRadius)
+		std::ceil(scaled) > (PF_FpLong)std::numeric_limits<A_long>::max())
 		return false;
 	*halo_out = (A_long)std::ceil(scaled);
 	return true;
