@@ -739,11 +739,10 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // luminance/max and four-component directional Gaussian after pairing
 // their FLOAT32 seeds, rays and aggregation.
 // C29 adds scalar Highlight and directional Gaussian approximation.
-// Keep the unresolved four-component Highlight owner outside this recovery.
+// C34 pairs the four-component Highlight owner through the same Gaussian.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
-	const bool gaussian_seed = info.blur_mode == 3 &&
-		(info.highlight_radius == 0 || info.channel == 1 || info.channel == 2 || info.channel == 4);
+	const bool gaussian_seed = info.blur_mode == 3;
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
 		 (info.channel >= 1 && info.channel <= 6 && gaussian_seed));
@@ -753,7 +752,7 @@ static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
 {
     return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
         (info.blur_mode == 1 || info.blur_mode == 2 ||
-         (info.blur_mode == 3 && info.highlight_radius == 0)) &&
+         info.blur_mode == 3) &&
         (info.channel == 3 || info.channel == 5 || info.channel == 6);
 }
 
@@ -920,10 +919,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
         }
 	}
 
-    if (highlight_radius > 0 && info.blur_mode == 3 && !color_owner &&
-        (info.channel == 1 || info.channel == 2 || info.channel == 4)) {
-        highlight = olm::kirakira::highlight_gaussian(
-            seed, work_width, work_height, highlight_radius);
+    if (highlight_radius > 0 && info.blur_mode == 3) {
+        if (color_owner) {
+            std::vector<float> plane((size_t)work_width * work_height);
+            for (int c = 0; c < 4; ++c) {
+                for (size_t i = 0; i < plane.size(); ++i) plane[i] = seed[i*4+c];
+                const auto ray = olm::kirakira::highlight_gaussian(
+                    plane, work_width, work_height, highlight_radius);
+                for (size_t i = 0; i < plane.size(); ++i) highlight[i*4+c] = ray[i];
+            }
+        } else {
+            highlight = olm::kirakira::highlight_gaussian(
+                seed, work_width, work_height, highlight_radius);
+        }
     }
 
 	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
@@ -1786,10 +1794,9 @@ static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat for
 static bool IsSmartDirectionalGaussianTuple(const OLMKiraKiraInfo &info,
 	PF_PixelFormat format, A_long width, A_long height)
 {
-	// Scalar Highlight shares the recovered constructor and adds a separable
-	// two-dimensional Gaussian. Four-component Highlight remains separate.
+	// Scalar and four-component Highlight use the separable Gaussian with
+	// the original area normalizer retained by the color aggregator.
 	if (info.blur_mode != 3 ||
-        (info.highlight_radius != 0 && info.channel != 1 && info.channel != 2 && info.channel != 4) ||
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
