@@ -581,8 +581,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--run-test-file", type=Path)
     args = parser.parse_args(argv)
     if args.run_test_file:
-        return run_test_file(args.run_test_file)
-    if os.environ.get("OLM_SELF_SPAWN_CHILD"):
+        # Dispatch matched: this marker has served its purpose. Tests may launch
+        # independent tools, which must not inherit our self-spawn marker.
+        child_marker = os.environ.pop("OLM_SELF_SPAWN_CHILD", None)
+        try:
+            return run_test_file(args.run_test_file)
+        finally:
+            if child_marker is not None:
+                os.environ["OLM_SELF_SPAWN_CHILD"] = child_marker
+    # Guard process CLI fall-through, not explicit in-process API calls (the
+    # gate's own tests call main([...]) with mocked work under a child runner).
+    if os.environ.get("OLM_SELF_SPAWN_CHILD") and argv is None:
         parser.error("refusing child invocation without --run-test-file")
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
