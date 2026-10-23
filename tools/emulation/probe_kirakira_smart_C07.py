@@ -27,6 +27,34 @@ from trace_kirakira_numeric_F09 import build_mac, original_trace, raw_diff
 
 
 def cases(adapter, family):
+    if family == 'gaussian-scalar-negative':
+        for case in cases(adapter, 'gaussian-one-negative'):
+            for param in case['parameters']:
+                if case['index'] == 3 and param['slot'] == 1: param['value'] = 3
+            yield case
+        return
+    if family == 'gaussian-scalar-boundary':
+        for i, (geometry, depth, channel, length) in enumerate(itertools.product(
+                ((1, 1), (2, 18), (31, 23)), (8, 16, 32), (2, 4), (1, 2, 50, 1000))):
+            case = matrix_case(adapter, i, geometry, depth, 1+i%2, 3, channel)
+            values = {6:(0, 97, 537, 1000)[i%4], 7:(0, 0.001, 0.1, 0.5, 1)[i%5],
+                      8:1703, 9:97, 10:length, 16:0, 22:0, 28:0, 34:0,
+                      40:(-31, 0, 22, 359)[i%4]/65536}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value'] = values[param['slot']]
+            yield case
+        return
+    if family == 'gaussian-scalar':
+        base_family = 'gaussian-ramps'
+        for base in cases(adapter, base_family):
+            for j, channel in enumerate((2, 4)):
+                case = copy.deepcopy(base)
+                case['index'] = base['index']*2+j
+                for param in case['parameters']:
+                    if param['slot'] == 1: param['value'] = channel
+                    if param['slot'] == 7: param['value'] = (0, 0.001, 0.1, 0.5, 1)[case['index']%5]
+                yield case
+        return
     if family in ('approximation-scalar', 'approximation-scalar-boundary'):
         base_family = 'approximation-active' if family == 'approximation-scalar' else 'approximation-boundary'
         for base in cases(adapter, base_family):
@@ -280,7 +308,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
+    p.add_argument('--family', choices=('gaussian-scalar-negative', 'gaussian-scalar', 'gaussian-scalar-boundary', 'max-controls', 'color-lengths', 'color-controls', 'luminance-controls', 'source-opacity', 'glow-opacity', 'opacity-combined', 'strength', 'strength-combined', 'finite-alpha', 'finite-nonnegative', 'finite-sdr-alpha', 'finite-seed', 'finite-lengths', 'signed-finite-seed', 'signed-finite-lengths', 'invalid-input', 'approximation', 'approximation-active', 'approximation-scalar', 'approximation-scalar-boundary', 'approximation-scalar-negative', 'approximation-boundary', 'approximation-active-negative', 'approximation-zero', 'approximation-zero-negative', 'gaussian-controls', 'gaussian-length1', 'gaussian-one-controls', 'gaussian-one-negative', 'gaussian-ramps', 'gaussian-lengths', 'gaussian-negative'), default='source-opacity')
     p.add_argument('--trace-index', type=int)
     p.add_argument('--campaign-seed', type=int)
     p.add_argument('--gate-off', action='store_true')

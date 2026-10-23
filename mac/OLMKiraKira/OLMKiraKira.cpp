@@ -539,7 +539,7 @@ static std::vector<float> RotatedAxisBoxBlur(
 	double angle_deg,
 	A_long passes,
 	A_long blur_mode,
-	bool scalar_alpha_gaussian = false,
+	bool scalar_gaussian = false,
 	bool recovered_scalar_box = false, bool normalize = true)
 {
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
@@ -568,12 +568,12 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// C22 includes the recovered symmetric tail for scalar Alpha Length 1.
-	// Keep the historical boundary for other seed/Highlight pipelines until
-	// their upstream and aggregation stages are reconciled.
+	// C22 recovers the symmetric tail for scalar Length 1. C28 pairs
+	// luminance/max constructors through the same directional Gaussian.
+	// Other seed/Highlight pipelines retain their historical boundary.
 	const bool mode3_admitted =
 		olm::kirakira::mode3_gaussian_admitted(rw, rh, length) ||
-		(scalar_alpha_gaussian &&
+		(scalar_gaussian &&
 		 olm::kirakira::mode3_scalar_gaussian_workspace_admitted(rw, rh, length));
 	if (blur_mode == 3 && !mode3_admitted) return input;
 	if (blur_mode == 3) {
@@ -723,13 +723,15 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 // scalar box pipeline. The four-component color box owner also uses the
 // recovered percentage parameters (C16). C07 pairs
 // the box pipeline; C13 pairs the directional Gaussian pipeline with the
-// same constructor, percentage materialization and aggregation. Keep unresolved Highlight and other resize owners outside this recovery.
+// same constructor, percentage materialization and aggregation. C28 adds
+// luminance/max directional Gaussian after pairing their FLOAT32 seeds.
+// Keep unresolved Highlight and other resize owners outside this recovery.
 static bool UsesRecoveredSeedPipeline(const OLMKiraKiraInfo &info)
 {
 	const bool directional_gaussian = info.blur_mode == 3 && info.highlight_radius == 0;
 	return (!info.approximated_input || UsesRecoveredApproximation(info)) &&
 		(((info.blur_mode == 1 || info.blur_mode == 2) && info.channel >= 1 && info.channel <= 6) ||
-		 (info.channel == 1 && directional_gaussian));
+		 ((info.channel == 1 || info.channel == 2 || info.channel == 4) && directional_gaussian));
 }
 
 static bool UsesRecoveredColorBoxPipeline(const OLMKiraKiraInfo &info)
@@ -868,7 +870,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
             return result;
         }
         return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode,
-			info.channel == 1 && info.highlight_radius == 0 &&
+			(info.channel == 1 || info.channel == 2 || info.channel == 4) && info.highlight_radius == 0 &&
 				(info.strength_multiplier == 1.0 || UsesRecoveredSeedPipeline(info)),
 			UsesRecoveredSeedPipeline(info));
 	};
@@ -1747,7 +1749,7 @@ static bool IsSmartColorBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat for
     return IsAlphaBoxTuple(alpha, format, true, true, true);
 }
 
-static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
+static bool IsSmartScalarGaussianTuple(const OLMKiraKiraInfo &info,
 	PF_PixelFormat format, A_long width, A_long height)
 {
 	// The directional Mode-3 operation is independent of the Highlight branch,
@@ -1756,6 +1758,9 @@ static bool IsSmartAlphaGaussianTuple(const OLMKiraKiraInfo &info,
 		!IsSmartOwnerFullFrameDimensions(width, height)) return false;
 	OLMKiraKiraInfo box_info = info;
 	box_info.blur_mode = 2;
+	if (info.channel != 1 && !((info.channel == 2 || info.channel == 4) &&
+		info.fade_out >= 0.0 && info.fade_out <= (double)0.2f)) return false;
+	box_info.channel = 1;
 	if (!IsAlphaBoxTuple(box_info, format, true, true, true)) return false;
 
 	// Bound the sum of all four Gaussian/warp workloads, not just one ray.
@@ -2837,7 +2842,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartScalarBrightnessBoxTuple(info, format) ||
 				 IsSmartApproximationTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartColorBoxTuple(info, format) ||
-				 IsSmartAlphaGaussianTuple(info, format, input_world->width, input_world->height) ||
+				 IsSmartScalarGaussianTuple(info, format, input_world->width, input_world->height) ||
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
 				 SmartAlphaBoxInputHasFiniteSeed(input_world, format, info));
