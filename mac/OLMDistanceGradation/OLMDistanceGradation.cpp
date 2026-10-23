@@ -1899,8 +1899,16 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		    !is_admitted_pf32_power_source(input, w, h)) {
 			p.pf32_smart_matrix_admitted = false;
 		}
-		const bool unblurred_beta = is_admitted_pf32_smart_unblurred_beta(p);
-		const bool blurred_beta = is_admitted_pf32_smart_blurred_beta(p, w, h);
+		// Power uses the shared UCRT FLOAT32 operation. Reuse only the
+		// existing filter admission; source/layout checks above retain their
+		// original Power restrictions (finite SDR), and rendering keeps Power.
+		DGParams admission = p;
+		if (p.interp_mode == INTERP_POWER && std::isfinite(p.power) &&
+		    p.power >= 0.01f && p.power <= 5.0f &&
+		    (p.blur_mode != BLUR_MODE_MEDIAN || p.blur_size <= 2))
+			admission.interp_mode = INTERP_LINEAR;
+		const bool unblurred_beta = is_admitted_pf32_smart_unblurred_beta(admission);
+		const bool blurred_beta = is_admitted_pf32_smart_blurred_beta(admission, w, h);
 		p.pf32_smart_oracle_profile_admitted =
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&

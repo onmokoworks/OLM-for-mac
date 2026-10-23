@@ -22,7 +22,7 @@ from run import main_checkout,default_worker
 def variant(base,path,deadline,source=None,sanitized=False):
     path.mkdir();a=copy.copy(base);a.env=dict(base.env);a.binary,_=a.build(path,deadline)
     if source is not None:
-        source=source.replace('#include "OLMDistanceGradation.h"','#include "'+str(SOURCE.with_suffix('.h'))+'"').replace('"../../core/','"'+str(ROOT/'core')+'/')
+        source=source.replace('#include "OLMDistanceGradation.h"','#include "'+str(SOURCE.with_suffix('.h'))+'"').replace('"../../core/','"'+str(ROOT/'core')+'/').replace('"../../ucrtmath/', '"'+str(ROOT/'ucrtmath')+'/')
         cpp=path/'candidate.cpp';cpp.write_text(source);host=path/'host.cpp';host.write_text(replace_once(host.read_text(),str(SOURCE),str(cpp)))
     flags=['-fsanitize=address,undefined','-fno-sanitize-recover=all'] if sanitized else []
     a.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',*flags,'-I',SHIM_DIR,path/'host.cpp',FIELDGEN,'-o',a.binary],deadline)
