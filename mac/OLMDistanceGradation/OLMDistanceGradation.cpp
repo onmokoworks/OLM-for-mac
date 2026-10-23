@@ -730,12 +730,19 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
+	// For finite samples, spatial-zero taps add only signed zero. Both
+	// accumulators start at +0, so removing these taps preserves their bits
+	// and the order of every nonzero addition. Retain the full traversal for
+	// nonfinite fields, where sample * 0 can produce a NaN.
+	const bool finite = std::all_of(mat, mat + (size_t)w*h,
+	    [](float value) { return std::isfinite(value); });
+	const int extent = finite ? std::min(radius, 7) : radius;
 	struct Offset { int x, y; float spatial; };
 	std::vector<Offset> offsets;
-	for (int y = -radius; y <= radius; ++y) {
-		for (int x = -radius; x <= radius; ++x) {
+	for (int y = -extent; y <= extent; ++y) {
+		for (int x = -extent; x <= extent; ++x) {
 			const int squared = x*x + y*y;
-			if (squared > radius*radius) continue;
+			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
 			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
@@ -804,12 +811,19 @@ static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
+	// For finite samples, spatial-zero taps add only signed zero. Both
+	// accumulators start at +0, so removing these taps preserves their bits
+	// and the order of every nonzero addition. Retain the full traversal for
+	// nonfinite fields, where sample * 0 can produce a NaN.
+	const bool finite = std::all_of(mat, mat + (size_t)w*h,
+	    [](float value) { return std::isfinite(value); });
+	const int extent = finite ? std::min(radius, 7) : radius;
 	struct Offset { int x, y; float spatial; };
 	std::vector<Offset> offsets;
-	for (int y = -radius; y <= radius; ++y) {
-		for (int x = -radius; x <= radius; ++x) {
+	for (int y = -extent; y <= extent; ++y) {
+		for (int x = -extent; x <= extent; ++x) {
 			const int squared = x*x + y*y;
-			if (squared > radius*radius) continue;
+			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
 			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
