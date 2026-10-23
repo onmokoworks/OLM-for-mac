@@ -73,3 +73,4 @@ C50-kira-smart-r1
 C51-dblur-smart-r1
 C49-radial-smart-r9
 C52-dg-smart-r1
+F49-dblur-nonfinite-pf32
