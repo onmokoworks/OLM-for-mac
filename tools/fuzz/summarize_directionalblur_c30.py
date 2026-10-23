@@ -8,11 +8,65 @@ from pathlib import Path
 import struct
 
 
+def angle_summary(args):
+    names = ('angle-builder', 'angle-matrix', 'angle-verify', 'angle-rebaseline',
+             'angle-after', 'angle-replay', 'seed6-stages', 'angle-stages')
+    reports = {n: json.loads((args.scratch/(n+'.json')).read_text()) for n in names}
+    result = {'report_sha256': {n: hashlib.sha256((args.scratch/(n+'.json')).read_bytes()).hexdigest()
+                              for n in names}, 'builder': reports['angle-builder']}
+    assert not result['builder']['candidate_mismatches']
+    matrix = reports['angle-matrix']
+    assert len(matrix['cases']) == 294
+    result['matrix'] = {k: v for k, v in matrix.items() if k != 'cases'}
+    result['matrix']['cases'] = []
+    for c in matrix['cases']:
+        assert all(r['exact'] and r['sanitizer_same'] for r in c['routes'].values())
+        result['matrix']['cases'].append({k: v for k, v in c.items() if k != 'parameters'})
+    verify = reports['angle-verify']
+    groups, changes, preserved = {}, [], 0
+    assert len(verify['cases']) == 656
+    for c in verify['cases']:
+        group = c['name'].split(':')[0] if c['name'].startswith('seed') else 'corpus'
+        counts = groups.setdefault(group, {'before': Counter(), 'after': Counter()})
+        b, a = c['before']['smart'], c['after']['routes']['smart']
+        counts['before'][b['status']] += 1
+        counts['after'][a['status']] += 1
+        assert c['sanitizer_same']
+        if b['status'] == 'exact':
+            assert a['status'] == 'exact' and b['raw_sha256'] == a['raw_sha256']
+            preserved += 1
+        if b.get('raw_sha256') != a.get('raw_sha256'):
+            assert a['status'] == 'exact'
+            changes.append(c)
+    result['verify'] = {k: v for k, v in verify.items() if k != 'cases'}
+    result['verify'].update(groups=groups, changes=changes, base_exact_preserved=preserved)
+    assert reports['angle-replay']['completed'] == 56 and reports['angle-replay']['replay_matches_saved']
+    assert len(reports['angle-rebaseline']['cases']) == 56
+    result['replay'] = {'completed': 56, 'matches_saved': 56}
+    result['after'] = {k: reports['angle-after'][k] for k in ('completed','summary','provenance')}
+    assert result['after']['completed'] == 300
+    for name in ('seed6-stages', 'angle-stages'):
+        r = reports[name]
+        for c in r['cases']:
+            assert c['fixture_session']['different_units'] == 0
+            for s in c['stages'].values():
+                s.pop('aex_hex', None); s.pop('mac_hex', None)
+        result[name] = r
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(result, indent=2, sort_keys=True)+'\n')
+    print(json.dumps(groups, sort_keys=True))
+    print('PASS angle: preserved', preserved, 'improved', len(changes))
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--angles', action='store_true')
     args = p.parse_args()
+    if args.angles:
+        angle_summary(args)
+        return
     names = ('baseline', 'gate', 'matrix-gate', 'matrix-production', 'verify',
              'after', 'replay', 'nonfinite', 'nonfinite-stages')
     reports = {n: json.loads((args.scratch/(n+'.json')).read_text()) for n in names}
