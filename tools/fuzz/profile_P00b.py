@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """Profile slow full-size default and observed-heaviest corpus cells, serially."""
-import collections,json,os,subprocess,time
+import argparse,collections,gzip,json,os,subprocess,time
 from pathlib import Path
 import ae_realism_audit as audit
 ROOT=audit.ROOT
 STATE=ROOT/'orchestra/state/P00b-ae-realism-audit-rerun'
 CACHE=Path.home()/'.cache/olm-emu/P00b'
 def main():
- rows=[json.loads(s) for s in (STATE/'matrix.jsonl').open()]
- manifest=json.loads((STATE/'matrix-manifest.json').read_text())
+ parser=argparse.ArgumentParser();parser.add_argument('--group',choices=('main','heavy','all'),default='all');a=parser.parse_args()
+ evidence=ROOT/'orchestra/reports/P00b-evidence'
+ with gzip.open(evidence/'matrix.jsonl.gz','rt') as f:rows=[json.loads(s) for s in f]
+ manifest=json.loads((evidence/'matrix-manifest.json').read_text())
+ plugins=[p for p in audit.PLUGINS if a.group=='all' or ((p in ('olmdirectionalblur','radialblur')) == (a.group=='heavy'))]
  dest=STATE/'profiles';dest.mkdir(exist_ok=True)
  env={k:v for k,v in os.environ.items() if not k.startswith(('OLM','DBLUR','COLORKEEP'))}
  env.update(TMPDIR=str(STATE),TMP=str(STATE),TEMP=str(STATE))
  selected=[]
- for plugin in audit.PLUGINS:
+ for plugin in plugins:
   for situation in ('full','4k'):
    for depth in (8,16,32):
     cells=[r for r in rows if (r['plugin'],r['situation'],r['depth'])==(plugin,situation,depth)]
@@ -25,8 +28,8 @@ def main():
      r=dict(rs[0]);r['selection']=label
      if label=='heaviest':r['timeout_ties']=[c['case'] for c in corpus if c['status']=='timeout']
      selected.append(r)
- (dest/'selected.json').write_text(json.dumps(selected,indent=2)+'\n')
- with (dest/'results.jsonl').open('w') as results:
+ (dest/('selected-'+a.group+'.json')).write_text(json.dumps(selected,indent=2)+'\n')
+ with (dest/('results-'+a.group+'.jsonl')).open('w') as results:
   for r in selected:
    if r['status']!='timeout' and (r['status']!='ok' or r['result']['render_seconds']<=2):continue
    free=audit.memory()

@@ -76,52 +76,199 @@ baseline: 60 rows; {'ok': 60}
 | olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
 | olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
 
-matrix: 741 rows; {'ok': 738, 'refusal': 3}
+matrix: 4723 rows; {'ok': 4619, 'refusal': 104}
 
 | Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
 |---|---|---|---|
-| olmblur / full | {'ok': 30} | {} | 30/30 |
-| olmblur / half | {'ok': 30} | {} | 30/30 |
-| olmblur / quarter | {'ok': 30} | {} | 30/30 |
-| olmblur / third | {'ok': 30} | {} | 30/30 |
-| olmblur / eighth | {'ok': 30} | {} | 30/30 |
-| olmblur / asymmetric | {'ok': 30} | {} | 30/30 |
-| olmblur / 4k | {'ok': 30} | {} | 30/30 |
-| olmblur / 4k-half | {'ok': 27} | {} | 27/27 |
-| olmblur / 4k-quarter | {'ok': 27} | {} | 27/27 |
-| olmblur / square | {'ok': 27} | {} | 27/27 |
-| olmblur / odd | {'ok': 27} | {} | 27/27 |
-| olmblur / odd-half | {'ok': 27} | {} | 27/27 |
-| olmblur / large-layer | {'ok': 27} | {} | 27/27 |
-| olmblur / aligned-odd | {'ok': 27} | {} | 27/27 |
-| olmblur / padded | {'ok': 27} | {} | 27/27 |
-| olmblur / extent | {'ok': 27} | {} | 27/27 |
-| olmblur / roi | {'ok': 27} | {} | 27/27 |
-| olmblur / expanded | {'ok': 27} | {} | 27/27 |
-| olmblur / cropped-expand | {'ok': 27} | {} | 27/27 |
-| olmblur / aspect09 | {'ok': 27} | {} | 27/27 |
-| olmblur / aspect2 | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / full | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / half | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / quarter | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / third | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / eighth | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / asymmetric | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / 4k | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / 4k-half | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / 4k-quarter | {'ok': 9} | {} | 9/9 |
-| olmdirectionalblur / square | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / odd | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / odd-half | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / large-layer | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / aligned-odd | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / padded | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / extent | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / roi | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / expanded | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / cropped-expand | {'ok': 3, 'refusal': 3} | {'SmartRender:smart-generic-world-or-budget@2707': 3} | 3/3 |
-| olmdirectionalblur / aspect09 | {'ok': 6} | {} | 6/6 |
-| olmdirectionalblur / aspect2 | {'ok': 6} | {} | 6/6 |
+| olmblur / full | {'ok': 33} | {} | 33/33 |
+| olmblur / half | {'ok': 33} | {} | 33/33 |
+| olmblur / quarter | {'ok': 33} | {} | 33/33 |
+| olmblur / third | {'ok': 33} | {} | 33/33 |
+| olmblur / eighth | {'ok': 33} | {} | 33/33 |
+| olmblur / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmblur / 4k | {'ok': 33} | {} | 33/33 |
+| olmblur / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmblur / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmblur / square | {'ok': 33} | {} | 33/33 |
+| olmblur / odd | {'ok': 33} | {} | 33/33 |
+| olmblur / odd-half | {'ok': 33} | {} | 33/33 |
+| olmblur / large-layer | {'ok': 33} | {} | 33/33 |
+| olmblur / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmblur / padded | {'ok': 33} | {} | 33/33 |
+| olmblur / extent | {'ok': 33} | {} | 33/33 |
+| olmblur / roi | {'ok': 33} | {} | 33/33 |
+| olmblur / expanded | {'ok': 33} | {} | 33/33 |
+| olmblur / cropped-expand | {'ok': 33} | {} | 33/33 |
+| olmblur / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmblur / aspect2 | {'ok': 33} | {} | 33/33 |
+| colorkeep / full | {'ok': 3} | {} | 3/3 |
+| colorkeep / half | {'ok': 3} | {} | 3/3 |
+| colorkeep / quarter | {'ok': 3} | {} | 3/3 |
+| colorkeep / third | {'ok': 3} | {} | 3/3 |
+| colorkeep / eighth | {'ok': 3} | {} | 3/3 |
+| colorkeep / asymmetric | {'ok': 3} | {} | 3/3 |
+| colorkeep / 4k | {'ok': 3} | {} | 3/3 |
+| colorkeep / 4k-half | {'ok': 3} | {} | 3/3 |
+| colorkeep / 4k-quarter | {'ok': 3} | {} | 3/3 |
+| colorkeep / square | {'ok': 3} | {} | 3/3 |
+| colorkeep / odd | {'ok': 3} | {} | 3/3 |
+| colorkeep / odd-half | {'ok': 3} | {} | 3/3 |
+| colorkeep / large-layer | {'ok': 3} | {} | 3/3 |
+| colorkeep / aligned-odd | {'ok': 3} | {} | 3/3 |
+| colorkeep / padded | {'ok': 3} | {} | 3/3 |
+| colorkeep / extent | {'ok': 3} | {} | 3/3 |
+| colorkeep / roi | {'ok': 3} | {} | 3/3 |
+| colorkeep / expanded | {'ok': 3} | {} | 3/3 |
+| colorkeep / cropped-expand | {'ok': 3} | {} | 3/3 |
+| colorkeep / aspect09 | {'ok': 3} | {} | 3/3 |
+| colorkeep / aspect2 | {'ok': 3} | {} | 3/3 |
+| olmcolorkey / full | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / half | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / quarter | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / third | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / eighth | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / 4k | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / square | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / odd | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / odd-half | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / large-layer | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / padded | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / extent | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / roi | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / expanded | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / cropped-expand | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmcolorkey / aspect2 | {'ok': 33} | {} | 33/33 |
+| olmdistancegradation / full | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / third | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / eighth | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / asymmetric | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / 4k | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / 4k-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / 4k-quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / square | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / odd-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / large-layer | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / aligned-odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / padded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / extent | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 32/32 |
+| olmdistancegradation / roi | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / expanded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / cropped-expand | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / aspect09 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmdistancegradation / aspect2 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| olmkirakira / full | {'ok': 33} | {} | 33/33 |
+| olmkirakira / half | {'ok': 33} | {} | 33/33 |
+| olmkirakira / quarter | {'ok': 33} | {} | 33/33 |
+| olmkirakira / third | {'ok': 33} | {} | 33/33 |
+| olmkirakira / eighth | {'ok': 33} | {} | 33/33 |
+| olmkirakira / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmkirakira / 4k | {'ok': 33} | {} | 33/33 |
+| olmkirakira / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmkirakira / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmkirakira / square | {'ok': 33} | {} | 33/33 |
+| olmkirakira / odd | {'ok': 33} | {} | 33/33 |
+| olmkirakira / odd-half | {'ok': 33} | {} | 33/33 |
+| olmkirakira / large-layer | {'ok': 33} | {} | 33/33 |
+| olmkirakira / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmkirakira / padded | {'ok': 33} | {} | 33/33 |
+| olmkirakira / extent | {'ok': 33} | {} | 33/33 |
+| olmkirakira / roi | {'ok': 33} | {} | 33/33 |
+| olmkirakira / expanded | {'ok': 33} | {} | 33/33 |
+| olmkirakira / cropped-expand | {'ok': 33} | {} | 33/33 |
+| olmkirakira / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmkirakira / aspect2 | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / full | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / half | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / quarter | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / third | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / eighth | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / 4k | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / square | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / odd | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / odd-half | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / large-layer | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / padded | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / extent | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / roi | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / expanded | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / cropped-expand | {'refusal': 33} | {'ValidatePublicWorlds:validate-world-shape@5240': 33} | 0/0 |
+| olmsmoother2 / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmsmoother2 / aspect2 | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / full | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / half | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / quarter | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / third | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / eighth | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / 4k | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / square | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / odd | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / odd-half | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / large-layer | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / padded | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / extent | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / roi | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / expanded | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / cropped-expand | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmtoondilate / aspect2 | {'ok': 33} | {} | 33/33 |
+| olmsmoother / full | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / half | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / quarter | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / third | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / eighth | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / asymmetric | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / 4k | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / 4k-half | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / 4k-quarter | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / square | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / odd | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / odd-half | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / large-layer | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / aligned-odd | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / padded | {'ok': 4, 'refusal': 2} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 2} | 4/4 |
+| olmsmoother / extent | {'ok': 3, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 3/3 |
+| olmsmoother / roi | {'ok': 2, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 2/2 |
+| olmsmoother / expanded | {'ok': 2, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 2/2 |
+| olmsmoother / cropped-expand | {'ok': 2, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 2/2 |
+| olmsmoother / aspect09 | {'ok': 2, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 2/2 |
+| olmsmoother / aspect2 | {'ok': 2, 'refusal': 1} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 1} | 2/2 |
+| olmdirectionalblur / full | {'ok': 21} | {} | 21/21 |
+| olmdirectionalblur / half | {'ok': 21} | {} | 21/21 |
+| olmdirectionalblur / quarter | {'ok': 21} | {} | 21/21 |
+| olmdirectionalblur / third | {'ok': 21} | {} | 21/21 |
+| olmdirectionalblur / eighth | {'ok': 21} | {} | 21/21 |
+| olmdirectionalblur / asymmetric | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / 4k | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / 4k-half | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / 4k-quarter | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / square | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / odd | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / odd-half | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / large-layer | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / aligned-odd | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / padded | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / extent | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / roi | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / expanded | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 14} | {'SmartRender:smart-generic-world-or-budget@2707': 14} | 4/4 |
+| olmdirectionalblur / aspect09 | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / aspect2 | {'ok': 18} | {} | 18/18 |
 
 inference:
 - Successful return and nonzero output are sanity checks only; no numerical compatibility inference.
