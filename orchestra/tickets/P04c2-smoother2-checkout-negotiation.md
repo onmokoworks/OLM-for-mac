@@ -11,7 +11,7 @@ depends: F53-oracle-cropped-checkout
 - If the original returns equal worlds, make Mac PreRender match and verify the render is exact. If the original also produces unequal worlds and throws, document it as faithful and stop.
 
 ## Acceptance (common)
-- The contract route (Smart; Classic for Smoother v1) stays exact: default fuzz seed 1 n300 with no exact→non-exact; realistic-v1 seed 1 + a fresh seed n100 and odd-even-v1 (T15b flags) seeds 2026/2027 n150 with 0 mismatches and 0 Mac-only refusals.
+- The contract route (Smart; Classic for Smoother v1) stays exact: default fuzz seed 1 n300 with no exact→non-exact; realistic-v1 and realistic-v2, seed 1 + a fresh seed, n100 each, and odd-even-v1 (T15b flags) seeds 2026/2027 n150 with 0 mismatches and 0 Mac-only refusals.
 - All of this plugin's corpora replay true under standard `tools/fuzz/run.py --replay` (both routes, matching flags; T15b sets need `--size-sampler odd-even-v1 --max-size <summary maximum>`).
 - Unit tests before/after (`OLM_TEST_JOBS=1`). Add new witnesses as a labelled corpus set.
 
@@ -23,3 +23,5 @@ depends: F53-oracle-cropped-checkout
 ## Resume note
 - The first attempt (`orchestra/reports/P04c-smoother2-checkout-negotiation.md`) found that with a full input and a cropped extent/request, the original's PreRender returns result `[0,0,7,5]` with max `[0,0,14,10]`, and SmartRender then throws (`0x180022410`). That is faithful. The cropped-input layout itself could not be built on F52c.
 - Use F53 (`~/.cache/olm-emu/worker-F53-geom/`, sampler `realistic-v2`) to measure the cropped-input layout, then decide whether to make a Mac fix or document it as faithful.
+
+- F53 survey (`orchestra/reports/F53-oracle-cropped-checkout.md`, `F53-evidence/`) has the witnesses and per-case data for this plugin; start from them.
