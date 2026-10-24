@@ -1,14 +1,23 @@
-status: partial
+status: done
 summary:
-- Fresh-bundle audit checkpoint; matrix/performance work is still in progress.
+
+- Fresh Universal Release bundles audited through the SDK host; native AE and pixel exactness are not claimed.
 - No plugin source, release gate, ledger, MAIN or AEXCompat edits.
+- Baseline: 60 rows, {'ok': 60}.
+- Matrix: 6930 rows, {'ok': 6555, 'refusal': 314, 'timeout': 61}.
+- All 25 slow default/heaviest performance cells have successful stack samples; concrete follow-up tickets are listed below.
 
 facts:
+
+- Runtime: Apple M1 Pro, 16 GiB, macOS 15.7.2 (24G325), native arm64 host. Shared-machine single-frame measurements; recorded memory checks are in `P00b-evidence/runtime.json`.
+- Verification: `python3 tools/fuzz/verify_P00b.py` passed all cell-coverage, profile and cache-hash checks; exact output is retained in `P00b-evidence/verification.txt`.
 - Source build HEAD: d1b18b9accaee821543548c1d2d7adf33781dcca (merge of P00).
 - Host and bundle identities, parameter paths/hashes and raw rows are in `P00b-evidence/`.
 - This is an oracle-free SDK host loading real arm64 plugin bundles, not native AE or a pixel-exact comparison.
-- Matrix uses independent host-shape probes, with two additional 4K downsample probes.
+- Unlisted status counts are zero; OK nonzero counts refer to active output bytes only.
+- Matrix uses independent host-shape probes, with two additional 4K downsample probes. ROI keeps the full source world; large-layer is a comp-sized viewport, not a compositor. Expansion occurs only when PreRender asks for larger bounds; the situation label alone does not prove expansion.
 - ColorKeep uses three nested T15b anchors sampled with replacement; ColorKey/KiraKira/Smoother2 also sample with replacement (9/8/8 unique paths).
+- Corpus values are reused unchanged, including absolute point coordinates from small original cases; this is not a rescaled artistic preset benchmark.
 - Timeouts are 60-second process wall limits; successful times below are render-selector seconds.
 
 - Fresh Universal Release build: `python3 tools/fuzz/build_F47_bundles.py --scratch orchestra/state/P00b-ae-realism-audit-rerun/build` completed for all ten bundles; products were copied to the registered P00b cache and scratch xcode trees removed.
@@ -19,286 +28,381 @@ facts:
 
 baseline: 60 rows; {'ok': 60}
 
-| Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
-|---|---|---|---|
-| olmblur / full | {'ok': 1} | {} | 1/1 |
-| olmblur / half | {'ok': 1} | {} | 1/1 |
-| olmblur / quarter | {'ok': 1} | {} | 1/1 |
-| olmblur / 4k | {'ok': 1} | {} | 1/1 |
-| olmblur / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmblur / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| colorkeep / full | {'ok': 1} | {} | 1/1 |
-| colorkeep / half | {'ok': 1} | {} | 1/1 |
-| colorkeep / quarter | {'ok': 1} | {} | 1/1 |
-| colorkeep / 4k | {'ok': 1} | {} | 1/1 |
-| colorkeep / 4k-half | {'ok': 1} | {} | 1/1 |
-| colorkeep / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / full | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / half | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / quarter | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / 4k | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmcolorkey / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / full | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / half | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / quarter | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / 4k | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmdirectionalblur / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmdistancegradation / full | {'ok': 1} | {} | 0/1 |
-| olmdistancegradation / half | {'ok': 1} | {} | 0/1 |
-| olmdistancegradation / quarter | {'ok': 1} | {} | 0/1 |
-| olmdistancegradation / 4k | {'ok': 1} | {} | 0/1 |
-| olmdistancegradation / 4k-half | {'ok': 1} | {} | 0/1 |
-| olmdistancegradation / 4k-quarter | {'ok': 1} | {} | 0/1 |
-| olmkirakira / full | {'ok': 1} | {} | 1/1 |
-| olmkirakira / half | {'ok': 1} | {} | 1/1 |
-| olmkirakira / quarter | {'ok': 1} | {} | 1/1 |
-| olmkirakira / 4k | {'ok': 1} | {} | 1/1 |
-| olmkirakira / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmkirakira / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / full | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / half | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / quarter | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / 4k | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmsmoother2 / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / full | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / half | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / quarter | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / 4k | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmtoondilate / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| radialblur / full | {'ok': 1} | {} | 1/1 |
-| radialblur / half | {'ok': 1} | {} | 1/1 |
-| radialblur / quarter | {'ok': 1} | {} | 1/1 |
-| radialblur / 4k | {'ok': 1} | {} | 1/1 |
-| radialblur / 4k-half | {'ok': 1} | {} | 1/1 |
-| radialblur / 4k-quarter | {'ok': 1} | {} | 1/1 |
-| olmsmoother / full | {'ok': 1} | {} | 1/1 |
-| olmsmoother / half | {'ok': 1} | {} | 1/1 |
-| olmsmoother / quarter | {'ok': 1} | {} | 1/1 |
-| olmsmoother / 4k | {'ok': 1} | {} | 1/1 |
-| olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
-| olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
+**OLMBlur**
 
-matrix: 6656 rows; {'ok': 6301, 'refusal': 314, 'timeout': 41}
-
-| Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
 |---|---|---|---|
-| olmblur / full | {'ok': 33} | {} | 33/33 |
-| olmblur / half | {'ok': 33} | {} | 33/33 |
-| olmblur / quarter | {'ok': 33} | {} | 33/33 |
-| olmblur / third | {'ok': 33} | {} | 33/33 |
-| olmblur / eighth | {'ok': 33} | {} | 33/33 |
-| olmblur / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmblur / 4k | {'ok': 33} | {} | 33/33 |
-| olmblur / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmblur / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmblur / square | {'ok': 33} | {} | 33/33 |
-| olmblur / odd | {'ok': 33} | {} | 33/33 |
-| olmblur / odd-half | {'ok': 33} | {} | 33/33 |
-| olmblur / large-layer | {'ok': 33} | {} | 33/33 |
-| olmblur / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmblur / padded | {'ok': 33} | {} | 33/33 |
-| olmblur / extent | {'ok': 33} | {} | 33/33 |
-| olmblur / roi | {'ok': 33} | {} | 33/33 |
-| olmblur / expanded | {'ok': 33} | {} | 33/33 |
-| olmblur / cropped-expand | {'ok': 33} | {} | 33/33 |
-| olmblur / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmblur / aspect2 | {'ok': 33} | {} | 33/33 |
-| colorkeep / full | {'ok': 33} | {} | 33/33 |
-| colorkeep / half | {'ok': 33} | {} | 33/33 |
-| colorkeep / quarter | {'ok': 33} | {} | 33/33 |
-| colorkeep / third | {'ok': 33} | {} | 33/33 |
-| colorkeep / eighth | {'ok': 33} | {} | 33/33 |
-| colorkeep / asymmetric | {'ok': 33} | {} | 33/33 |
-| colorkeep / 4k | {'ok': 33} | {} | 33/33 |
-| colorkeep / 4k-half | {'ok': 33} | {} | 33/33 |
-| colorkeep / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| colorkeep / square | {'ok': 33} | {} | 33/33 |
-| colorkeep / odd | {'ok': 33} | {} | 33/33 |
-| colorkeep / odd-half | {'ok': 33} | {} | 33/33 |
-| colorkeep / large-layer | {'ok': 33} | {} | 33/33 |
-| colorkeep / aligned-odd | {'ok': 33} | {} | 33/33 |
-| colorkeep / padded | {'ok': 33} | {} | 33/33 |
-| colorkeep / extent | {'ok': 33} | {} | 33/33 |
-| colorkeep / roi | {'ok': 33} | {} | 33/33 |
-| colorkeep / expanded | {'ok': 33} | {} | 33/33 |
-| colorkeep / cropped-expand | {'ok': 33} | {} | 33/33 |
-| colorkeep / aspect09 | {'ok': 33} | {} | 33/33 |
-| colorkeep / aspect2 | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / full | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / half | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / quarter | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / third | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / eighth | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / 4k | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / square | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / odd | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / odd-half | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / large-layer | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / padded | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / extent | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / roi | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / expanded | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / cropped-expand | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmcolorkey / aspect2 | {'ok': 33} | {} | 33/33 |
-| olmdistancegradation / full | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / third | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / eighth | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / asymmetric | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / 4k | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / 4k-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / 4k-quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / square | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / odd-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / large-layer | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / aligned-odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / padded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / extent | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 32/32 |
-| olmdistancegradation / roi | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / expanded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / cropped-expand | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / aspect09 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmdistancegradation / aspect2 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
-| olmkirakira / full | {'ok': 33} | {} | 33/33 |
-| olmkirakira / half | {'ok': 33} | {} | 33/33 |
-| olmkirakira / quarter | {'ok': 33} | {} | 33/33 |
-| olmkirakira / third | {'ok': 33} | {} | 33/33 |
-| olmkirakira / eighth | {'ok': 33} | {} | 33/33 |
-| olmkirakira / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmkirakira / 4k | {'ok': 33} | {} | 33/33 |
-| olmkirakira / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmkirakira / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmkirakira / square | {'ok': 33} | {} | 33/33 |
-| olmkirakira / odd | {'ok': 33} | {} | 33/33 |
-| olmkirakira / odd-half | {'ok': 33} | {} | 33/33 |
-| olmkirakira / large-layer | {'ok': 33} | {} | 33/33 |
-| olmkirakira / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmkirakira / padded | {'ok': 33} | {} | 33/33 |
-| olmkirakira / extent | {'ok': 33} | {} | 33/33 |
-| olmkirakira / roi | {'ok': 33} | {} | 33/33 |
-| olmkirakira / expanded | {'ok': 33} | {} | 33/33 |
-| olmkirakira / cropped-expand | {'ok': 33} | {} | 33/33 |
-| olmkirakira / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmkirakira / aspect2 | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / full | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / half | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / quarter | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / third | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / eighth | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / 4k | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / square | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / odd | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / odd-half | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / large-layer | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / padded | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / extent | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / roi | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / expanded | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / cropped-expand | {'refusal': 33} | {'ValidatePublicWorlds:validate-world-shape@5240': 33} | 0/0 |
-| olmsmoother2 / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmsmoother2 / aspect2 | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / full | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / half | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / quarter | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / third | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / eighth | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / 4k | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / square | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / odd | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / odd-half | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / large-layer | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / padded | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / extent | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / roi | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / expanded | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / cropped-expand | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmtoondilate / aspect2 | {'ok': 33} | {} | 33/33 |
-| olmsmoother / full | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / quarter | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / third | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / eighth | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / asymmetric | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / 4k | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / 4k-half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / 4k-quarter | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / square | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / odd | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / odd-half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / large-layer | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / aligned-odd | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / padded | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / extent | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / roi | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / expanded | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / cropped-expand | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / aspect09 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmsmoother / aspect2 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmdirectionalblur / full | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / half | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / quarter | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / third | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / eighth | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / 4k | {'ok': 30, 'timeout': 3} | {} | 30/30 |
-| olmdirectionalblur / 4k-half | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / 4k-quarter | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / square | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / odd | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / odd-half | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / large-layer | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / aligned-odd | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / padded | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / extent | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / roi | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / expanded | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 29} | {'SmartRender:smart-generic-world-or-budget@2707': 29} | 4/4 |
-| olmdirectionalblur / aspect09 | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / aspect2 | {'ok': 33} | {} | 33/33 |
-| radialblur / full | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / third | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / eighth | {'ok': 21} | {} | 21/21 |
-| radialblur / asymmetric | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / 4k | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / 4k-half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / 4k-quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / square | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / odd | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / odd-half | {'ok': 18} | {} | 18/18 |
-| radialblur / large-layer | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / aligned-odd | {'ok': 18} | {} | 18/18 |
-| radialblur / padded | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / extent | {'ok': 18} | {} | 18/18 |
-| radialblur / roi | {'ok': 18, 'timeout': 2} | {} | 18/18 |
-| radialblur / expanded | {'ok': 18} | {} | 18/18 |
-| radialblur / cropped-expand | {'ok': 18} | {} | 18/18 |
-| radialblur / aspect09 | {'ok': 18} | {} | 18/18 |
-| radialblur / aspect2 | {'ok': 18} | {} | 18/18 |
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**ColorKeep**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMColorKey**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMDirectionalBlur**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMDistanceGradation**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 0/1 |
+| half | {'ok': 1} | {} | 0/1 |
+| quarter | {'ok': 1} | {} | 0/1 |
+| 4k | {'ok': 1} | {} | 0/1 |
+| 4k-half | {'ok': 1} | {} | 0/1 |
+| 4k-quarter | {'ok': 1} | {} | 0/1 |
+
+**OLMKiraKira**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMSmoother2**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMToonDilate**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMRadialBlur**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+**OLMSmoother**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 1} | {} | 1/1 |
+| half | {'ok': 1} | {} | 1/1 |
+| quarter | {'ok': 1} | {} | 1/1 |
+| 4k | {'ok': 1} | {} | 1/1 |
+| 4k-half | {'ok': 1} | {} | 1/1 |
+| 4k-quarter | {'ok': 1} | {} | 1/1 |
+
+matrix: 6930 rows; {'ok': 6555, 'refusal': 314, 'timeout': 61}
+
+**OLMBlur**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 33} | {} | 33/33 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**ColorKeep**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 33} | {} | 33/33 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMColorKey**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 33} | {} | 33/33 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMDirectionalBlur**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 4, 'refusal': 29} | {'SmartRender:smart-generic-world-or-budget@2707': 29} | 4/4 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMDistanceGradation**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| third | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| eighth | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| asymmetric | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| 4k | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| 4k-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| 4k-quarter | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| square | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| odd-half | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| large-layer | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| aligned-odd | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| padded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| extent | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 32/32 |
+| roi | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| expanded | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| cropped-expand | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| aspect09 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+| aspect2 | {'ok': 32, 'refusal': 1} | {'RenderBits:pf32-smart-profile@2201': 1} | 0/32 |
+
+**OLMKiraKira**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 33} | {} | 33/33 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMSmoother2**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'refusal': 33} | {'ValidatePublicWorlds:validate-world-shape@5240': 33} | 0/0 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMToonDilate**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 33} | {} | 33/33 |
+| half | {'ok': 33} | {} | 33/33 |
+| quarter | {'ok': 33} | {} | 33/33 |
+| third | {'ok': 33} | {} | 33/33 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 33} | {} | 33/33 |
+| 4k | {'ok': 33} | {} | 33/33 |
+| 4k-half | {'ok': 33} | {} | 33/33 |
+| 4k-quarter | {'ok': 33} | {} | 33/33 |
+| square | {'ok': 33} | {} | 33/33 |
+| odd | {'ok': 33} | {} | 33/33 |
+| odd-half | {'ok': 33} | {} | 33/33 |
+| large-layer | {'ok': 33} | {} | 33/33 |
+| aligned-odd | {'ok': 33} | {} | 33/33 |
+| padded | {'ok': 33} | {} | 33/33 |
+| extent | {'ok': 33} | {} | 33/33 |
+| roi | {'ok': 33} | {} | 33/33 |
+| expanded | {'ok': 33} | {} | 33/33 |
+| cropped-expand | {'ok': 33} | {} | 33/33 |
+| aspect09 | {'ok': 33} | {} | 33/33 |
+| aspect2 | {'ok': 33} | {} | 33/33 |
+
+**OLMRadialBlur**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| half | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| quarter | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| third | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| eighth | {'ok': 33} | {} | 33/33 |
+| asymmetric | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| 4k | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| 4k-half | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| 4k-quarter | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| square | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| odd | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| odd-half | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| large-layer | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| aligned-odd | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| padded | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| extent | {'ok': 32, 'timeout': 1} | {} | 32/32 |
+| roi | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| expanded | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| cropped-expand | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| aspect09 | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| aspect2 | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+
+**OLMSmoother**
+
+| Situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| full | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| quarter | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| third | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| eighth | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| asymmetric | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| 4k | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| 4k-half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| 4k-quarter | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| square | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| odd | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| odd-half | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| large-layer | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| aligned-odd | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| padded | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| extent | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| roi | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| expanded | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| cropped-expand | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| aspect09 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
+| aspect2 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
 
 Performance (seconds per render selector; **bold** flags >2 s at 1080p):
 Heaviest means the largest observed render time among sampled corpus tuples for that size/depth; a timeout is only a process-time lower bound.
+
 | Plugin | bpc | Default 1080p | Default 4K | Heaviest 1080p (case) | Heaviest 4K (case) |
 |---|---|---|---|---|---|
 | olmblur | 8 | 0.452 | 1.804 | **2.885** (corpus05) | 11.667 (corpus05) |
@@ -331,6 +435,37 @@ Heaviest means the largest observed render time among sampled corpus tuples for 
 | olmsmoother | 8 | 0.346 | 1.399 | 1.535 (corpus00) | 6.125 (corpus00) |
 | olmsmoother | 16 | 1.077 | 4.269 | **2.151** (corpus00) | 8.585 (corpus00) |
 | olmsmoother | 32 | refusal | refusal | unavailable | unavailable |
+
+Profile reruns (sampling is separate from the performance table):
+Each rerun samples a two-second window after a one-second startup delay, then deliberately stops a still-running host. `sampled_then_stopped` is not a crash or a new timeout measurement. Late live profiles additionally identify DirectionalBlur scatter and RadialBlur rotation; sampled leaf counts are not whole-frame time fractions.
+
+| Cell | Corpus identity | Rerun status | sample exit | Top sampled leaf functions |
+|---|---|---|---|---|
+| olmdirectionalblur-heaviest-full-8 | corpus09 | sampled_then_stopped | 0 | olm_dblur_scatter_f32; olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float) |
+| olmdirectionalblur-heaviest-full-16 | corpus09 | sampled_then_stopped | 0 | olm_dblur_scatter_f32; olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float) |
+| olmdirectionalblur-heaviest-full-32 | corpus09 | sampled_then_stopped | 0 | olm_dblur_scatter_f32; olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float) |
+| olmdirectionalblur-heaviest-4k-8 | corpus09 | sampled_then_stopped | 0 | olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float); (anonymous namespace)::fmul(float, float) |
+| olmdirectionalblur-heaviest-4k-16 | corpus09 | sampled_then_stopped | 0 | olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float); olm::x86_float::bits(float) |
+| olmdirectionalblur-heaviest-4k-32 | corpus09 | sampled_then_stopped | 0 | olm::x86_float::sse_result(float, float, float); olm::x86_float::generated_nan(float, float, float); olm::x86_float::bits(float) |
+| radialblur-heaviest-full-8 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_Pixel>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| radialblur-heaviest-full-16 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_Pixel16>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| radialblur-heaviest-full-32 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_PixelFloat>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| radialblur-heaviest-4k-8 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_Pixel>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| radialblur-heaviest-4k-16 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_Pixel16>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| radialblur-heaviest-4k-32 | corpus05 | sampled_then_stopped | 0 | SampleScalarAEXNoRepeat(std::vector<float> const&, int, int, float, float); RadialAEXSinHot(float); int RenderRotationTyped<PF_PixelFloat>(PF_LayerDef*, PF_LayerDef*, OLMRadialBlurInfo const&) |
+| olmblur-heaviest-full-8 | corpus05 | completed | 0 | olm::blur::vertical(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); mach_msg2_trap |
+| olmblur-heaviest-full-16 | corpus05 | completed | 0 | olm::blur::vertical(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); mach_msg2_trap |
+| olmblur-heaviest-full-32 | corpus05 | completed | 0 | olm::blur::vertical(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&); mach_msg2_trap |
+| olmblur-heaviest-4k-8 | corpus05 | sampled_then_stopped | 0 | olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&) |
+| olmblur-heaviest-4k-16 | corpus05 | sampled_then_stopped | 0 | olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&) |
+| olmblur-heaviest-4k-32 | corpus05 | sampled_then_stopped | 0 | olm::blur::horizontal(unsigned char const*, float const*, float*, float const*, olm::blur::HelperParams const&) |
+| olmcolorkey-heaviest-4k-8 | corpus05 | sampled_then_stopped | 0 | ucrt_powf; RGBToPluginLab76(float const*, float*); ucrt_atan2f |
+| olmcolorkey-heaviest-4k-16 | corpus05 | sampled_then_stopped | 0 | ucrt_powf; RGBToPluginLab76(float const*, float*); ucrt_atan2f |
+| olmcolorkey-heaviest-4k-32 | corpus05 | sampled_then_stopped | 0 | ucrt_powf; RGBToPluginLab76(float const*, float*); ucrt_atan2f |
+| olmsmoother-heaviest-full-16 | corpus00 | completed | 0 | _platform_memset; SubHandler8Memory::read32(unsigned long long) const; EdgeWalker16Exact(RenderState*, int, int, int, unsigned int, int*, int*, int) |
+| olmsmoother-heaviest-4k-8 | corpus00 | sampled_then_stopped | 0 | SubHandler8Memory::read32(unsigned long long) const; EdgeWalker8(RenderState*, int, int, int, unsigned int, int*, int*, int); _platform_memset |
+| olmsmoother-default-4k-16 | default | sampled_then_stopped | 0 | _platform_memset; Classifier16Exact(RenderState*, unsigned int, unsigned int, unsigned long const*, unsigned int); SubHandler8Memory::read32(unsigned long long) const |
+| olmsmoother-heaviest-4k-16 | corpus00 | sampled_then_stopped | 0 | _platform_memset; SubHandler8Memory::read32(unsigned long long) const; EdgeWalker16Exact(RenderState*, int, int, int, unsigned int, int*, int*, int) |
 
 Refusal interpretation (FACT and INFERENCE kept separate):
 
@@ -399,10 +534,12 @@ byte is claimed; the small probe establishes return behavior only.
 
 
 inference:
+
 - Successful return and nonzero output are sanity checks only; no numerical compatibility inference.
 - The classification above distinguishes observed return behavior from original-host and native-AE inference.
 
 changed_files:
+
 - `tools/fuzz/ae_realism_audit.py`: 60-second timeout, required 8bpc baseline, additional 4K probes, cache-specific registration, incremental manifests.
 - `tools/emulation/aexcompat_patches/P00-host-realism.{cpp,md}`: SDK iterate clipping and rerun documentation.
 - `tools/fuzz/{report_P00b,profile_P00b,probe_P00b_defaults,verify_P00b}.py`, `test_P00b_iterate.cpp`, this report and `P00b-evidence/`.
@@ -414,6 +551,7 @@ Read-only evidence check first; optional full rerun uses a fresh subdirectory an
 python3 tools/fuzz/verify_P00b.py
 mkdir -p orchestra/state/P00b-ae-realism-audit-rerun/recheck
 export TMPDIR="$PWD/orchestra/state/P00b-ae-realism-audit-rerun/recheck" PYTHONDONTWRITEBYTECODE=1
+scripts/setup_ae_sdk_links.sh > "$TMPDIR/sdk-links.log" 2>&1
 clang++ -std=c++17 -O2 -Wno-pragma-pack -IHeaders -IHeaders/SP tools/fuzz/test_P00b_iterate.cpp -o "$TMPDIR/test-iterate" > "$TMPDIR/test-build.log" 2>&1
 "$TMPDIR/test-iterate"
 python3 tools/fuzz/ae_realism_audit.py --phase baseline --jobs 1 --timeout 60 --cache "$HOME/.cache/olm-emu/P00b" --state "$TMPDIR" > "$TMPDIR/baseline.log" 2>&1
@@ -424,6 +562,48 @@ git diff --check
 Expected: integrity OK, iterate regression exit 0, 60 baseline OK rows and 6930 unique matrix rows; compare measured status/tag counts above. The matrix is not an all-success gate. Full reruns take substantial time because every timed-out cell gets 60 seconds.
 
 next:
-- Finish matrix; profile each slow full-size default/heaviest-corpus performance cell.
-- Classify each remaining refusal against F52c/T15b evidence and current source before proposing fix tickets.
-- Retain ten independent exact ColorKeep corpus tuples in a separate coverage ticket.
+
+- **P00c-DG-default-PF32** — confirmed Mac-only refusal group. Recover the
+  original no-override In/Out=0/default PF32 owner behavior from the retained
+  32×24 witness, then extend general admission with independent alpha/source
+  and geometry tests. Do not insert a default-only zero-output shortcut.
+- **P00c-DBlur-cropped-world** — probable Mac-only full-layer guard. Start
+  with equal 960×540 checkout/output worlds under 1920×1080 layer metadata,
+  plus a small original witness; reconstruct input-sized workspace/request
+  handling before changing `DirectionalGenericWorldIsFullFrame` admission.
+- **P00c-Sm2-checkout-contract** — qualify native/original cropped checkout
+  negotiation. Preserve the original-backed equal-world guard; determine
+  whether Mac's forced full-frame PreRender creates the unequal world pair.
+  This is not a proposal to accept mismatched buffers blindly.
+- **P00p-DBlur-rotation-softfloat** — profile `olm_dblur_rotate_rgba_f32_trig`
+  and its `x86_float::{sse_result,generated_nan,bits}` calls. Optimize only with
+  bit-exact independent finite/nonfinite and signed-zero regression evidence.
+- **P00p-DBlur-scatter** — investigate `olm_dblur_scatter_f32` on `corpus09`,
+  including the 4K timeouts and 1080p timings. Preserve scatter accumulation
+  order and distinguish invariant work from arithmetic changes.
+- **P00p-Radial-rotation** — investigate `RenderRotationTyped` using C45
+  `C45_seed1_case000108.json` (matrix `corpus05`). The current observed boundary
+  is 240×135 completing in 36.4–38.3 s versus 480×270 exceeding 60 s. Establish
+  stage/work-count scaling before an exact optimization. The 1080p extent-hint/
+  transparent-source variant completed near the limit at PF8/PF32 but timed out
+  at PF16; separate metadata effects from alpha coverage and shared-load noise.
+  Do not replace the
+  timeout with a refusal budget or an approximate blur.
+- **P00p-Blur-horizontal** — optimize the measured `olm::blur::horizontal`
+  convolution hotspot (`corpus05`, three depths), preserving tap traversal,
+  intermediate precision and output bits. Recheck both 1080p and 4K.
+- **P00p-ColorKey-Lab-UCRT** — investigate `ucrt_powf` / `RGBToPluginLab76`
+  and `ucrt_atan2f` in the heavy 4K Lab-distance path. Look for invariant work
+  before changing arithmetic; replacing UCRT with a faster approximate math
+  library is outside the bit-exact contract.
+- **P00p-Smoother-scratch-memory** — investigate `_platform_memset` and
+  `SubHandler8Memory::read32` in default/heavy PF16 and heavy PF8 profiles.
+  Establish which clears and address translations are redundant without
+  changing initialized-state or traversal semantics.
+- **P00p-Smoother-edgewalk** — separately measure `EdgeWalker8`,
+  `EdgeWalker16Exact` and the classifier paths after attributing scratch-memory
+  cost. Preserve visit order, branching and typed arithmetic in any optimization.
+- **P00c-corpus-diversity** — retain ten independent exact tuples for
+  ColorKeep, ColorKey, KiraKira and Smoother2. This audit explicitly samples
+  smaller corpora with replacement and does not invent independent witnesses.
+

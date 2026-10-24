@@ -1,0 +1,11 @@
+{
+  "cpu": "Apple M1 Pro",
+  "ram_bytes": 17179869184,
+  "macos": "15.7.2",
+  "macos_build": "24G325",
+  "host_arch": "arm64",
+  "recorded_memory_free_min_percent": 57,
+  "recorded_memory_free_max_percent": 63,
+  "recorded_memory_checks": 48,
+  "qualification": "Checks at recorded instants, not continuous monitoring. Shared machine; single-frame timings."
+}

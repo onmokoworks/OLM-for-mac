@@ -55,13 +55,16 @@ def main():
      except subprocess.TimeoutExpired:
       with (dest/(identity+'.sample.log')).open('w') as log:
        sample_rc=subprocess.run(['sample',str(p.pid),'2','1','-file',str(profile)],stdout=log,stderr=subprocess.STDOUT,env=env,timeout=10).returncode
+     # Timing comes from the matrix; a bounded profile need not repeat a
+     # full 60-second timeout. Label this deliberate stop separately.
+     status='completed' if p.poll() is not None else 'sampled_then_stopped'
+     if p.poll() is None:p.kill()
      p.wait(timeout=max(0.01,60-(time.monotonic()-start)))
-     status='completed'
     except subprocess.TimeoutExpired:
      status='timeout'
     finally:
      if p.poll() is None:p.kill()
      p.wait()
-   record=dict(identity=identity,case=r['case'],profile=str(profile.relative_to(STATE)),sample_returncode=sample_rc,status=status,returncode=p.returncode,wall_seconds=time.monotonic()-start,memory_free=free)
+   record=dict(identity=identity,case=r['case'],profile=str(profile.relative_to(STATE)),sample_returncode=sample_rc,status=status,returncode=p.returncode,wall_seconds=time.monotonic()-start,memory_free=free,matrix_status=r['status'],intentional_stop=status=='sampled_then_stopped')
    results.write(json.dumps(record)+'\n');results.flush();print(record,flush=True)
 if __name__=='__main__':main()

@@ -19,10 +19,25 @@
 - **P00p-Radial-rotation** — investigate `RenderRotationTyped` using C45
   `C45_seed1_case000108.json` (matrix `corpus05`). The current observed boundary
   is 240×135 completing in 36.4–38.3 s versus 480×270 exceeding 60 s. Establish
-  stage/work-count scaling before an exact optimization; do not replace the
+  stage/work-count scaling before an exact optimization. The 1080p extent-hint/
+  transparent-source variant completed near the limit at PF8/PF32 but timed out
+  at PF16; separate metadata effects from alpha coverage and shared-load noise.
+  Do not replace the
   timeout with a refusal budget or an approximate blur.
-- Additional Blur, ColorKey and Smoother performance tickets will be named
-  from their retained default/heaviest-cell profiles when those reruns finish.
+- **P00p-Blur-horizontal** — optimize the measured `olm::blur::horizontal`
+  convolution hotspot (`corpus05`, three depths), preserving tap traversal,
+  intermediate precision and output bits. Recheck both 1080p and 4K.
+- **P00p-ColorKey-Lab-UCRT** — investigate `ucrt_powf` / `RGBToPluginLab76`
+  and `ucrt_atan2f` in the heavy 4K Lab-distance path. Look for invariant work
+  before changing arithmetic; replacing UCRT with a faster approximate math
+  library is outside the bit-exact contract.
+- **P00p-Smoother-scratch-memory** — investigate `_platform_memset` and
+  `SubHandler8Memory::read32` in default/heavy PF16 and heavy PF8 profiles.
+  Establish which clears and address translations are redundant without
+  changing initialized-state or traversal semantics.
+- **P00p-Smoother-edgewalk** — separately measure `EdgeWalker8`,
+  `EdgeWalker16Exact` and the classifier paths after attributing scratch-memory
+  cost. Preserve visit order, branching and typed arithmetic in any optimization.
 - **P00c-corpus-diversity** — retain ten independent exact tuples for
   ColorKeep, ColorKey, KiraKira and Smoother2. This audit explicitly samples
   smaller corpora with replacement and does not invent independent witnesses.
