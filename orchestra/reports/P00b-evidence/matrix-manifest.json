@@ -328,15 +328,23 @@
     },
     {
       "plugin": "radialblur",
-      "free_percent": 62
+      "free_percent": 63
+    },
+    {
+      "plugin": "radialblur",
+      "free_percent": 61
+    },
+    {
+      "plugin": "radialblur",
+      "free_percent": 63
     }
   ],
   "phase": "matrix",
   "timeout": 60.0,
   "counts": {
-    "ok": 6259,
-    "refusal": 311,
-    "timeout": 8
+    "ok": 6301,
+    "refusal": 314,
+    "timeout": 20
   },
   "supplement_source_head": "7389ab09effeb6a4470bac3280e6bbddcddbb195"
 }

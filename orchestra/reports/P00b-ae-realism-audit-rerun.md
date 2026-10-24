@@ -11,6 +11,12 @@ facts:
 - ColorKeep uses three nested T15b anchors sampled with replacement; ColorKey/KiraKira/Smoother2 also sample with replacement (9/8/8 unique paths).
 - Timeouts are 60-second process wall limits; successful times below are render-selector seconds.
 
+- Fresh Universal Release build: `python3 tools/fuzz/build_F47_bundles.py --scratch orchestra/state/P00b-ae-realism-audit-rerun/build` completed for all ten bundles; products were copied to the registered P00b cache and scratch xcode trees removed.
+- Initial host baseline: 54 OK / 6 ColorKeep iterate host errors; after the host-only rectangle correction: 60 OK. `test_P00b_iterate.cpp` compiled and exited 0.
+- Original default probe: `python3 tools/fuzz/probe_P00b_defaults.py`; 32x24 original Smart succeeds at PF8/PF16/PF32, real Mac PF32 returns 516 (the two lower depths return zero). See the hash-bound JSON.
+- Native process profiling uses `sample PID 2 1 -file PATH`; live profiles and separate default/heaviest-cell reruns are retained. No Instruments, oracle rebuild, plugin source change or pixel oracle in the matrix.
+- All runs use `--jobs 1 --timeout 60`; at most two rendering/oracle processes run concurrently. Interrupted in-flight calls while splitting lanes were discarded and rerun; only completed rows/timeouts are counted.
+
 baseline: 60 rows; {'ok': 60}
 
 | Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
@@ -76,7 +82,7 @@ baseline: 60 rows; {'ok': 60}
 | olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
 | olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
 
-matrix: 6578 rows; {'ok': 6259, 'refusal': 311, 'timeout': 8}
+matrix: 6635 rows; {'ok': 6301, 'refusal': 314, 'timeout': 20}
 
 | Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
 |---|---|---|---|
@@ -254,32 +260,32 @@ matrix: 6578 rows; {'ok': 6259, 'refusal': 311, 'timeout': 8}
 | olmdirectionalblur / third | {'ok': 33} | {} | 33/33 |
 | olmdirectionalblur / eighth | {'ok': 33} | {} | 33/33 |
 | olmdirectionalblur / asymmetric | {'ok': 33} | {} | 33/33 |
-| olmdirectionalblur / 4k | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / 4k-half | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / 4k-quarter | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / square | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / odd | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / odd-half | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / large-layer | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / aligned-odd | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / padded | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / extent | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / roi | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / expanded | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 26} | {'SmartRender:smart-generic-world-or-budget@2707': 26} | 4/4 |
-| olmdirectionalblur / aspect09 | {'ok': 30} | {} | 30/30 |
-| olmdirectionalblur / aspect2 | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / 4k | {'ok': 30, 'timeout': 3} | {} | 30/30 |
+| olmdirectionalblur / 4k-half | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / 4k-quarter | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / square | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / odd | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / odd-half | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / large-layer | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / aligned-odd | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / padded | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / extent | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / roi | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / expanded | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 29} | {'SmartRender:smart-generic-world-or-budget@2707': 29} | 4/4 |
+| olmdirectionalblur / aspect09 | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / aspect2 | {'ok': 33} | {} | 33/33 |
 | radialblur / full | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / quarter | {'ok': 18, 'timeout': 2} | {} | 18/18 |
-| radialblur / third | {'ok': 18} | {} | 18/18 |
-| radialblur / eighth | {'ok': 18} | {} | 18/18 |
+| radialblur / quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
+| radialblur / third | {'ok': 18, 'timeout': 1} | {} | 18/18 |
+| radialblur / eighth | {'ok': 21} | {} | 21/21 |
 | radialblur / asymmetric | {'ok': 18} | {} | 18/18 |
-| radialblur / 4k | {'ok': 18} | {} | 18/18 |
+| radialblur / 4k | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / 4k-half | {'ok': 18} | {} | 18/18 |
-| radialblur / 4k-quarter | {'ok': 18} | {} | 18/18 |
+| radialblur / 4k-quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / square | {'ok': 18} | {} | 18/18 |
-| radialblur / odd | {'ok': 18} | {} | 18/18 |
+| radialblur / odd | {'ok': 18, 'timeout': 1} | {} | 18/18 |
 | radialblur / odd-half | {'ok': 18} | {} | 18/18 |
 | radialblur / large-layer | {'ok': 18} | {} | 18/18 |
 | radialblur / aligned-odd | {'ok': 18} | {} | 18/18 |
@@ -304,9 +310,9 @@ Heaviest means the largest observed render time among sampled corpus tuples for 
 | olmcolorkey | 8 | 0.017 | 0.069 | 1.873 (corpus05) | 7.351 (corpus05) |
 | olmcolorkey | 16 | 0.019 | 0.075 | 1.857 (corpus05) | 7.328 (corpus05) |
 | olmcolorkey | 32 | 0.025 | 0.110 | 1.858 (corpus05) | 7.489 (corpus05) |
-| olmdirectionalblur | 8 | 0.003 | 0.010 | **17.579** (corpus09) | 22.269 (corpus07) |
-| olmdirectionalblur | 16 | 0.004 | 0.017 | **17.662** (corpus09) | 22.292 (corpus07) |
-| olmdirectionalblur | 32 | 0.008 | 0.038 | **17.571** (corpus09) | 22.177 (corpus07) |
+| olmdirectionalblur | 8 | 0.003 | 0.010 | **17.579** (corpus09) | >=60 wall (timeout) (corpus09) |
+| olmdirectionalblur | 16 | 0.004 | 0.017 | **17.662** (corpus09) | >=60 wall (timeout) (corpus09) |
+| olmdirectionalblur | 32 | 0.008 | 0.038 | **17.571** (corpus09) | >=60 wall (timeout) (corpus09) |
 | olmdistancegradation | 8 | 0.077 | 0.340 | 0.032 (corpus02) | 0.112 (corpus04) |
 | olmdistancegradation | 16 | 0.077 | 0.334 | 0.031 (corpus04) | 0.135 (corpus01) |
 | olmdistancegradation | 32 | refusal | refusal | 0.041 (corpus01) | 0.250 (corpus02) |
@@ -319,9 +325,9 @@ Heaviest means the largest observed render time among sampled corpus tuples for 
 | olmtoondilate | 8 | 0.011 | 0.043 | 0.011 (corpus06) | 0.043 (corpus06) |
 | olmtoondilate | 16 | 0.012 | 0.052 | 0.015 (corpus08) | 0.054 (corpus03) |
 | olmtoondilate | 32 | 0.015 | 0.067 | 0.019 (corpus03) | 0.066 (corpus06) |
-| radialblur | 8 | 0.002 | 0.004 | **>=60 wall (timeout)** (corpus05) | 2.189 (corpus01) |
-| radialblur | 16 | 0.002 | 0.010 | **>=60 wall (timeout)** (corpus05) | 2.178 (corpus01) |
-| radialblur | 32 | 0.005 | 0.024 | **>=60 wall (timeout)** (corpus05) | 2.149 (corpus01) |
+| radialblur | 8 | 0.002 | 0.004 | **>=60 wall (timeout)** (corpus05) | >=60 wall (timeout) (corpus05) |
+| radialblur | 16 | 0.002 | 0.010 | **>=60 wall (timeout)** (corpus05) | >=60 wall (timeout) (corpus05) |
+| radialblur | 32 | 0.005 | 0.024 | **>=60 wall (timeout)** (corpus05) | >=60 wall (timeout) (corpus05) |
 | olmsmoother | 8 | 0.346 | 1.399 | 1.535 (corpus00) | 6.125 (corpus00) |
 | olmsmoother | 16 | 1.077 | 4.269 | **2.151** (corpus00) | 8.585 (corpus00) |
 | olmsmoother | 32 | refusal | refusal | unavailable | unavailable |
@@ -391,23 +397,28 @@ byte is claimed; the small probe establishes return behavior only.
 
 inference:
 - Successful return and nonzero output are sanity checks only; no numerical compatibility inference.
-- Refusal classification and hotspot attribution remain pending until the matrix completes.
+- The classification above distinguishes observed return behavior from original-host and native-AE inference.
 
 changed_files:
 - `tools/fuzz/ae_realism_audit.py`: 60-second timeout, required 8bpc baseline, additional 4K probes, cache-specific registration, incremental manifests.
-- `tools/fuzz/report_P00b.py`, this report and `P00b-evidence/`.
+- `tools/emulation/aexcompat_patches/P00-host-realism.{cpp,md}`: SDK iterate clipping and rerun documentation.
+- `tools/fuzz/{report_P00b,profile_P00b,probe_P00b_defaults,verify_P00b}.py`, `test_P00b_iterate.cpp`, this report and `P00b-evidence/`.
 - P00 host/driver and stale evidence were brought in by the required merge.
 
 verify:
+Read-only evidence check first; optional full rerun uses a fresh subdirectory and the registered binaries. Timing/timeout boundaries may vary with shared-machine load.
 ```sh
-python3 tools/fuzz/build_F47_bundles.py --scratch orchestra/state/P00b-ae-realism-audit-rerun/build
-python3 tools/fuzz/ae_realism_audit.py --build-host --cache "$HOME/.cache/olm-emu/P00b" --state orchestra/state/P00b-ae-realism-audit-rerun
-python3 tools/fuzz/ae_realism_audit.py --phase baseline --jobs 1 --timeout 60 --cache "$HOME/.cache/olm-emu/P00b" --state orchestra/state/P00b-ae-realism-audit-rerun
-python3 tools/fuzz/ae_realism_audit.py --phase matrix --jobs 1 --timeout 60 --cache "$HOME/.cache/olm-emu/P00b" --state orchestra/state/P00b-ae-realism-audit-rerun
-python3 tools/fuzz/report_P00b.py
+python3 tools/fuzz/verify_P00b.py
+mkdir -p orchestra/state/P00b-ae-realism-audit-rerun/recheck
+export TMPDIR="$PWD/orchestra/state/P00b-ae-realism-audit-rerun/recheck" PYTHONDONTWRITEBYTECODE=1
+clang++ -std=c++17 -O2 -Wno-pragma-pack -IHeaders -IHeaders/SP tools/fuzz/test_P00b_iterate.cpp -o "$TMPDIR/test-iterate" > "$TMPDIR/test-build.log" 2>&1
+"$TMPDIR/test-iterate"
+python3 tools/fuzz/ae_realism_audit.py --phase baseline --jobs 1 --timeout 60 --cache "$HOME/.cache/olm-emu/P00b" --state "$TMPDIR" > "$TMPDIR/baseline.log" 2>&1
+python3 tools/fuzz/ae_realism_audit.py --phase matrix --jobs 1 --timeout 60 --cache "$HOME/.cache/olm-emu/P00b" --state "$TMPDIR" > "$TMPDIR/matrix.log" 2>&1
+python3 tools/fuzz/ae_realism_audit.py --summarize --state "$TMPDIR"
 git diff --check
 ```
-Expected complete coverage: 60 baseline rows and 6930 matrix rows. Checkpoint counts above are measured, not a completion claim. Build products must be installed under P00b/xcode before running the host.
+Expected: integrity OK, iterate regression exit 0, 60 baseline OK rows and 6930 unique matrix rows; compare measured status/tag counts above. The matrix is not an all-success gate. Full reruns take substantial time because every timed-out cell gets 60 seconds.
 
 next:
 - Finish matrix; profile each slow full-size default/heaviest-corpus performance cell.

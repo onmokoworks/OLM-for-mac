@@ -21,4 +21,10 @@ for phase in ('baseline','matrix'):
   if r['status']=='ok':assert r['result']['error']==0
   if r['status']=='timeout':assert r['wall_seconds']>=60
  print(phase,len(rows),counts)
+cache=Path.home()/'.cache/olm-emu/P00b'
+assert audit.sha(cache/'plugin-host')==manifest['host_sha256']
+for plugin,expected_hash in manifest['bundles'].items():
+ name=audit.PLUGINS[plugin]
+ assert audit.sha(cache/'xcode'/name/'products'/(name+'.plugin')/'Contents/MacOS'/name)==expected_hash,plugin
+print('Cached host and all ten bundle hashes match.')
 print('Evidence integrity OK; this does not assert pixel-exactness or native AE compatibility.')
