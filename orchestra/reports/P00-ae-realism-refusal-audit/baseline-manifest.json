@@ -1,0 +1,65 @@
+{
+  "source_head": "0c6b0c8e015567a0a17ab7a5b3b1219dbbeb94ae",
+  "host_sha256": "28b2d75fa2d7333d0f7352848c90562b4aecea6922bc2a22d1365969f13d1ad3",
+  "bundles": {
+    "olmblur": "0b89e5230db0da0a3276d98257e5387d5cf763d750adef4a7d0efd33de35a075",
+    "colorkeep": "c70bdfc4c44b625f7893858014d718493629f56a850d6ed7182a2852fb516e98",
+    "olmcolorkey": "d2c07853b765624122e029beacaba12c70fc3c79cc059e00f3e4e385c8604e7d",
+    "olmdirectionalblur": "9ee9e88f78fdfe26d0f6b80e5191e78e835b1c30e473f8ef7199eb438300f04e",
+    "olmdistancegradation": "cdcfb39abc75af00f989b0e6fdfa6b4e3f1e125c9275925f5c1d2109978152a9",
+    "olmkirakira": "59052d2694895c8b96b1d19d12f791dec1e4ab95f74c89e75b8e49ceea00631d",
+    "olmsmoother2": "a7eba93233127daef1425a6e0c8d033a5aa22eeb9b155e831f0c7abad1b5f4c9",
+    "olmtoondilate": "4dd1401d07ac0caf101a38e6f8c64503f6663b2b27c58b49f252654500f36e28",
+    "radialblur": "e17fdb2223c65fdee5f8d21f23dcac3756baac4d66f9c18a37cfce7a24bc2c3c",
+    "olmsmoother": "faab3abbda3ba63aa00a9d343c057a76477aa614a7ac7393b5906a88c397c2b1"
+  },
+  "samples": {},
+  "memory": [
+    {
+      "plugin": "olmblur",
+      "free_percent": 51
+    },
+    {
+      "plugin": "colorkeep",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmcolorkey",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmdirectionalblur",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmdistancegradation",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmkirakira",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmsmoother2",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmtoondilate",
+      "free_percent": 52
+    },
+    {
+      "plugin": "radialblur",
+      "free_percent": 52
+    },
+    {
+      "plugin": "olmsmoother",
+      "free_percent": 52
+    }
+  ],
+  "phase": "baseline",
+  "timeout": 15,
+  "counts": {
+    "ok": 38,
+    "refusal": 52
+  }
+}
