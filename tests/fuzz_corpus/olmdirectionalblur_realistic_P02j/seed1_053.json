@@ -127,6 +127,7 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
     "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
     "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
     "dependencies_sha256": {
       "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
@@ -168,7 +169,7 @@
     },
     "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
     "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
-    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
     "accepted": []
@@ -188,6 +189,18 @@
       "status": "ok"
     },
     "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          5,
+          18
+        ],
+        "raw_sha256": "52dbd4365b026555e3382c056240376d3aa319c7e46c1aa7c38caa4883570517",
+        "session_clean": true,
+        "status": "ok"
+      },
       "smart": {
         "guards_intact": true,
         "output_rect": [
@@ -202,6 +215,32 @@
       }
     },
     "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1440,
+          "actual_word_hex": "69d1cc3e",
+          "different_bytes": 1388,
+          "different_words": 348,
+          "expected_bytes": 1440,
+          "expected_word_hex": "00000000",
+          "first_byte": 16,
+          "first_word": 4
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "5 18 1 1 1 1 1 1 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          5,
+          18
+        ],
+        "raw_sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516",
+        "status": "mismatch"
+      },
       "smart": {
         "error": 0,
         "metadata": {
