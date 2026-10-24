@@ -111,3 +111,6 @@ P02e-toondilate-geometry
 P02f-smoother2-geometry
 P02g-smoother-geometry
 P02h-blur-geometry
+P02i-colorkey-geometry
+P02j-directionalblur-geometry
+T15b-odd-even-random-comp-sweep
