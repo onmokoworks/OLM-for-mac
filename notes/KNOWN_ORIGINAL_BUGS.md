@@ -127,3 +127,23 @@ DECISION: the exactness contract for these nine plugins is the Smart route. Thei
 the Smart algorithm instead of reproducing a no-write or uninitialized-memory result, so a host that does call
 PF_Cmd_RENDER gets the effect rather than an untouched or garbage frame. Classic-route fuzz mismatches for these
 plugins are therefore expected and are not counted as port defects. Smoother v1 Classic remains bit-exact.
+
+## DirectionalBlur PF32 negative alpha with Back Alpha Fade (P06a, orchestrator decision)
+
+FACT (P06a): the realistic-v1 seed 2053 index 9 mismatch reduces to one PF32 pixel with **negative alpha**, Size
+Variation 40 and Back Alpha Fade 6, at 1/3 scale. Two original behaviours interact:
+- AEX `0x61f6` stores the component maximum without a nonzero floor. The divisor becomes zero, so the scaled backward
+  count is NaN, and CVTTSS2SI (`0x10a8`) turns it into INT32_MIN.
+- The clip at `0x1234 CMP` / `0x1237 CMOVS` then uses the sign of a wrapping 32-bit subtraction.
+
+With that wrapped count, the alpha prepass walks the Back Alpha Fade table (context+`0x7ee8`; 100 slots up to
+`0x8078`) past the generated weights. Those weights are written only up to the requested count (`FUN_180001830`), and
+the Smart caller does not clear the context. A candidate that reproduced the arithmetic matched 600/600 focused PF32
+cases, but under ASan it read beyond the Mac allocation in 6/12 small-fade cases. Evidence:
+`orchestra/reports/P06a-directionalblur-pf32-cropped-mismatch.md`, `P06a-evidence/`.
+
+DECISION: the original reads weight storage whose contents it never defined. That is not a deterministic contract,
+so the Mac port keeps its current behaviour for negative-alpha PF32 input with nonzero Back Alpha Fade, and this
+mismatch is classified as an original bug, not a port defect. Negative alpha does not occur in ordinary AE footage.
+The retained witnesses stay in `tests/fuzz_corpus/olmdirectionalblur/P05a-performance/` and P06a's labelled set
+as replayed mismatches.
