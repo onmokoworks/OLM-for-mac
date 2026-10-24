@@ -133,3 +133,5 @@ PY
 next:
 
 Assign a configuration follow-up to pin DistanceGradation's project Release deployment target to 11.0 and rerun v2. Keep original-stop/uncompared coverage, Mac refusals, excluded R05/R07 contracts, and non-owner Classic behavior as separate follow-ups. Installed identity, native AE smoke and Windows owner evidence require their real hosts. No numerical production fix is justified by this ticket's zero owner-mismatch result.
+
+orchestrator note: fixed the finding by pinning `MACOSX_DEPLOYMENT_TARGET = 11.0` in all four DistanceGradation build configurations; `xcodebuild -showBuildSettings` now reports 11.0 and the static predicate (flags, arm64+x86_64, 11.0) holds for all ten projects. The tested bundles were already built with an explicit 11.0, so stage 2-6 evidence is unchanged. The next full gate run is expected to be 7/7 PASS locally (real-host items still required).

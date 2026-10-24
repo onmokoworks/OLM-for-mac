@@ -210,6 +210,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WRAPPER_EXTENSION = plugin;
@@ -227,6 +228,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.AfterEffects.OLMDistanceGradation;
 				PRODUCT_NAME = OLMDistanceGradation;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
@@ -264,6 +266,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				ARCHS = "x86_64 arm64";
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WRAPPER_EXTENSION = plugin;
@@ -281,6 +284,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.AfterEffects.OLMDistanceGradation;
 				PRODUCT_NAME = OLMDistanceGradation;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
