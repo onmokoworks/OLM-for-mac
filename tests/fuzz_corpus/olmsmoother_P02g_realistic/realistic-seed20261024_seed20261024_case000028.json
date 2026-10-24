@@ -1,0 +1,152 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      45,
+      1
+    ],
+    "full_geometry": [
+      89,
+      1
+    ],
+    "geometry": [
+      45,
+      1
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 28,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 224
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      24,
+      0,
+      26,
+      1
+    ],
+    "rowbytes_padding": 7,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 28,
+  "input_sha256": "856262cfc424a77c015f5ddc190f6b88cb6553d955f372e41b37026c45f9e4d7",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNodkH0s1HEcx39GdLOEGjHKQymdFjq7P7rf513YJAvDuXaEahHFmPM0inloqNuUHmSzlmaGNV3UFJGH89SDkes2zorJw1SiTCmq+37/e+39fT98vxzHIS6zkUq8rpFLSQGJpp1p94Qxr2pwgSrdFByXhz0jLTx/oIbaMiQoaFFgI0hHa1p7SeCuQGji/SEO8oIoxBaeXsvE/T+WJ7cjY3mVim9chJ6b6iLJZlBBVZ6Neh0LZ7aAmxuh1x+FmDKOhlRsCs+mBLw69YEsN6XBotOKBCltkq+Tzsxv+GmY3PzK6JL2DsvPW1RgpS4XEfJovY5abSICCsWoj21g+eeyx0iR+YTvsstm+5N/59Nq2WFELf3l9f6l99bkIn5DSbnnWX5nw3Fchz1UsizmT83dh40fOv7p8gDjZVcHvOCssG1dzu53JdTQ3XABHOSmrP/Pwk6YhVpS5pgj1KJgzEbNkOJmCv20MubT5By0Zs+p/nEsZv3n2f7guZfUW+2A3GEp83f8vU/xS+HY6E9kfUGicWp2lcJD2Ucy4ZrEO1VHIZudMFPeo98P23k7vjInAUpVDnvfaG03GRoIMREqZvs+x0xRhP1panX/zut1E8lejJiVU566m8wWxum2IJt0qjWaXh9mfSalSbDUPKQs62RMuiZS6QUBImNOkF+0fk8exHaOSKMhuqc+xvo0AfGIErXTopcB4/aKPuqpyIGvkRvjqqNnUaB8S+lfzFn+I00HNRfnU0PRN8bSqYNUOOpP02G9lPxuK4ZsLKBuAsb3y5j/mVIKd6PLWPnlzf5HOOiBBwOH4HtrB+M4Jx+StV7hi+Rh6Dc/Qm4WGnKuNkGlz1XJP+YDBJQ=",
+  "plugin": "olmsmoother",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "079077b0d0ddb7a92f66a405c9cd9b1b21ef9108e5828c8bc6ef4bc7052141e5",
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "eaac5c4585a54d6d7d675ca0ff05d8738a3094721472b101b486064d1f86091c",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "classic"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "absent; Mac Smart wrapper is explicitly compared to original Classic"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "minimality_claimed": false
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+      "returncode": 1,
+      "status": "reject"
+    },
+    "routes": {
+      "classic": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25",
+          "GEOMETRY_INPUT": "89 1 1 2 1 3 1 1 7"
+        },
+        "status": "refusal"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

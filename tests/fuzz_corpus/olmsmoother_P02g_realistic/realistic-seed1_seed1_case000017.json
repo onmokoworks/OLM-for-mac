@@ -1,0 +1,152 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      5,
+      27,
+      6,
+      31
+    ],
+    "full_geometry": [
+      19,
+      158
+    ],
+    "geometry": [
+      7,
+      53
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 17,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 6
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      7,
+      53
+    ],
+    "rowbytes_padding": 0,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 17,
+  "input_sha256": "81c712af9a94af30c2e9952e79e2e1b36149e8733ba12cdbf384296fadcf69ae",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmsmoother",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "079077b0d0ddb7a92f66a405c9cd9b1b21ef9108e5828c8bc6ef4bc7052141e5",
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "eaac5c4585a54d6d7d675ca0ff05d8738a3094721472b101b486064d1f86091c",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "classic"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "absent; Mac Smart wrapper is explicitly compared to original Classic"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "minimality_claimed": false
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "diagnostic": "aex_guest_error: invalid frame input: AEX did not advertise support for output argb32f or input argb32f pixel depth\n",
+      "returncode": 1,
+      "status": "reject"
+    },
+    "routes": {
+      "classic": {
+        "error": 25,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "25",
+          "GEOMETRY_INPUT": "19 158 1 3 1 3 2 1 0"
+        },
+        "status": "refusal"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

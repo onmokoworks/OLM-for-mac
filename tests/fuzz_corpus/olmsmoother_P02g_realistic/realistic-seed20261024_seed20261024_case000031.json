@@ -1,0 +1,166 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      20,
+      17,
+      22,
+      21
+    ],
+    "full_geometry": [
+      46,
+      61
+    ],
+    "geometry": [
+      23,
+      21
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 31,
+    "input_padding": 1,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          128,
+          223,
+          159,
+          8
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 143
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      23,
+      21
+    ],
+    "rowbytes_padding": 1,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 31,
+  "input_sha256": "6d44c47cacdc2cf170b16706333baa425ba401b482e15980f7518d21a5fb0ce6",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmsmoother",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "079077b0d0ddb7a92f66a405c9cd9b1b21ef9108e5828c8bc6ef4bc7052141e5",
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "eaac5c4585a54d6d7d675ca0ff05d8738a3094721472b101b486064d1f86091c",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "classic"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "absent; Mac Smart wrapper is explicitly compared to original Classic"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "minimality_claimed": false
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        23,
+        21
+      ],
+      "raw_sha256": "d1ae720ffa1bf620b2e75689e5284216f01cde9c91eadd4a611046d4dca2b916",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "46 61 1 2 1 3 2 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          23,
+          21
+        ],
+        "raw_sha256": "d1ae720ffa1bf620b2e75689e5284216f01cde9c91eadd4a611046d4dca2b916",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

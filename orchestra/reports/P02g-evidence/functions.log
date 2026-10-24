@@ -1,0 +1,25 @@
+unittest.case.FunctionTestCase (test_pf16_forward_pair_cannot_alias_reverse_table_operand) ... ok
+unittest.case.FunctionTestCase (test_pf16_forward_pair_matches_the_pf8_twin) ... ok
+unittest.case.FunctionTestCase (test_pf16_uses_generated_exact_walker_and_subhandler) ... ok
+unittest.case.FunctionTestCase (test_contract_and_run5_identities_are_pinned) ... ERROR
+unittest.case.FunctionTestCase (<lambda>) ... ok
+
+======================================================================
+ERROR: unittest.case.FunctionTestCase (test_contract_and_run5_identities_are_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_v1_pf16_macos_aexcompat_contract_20260805.py", line 16, in test_contract_and_run5_identities_are_pinned
+    spec = json.loads(CONTRACT.read_text())
+                      ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/refs/requests/olmsmoother_v1_pf16_macos_aexcompat_session_20260805.json'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (errors=1)
