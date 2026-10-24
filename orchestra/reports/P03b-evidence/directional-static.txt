@@ -18,13 +18,13 @@ RVA 0x1ec0 0x2250
 180001ef1 movaps     xmm0, xmm6
 180001ef4 mov        eax, r8d
 180001ef7 mov        ebx, r8d
-180001efa cdq        
+180001efa cdq
 180001efb mov        rdi, rcx
 180001efe sub        eax, edx
 180001f00 sar        eax, 1
 180001f02 mov        r14d, eax
 180001f05 mov        eax, r9d
-180001f08 cdq        
+180001f08 cdq
 180001f09 sub        eax, edx
 180001f0b sar        eax, 1
 180001f0d mov        r15d, eax
@@ -201,10 +201,10 @@ RVA 0x1ec0 0x2250
 180002248 pop        r12
 18000224a pop        rdi
 18000224b pop        rsi
-18000224c ret        
-18000224d int3       
-18000224e int3       
-18000224f int3       
+18000224c ret
+18000224d int3
+18000224e int3
+18000224f int3
 
 RVA 0x6b30 0x6c50
 180006b30 mov        r9, qword ptr [rcx + 0x8090]
@@ -241,13 +241,13 @@ RVA 0x6b30 0x6c50
 180006bc1 cvttss2si  eax, xmm3
 180006bc5 mov        byte ptr [rcx], al
 180006bc7 xor        eax, eax
-180006bc9 ret        
-180006bca int3       
-180006bcb int3       
-180006bcc int3       
-180006bcd int3       
-180006bce int3       
-180006bcf int3       
+180006bc9 ret
+180006bca int3
+180006bcb int3
+180006bcc int3
+180006bcd int3
+180006bce int3
+180006bcf int3
 180006bd0 mov        r9, qword ptr [rcx + 0x8090]
 180006bd7 movss      xmm4, dword ptr [rcx + 0x28]
 180006bdc mov        eax, dword ptr [rcx + 0x8098]
@@ -273,13 +273,13 @@ RVA 0x6b30 0x6c50
 180006c3d movss      dword ptr [rax + 0xc], xmm2
 180006c42 movss      dword ptr [rax + 4], xmm4
 180006c47 xor        eax, eax
-180006c49 ret        
-180006c4a int3       
-180006c4b int3       
-180006c4c int3       
-180006c4d int3       
-180006c4e int3       
-180006c4f int3       
+180006c49 ret
+180006c4a int3
+180006c4b int3
+180006c4c int3
+180006c4d int3
+180006c4e int3
+180006c4f int3
 
 RVA 0x1000 0x1830
 180001000 mov        qword ptr [rsp + 0x20], r9
@@ -312,7 +312,7 @@ RVA 0x1000 0x1830
 180001064 pop        r14
 180001066 pop        r12
 180001068 pop        rsi
-180001069 ret        
+180001069 ret
 18000106a movss      xmm1, dword ptr [rsp + 0x98]
 180001073 movaps     xmm4, xmm3
 180001076 comiss     xmm1, xmm5
@@ -525,14 +525,14 @@ RVA 0x1000 0x1830
 1800013d3 pop        r14
 1800013d5 pop        r12
 1800013d7 pop        rsi
-1800013d8 ret        
-1800013d9 int3       
-1800013da int3       
-1800013db int3       
-1800013dc int3       
-1800013dd int3       
-1800013de int3       
-1800013df int3       
+1800013d8 ret
+1800013d9 int3
+1800013da int3
+1800013db int3
+1800013dc int3
+1800013dd int3
+1800013de int3
+1800013df int3
 1800013e0 mov        dword ptr [rsp + 0x10], edx
 1800013e4 push       rbx
 1800013e5 push       r12
@@ -788,5 +788,5 @@ RVA 0x1000 0x1830
 180001827 add        rsp, 0x38
 18000182b pop        r12
 18000182d pop        rbx
-18000182e ret        
-18000182f int3       
+18000182e ret
+18000182f int3

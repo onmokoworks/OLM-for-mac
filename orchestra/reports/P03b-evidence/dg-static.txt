@@ -12,11 +12,11 @@ RVA 0x11749a0 0x1174da0
 1811749bd mov        rdx, rcx
 1811749c0 lea        rcx, [rsp + 0x50]
 1811749c5 call       0x181395030
-1811749ca nop        
+1811749ca nop
 1811749cb mov        rdx, rbx
 1811749ce lea        rcx, [rsp + 0x30]
 1811749d3 call       0x181395030
-1811749d8 nop        
+1811749d8 nop
 1811749d9 mov        rcx, rdi
 1811749dc call       0x1811765a0
 1811749e1 mov        r9d, 1
@@ -59,10 +59,10 @@ RVA 0x11749a0 0x1174da0
 181174a8a mov        rdx, rbp
 181174a8d mov        rcx, rbx
 181174a90 call       0x1812b6a40
-181174a95 nop        
+181174a95 nop
 181174a96 lea        rcx, [rsp + 0x30]
 181174a9b call       0x181395050
-181174aa0 nop        
+181174aa0 nop
 181174aa1 lea        rcx, [rsp + 0x50]
 181174aa6 call       0x181395050
 181174aab lea        r11, [rsp + 0x70]
@@ -71,22 +71,22 @@ RVA 0x11749a0 0x1174da0
 181174ab8 mov        rsi, qword ptr [r11 + 0x20]
 181174abc mov        rsp, r11
 181174abf pop        rdi
-181174ac0 ret        
-181174ac1 int3       
-181174ac2 int3       
-181174ac3 int3       
-181174ac4 int3       
-181174ac5 int3       
-181174ac6 int3       
-181174ac7 int3       
-181174ac8 int3       
-181174ac9 int3       
-181174aca int3       
-181174acb int3       
-181174acc int3       
-181174acd int3       
-181174ace int3       
-181174acf int3       
+181174ac0 ret
+181174ac1 int3
+181174ac2 int3
+181174ac3 int3
+181174ac4 int3
+181174ac5 int3
+181174ac6 int3
+181174ac7 int3
+181174ac8 int3
+181174ac9 int3
+181174aca int3
+181174acb int3
+181174acc int3
+181174acd int3
+181174ace int3
+181174acf int3
 181174ad0 mov        qword ptr [rsp + 8], rbx
 181174ad5 mov        qword ptr [rsp + 0x10], rsi
 181174ada push       rdi
@@ -98,11 +98,11 @@ RVA 0x11749a0 0x1174da0
 181174af2 mov        rdx, rcx
 181174af5 lea        rcx, [rsp + 0x40]
 181174afa call       0x181395030
-181174aff nop        
+181174aff nop
 181174b00 mov        rdx, rbx
 181174b03 lea        rcx, [rsp + 0x20]
 181174b08 call       0x181395030
-181174b0d nop        
+181174b0d nop
 181174b0e mov        rcx, rsi
 181174b11 call       0x1811765a0
 181174b16 mov        r9d, 1
@@ -136,10 +136,10 @@ RVA 0x11749a0 0x1174da0
 181174b8c mov        rdx, rbx
 181174b8f mov        rcx, rdi
 181174b92 call       0x181182d60
-181174b97 nop        
+181174b97 nop
 181174b98 lea        rcx, [rsp + 0x20]
 181174b9d call       0x181395050
-181174ba2 nop        
+181174ba2 nop
 181174ba3 lea        rcx, [rsp + 0x40]
 181174ba8 call       0x181395050
 181174bad lea        r11, [rsp + 0x80]
@@ -147,21 +147,21 @@ RVA 0x11749a0 0x1174da0
 181174bb9 mov        rsi, qword ptr [r11 + 0x18]
 181174bbd mov        rsp, r11
 181174bc0 pop        rdi
-181174bc1 ret        
-181174bc2 int3       
-181174bc3 int3       
-181174bc4 int3       
-181174bc5 int3       
-181174bc6 int3       
-181174bc7 int3       
-181174bc8 int3       
-181174bc9 int3       
-181174bca int3       
-181174bcb int3       
-181174bcc int3       
-181174bcd int3       
-181174bce int3       
-181174bcf int3       
+181174bc1 ret
+181174bc2 int3
+181174bc3 int3
+181174bc4 int3
+181174bc5 int3
+181174bc6 int3
+181174bc7 int3
+181174bc8 int3
+181174bc9 int3
+181174bca int3
+181174bcb int3
+181174bcc int3
+181174bcd int3
+181174bce int3
+181174bcf int3
 181174bd0 mov        qword ptr [rsp + 8], rbx
 181174bd5 push       rsi
 181174bd6 push       rdi
@@ -187,7 +187,7 @@ RVA 0x11749a0 0x1174da0
 181174c34 mov        rdx, qword ptr [rbx + 0x180]
 181174c3b lea        rcx, [rsp + 0x1b0]
 181174c43 call       0x181174fb0
-181174c48 nop        
+181174c48 nop
 181174c49 mov        rsi, qword ptr [rsp + 0x388]
 181174c51 test       rsi, rsi
 181174c54 jne        0x181174c97
@@ -218,7 +218,7 @@ RVA 0x11749a0 0x1174da0
 181174cca xor        r9d, r9d
 181174ccd lea        rdx, [rip + 0x38fd9c]
 181174cd4 call       qword ptr [rsi + 0x78]
-181174cd7 nop        
+181174cd7 nop
 181174cd8 lea        rcx, [rsp + 0x1b0]
 181174ce0 call       0x181174ff0
 181174ce5 jmp        0x181174f15
@@ -228,7 +228,7 @@ RVA 0x11749a0 0x1174da0
 181174d04 mov        rdx, qword ptr [rbx + 0x180]
 181174d0b lea        rcx, [rsp + 0x1b0]
 181174d13 call       0x181174fb0
-181174d18 nop        
+181174d18 nop
 181174d19 mov        rbx, qword ptr [rsp + 0x358]
 181174d21 test       rbx, rbx
 181174d24 jne        0x181174d67
@@ -288,7 +288,7 @@ RVA 0x1170c90 0x1170ff0
 181170d00 mov        rbx, qword ptr [rsp + 0xb0]
 181170d08 add        rsp, 0xa0
 181170d0f pop        rdi
-181170d10 ret        
+181170d10 ret
 181170d11 movaps     xmmword ptr [rsp + 0x90], xmm6
 181170d19 xor        edx, edx
 181170d1b movaps     xmmword ptr [rsp + 0x80], xmm7
@@ -461,8 +461,8 @@ RVA 0x1170c90 0x1170ff0
 181170fde mov        rbx, qword ptr [rsp + 0xb0]
 181170fe6 add        rsp, 0xa0
 181170fed pop        rdi
-181170fee ret        
-181170fef int3       
+181170fee ret
+181170fef int3
 
 RVA 0x117c580 0x117c680
 18117c580 mov        rax, rsp
@@ -485,7 +485,7 @@ RVA 0x117c580 0x117c680
 18117c5c0 mov        rdx, rcx
 18117c5c3 lea        rcx, [rsp + 0xb0]
 18117c5cb call       0x18118ffc0
-18117c5d0 nop        
+18117c5d0 nop
 18117c5d1 mov        qword ptr [rsp + 0x28], rdi
 18117c5d6 mov        dword ptr [rsp + 0x20], edi
 18117c5da mov        r9b, 1
@@ -493,7 +493,7 @@ RVA 0x117c580 0x117c680
 18117c5e0 mov        rdx, rbx
 18117c5e3 lea        rcx, [rsp + 0x50]
 18117c5e8 call       0x18118ffc0
-18117c5ed nop        
+18117c5ed nop
 18117c5ee lea        rdx, [rsp + 0x90]
 18117c5f6 lea        rcx, [rsp + 0xf0]
 18117c5fe call       0x18118b650
@@ -514,10 +514,10 @@ RVA 0x117c580 0x117c680
 18117c648 lea        rdx, [rsp + 0x30]
 18117c64d lea        rcx, [rsp + 0xb0]
 18117c655 call       0x1811a3020
-18117c65a nop        
+18117c65a nop
 18117c65b lea        rcx, [rsp + 0x50]
 18117c660 call       0x18118b380
-18117c665 nop        
+18117c665 nop
 18117c666 lea        rcx, [rsp + 0xb0]
 18117c66e call       0x18118b380
 18117c673 mov        rcx, qword ptr [rsp + 0x110]

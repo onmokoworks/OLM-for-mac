@@ -16,4 +16,4 @@ if name == 'OLMKiraKira': regions = [(0x114ec60,0x114ee00),(0x11501b0,0x1150270)
 for start,end in regions:
     print('\nRVA',hex(start),hex(end))
     for ins in md.disasm(image[start:end],pe.OPTIONAL_HEADER.ImageBase+start):
-        print(f'{ins.address:x} {ins.mnemonic:10} {ins.op_str}')
+        print(f'{ins.address:x} {ins.mnemonic:10} {ins.op_str}'.rstrip())
