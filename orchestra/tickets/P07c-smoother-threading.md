@@ -27,7 +27,8 @@ depends: P07a-parallel-helper-kirakira
 - A before/after timing table.
 
 ## Rules
-- Use 1-2 processes for fuzz and builds. Benchmarks must run alone; check `memory_pressure` (≥30% free).
+- Use 1-2 processes for fuzz and builds. Check `memory_pressure` (≥30% free).
+- **Benchmarks must hold the shared lock**, because other workers run in parallel: wrap every timing run (P00b driver or `sample`) in `lockf -k ~/.cache/olm-emu/bench.lock <command>`. Never time anything outside the lock. Note in the report if timings look load-affected.
 - Change only this plugin's sources, its plugin-only core helpers, and `core/olm_parallel.h`.
 - Do not touch the release gate or ledger, never edit `04_Tools/AEXCompat*`, and do not rebuild the oracle.
 - Commit partial results at least every 30 minutes. The stop rule applies.
