@@ -12,4 +12,4 @@ with (here/'original-disassembly.txt').open('w') as out:
  for address,size in [(0x1800094b0,480),(0x1800113c0,128),(0x1800117c0,210)]:
   out.write(f'\n0x{address:x}\n')
   for i in md.disasm(pe.get_data(address-base,size),address):
-   out.write(f'{i.address:x}: {i.mnemonic} {i.op_str}\n')
+   out.write(f'{i.address:x}: {i.mnemonic} {i.op_str}'.rstrip()+'\n')

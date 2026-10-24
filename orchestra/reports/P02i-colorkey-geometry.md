@@ -89,7 +89,9 @@ ParamsSetup source parser, stale source hashes, and old hostless mock missing
 `distance_step_x/y` (including the historical generic ROI test). No existing
 unit expectation was rewritten. Initial collection failed for missing pytest,
 Pillow and pefile; a ticket-local venv with pytest/pillow/numpy/unicorn/capstone/
-pefile resolved collection before the reported runs. `git diff --check` passes.
+pefile resolved collection before the reported runs. The first staged whitespace
+check caught trailing spaces emitted for operand-free disassembly instructions;
+the generator/output were corrected in a follow-up commit. Final diff check passes.
 
 inference:
 

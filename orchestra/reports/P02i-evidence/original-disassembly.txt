@@ -59,7 +59,7 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 180009589: mov rdx, r13
 18000958c: lea rcx, [rsp + 0x70]
 180009591: call 0x180010e90
-180009596: nop 
+180009596: nop
 180009597: mov byte ptr [rsp + 0x28], 1
 18000959c: mov eax, dword ptr [r14 + 0x20]
 1800095a0: mov dword ptr [rsp + 0x20], eax
@@ -68,7 +68,7 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 1800095ac: mov rdx, r13
 1800095af: lea rcx, [rbp + 0x70]
 1800095b3: call 0x180010e90
-1800095b8: nop 
+1800095b8: nop
 1800095b9: mov byte ptr [rsp + 0x28], 1
 1800095be: mov dword ptr [rsp + 0x20], 0x20
 1800095c6: mov r9d, dword ptr [r15 + 0x28]
@@ -76,7 +76,7 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 1800095ce: mov rdx, r13
 1800095d1: lea rcx, [rbp - 0x10]
 1800095d5: call 0x180010e90
-1800095da: nop 
+1800095da: nop
 1800095db: lea rbx, [r12 + 0x2c]
 1800095e0: mov qword ptr [rsp + 0x28], r14
 1800095e5: lea rax, [rip - 0x77ec]
@@ -132,25 +132,25 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 1800113d2: lea rdx, [r8 + rax*4]
 1800113d6: add rdx, qword ptr [rcx + 0x18]
 1800113da: mov qword ptr [r9], rdx
-1800113dd: ret 
-1800113de: int3 
-1800113df: int3 
-1800113e0: int3 
-1800113e1: int3 
-1800113e2: int3 
-1800113e3: int3 
-1800113e4: int3 
-1800113e5: int3 
-1800113e6: int3 
-1800113e7: int3 
-1800113e8: int3 
-1800113e9: int3 
-1800113ea: int3 
-1800113eb: int3 
-1800113ec: int3 
-1800113ed: int3 
-1800113ee: int3 
-1800113ef: int3 
+1800113dd: ret
+1800113de: int3
+1800113df: int3
+1800113e0: int3
+1800113e1: int3
+1800113e2: int3
+1800113e3: int3
+1800113e4: int3
+1800113e5: int3
+1800113e6: int3
+1800113e7: int3
+1800113e8: int3
+1800113e9: int3
+1800113ea: int3
+1800113eb: int3
+1800113ec: int3
+1800113ed: int3
+1800113ee: int3
+1800113ef: int3
 1800113f0: mov qword ptr [r9], 0
 1800113f7: imul r8d, dword ptr [rcx + 0x20]
 1800113fc: movsxd rax, edx
@@ -158,25 +158,25 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 180011402: lea rdx, [r8 + rax*8]
 180011406: add rdx, qword ptr [rcx + 0x18]
 18001140a: mov qword ptr [r9], rdx
-18001140d: ret 
-18001140e: int3 
-18001140f: int3 
-180011410: int3 
-180011411: int3 
-180011412: int3 
-180011413: int3 
-180011414: int3 
-180011415: int3 
-180011416: int3 
-180011417: int3 
-180011418: int3 
-180011419: int3 
-18001141a: int3 
-18001141b: int3 
-18001141c: int3 
-18001141d: int3 
-18001141e: int3 
-18001141f: int3 
+18001140d: ret
+18001140e: int3
+18001140f: int3
+180011410: int3
+180011411: int3
+180011412: int3
+180011413: int3
+180011414: int3
+180011415: int3
+180011416: int3
+180011417: int3
+180011418: int3
+180011419: int3
+18001141a: int3
+18001141b: int3
+18001141c: int3
+18001141d: int3
+18001141e: int3
+18001141f: int3
 180011420: mov qword ptr [r9], 0
 180011427: imul r8d, dword ptr [rcx + 0x20]
 18001142c: movsxd rax, edx
@@ -239,7 +239,7 @@ AEX SHA256 9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c
 18001187b: call r10
 18001187e: mov ecx, eax
 180011880: call 0x180010890
-180011885: nop 
+180011885: nop
 180011886: mov rax, qword ptr [r14 + 8]
 18001188a: mov edx, 1
 18001188f: mov rcx, r12
