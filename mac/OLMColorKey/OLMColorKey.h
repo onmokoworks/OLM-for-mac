@@ -126,6 +126,9 @@ typedef struct {
 	PF_FpLong threshold_r;
 	PF_FpLong threshold_g;
 	PF_FpLong threshold_b;
+	// Original distance generators use the host denominators, not num/den.
+	float distance_step_x;
+	float distance_step_y;
 	A_long edge_thin_amount;
 	A_long edge_thin_distance_type;
 	PF_FpLong edge_blur_amount;
