@@ -3698,7 +3698,8 @@ RenderEntryChain(PF_InData       *in_data,
                  PF_EffectWorld  *output,
                  RenderState     *state,
                  PF_Err         (*main_pix_fn)(void*, A_long, A_long, PixelT*, PixelT*),
-                 PF_Err         (*mask_pix_fn)(void*, A_long, A_long, PixelT*, PixelT*))
+                 PF_Err         (*mask_pix_fn)(void*, A_long, A_long, PixelT*, PixelT*),
+                 bool             classic_extent = false)
 {
 	PF_Err err = PF_Err_NONE;
 	(void)in_data;
@@ -3710,14 +3711,21 @@ RenderEntryChain(PF_InData       *in_data,
 	// those writes race and make the result dependent on host scheduling.  The
 	// Windows control flow is scanline ordered, so keep this lane deterministic
 	// with an explicit top-to-bottom, left-to-right traversal.
-	auto scan_world = [](PF_EffectWorld *src, PF_EffectWorld *dst, void *refcon,
+	// Original Classic passes the OUTPUT extent to both iterate calls, including
+	// the key-mask pass into the source-sized temporary world (PF16 +0x12f0,
+	// +0x1389; PF8 +0x1510, +0x15a9). Copies and contour reads remain world-wide.
+	const A_long left = classic_extent ? output->extent_hint.left : 0;
+	const A_long top = classic_extent ? output->extent_hint.top : 0;
+	const A_long right = classic_extent ? output->extent_hint.right : output->width;
+	const A_long bottom = classic_extent ? output->extent_hint.bottom : output->height;
+	auto scan_world = [=](PF_EffectWorld *src, PF_EffectWorld *dst, void *refcon,
 	                     PF_Err (*pixel_fn)(void*, A_long, A_long, PixelT*, PixelT*)) -> PF_Err {
-		for (A_long y = 0; y < dst->height; ++y) {
+		for (A_long y = top; y < bottom; ++y) {
 			PixelT *src_row = reinterpret_cast<PixelT *>(
 				reinterpret_cast<uint8_t *>(src->data) + (int64_t)y * src->rowbytes);
 			PixelT *dst_row = reinterpret_cast<PixelT *>(
 				reinterpret_cast<uint8_t *>(dst->data) + (int64_t)y * dst->rowbytes);
-			for (A_long x = 0; x < dst->width; ++x) {
+			for (A_long x = left; x < right; ++x) {
 				PF_Err pixel_err = pixel_fn(refcon, x, y, src_row + x, dst_row + x);
 				if (pixel_err) return pixel_err;
 			}
@@ -3827,7 +3835,8 @@ DispatchRender(PF_InData       *in_data,
                PF_ParamDef     *params[],
                PF_EffectWorld  *input,
                PF_EffectWorld  *output,
-               short            bitdepth)
+               short            bitdepth,
+               bool             classic_extent = false)
 {
 	RenderState state;
 	BuildRenderState(params, bitdepth, &state);
@@ -3837,19 +3846,19 @@ DispatchRender(PF_InData       *in_data,
 			in_data,
 			kPFIterate8Suite, kPFIterate8SuiteVersion1,
 			input, output, &state,
-			ScanlinePixel8_Main, ScanlinePixel8_KeyMask);
+			ScanlinePixel8_Main, ScanlinePixel8_KeyMask, classic_extent);
 	} else if (bitdepth == 16) {
 		return RenderEntryChain<PF_Pixel16, PF_Iterate16Suite1>(
 			in_data,
 			kPFIterate16Suite, kPFIterate16SuiteVersion1,
 			input, output, &state,
-			ScanlinePixel16_Main, ScanlinePixel16_KeyMask);
+			ScanlinePixel16_Main, ScanlinePixel16_KeyMask, classic_extent);
 	} else {
 		return RenderEntryChain<PF_PixelFloat, PF_IterateFloatSuite1>(
 			in_data,
 			kPFIterateFloatSuite, kPFIterateFloatSuiteVersion1,
 			input, output, &state,
-			ScanlinePixelFloat_Main, ScanlinePixelFloat_KeyMask);
+			ScanlinePixelFloat_Main, ScanlinePixelFloat_KeyMask, classic_extent);
 	}
 }
 
@@ -4002,12 +4011,11 @@ ValidatePublicWorlds(PF_InData *in_data,
                      PF_OutData *out_data,
                      PF_EffectWorld *input,
                      PF_EffectWorld *output,
-                     short *depth)
+                     short *depth,
+                     bool classic_extent = false)
 {
-	// Full-frame-only contract: EdgeWalker{8,16} can follow a contour until a
-	// world boundary and the interpolation handlers write neighbouring output
-	// pixels. A non-zero extent/ROI or independently rendered tile therefore has
-	// no finite halo that guarantees composition parity with a full-frame pass.
+	// The non-original Smart wrapper retains its full-frame admission policy.
+	// Classic follows the original output-extent iteration contract below.
 	if (!input || !output || !input->data || !output->data || !depth)
 		return OLM_SMOOTHER_REFUSAL("world-args-null");
 	if (input->width <= 0 || input->height <= 0)
@@ -4016,13 +4024,23 @@ ValidatePublicWorlds(PF_InData *in_data,
 		return OLM_SMOOTHER_REFUSAL("world-dimension-mismatch");
 	if (input->rowbytes <= 0 || output->rowbytes <= 0)
 		return OLM_SMOOTHER_REFUSAL("world-rowbytes-nonpositive");
-	if (input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
+	if (!classic_extent && (input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
 	    input->extent_hint.right != input->width ||
 	    input->extent_hint.bottom != input->height ||
 	    output->extent_hint.left != 0 || output->extent_hint.top != 0 ||
 	    output->extent_hint.right != output->width ||
-	    output->extent_hint.bottom != output->height) {
+	    output->extent_hint.bottom != output->height)) {
 		return OLM_SMOOTHER_REFUSAL("world-extent-not-full-frame");
+	}
+	// Classic's iterate area must fit the supplied worlds. Input extent is not
+	// used by the original entry chain; output extent selects callback centers,
+	// not a clipping boundary for contour reads or neighbouring writes.
+	if (classic_extent && (output->extent_hint.left < 0 || output->extent_hint.top < 0 ||
+	    output->extent_hint.right < output->extent_hint.left ||
+	    output->extent_hint.bottom < output->extent_hint.top ||
+	    output->extent_hint.right > output->width ||
+	    output->extent_hint.bottom > output->height)) {
+		return OLM_SMOOTHER_REFUSAL("world-output-extent-invalid");
 	}
 	// Bound the public lane to the production envelope exercised by the beta
 	// suite.  The contour walkers are frame-wide and Render stages both worlds,
@@ -4071,7 +4089,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		return OLM_SMOOTHER_REFUSAL("render-null-params");
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
 	short bitdepth = 0;
-	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &bitdepth);
+	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &bitdepth, true);
 	if (err) return err;
 	if (!V1ClassicAdmission((const PF_ParamDef *const *)params, input, bitdepth))
 		return OLM_SMOOTHER_REFUSAL("classic-admission");
@@ -4095,7 +4113,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	staged_input.rowbytes = (A_long)staging.row_bytes();
 	staged_output.data = reinterpret_cast<decltype(staged_output.data)>(staging.output_data());
 	staged_output.rowbytes = (A_long)staging.row_bytes();
-	err = DispatchRender(in_data, params, &staged_input, &staged_output, bitdepth);
+	err = DispatchRender(in_data, params, &staged_input, &staged_output, bitdepth, true);
 	if (!err && staging.commit() != olm::world_safety::Status::ok)
 		err = OLM_SMOOTHER_REFUSAL("render-staging-commit");
 	return err;

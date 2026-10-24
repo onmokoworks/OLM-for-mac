@@ -1,0 +1,232 @@
+test_v1_world_suite (test_olmsmoother_real_sdk_suite_lifecycle_20260813.RealSdkSuiteLifecycle.test_v1_world_suite) ... /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/probe_olmsmoother_real_sdk_suite_lifecycle_20260813.cpp:3:10: fatal error: 'AE_Effect.h' file not found
+    3 | #include "AE_Effect.h"
+      |          ^~~~~~~~~~~~~
+1 error generated.
+In file included from mac/OLMSmoother/OLMSmoother_Strings.cpp:1:
+mac/OLMSmoother/OLMSmoother.h:15:10: fatal error: 'AEConfig.h' file not found
+   15 | #include "AEConfig.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp:30:10: error: 'AEGP_SuiteHandler.h' file not found with <angled> include; use "quotes" instead
+   30 | #include <AEGP_SuiteHandler.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~
+      |          "AEGP_SuiteHandler.h"
+In file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp:30:
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:68:10: fatal error: 'AE_GeneralPlug.h' file not found
+   68 | #include <AE_GeneralPlug.h>
+      |          ^~~~~~~~~~~~~~~~~~
+2 errors generated.
+In file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp:22:
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:68:10: fatal error: 'AE_GeneralPlug.h' file not found
+   68 | #include <AE_GeneralPlug.h>
+      |          ^~~~~~~~~~~~~~~~~~
+1 error generated.
+ERROR
+test_v2_world_and_color_suites (test_olmsmoother_real_sdk_suite_lifecycle_20260813.RealSdkSuiteLifecycle.test_v2_world_and_color_suites) ... /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/probe_olmsmoother_real_sdk_suite_lifecycle_20260813.cpp:3:10: fatal error: 'AE_Effect.h' file not found
+    3 | #include "AE_Effect.h"
+      |          ^~~~~~~~~~~~~
+1 error generated.
+In file included from mac/OLMSmoother2/OLMSmoother2_Strings.cpp:1:
+mac/OLMSmoother2/OLMSmoother2.h:15:10: fatal error: 'AEConfig.h' file not found
+   15 | #include "AEConfig.h"
+      |          ^~~~~~~~~~~~
+1 error generated.
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp:30:10: error: 'AEGP_SuiteHandler.h' file not found with <angled> include; use "quotes" instead
+   30 | #include <AEGP_SuiteHandler.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~
+      |          "AEGP_SuiteHandler.h"
+In file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp:30:
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:68:10: fatal error: 'AE_GeneralPlug.h' file not found
+   68 | #include <AE_GeneralPlug.h>
+      |          ^~~~~~~~~~~~~~~~~~
+2 errors generated.
+In file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp:22:
+/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:68:10: fatal error: 'AE_GeneralPlug.h' file not found
+   68 | #include <AE_GeneralPlug.h>
+      |          ^~~~~~~~~~~~~~~~~~
+1 error generated.
+ERROR
+setUpClass (test_olmsmoother_source_bound_universal_candidates_20260813.CandidateIdentity) ... ERROR
+In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/probe_olmsmoother_source_contract_20260813.cpp:5:
+/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/../../cli/OLMSmoother2/shim/OLMSmoother2.h:221:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };
+      |                                                      ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+1 warning generated.
+test_sha256_known_answers (test_olmsmoother_source_contract_20260813.SourceContract.test_sha256_known_answers) ... ok
+test_v1_every_fixed_source_is_pinned (test_olmsmoother_source_contract_20260813.SourceContract.test_v1_every_fixed_source_is_pinned) ... ok
+test_v1_probe_matches_every_fixture_digest (test_olmsmoother_source_contract_20260813.SourceContract.test_v1_probe_matches_every_fixture_digest) ... ok
+test_v1_tuple_to_digest_placement_is_exact (test_olmsmoother_source_contract_20260813.SourceContract.test_v1_tuple_to_digest_placement_is_exact) ... ok
+test_v2_every_fixed_source_is_pinned (test_olmsmoother_source_contract_20260813.SourceContract.test_v2_every_fixed_source_is_pinned) ... ok
+test_v2_probe_matches_every_fixture_digest (test_olmsmoother_source_contract_20260813.SourceContract.test_v2_probe_matches_every_fixture_digest) ... ok
+test_v2_tuple_to_digest_placement_is_exact (test_olmsmoother_source_contract_20260813.SourceContract.test_v2_tuple_to_digest_placement_is_exact) ... ok
+test_wrong_pf16_17x11_hashes_are_absent (test_olmsmoother_source_contract_20260813.SourceContract.test_wrong_pf16_17x11_hashes_are_absent) ... ok
+test_authority_and_unknown_rejected (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_authority_and_unknown_rejected) ... ok
+test_complete_union (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_complete_union) ... ok
+test_default_live_read_only (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_default_live_read_only) ... FAIL
+test_hashes (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_hashes) ... FAIL
+test_recanonicalized_transcript_rejected (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_recanonicalized_transcript_rejected) ... ok
+test_scope_escalation_rejected (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_scope_escalation_rejected) ... ok
+test_authority_summary_unknown_rejected (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_authority_summary_unknown_rejected) ... ok
+test_canonical_hashes (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_canonical_hashes) ... FAIL
+test_default_live_read_only (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_default_live_read_only) ... FAIL
+test_recanonicalized_transcript_rejected (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_recanonicalized_transcript_rejected) ... ok
+test_relation (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_relation) ... ok
+test_scope_escalation_rejected (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_scope_escalation_rejected) ... ok
+test_optimized_keyed_hd_and_4k_determinism (test_olmsmoother_v1_generic_classic_beta_20260820.GenericClassicBeta.test_optimized_keyed_hd_and_4k_determinism) ... ok
+test_optimized_sd_hd_determinism (test_olmsmoother_v1_generic_classic_beta_20260820.GenericClassicBeta.test_optimized_sd_hd_determinism) ... ok
+test_sanitized_odd_sd_all_tolerances_and_determinism (test_olmsmoother_v1_generic_classic_beta_20260820.GenericClassicBeta.test_sanitized_odd_sd_all_tolerances_and_determinism) ... ok
+test_source_uses_bounded_transactional_world_safety (test_olmsmoother_v1_generic_classic_beta_20260820.GenericClassicBeta.test_source_uses_bounded_transactional_world_safety) ... ok
+test_current_classic_and_smart_match_windows_pf16_practical_oracle (test_olmsmoother_v1_smart_beta_20260822.SmootherV1SmartBeta.test_current_classic_and_smart_match_windows_pf16_practical_oracle) ... ok
+test_optimized_classic_smart_parity_and_cleanup_atomicity (test_olmsmoother_v1_smart_beta_20260822.SmootherV1SmartBeta.test_optimized_classic_smart_parity_and_cleanup_atomicity) ... ok
+test_optimized_hd_uhd_classic_smart_parity (test_olmsmoother_v1_smart_beta_20260822.SmootherV1SmartBeta.test_optimized_hd_uhd_classic_smart_parity) ... ok
+test_smart_lane_under_address_and_undefined_sanitizers (test_olmsmoother_v1_smart_beta_20260822.SmootherV1SmartBeta.test_smart_lane_under_address_and_undefined_sanitizers) ... ok
+test_all_offsets_widths_and_native_fallback_sanitized (test_olmsmoother_v1_synthetic_stack.SyntheticStack.test_all_offsets_widths_and_native_fallback_sanitized) ... ok
+test_canonical_request_contains_exactly_one_native_pf16_smoother_row (test_olmsmoother_v1_windows_boundary_mac_ae_20260806.SmootherV1WindowsBoundaryMacAEContractTests.test_canonical_request_contains_exactly_one_native_pf16_smoother_row) ... ok
+test_current_mac_replay_remains_fail_closed (test_olmsmoother_v1_windows_boundary_mac_ae_20260806.SmootherV1WindowsBoundaryMacAEContractTests.test_current_mac_replay_remains_fail_closed) ... ok
+test_runner_is_valid_python_and_pins_canonical_request (test_olmsmoother_v1_windows_boundary_mac_ae_20260806.SmootherV1WindowsBoundaryMacAEContractTests.test_runner_is_valid_python_and_pins_canonical_request) ... ok
+
+======================================================================
+ERROR: test_v1_world_suite (test_olmsmoother_real_sdk_suite_lifecycle_20260813.RealSdkSuiteLifecycle.test_v1_world_suite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_real_sdk_suite_lifecycle_20260813.py", line 29, in test_v1_world_suite
+    lines=self.compile_run('V1');self.assertEqual(len([x for x in lines if x.startswith('WORLD ')]),6)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_real_sdk_suite_lifecycle_20260813.py", line 24, in compile_run
+    subprocess.run(command,cwd=ROOT,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/ucrt_cxx.py', '-std=c++17', '-arch', 'arm64', '-O2', '-Wno-pragma-pack', '-Wno-deprecated-declarations', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk', '-IHeaders', '-IHeaders/SP', '-IUtil', '-IResources', '-Imac/OLMSmoother', '-DTEST_SMOOTHER_V1=1', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/probe_olmsmoother_real_sdk_suite_lifecycle_20260813.cpp', 'mac/OLMSmoother/OLMSmoother_Strings.cpp', '/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp', '/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp', '-framework', 'Cocoa', '-o', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/orchestra/state/P02g-smoother-geometry/units/olmsmoother-V1-real-sdk.e884k2vi/probe']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_v2_world_and_color_suites (test_olmsmoother_real_sdk_suite_lifecycle_20260813.RealSdkSuiteLifecycle.test_v2_world_and_color_suites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_real_sdk_suite_lifecycle_20260813.py", line 31, in test_v2_world_and_color_suites
+    lines=self.compile_run('V2');self.assertEqual(len([x for x in lines if x.startswith('WORLD ')]),6);self.assertEqual(len([x for x in lines if x.startswith('COLOR ')]),6)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_real_sdk_suite_lifecycle_20260813.py", line 24, in compile_run
+    subprocess.run(command,cwd=ROOT,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/ucrt_cxx.py', '-std=c++17', '-arch', 'arm64', '-O2', '-Wno-pragma-pack', '-Wno-deprecated-declarations', '-isysroot', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk', '-IHeaders', '-IHeaders/SP', '-IUtil', '-IResources', '-Imac/OLMSmoother2', '-DTEST_SMOOTHER_V2=1', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/probe_olmsmoother_real_sdk_suite_lifecycle_20260813.cpp', 'mac/OLMSmoother2/OLMSmoother2_Strings.cpp', '/Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.cpp', '/Users/onmk/Documents/Projects/Personal/OLM as/Util/MissingSuiteError.cpp', '-framework', 'Cocoa', '-o', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/orchestra/state/P02g-smoother-geometry/units/olmsmoother-V2-real-sdk.7jvv87s0/probe']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmsmoother_source_bound_universal_candidates_20260813.CandidateIdentity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_source_bound_universal_candidates_20260813.py", line 28, in setUpClass
+    cls.data = json.loads(audit.MANIFEST.read_text())
+                          ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/handoffs/olmsmoother_source_bound_atomic_universal_candidate_v3_20260813/build_identity.json'
+
+======================================================================
+FAIL: test_default_live_read_only (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_default_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 14, in test_default_live_read_only
+    before=REPORT.read_bytes(),MD.read_bytes();p=subprocess.run([sys.executable,str(GEN)],cwd=ROOT,text=True,capture_output=True);self.assertEqual(p.returncode,0,p.stdout+p.stderr);self.assertEqual(before,(REPORT.read_bytes(),MD.read_bytes()))
+                                                                                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 98, in <module>
+    if __name__=="__main__":main()
+                            ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 92, in main
+    p=argparse.ArgumentParser();p.add_argument("--write",action="store_true");a=p.parse_args();fresh=generate();validate(fresh)
+                                                                                                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 76, in generate
+    if authorities()!=PINS:raise RuntimeError(f"authority drift: {authorities()}")
+       ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 32, in authorities
+    def authorities():return{"probe":sha(PROBE),"source":sha(SOURCE),"strings":sha(STRINGS),"suite_cpp":sha(SUITE_CPP),"missing_cpp":sha(MISSING_CPP),"sdk_header":sha(SDK),"installed_binary":sha(INSTALLED),"guard_report":sha(GUARD),"install_identity":sha(IDENTITY),"fullframe_png":sha(IMAGE)}
+                                                                                                                                                                                               ~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 31, in sha
+    def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother'
+
+
+======================================================================
+FAIL: test_hashes (test_olmsmoother_v1_current_installed_admission_union_20260813.V1InstalledAdmissionUnion.test_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_v1_current_installed_admission_union_20260813.py", line 15, in test_hashes
+    def test_hashes(self):self.assertEqual((sha(GEN),sha(REPORT),sha(MD)),(GEN_SHA,REPORT_SHA,MD_SHA))
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('148c2b521e9b4893521b678c5c9d0ab3d3ed4866f[156 chars]96c') != ('a0b70c8cad308344375ef6a2ca0909b7ca76d7d19[156 chars]96c')
+
+First differing element 0:
+'148c2b521e9b4893521b678c5c9d0ab3d3ed4866fc3c286161b3fbe69918d33a'
+'a0b70c8cad308344375ef6a2ca0909b7ca76d7d19725bf11c5e6df3b40d2955e'
+
+- ('148c2b521e9b4893521b678c5c9d0ab3d3ed4866fc3c286161b3fbe69918d33a',
++ ('a0b70c8cad308344375ef6a2ca0909b7ca76d7d19725bf11c5e6df3b40d2955e',
+   '34d66834c08ff265b8760ec84f2b2595023ca3ed9120582726f97e3d10c3963a',
+   '4b399a5411a5d2b6dfe7dd9071dec9f0ebb859b536f0557343425b6f5450796c')
+
+======================================================================
+FAIL: test_canonical_hashes (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_canonical_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_v1_current_installed_public_20260813.py", line 53, in test_canonical_hashes
+    self.assertEqual(sha256(GENERATOR), GENERATOR_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '4ba513533e110f5f9df1b7e1fed1cf1423e36a95c361050f1ccc7b3562e70f65' != '91aef0fd8fc63631e3dfa614eda7fefcae90f34607b9600b6af02939d8c68756'
+- 4ba513533e110f5f9df1b7e1fed1cf1423e36a95c361050f1ccc7b3562e70f65
++ 91aef0fd8fc63631e3dfa614eda7fefcae90f34607b9600b6af02939d8c68756
+
+
+======================================================================
+FAIL: test_default_live_read_only (test_olmsmoother_v1_current_installed_public_20260813.OLMSmootherV1CurrentInstalledPublicTest.test_default_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tests/test_olmsmoother_v1_current_installed_public_20260813.py", line 49, in test_default_live_read_only
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_public_20260813.py", line 152, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_public_20260813.py", line 137, in main
+    fresh = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_public_20260813.py", line 94, in generate
+    live = authorities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_public_20260813.py", line 59, in authorities
+    "suite_cpp": sha256(SUITE_CPP), "suite_h": sha256(SUITE_H),
+                 ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/tools/emulation/test_olmsmoother_v1_current_installed_public_20260813.py", line 53, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P02g-smoother-geometry/Util/AEGP_SuiteHandler.cpp'
+
+
+----------------------------------------------------------------------
+Ran 34 tests in 44.971s
+
+FAILED (failures=4, errors=3)
