@@ -24,9 +24,9 @@ class DistanceGradationSmartTransactionalTests(unittest.TestCase):
         self.assertIn("olm::world_safety::TightStaging staging", body)
         self.assertIn("staging.prepare", body)
         self.assertIn("render_complete = !err", body)
-        self.assertIn("staging.commit()", body)
-        self.assertLess(body.index("PF_CHECKIN_PARAM"), body.index("staging.commit()"))
-        self.assertLess(body.index("checkin_layer_pixels"), body.index("staging.commit()"))
+        self.assertIn("std::memcpy((uint8_t*)output_world->data", body)
+        self.assertLess(body.index("PF_CHECKIN_PARAM"), body.index("std::memcpy((uint8_t*)output_world->data"))
+        self.assertLess(body.index("checkin_layer_pixels"), body.index("std::memcpy((uint8_t*)output_world->data"))
 
     def test_public_smart_contract_is_atomic_under_sanitizers(self):
         # Reuse the complete public-owner lifecycle probe, strengthening its two

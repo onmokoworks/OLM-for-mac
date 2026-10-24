@@ -1,0 +1,289 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      17,
+      1,
+      23,
+      2
+    ],
+    "full_geometry": [
+      62,
+      23
+    ],
+    "geometry": [
+      31,
+      8
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 97,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 128
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 128
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 6,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 7,
+        "value": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 8,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "u",
+        "slot": 9,
+        "value": 2
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 1.0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 10
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      31,
+      8
+    ],
+    "rowbytes_padding": 32,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 97,
+  "input_sha256": "1a2f513b0666f026f7f4fd9470bc37b44acd24d82b3b572794a224edb9ea2d74",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmdistancegradation",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+    "candidate_sha256": "6604930c28085da2d2aefdf9d3dfb0232a4544c3bf7c32bb6e37cdbef644ca2e",
+    "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+    "dependencies_sha256": {
+      "core/olmdistancegradation_fieldgen.cpp": "9a758fe4ba0b2da7f62d42f373439dec30f87a3964adca519793a4b837611525",
+      "core/olmdistancegradation_fieldgen.h": "7f9c1a6e0805bfbda84d957dbf72c9b8047728edbdd51f26fc594a2138b5af10",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "0c49669c3c6393a4f1b3381263fc1ce38197a25742aef756beefe7d19cc7836c",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+      "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+      "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.0,
+        "sampled_default": 1,
+        "slot": 2
+      }
+    ],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "label": "P02b realistic-v1"
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        31,
+        8
+      ],
+      "raw_sha256": "be52bdbae73e8c08bd2081fdd70bf5c6ff5aefa40c5fa8dd11d009a264ceaec2",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          31,
+          8
+        ],
+        "raw_sha256": "e954c0617bf941a579ebc43e50d4126b806e69b719c77c57bffcf4384c136f66",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          31,
+          8
+        ],
+        "raw_sha256": "be52bdbae73e8c08bd2081fdd70bf5c6ff5aefa40c5fa8dd11d009a264ceaec2",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1984,
+          "actual_word_hex": "0000",
+          "different_bytes": 890,
+          "different_words": 807,
+          "expected_bytes": 1984,
+          "expected_word_hex": "0080",
+          "first_byte": 1,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "62 23 1 2 1 3 10 11 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          31,
+          8
+        ],
+        "raw_sha256": "c56cb8946ee2554edf7d8894687fce6faabdbe1555a1617c98c4733824ef9eee",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 12 12",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 31 8",
+          "GEOMETRY_INPUT": "62 23 1 2 1 3 10 11 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          31,
+          8
+        ],
+        "raw_sha256": "be52bdbae73e8c08bd2081fdd70bf5c6ff5aefa40c5fa8dd11d009a264ceaec2",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

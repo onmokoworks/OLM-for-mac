@@ -1,0 +1,289 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      13,
+      8
+    ],
+    "full_geometry": [
+      39,
+      24
+    ],
+    "geometry": [
+      13,
+      8
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 75,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 30
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 128
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 7,
+        "value": [
+          128,
+          218,
+          56,
+          203
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 8,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "u",
+        "slot": 9,
+        "value": 2
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 1.4112533076656903
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      13,
+      8
+    ],
+    "rowbytes_padding": 0,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 75,
+  "input_sha256": "e1bd5a7dd406cb9e802b256e8f363db70e592d510f3069df74dafbbcafc8faa1",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNolVHlYzHkcnk3bdDwaOy2rdKl2u6hssmnm93lLObp0yDHPpiWipttWCllrWvtU0zpCF9kWidqEkdZRLascxYaylB5HMWpLRmskPGu+/f57n8/7vt/P8T4/Ho+H7W461FxnDff2YJxWGOChXi9l6cjp2Flj8D5+ZkWd4sfm8bjp0M3xeFtQ6TsgVs6LILMDGdBgH/dwvKuPwYJk9cc6Dy0efMg6A/FW0EYa/dOC2+S3eCd3Rm8p4/dnuqDeSADjydc0dUz+wgfC8CLurCAKMv9EpEYEotRrEbrtBOw9OTngVKOMhvjdzG+ByAZtP3ijOOoGw37uPPwna6ER68Ok4ZcftUZCaQnV81YwfDPdHHdt3RHkeJL1VyaJpEOVavLQyxZr9EPPI+nP2kHyiGhhfGWtmO6Hm2Cjkz1IyxHTHjbRG36l2CHVk/Vr5/IXTdcHqUMqNH68h8YVlNN8jJr4cWy+AWkHV3zCFVn9T5nfi5VC7L54hbMqSGL7FFc205DFZU60qkikwfyyqagTS3FwhgOrnxFNQOWz+bhQtY3Nt1n9FTm/X04vdskZ5ruHQSfNFlNiGsjz/iq07w3Co8P6iE3ZR8vmTod8eBY+VyQip3qOxg/5vjHQKjLD7ITzTL9jYBPKGpPw+Agfb8riUWLBh7B4L4XWpbL353dp43qePYSrE/Bj9VHqdF1DXqalnFthMNNvSjfEoLMx7Q3NZPyFa3NIsESMbSGF7F4p8tlI7A/A/toUGByZjk1zTNCXEoQR6QrGD5Fa0Wp5MGqGHSCuOSr+oyibwqWBlO8TpbkHGtKnoOX3y+T4WsT6j01X0PtVbZxWnR/TD+f6U/kFU0z8qZnxv8z7mNOWWOROuML2HWRnSJE7x8FUN4HxVSU36Ndb1lzktFBMyOijLuUaWIacIN/yUJxdMo6SvG/TratD3PpcHrufyas5KKjZT/yXbB/o9z5Jp2Y7IK8rnuHEcm3xk7vH6Ux0B8tD+8wIaKkSoP72HctDmEUrBXruECv3KFi+6oLdOHVjE/n5V7H+LkX9gO1mliTpfE61BobUoIrjygONcOeDDstnUHQq8pV2qOKMWP8x7+/Su0cq8tg1F/ImI4w+HQczi600MLqWvd9YsAHnBs3RNbKdq5JlorVHAqXSFN7SKKZ3lYWiZI0Z3I/+zO63pfoc8Vp9YCOpZzjEKBaFQxepXtjDaVWvxHGrS5zYbRKc347da+sKGRVYT8fusClsfsmlNBL+e4D2cEq6VheNJouNqEg2RK56LN+iD7aiyR2B8GrVZfPWyCs51e1sOl3axvBovCmSQrJpea8l89PvyaX9AXPo6uVy7u9nAsSss8DXCcOclcyT+SVX68FVZyY1DazCg/IOmrFTxlnNlHP3Vq9m+1LEZeDxsg30zzFHRF3/FL4ZNqLW3iLy52+hU8czkLxgEjLDP0FGEo/57RPakUFVEszRwvJTm1xLJsejyJHWQSWSkOizeVRr+5LbuHst63dwmgcGyhVk+BvH9mV6Poz49/eRnkiIHSPXOafuVtI5PR8ufWP+00YaKDVGRfaR3zC9y/g45N/5HgUd9gjjLcLC9a4IcIrDBb3NLG+zfNPQauyEaP8gtg8D70nkliqEwjqC1Y2MpDitP0q/FE8du8fWDk51ZhI6S3wY/5XOE0p20Ob83nzH8P1oGwid7WFcuJj1W+MVh6mKZq5n8yuGPZrMMCoJwL0Znsz/3sHX5LRyGfEsBBj/SAvtcQGI60zA8qwHtCtLG8sT+riyvKW49/za2P800hLPlNnUq84jheoWXZl3krI8rbFOewLz79LVRW//FqpQqBmeqC9AaU4aJ5UYM/3rZVFka3qBZIcm4n+Etkf0",
+  "plugin": "olmdistancegradation",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1",
+    "candidate_sha256": "6604930c28085da2d2aefdf9d3dfb0232a4544c3bf7c32bb6e37cdbef644ca2e",
+    "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+    "dependencies_sha256": {
+      "core/olmdistancegradation_fieldgen.cpp": "9a758fe4ba0b2da7f62d42f373439dec30f87a3964adca519793a4b837611525",
+      "core/olmdistancegradation_fieldgen.h": "7f9c1a6e0805bfbda84d957dbf72c9b8047728edbdd51f26fc594a2138b5af10",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "0c49669c3c6393a4f1b3381263fc1ce38197a25742aef756beefe7d19cc7836c",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+      "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEConfig.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_ChannelDepthTpl.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEFX_SuiteHelper.h": "1eebefb66ea2626f64191c5b003768cb0118313cd56d01dd49bb89dbe4f506c3",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AEGP_SuiteHandler.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Effect.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCB.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_EffectCBSuites.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_GeneralPlug.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/AE_Macros.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/Param_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/String_Utils.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716/entry.h": "9d0bbc16ed6a3c85ae4ba3f05c3727de3ff87efafe74d9b078df7089317a6628",
+      "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+      "tools/fuzz/harnesses/distancegradation_main.cpp": "3d7af822b3b407c2e1ff6e0ed3330d74fbf91da24a2ff093b5d398888241f51d",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/scalar_color_parameters.hpp": "69c270dce56c4b5ffb152cace40aba0b1f5c19cd378d5f4f1b0e17706f72d1b9",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "host_checkout_reference": "fuzz scratch host fills checkout ref_width/ref_height from the layer geometry",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.0,
+        "sampled_default": 1,
+        "slot": 2
+      }
+    ],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "label": "P02b realistic-v1"
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        13,
+        8
+      ],
+      "raw_sha256": "5b3f7cab68f66a451343d8a3a27d1393cde62f849796cc011492547ff704483f",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          13,
+          8
+        ],
+        "raw_sha256": "52b04d220de72da3392db4d81e95dc0b418c8c04e346f7b5acb09e7eadaba5ff",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          13,
+          8
+        ],
+        "raw_sha256": "5b3f7cab68f66a451343d8a3a27d1393cde62f849796cc011492547ff704483f",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1664,
+          "actual_word_hex": "dbda5a3f",
+          "different_bytes": 1401,
+          "different_words": 380,
+          "expected_bytes": 1664,
+          "expected_word_hex": "00000000",
+          "first_byte": 4,
+          "first_word": 1
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "39 24 1 3 1 3 1 1 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          13,
+          8
+        ],
+        "raw_sha256": "8ec408689fad930904fe15a77cb9b9e0a13493906821152eab7ebc4922bfcede",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 12 12",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 13 8",
+          "GEOMETRY_INPUT": "39 24 1 3 1 3 1 1 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          13,
+          8
+        ],
+        "raw_sha256": "5b3f7cab68f66a451343d8a3a27d1393cde62f849796cc011492547ff704483f",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}
