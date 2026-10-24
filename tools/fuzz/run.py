@@ -74,6 +74,8 @@ def options():
     p.add_argument('--corpus-max-bytes', type=int, default=2_000_000)
     p.add_argument('--replay', type=Path, help='Replay a corpus JSON or directory; generation and shrinking are disabled')
     args = p.parse_args()
+    if args.reference_build and args.candidate != 'source':
+        p.error('--reference-build compiles source hosts; it cannot change a supplied bundle')
     if args.candidate == 'plugin-bundle' and (not args.plugin_bundle or args.jobs != 1):
         p.error('plugin-bundle requires --plugin-bundle PATH --jobs 1')
     if not args.plugin.isidentifier():

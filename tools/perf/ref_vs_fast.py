@@ -143,7 +143,10 @@ def cases(adapter, args):
             n = case['geometry'][0]*case['geometry'][1]*case['depth']//8*4
             payload = case['pixels']
             case['pixels'] = (payload * ((n+len(payload)-1)//len(payload)))[:n]
-            adapter.resize(case, old)
+            # P00b presets are literal parameter values, including points.
+            # Only procedural fuzz parameters follow the generated frame resize.
+            if not (corpus and args.large_corpus):
+                adapter.resize(case, old)
         # Downsample/ROI are independently exercised by the small cases. Fixed
         # large cases must really render their requested full frame dimensions.
         if phase == 'small':
@@ -158,6 +161,7 @@ def main():
     p.add_argument('--hd', type=int, default=20)
     p.add_argument('--uhd', type=int, default=5)
     p.add_argument('--seed', type=int, default=1)
+    p.add_argument('--jobs', type=int, choices=(1,), default=1, help='Native builds and renders are serialized')
     p.add_argument('--cycle-depth', action=argparse.BooleanOptionalAction, default=True, help='Guarantee every depth in each fixed-size phase')
     p.add_argument('--max-size', type=int, default=64)
     p.add_argument('--large-corpus', action=argparse.BooleanOptionalAction, default=True, help='Use P00b corpus parameters for fixed-size frames (default: enabled)')
@@ -196,6 +200,11 @@ def main():
         counts = {'exact':0, 'refusal':0, 'mismatch':0}
         with (args.scratch/'results.jsonl').open('w') as report:
             for phase, case in cases(adapters['fast'], args):
+                # A timeout must not leave a previous case's output beside the
+                # current input and metadata. Preserve only this case's streams.
+                for kind in adapters:
+                    for name in ('input.raw','output.raw','stdout','stderr','geometry-input.raw','geometry-output.raw'):
+                        (args.scratch/kind/name).unlink(missing_ok=True)
                 record = {'phase':phase, 'case':{k:v for k,v in case.items() if k!='pixels'}, 'input_sha256':hashlib.sha256(case['pixels']).hexdigest()}
                 (args.scratch/'current-case.json').write_text(json.dumps(record, indent=2)+'\n')
                 ref, reference = run(adapters['reference'],case,args.scratch/'reference',8,args.case_timeout)
