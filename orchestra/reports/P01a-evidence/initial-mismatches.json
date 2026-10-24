@@ -1,0 +1,228 @@
+[
+  {
+    "seed": 1,
+    "index": 31,
+    "geometry": [
+      3,
+      6
+    ],
+    "depth": 16,
+    "profile": "sdr",
+    "parameters": [
+      {
+        "slot": 1,
+        "kind": "s",
+        "value": 1.0
+      },
+      {
+        "slot": 2,
+        "kind": "f",
+        "value": 45.823699951171875
+      },
+      {
+        "slot": 3,
+        "kind": "i",
+        "value": 2
+      },
+      {
+        "slot": 4,
+        "kind": "u",
+        "value": 2
+      },
+      {
+        "slot": 5,
+        "kind": "b",
+        "value": 1
+      }
+    ],
+    "input_padding": 16,
+    "output_padding": 32,
+    "full_geometry": [
+      5,
+      12
+    ],
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "input_sha256": "aeab2cd5c400c49ebfbf496ae2996dfd7cd18b00eec127fdce20c6713273e85f",
+    "result": {
+      "oracles": {
+        "classic": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "aeab2cd5c400c49ebfbf496ae2996dfd7cd18b00eec127fdce20c6713273e85f"
+        },
+        "smart": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "e9d60f76e10221b37bbf75ae2e227afd2f8a5e20fbdeff202d87b7bca451816d"
+        }
+      },
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true,
+        "raw_sha256": "e9d60f76e10221b37bbf75ae2e227afd2f8a5e20fbdeff202d87b7bca451816d"
+      },
+      "routes": {
+        "classic": {
+          "status": "refusal",
+          "error": 516,
+          "metadata": {
+            "ERROR": "516",
+            "COUNTS": "0 0 0 0 0 0"
+          }
+        },
+        "smart": {
+          "status": "mismatch",
+          "error": 0,
+          "metadata": {
+            "ERROR": "0",
+            "COUNTS": "1 1 1 5 5 0"
+          },
+          "raw_sha256": "aeab2cd5c400c49ebfbf496ae2996dfd7cd18b00eec127fdce20c6713273e85f",
+          "diff": {
+            "expected_bytes": 144,
+            "actual_bytes": 144,
+            "different_bytes": 36,
+            "different_words": 18,
+            "first_byte": 10,
+            "first_word": 5,
+            "expected_word_hex": "0000",
+            "actual_word_hex": "0339"
+          }
+        }
+      },
+      "first_mismatching_stage": null,
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "refusals": {
+      "classic": [
+        "Render:classic-nondefault-tuple@1447"
+      ]
+    },
+    "seconds": 0.033571833999303635
+  },
+  {
+    "seed": 1,
+    "index": 87,
+    "geometry": [
+      11,
+      2
+    ],
+    "depth": 16,
+    "profile": "sdr",
+    "parameters": [
+      {
+        "slot": 1,
+        "kind": "s",
+        "value": 1.0
+      },
+      {
+        "slot": 2,
+        "kind": "f",
+        "value": 57.53456115722656
+      },
+      {
+        "slot": 3,
+        "kind": "i",
+        "value": 6
+      },
+      {
+        "slot": 4,
+        "kind": "u",
+        "value": 2
+      },
+      {
+        "slot": 5,
+        "kind": "b",
+        "value": 1
+      }
+    ],
+    "input_padding": 1,
+    "output_padding": 0,
+    "full_geometry": [
+      22,
+      5
+    ],
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "input_sha256": "7fef91b60ae4fb0f4e8966127c3de8e1fe843e559a8383d92f94fb3cf755684f",
+    "result": {
+      "oracles": {
+        "classic": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "7fef91b60ae4fb0f4e8966127c3de8e1fe843e559a8383d92f94fb3cf755684f"
+        },
+        "smart": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "raw_sha256": "90081bb2935837d2845ae854cdcc85281491fc1a5f297214653844fad99a23cc"
+        }
+      },
+      "oracle": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true,
+        "raw_sha256": "90081bb2935837d2845ae854cdcc85281491fc1a5f297214653844fad99a23cc"
+      },
+      "routes": {
+        "classic": {
+          "status": "refusal",
+          "error": 516,
+          "metadata": {
+            "ERROR": "516",
+            "COUNTS": "0 0 0 0 0 0"
+          }
+        },
+        "smart": {
+          "status": "mismatch",
+          "error": 0,
+          "metadata": {
+            "ERROR": "0",
+            "COUNTS": "1 1 1 5 5 0"
+          },
+          "raw_sha256": "7fef91b60ae4fb0f4e8966127c3de8e1fe843e559a8383d92f94fb3cf755684f",
+          "diff": {
+            "expected_bytes": 176,
+            "actual_bytes": 176,
+            "different_bytes": 42,
+            "different_words": 21,
+            "first_byte": 18,
+            "first_word": 9,
+            "expected_word_hex": "0000",
+            "actual_word_hex": "de61"
+          }
+        }
+      },
+      "first_mismatching_stage": null,
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "refusals": {
+      "classic": [
+        "Render:classic-nondefault-tuple@1447"
+      ]
+    },
+    "seconds": 0.034810666998964734
+  }
+]

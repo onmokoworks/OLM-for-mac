@@ -1,0 +1,116 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "full_geometry": [
+      89,
+      1
+    ],
+    "geometry": [
+      45,
+      1
+    ],
+    "index": 28,
+    "input_padding": 7,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 5.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 100.0
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 1
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 28,
+  "input_sha256": "856262cfc424a77c015f5ddc190f6b88cb6553d955f372e41b37026c45f9e4d7",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNodkH0s1HEcx39GdLOEGjHKQymdFjq7P7rf513YJAvDuXaEahHFmPM0inloqNuUHmSzlmaGNV3UFJGH89SDkes2zorJw1SiTCmq+37/e+39fT98vxzHIS6zkUq8rpFLSQGJpp1p94Qxr2pwgSrdFByXhz0jLTx/oIbaMiQoaFFgI0hHa1p7SeCuQGji/SEO8oIoxBaeXsvE/T+WJ7cjY3mVim9chJ6b6iLJZlBBVZ6Neh0LZ7aAmxuh1x+FmDKOhlRsCs+mBLw69YEsN6XBotOKBCltkq+Tzsxv+GmY3PzK6JL2DsvPW1RgpS4XEfJovY5abSICCsWoj21g+eeyx0iR+YTvsstm+5N/59Nq2WFELf3l9f6l99bkIn5DSbnnWX5nw3Fchz1UsizmT83dh40fOv7p8gDjZVcHvOCssG1dzu53JdTQ3XABHOSmrP/Pwk6YhVpS5pgj1KJgzEbNkOJmCv20MubT5By0Zs+p/nEsZv3n2f7guZfUW+2A3GEp83f8vU/xS+HY6E9kfUGicWp2lcJD2Ucy4ZrEO1VHIZudMFPeo98P23k7vjInAUpVDnvfaG03GRoIMREqZvs+x0xRhP1panX/zut1E8lejJiVU566m8wWxum2IJt0qjWaXh9mfSalSbDUPKQs62RMuiZS6QUBImNOkF+0fk8exHaOSKMhuqc+xvo0AfGIErXTopcB4/aKPuqpyIGvkRvjqqNnUaB8S+lfzFn+I00HNRfnU0PRN8bSqYNUOOpP02G9lPxuK4ZsLKBuAsb3y5j/mVIKd6PLWPnlzf5HOOiBBwOH4HtrB+M4Jx+StV7hi+Rh6Dc/Qm4WGnKuNkGlz1XJP+YDBJQ=",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "5d688cb25d489a47c6095da7f2294241c888e4dc66fd5ad1c03fa896caf23392",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "856262cfc424a77c015f5ddc190f6b88cb6553d955f372e41b37026c45f9e4d7",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "5d688cb25d489a47c6095da7f2294241c888e4dc66fd5ad1c03fa896caf23392",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5d688cb25d489a47c6095da7f2294241c888e4dc66fd5ad1c03fa896caf23392",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

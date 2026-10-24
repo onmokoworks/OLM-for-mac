@@ -1,0 +1,116 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "full_geometry": [
+      29,
+      61
+    ],
+    "geometry": [
+      4,
+      8
+    ],
+    "index": 77,
+    "input_padding": 1,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 5.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 14.600418090820312
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 9
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 77,
+  "input_sha256": "c2e9e2b903f59be74721ff08cf1aebcb3565e7bd164f5eb46e5c5c7cf88a2008",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoBgAB//wDXqSD/Kxs1+5q8HyZ7YIL/3EfQAEnEbgAWeFUAtxJgAPd+/KQVwbr/FcrmAMB6MOgV7L0AbpXL/8mQYYETTy3iiv2RAMiPq/9keCH/2y6c//Q+iQA+/fa66rW5AJdtzAB/UsH/u4bp/8nO1P9/VSFqidBj0JrqpwCTtK8AeGpjYxpEdQ==",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "c2e9e2b903f59be74721ff08cf1aebcb3565e7bd164f5eb46e5c5c7cf88a2008",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "c2e9e2b903f59be74721ff08cf1aebcb3565e7bd164f5eb46e5c5c7cf88a2008",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "c2e9e2b903f59be74721ff08cf1aebcb3565e7bd164f5eb46e5c5c7cf88a2008",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c2e9e2b903f59be74721ff08cf1aebcb3565e7bd164f5eb46e5c5c7cf88a2008",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

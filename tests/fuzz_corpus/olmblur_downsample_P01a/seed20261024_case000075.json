@@ -1,0 +1,116 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "full_geometry": [
+      39,
+      24
+    ],
+    "geometry": [
+      13,
+      8
+    ],
+    "index": 75,
+    "input_padding": 3,
+    "output_padding": 5,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 98.13247680664062
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 5
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "signed",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 75,
+  "input_sha256": "e378f62e30179868267bf74e79bec171b989cd03e848ab09e57c566095e38ec0",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNolVHlUzXkUfzUtmtGm06RllFMvjuWlTVH97k1T0maoxmv39FJPKJ5siYjJTEo0lhg1ES2yVcI55ve9mJKdaNQww3GaYqpRMaOIxvv68577+dz7ufd+vl+JRCKxL34GcQ/DWX14HUgk2eDUHkAJATbYUOxBXmFG+P70Q3FwoIt90xr6MS+RLA9YSY0+0RiSEUgafNLkFbTjsQnNFNSoibene+JQVjietJ/1MS+BvKhkQfecNVqQF9Pwk392ZierYyjNTMbxJ95cgude/UJJ6QJNHqbJRuFwZRRl2Aah/r54fHHRCn1yHLHDajnv5/S2Eg5sHGS+T/V5vXG9hVA2oof7VQGszMGZMNaeBoZK2NG0WRxffKwAHK40s7IRYx6vaVJDfOlTmJIRzvVNu29EV/x1xaVpazSxZFSeEb2Z84NokRvGNPgd5ePpbud86LlQDoOjaiBsk5Jlz82g1EZbzldAGnux3o62dEdyPtw8xXrTq1m+sZzP558URClNt+HJkWaR9zc2g5g7ofS1TIEavFG4gumcDyP1gSzOt9n6HaxYF4EFTZVwotFHtHuzRVS7+VJCDhM0ed+tU0ilZUrjf+/k8xumT0SrtkNwbepmll0/G6un2qJJfLUwyeIqW2R+FlxaHsHElAQ0j9PV9ANp0Xw0al4KO+1zOd/20TqctVmB/sOrhH6/GEx9lSg8vtHCytNTub77262FyR7HwL45FkcO17AxnaOpb62c/qqz4HqbcrsEgxRXmnJ0PccnOnezmfJ+KOmO4vu+59wJT36zxJnLVDw/XfFA0H8cg+p1d3w08cPrMmoeOx7FluMwrMygnTd7WEuQJT1qXcv3O9wYA3cCVexE20uN/2CS8T6mVRFMuunmvJ7eTCty6U2CU7lqjp+gCoGRfQuw5ZcEfr+2bk8qkXf4eJjEcrxnoT+r2ZZKV+QOmONRI164F4os7hArCpHikQiBfAdcWN4tP4pak+et4bt36mJLya/M8BnfB0xee5Bd76wEywsxvF7aSyWOKvy4m4po7t8qlTd+1hGH2i+Q7+fUlmD27t1qKmtYxeMXkSpyHFayZaoKrm/bjY3o2e9EXtIzovStJ1UqFpFsmRVI7dL4PKV3l2DI4SOg7LXk7y/uc7uP3p8nrnL4AmPdxkGzOORz9dI7ZqA9muM3OWVga8Ya+F4rlqL0M/HgNVf0nZ0MuQ+CuN7FelJsd0uFwhN9/P4jh7czyQEDPBeaw/UP652GQpfFtEFaCDqxfhjhMZc6qpwh/rUv578Xhlh8QT2Ulkfze0SU6NDjCcSizUSxaMU8zIfVmGPVJXz58pO/dU5vJOcaa0wo9uJ+eGATSV/Je9ikbTP4/K1piWAX18vUe3J4vW6P5+xM+zgqCPuWtLI+CAFFmaDumEX+elq8nmHXAaFzWEr5j2ZjvlLK6q0TaHAglpLUiXz+5PaVuPO+NsUfP8n/s9bIK8yy3gZuZGmzxQlqzPVzgUxB5lM6sNBbU6/2v8lkIVegkfcn//xoU8TUEw0pcoMS9ReZ0aI3NmTW4EeX3Udz/Q11z0Fau5cNycbzew6UmdOr4CYW1GYKP2mF0pzcQDZ6iTGecfqb168yzGanU6LEnjAHzldYydGxKhljoiugUuKIM/64Bftj5bjebAP/L1J3L0XX5PNwd+847rfMP92oosoMUmZ78/kdcpWQuXIdvBY/+XlhQhDtYu7Q4GHA8Uubu8Ta9Wm0pw94rDqyCwIvlsNrV3OuV5Ejx8ExYdRkGihq4tvOy+HfurFYmyjh/dWXzUXVHTPS6esXwv3O+1S3j8W2hjjM+8eABe42EVRKf/KzdsISeQS/n3feZnCR9bDpJh1M5u7G0lceZKba+XD1vQfvx/KzBfeJH9iWszq8X1BZn1AjU1BwuCv9D6mPktU=",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "e378f62e30179868267bf74e79bec171b989cd03e848ab09e57c566095e38ec0",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "e378f62e30179868267bf74e79bec171b989cd03e848ab09e57c566095e38ec0",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "e378f62e30179868267bf74e79bec171b989cd03e848ab09e57c566095e38ec0",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "e378f62e30179868267bf74e79bec171b989cd03e848ab09e57c566095e38ec0",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

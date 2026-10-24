@@ -1,0 +1,115 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "full_geometry": [
+      1,
+      50
+    ],
+    "geometry": [
+      1,
+      7
+    ],
+    "index": 19,
+    "input_padding": 16,
+    "output_padding": 11,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 22.67040791222629
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 100.0
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 19,
+  "input_sha256": "b3ad6888a53e2671964e11bc3147ab4ba1897b04043ab12e0c7358783813928e",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNp7xadrL/rll+3HH3r2NjHtdrHvuu3Wfr1hK9+03rbHt9rewG2anVxCob0lG4P9D9MyOwYguBeiZ7dIq9uOfecfu+Qr02yf5B6xPTsp2V5uoqgtA0OD/aRn4vaR3qJ2PmsmgPn5EVPsqn542bqVMNgBABiOKzc=",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "7ca1ca538c008bde093a23a025f44f1f88ff3088a61a0a2169920466de4550b5",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 18446744073393733352 bytes: handle allocation exceeds 2147483648 bytes: 18446744073393733352\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "7ca1ca538c008bde093a23a025f44f1f88ff3088a61a0a2169920466de4550b5",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "7ca1ca538c008bde093a23a025f44f1f88ff3088a61a0a2169920466de4550b5",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

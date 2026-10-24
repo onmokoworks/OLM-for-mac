@@ -1242,6 +1242,9 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	if (w <= 0 || h <= 0) return err;
 	const BlurObservationConfig observation = load_blur_observation_config();
 
+	// Original non-Legacy workers scale Amount in float32 before deriving
+	// integer radii (CVTTSS2SI). Legacy scales radius and sigma separately.
+	// Both axes use downsample_x; Smoothness, Repeat and Bias are unchanged.
 	const float render_scale =
 		((float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
 	float blur_amount = bp->blur_amount * render_scale;
@@ -1923,7 +1926,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		input_world->width<=24 && input_world->height<=24 &&
 		!SmallDefaultPF32Source(input_world))
 		generic_tuple_refusal="generic-small-pf32-domain";
-	const bool generic_downsample =
+	const bool full_resolution =
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
 		in_data->downsample_y.num==1 && in_data->downsample_y.den==1;
 	const bool public24 = raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&
@@ -2045,7 +2048,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		PublicWorldsDisjoint(input_world,output_world,height) &&
 		ExactPublicSource(input_world,bpc,raw.legacy!=0,source_kind);
 	if (!err && !generic_tuple_refusal && generic_input_ok && generic_output_ok &&
-		generic_downsample && !exact_fixture_owner) {
+		(!full_resolution || !exact_fixture_owner)) {
 		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
 		if (err) err=BlurRefusal(__func__, "generic-formats", __LINE__, err);
 		olm::world_safety::TightStaging staging;
@@ -2084,12 +2087,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		if (generic_tuple_refusal) err=OLM_BLUR_REFUSAL(generic_tuple_refusal);
 		else if (!generic_input_ok) err=OLM_BLUR_REFUSAL("generic-input-world");
 		else if (!generic_output_ok) err=OLM_BLUR_REFUSAL("generic-output-world");
-		else if (!generic_downsample) err=OLM_BLUR_REFUSAL("generic-downsample");
 		else err=OLM_BLUR_REFUSAL("exact-source-none");
 	}
-	if (!err && (in_data->downsample_x.num!=1 || in_data->downsample_x.den!=1 ||
-		in_data->downsample_y.num!=1 || in_data->downsample_y.den!=1))
-		err=OLM_BLUR_REFUSAL("exact-downsample");
 	if (!err && !pixel_bytes) err=OLM_BLUR_REFUSAL("exact-bitdepth");
 	if (!err && !ExactPublicWorld(input_world,bpc,width,height,rowbytes))
 		err=OLM_BLUR_REFUSAL("exact-input-world");

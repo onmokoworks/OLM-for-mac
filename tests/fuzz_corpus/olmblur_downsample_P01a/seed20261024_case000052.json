@@ -1,0 +1,116 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "full_geometry": [
+      1,
+      14
+    ],
+    "geometry": [
+      1,
+      7
+    ],
+    "index": 52,
+    "input_padding": 1,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 95.5247802734375
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 52,
+  "input_sha256": "ee5b4902cad168c8660dd52633375dcd28f8c90e908b17d896e49aad762517ce",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNp7bVth5+ayxs53aaJ9rfwsOwaGBvv975bZvXzNbTfHTdSeAQjsnS3tv78psTuysNkWxFX5k2+/oaXKvrLUCyy/RCHb/nGani3HWkH7qpWi9hfmqNiL9krZ711zxQakftkbV7vo2RF2jxVY7AERuSgo",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "ee5b4902cad168c8660dd52633375dcd28f8c90e908b17d896e49aad762517ce",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "ee5b4902cad168c8660dd52633375dcd28f8c90e908b17d896e49aad762517ce",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "ee5b4902cad168c8660dd52633375dcd28f8c90e908b17d896e49aad762517ce",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ee5b4902cad168c8660dd52633375dcd28f8c90e908b17d896e49aad762517ce",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

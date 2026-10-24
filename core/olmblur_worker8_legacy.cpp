@@ -98,7 +98,9 @@ void render(const std::uint8_t* source_argb,
 
     const float scale = params.render_scale;
     const std::size_t radius = static_cast<std::size_t>(params.blur_amount * scale);
-    if (radius == 0 || params.repeat == 0 || params.bias_direction < 1 ||
+    // A downsampled radius of zero still executes the original passes and
+    // writer (including transparent-pixel handling); it is not a copy bypass.
+    if (params.repeat == 0 || params.bias_direction < 1 ||
         params.bias_direction > 2) {
         return;
     }

@@ -1,0 +1,115 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "full_geometry": [
+      121,
+      26
+    ],
+    "geometry": [
+      61,
+      13
+    ],
+    "index": 10,
+    "input_padding": 0,
+    "output_padding": 11,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 10.738002308048463
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 100.0
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 10,
+  "input_sha256": "5498cc16e83264afd3a51a8e731292590cfb079f120a001aa46eae450c709556",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "bae4e970e005fb44394603dc857e4a06495d04ee4f314fabfc60428810421476",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 3766862600 bytes: handle allocation exceeds 2147483648 bytes: 3766862600\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "bae4e970e005fb44394603dc857e4a06495d04ee4f314fabfc60428810421476",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "bae4e970e005fb44394603dc857e4a06495d04ee4f314fabfc60428810421476",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

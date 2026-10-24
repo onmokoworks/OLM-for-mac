@@ -1,0 +1,10 @@
+{
+  "returncode": 0,
+  "geometry": "odd",
+  "asserted_cases": 6,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "sdk": "MAIN absolute CPLUS_INCLUDE_PATH"
+}
