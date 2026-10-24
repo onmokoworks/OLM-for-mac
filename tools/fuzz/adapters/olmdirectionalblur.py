@@ -23,6 +23,7 @@ class Adapter(PublicAdapter):
             ('state.format=depth==16?','state.format=depth==8?PF_PixelFormat_ARGB32:depth==16?'),
             ('in.current_time = 7','in.current_time = 0')]:
             body = replace_once(body,old,new)
+        body = self.geometry_host(body)
         path = scratch/'host.cpp';path.write_text(body)
         sdk = self.compile(['xcrun','--show-sdk-path'],deadline).decode().strip()
         binary = scratch/'mac'
