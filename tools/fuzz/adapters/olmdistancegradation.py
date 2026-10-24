@@ -15,7 +15,7 @@ FIELDGEN = ROOT/'core/olmdistancegradation_fieldgen.cpp'
 
 class Adapter(PublicAdapter):
     name = 'olmdistancegradation'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'DistanceGradation'
     output_format = 'raw'
     small_controls = (3,4,12)
@@ -45,10 +45,23 @@ class Adapter(PublicAdapter):
                       '-I',shimdir,host,FIELDGEN,'-o',binary],deadline)
         return binary,[HOST,SHIM,*sorted(SHIM_DIR.glob('*.h')),MAIN,PARAMETERS,SOURCE,SOURCE.with_suffix('.h'),FIELDGEN,FIELDGEN.with_suffix('.h')]
 
+    def real_defaults(self, w, h):
+        """Captured PARAMS_SETUP values, including the In/Out=0 builder state.
+
+        Explicit P04a corpus cases serialize these parameters and input bytes;
+        ordinary historical seeded generation remains unchanged.
+        """
+        params = self.defaults(w, h)
+        for p, declaration in zip(params, self.controls):
+            if p["kind"] not in ("a", "p", "c"):
+                value = declaration["default_value"]
+                p["value"] = int(value) if p["kind"] in ("i", "u", "b") else value
+        return params
+
     def scope(self):
         return {'mac_host':'existing public owner contract SDK shim; O2 strict floating-point production EffectMain',
                 'host_checkout_reference':'fuzz scratch host fills checkout ref_width/ref_height from the layer geometry',
-                'builder_anomalies':'In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1'}
+                'builder_anomalies':'In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1; real_defaults preserves captured values for explicit P04a corpus'}
 
     def candidate_command(self, case, directory, route):
         config = directory/'params.txt'

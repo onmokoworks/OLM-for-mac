@@ -15,7 +15,7 @@ def candidate(adapter,case,directory,route,deadline):
  env=dict(adapter.env,OLM_REFUSAL_TRACE=str(trace))
  if adapter.name=='olmkirakira':env['OLM_NATIVE_PARAMETER_PROFILE']='kirakira-default-ramps'
  geometry_environment(case,directory,env)
- status,raw,err=command([HOST,adapter.executable,*case['geometry'],case['depth'],case['rowbytes_padding'],int(route=='smart'),schema,params],data=case['pixels'],timeout=adapter.timeout,deadline=deadline,env=env)
+ status,raw,err=command([Path.home()/'.cache/olm-emu/worker-F53-bundle/plugin-host' if case.get('geometry_sampler')=='realistic-v2' else HOST,adapter.executable,*case['geometry'],case['depth'],case['rowbytes_padding'],int(route=='smart'),schema,params],data=case['pixels'],timeout=adapter.timeout,deadline=deadline,env=env)
  guards=trace.read_text().splitlines() if trace.exists() else [];text=err.decode(errors='replace')
  if status['status']!='ok':return dict(status,diagnostic=text[-1600:]),b'',guards
  if len(raw)<4:return {'status':'harness_error','diagnostic':'missing bundle return code'},b'',guards

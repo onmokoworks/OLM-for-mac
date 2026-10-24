@@ -10,7 +10,7 @@ SHIM = ROOT/'cli/OLMSmoother/shim'
 
 class Adapter(PublicAdapter):
     name = 'olmsmoother'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     geometry_routes = ('classic',)
     aex_name = 'OLMSmoother'
     output_format = 'raw'

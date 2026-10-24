@@ -12,7 +12,7 @@ class Adapter(PublicAdapter):
     original_routes = {'classic': 'no-write', 'smart': 'render'}
     no_write_fill = 0xee
     name = 'olmsmoother2'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'OLMSmoother2'
     output_format = 'hex'
 
