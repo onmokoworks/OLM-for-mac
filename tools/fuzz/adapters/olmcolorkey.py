@@ -1,4 +1,5 @@
 """ColorKey: original typed-control serializer and real-SDK public replay host."""
+import copy
 import random
 import struct
 from core import case_seed
@@ -66,6 +67,17 @@ class Adapter(ColorTriage, PublicAdapter):
     def scope(self):
         return dict(super().scope(), **{'mac_stride':'shared randomly padded input/output stride from existing ColorKey helper',
                 'palette':'all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels'})
+
+    def candidate(self, case, directory, route, deadline):
+        # ColorTriage owns candidate execution, so the shared PublicAdapter
+        # geometry environment setup is not reached through this MRO.
+        if 'downsample' not in case:
+            return super().candidate(case, directory, route, deadline)
+        invocation = copy.copy(self)
+        invocation.env = dict(self.env)
+        values = [*case['full_geometry'], *case['downsample'][0], *case['downsample'][1]]
+        invocation.env['OLM_F52_DOWNSAMPLE'] = ','.join(map(str, values))
+        return ColorTriage.candidate(invocation, case, directory, route, deadline)
 
     def candidate_command(self, case, directory, route):
         # Same configuration format as typed_controls.config_text.

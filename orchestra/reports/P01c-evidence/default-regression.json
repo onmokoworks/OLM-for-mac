@@ -1,0 +1,12 @@
+{
+  "base": "22f8f802",
+  "cases": 2000,
+  "route_comparisons": 4000,
+  "failures": [],
+  "changed": [],
+  "candidate_sha256": [
+    "2a2938eb6bddf26c4093ffb816bdac9dd764c5571e15165678e50f2e568c46b1",
+    "b76f54cd9fba5ff64f9304161b0ec8e8152127c87697c290968deae783974079"
+  ],
+  "final_source_sha256": "0b3309f0d66d395ff9fb8901c01bb41ed96915d1d0683a5cf186e3697eb0d7da"
+}

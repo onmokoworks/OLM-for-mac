@@ -1,0 +1,17 @@
+unittest.case.FunctionTestCase (test_number_of_colors_keeps_abi_but_matches_windows_zero_minimum)
+test_olmcolorkey_parameter_ui_parity_20260806.test_number_of_colors_keeps_abi_but_matches_windows_zero_minimum ... ok
+unittest.case.FunctionTestCase (test_fixed_group_and_control_types_remain_windows_shaped)
+test_olmcolorkey_parameter_ui_parity_20260806.test_fixed_group_and_control_types_remain_windows_shaped ... ok
+unittest.case.FunctionTestCase (test_proven_popup_names_choices_and_defaults_remain_exact)
+test_olmcolorkey_parameter_ui_parity_20260806.test_proven_popup_names_choices_and_defaults_remain_exact ... ok
+unittest.case.FunctionTestCase (test_generic_pixel_local_beta_worlds)
+test_olmcolorkey_generic_pixel_local_beta.test_generic_pixel_local_beta_worlds ... ok
+unittest.case.FunctionTestCase (test_generic_pixel_local_pairwise_matrix)
+test_olmcolorkey_generic_pixel_local_pairwise.test_generic_pixel_local_pairwise_matrix ... ok
+unittest.case.FunctionTestCase (test_generic_edge_thin_under_asan_ubsan)
+test_olmcolorkey_generic_pixel_local_pairwise.test_generic_edge_thin_under_asan_ubsan ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 21.708s
+
+OK
