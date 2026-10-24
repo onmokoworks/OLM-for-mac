@@ -101,3 +101,4 @@ P01a-blur-downsample
 P01b-directionalblur-downsample
 P01c-colorkey-downsample
 F52b-geometry-plumbing-all-plugins
+T15-odd-even-random-comp-sweep
