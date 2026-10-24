@@ -34,8 +34,10 @@ class BundleMixin:
 
     def __init__(self, options):
         super().__init__(options)
-        if options.plugin in ('colorkeep','olmdistancegradation','olmkirakira','radialblur','olmtoondilate','olmsmoother2','olmsmoother','olmblur','olmdirectionalblur','olmcolorkey'):
+        if options.plugin in ('colorkeep','olmdistancegradation','olmkirakira','radialblur','olmtoondilate','olmsmoother2','olmsmoother','olmblur'):
             self.geometry_samplers=('realistic-v1','realistic-v2')
+        elif options.plugin in ('olmdirectionalblur','olmcolorkey'):
+            self.geometry_samplers=('realistic-v2',)
         self.env.pop('OLM_NATIVE_BUNDLE_EXECUTABLE', None)
         self.env.pop('OLM_NATIVE_PARAMETER_PROFILE', None)
         self.bundle = options.plugin_bundle.resolve()

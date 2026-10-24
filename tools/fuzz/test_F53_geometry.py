@@ -3,7 +3,7 @@
 import subprocess,types,tempfile,time
 from pathlib import Path
 from geometry import sample
-from core import save_corpus,load_corpus
+from core import save_corpus,load_corpus,apply_operation
 from adapters.olmdirectionalblur import Adapter
 from run import main_checkout
 ROOT=Path(__file__).resolve().parents[2]
@@ -21,4 +21,8 @@ with tempfile.TemporaryDirectory(dir=s) as td:
   loaded=load_corpus(path,a)
   # load_corpus returns case plus its persisted metadata.
   assert loaded[0]==v
-print('PASS: 300 unchanged default/v1 cases; 100 v2 payloads and corpus replays')
+  op={'kind':'crop','geometry':[max(1,w//2),max(1,h//2)]}
+  reduced=apply_operation(a,v,op)
+  save_corpus(path,a,v,reduced,{},dict(accepted=[op]),{})
+  assert load_corpus(path,a)[0]==reduced
+print('PASS: 300 unchanged default/v1 cases; 100 v2 payloads, 100 full and 100 reduced corpus replays')

@@ -10,7 +10,7 @@ from run import main_checkout
 ROOT=Path(__file__).resolve().parents[2]
 PLUGINS=('olmblur','colorkeep','olmcolorkey','olmdirectionalblur','olmdistancegradation','olmkirakira','olmsmoother2','olmtoondilate','radialblur','olmsmoother')
 def main():
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--survey',action='store_true');ap.add_argument('--n',type=int,default=100);ap.add_argument('--label',default='witness');ap.add_argument('--plugin',choices=PLUGINS);a=ap.parse_args()
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--survey',action='store_true');ap.add_argument('--bundle',action='store_true');ap.add_argument('--n',type=int,default=100);ap.add_argument('--label',default='witness');ap.add_argument('--plugin',choices=PLUGINS);a=ap.parse_args()
  scratch=ROOT/'orchestra/state/F53-oracle-cropped-checkout'/a.label;scratch.mkdir(parents=True,exist_ok=True)
  evidence=ROOT/'orchestra/reports/F53-evidence';evidence.mkdir(parents=True,exist_ok=True)
  os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),OLM_TEST_JOBS='1',PYTHONDONTWRITEBYTECODE='1')
@@ -18,6 +18,10 @@ def main():
  for plugin in ((a.plugin,) if a.plugin else PLUGINS if a.survey else ('olmdirectionalblur','olmsmoother2')):
   s=scratch/plugin;s.mkdir(exist_ok=True);deadline=time.monotonic()+3600
   adapter=importlib.import_module('adapters.'+plugin).Adapter(SimpleNamespace(main=main_checkout(),worker=Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker',max_size=256,case_timeout=10))
+  if a.bundle:
+   from adapters.plugin_bundle import Adapter as BundleAdapter
+   name={'radialblur':'OLMRadialBlur','olmdistancegradation':'OLMDistanceGradation'}.get(plugin,getattr(adapter,'aex_name',None))
+   adapter=BundleAdapter(SimpleNamespace(plugin=plugin,plugin_bundle=Path.home()/'.cache/olm-emu/P00b/xcode'/name/'products'/(name+'.plugin'),main=main_checkout(),worker=adapter.worker,max_size=256,case_timeout=10))
   require_host(adapter,{'geometry_sampler':'realistic-v2'})
   adapter.routes=('classic',) if plugin=='olmsmoother' else ('smart',)
   provenance=adapter.prepare(s,deadline)

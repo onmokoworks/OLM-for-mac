@@ -3,7 +3,7 @@
   "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
   "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
   "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
-  "candidate_sha256": "d2eafe4260da1475775ad6b6657f990207aafc7981f1c4a6656a756a5adb9b64",
+  "candidate_sha256": "9b6aaf29ce855b9ab8d1dec7fa9ad115ef7a5cfeaa3c7193bc51c0369db5726c",
   "dependencies_sha256": {
     "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
     "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "3b8f86b02ac8a89746f72b868ab18c75cdce7c463238088bd0b278e2485c33d2",
@@ -12,7 +12,7 @@
     "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
     "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
     "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
-    "tools/fuzz/harnesses/geometry.hpp": "55d0ddf8b843c4f5450940da071ecb7632c583ad2c751575c1fffb915bc8de66",
+    "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
     "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
     "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
     "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",

@@ -11,7 +11,7 @@ static int f52_full[2], f52_sampled[2], f52_aspect[2]={1,1}, f52_pad;
 static bool f53_crop=false, f53_auto=false;
 static PF_LRect f53_available{}, f53_checkout{};
 static std::map<A_long,PF_LRect> f53_checkouts;
-static std::map<A_long,PF_EffectWorld> f53_input_worlds;
+static std::map<PF_EffectWorld*,PF_EffectWorld> f53_input_worlds;
 static PF_LRect f52_extent{}, f52_request{}, f52_result{};
 static void f52_rect(const char *key,PF_LRect &r) {
     int l,t,x,b; const char *v=std::getenv(key);
@@ -85,8 +85,11 @@ static PF_Err f52_pixels(PF_ProgPtr ref,A_long id,PF_EffectWorld **w) {
         f52_world(*w);
         if(f53_crop && f53_checkouts.count(id)) {
             auto rect=f53_checkouts.at(id);
-            auto &f53_input_world=f53_input_worlds[id];
-            f53_input_world=**w;
+            // WorldSuite fakes identify the host-owned pointer (as f52_output does).
+            // Retain that identity and restore the descriptor after SmartRender.
+            auto saved=f53_input_worlds.emplace(*w,**w).first;
+            **w=saved->second;
+            auto &f53_input_world=**w;
             if(f53_auto) {
                 auto &o=f53_input_world;
                 o.data=reinterpret_cast<decltype(o.data)>(reinterpret_cast<unsigned char*>(o.data)+rect.top*o.rowbytes+rect.left*(f52_depth/8*4));
@@ -94,7 +97,7 @@ static PF_Err f52_pixels(PF_ProgPtr ref,A_long id,PF_EffectWorld **w) {
                 o.origin_x=rect.left;o.origin_y=rect.top;
                 o.extent_hint={0,0,o.width,o.height};
             }
-            *w=&f53_input_world;
+
         }
     }
     return e;
@@ -155,6 +158,7 @@ static PF_Err f52_entry(PF_Cmd cmd,PF_InData *in,PF_OutData *out,PF_ParamDef **p
         PF_SmartRenderExtra wrapped{&si,&cb};in->output_origin_x=-f52_result.left;in->output_origin_y=-f52_result.top;
         if(f53_crop){in->output_origin_x+=f53_checkout.left;in->output_origin_y+=f53_checkout.top;}
         auto err=(f52_result.left==f52_result.right||f52_result.top==f52_result.bottom)?0:EffectMain(cmd,in,out,params,world,&wrapped);
+        for(auto &saved:f53_input_worlds)*saved.first=saved.second;
         if(f52_original_output)*f52_original_output=f52_output_world;
         if(!err)f52_save();return err;
     }

@@ -1,0 +1,20 @@
+{
+  "host": "F52c standalone Universal bundle host; negotiated geometry",
+  "bundle_host_path": "/Users/onmk/.cache/olm-emu/worker-F53-bundle/plugin-host",
+  "bundle_host_sha256": "218f3a3e702dd509b99997aa4c98259c7264036ba2cad48e3dc7853ee7952c6b",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "candidate_path": "/Users/onmk/.cache/olm-emu/P00b/xcode/OLMRadialBlur/products/OLMRadialBlur.plugin",
+  "candidate_sha256": "6ccaaccbc823c771ab5a8f4d52ab35bc3f1d4b2287322f677c5e526437a40bf6",
+  "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+  "world": "realistic-v1: byte padding, extent, aspect, downsample, request and negotiated output rect/origin",
+  "parameter_profile": "shared declarations",
+  "oracle_routes": {
+    "smart": "smart"
+  },
+  "original_routes": {
+    "smart": "render"
+  }
+}

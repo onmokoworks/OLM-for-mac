@@ -3,7 +3,7 @@
   "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
   "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
   "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
-  "candidate_sha256": "dbbd563390faab98bda8b267385b925d13a157634901a7a890b4566afdc827a2",
+  "candidate_sha256": "996124ea44758c799df533f529a2682d7c53f14c1adc171d7d2053706e6eb384",
   "dependencies_sha256": {
     "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
     "tools/fuzz/harnesses/blur_main.cpp": "0ad8d24ba92e2628e62f02299aeb407ca9b942a6db6860b22ba9e4fda5b503b1",
@@ -19,7 +19,7 @@
     "core/olmblur_worker8_legacy.cpp": "970830b499533f2a7369fe2e79f10d85b680e9518abbff35a368342325a85054",
     "core/olmblur_worker_orchestration.cpp": "c36db12f84bfd78ba425f4196dcddaedc5c87bc207ac2d3ca707a9dcb0f29023",
     "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
-    "tools/fuzz/harnesses/geometry.hpp": "55d0ddf8b843c4f5450940da071ecb7632c583ad2c751575c1fffb915bc8de66",
+    "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
     "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
     "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
     "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",

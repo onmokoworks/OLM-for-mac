@@ -43,13 +43,10 @@ def sample(case, mode='default'):
     result['rowbytes_padding'] = rng.choice([0,1,3,7,16,32])
     result['input_padding'] = result['output_padding'] = result['rowbytes_padding']
     if mode=='realistic-v2':
+        # Preserve v1 generation. The v2 host defaults to automatic intersection
+        # with the plugin's actual PreRender request, including requested halos.
+        # Explicit packed checkout rectangles remain available for fixed witnesses.
         result['geometry_sampler']='realistic-v2'
-        rect=rectangle()
-        l,t,r,b=rect
-        result['checkout_rect']=rect
-        result['pixels']=b''.join(result['pixels'][(y*w+l)*pixel:(y*w+r)*pixel] for y in range(t,b))
-        result['geometry']=[r-l,b-t]
-        result['extent_hint']=[0,0,r-l,b-t]
     return result
 
 
@@ -59,11 +56,10 @@ def resize(case, old_geometry):
         return case
     if case['geometry_sampler'] not in (VERSION,'realistic-v2'):
         raise ValueError('unknown geometry sampler version')
-    if case['geometry_sampler']=='realistic-v2':
-        ow,oh=old_geometry; w,h=case['geometry']; l,t,r,b=case['checkout_rect']
-        nl,nt=l*w//ow,t*h//oh
-        case['checkout_rect']=[nl,nt,nl+w,nt+h]
-        case['full_geometry']=[max((n*num+den-1)//den,edge)*den//num for n,(num,den),edge in zip(case['full_geometry'],case['downsample'],[nl+w,nt+h])]
+    if case['geometry_sampler']=='realistic-v2' and 'checkout_rect' in case:
+        w,h=case['geometry']; l,t,r,b=case['checkout_rect']
+        # Shrinking the available payload must not resize the underlying layer.
+        case['checkout_rect']=[l,t,l+w,t+h]
         case['extent_hint']=[0,0,w,h]
         return case
     case['full_geometry'] = [(n*den+num-1)//num for n,(num,den) in zip(case['geometry'],case['downsample'])]

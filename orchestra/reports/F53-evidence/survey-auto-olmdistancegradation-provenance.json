@@ -3,7 +3,7 @@
   "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
   "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
   "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
-  "candidate_sha256": "cc81bf312e80e501c97641b672025c607941817aa6c26cf76f7850a26940d8d2",
+  "candidate_sha256": "406c078b8da4c7b17f9be4c47e46cfe6930f2582ea132284259bf62e9845d135",
   "dependencies_sha256": {
     "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
     "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
@@ -25,7 +25,7 @@
     "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
     "core/olmdistancegradation_fieldgen.cpp": "ad3857f6b0b2af3afa42509ccb6d240763118234395a6ced557cb31888d75bb8",
     "core/olmdistancegradation_fieldgen.h": "7f9c1a6e0805bfbda84d957dbf72c9b8047728edbdd51f26fc594a2138b5af10",
-    "tools/fuzz/harnesses/geometry.hpp": "52be44c81d2117624cc1232a1892a71dbd3d12020b8b3f63ab3aa5ebeea3e0e5",
+    "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
     "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
     "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
     "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
