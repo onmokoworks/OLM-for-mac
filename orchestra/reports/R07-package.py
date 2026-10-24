@@ -9,6 +9,9 @@ p=argparse.ArgumentParser();p.add_argument('group',choices=['contracts','f40','b
 files=[S/f'{args.group}.json',*sorted(S.glob(f'{args.group}-*.log'))]
 if args.group=='f40':
  files += [p for p in sorted((S/'colorkeep-oracle').glob('*')) if p.is_file()]
+ files += [p for p in sorted(S.glob('blur-*')) if p.is_file()]
+ files += [p for p in sorted((S/'blur-owner').rglob('*')) if p.is_file() and not any(part.startswith('build-') for part in p.parts)]
+ files += [S/'f40-adjudication.json']
 if args.group=='bindings':
  files += [p for p in sorted(S.glob('performance-*')) if p.is_file()]
 rows=[]

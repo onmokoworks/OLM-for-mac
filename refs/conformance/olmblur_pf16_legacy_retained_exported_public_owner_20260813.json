@@ -14,11 +14,11 @@
     },
     "public_runner": {
       "path": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
-      "sha256": "5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6"
+      "sha256": "2b07c6ea1cde0640f954caaab28d5d9294e0b2f48db8ae189db524d725d1f334"
     },
     "worker_runner": {
       "path": "tools/emulation/test_olmblur_worker16_legacy.py",
-      "sha256": "61c74e6ab9e4c3d6db90157a63bf77cd8544fc6e7197a004472b7a479b2deaf5"
+      "sha256": "5b6a69b1e0fdcfbaac8d025f28da8e48f0499312d2f56d725be2d193ec04611f"
     }
   },
   "rows": [
