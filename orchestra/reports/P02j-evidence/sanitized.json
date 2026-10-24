@@ -1,0 +1,4251 @@
+{
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "candidate_sha256": "8046dbd968b8071ad7ed1bdd4c343a9fa00e5e683587de6c1676b18007984134",
+    "dependencies_sha256": {
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+    },
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "out_of_range_builder_defaults": [],
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "oracle_render_path": "smartfx",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion",
+    "layer": "None; independent layer worlds outside this adapter",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof"
+  },
+  "cases": [
+    {
+      "file": "seed1_000.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3",
+          "GEOMETRY": "5 4 6 5"
+        },
+        "output_rect": [
+          5,
+          4,
+          6,
+          5
+        ]
+      },
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "file": "seed1_001.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "ca48b1fec35bc33d07feab9c5763b21a856552fa51bbadfae3c41a4a599972b6"
+    },
+    {
+      "file": "seed1_002.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1",
+          "GEOMETRY": "0 0 4 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          7
+        ]
+      },
+      "sha256": "0eb3883cd2bcbd836f3e3d80b7a9759f410fc3f39d685ac51ee2cf623639791b"
+    },
+    {
+      "file": "seed1_003.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "39 45 1 4 1 4 1 1 16",
+          "GEOMETRY": "0 0 10 12"
+        },
+        "output_rect": [
+          0,
+          0,
+          10,
+          12
+        ]
+      },
+      "sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa"
+    },
+    {
+      "file": "seed1_004.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "117 244 1 1 1 1 1 1 32",
+          "GEOMETRY": "0 0 117 244"
+        },
+        "output_rect": [
+          0,
+          0,
+          117,
+          244
+        ]
+      },
+      "sha256": "447e63a662acaf20e6633f6c78e2ba15f7c0e6dfcb5c65c148324c300b99e678"
+    },
+    {
+      "file": "seed1_005.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 67 1 2 1 3 2 1 0",
+          "GEOMETRY": "6 5 8 15"
+        },
+        "output_rect": [
+          6,
+          5,
+          8,
+          15
+        ]
+      },
+      "sha256": "56c5b0124c703f4e3acf386a373db5dbfbbb696d170cce11c10258a8e395b57d"
+    },
+    {
+      "file": "seed1_006.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "33 61 1 8 1 8 4 3 0",
+          "GEOMETRY": "4 1 5 8"
+        },
+        "output_rect": [
+          4,
+          1,
+          5,
+          8
+        ]
+      },
+      "sha256": "fc4845ee9dbc992154e5b52846c6b1a06db70aeb37648552a7932e117cd2a4cd"
+    },
+    {
+      "file": "seed1_007.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 24 1 8 1 8 1 1 1",
+          "GEOMETRY": "0 0 3 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          3
+        ]
+      },
+      "sha256": "4b39a9072e1052f1d8c736a16b3167a8c2dd8b5003d4c7930ec87ef8ea11273b"
+    },
+    {
+      "file": "seed1_008.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 2 1 3 1 3 2 1 32",
+          "GEOMETRY": "0 0 4 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "sha256": "968fe7ce7857a771ce1cae1b450b33fa826d881f819747a6b2d18239cf4d9b44"
+    },
+    {
+      "file": "seed1_009.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "24 5 1 4 1 4 2 1 1",
+          "GEOMETRY": "0 0 6 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          6,
+          2
+        ]
+      },
+      "sha256": "2c0c70bd324502a58981e3bdefb5a342e6b4417d4af8c7aaaec633f6a0eafb6f"
+    },
+    {
+      "file": "seed1_010.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 38 1 3 1 3 2 1 1",
+          "GEOMETRY": "0 0 2 13"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          13
+        ]
+      },
+      "sha256": "7de8148e1c281ff9da488486c665b4358640c27472cd666563344d25e5549dbf"
+    },
+    {
+      "file": "seed1_011.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "37 46 1 8 1 8 10 11 3",
+          "GEOMETRY": "0 0 5 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          5,
+          6
+        ]
+      },
+      "sha256": "a0c32e90a12c4600c6a7d5aba37423f2b98eccf1f6ba302af45b30a3b525ce08"
+    },
+    {
+      "file": "seed1_012.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 18 1 1 1 1 10 11 0",
+          "GEOMETRY": "1 0 2 1"
+        },
+        "output_rect": [
+          1,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "e1ac9cade647fefd8dd378fda8c69d6d6de83a7109d3439ab58b72a0e8e8795b"
+    },
+    {
+      "file": "seed1_013.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "24 17 1 3 1 3 4 3 0",
+          "GEOMETRY": "4 4 6 5"
+        },
+        "output_rect": [
+          4,
+          4,
+          6,
+          5
+        ]
+      },
+      "sha256": "1bfa44549d632a455e0b9494f5aefc57a9e75b530963d12767c4377115fdd6f0"
+    },
+    {
+      "file": "seed1_014.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "18 1 1 3 1 3 2 1 16",
+          "GEOMETRY": "0 0 6 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          6,
+          1
+        ]
+      },
+      "sha256": "b638c597ba9fa4c803532a16c43e1134ef5463aeec3d3fcb030d83052584a544"
+    },
+    {
+      "file": "seed1_015.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "9 19 1 2 1 2 2 1 32",
+          "GEOMETRY": "2 6 4 9"
+        },
+        "output_rect": [
+          2,
+          6,
+          4,
+          9
+        ]
+      },
+      "sha256": "1c13d20467b6ddb62f43f8fa0e1a2e46d92961fe246e1c4f96e5671f3d30d611"
+    },
+    {
+      "file": "seed1_016.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "4 22 1 2 1 3 10 11 32",
+          "GEOMETRY": "0 0 2 8"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          8
+        ]
+      },
+      "sha256": "afcb15fb851e4da365d13d91726f348ace1322c849684b1581fa4d64b552c59b"
+    },
+    {
+      "file": "seed1_017.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 158 1 3 1 3 2 1 0",
+          "GEOMETRY": "0 0 7 53"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          53
+        ]
+      },
+      "sha256": "289e033e0d297d9b958697ade195762bc76d18c64e83a3ea4cfe2494d6b7b358"
+    },
+    {
+      "file": "seed1_018.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 39 1 3 1 3 4 3 3",
+          "GEOMETRY": "0 0 1 13"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          13
+        ]
+      },
+      "sha256": "9438d8364b84bce974cf8927ebf087ed127d06496692efb068991482b28a4652"
+    },
+    {
+      "file": "seed1_019.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 21 1 3 1 3 10 11 7",
+          "GEOMETRY": "2 4 3 7"
+        },
+        "output_rect": [
+          2,
+          4,
+          3,
+          7
+        ]
+      },
+      "sha256": "29af30d552c53ac1884cbdfbc2f0736a082033d35aa5a712cedb6549b58031d5"
+    },
+    {
+      "file": "seed1_020.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 22 1 3 1 3 2 1 16",
+          "GEOMETRY": "0 0 4 8"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          8
+        ]
+      },
+      "sha256": "1b8e614cc58acd234d25ba818079ef960bdcd761b02c0c60a9962c788c4c0172"
+    },
+    {
+      "file": "seed1_021.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 34 1 8 1 8 10 11 3",
+          "GEOMETRY": "0 0 1 5"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          5
+        ]
+      },
+      "sha256": "1609308c572fc18889865579a58b3c53f038200d564d2a5b1855080dabee6d0e"
+    },
+    {
+      "file": "seed1_022.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "4 4 1 3 1 3 4 3 0",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "a4d9453a616ab29a25cf63d1102db8792f06d0e7b86e894b839a3fa44c82682d"
+    },
+    {
+      "file": "seed1_023.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 1 1 7",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "351acdde917c8f4147ec8587ec39d361ea85bd0d13250e055773eb7aed393d5d"
+    },
+    {
+      "file": "seed1_024.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "50 34 1 3 1 3 10 11 0",
+          "GEOMETRY": "0 0 17 12"
+        },
+        "output_rect": [
+          0,
+          0,
+          17,
+          12
+        ]
+      },
+      "sha256": "61052b519015ef814b179369ef95e255d0a17b52f029f33d827130218f5a67a1"
+    },
+    {
+      "file": "seed1_025.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 91 1 1 1 1 4 3 3",
+          "GEOMETRY": "0 0 1 91"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          91
+        ]
+      },
+      "sha256": "8635b3eab928f26d1c0579610b884d16d4911dd090f65d5599aa7470f805a656"
+    },
+    {
+      "file": "seed1_026.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "7 22 1 2 1 3 2 1 1",
+          "GEOMETRY": "1 4 3 5"
+        },
+        "output_rect": [
+          1,
+          4,
+          3,
+          5
+        ]
+      },
+      "sha256": "effb491ee2a3972f343a7451f642a67611f2d599d280abb15e473b7686eb9223"
+    },
+    {
+      "file": "seed1_027.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 10 1 4 1 4 1 1 1",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "c3e5073f39345f7555e4e7e9e53146b6681e646f5cb7d54cc21f0d8ba3ab451f"
+    },
+    {
+      "file": "seed1_028.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 3 1 3 2 1 7",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "9ea6c8f8bcdee532039308f624a1db649f1ef1644fa7f5ce4938fa2f101fdd5a"
+    },
+    {
+      "file": "seed1_029.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 42 1 2 1 2 2 1 3",
+          "GEOMETRY": "4 3 8 14"
+        },
+        "output_rect": [
+          4,
+          3,
+          8,
+          14
+        ]
+      },
+      "sha256": "0884fa9ea1fd93a3fbca6689c64faecce4f4e848fe3d7a02d44c3d6b8b039a19"
+    },
+    {
+      "file": "seed1_030.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 1 1 3 1 3 1 1 16",
+          "GEOMETRY": "0 0 8 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          1
+        ]
+      },
+      "sha256": "3868f5695fb9b64a2ff79a4897e103fa2b0cbdcdf767a673c7ea69300fce4660"
+    },
+    {
+      "file": "seed1_031.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 12 1 2 1 3 2 1 32",
+          "GEOMETRY": "2 0 3 4"
+        },
+        "output_rect": [
+          2,
+          0,
+          3,
+          4
+        ]
+      },
+      "sha256": "4a65fd4d8e4019b47ffcbb2d253ac2f819e4f535f9974d1cbfcf137fd62f0ada"
+    },
+    {
+      "file": "seed1_032.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 2 1 4 1 4 4 3 1",
+          "GEOMETRY": "0 0 3 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          1
+        ]
+      },
+      "sha256": "8464e4b366787b63baffcf307d6dfa98a020bcc7ab45d1a8351709829318e0bf"
+    },
+    {
+      "file": "seed1_033.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 12 1 1 1 1 2 1 1",
+          "GEOMETRY": "0 0 1 12"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          12
+        ]
+      },
+      "sha256": "29786a4697cb8fa3ecdae341483794cf868c365e768a719520733f2b0e86e19c"
+    },
+    {
+      "file": "seed1_034.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 7 1 4 1 4 1 1 16",
+          "GEOMETRY": "0 1 2 2"
+        },
+        "output_rect": [
+          0,
+          1,
+          2,
+          2
+        ]
+      },
+      "sha256": "c71593863f61f53834f5b5f8051bd4fc17291e7cd64b0f97baad6978c0f64d08"
+    },
+    {
+      "file": "seed1_035.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 56 1 3 1 3 4 3 16",
+          "GEOMETRY": "0 0 6 19"
+        },
+        "output_rect": [
+          0,
+          0,
+          6,
+          19
+        ]
+      },
+      "sha256": "463d55250a0181a0320072c0ef0248457694c7396000e7a0e8cc24dfcaf78f2a"
+    },
+    {
+      "file": "seed1_036.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 38 1 8 1 8 10 11 3",
+          "GEOMETRY": "0 0 2 5"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          5
+        ]
+      },
+      "sha256": "485db0ab49347a1d7e44e3308968184c88169cc5bee36bd7de6662759b53a246"
+    },
+    {
+      "file": "seed1_037.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 9 1 3 1 3 4 3 1",
+          "GEOMETRY": "0 0 5 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          5,
+          3
+        ]
+      },
+      "sha256": "a0bfdb1380121eaba710e66219ed948258c2c6738969485f896371fe99d8ce8c"
+    },
+    {
+      "file": "seed1_038.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 7 1 3 1 3 10 11 16",
+          "GEOMETRY": "0 0 4 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          3
+        ]
+      },
+      "sha256": "11d0bd5088b224efcd26a144995a9c259b084e048fbda23b24e677a23033a1b5"
+    },
+    {
+      "file": "seed1_039.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "21 6 1 8 1 8 4 3 3",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "90dd78f02d3eb622c24f6ba11424f224a840633ec229e7ea7bde566429f6db28"
+    },
+    {
+      "file": "seed1_040.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "147 169 1 8 1 8 2 1 32",
+          "GEOMETRY": "15 6 19 16"
+        },
+        "output_rect": [
+          15,
+          6,
+          19,
+          16
+        ]
+      },
+      "sha256": "6c1d5409e00641615833cabb968b06772e71a136322feeb6fa22e20599410ec1"
+    },
+    {
+      "file": "seed1_041.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "20 15 1 1 1 1 4 3 32",
+          "GEOMETRY": "0 0 20 15"
+        },
+        "output_rect": [
+          0,
+          0,
+          20,
+          15
+        ]
+      },
+      "sha256": "12a35e9b55ddf844ff2551281ba8c4ed56715b7c8a1c883fc9ca3e1d36cec996"
+    },
+    {
+      "file": "seed1_042.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 16 1 1 1 1 4 3 0",
+          "GEOMETRY": "0 0 8 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          16
+        ]
+      },
+      "sha256": "8c98f01a49fe1e330c1a2489fc3de363c6e23b0ea94e8ac90ab93a98940a5c97"
+    },
+    {
+      "file": "seed1_043.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 14 1 2 1 3 2 1 0",
+          "GEOMETRY": "0 2 3 5"
+        },
+        "output_rect": [
+          0,
+          2,
+          3,
+          5
+        ]
+      },
+      "sha256": "b9bbdb71d20f95458e30b8ffd3615b4fc707edfbae6f34b8ca03d064cf6c0ee4"
+    },
+    {
+      "file": "seed1_044.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "49 6 1 3 1 3 2 1 1",
+          "GEOMETRY": "0 0 15 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          15,
+          2
+        ]
+      },
+      "sha256": "ad57c851a637a83a03a84186699bb6341d9beb41e99fa092f92b0255eb56678d"
+    },
+    {
+      "file": "seed1_045.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 20 1 2 1 2 2 1 16",
+          "GEOMETRY": "0 0 7 10"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          10
+        ]
+      },
+      "sha256": "762e91df4386d16decf2aacf181f456ba2592bbb88fa991afe370e33b5591f81"
+    },
+    {
+      "file": "seed1_046.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 20 1 2 1 2 1 1 3",
+          "GEOMETRY": "0 0 1 10"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          10
+        ]
+      },
+      "sha256": "278b2a404c01b712cb88cfa40758bd47e1368141ffab9e83b7c060214d1a944b"
+    },
+    {
+      "file": "seed1_047.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 134 1 8 1 8 10 11 3",
+          "GEOMETRY": "0 0 3 17"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          17
+        ]
+      },
+      "sha256": "3fe1ae7402cc1d2a074f7676cba06a85c8ef1ca7be53c365d6a17df38d2c7b0b"
+    },
+    {
+      "file": "seed1_048.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 65 1 2 1 3 2 1 32",
+          "GEOMETRY": "0 0 1 22"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          22
+        ]
+      },
+      "sha256": "0b26ff06b8bf3dab21491afc025c433bc022f36f4764f6ee59b567b0396d2381"
+    },
+    {
+      "file": "seed1_049.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "9 8 1 8 1 8 2 1 16",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "6c586733a2585116ad84021f6ab2af6128cb005da7242f52aba5df4a19b66232"
+    },
+    {
+      "file": "seed1_050.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 5 1 8 1 8 10 11 0",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "b2e78a645fa1f018203f311124e63bdebfc0c57641121be1046918628ea0e1df"
+    },
+    {
+      "file": "seed1_051.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "51 23 1 1 1 1 10 11 0",
+          "GEOMETRY": "0 0 51 23"
+        },
+        "output_rect": [
+          0,
+          0,
+          51,
+          23
+        ]
+      },
+      "sha256": "0c521cab70516c63796ace4497013a913561c7ff0d115ec6be416bcbe6386efc"
+    },
+    {
+      "file": "seed1_052.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 21 1 2 1 3 2 1 1",
+          "GEOMETRY": "0 0 2 4"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          4
+        ]
+      },
+      "sha256": "db9297e59f4f5bc88bb1ab13afbdd147d41f40a2db2bb26214797de901e38d34"
+    },
+    {
+      "file": "seed1_053.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 18 1 1 1 1 1 1 32",
+          "GEOMETRY": "0 0 5 18"
+        },
+        "output_rect": [
+          0,
+          0,
+          5,
+          18
+        ]
+      },
+      "sha256": "2ddd7905f6792cbf1a713deb19d9680a165b8fbaceaa988b1f82b89814a26516"
+    },
+    {
+      "file": "seed1_054.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 1 1 2 1 3 4 3 1",
+          "GEOMETRY": "2 0 6 1"
+        },
+        "output_rect": [
+          2,
+          0,
+          6,
+          1
+        ]
+      },
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    {
+      "file": "seed1_055.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 53 1 3 1 3 1 1 32",
+          "GEOMETRY": "0 0 1 18"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          18
+        ]
+      },
+      "sha256": "dbd517c8409460bfe1abbc340ccd3fc3b40c18c3025d42d4dcf56939c22597a0"
+    },
+    {
+      "file": "seed1_056.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 113 1 4 1 4 2 1 7",
+          "GEOMETRY": "0 0 1 29"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          29
+        ]
+      },
+      "sha256": "bec91ed05053839283f48d90df7e37c27b27744446cb5a8815be94f04c17829b"
+    },
+    {
+      "file": "seed1_057.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 35 1 4 1 4 4 3 0",
+          "GEOMETRY": "0 0 1 9"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          9
+        ]
+      },
+      "sha256": "621b96e9b8e4981bd30837e9cb25f79b758c90e5f8df1cc252b49c9f425ea85c"
+    },
+    {
+      "file": "seed1_058.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 140 1 2 1 2 1 1 0",
+          "GEOMETRY": "0 69 1 70"
+        },
+        "output_rect": [
+          0,
+          69,
+          1,
+          70
+        ]
+      },
+      "sha256": "3024f76d4bd2b2f73f304bba49459c67afb3bf47a4be8eed30b192d0c11abc57"
+    },
+    {
+      "file": "seed1_059.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 13 1 2 1 3 10 11 32",
+          "GEOMETRY": "3 2 4 3"
+        },
+        "output_rect": [
+          3,
+          2,
+          4,
+          3
+        ]
+      },
+      "sha256": "cbe83b72c5552bc7c67084920f977b613c2b79ee115b3737b85a3cd844c40a83"
+    },
+    {
+      "file": "seed1_060.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 23 1 1 1 1 4 3 0",
+          "GEOMETRY": "0 0 13 23"
+        },
+        "output_rect": [
+          0,
+          0,
+          13,
+          23
+        ]
+      },
+      "sha256": "e86f59cf84d5d90a422a01b83c914788bb615b7326bee77eaad57da90eabe9a5"
+    },
+    {
+      "file": "seed1_061.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 8 1 8 2 1 1",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "453b7e090b18eb612ce236eb262f8f472be7e465615873809995fcb0bec78f58"
+    },
+    {
+      "file": "seed1_062.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "7 7 1 2 1 2 4 3 16",
+          "GEOMETRY": "0 0 4 4"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          4
+        ]
+      },
+      "sha256": "3453ce293dfec6ea2d854a56282b866710758502049c9343db06268aca311902"
+    },
+    {
+      "file": "seed1_063.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 21 1 8 1 8 1 1 3",
+          "GEOMETRY": "1 2 2 3"
+        },
+        "output_rect": [
+          1,
+          2,
+          2,
+          3
+        ]
+      },
+      "sha256": "f8a3afa4ec9af784d4493e052521c0687e6f39846b2c43fdfe2f631c39ed87cd"
+    },
+    {
+      "file": "seed1_064.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 3 1 2 1 2 1 1 16",
+          "GEOMETRY": "3 1 5 2"
+        },
+        "output_rect": [
+          3,
+          1,
+          5,
+          2
+        ]
+      },
+      "sha256": "c0b2f1ef5418609c0943822074eb60b5b565a499362d956cf184dd34789e8988"
+    },
+    {
+      "file": "seed1_065.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 6 1 2 1 3 1 1 0",
+          "GEOMETRY": "0 0 12 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          12,
+          2
+        ]
+      },
+      "sha256": "68c14df939a6b74b8b14fbdde91dc8682a4be3158d65e1d204ed06aab07f2389"
+    },
+    {
+      "file": "seed1_066.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 3 1 2 1 2 4 3 16",
+          "GEOMETRY": "0 1 2 2"
+        },
+        "output_rect": [
+          0,
+          1,
+          2,
+          2
+        ]
+      },
+      "sha256": "2cfcecc8452c8dc8380e394eec665ab64014522ab9911d33c82dad2f43c65606"
+    },
+    {
+      "file": "seed1_067.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 8 1 2 1 2 1 1 7",
+          "GEOMETRY": "3 3 4 4"
+        },
+        "output_rect": [
+          3,
+          3,
+          4,
+          4
+        ]
+      },
+      "sha256": "e9cc05e0a6da774f818b5b306e3834733a36836bd37c1cf83f406d70358890b9"
+    },
+    {
+      "file": "seed1_068.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "80 1 1 2 1 2 4 3 16",
+          "GEOMETRY": "31 0 40 1"
+        },
+        "output_rect": [
+          31,
+          0,
+          40,
+          1
+        ]
+      },
+      "sha256": "2c10fdc97e6326a349ec3aeb4339cb0abbbcc8cb312ab563877a223b4decdb35"
+    },
+    {
+      "file": "seed1_069.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 14 1 4 1 4 10 11 16",
+          "GEOMETRY": "0 2 2 4"
+        },
+        "output_rect": [
+          0,
+          2,
+          2,
+          4
+        ]
+      },
+      "sha256": "8edb4dfbe66fbd4bb9c8a3eae91ce58781cf6988d583c50be065684f8365e0f6"
+    },
+    {
+      "file": "seed1_070.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 17 1 1 1 1 10 11 1",
+          "GEOMETRY": "5 2 6 11"
+        },
+        "output_rect": [
+          5,
+          2,
+          6,
+          11
+        ]
+      },
+      "sha256": "40fb2166dcf7fec0d97b5a65cf921ec6d20a3e29811c80d16120bbfeef09e715"
+    },
+    {
+      "file": "seed1_071.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "17 8 1 1 1 1 2 1 1",
+          "GEOMETRY": "0 0 17 8"
+        },
+        "output_rect": [
+          0,
+          0,
+          17,
+          8
+        ]
+      },
+      "sha256": "649954d3ff77ff8d206aa78f15c3c183310e14f00758f02400b94fbf50b006e5"
+    },
+    {
+      "file": "seed1_072.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 19 1 2 1 3 4 3 0",
+          "GEOMETRY": "7 1 11 6"
+        },
+        "output_rect": [
+          7,
+          1,
+          11,
+          6
+        ]
+      },
+      "sha256": "1f7ebe3bf1c1dafd0a88a84c245b164e0c2f3a6ad2e022e2315c3849ef43f986"
+    },
+    {
+      "file": "seed1_073.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 6 1 8 1 8 1 1 1",
+          "GEOMETRY": "1 0 2 1"
+        },
+        "output_rect": [
+          1,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "file": "seed1_074.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "223 1 1 2 1 2 10 11 1",
+          "GEOMETRY": "23 0 25 1"
+        },
+        "output_rect": [
+          23,
+          0,
+          25,
+          1
+        ]
+      },
+      "sha256": "2d77f67118ff443cfb59961840847c26e126c58058983f0b21ae43be1ac949c7"
+    },
+    {
+      "file": "seed1_075.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 28 1 8 1 8 10 11 0",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "cfce5ee390546bd40868d5d9e3f2750a28f4ae557b464121cf02dc14b72a7cef"
+    },
+    {
+      "file": "seed1_076.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 12 1 8 1 8 1 1 16",
+          "GEOMETRY": "0 0 1 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "file": "seed1_077.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "18 18 1 1 1 1 4 3 0",
+          "GEOMETRY": "0 0 18 18"
+        },
+        "output_rect": [
+          0,
+          0,
+          18,
+          18
+        ]
+      },
+      "sha256": "5d29013e3f6720e0729dbaf182d1d96fdb1903c2172c18ba6e5b05b9685b3778"
+    },
+    {
+      "file": "seed1_078.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 19 1 2 1 3 2 1 32",
+          "GEOMETRY": "0 0 4 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          7
+        ]
+      },
+      "sha256": "ace8eaefa05cfa01dfecda06361a9d8e1bc088eea8abab48a14ff6f95a50c7e0"
+    },
+    {
+      "file": "seed1_079.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 4 1 3 1 3 4 3 0",
+          "GEOMETRY": "0 0 4 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          2
+        ]
+      },
+      "sha256": "41aed2f1151017f5709b45e477631ab87396d4c910831546c6935549b9e1ba57"
+    },
+    {
+      "file": "seed1_080.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "33 59 1 3 1 3 10 11 32",
+          "GEOMETRY": "0 0 11 20"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          20
+        ]
+      },
+      "sha256": "b82bf91ba7c6996ae8e3e60f488b0cfc39900ab0deaac7476520e6a2fd1b7daa"
+    },
+    {
+      "file": "seed1_081.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 14 1 2 1 2 4 3 3",
+          "GEOMETRY": "0 0 7 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          7
+        ]
+      },
+      "sha256": "946973236fe6a6e6002a9812b8935a45d06ee59acee56c512a9f192d44d2f692"
+    },
+    {
+      "file": "seed1_082.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 13 1 2 1 3 1 1 3",
+          "GEOMETRY": "0 0 11 5"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          5
+        ]
+      },
+      "sha256": "2faf9d890ff85d6b5127765da4c24aa5f9f0b72ea3f051ad3b149a92d2d53f64"
+    },
+    {
+      "file": "seed1_083.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 9 1 3 1 3 4 3 0",
+          "GEOMETRY": "0 0 2 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          3
+        ]
+      },
+      "sha256": "7f707c03b448d2e3d93535f63a33f3424c807f92728d6b99facb0372e06ec826"
+    },
+    {
+      "file": "seed1_084.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 36 1 3 1 3 1 1 0",
+          "GEOMETRY": "6 2 7 7"
+        },
+        "output_rect": [
+          6,
+          2,
+          7,
+          7
+        ]
+      },
+      "sha256": "94a20d8c5205a8b354ba055a4f4e42794aadf6bdda30ab15f3a189621d7246ef"
+    },
+    {
+      "file": "seed1_085.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 3 1 2 1 3 4 3 3",
+          "GEOMETRY": "2 0 3 1"
+        },
+        "output_rect": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "file": "seed1_086.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "31 5 1 3 1 3 4 3 16",
+          "GEOMETRY": "0 0 11 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          2
+        ]
+      },
+      "sha256": "41feee480c9393b8010bb3182ad4d6e2b019714b939da513881a91a9eca5cb2c"
+    },
+    {
+      "file": "seed1_087.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 5 1 2 1 2 4 3 0",
+          "GEOMETRY": "6 1 7 3"
+        },
+        "output_rect": [
+          6,
+          1,
+          7,
+          3
+        ]
+      },
+      "sha256": "1c38a46c762ed92646af07b26b0ab90f00919d711afe70c1db91b83e1c266458"
+    },
+    {
+      "file": "seed1_088.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "4 14 1 2 1 2 2 1 3",
+          "GEOMETRY": "0 0 2 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          7
+        ]
+      },
+      "sha256": "0d818fef8be342e7595bca0be3f8bda6ac32c25d8895463edf3e613ecaa92b78"
+    },
+    {
+      "file": "seed1_089.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "17 21 1 8 1 8 10 11 1",
+          "GEOMETRY": "1 0 3 1"
+        },
+        "output_rect": [
+          1,
+          0,
+          3,
+          1
+        ]
+      },
+      "sha256": "0d52293a83255592fc3c3583181992cfab87122ea3897554eaa3d634941172bf"
+    },
+    {
+      "file": "seed1_090.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 9 1 3 1 3 4 3 16",
+          "GEOMETRY": "0 0 8 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          3
+        ]
+      },
+      "sha256": "e98a66a927b0665e390c9d9c71d36562f023dd3dbc7669d51717a989851ccdc5"
+    },
+    {
+      "file": "seed1_091.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 4 1 3 1 3 4 3 32",
+          "GEOMETRY": "0 0 3 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          2
+        ]
+      },
+      "sha256": "b89266d58f919e37e9abe031b3f4f841415816ea12625fcde848051409ec22b4"
+    },
+    {
+      "file": "seed1_092.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "56 44 1 8 1 8 1 1 1",
+          "GEOMETRY": "0 0 7 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          6
+        ]
+      },
+      "sha256": "7b5665df9b773b34e0308449c027ad70363d04181925edafd6d98fd2bad84172"
+    },
+    {
+      "file": "seed1_093.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "72 1 1 2 1 2 2 1 7",
+          "GEOMETRY": "27 0 35 1"
+        },
+        "output_rect": [
+          27,
+          0,
+          35,
+          1
+        ]
+      },
+      "sha256": "5d1a44101d2871e031a88506a08fb5e43f5842065e392ac08ef86f3eeb3a9d7f"
+    },
+    {
+      "file": "seed1_094.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "51 132 1 4 1 4 4 3 32",
+          "GEOMETRY": "0 0 13 33"
+        },
+        "output_rect": [
+          0,
+          0,
+          13,
+          33
+        ]
+      },
+      "sha256": "55da2cf1c01428721edbc430aac538d450ec9068951a005ad5d37460961a1e43"
+    },
+    {
+      "file": "seed1_095.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 3 1 2 1 3 1 1 7",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "985da9132518b1ce8cc61cd4073824050c8656ebe8ee5cb10af5a8ae019b908d"
+    },
+    {
+      "file": "seed1_096.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "104 1 1 1 1 1 2 1 7",
+          "GEOMETRY": "0 0 104 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          104,
+          1
+        ]
+      },
+      "sha256": "187be03bedfcf189f87b6178ea9cec6190d9d26ece5f5199a3d3a42ef2e6c897"
+    },
+    {
+      "file": "seed1_097.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 22 1 4 1 4 2 1 3",
+          "GEOMETRY": "0 0 4 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          6
+        ]
+      },
+      "sha256": "bc3c1f4f6fecedfcedf66255f1aaaf73775de07d1f06c61df40712f0c2ced4e8"
+    },
+    {
+      "file": "seed1_098.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 7 1 2 1 2 10 11 1",
+          "GEOMETRY": "0 0 12 4"
+        },
+        "output_rect": [
+          0,
+          0,
+          12,
+          4
+        ]
+      },
+      "sha256": "7b25e8950fe1dd91204ad6404c7e75197cfc360ad45e7961c797ead759ec2bec"
+    },
+    {
+      "file": "seed1_099.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 127 1 1 1 1 1 1 7",
+          "GEOMETRY": "0 27 1 116"
+        },
+        "output_rect": [
+          0,
+          27,
+          1,
+          116
+        ]
+      },
+      "sha256": "a52308edd2ed525b2d049da39cf4673d0c27ea1f6e87aa241e5045cf1b450cc8"
+    },
+    {
+      "file": "seed20261026_000.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "61 63 1 1 1 1 4 3 7",
+          "GEOMETRY": "9 62 45 63"
+        },
+        "output_rect": [
+          9,
+          62,
+          45,
+          63
+        ]
+      },
+      "sha256": "19ea82a964019d33c383852ac16d2c7dd54accf2f6bf8c75e07a8a1ed37b1be8"
+    },
+    {
+      "file": "seed20261026_001.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 96 1 3 1 3 2 1 3",
+          "GEOMETRY": "0 30 1 31"
+        },
+        "output_rect": [
+          0,
+          30,
+          1,
+          31
+        ]
+      },
+      "sha256": "20e3243350f57b681cc80effa62599533a1ec15f78c482e0b657dc68219af05f"
+    },
+    {
+      "file": "seed20261026_002.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "61 47 1 8 1 8 4 3 16",
+          "GEOMETRY": "0 0 8 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          6
+        ]
+      },
+      "sha256": "95a57c97209dcfae0035e7861add8132977e56ce168147e58d6b017844fff45f"
+    },
+    {
+      "file": "seed20261026_003.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "61 28 1 2 1 3 10 11 0",
+          "GEOMETRY": "0 0 31 10"
+        },
+        "output_rect": [
+          0,
+          0,
+          31,
+          10
+        ]
+      },
+      "sha256": "65314c4ffea2d4a47b43cbdd8b9dd38538054fcfb94fb120404e9632c162264c"
+    },
+    {
+      "file": "seed20261026_004.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 9 1 8 1 8 10 11 7",
+          "GEOMETRY": "0 0 2 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      "sha256": "cc2f38df12e9ff40a80f4771864056b8bbb6215aa9f48c166a91252ac408c902"
+    },
+    {
+      "file": "seed20261026_005.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 198 1 8 1 8 4 3 0",
+          "GEOMETRY": "0 10 1 14"
+        },
+        "output_rect": [
+          0,
+          10,
+          1,
+          14
+        ]
+      },
+      "sha256": "60241caa98dd570c111581afcd9eae4eb977253639c839d983c5205d89e5e543"
+    },
+    {
+      "file": "seed20261026_006.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "20 21 1 4 1 4 10 11 32",
+          "GEOMETRY": "0 0 5 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          5,
+          6
+        ]
+      },
+      "sha256": "d19690d6858a53441be4a50c7d4deab754fa34ec43314ff9fd2ae81a57a881e7"
+    },
+    {
+      "file": "seed20261026_007.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 54 1 1 1 1 1 1 16",
+          "GEOMETRY": "8 37 11 47"
+        },
+        "output_rect": [
+          8,
+          37,
+          11,
+          47
+        ]
+      },
+      "sha256": "1a28846f9d05ed2d996b2acd3fadc0bc8837c1ffbd77e3cef26d847d008d3883"
+    },
+    {
+      "file": "seed20261026_008.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 8 1 8 1 1 7",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "826e20ac15a5d5467f71e3db62b7db334c8546fde2d991ab958519fe47fb5551"
+    },
+    {
+      "file": "seed20261026_009.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "18 1 1 2 1 2 1 1 16",
+          "GEOMETRY": "0 0 9 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          9,
+          1
+        ]
+      },
+      "sha256": "396bd53f5d7519fc8f32ae44520ccb539d1b3aa0586e7294c31ce2c9516b5a55"
+    },
+    {
+      "file": "seed20261026_010.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 172 1 8 1 8 10 11 16",
+          "GEOMETRY": "0 0 1 22"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          22
+        ]
+      },
+      "sha256": "b679fb990dab722eb0515c45c1cacf367053c3b4d8c24aa3c28012d292390b9f"
+    },
+    {
+      "file": "seed20261026_011.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "55 1 1 2 1 2 4 3 3",
+          "GEOMETRY": "0 0 28 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          28,
+          1
+        ]
+      },
+      "sha256": "f21535f5282255de0224803d6bbe4a2488c1cc1b425a72c80cbf9bc3e04e38b3"
+    },
+    {
+      "file": "seed20261026_012.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 6 1 3 1 3 4 3 16",
+          "GEOMETRY": "1 0 3 1"
+        },
+        "output_rect": [
+          1,
+          0,
+          3,
+          1
+        ]
+      },
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "file": "seed20261026_013.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "249 1 1 4 1 4 4 3 16",
+          "GEOMETRY": "54 0 60 1"
+        },
+        "output_rect": [
+          54,
+          0,
+          60,
+          1
+        ]
+      },
+      "sha256": "64dd342b33ea6d52ba9abe9d2dea3180332b352e4037284ed7a5295529c8f1b5"
+    },
+    {
+      "file": "seed20261026_014.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "15 22 1 2 1 2 1 1 7",
+          "GEOMETRY": "0 0 8 11"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          11
+        ]
+      },
+      "sha256": "9ec4305361c2997a58ed700285dff2eff1d02d5c6926ed9f58ace3942006dd65"
+    },
+    {
+      "file": "seed20261026_015.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 3 1 4 1 4 10 11 16",
+          "GEOMETRY": "4 0 5 1"
+        },
+        "output_rect": [
+          4,
+          0,
+          5,
+          1
+        ]
+      },
+      "sha256": "a9d717f6c184d1d488ddbe78889a38a923207e777657a12e758a90f352e55452"
+    },
+    {
+      "file": "seed20261026_016.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 47 1 1 1 1 4 3 32",
+          "GEOMETRY": "2 33 3 37"
+        },
+        "output_rect": [
+          2,
+          33,
+          3,
+          37
+        ]
+      },
+      "sha256": "9789a184fd7399366e7e8450735416cb0f65eecdafe77503a705fcd1d38d5b4a"
+    },
+    {
+      "file": "seed20261026_017.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 11 1 1 1 1 2 1 16",
+          "GEOMETRY": "12 2 21 7"
+        },
+        "output_rect": [
+          12,
+          2,
+          21,
+          7
+        ]
+      },
+      "sha256": "051fc766a29200fd9b4648f8cc40551e55216afa55213ccd487be10b8b7a32a4"
+    },
+    {
+      "file": "seed20261026_018.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "5 7 1 4 1 4 1 1 3",
+          "GEOMETRY": "0 0 2 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "file": "seed20261026_019.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 13 1 2 1 2 4 3 1",
+          "GEOMETRY": "0 0 2 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          7
+        ]
+      },
+      "sha256": "d121c8e2384c5a61cedba09229f8a885c65e6dee0af5eaa3eaded205992e25ec"
+    },
+    {
+      "file": "seed20261026_020.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "31 15 1 2 1 2 4 3 1",
+          "GEOMETRY": "0 0 16 8"
+        },
+        "output_rect": [
+          0,
+          0,
+          16,
+          8
+        ]
+      },
+      "sha256": "0e9dfd3c5f924d0fe351d4a0f58f1ce42f18f7c9ad7cd0790ce757b212c9a602"
+    },
+    {
+      "file": "seed20261026_021.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 24 1 2 1 2 2 1 0",
+          "GEOMETRY": "7 1 8 9"
+        },
+        "output_rect": [
+          7,
+          1,
+          8,
+          9
+        ]
+      },
+      "sha256": "0578e0dd851608aded0184f156a3c482721597e91101bbc831dce8d6aab5104e"
+    },
+    {
+      "file": "seed20261026_022.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "33 51 1 4 1 4 2 1 0",
+          "GEOMETRY": "0 7 9 12"
+        },
+        "output_rect": [
+          0,
+          7,
+          9,
+          12
+        ]
+      },
+      "sha256": "185f698c926ae048f2a55860566362f46a6c81c9694142203231e3d3b0a6ff62"
+    },
+    {
+      "file": "seed20261026_023.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 2 1 1 0",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "file": "seed20261026_024.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 9 1 1 1 1 4 3 32",
+          "GEOMETRY": "3 2 18 6"
+        },
+        "output_rect": [
+          3,
+          2,
+          18,
+          6
+        ]
+      },
+      "sha256": "42d9f0f3cd7db0f2e0ea3bd5d95b6165f5d7701c80256c370eaba43b02c25e34"
+    },
+    {
+      "file": "seed20261026_025.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "7 5 1 8 1 8 4 3 7",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "3fa61c7a7849cee5595b9b3c3aa536462cbd8c8ccb8c027150be27a7e534ed12"
+    },
+    {
+      "file": "seed20261026_026.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 6 1 1 1 1 10 11 0",
+          "GEOMETRY": "0 0 6 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          6,
+          6
+        ]
+      },
+      "sha256": "5d65c1de407fb0559b02c69d670f8eeb37a8b01c8f7a3776f6c6ebbe59f0efd7"
+    },
+    {
+      "file": "seed20261026_027.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "20 11 1 4 1 4 4 3 0",
+          "GEOMETRY": "0 1 2 3"
+        },
+        "output_rect": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "sha256": "564b283a51264d0d6881a3eea1fba8e5bc7d3ba1f070105f7514075876a0918d"
+    },
+    {
+      "file": "seed20261026_028.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "41 30 1 2 1 3 4 3 7",
+          "GEOMETRY": "15 7 19 8"
+        },
+        "output_rect": [
+          15,
+          7,
+          19,
+          8
+        ]
+      },
+      "sha256": "4ced189071ff2e5685f0e60110837ec4c15321b0b4d05fa68f2acd057368a620"
+    },
+    {
+      "file": "seed20261026_029.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 18 1 3 1 3 1 1 1",
+          "GEOMETRY": "0 0 7 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          6
+        ]
+      },
+      "sha256": "c7c69fb9943b12bb44430b25d0ae76e9c8771e033d410cc01344ce58c92b456f"
+    },
+    {
+      "file": "seed20261026_030.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 16 1 1 1 1 2 1 16",
+          "GEOMETRY": "0 4 1 10"
+        },
+        "output_rect": [
+          0,
+          4,
+          1,
+          10
+        ]
+      },
+      "sha256": "8afdca830aee4c77f8e7ce58a18a4168e3da5e506966b50156aefe53b6e7ccc0"
+    },
+    {
+      "file": "seed20261026_031.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "126 190 1 2 1 2 2 1 32",
+          "GEOMETRY": "27 46 50 82"
+        },
+        "output_rect": [
+          27,
+          46,
+          50,
+          82
+        ]
+      },
+      "sha256": "5291141f2cd34c4d4583bdaff854b7381d27eeeb64ff97f95c61699e5d10669f"
+    },
+    {
+      "file": "seed20261026_032.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "24 52 1 2 1 3 1 1 1",
+          "GEOMETRY": "10 11 11 16"
+        },
+        "output_rect": [
+          10,
+          11,
+          11,
+          16
+        ]
+      },
+      "sha256": "4329b8150f4973f98e932098a89792cb1d7271c18a75941073dbfbffdff48f9a"
+    },
+    {
+      "file": "seed20261026_033.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 9 1 2 1 3 2 1 16",
+          "GEOMETRY": "0 0 4 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          3
+        ]
+      },
+      "sha256": "228d333a799b45c56ae648d9439fe6b532c61ebaba1eb1d0dd711e2e36fc619b"
+    },
+    {
+      "file": "seed20261026_034.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 1 1 3",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "file": "seed20261026_035.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "4 5 1 2 1 3 1 1 0",
+          "GEOMETRY": "0 0 2 2"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      "sha256": "7faf2f24f9404db06c4184ed427884e19c9c2a6f4a4de7d09685131fba801eae"
+    },
+    {
+      "file": "seed20261026_036.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "15 17 1 8 1 8 4 3 3",
+          "GEOMETRY": "0 0 2 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          3
+        ]
+      },
+      "sha256": "9ddf6e55302a5080110ee6879483ed18d0645b9297413c1d4dc36db77f28c0f5"
+    },
+    {
+      "file": "seed20261026_037.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 2 1 3 1 3 2 1 16",
+          "GEOMETRY": "2 0 3 1"
+        },
+        "output_rect": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "sha256": "a31d4abd84b22141b77c8b9d195dd3ce3bc0e3a6b035897cdd954abb3669442c"
+    },
+    {
+      "file": "seed20261026_038.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 12 1 1 1 1 1 1 7",
+          "GEOMETRY": "0 0 11 12"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          12
+        ]
+      },
+      "sha256": "534e694759efb0c0c95aff552752bd0c04ffb54061c055a1863390b22de0d0e7"
+    },
+    {
+      "file": "seed20261026_039.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 155 1 1 1 1 10 11 0",
+          "GEOMETRY": "0 99 1 111"
+        },
+        "output_rect": [
+          0,
+          99,
+          1,
+          111
+        ]
+      },
+      "sha256": "26e52c009b4398e64ebb26748e6565b7d3eed9421724482fb42f4c3673657677"
+    },
+    {
+      "file": "seed20261026_040.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 12 1 2 1 3 1 1 3",
+          "GEOMETRY": "6 0 7 3"
+        },
+        "output_rect": [
+          6,
+          0,
+          7,
+          3
+        ]
+      },
+      "sha256": "52dbf2f89235a79739238063b540e6d76f22b00023832b64558b6c215bccc03f"
+    },
+    {
+      "file": "seed20261026_041.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 3 1 8 1 8 1 1 32",
+          "GEOMETRY": "0 0 2 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "52efe92460bab9ab2eeb1bf2037e46aabca50f56b4bfcb22938eb973f2afaa7c"
+    },
+    {
+      "file": "seed20261026_042.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "26 104 1 2 1 3 2 1 1",
+          "GEOMETRY": "3 34 8 35"
+        },
+        "output_rect": [
+          3,
+          34,
+          8,
+          35
+        ]
+      },
+      "sha256": "8dac20d2762cbecf60830b67488f945a9627b95eefd0f0ac8c3f93ffec66388c"
+    },
+    {
+      "file": "seed20261026_043.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "14 1 1 1 1 1 1 1 3",
+          "GEOMETRY": "0 0 14 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          14,
+          1
+        ]
+      },
+      "sha256": "bfe1d1a84233dc0d8cb6239bf1f00bf0e1bdd65f02f24895032fbcf9352b8431"
+    },
+    {
+      "file": "seed20261026_044.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "47 49 1 1 1 1 2 1 32",
+          "GEOMETRY": "19 25 33 30"
+        },
+        "output_rect": [
+          19,
+          25,
+          33,
+          30
+        ]
+      },
+      "sha256": "94f95af8e85762f7cf6aaf2eb7252ca91215f04f72cdce86b532c06d18914461"
+    },
+    {
+      "file": "seed20261026_045.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 1 1 1 1 1 4 3 7",
+          "GEOMETRY": "0 0 23 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          23,
+          1
+        ]
+      },
+      "sha256": "1ba4ada0e16120bf6adaec0ccc72a0493c28d122225a50f6dac6b926e393d747"
+    },
+    {
+      "file": "seed20261026_046.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "16 9 1 4 1 4 1 1 7",
+          "GEOMETRY": "3 0 4 1"
+        },
+        "output_rect": [
+          3,
+          0,
+          4,
+          1
+        ]
+      },
+      "sha256": "5b92cd2fe1f9698afff181458d2abb4c2eed69c9a98df29f5601e55e62a49f09"
+    },
+    {
+      "file": "seed20261026_047.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 12 1 4 1 4 4 3 7",
+          "GEOMETRY": "1 1 2 3"
+        },
+        "output_rect": [
+          1,
+          1,
+          2,
+          3
+        ]
+      },
+      "sha256": "e39eec063e8de3a6ca718dd7fe1d83fde61df9f89adca0e951e2c6daf03011b2"
+    },
+    {
+      "file": "seed20261026_048.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "178 1 1 8 1 8 2 1 32",
+          "GEOMETRY": "12 0 22 1"
+        },
+        "output_rect": [
+          12,
+          0,
+          22,
+          1
+        ]
+      },
+      "sha256": "feb4123a16d6feb679e9bb909ef89361f08252aa30c52d1d84e90c6d3736266b"
+    },
+    {
+      "file": "seed20261026_049.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "170 1 1 3 1 3 4 3 7",
+          "GEOMETRY": "42 0 43 1"
+        },
+        "output_rect": [
+          42,
+          0,
+          43,
+          1
+        ]
+      },
+      "sha256": "e74880aaff168454db3cbb97f108d3087476a0c68b41e49b804265a2bf760db8"
+    },
+    {
+      "file": "seed20261026_050.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 119 1 2 1 2 2 1 32",
+          "GEOMETRY": "0 7 1 41"
+        },
+        "output_rect": [
+          0,
+          7,
+          1,
+          41
+        ]
+      },
+      "sha256": "c71650b1830ba4fd9eabe647e05f0a134a8d1bb8ed03cf34aa2b925c144825c8"
+    },
+    {
+      "file": "seed20261026_051.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 13 1 2 1 2 4 3 16",
+          "GEOMETRY": "3 0 10 5"
+        },
+        "output_rect": [
+          3,
+          0,
+          10,
+          5
+        ]
+      },
+      "sha256": "5b8b6f7dcf3322db6d6c79df70a926905ccce0c6b6443e0ab04ac323a8818c04"
+    },
+    {
+      "file": "seed20261026_052.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "15 12 1 2 1 2 4 3 3",
+          "GEOMETRY": "0 0 8 6"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          6
+        ]
+      },
+      "sha256": "7c9ef700f64eaa5c89c8ca1042655de457a08f704a1038f72e73ac5b6cd6c019"
+    },
+    {
+      "file": "seed20261026_053.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 47 1 3 1 3 4 3 3",
+          "GEOMETRY": "0 0 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          16
+        ]
+      },
+      "sha256": "998825e26b42ae5157d4a3110ae5e3f1057c75392209e8b22d4506cc343eb309"
+    },
+    {
+      "file": "seed20261026_054.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "15 19 1 1 1 1 4 3 0",
+          "GEOMETRY": "1 11 2 15"
+        },
+        "output_rect": [
+          1,
+          11,
+          2,
+          15
+        ]
+      },
+      "sha256": "52e9e78305b5d328a0d3be49150313d78d66e08a82f125ea6c952e4c0c1fe48a"
+    },
+    {
+      "file": "seed20261026_055.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "3 16 1 1 1 1 10 11 7",
+          "GEOMETRY": "0 15 3 16"
+        },
+        "output_rect": [
+          0,
+          15,
+          3,
+          16
+        ]
+      },
+      "sha256": "96c867666df63f5811e8b04b26b4cae8d660057603b05d850e8e2dcbe1836e25"
+    },
+    {
+      "file": "seed20261026_056.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "17 1 1 2 1 3 2 1 3",
+          "GEOMETRY": "5 0 8 1"
+        },
+        "output_rect": [
+          5,
+          0,
+          8,
+          1
+        ]
+      },
+      "sha256": "f9d3c7244bd2d6f417e505e166645293efb1a6a9441a736e624b3b0dc05954d6"
+    },
+    {
+      "file": "seed20261026_057.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "128 235 1 1 1 1 1 1 0",
+          "GEOMETRY": "0 0 128 235"
+        },
+        "output_rect": [
+          0,
+          0,
+          128,
+          235
+        ]
+      },
+      "sha256": "435d0029564d9eb2b50faaebecfe7dfbe1c3c5e20a705ea5478dfafb29b59937"
+    },
+    {
+      "file": "seed20261026_058.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 8 1 8 2 1 16",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "43a6c10f5b6daee0f986c99d1f9354002f4755af1967dbc71025ee2eaf34d306"
+    },
+    {
+      "file": "seed20261026_059.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "8 9 1 3 1 3 4 3 7",
+          "GEOMETRY": "0 2 2 3"
+        },
+        "output_rect": [
+          0,
+          2,
+          2,
+          3
+        ]
+      },
+      "sha256": "e8f0b0f0dd61963fd244e4a2e1225634dccec47d0a605a52b8f1a7fb0d24e035"
+    },
+    {
+      "file": "seed20261026_060.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "22 53 1 2 1 2 1 1 7",
+          "GEOMETRY": "0 0 11 27"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          27
+        ]
+      },
+      "sha256": "d08d57adf8f9fa9b8ac2da5d916db52e28b1fa86668106ed5c253419e0950894"
+    },
+    {
+      "file": "seed20261026_061.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 56 1 8 1 8 10 11 3",
+          "GEOMETRY": "0 0 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          7
+        ]
+      },
+      "sha256": "41329c659161be9e684a5192ffcc52c0651063f08dc702528ba2b17f1d8118fa"
+    },
+    {
+      "file": "seed20261026_062.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "133 1 1 4 1 4 10 11 3",
+          "GEOMETRY": "0 0 34 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          34,
+          1
+        ]
+      },
+      "sha256": "cdcbbd4d15bb8dc2f40d1c0dcc1aeaed4c4f13a58a6a02c11733aedf070cc5bd"
+    },
+    {
+      "file": "seed20261026_063.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 1 1 1 1 1 10 11 16",
+          "GEOMETRY": "6 0 8 1"
+        },
+        "output_rect": [
+          6,
+          0,
+          8,
+          1
+        ]
+      },
+      "sha256": "2fde9d5ddcee2a3d87541cc76f280d52e68084d888591da1734300e308d2bf77"
+    },
+    {
+      "file": "seed20261026_064.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "19 18 1 2 1 2 1 1 0",
+          "GEOMETRY": "0 0 10 9"
+        },
+        "output_rect": [
+          0,
+          0,
+          10,
+          9
+        ]
+      },
+      "sha256": "fa3620b137c88b43d61b06de2402e9b00c86c266a616d37203662ba267950463"
+    },
+    {
+      "file": "seed20261026_065.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 1 1 1",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "9f84d2eb760bf15631c1cadd93ebdb14a772a15b6018ed04e05c2bafb844157c"
+    },
+    {
+      "file": "seed20261026_066.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 14 1 2 1 2 10 11 3",
+          "GEOMETRY": "0 0 2 4"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          4
+        ]
+      },
+      "sha256": "b7a5052999480c3f45a674d65d528512ee0331c70640b44274eced3c91c610f5"
+    },
+    {
+      "file": "seed20261026_067.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "39 39 1 3 1 3 1 1 1",
+          "GEOMETRY": "11 2 12 9"
+        },
+        "output_rect": [
+          11,
+          2,
+          12,
+          9
+        ]
+      },
+      "sha256": "6a662aaacc2409b442a40be28a0e53a26357ee8a60d731a4c64987e78c3e066d"
+    },
+    {
+      "file": "seed20261026_068.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 6 1 3 1 3 4 3 7",
+          "GEOMETRY": "4 0 5 1"
+        },
+        "output_rect": [
+          4,
+          0,
+          5,
+          1
+        ]
+      },
+      "sha256": "b2b298eff32d2750653782aff60662d4e2a5b76d003f94ddd776c0e0d46cee28"
+    },
+    {
+      "file": "seed20261026_069.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "26 33 1 4 1 4 4 3 32",
+          "GEOMETRY": "0 0 7 9"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          9
+        ]
+      },
+      "sha256": "05f34a8f6091b28bbb67ac1b2ca6fc5220fb51042e1904430a2634e828a3a45f"
+    },
+    {
+      "file": "seed20261026_070.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 24 1 4 1 4 4 3 32",
+          "GEOMETRY": "1 5 2 6"
+        },
+        "output_rect": [
+          1,
+          5,
+          2,
+          6
+        ]
+      },
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "file": "seed20261026_071.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 18 1 4 1 4 2 1 32",
+          "GEOMETRY": "1 0 2 1"
+        },
+        "output_rect": [
+          1,
+          0,
+          2,
+          1
+        ]
+      },
+      "sha256": "d6442375b20c12a999b6c55e4eb6ef0d87cd89b09d437e7005b4cd9a9ea1d394"
+    },
+    {
+      "file": "seed20261026_072.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 1 1 3 1 3 1 1 0",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    {
+      "file": "seed20261026_073.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "115 1 1 3 1 3 2 1 16",
+          "GEOMETRY": "14 0 23 1"
+        },
+        "output_rect": [
+          14,
+          0,
+          23,
+          1
+        ]
+      },
+      "sha256": "71b96b111c1e0f8efadfd1b562a552fe56831eef294b8d9e2b03d17fd5f03e6a"
+    },
+    {
+      "file": "seed20261026_074.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "7 21 1 3 1 3 4 3 32",
+          "GEOMETRY": "0 4 1 7"
+        },
+        "output_rect": [
+          0,
+          4,
+          1,
+          7
+        ]
+      },
+      "sha256": "ce914d40c3846b7effaa97e932bcc79927b928993e332cf1574c90a8883aa882"
+    },
+    {
+      "file": "seed20261026_075.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 24 1 8 1 8 4 3 3",
+          "GEOMETRY": "1 1 2 3"
+        },
+        "output_rect": [
+          1,
+          1,
+          2,
+          3
+        ]
+      },
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "file": "seed20261026_076.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 19 1 3 1 3 2 1 7",
+          "GEOMETRY": "0 3 1 5"
+        },
+        "output_rect": [
+          0,
+          3,
+          1,
+          5
+        ]
+      },
+      "sha256": "d1fb3f0616d81e8e98c171c4872c7cb1d05abc4499df1c218b3edeb0bb396b21"
+    },
+    {
+      "file": "seed20261026_077.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 37 1 3 1 3 1 1 3",
+          "GEOMETRY": "1 9 2 11"
+        },
+        "output_rect": [
+          1,
+          9,
+          2,
+          11
+        ]
+      },
+      "sha256": "7168b5646c990108c92d544cfe1ffc5ff62c46e1e0ddff26b609f0a74de29704"
+    },
+    {
+      "file": "seed20261026_078.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "17 3 1 1 1 1 10 11 16",
+          "GEOMETRY": "1 0 9 2"
+        },
+        "output_rect": [
+          1,
+          0,
+          9,
+          2
+        ]
+      },
+      "sha256": "033c894c366d4560ab56d79432caafe03b0aed81202b02955b0e6cd861e13af3"
+    },
+    {
+      "file": "seed20261026_079.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "181 1 1 2 1 3 2 1 0",
+          "GEOMETRY": "45 0 61 1"
+        },
+        "output_rect": [
+          45,
+          0,
+          61,
+          1
+        ]
+      },
+      "sha256": "0c8c0f0f70d2d1b06f0b79ed404514ccb724ed09fc29c9cd35ad06813415babe"
+    },
+    {
+      "file": "seed20261026_080.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "18 2 1 2 1 3 1 1 7",
+          "GEOMETRY": "3 0 8 1"
+        },
+        "output_rect": [
+          3,
+          0,
+          8,
+          1
+        ]
+      },
+      "sha256": "993fe4b12f515c1c2efe4bffb9e163a69d97d830b385f66f829d0aab7a88c54c"
+    },
+    {
+      "file": "seed20261026_081.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 13 1 3 1 3 1 1 16",
+          "GEOMETRY": "0 0 4 5"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          5
+        ]
+      },
+      "sha256": "a31483b93fe6b3569c434c865f8c1aeedd40bc222dea91b9fcf5eb4d73fd59b6"
+    },
+    {
+      "file": "seed20261026_082.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "11 3 1 4 1 4 10 11 16",
+          "GEOMETRY": "0 0 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "sha256": "c05a1f206dde230b2312bd348ce70852243380d4164cf9b1d937737f0bf8408c"
+    },
+    {
+      "file": "seed20261026_083.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "13 54 1 1 1 1 10 11 3",
+          "GEOMETRY": "1 29 6 32"
+        },
+        "output_rect": [
+          1,
+          29,
+          6,
+          32
+        ]
+      },
+      "sha256": "7d8bbb5a549ecf291d1282b3e905b8b4393948fe9ce40b886b3e85df76169665"
+    },
+    {
+      "file": "seed20261026_084.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "69 1 1 3 1 3 4 3 7",
+          "GEOMETRY": "14 0 23 1"
+        },
+        "output_rect": [
+          14,
+          0,
+          23,
+          1
+        ]
+      },
+      "sha256": "c99e94dad8f5e7c124b5885d338278b1225d7868497cb5cab931b8281553b3b6"
+    },
+    {
+      "file": "seed20261026_085.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "10 22 1 8 1 8 4 3 32",
+          "GEOMETRY": "0 2 1 3"
+        },
+        "output_rect": [
+          0,
+          2,
+          1,
+          3
+        ]
+      },
+      "sha256": "70d96590af50e47d1a97dea677589c2c884b1dd2645e2108eb372479ee8854bd"
+    },
+    {
+      "file": "seed20261026_086.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "12 15 1 2 1 3 1 1 16",
+          "GEOMETRY": "5 2 6 4"
+        },
+        "output_rect": [
+          5,
+          2,
+          6,
+          4
+        ]
+      },
+      "sha256": "3a15bfb8acfc405b89d2d98ebeb6e8af9b366a381ee62effc765f45c9dd9e051"
+    },
+    {
+      "file": "seed20261026_087.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "18 5 1 2 1 2 10 11 32",
+          "GEOMETRY": "0 0 9 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          9,
+          3
+        ]
+      },
+      "sha256": "1cc81c5ae7f551d8493fd0127d50488edfafb65d3d2c5104149eaa18869f6743"
+    },
+    {
+      "file": "seed20261026_088.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "9 16 1 2 1 2 2 1 0",
+          "GEOMETRY": "1 0 5 3"
+        },
+        "output_rect": [
+          1,
+          0,
+          5,
+          3
+        ]
+      },
+      "sha256": "797e784e12b7c05a92803a23ebc73868af4420560da560c83e1445b457715c2c"
+    },
+    {
+      "file": "seed20261026_089.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "23 24 1 3 1 3 1 1 32",
+          "GEOMETRY": "0 0 8 8"
+        },
+        "output_rect": [
+          0,
+          0,
+          8,
+          8
+        ]
+      },
+      "sha256": "ef4631f324ccac7ee72dbf692a52552887553099a707300463c1992bacb02c82"
+    },
+    {
+      "file": "seed20261026_090.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "20 23 1 1 1 1 10 11 1",
+          "GEOMETRY": "0 0 20 23"
+        },
+        "output_rect": [
+          0,
+          0,
+          20,
+          23
+        ]
+      },
+      "sha256": "1255b35b9655277e16b8e7c0c5d3d177646a5bd33319993e3371571246f8f115"
+    },
+    {
+      "file": "seed20261026_091.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "6 12 1 2 1 3 10 11 7",
+          "GEOMETRY": "0 2 2 3"
+        },
+        "output_rect": [
+          0,
+          2,
+          2,
+          3
+        ]
+      },
+      "sha256": "79d3646c03c84414967eb3e19f2efecc9b3680eb85804e4d7ceea1df06b799fb"
+    },
+    {
+      "file": "seed20261026_092.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "1 19 1 2 1 2 10 11 7",
+          "GEOMETRY": "0 7 1 10"
+        },
+        "output_rect": [
+          0,
+          7,
+          1,
+          10
+        ]
+      },
+      "sha256": "f3e4b9a8a266d3f6d5c51adbf30eea805621aee7916c708fcabdeb97e9714335"
+    },
+    {
+      "file": "seed20261026_093.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "91 76 1 2 1 3 2 1 0",
+          "GEOMETRY": "43 3 45 25"
+        },
+        "output_rect": [
+          43,
+          3,
+          45,
+          25
+        ]
+      },
+      "sha256": "46e22e07e4a46b8fbcd9aa2263a732e672ed9f2970adecab62f21ce01b7177ac"
+    },
+    {
+      "file": "seed20261026_094.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "249 229 1 8 1 8 4 3 0",
+          "GEOMETRY": "0 0 32 29"
+        },
+        "output_rect": [
+          0,
+          0,
+          32,
+          29
+        ]
+      },
+      "sha256": "b5c7d82b376f9f04ad08c622471d322afae6bc446ac5cb4f932e396cfeb8dc70"
+    },
+    {
+      "file": "seed20261026_095.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 12 1 4 1 4 10 11 3",
+          "GEOMETRY": "0 0 1 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          3
+        ]
+      },
+      "sha256": "0174df452849707932e2219ce9ef226009aaa6d911cdd86fb601d66e11893272"
+    },
+    {
+      "file": "seed20261026_096.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "24 20 1 8 1 8 4 3 0",
+          "GEOMETRY": "0 0 3 3"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          3
+        ]
+      },
+      "sha256": "5ecc2f3179ba8c65d4d198ad4a0ac8de356eaeab0698e8cdf3349ecfdc86d0d2"
+    },
+    {
+      "file": "seed20261026_097.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "2 21 1 4 1 4 4 3 7",
+          "GEOMETRY": "0 1 1 3"
+        },
+        "output_rect": [
+          0,
+          1,
+          1,
+          3
+        ]
+      },
+      "sha256": "6283317dc5ad7cb743a87ff32511529bcabbf3519ad560a65f5491bb36b6f703"
+    },
+    {
+      "file": "seed20261026_098.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "48 49 1 2 1 2 2 1 7",
+          "GEOMETRY": "4 5 18 17"
+        },
+        "output_rect": [
+          4,
+          5,
+          18,
+          17
+        ]
+      },
+      "sha256": "38e9fb96071dba8884f728f262c4bb4f484bcee8c55a9b83b70bfef9c2a1c5bd"
+    },
+    {
+      "file": "seed20261026_099.json",
+      "exact": true,
+      "result": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "21 21 1 1 1",
+          "GEOMETRY_INPUT": "162 1 1 8 1 8 1 1 32",
+          "GEOMETRY": "19 0 20 1"
+        },
+        "output_rect": [
+          19,
+          0,
+          20,
+          1
+        ]
+      },
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ]
+}

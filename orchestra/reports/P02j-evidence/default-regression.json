@@ -1,0 +1,10 @@
+{
+  "classic": {
+    "changed_output_hash_or_error": [],
+    "exact_to_nonexact": []
+  },
+  "smart": {
+    "changed_output_hash_or_error": [],
+    "exact_to_nonexact": []
+  }
+}

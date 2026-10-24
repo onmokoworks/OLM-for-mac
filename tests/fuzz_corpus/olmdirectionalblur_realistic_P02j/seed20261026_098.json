@@ -1,0 +1,266 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "extent_hint": [
+      2,
+      11,
+      13,
+      18
+    ],
+    "full_geometry": [
+      48,
+      49
+    ],
+    "geometry": [
+      24,
+      25
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 98,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 95.90695190429688
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 56.48193359375
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 24
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 0.0
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      4,
+      5,
+      18,
+      17
+    ],
+    "rowbytes_padding": 7,
+    "seed": 20261026
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 98,
+  "input_sha256": "d89e80240403be41cf38d2765777a3c1ff5428b081f54c902685d17830da0f93",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoN04kjE4ofAPAveaaUdDjfK82RIynJMUUvOSqkEKuXcsWTRCvHhEpPObLkbrLIZvSKJpRjI6FUkzmK14ZCrhyVMKnv7/f5Hz4gbXUOzrUTUStKgDdqMuGE1gFck2O3LuE2P9dRww/FozyMi/XGwjPKuGnGBlfIuEz524Vg/4UAqOafRM7FC+BqL4C97cFA5+mOxeu8wvFdXiY7q6yRnaUDTofqwOQrWZyW/hnumgmwwzTg4xz3/SWSUwZEFCwHv+FErjGbj5NygQY4Vw2DNKKK11QiHNULx55Piah78IB/1A5W/SHRD4ndnxNgri6Go7s9HJaq10HRE/2X/f8cVs3fNoatq791agr4OzJMF/FbcD+41SRFHFLwh6nFkAR91ir498AyQ2rjKhgomQQ9+exVofruoLSM6/9lPgw1CfyBeiVSwkfbF0A/+waubn/Hu8YjwLOJKNTLyY9e+K0GWxK+8dO+b17Q3lxio9bQwoxkRSIt2xo6Dvpip7YiPs/jar6ZG4YVV7Xg+J5hKDegoNUny+dK1FeVXNNBXNTeCzELc6h63h3mJraigcEgsu/dxIAtzaCY6DM6Tf8Fkeu9kH/6AdID+vBO9osFO3NZnDMnx5j6nUflwhaY4EZB2Y5wbMm6/Zmt2lvhEU/sOW+tt7jKeBjH8z0w6c6Wzic859ywOCYI7dtRff9/szI+GRD3/P7fyxi/Kf4uI8Smzt2w207Sk8Vtx/MEYcnDInlQ9juGulNOQCWm4x7+AMbX+6OdpyUwFd3hZ82/0GUqhKFQa3HFtkAIa4lS28PSw87MDMjgx67saek74xC/BrpUPMNiHIadrukY4eF9bdBtr4VpaUrg/94SxohWX9yIchCzlmz5/eHFrWcE9NnEa29hHh6j1z9KAo/GZiRZ0vD7gO9y6boevN7XLtdEU8Fky6mKyDPbIaKwAi/Sw/B0bCM2X2BiOqkDb9GP4iuZgycu/SEBi5Eb8dX0Wfgj8T3sIxTjuQ/aKHPDAS1b6KCR1rcYX2J7QYqThI4VpfhTrwYY+mYrNb6qfjWNCcJPX44eK4tt3uly8wd8kZq8KkoRooqSyVcbFdnnwhxvdO1PRWrZOogbfR5ya34NHH9RjPW8MBj8GAfycpEY6NCA4vuXoO332VOFp+/CBV9rUPOQgh9lZo46RaOY//rpz8eRwv5845G2Kd8+DKA/wVq5o6B9Jh0GJWhLCoudsMlsEj1P+QBx2AUP2dzBzODQXyNvt4bvZzkgeegwiFv38Jvq2Qqs52PoJz8NslYj2M/96TcwHI6l2XsxvKoKHi+OYpozCSt9iWpsOaGDw9MULFLOwb8mX2G6HsxLSTpGCi0IGGjxEA1zaJoHMrtyg+5sQBfa+6/H/opIzu56c0s3bh1saFDb8GdI9Z3QM/KrCepWqBzxGcSllkD+O8o1IaISH5zzgaF1khi0W4iPCqWLs90N8UTcWVzB7hlKLN8FxnsvRp4Nkm7mkJgQ0yvR3ta3G14nj2H6snt48F486D/ogFQ3CuaI1T+tmqCgYdfWY6kFAiBUe+B44yk0Z1+BtKQVyNeiT3/lJ0ITwwwkN+Wi79RBEOjkYrFVOth33wU7xp9YzUz2yX4UjU/zujGwxJ2RXnEJo57tYIhqqpASLgMzXHOIEGdhoUUweL5eY1BWMRba9lIE3aJgsDC9D71+M1h83xgUdjDh1EEyN3VbKTaymlDHXCddd190LDfeDvKteW6ucx3AUhahT1e90EhLCpoX9eq8i3jgHkLAziAFc3riN5jesxWmt2QBe6EZWdOKFyej58Dcwh7Mc2TlntyIoqUaRaCb9gz2KLs/Ekq7YlUlXe5ir8Z/zDcbnSt/pODJhpq4NttYlDBoNdZiL3fPLy/BKcp2UBBRIPnaZbR0a8dLUiNIPqWNpSYBZOmlO5dFl7YcNnTsnmrdXOQQbLsbOb2G2FyLaKBhizMr/aC6eShs/lcaBH9OQtL1HJE80wJNkp0U9DOdkG2mCKFj9HbddfuRVxx09+qa251bVTLLqcdoWGCyyX+64RzsoslA8E9vouwzKYid54BhHxcsP0xDQ248zBishaucIGitL8RYr0FsEE2ojj5TwBybf6D7au+3pvl3MF5UCKTMSDjh/OyucLskHpGrRTkdRzBOLFjbQSGCipWk+uHXU3Eyv0QQOBEKGQbyvrzAqDn5TR2YNssE6qN2+GjDBH9Nd1jtWEmhrk6BiCdL0bt/88qT4miYWyQPzhTVHXJIsMIP5YPtv8t34fXuPOQ8JqN01giI7VLxwSJVkgqn8ELzdVQLVUT/qF/YWlzGWWokAEG/uYcHZxw2XG9FQ+GTL9NX2Dhq7smY4RJR7GGHCFlwXmUBfYKM4cRxdZeeKysVAtWX4/4EezCWZUBfcRV62n2ELoG0OKXxKZSLXaDRtRZnbygBYycdog0vKxJOCjmUPBKqGDkCQ5mArBZdPFJQgayqd6D99iXsMnWA/tyMrDX5DzFgonaCL+0GKSpUn35nY3QgUsGRogm//BdQ3bRy+EiGPhrWnIa6zTeAtMSj1MfgMwqqI6E7zhPeS2yACFoeTlrVYEh6M/goWqEt6R4EO17CEut6nL0lBIufCUsoDxywoNQVnQ098A9e3pWhDi5e9jyCzmYikCctg7w6f6DqjKBQ6AWyvawD641MM3uXvxUkJRQBQ88MJ73/f6JkH4d8QAbefXKB6BEqjvt5IY/7AQpUWoF1txtUObLwYnDdDx6BDaH7bTBpV4XcYKEIB5hqQIhtBIvaTPDu/YJ/Lq+Jz3iwAdoIjkAOWLJ5MZOGH+MjYba9FpZQ/GBe9gWZZDCmGdOkCbTzVtj7+oaOxtIKqLmTimrfbZHY6gPrX1bB6wZV1D1SAJuGBWtZVYh1KW1VP/5zRW+pNtwyXIohlP71ShXFWJl7Fk4+07ZoJysOkHLtIfkQH5gljE8il4Fb4+5OcD1DHqxkp+B4wEbQWrux9NHxp6iaVQ3klYEmeteWbuKVrQbQOAJ1nlQse3kTy49RgWE0hNLnhneeMAagvgSUvXkWdG0MQSJ2X1Anj/Y/4pG+cw==",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        4,
+        5,
+        18,
+        17
+      ],
+      "raw_sha256": "38e9fb96071dba8884f728f262c4bb4f484bcee8c55a9b83b70bfef9c2a1c5bd",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          24,
+          25
+        ],
+        "raw_sha256": "a0ee989ed2a0a2e3626520afa4032e06144865c8c8f6357293c9f4cd2069eaf2",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          4,
+          5,
+          18,
+          17
+        ],
+        "raw_sha256": "38e9fb96071dba8884f728f262c4bb4f484bcee8c55a9b83b70bfef9c2a1c5bd",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 2400,
+          "actual_word_hex": "25",
+          "different_bytes": 1627,
+          "different_words": 1627,
+          "expected_bytes": 2400,
+          "expected_word_hex": "00",
+          "first_byte": 5,
+          "first_word": 5
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "48 49 1 2 1 2 2 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          24,
+          25
+        ],
+        "raw_sha256": "67e4648df77bd054631696bd69179d8fddb3320fdab5f959a0000b1178deb689",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "4 5 18 17",
+          "GEOMETRY_INPUT": "48 49 1 2 1 2 2 1 7"
+        },
+        "output_rect": [
+          4,
+          5,
+          18,
+          17
+        ],
+        "raw_sha256": "38e9fb96071dba8884f728f262c4bb4f484bcee8c55a9b83b70bfef9c2a1c5bd",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261026
+}

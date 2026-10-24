@@ -1,0 +1,266 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "extent_hint": [
+      17,
+      12,
+      20,
+      21
+    ],
+    "full_geometry": [
+      20,
+      23
+    ],
+    "geometry": [
+      20,
+      23
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 90,
+    "input_padding": 1,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 2431
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 0.0
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      20,
+      23
+    ],
+    "rowbytes_padding": 1,
+    "seed": 20261026
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 90,
+  "input_sha256": "2ac3356336558582f6e62fcfea90b9969ef5347407986ed0be557204031d89f2",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoNz4kjFIgeB/CfUo4cRS8U7cqQWLm2SbRKPPc2heeIktt7iZLJhsIkxtFFxMoR5ZhEhRKRitCBrVw1Nc7ykmtdofq+9/kPPg6m/He0g83Zt+CvRF6p0ieP7GWiL90fYRahIVK7QzpWnr2k98l4KYJyluGulhNlaH1GkZZi34+afmI/O4+6qbHA0IQH2A4m+YvGkqpxKrI6POQma2bMPrkI6K/nrnRc/zlszlij3F1c5ULvQ2JsKDJtELNHToXLjpNjYnhd93UhavQyll1JgEeAXNX9AAssXTxBiUtsUcR5wB61SKX8ySZgLo52P47BpqdqcEwuJOYue4rJHKYq78WKtv1qaKr4nZarVqFyciPVldfjTz8pFK9qpFtxR4n3xGLVmR1a9MWhU94uVZLVftJnl4OgkOw/jcNkpNZKnddySebNzVSTnWW4v94T2pLXwL1mLqj3nYJqpm0+w5XAvSMM1f/6oP1qPsXdOPOIV2YOhmqpjtDTcNh9iIb/+2DZPDtdfBydMF1kHKRDmkz4ycTg3uxSVA9IY7AquvDKsBk5h26mLastcWnPCuhHXcTbpz+gGLZVO+fYFAyO8JPMc5+xW5JF7lZUfKXR8gFEcBYpjVGF2K5/OFjPWNIPobae6bu1Jtmz6jSkleEzeSoknXsjHHq5BQi0KAy4saEU0rysnoajVgr5SiWkIPEa/LBPiPA8ClGJeKRvy87Lf3kdVwKLUOylRTOmCfASUn5j2DtBVRpJi+LfxehDqAUrr2QhYfz0PCkMutNHFRWq+6WR6oQ2UrhCwU9C493IzBVuL/Iu5pfUOlKXo7ob1yOYHSIpIuW7zoWaSiWunuYvwOCJCmYGl5GP4+2KDL8IMso4aLjC2BHLRJdg2Nfn5ciuvvS1AeLhG1IW4dy0h2T6Phj8ayZDS/SyOFYq+sF4mx+CTyVS8V8VdPtWIJnszKO1/jcR23mA1Db+BkeNaJHtKoZ6s+ztGMsIJ8XwbnrVnbqlXPYPZe7VY47i4aW4dz3cfm3LrkPBNepUJeVpFVkZKVgIZDK0NYSqrKZECB15JBJ9iAryL2wqSLegQNsAeAe5k6FVi91e7k24tRlh4PHyhgjGKD1yO0/7J2LIRnf9z9aM1bT/gD/xRpNleM9eU19uPLy2smyj3QjSygXQTSkgV6skKpvuj+wVeUu6KwXgjHszTjQqoTO5lsScLZGsRDhr7P1C3wyQ/1hJnt/Xkvhc6Z9FLCv4fn9CqQrraXeECsWdOFvKri+5GWTdGpJgkoH6WV1kccezImts6EU8k76MdSO0SwOxv/6Cw/YsAvM6thV8pTiLWlS1uqD60Bi5ZE2YGWjeXyxK7O1gcq3Il3WMcju9wJY4Tadmu2Ezl0aRZSGU0xIG5y1jYAZEHtYVqFC7hCKMBj/S5MgjZC/9D2Q9e1CiW4JrOi9x/N9R1Gmah6aOeKjKJTssiqjRVOM8ZXbz6c5WLoX2///gNgi1czV0p+UmhpM0ofXrTu2TmpxXnGjL5G6h2xRd2ZRw5D6HGiqlSDv7EFrdxkm0cI9SjikbbqF1nh65jeygpZWzlaM1tHWNPEGngCanDmPfTjP9PmYXTvUrJs80mpL2UZDBramGS9q3BPyUNvTyDTtLbd7zmsXSyoN69LGsax/27JMl9nMT3G19wWBp+MNJ/SCxD0dTc+4QjDiSiDq2bUl9ez0ELb5Y8j2JEhWHNJisYNKpWQQ2H8GU9wgZF25qFsgE49y2VTSasN7jhM/4s/cDOyg3K7+lOnrP15Jpccp35EDR3QQXH5uRvMND8BLN0SEvtH2+wByiH3WxqYzz3McngmSt0yFzLQ3DrsIUHL6bDFKCiGnOwNDmZkhKhupI7uzp87gUD+mWexHz5UdppD+ZXDKLR+jcGbDFxlAtHEDuTwPop33m1Vqsg8SX2g7rP/TmKLMfc7kVdPLeNyRKHWjiSoyZqpspw/t2/gqJdbqYeNVACtlRqC52A1fzdzI6fZ6kZO2xvjsGAvUTJNhYhojVenZ9Yebtq7tEQ3LXWcq23fsOudh6Os4cp7RshX5Z73eYkJr+W/8UyuX4/9wfHjfEXRgKTlVsvYrCi9eaH75bSdXfnOAn1S7v1nUmqf9RP7l+sUWtkhlsZ0YoIrqUXi0RpjX+n5H6I5ikX+ZAZD7szctSVTzqGIRrnyWVxX4y4HD4GK9kYVJfHR9eb6C58i3Eq66u/xxyi4grRDYplaT29eC3mLpuXBb+u+HFgXJYGbygKoN6mGiX85zm+bTDw+768hQWfv5WSk6vjm1IGF6Dh297ngvS3DFDdqHKIQ8wossLVisofNY6eYEYFR4lFpq+Rr95y03ZDex1nrZsrrO5Yfg/DX2m8A==",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        20,
+        23
+      ],
+      "raw_sha256": "1255b35b9655277e16b8e7c0c5d3d177646a5bd33319993e3371571246f8f115",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          20,
+          23
+        ],
+        "raw_sha256": "e830a58c5fb341b0909304355d8035c82c8f09fcb9da49f537bfc4717a9b246d",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          20,
+          23
+        ],
+        "raw_sha256": "1255b35b9655277e16b8e7c0c5d3d177646a5bd33319993e3371571246f8f115",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1840,
+          "actual_word_hex": "fe",
+          "different_bytes": 1825,
+          "different_words": 1825,
+          "expected_bytes": 1840,
+          "expected_word_hex": "00",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "20 23 1 1 1 1 10 11 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          20,
+          23
+        ],
+        "raw_sha256": "1255b35b9655277e16b8e7c0c5d3d177646a5bd33319993e3371571246f8f115",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 20 23",
+          "GEOMETRY_INPUT": "20 23 1 1 1 1 10 11 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          20,
+          23
+        ],
+        "raw_sha256": "1255b35b9655277e16b8e7c0c5d3d177646a5bd33319993e3371571246f8f115",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261026
+}

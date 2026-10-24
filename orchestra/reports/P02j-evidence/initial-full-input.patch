@@ -1,0 +1,72 @@
+--- a/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
++++ b/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
+@@ -2335,3 +2335,2 @@
+-		// The rotated workspace depends on the entire source even for an ROI.
+-		// Negotiate full input instead of refusing a partial output request.
+-		req.rect = PF_LRect{0, 0, full_width, full_height};
++		// AEX SmartPreRender forwards the request unchanged; checkout owns
++		// the returned result/max rectangles independently of input storage.
+@@ -2606,0 +2606,26 @@
++			// The AEX copy and Iterate writers use world-local coordinates. Keep
++			// the full input-sized workspace, then publish the negotiated output's
++			// local rows. An ROI origin does not translate the worker's samples.
++			PF_EffectWorld workspace = *output_world;
++			std::vector<std::uint8_t> workspace_storage;
++			PF_EffectWorld *render_world = output_world;
++			std::size_t render_row_bytes = 0;
++			if (!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
++			                              &active_row_bytes) ||
++			    active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
++				err = OLM_DIRECTIONAL_REFUSAL("smart-output-span");
++			}
++			if (!err && (output_world->width != input_world->width ||
++			             output_world->height != input_world->height)) {
++				std::uintptr_t begin = 0, end = 0;
++				if (output_world->width > input_world->width ||
++				    output_world->height > input_world->height ||
++				    !PayloadSpan(input_world, &begin, &end)) {
++					err = OLM_DIRECTIONAL_REFUSAL("smart-workspace-span");
++				} else {
++					workspace = *input_world;
++					workspace_storage.assign(end - begin, 0);
++					workspace.data = reinterpret_cast<PF_PixelPtr>(workspace_storage.data());
++					render_world = &workspace;
++				}
++			}
+@@ -2612,2 +2637,2 @@
+-					? GenericDeepLayerWorldSafe<PF_Pixel16>(input_world, output_world, noise_world, info)
+-					: GenericDeepLayerWorldSafe<PF_PixelFloat>(input_world, output_world, noise_world, info);
++					? GenericDeepLayerWorldSafe<PF_Pixel16>(input_world, render_world, noise_world, info)
++					: GenericDeepLayerWorldSafe<PF_PixelFloat>(input_world, render_world, noise_world, info);
+@@ -2622,4 +2647,4 @@
+-			if (!PayloadSpan(output_world, &output_begin, &output_end) ||
+-				!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
+-				                           &active_row_bytes) ||
+-				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
++			if (!PayloadSpan(render_world, &output_begin, &output_end) ||
++				!DirectionalActiveRowBytes(extra->input->bitdepth, render_world->width,
++				                           &render_row_bytes) ||
++				render_row_bytes > static_cast<std::size_t>(render_world->rowbytes)) {
+@@ -2629 +2654 @@
+-				input_world, output_world, info, extra->input->bitdepth);
++				input_world, render_world, info, extra->input->bitdepth);
+@@ -2632 +2657 @@
+-                !CanUseExact8(input_world, output_world, noise_world, info);
++                !CanUseExact8(input_world, render_world, noise_world, info);
+@@ -2646,2 +2671,2 @@
+-                        ? CanUsePF8FeatureFallback(input_world, output_world, info, output_end - output_begin, true)
+-                        : CanUseGenericNeutral8(input_world, output_world, info, true))
++                        ? CanUsePF8FeatureFallback(input_world, render_world, info, output_end - output_begin, true)
++                        : CanUseGenericNeutral8(input_world, render_world, info, true))
+@@ -2649 +2674 @@
+-						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features, true)
++						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, render_world, strength_info, generic_features, true)
+@@ -2651 +2676 @@
+-							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info, generic_features, true)));
++							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, render_world, strength_info, generic_features, true)));
+@@ -2677 +2702 @@
+-							 output_world, pre->full_width, pre->full_height)))) {
++							 render_world, pre->full_width, pre->full_height)))) {
+@@ -2683 +2708 @@
+-				staged_world = *output_world;
++				staged_world = *render_world;

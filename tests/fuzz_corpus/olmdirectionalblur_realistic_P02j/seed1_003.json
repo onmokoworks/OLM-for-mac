@@ -1,0 +1,266 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "extent_hint": [
+      8,
+      10,
+      9,
+      11
+    ],
+    "full_geometry": [
+      39,
+      45
+    ],
+    "geometry": [
+      10,
+      12
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 3,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 38.290924072265625
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 0.0
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": -443.36329650878906
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      10,
+      12
+    ],
+    "rowbytes_padding": 16,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 3,
+  "input_sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoNk39Q0nccxh8EZPgDEDRA1ImCmIhoE3WiIiAhoBiZPyBQQAS1gEtFSnF+2o/qVlm3u7K72eq63TbvtnlnV9613cq2y9rqrl1bq81b/dGq89wvd+12c1v7/v887/f7nuf1DmmLX+THxWyQfuGoKKoDTDZFfrQFRB970HlbAGTQl6YuMkHO5Ghiz11q1kqQyRPoQBqarwgWJ4GilhuORwGQhYos2RcDQHbzQGPdXr3zaDin67UhQF4Y5XFHgXes01lc8ZzVJHysKa8DHpRfkWRkqDKXjLKqYyoQqdRj+Yn20G4ZYKVPuHXRujJZR72+vKcy92evdheIg7caWJsEeTJAcmM1v+imwkHNpz0g8bHGzexaZY9YnJcaMy+mvuWZzaZZ/+0rqOZxS83AkG5/zrNC4GGXQfzhHqCtNSgU0jpDryq3VhUXAV+/tNZ0RO3mH5Ve7o8DqOQuR340edPOCU0GYhho72trKDqoAVmtjlmyvMD1EkbdYz/g4Yf97KYfUhwd15nxRpDdk83m5RzK71COMOggf2q+0zWOXU5svNwWkqaA+I0b2rTqWv1ndK5Kzv7ceLV1KbYUWpdXpqtFJRn0PllpZ/uRNCBUcaP2t03AhOt9VV8ayPli2QRfAvLP1EHzOrV3k0RTEDR/MuhjflVJBHM1UvFpUaANhGNrY+ZRumzvMZF7B1Dmv8Up7O+sXEy+xLuTAPl+cif/qdDnv08/NfZX+h/KUc9J9c1XEj62L1Ot3Adc1SZnSx0gh8UfKz8IAe/q/qsvqgK2MVi8vO5vtUrJvvxvJFS/kVXXuILKwy41DDKou2y/JwJiYF7R7L0j5IiEk7PG3UFgr33Dd0vhz0gzLG9ddLh1w4wDKYpkipvQYvepJmpuUrhHpQI0rHCIVjLNf6Nj3lCQtzkxk16/0xgHSWqdjg1pzkTQc43+HsXb6fSwdZ0GON0Hxs/LQJ5KTgwNbour2cJh2zVxYW+kgKH/1XLhhdTGBZ27gtJVnY2GMoEc55grl+K7IrDSvWADOaQ50SsWgCxrL7nWtoMk2+gT89YVVdx+VsRNBblofd17juL9XsUjxxPqDzrtt3vvRYDgjuN1I8XATN5EmdMDcIZZpi0JVXez3bf9I/mclzvCk3YJDul3DRsjf1eDtNhn5V1ZIK6aVMsFiv9xqSWpnQ1E9piYim6gSXa3daYUsOffd3NGgFImS5HLARpYVcmRRGD4+ZZ2lcIO5KsGR4tqnKaTWXeDb9KoXMa+bHlbF5262a+vfkb/Hy+3KuE=",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        10,
+        12
+      ],
+      "raw_sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          10,
+          12
+        ],
+        "raw_sha256": "3dc463a76fc170607c07b104c3cb531362ce7d6e10c1a34e0c0f370aeae08ce8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          10,
+          12
+        ],
+        "raw_sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 960,
+          "actual_word_hex": "673b",
+          "different_bytes": 843,
+          "different_words": 440,
+          "expected_bytes": 960,
+          "expected_word_hex": "0000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "39 45 1 4 1 4 1 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          10,
+          12
+        ],
+        "raw_sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 10 12",
+          "GEOMETRY_INPUT": "39 45 1 4 1 4 1 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          10,
+          12
+        ],
+        "raw_sha256": "d28060e316e0c4f7dbfb22f7f469c8e2e7528069269c425bb27f656767e7c0fa",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

@@ -12,23 +12,23 @@
       ]
     ],
     "extent_hint": [
-      1,
-      0,
       3,
+      0,
+      6,
       1
     ],
     "full_geometry": [
-      15,
-      3
+      18,
+      1
     ],
     "geometry": [
-      5,
+      6,
       1
     ],
     "geometry_sampler": "realistic-v1",
-    "index": 2,
-    "input_padding": 32,
-    "output_padding": 32,
+    "index": 14,
+    "input_padding": 16,
+    "output_padding": 16,
     "parameters": [
       {
         "kind": "a",
@@ -43,12 +43,12 @@
       {
         "kind": "f",
         "slot": 3,
-        "value": 0.0
+        "value": 22.351791381835938
       },
       {
         "kind": "i",
         "slot": 5,
-        "value": 0
+        "value": 14
       },
       {
         "kind": "i",
@@ -73,7 +73,7 @@
       {
         "kind": "f",
         "slot": 12,
-        "value": 0.0
+        "value": 0.1540069580078125
       },
       {
         "kind": "f",
@@ -93,7 +93,7 @@
       {
         "kind": "a",
         "slot": 19,
-        "value": 0.0
+        "value": -123.94119262695312
       },
       {
         "kind": "s",
@@ -107,60 +107,26 @@
     ],
     "profile": "sdr",
     "request_rect": [
-      1,
       0,
-      5,
+      0,
+      6,
       1
     ],
-    "rowbytes_padding": 32,
-    "seed": 2026
+    "rowbytes_padding": 16,
+    "seed": 1
   },
   "generator_version": 1,
   "geometry_sampler": "realistic-v1",
-  "index": 2,
-  "input_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
+  "index": 14,
+  "input_sha256": "75d72ea7fdc0a4c8bd590b7da90ca4c851e45133fe37d82556bbd6f74b7b7130",
   "max_size": 256,
-  "operations": [
-    {
-      "geometry": [
-        21,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "geometry": [
-        10,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "geometry": [
-        5,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "kind": "params",
-      "values": {
-        "3": 0.0,
-        "15": 0.0,
-        "20": 10.0
-      }
-    },
-    {
-      "kind": "pixels",
-      "value": "zero"
-    }
-  ],
-  "pixels_zlib_base64": "eNpjYMAEAAAUAAE=",
+  "operations": [],
+  "pixels_zlib_base64": "eNpjUOAVvbRFKpLBKfTJYe6OrQy+bm7/n518BABi8Qor",
   "plugin": "olmdirectionalblur",
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
     "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
-    "candidate_sha256": "12428d95ebc4f60df85dac9a795f198aef32751bcc30afcb98952f33223b61c8",
+    "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
     "case_timeout_seconds": 10,
     "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
     "dependencies_sha256": {
@@ -168,7 +134,7 @@
       "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
       "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
       "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
-      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "84ba5974e84ef9760e09141c46efb1c5a4da07acc325c8deb4c8a69fe7c239b1",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
       "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
       "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
       "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
@@ -206,60 +172,19 @@
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
-    "accepted": [
-      {
-        "geometry": [
-          21,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "geometry": [
-          10,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "geometry": [
-          5,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "kind": "params",
-        "values": {
-          "3": 0.0,
-          "15": 0.0,
-          "20": 10.0
-        }
-      },
-      {
-        "kind": "pixels",
-        "value": "zero"
-      }
-    ],
-    "attempts": 14,
-    "bounded": true,
-    "minimality_claimed": false,
-    "outcomes": {
-      "ok/exact": 9,
-      "ok/mismatch": 5
-    }
+    "accepted": []
   },
   "result": {
     "first_mismatching_stage": null,
     "oracle": {
       "guards_intact": true,
       "output_rect": [
-        1,
         0,
-        5,
+        0,
+        6,
         1
       ],
-      "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "raw_sha256": "b638c597ba9fa4c803532a16c43e1134ef5463aeec3d3fcb030d83052584a544",
       "session_clean": true,
       "status": "ok"
     },
@@ -269,87 +194,73 @@
         "output_rect": [
           0,
           0,
-          5,
+          6,
           1
         ],
-        "raw_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
+        "raw_sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
         "session_clean": true,
         "status": "ok"
       },
       "smart": {
         "guards_intact": true,
         "output_rect": [
-          1,
           0,
-          5,
+          0,
+          6,
           1
         ],
-        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "raw_sha256": "b638c597ba9fa4c803532a16c43e1134ef5463aeec3d3fcb030d83052584a544",
         "session_clean": true,
         "status": "ok"
       }
     },
     "routes": {
       "classic": {
+        "diff": {
+          "actual_bytes": 24,
+          "actual_word_hex": "d2",
+          "different_bytes": 12,
+          "different_words": 12,
+          "expected_bytes": 24,
+          "expected_word_hex": "00",
+          "first_byte": 4,
+          "first_word": 4
+        },
         "error": 0,
         "metadata": {
           "COUNTS": "0 0 0 1 1",
           "ERROR": "0",
-          "GEOMETRY_INPUT": "15 3 1 3 1 3 2 1 32"
+          "GEOMETRY_INPUT": "18 1 1 3 1 3 2 1 16"
         },
         "output_rect": [
           0,
           0,
-          5,
+          6,
           1
         ],
-        "raw_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
-        "status": "exact"
+        "raw_sha256": "b638c597ba9fa4c803532a16c43e1134ef5463aeec3d3fcb030d83052584a544",
+        "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 20,
-          "actual_word_hex": "00",
-          "different_bytes": 4,
-          "different_words": 4,
-          "expected_bytes": 16,
-          "expected_word_hex": "",
-          "first_byte": 16,
-          "first_word": 16
-        },
         "error": 0,
-        "geometry_diff": {
-          "actual": [
-            0,
-            0,
-            5,
-            1
-          ],
-          "expected": [
-            1,
-            0,
-            5,
-            1
-          ]
-        },
         "metadata": {
           "COUNTS": "21 21 1 1 1",
           "ERROR": "0",
-          "GEOMETRY": "0 0 5 1",
-          "GEOMETRY_INPUT": "15 3 1 3 1 3 2 1 32"
+          "GEOMETRY": "0 0 6 1",
+          "GEOMETRY_INPUT": "18 1 1 3 1 3 2 1 16"
         },
         "output_rect": [
           0,
           0,
-          5,
+          6,
           1
         ],
-        "raw_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
-        "status": "mismatch"
+        "raw_sha256": "b638c597ba9fa4c803532a16c43e1134ef5463aeec3d3fcb030d83052584a544",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
   },
   "schema": "olm-fuzz-case/1",
-  "seed": 2026
+  "seed": 1
 }

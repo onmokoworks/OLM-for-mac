@@ -1,0 +1,266 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      1,
+      127
+    ],
+    "full_geometry": [
+      1,
+      127
+    ],
+    "geometry": [
+      1,
+      127
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 99,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 61
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 94.83329772949219
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 0
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 0.0
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 732
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      27,
+      1,
+      116
+    ],
+    "rowbytes_padding": 7,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 99,
+  "input_sha256": "399c97e0c770868cc276b9c50dd138195add7fe79b8bcfc8cfce91e63fe6f346",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "df17cb934d256406c339e0261e18ec8aac4b30c702aa0000b2b5552ff1758779",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        27,
+        1,
+        116
+      ],
+      "raw_sha256": "a52308edd2ed525b2d049da39cf4673d0c27ea1f6e87aa241e5045cf1b450cc8",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          127
+        ],
+        "raw_sha256": "23ba65cb93433b65e7ddcae5f8a7dd2ca232491793848644e625875c6dd6ae43",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          27,
+          1,
+          116
+        ],
+        "raw_sha256": "a52308edd2ed525b2d049da39cf4673d0c27ea1f6e87aa241e5045cf1b450cc8",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 2032,
+          "actual_word_hex": "04dc073f",
+          "different_bytes": 1515,
+          "different_words": 380,
+          "expected_bytes": 2032,
+          "expected_word_hex": "00000000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "1 127 1 1 1 1 1 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          127
+        ],
+        "raw_sha256": "5b262ada44b8996fbf7cca8f79f6318a5e19f9fe66edd1903da8b00504087585",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "21 21 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 27 1 116",
+          "GEOMETRY_INPUT": "1 127 1 1 1 1 1 1 7"
+        },
+        "output_rect": [
+          0,
+          27,
+          1,
+          116
+        ],
+        "raw_sha256": "a52308edd2ed525b2d049da39cf4673d0c27ea1f6e87aa241e5045cf1b450cc8",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
