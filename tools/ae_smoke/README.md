@@ -1,95 +1,76 @@
-# A01 real AE smoke (staged, incomplete)
+# Real AE 2026 smoke — A01c continuation
 
-The retained result proves AE 2026 registration/application of all ten fresh
-bundles, with mapped executable paths and binary hashes. It does **not** prove
-rendering, parameter equivalence, Smart dispatch, or pixel equality.
-AE 2025 encountered an Adobe sign-in modal. See the ticket report.
+A01 established load/apply only. A01b rendered no pixels. A01c replaces the unsafe
+launch lifecycle with **one full-path `-r` dispatch**, a 180-second deadline, and
+normal quit only. AE 2025 is excluded. No bundle installation/build occurs.
 
-Read-only verification (does not launch AE):
+The pipeline currently prepares **30 default effect cells and 3 I/O controls**
+in three depth-specific projects during one GUI session (AE depth is project-wide).
+The 90 corpus cells and native-host comparisons remain unimplemented. Do not
+interpret an `all` run as completion of the requested 120-cell matrix.
 
-```sh
-python3 tools/ae_smoke/verify_evidence.py
-```
-
-After resolving Adobe sign-in and quitting all AE instances, rerun the load and
-parameter probe with a fresh run ID:
+Use a Python environment with numpy, tifffile and OpenEXR. For example:
 
 ```sh
-python3 tools/ae_smoke/run_ae_smoke.py --run-id rerun2026 --year 2026
-python3 tools/ae_smoke/run_ae_smoke.py --run-id rerun2025 --year 2025
+python3 -m venv orchestra/state/A01c-real-ae-render-aerender/venv
+TMPDIR="$PWD/orchestra/state/A01c-real-ae-render-aerender" orchestra/state/A01c-real-ae-render-aerender/venv/bin/pip install numpy tifffile OpenEXR
+orchestra/state/A01c-real-ae-render-aerender/venv/bin/python tools/ae_smoke/run_ae_smoke.py --year 2026 --stage all --run-id fresh2026
 ```
 
-The driver checks both writable `OLM-smoke` folders, waits up to two hours for
-existing AE processes, checks `memory_pressure >= 30%`, launches one owned AE,
-and uses `-r` with a bounded `DoScriptFile` fallback. It captures a screenshot
-on timeout, never clicks a dialog, and terminates only its owned process and
-identified installation-local descendants. It changes no preferences. Launch
-failure may require user sign-in; do not automate credentials.
+Stages use the same `--run-id`:
 
-`--build --install` builds into `~/.cache/olm-emu/A01` and installs into both
-allowed folders. Installation intentionally refuses an existing destination;
-the original A01 bundles remain installed. Do not use this flag for an ordinary
-load rerun. The build script uses one Xcode job.
+- `build`: generate deterministic SDR inputs, check exact main executable paths
+  using `ps ... comm` (so launch arguments cannot hide a running instance), wait
+  up to two hours if busy, check memory free >=30%, launch AE 2026 once, create
+  projects/queues and property readbacks, save, close project and `app.quit()`.
+  Existing run launch files are rejected to prevent accidental second dispatch.
+- `render`: require a complete build manifest; invoke 2026 `aerender -project`
+  sequentially with MFR off. All render diagnostics go to depth-specific logs.
+- `compare`: decode no-effect TIFF/EXR to packed ARGB and compare against source
+  bytes with `compare.py`. Refuse interpretation when controls differ. This does
+  **not** yet invoke a native-plugin host or compare effect cells.
+- `all`: run those stages in order; stop on any failure.
 
-The probe captures raw ExtendScript property types/values/min/max, plus output
-module templates. Popup labels are explicitly `null`: no popup label getter was
-implemented. AE built-in compositing properties are included in the raw dump;
-do not count them as plugin parameters. Source-declaration comparison remains
-incomplete.
+On a GUI timeout, capture a center crop <=400 KB, request quit once via the full
+2026 app path, then fail without retry. No SIGTERM/SIGKILL is sent to AE or its
+helpers. If quit is blocked by a dialog, AE remains open for user recovery; do
+not rerun. A successful JSX also must exit AE before rendering begins.
 
-## Prepared but not yet validated render stage
+The output templates are the previously observed local
+`TIFF シーケンス (アルファ付き)` and `OLM EXR 32 Float`. The script requests straight
+alpha, no working space/linearization, and software GPU mode. Template settings,
+import alpha behavior and the full image round trip still require real-host
+validation. The decoder rejects HALF EXR channels and unexpected TIFF shape/depth;
+16-bit decoding uses nearest inverse full-range scaling to AE's 0..32768 range.
+An exhaustive synthetic inverse check is not an AE I/O calibration.
 
-Create a scratch virtual environment and deterministic SDR inputs:
+## Popup registration audit
 
 ```sh
-python3 -m venv orchestra/state/A01-real-ae-smoke/venv
-TMPDIR="$PWD/orchestra/state/A01-real-ae-smoke" orchestra/state/A01-real-ae-smoke/venv/bin/pip install numpy tifffile OpenEXR
-orchestra/state/A01-real-ae-smoke/venv/bin/python tools/ae_smoke/prepare_inputs.py orchestra/state/A01-real-ae-smoke/inputs
-python3 tools/ae_smoke/run_ae_smoke.py --run-id defaults --prepare-inputs orchestra/state/A01-real-ae-smoke/inputs/inputs.json
+PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/popup_audit.py --scratch orchestra/state/A01c-real-ae-render-aerender/popup-recheck
 ```
 
-`prepare_inputs.py` calls the existing OLMBlur fuzz adapter with seed 1, choosing
-one SDR case per depth with both dimensions >= 4. It saves the exact generator
-ARGB bytes, full-range unassociated-alpha 16-bit TIFF, and uncompressed float
-EXR. Source/file hashes and generator indices are recorded. No expected pixel
-values are patched. Import quantization and premultiplication are unproven.
+This invokes the cached F46 AEX worker serially on the original binaries in MAIN,
+tracing `PARAMS_SETUP` without rendering or rebuilding anything. Eight popup
+registrations across DirectionalBlur, DistanceGradation and KiraKira match the
+A01b source capture (labels, choice count, default). Current AE UI readback is a
+separate boundary; `prepare.jsx` records values/min/max if it executes. No claim
+is made that ExtendScript can enumerate third-party popup labels.
 
-`prepare.jsx` intends to save three projects, each with ten enabled default
-plugins and a no-effect control. It requests no working space, no linearization,
-Software GPU setting, straight-alpha TIFF 8/16 and float EXR. This preparation
-stage has not completed in this ticket. It depends on the observed local
-`TIFF シーケンス (アルファ付き)` and `OLM EXR 32 Float` templates. EXR exporter
-compression and Preserve-RGB settings must be verified independently.
+The cache index labels the original F47 worker `native-plugin-load-only`.
+The cached F51 `plugin-host` uses the F47d rendering bridge; a future host matrix
+must bind it to the **installed A01 bundle hashes**, input and read-back params,
+not silently use another bundle set.
 
-The aerender invocation, three exact-corpus parameter sets, F47 worker input and
-parameter mapping, file-to-ARGB conversion, no-effect I/O checks, and Effect
-Controls screenshots remain to be implemented/validated. Do not treat the above
-commands as a completed end-to-end matrix.
-
-`compare.py` only compares already normalized packed ARGB files, by exact sample
-bytes. It rejects incorrect lengths and reports first x/y/channel and SHA-256.
-It does not decode image files, infer transforms, classify a mismatch, or use a
-tolerance:
+Offline verification:
 
 ```sh
-python3 tools/ae_smoke/compare.py ae.argb host.argb --width 32 --height 24 --depth 16
+PYTHONDONTWRITEBYTECODE=1 orchestra/state/A01c-real-ae-render-aerender/venv/bin/python tools/ae_smoke/test_pipeline.py
+PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/test_compare.py
 ```
 
-## A01b continuation (blocked before rendering)
-
-See `orchestra/reports/A01b-real-ae-render-compare.md`. The new default scratch
-root is `orchestra/state/A01b-real-ae-render-compare/`. Busy detection now uses
-`ps` and matches only command lines ending in `MacOS/After Effects`, per the
-ticket. Helpers are not treated as a user AE session.
-
-`--stage probe` is the default. `--stage io --prepare-inputs <inputs.json>` attempts
-to prepare **control-only** projects using the existing JSX. It does not render,
-decode images, or validate an I/O gate. `matrix`, `compare`, `screens` and `all`
-are reserved choices that fail explicitly; the whole pipeline is not implemented.
-Both the 2025 probe and 2026 preparation timed out in A01b with startup dialogs.
-No effect comparison should be inferred from these commands.
-
-`source_popups.py <output.json>` resolves all 20 `PF_ADD_POPUP` declarations from
-source string tables across the ten plugins. This covers source popup metadata
-only, not the full parameter audit. AE has no third-party popup-label getter in
-the existing scripting probe; labels are not claimed as verified in AE.
+These check main-process detection, the mathematical 16-bit encoding inverse,
+and raw byte comparison (including float payloads). They are not AE renders.
+See `orchestra/reports/A01c-real-ae-render-aerender.md` for measured results and
+remaining work. Historical A01/A01b reports retain their original commands;
+the current runner deliberately no longer accepts their unsafe launch options.

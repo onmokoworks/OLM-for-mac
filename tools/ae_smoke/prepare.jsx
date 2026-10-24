@@ -21,7 +21,12 @@
                 var name=n<0?'control':A01.plugins[n].plugin;
                 var c=pr.items.addComp(name,spec.width,spec.height,1,1/24,24),layer=c.layers.add(footage);
                 var item={plugin:name};
-                if(n>=0){var effect=layer.property('ADBE Effect Parade').addProperty(A01.plugins[n].matchName);item.enabled=effect.enabled;}
+                if(n>=0){var effect=layer.property('ADBE Effect Parade').addProperty(A01.plugins[n].matchName);item.enabled=effect.enabled;item.properties=[];
+                    for(var pi=1;pi<=effect.numProperties;pi++) {
+                        var prop=effect.property(pi),pd={index:pi,name:prop.name};
+                        try{pd.value=prop.value;if(prop.hasMin)pd.min=prop.minValue;if(prop.hasMax)pd.max=prop.maxValue;}catch(pe){}
+                        item.properties.push(pd);
+                    }}
                 var q=pr.renderQueue.items.add(c);q.timeSpanStart=0;q.timeSpanDuration=1/24;
                 var om=q.outputModule(1);
                 om.applyTemplate(spec.depth==32?'OLM EXR 32 Float':'TIFF シーケンス (アルファ付き)');
@@ -35,4 +40,6 @@
         result.phase='complete';
     }catch(err){result.phase='error';result.error=String(err);}
     write();
+    if(app.project)app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+    app.quit();
 }());
