@@ -6,7 +6,7 @@ S=ROOT/'orchestra/state/P05c-blur-colorkey-smoother-performance';S.mkdir(parents
 env=dict(os.environ,TMPDIR=str(S),TMP=str(S),TEMP=str(S),OLM_TEST_JOBS='1',PYTHONDONTWRITEBYTECODE='1')
 bounds=json.loads((ROOT/f'orchestra/reports/T15b-evidence/{plugin}-summary.json').read_text())
 odd=['--geometry','realistic','--size-sampler','odd-even-v1','--max-size',str(bounds['maximum']),'--size-max-height',str(bounds['height_maximum'])]
-commands=[('default',['--n','300','--seed','1']),('realistic-1',['--geometry','realistic','--n','100','--seed','1']),('realistic-fresh',['--geometry','realistic','--n','100','--seed','20261024']),('odd-2026',[*odd,'--n','150','--seed','2026']),('odd-2027',[*odd,'--n','150','--seed','2027'])]
+commands=[('default',['--n','300','--seed','1']),('realistic-1',['--geometry','realistic','--n','100','--seed','1']),('realistic-fresh',['--geometry','realistic','--n','100','--seed','2026102505']),('odd-2026',[*odd,'--n','150','--seed','2026']),('odd-2027',[*odd,'--n','150','--seed','2027'])]
 if os.environ.get('P05C_REPLAY_ONLY')=='1':commands=[]
 corpora=[p for p in (ROOT/'tests/fuzz_corpus').iterdir() if p.is_dir() and (p.name==plugin or p.name.startswith(plugin+'_'))]
 folders=[folder for corpus in sorted(corpora) for folder in [corpus,*sorted(p for p in corpus.rglob('*') if p.is_dir())]]
@@ -28,6 +28,7 @@ for name,args in commands:
  if '--replay' in args:assert d['replay_matches_saved'],name
  else:
   assert d['completed']==int(args[args.index('--n')+1]),name
+  assert d['seed']==int(args[args.index('--seed')+1]),name
   assert not d['summary'].get(route+'_mismatch',0),(name,d['summary'])
   assert all(c['result']['routes'][route]['status']=='exact' for c in d['cases'] if c['result'].get('oracles',{}).get(route,c['result']['oracle'])['status']=='ok'),name
   if '--geometry' not in args and os.environ.get('P05C_BASELINE_REPORT'):
