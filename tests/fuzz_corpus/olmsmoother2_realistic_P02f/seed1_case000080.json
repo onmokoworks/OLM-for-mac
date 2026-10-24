@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      11,
+      20
+    ],
+    "full_geometry": [
+      33,
+      59
+    ],
+    "geometry": [
+      11,
+      20
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 80,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 57
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.4000000953674316
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 4
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          128,
+          73,
+          43,
+          67
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          128,
+          222,
+          203,
+          248
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      11,
+      20
+    ],
+    "rowbytes_padding": 32,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 80,
+  "input_sha256": "5c1607baa70a98c27d7814b3a051342b24c4b1f0e0488af522d39951172387c3",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        11,
+        20
+      ],
+      "raw_sha256": "f1ed15d97efffc4cb78111366da3d41af32a38fe3420c798629d4f82ff1d91c1",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 11 20",
+          "GEOMETRY_INPUT": "33 59 1 3 1 3 10 11 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          20
+        ],
+        "raw_sha256": "f1ed15d97efffc4cb78111366da3d41af32a38fe3420c798629d4f82ff1d91c1",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

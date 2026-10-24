@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      17,
+      1,
+      23,
+      2
+    ],
+    "full_geometry": [
+      62,
+      23
+    ],
+    "geometry": [
+      31,
+      8
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 97,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          128,
+          221,
+          42,
+          194
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 1.6949337572176968
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          128,
+          93,
+          190,
+          160
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          63,
+          221,
+          217
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          128,
+          21,
+          88,
+          97
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      31,
+      8
+    ],
+    "rowbytes_padding": 32,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 97,
+  "input_sha256": "34f0a28606eb1cbaa29c4c9b1846d1d371d9436a3b6029bab01a1e84b7b1c489",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoNlXlUk1caxh9IQgABIUDYDIsGCIQt7MgSgqxJkISgCVuCSQhLTNhDWIRrW3DpWLepYtHRzujUZUCdUyvWurTW3XGv1qpTqdoOpz1oj3U7Vpz753vu/e59v+f5Pe9dlvy+2d3gJgYJZN6Wdy4GTih227Pyr/o28gP8+nvtqomke3GDTCAi823M4ficrk2zZrLGwkByLdFlyjqQUM5qh1BHkKGst8EttH4VMlL0HQ9EHlfG4SwBOdjB0JX3AcWy9+fsbwMcPXuU2kZg3eAZj1EHYG2mQbbRDtJslmMqB2SHZ5jvI1q/cRoOuhAFIpXYyp3cgU+F1eaCRTmRSt9iRZIKYPD0LScWAd8F3GNu9h9peZXzOMdLAjKjCtbeyAc5YPjY74jyie945GyXzbOA293cxkk5u9PgN89EBkCumUR12+cBC7O/7v2sEiS2/5m6pORlgrJRnpHtDnKWIzW1ZDioUlzGGMJ4kP9mpcatlQBS1ubSX80g/JKhRR/EA1GNXYFdTY+UApmaPcQCrE0VgnERSKs9UHdIP+y2J+VxjZ7ujyzjBBZWg2zlTtpCmkFqo2fxV8fp5z6IL1LN9J6JvRG0x2uLPyBjZA+8i5vy+dJaWHg9Gfje08X1mRXI0skXsr3uNL1NKCowOYMwuPpcK9XVyJzb9TfDc2FK6u26baXABVOWbYUG+DziiPmt803xCcZX84d8+1wtqnaHC9w3HmuFzPAvOEBDhrDZTT1YuNVzxP5vAYi54HzDNj3gYcy1H8yn69HbBauCQE4PJLj9KNilsJq9tIsDAbn3htQtCXf9wtzXGa8mgLwOi1Kr2SNL/nAaLt+UDnLLOu5fVw98rLeWa2IAdd0IX0b7HDeeC/htiVXbak3zXh8OuMwaNbQEAb+lNvUPUZ+LhWqfs9S/ndnTyULKU+2yX6r3BYDIaq7gFD0vz/aJuMQx36+i/lGdQgAk8f9suZIL0mCciHzo45I75LgvX0751agtgtSodJZz2wLuIQ5IvP+34kNugD76PcuyuJ+tjwTJPbvpfR/ZCxUv6T3Jxm3Mh0KgMTGzp7Uvh6njndRwM4CZkjUwJLnnfS46UrqL+mIUK62DwUCt4Wk2JwnYF7xKza0GDrVuDBiiuv9rsUvgBdHFfh/38sadKXQ91SttQzjI34t1QQtofqYMmmAJ9eUlUxWl5JFiXXhn96Ngyp3D+e7JYhCD8NacKXOD9AvxXcP/IoHgtn/ObqT6VSSm9X3mTXm2nwwVRku7ohaszhsVgvREb1edoX5dSZlvvW4/I/shKS9gJ83d3sXbS0zFwC5fp5RLiYCof4flP7SPc54Z8qOlS0vZjbsrJvxAhgWf8LJMgHtqVfWlHpN6Oe9KXqjkPEJ7XKtmJJd1lfLjwbPbxxTE8Urgc5rrk/5jgpokkCNdf3auoHnx1l+y/OQBvElnS/wrgSe8qx0vGoBR3k1+LO17R7Om9XdOTzfbssxc29AoO93LapssAGwsbenruUZXeVKeo0hzOntV7hZP53qQzXn1ts0+wCubW/Ybwc8eF2ruhN/PANmSebB+ayRIp3SgUtPZFtHqF5M5bgR5EH/UJKVzq7BgpOlURYrP1nbTnKYEgJm02D8kvzx6BfMJlyGj+uiaOvvpnLjffalURGvCtC/tTxxImbEESW/Npd9nP4h1Tjtee1rb4LmX6lkRGd8nSfHAC6VYPJUHHAz5a6c+FdhUe7jFSPnqMvYx1tM8lvNXBV7y5aebbV2VZ9QgQt5oUVULzUPia2YIE6Tf7y8RzPnNjC0BIu+XdP8pyRoTI+uGylU1E7FuLtBj3VruHwewAn8f3Om8f0DnN947mvpu3rGwc/UTVhBHN6bpFuVDUNYRcrQDiE0ZHviqjPKdGcR+Sutu4y7ecS3Iev061kpvep630HpCw+rzi5u2TgvrNcN1e5hXE+n8tQsS2VoAkbmMeZ0gQcrnNTmKSfXbgv3h4pwpy0e4WTlCfRzvMytU1L8bxeE1pbK7MYVNEyafRUvztbGPBa09G0Veue/5SoqW92dEp7UWS22tw+0u859Q/STqEe+VYuAc8weWcCnwjc66UCGnfIRVJ5dygb3yy56FDICdPFafTHP8oj29eYNUxCuQsUonKCfigpj+qFAQRQ5fa+b/6rEs6NRCPZ/27Tqhd6i63mWzfFM4PQtkmiNmCZyAw7ZXdRqqd3TWhyXP5tC69az0WDOwoSi2eNXgt4qo0F2RcWUgqHvXfiAXaM6TG/znKdljYc2MA/Q/byy873B98MMSrjxmwYO8pwEW7/uz7yjlCcbaWxZ/ysmXnCxdGJ0bv8S41jiHgNiTospqjEA0u7TxIQvEM/RaJQvHesXdR6ue0fdtpXMsd1ANcAOPtvBFNE9RVW2vKWZOsh87wun7oE2/bPWl8+ePgoODDzv+UeiitVaE24GfjMvbdK4gG0Mi+p3pXP00R+I02U756bzpdzGE5ift68QTbMq/r3f3kZZrMfvn31NPF/MiIufc1H0fb8ldI7nYW5bwf6BJlA4=",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        31,
+        8
+      ],
+      "raw_sha256": "455bcaca68c548b8b3fe18d104427e652463c941d775324e90272ccbe99e0363",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 31 8",
+          "GEOMETRY_INPUT": "62 23 1 2 1 3 10 11 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          31,
+          8
+        ],
+        "raw_sha256": "455bcaca68c548b8b3fe18d104427e652463c941d775324e90272ccbe99e0363",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

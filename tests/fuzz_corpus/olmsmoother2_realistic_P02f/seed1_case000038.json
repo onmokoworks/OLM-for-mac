@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      3,
+      1,
+      4,
+      2
+    ],
+    "full_geometry": [
+      10,
+      7
+    ],
+    "geometry": [
+      4,
+      3
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 38,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.4000000953674316
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          81,
+          63,
+          40
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      4,
+      3
+    ],
+    "rowbytes_padding": 16,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 38,
+  "input_sha256": "3b3223dabbf582d708e1bf776374600a527e6bb6f2b207553c96502c80476e84",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoBYACf/5RlXippVXZQAAA8c9AzjWYAgARgqHDnEwCAy0bRRS1YNSPve19N9CRdKW8qaVjpcQAA023iB9cpWjblOyVBagZARmZ+QwCAVQCAmziwBnlyAADZRhsOlnQAgKEmfyFRHLzWIlg=",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        4,
+        3
+      ],
+      "raw_sha256": "921b3d3575ad0b5a572fefff23a983d54f43844326db7601da8f68f6d3fb2be5",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 4 3",
+          "GEOMETRY_INPUT": "10 7 1 3 1 3 10 11 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          3
+        ],
+        "raw_sha256": "921b3d3575ad0b5a572fefff23a983d54f43844326db7601da8f68f6d3fb2be5",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

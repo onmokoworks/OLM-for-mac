@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      2,
+      1,
+      6,
+      2
+    ],
+    "full_geometry": [
+      31,
+      5
+    ],
+    "geometry": [
+      11,
+      2
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 86,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          0,
+          250,
+          148,
+          26
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 7
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 28
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 100
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 3
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.2650333891523946
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 5
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          128,
+          231,
+          69,
+          99
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          168,
+          229,
+          169
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          128,
+          2,
+          167,
+          167
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          128,
+          147,
+          133,
+          43
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          128,
+          227,
+          166,
+          116
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      4,
+      3
+    ],
+    "profile": "signed",
+    "request_rect": [
+      0,
+      0,
+      11,
+      2
+    ],
+    "rowbytes_padding": 16,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 86,
+  "input_sha256": "526b1043acbe8b50d860ed6cbdde68c52cbee8917b16aee6678efad694a57867",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYGiw5wrJcbg6ccn+q1kX7BmA/M8MG/fdZMjd52asfoABCMyXODhssjZz+DKtxAHEf+0db9coH3Qg3Gye/TefSIfjX00PnNvr5OB4XNJu1Vc+h8KN/A4L3ofb6y8H6W+w17f9Y9/flG+vx1xnB9Ruf26ym72S86r9p07xguW1nhociOnUO5B0RNIBxL/8WvRAr2DygfvWYmD7/uwOdFBWqrUvPlxrC5K3DDU48PJfpUP3uSwHNqYEh/Z95+wvn7Nx0J48wR5k/im9ygMm7UkO+29u2L+DQdJhT6+Jg4KMpcNEGYsDTKtX2Zu3ljioXgs8oM/GDjZfz3P1fpUMxf3X2ETA9jNPsti/81eBQyuH+n6QeW6LPHev5TCzv/NrBTh8/LdVHvA/WeNQUKFivyj1t/2fr337q7/pHdi1o2F/XESmgzWz8f7u5mW22/dJHgAAgQ+K8g==",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        11,
+        2
+      ],
+      "raw_sha256": "859953949313cbf7969971ac3926100f83f40b16555b50abe98202b8c393bd39",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 11 2",
+          "GEOMETRY_INPUT": "31 5 1 3 1 3 4 3 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          2
+        ],
+        "raw_sha256": "859953949313cbf7969971ac3926100f83f40b16555b50abe98202b8c393bd39",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      11,
+      4
+    ],
+    "full_geometry": [
+      22,
+      10
+    ],
+    "geometry": [
+      11,
+      4
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 55,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 100
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.4000000953674316
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          143,
+          86,
+          220
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      11,
+      4
+    ],
+    "rowbytes_padding": 7,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 55,
+  "input_sha256": "6d1344aaefd8cded5582348e7bd6dd462a37765537648bbd850c9ea08709d009",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNodkWtIk3EUxl/dVGiabsvogpmaYjjS5gc1957HpinWLMm05hcTNZ23JV4yXabYlRwsvEJohlh28UaWUs5wsLwQmBrTMhHJPlSwyGBlktb+Hx/O75znOedwHMdNBish2biEH5tL9F/CYekKRY+FgzsiAcdV4+/0cZLYnlN+p5W31+vu3aSIpD0oMT5gvL73HD+WVkWOcRrYtVjnix5bFG4snESAzwU42wToVwJdaZt2nrsrz4RZ6MsHa4PsPBf4O4S0lQa6Zj3A+lM7L0IwUooqox/TU14zvLBeTu0PnVme8dR4RIqsNFATCE9pHlZ8lAj3H6faTgubP9+bgdiEM7S27zbL61yywnfLFvg/K8msvjrhQD1hcug6/Jm2JGfD46cDEkfj2D4NakDjFkTCWhPZ/VbdZXg/Mket7RN0XbWL4vMLYXEvgOaRI8tfLJjgh18qUTOTxPzM6p1wMrymIeEamQaN9E03TBXZCVDnebL8zbpRShJ85reIoln/O7WK7zg0RV+l92lUK8aTBsL5obMI3f6J5Rn4EolMr2UyTaYz/lfLU9q/VIbygNNUvy5Ha60fXs2+IE5XwOa3nIhDc1MWij7KGJ8gUlKGYZ53iVWRyCWG7lSkIEJ8Cq63TKSdcsfcjBj6wWGylY0zv6u9Inwv8gFnnmT3QeVBVCUfw4Zeg35fKRbknjRg9gAZphkfVschzRIKRekO5ieXrlNUilUx23aY/S+nxA27yUhtj4OQW95HR4s5RU7FNoVbYy66Asy03B6iKFzMRkygjdTVfUTe6Wh8poR6qz/bR+jkBJP3ZSQuWvhuiWtk1hs9vZV9oL2DKsU/gnXxeQ==",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        11,
+        4
+      ],
+      "raw_sha256": "91342ae84c5fd770acf3905b2c55e7723dcc9d0149c0df01e9d1d361d71988fd",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 11 4",
+          "GEOMETRY_INPUT": "22 10 1 2 1 3 2 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          11,
+          4
+        ],
+        "raw_sha256": "91342ae84c5fd770acf3905b2c55e7723dcc9d0149c0df01e9d1d361d71988fd",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

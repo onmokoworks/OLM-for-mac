@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      7,
+      1
+    ],
+    "full_geometry": [
+      23,
+      5
+    ],
+    "geometry": [
+      12,
+      2
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 85,
+    "input_padding": 1,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 23
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.4000000953674316
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          0,
+          216,
+          242,
+          60
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          246,
+          77,
+          198
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      12,
+      2
+    ],
+    "rowbytes_padding": 1,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 85,
+  "input_sha256": "43cc615567f8d938eb36878b5d60b70efd56cf358ba4d86b19833ba02e5f0d51",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYGiwZ78Xa+8QmWLfd3SuHQMQOLc62+f0cNqHxN0G809t8LS/ZHnejveZD5DfYP/Yzsw+QNjP3mOSgT2Ivzat2e6Tcq39pbchQD6Dvd8abzsJPwtbzQ4ZMD8yt8J+qtpTu/UpU2wVPrjaL9152O5Oe6idCM9SsHlKVfx2N/ao2fr3J4DUMygm29i/W8xq33yGxU7VUNL+XKirvaOei+2jziSw/IGZZnaTVkbZrWqCuM/5mq396y0L7Fpi7oL5lndFrdd4e9gzLmC2n6cWb39rk7Wdnr2E/Z4dd8D2zZUJtWPeXmmfY5RrC1I/z9Lbzj+92v6VsK3d7qWi9s/OTLKLULW0T9j9DGxeQamtfeClUPurG/PA/p1w95cd94IfdmIHd4Dk7a/dvGq3tNzX/tA6E7D7JF31bQuPLbJ78NXXFqT+6gdt+9qlU+2+6QeA9S++/MauuzHEzr1ish0ATyaF9g==",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        12,
+        2
+      ],
+      "raw_sha256": "57286037da36e770126297306648e2abe54e5dacb00de577553d548497bcc36a",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 12 2",
+          "GEOMETRY_INPUT": "23 5 1 2 1 3 2 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          12,
+          2
+        ],
+        "raw_sha256": "57286037da36e770126297306648e2abe54e5dacb00de577553d548497bcc36a",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

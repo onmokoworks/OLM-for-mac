@@ -57,10 +57,11 @@ class OLMSmoother2RoiContract(unittest.TestCase):
 #undef main
 
 static bool wrong_ref = false;
+static A_long sampled_width = 37, sampled_height = 23;
 static PF_Err checkout(PF_ProgPtr, A_long, A_long, PF_RenderRequest *req,
                        A_long, A_long, A_long, PF_CheckoutResult *r) {{
     if (req->rect.left != 0 || req->rect.top != 0 ||
-        req->rect.right != 37 || req->rect.bottom != 23 ||
+        req->rect.right != sampled_width || req->rect.bottom != sampled_height ||
         !req->preserve_rgb_of_zero_alpha) return 91;
     r->ref_width = wrong_ref ? 36 : 37; r->ref_height = 23;
     // Transparent source: content bounds are legitimately empty even though
@@ -85,10 +86,12 @@ int main() {{
         f.ow.origin_x = 1;
         if (!Smart(f)) return 11;
     }}
-    for (short depth : {{8, 16, 32}}) {{
+    for (short depth : {{8, 16, 32}}) for (A_long divisor : {{1, 2, 3, 4, 8}}) {{
         PF_InData in{{}}; PF_OutData out{{}};
         in.width = 37; in.height = 23;
-        in.downsample_x = {{1,1}}; in.downsample_y = {{1,1}};
+        in.downsample_x = {{1,divisor}}; in.downsample_y = {{1,divisor == 3 ? 2 : divisor}};
+        sampled_width = (37 + in.downsample_x.den - 1) / in.downsample_x.den;
+        sampled_height = (23 + in.downsample_y.den - 1) / in.downsample_y.den;
         PF_PreRenderInput pri{{}}; pri.bitdepth = depth;
         pri.output_request.rect = PF_LRect{{11, 7, 19, 13}};
         PF_PreRenderOutput pro{{}};
@@ -96,7 +99,7 @@ int main() {{
         PF_PreRenderExtra ex{{&pri, &pro, &cb}};
         if (EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out, nullptr, nullptr, &ex)) return 1;
         if (pro.result_rect.left != 0 || pro.result_rect.top != 0 ||
-            pro.result_rect.right != 37 || pro.result_rect.bottom != 23 ||
+            pro.result_rect.right != sampled_width || pro.result_rect.bottom != sampled_height ||
             !(pro.flags & PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS)) return 2;
         wrong_ref = true;
         PF_PreRenderOutput bad{{}};

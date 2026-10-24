@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "extent_hint": [
+      0,
+      50,
+      1,
+      82
+    ],
+    "full_geometry": [
+      1,
+      253
+    ],
+    "geometry": [
+      1,
+      127
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 36,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          131,
+          179,
+          23
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 58
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 61
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 27
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 1.6573172036380717
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 2
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          164,
+          136,
+          84
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          185,
+          226,
+          135
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          255,
+          24,
+          143,
+          57
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          44,
+          249,
+          172
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          0,
+          167,
+          134,
+          170
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      4,
+      3
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      1,
+      127
+    ],
+    "rowbytes_padding": 32,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 36,
+  "input_sha256": "33c4ba9cf97ec0e9d8e8c94bd225057a11905433e7ab4f2df836afee4eaa6775",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoB/AED/gAwf5f/0OF6C7QZav8zdf8APRdh/9yedmIs0fZGTjgH//TSoADn1bT/YOAW/+4UEQCoBtkAL+KYAFvlYJDhLkv/aizUACRE3f9J0rAAPgeSg/MrCuhl1Oz/094m/+c4/wAToPD/2N/b/4u/dANQNOdoogk6/xKLewADBYJegWtV/4z/YwCb6pP/63cE/ziufwDEUScAl3As/wf8I/8cLyoAG27zHnQfHABKDmoAtEmLgh+uiMl7tiQAywTxAIzUmv+Fn3z/V2it4rRLw7qECg4A0iD3k5Tnbv/9cIKWwi4GeCu/AQAyiSMAoH6lZBn/VQAXx4MAr3QoIF1zuP9jDgX/RsKtAN2qVQA23TgAoB/9Uk3oaDLcPvqgdYd2AKhK4AD9u0z/JG15XUL3OPUhHjp7xZxf//TvqP9WCeT/PiTSAOt8cP+TA6r/1IsCAFsk1P/vNhQATOrn//6uh8nMhy0olKtJAIexIwDba0AAqSG3bx0eWACJgO7cdsTbAEE2kAAQ3XQA9cUXABljEP+RhO7/R/WHm1qHWQADtQbY89W+/2JTjf+7XXLdaJnRAIqG4gAK4JMAV7yJ/we21v9djDpljiFMABNDI//J+2VP84I2/ysxvPoPR0//BAbdM9KA+v8arigANgNZAGqLBxBb9DX/NoAipBjJRyErJKjR9PP2",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        1,
+        127
+      ],
+      "raw_sha256": "33c4ba9cf97ec0e9d8e8c94bd225057a11905433e7ab4f2df836afee4eaa6775",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 1 127",
+          "GEOMETRY_INPUT": "1 253 1 2 1 2 4 3 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          127
+        ],
+        "raw_sha256": "33c4ba9cf97ec0e9d8e8c94bd225057a11905433e7ab4f2df836afee4eaa6775",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}
