@@ -1,4 +1,4 @@
-depends: P07a-parallel-helper-kirakira
+depends: R10-reference-fast-split
 # P07c: Smoother v1 in-frame threading (contract route is Classic)
 
 ## Plugin facts
@@ -32,3 +32,7 @@ depends: P07a-parallel-helper-kirakira
 - Change only this plugin's sources, its plugin-only core helpers, and `core/olm_parallel.h`.
 - Do not touch the release gate or ledger, never edit `04_Tools/AEXCompat*`, and do not rebuild the oracle.
 - Commit partial results at least every 30 minutes. The stop rule applies.
+
+## Reference path (R10)
+- Keep the faithful sequential form of everything you optimize, selectable with `OLM_REFERENCE_BUILD`, as R10 set up. The fast path stays the default.
+- Main acceptance step: `tools/perf/ref_vs_fast.py` must report byte-identical results for this plugin, including the 1080p/4K and heaviest-param cases, at `OLM_PARALLEL_MAX` 1, 2 and 8. The oracle campaigns above are still required.

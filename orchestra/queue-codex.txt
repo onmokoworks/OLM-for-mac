@@ -129,6 +129,7 @@ P05b-radialblur-rotation-performance
 P05c-blur-colorkey-smoother-performance
 P06a-directionalblur-pf32-cropped-mismatch
 P07a-parallel-helper-kirakira
+R10-reference-fast-split
 P07b-smoother2-threading
 P07c-smoother-threading
 P07d-distancegradation-blur-colorkey-threading
