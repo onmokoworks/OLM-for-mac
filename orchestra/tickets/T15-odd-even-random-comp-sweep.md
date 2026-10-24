@@ -13,7 +13,11 @@ depends: P02h-blur-geometry
 - Odd sizes combined with downsample are where rounding bugs hide: `ceil(full*ds)` world sizes, odd/even center pixels, half-pixel radii, and row padding. The existing corpora mostly use tiny sizes.
 
 ## Do
-1. Using the F52 oracle (`~/.cache/olm-emu/worker-F52-geom/`) and the `--geometry realistic` sampler from F52b, add a size sampler:
+0. **Prerequisite (found by the first T15 attempt, see `orchestra/reports/T15-odd-even-random-comp-sweep.md` on branch history aca96437).**
+   - Use the **F52c** oracle `~/.cache/olm-emu/worker-F52c-geom/`, NOT F52. F52 rejects `--negotiate-output` with usage code 2. See `orchestra/reports/F52c-*.md` for how P02a-h invoked it.
+   - The ColorKey and DirectionalBlur source hosts do not yet declare realistic-v1 (`tools/fuzz/geometry.py:67`). Qualify them the way F52b/F52c qualified the other eight: plumbing, a negotiated-output check, and a short realistic run.
+   - If that reveals Mac-only refusals or mismatches in those two plugins, fix them under the same acceptance as P02 (contract route exact, 0 Mac-only refusals).
+1. Using that oracle and the `--geometry realistic` sampler, add a size sampler:
    - width and height drawn independently, with odd and even each about 50%, including 1, 2, 3 and primes;
    - sizes from tiny up to the largest the oracle completes within its time limit (measure it; F52 measured Blur 1920x1080 at 1/2 in about 5 s);
    - downsample 1/1, 1/2, 1/3, 1/4, 1/8, plus asymmetric;
