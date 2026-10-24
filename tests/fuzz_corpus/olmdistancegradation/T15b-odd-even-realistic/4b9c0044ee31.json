@@ -288,16 +288,6 @@
         "status": "mismatch"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 373760,
-          "actual_word_hex": "25ea213f",
-          "different_bytes": 7613,
-          "different_words": 7613,
-          "expected_bytes": 373760,
-          "expected_word_hex": "24ea213f",
-          "first_byte": 0,
-          "first_word": 0
-        },
         "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 1 12 12",
@@ -311,8 +301,8 @@
           365,
           64
         ],
-        "raw_sha256": "f520406ed2364005bbf2d78bc26a2eb08564b5c86cb3a686aed201e730762856",
-        "status": "mismatch"
+        "raw_sha256": "b25abd2f3f6f416a309cb2ece67223a1fa260f477b9cb55029f426165a386b7b",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
@@ -320,5 +310,6 @@
   "schema": "olm-fuzz-case/1",
   "seed": 2026,
   "size_max_height": 1080,
-  "size_sampler": "odd-even-v1"
+  "size_sampler": "odd-even-v1",
+  "P03a_update": "Smart expectation is now exact; input and original AEX hashes unchanged. Historical mismatch retained in orchestra/reports/T15b-evidence/olmdistancegradation-summary.json."
 }

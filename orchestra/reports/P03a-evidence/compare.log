@@ -1,0 +1,18 @@
+expanded differences 0
+distance differences 229
+resized differences 4
+resize 5 5 49994f41 48994f41 [[12.649110794067383, 13.0], [12.649110794067383, 13.601470947265625]]
+resize 6 5 44b75441 43b75441 [[13.601470947265625, 12.649110794067383], [13.928388595581055, 13.0]]
+resize 0 6 44b75441 43b75441 [[13.928388595581055, 13.0], [13.601470947265625, 12.649110794067383]]
+resize 5 7 44b75441 43b75441 [[12.649110794067383, 13.601470947265625], [13.0, 13.928388595581055]]
+distance 24 2 fea5c240 fda5c240
+distance 72 2 fea5c240 fda5c240
+distance 2 8 fea5c240 fda5c240
+distance 1 9 a9f6e840 a8f6e840
+distance 1 10 6ab4f340 69b4f340
+distance 1 13 6ab4f340 69b4f340
+distance 1 14 a9f6e840 a8f6e840
+distance 2 15 fea5c240 fda5c240
+Newton model differences 0
+resize with original distance differences 0
+production core distance differences 0
