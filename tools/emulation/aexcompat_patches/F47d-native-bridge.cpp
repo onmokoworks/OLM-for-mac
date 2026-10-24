@@ -92,14 +92,20 @@ static PF_Err color(PF_ProgPtr,const PF_ParamDef *p,PF_PixelFloat *c) {
  c->green=p->u.cd.value.green/255.0f; c->blue=p->u.cd.value.blue/255.0f; return 0;
 }
 static PF_ColorParamSuite1 color_suite={color};
-// ColorKeep requests only full-frame iterate, with independent rowbytes.
+// ColorKeep uses ordinary iterate: local coordinates within both worlds
+// and the optional area. World origins are not an iterate_origin offset.
 template<typename Pixel>
 static PF_Err iterate(PF_InData*,A_long,A_long,PF_EffectWorld *src,const PF_Rect *area,
  void *refcon,PF_Err (*fn)(void*,A_long,A_long,Pixel*,Pixel*),PF_EffectWorld *dst) {
- if(!src || !dst || !src->data || !dst->data || !fn || area ||
-    src->width!=dst->width || src->height!=dst->height ||
+ if(!src || !dst || !src->data || !dst->data || !fn ||
+    src->width<=0 || src->height<=0 || dst->width<=0 || dst->height<=0 ||
     src->rowbytes<src->width*sizeof(Pixel) || dst->rowbytes<dst->width*sizeof(Pixel)) return fail("iterate");
- for(A_long y=0;y<dst->height;++y) for(A_long x=0;x<dst->width;++x) {
+ const A_long width=std::min(src->width,dst->width), height=std::min(src->height,dst->height);
+ const A_long left=area?area->left:0, top=area?area->top:0;
+ const A_long right=area?area->right:width, bottom=area?area->bottom:height;
+ if(left<0 || top<0 || right<left || bottom<top || right>width || bottom>height)
+  return fail("iterate-area");
+ for(A_long y=top;y<bottom;++y) for(A_long x=left;x<right;++x) {
   Pixel in_pixel,out_pixel;
   auto in_ptr=(char*)src->data+y*src->rowbytes+x*sizeof(Pixel);
   auto out_ptr=(char*)dst->data+y*dst->rowbytes+x*sizeof(Pixel);
