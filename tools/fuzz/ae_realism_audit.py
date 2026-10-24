@@ -32,7 +32,7 @@ def situations():
     base=dict(w=1920,h=1080,dx=1,dy=1,pad=0,extent=0,roi=0,an=1,ad=1,expand=0)
     changes=[('full',{}),('half',dict(dx=2,dy=2)),('quarter',dict(dx=4,dy=4)),
         ('third',dict(dx=3,dy=3)),('eighth',dict(dx=8,dy=8)),('asymmetric',dict(dx=2)),
-        ('4k',dict(w=3840,h=2160)),('square',dict(w=1000,h=1000)),
+        ('4k',dict(w=3840,h=2160)),('4k-half',dict(w=3840,h=2160,dx=2,dy=2)),('4k-quarter',dict(w=3840,h=2160,dx=4,dy=4)),('square',dict(w=1000,h=1000)),
         ('odd',dict(w=1279,h=719)),('odd-half',dict(w=1279,h=719,dx=2,dy=2)),
         ('large-layer',dict(w=2560,h=1440,roi=2)),
         ('aligned-odd',dict(w=1279,h=719,pad=-1)),('padded',dict(pad=256)),
@@ -65,7 +65,7 @@ def build_host(state,cache):
     env=dict(os.environ,TMPDIR=str(state),TMP=str(state),TEMP=str(state))
     with (state/'host-build.log').open('w') as log:
         subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
-    record=dict(name='P00',worker_path=str(cache/'plugin-host'),worker_sha256=sha(cache/'plugin-host'),
+    record=dict(name=cache.name,worker_path=str(cache/'plugin-host'),worker_sha256=sha(cache/'plugin-host'),
         build_json=str(cache/'build.json'),bundles_path=str(cache),command=command,
         source_sha256=sha(source),capability='plugin-only AE realism host; arm64; no oracle',
         recipe='python3 tools/fuzz/ae_realism_audit.py --build-host',bundle_sha256={})
@@ -75,7 +75,7 @@ def build_host(state,cache):
     (cache/'build.json').write_text(json.dumps(record,indent=2)+'\n')
     index=cache.parent/'INDEX.json'
     data=json.loads(index.read_text())
-    data['links']=[r for r in data['links'] if r['name']!='P00']+[record]
+    data['links']=[r for r in data['links'] if r['name']!=cache.name]+[record]
     index.write_text(json.dumps(data,indent=2)+'\n')
     print('Built and registered',record['worker_sha256'])
 
@@ -95,7 +95,7 @@ def summarize(state):
                 for tag in r['tags']:group[tag]+=1
                 if r['status']=='ok' and not r['result']['nonzero']:group['ok_all_zero']+=1
         manifest=json.loads((state/(phase+'-manifest.json')).read_text())
-        expected=(len(manifest['bundles'])*9 if phase=='baseline' else sum(len(situations())*3*(1+len(v['paths'])) for v in manifest['samples'].values()))
+        expected=(len(manifest['bundles'])*6 if phase=='baseline' else sum(len(situations())*3*(1+len(v['paths'])) for v in manifest['samples'].values()))
         assert n==expected,(phase,n,expected)
         assert dict(counts)==manifest['counts']
         summary[phase]=dict(rows=n,counts=dict(counts),groups={k:dict(v) for k,v in groups.items()})
@@ -111,7 +111,7 @@ def main():
     p.add_argument('--resume',action='store_true',help='Resume rows with matching baseline binary identities')
     p.add_argument('--state',type=Path,default=STATE)
     p.add_argument('--cache',type=Path,default=CACHE)
-    p.add_argument('--timeout',type=float,default=15)
+    p.add_argument('--timeout',type=float,default=60)
     p.add_argument('--jobs',type=int,choices=[1],default=1)
     p.add_argument('--plugins',nargs='+',choices=PLUGINS,default=list(PLUGINS))
     a=p.parse_args();a.state.mkdir(parents=True,exist_ok=True)
@@ -147,6 +147,7 @@ def main():
                 chosen,eligible=samples(plugin)
                 manifest['samples'][plugin]=dict(eligible=eligible,paths=[str(f.relative_to(ROOT)) for f,v in chosen],sha256=[sha(f) for f,v in chosen])
                 cases += [(f'corpus{i:02d}',v['case']['parameters']) for i,(f,v) in enumerate(chosen)]
+            (a.state/(a.phase+'-manifest.json')).write_text(json.dumps(manifest,indent=2)+'\n')
             for identity,params in cases:
                 config=a.state/'parameters.txt';lines=[]
                 for q in params:
@@ -154,8 +155,8 @@ def main():
                     if plugin=='olmkirakira' and kind=='a':kind='s';val=val*65536
                     lines.append(f"{q['slot']} {kind} "+(' '.join(map(str,val)) if isinstance(val,list) else str(val))+'\n')
                 config.write_text(''.join(lines))
-                for situation,g in (situations()[:3] if a.phase=='baseline' else situations()):
-                    for depth in (8,16,32):
+                for situation,g in ([v for v in situations() if v[0] in ('full','half','quarter','4k','4k-half','4k-quarter')] if a.phase=='baseline' else situations()):
+                    for depth in ((8,) if a.phase=='baseline' else (8,16,32)):
                         if (plugin,identity,situation,depth) in existing:
                             assert existing[(plugin,identity,situation,depth)]['geometry']==g
                             continue
@@ -182,6 +183,8 @@ def main():
                         row=dict(plugin=plugin,case=identity,situation=situation,geometry=g,depth=depth,padding=pad,status=status,returncode=rc,wall_seconds=wall,tags=tags,callbacks=callbacks,result=result,prerender=re.findall(r'P00 prerender ([^\n]+)',stderr),final_error=re.findall(r'P00 final_error=(\d+)',stderr))
                         if status in ('host_error','crash','timeout'):row['diagnostic']=stderr[-3000:]
                         rows.write(json.dumps(row,sort_keys=True)+'\n');rows.flush();counts[status]+=1
+            manifest['counts']=dict(counts)
+            (a.state/(a.phase+'-manifest.json')).write_text(json.dumps(manifest,indent=2)+'\n')
             print(plugin,dict(counts),flush=True)
     manifest['counts']=dict(counts)
     (a.state/(a.phase+'-manifest.json')).write_text(json.dumps(manifest,indent=2)+'\n')
