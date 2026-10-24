@@ -1,0 +1,22 @@
+--- a/crates/aex-guest-worker/src/x64.rs
++++ b/crates/aex-guest-worker/src/x64.rs
+@@ -305,7 +305,7 @@
+ const TRACE_LAST_SAMPLES: usize = 3;
+ const TRACE_DISTINCT_SAMPLES: usize = 16;
+ const TRACE_DISTINCT_FINGERPRINTS: usize = 4096;
+-const MAX_TRACE_WATCH_BYTES: usize = 16777216;
++const MAX_TRACE_WATCH_BYTES: usize = 67108864;
+ const MAX_TRACE_WITNESSES: usize = 256;
+ const MAX_UNSUPPORTED_SUITE_CALLS: usize = 256;
+ const MAX_SUITE_REQUESTS: usize = 256;
+--- a/crates/aex-guest-worker/src/classic.rs
++++ b/crates/aex-guest-worker/src/classic.rs
+@@ -2976,7 +2976,7 @@
+             assert!(!specs.is_empty() && specs.len() <= 64, "1..64 watches required");
+             let watches = specs.into_iter().map(|w| {
+                 assert!(w.function_rva.is_some() != w.instruction_rva.is_some(), "exactly one RVA required");
+-                assert!(w.size > 0 && w.size <= 16777216, "watch bytes must be 1..16777216");
++                assert!(w.size > 0 && w.size <= 67108864, "watch bytes must be 1..67108864");
+                 assert!(w.occurrence != Some(0), "occurrence must be positive");
+                 let register = match w.register.as_str() {
+                     "rcx" => "rcx", "rdx" => "rdx", "r8" => "r8", "r9" => "r9",

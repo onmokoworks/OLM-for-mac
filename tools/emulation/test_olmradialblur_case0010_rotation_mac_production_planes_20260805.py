@@ -27,8 +27,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 INPUT = resolve_asset(ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png")
-FIXTURE = resolve_asset(ROOT / "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805")
-FULL_PF8_FIXTURE = FIXTURE / "post_worker_full_pf8_argb.bin.zlib"
+# R08: six planes captured twice with the F46-derived worker and matched to production.
+FIXTURE = resolve_asset(ROOT / "refs/fixtures/olmradialblur_R08_fullsize_20261024")
+FULL_PF8_FIXTURE = resolve_asset(ROOT / "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805/post_worker_full_pf8_argb.bin.zlib")
 FULL_PF8_REPORT = ROOT / "refs/conformance/olmradialblur_case0010_full_pf8_actual_aex_20260805.json"
 EXPECTED_FULL_PF8_ZLIB_SHA256 = "b18b2b11e627db82bc79365196a581e01198739fd7708da6af279ef3e2b9e2f1"
 EXPECTED_FULL_PF8_RAW_SHA256 = "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc"
