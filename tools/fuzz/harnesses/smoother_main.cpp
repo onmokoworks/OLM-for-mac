@@ -8,7 +8,7 @@ static PF_Err FuzzPre(PF_ProgPtr,A_long index,A_long id,PF_RenderRequest*,A_long
 int main(int argc,char **argv) {
     if(argc!=7)return 64;
     int w=atoi(argv[1]),h=atoi(argv[2]),depth=atoi(argv[3]);
-    if(w<1||h<1||w>256||h>256||(depth!=8&&depth!=16&&depth!=32))return 64;
+    if(w<1||h<1||w>4096||h>4096||(depth!=8&&depth!=16&&depth!=32))return 64;
     Fixture f(depth,w,h,atoi(argv[6]));int active=w*depth/8*4;
     for(int y=0;y<h;++y)if(fread(f.input.data()+y*f.iw.rowbytes,1,active,stdin)!=(size_t)active)return 65;
     if(getchar()!=EOF)return 65;const auto before=f.input,output_before=f.output;

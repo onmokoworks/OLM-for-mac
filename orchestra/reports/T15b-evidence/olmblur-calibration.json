@@ -1,0 +1,900 @@
+{
+  "maxima": {
+    "16": {
+      "first_noncompletion": 1081,
+      "largest_completed": 1080
+    },
+    "32": {
+      "first_noncompletion": 1081,
+      "largest_completed": 1080
+    },
+    "8": {
+      "first_noncompletion": 1081,
+      "largest_completed": 1080
+    }
+  },
+  "rows": [
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0133,
+      "sha256": "f390648070bd2d8965cc8475b2aef8575be59943de0575a845398ba5a4461e4f",
+      "size": 1
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0126,
+      "sha256": "caf84a49c4f015ac1e82615c6b48b2491b8afdf1c1b758ff8a73786f3fb25353",
+      "size": 16
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0147,
+      "sha256": "c51e5c77c417cf90648a3221be1214135039914d1c5a423a92626110155e6f9c",
+      "size": 32
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0212,
+      "sha256": "bcc6629add394549dc800bb73fc4cad0305dbd6ab0467d97b292ecb027f811eb",
+      "size": 64
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0393,
+      "sha256": "9d53791d01e8dc85ff8b3adc6aac001c0c842a4359761cf68b84e8022c9fa6d9",
+      "size": 128
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.1236,
+      "sha256": "013bae60e6fc42a9cc017419e5cdadaf0dba78bd8b71d396d6d6d9450ecccd01",
+      "size": 256
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.4649,
+      "sha256": "59a2b2ea48b4b8b9f0e48bf85b9c281fdc8e0df6f54b955ca4b3c0d5d5c73e3e",
+      "size": 512
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1024,
+          1024
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.7997,
+      "sha256": "17baa82207b4923b48a54cc8578c8e3c9505e3fbb05a505e21c0436c80e8dd9b",
+      "size": 1024
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0118,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 2048
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.01,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1536
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0096,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1280
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0098,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1152
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.009,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1088
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1056,
+          1056
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.7077,
+      "sha256": "5c57508303b797937bdaf20a1cb67376a890bbf2041cc733bc4eba06869bc6fb",
+      "size": 1056
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1072,
+          1072
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.8499,
+      "sha256": "71899598db30db6d83d58dd964b1255bce3c3d1a5d6fedc878185124e3a23ead",
+      "size": 1072
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1080,
+          1080
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 2.0301,
+      "sha256": "80e3ea72e7c9042d719e28ec1d616d79ef8b710fd22627c29ab5ca23416819fa",
+      "size": 1080
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0098,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1084
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0095,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1082
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0099,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1081
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0115,
+      "sha256": "9942e68f61b18d935832460ab31575d4eba261e49867c4954ae94809ae2624ba",
+      "size": 1
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0125,
+      "sha256": "effc9b6c1fc3f508b028ce0ddc9846331d14d1e65d72fb6fdac2e69c9c13a0b4",
+      "size": 16
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0125,
+      "sha256": "d7566d0c91f8302fd06e026197fa7577d75489a0b3f6ad8012b48db42a0defa6",
+      "size": 32
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0139,
+      "sha256": "4c43001b02c8482ec539990c25d494f332878bb8e12b5ae0e3972e6bbb995cdb",
+      "size": 64
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0405,
+      "sha256": "e09dc58b2771c88b05ce9be795def51153cee707c07ead9e23c0ca409568b81c",
+      "size": 128
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.1269,
+      "sha256": "e8439e0374c7ef8400d75dc5a10c3b4a957fe2662d02e68c9a61d457fbcf7cc8",
+      "size": 256
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.4749,
+      "sha256": "7468a3ec3f0acc4b2b703e878ee8509bab2254ac14e4efe480159bb7edb4ca55",
+      "size": 512
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1024,
+          1024
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.8273,
+      "sha256": "adddf7cd3236294b4245e43c81fad313937d3d204d8e5f69cb47d46100992089",
+      "size": 1024
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0163,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 2048
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0129,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1536
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0121,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1280
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0113,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1152
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0538,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1088
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1056,
+          1056
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.9585,
+      "sha256": "8f9ce61b39b16838e93b3a40f1c937055827482bcb8d9b73124e9423521146b7",
+      "size": 1056
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1072,
+          1072
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 2.0012,
+      "sha256": "92b0ede4ce7bf0b334c2f6548c1b1f8237ad7917bfd5f19668ad4b1a87d6e57e",
+      "size": 1072
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1080,
+          1080
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.7479,
+      "sha256": "614e0b2820220ebd17c2f8a093e3d7e76ef313c7dfbf4074c962e926421339df",
+      "size": 1080
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0113,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1084
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0107,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1082
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0111,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1081
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0115,
+      "sha256": "0bc7959a9c04c2f583817e25664db43def4f1ee6f6bab7f4ed5517044818b3f7",
+      "size": 1
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0125,
+      "sha256": "2b113456e1016c1972e0a71d3001d3e89dbe75922da8e0cc0e5e083f53ae64fc",
+      "size": 16
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0132,
+      "sha256": "9bc1f0a7096d87b19a6d7a8c38035d341ddf4eee7803ecc3e9f16e02eae20ce2",
+      "size": 32
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0201,
+      "sha256": "91809ba7b627b0414e1a95c8dec4a8f10bfda31cc286e84e103c7c75c9b7b60f",
+      "size": 64
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0221,
+      "sha256": "dcbed1886cfafb10ed411a47352e7a156b1e7b4fd24750de3eb3ba584d594296",
+      "size": 128
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.1149,
+      "sha256": "a0773fec9db464ce9cffbdf3079503401429c00ffab34970d8209fc408ec57d9",
+      "size": 256
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.4485,
+      "sha256": "723df4a913bab9da383ca305cc4e71392b13fb18646c67bb3121fe2bc0a5eb28",
+      "size": 512
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1024,
+          1024
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.7069,
+      "sha256": "01fb7612b2c72f3141b472e54132a7a1bed4eee18842d54f608978f5f57ba0e1",
+      "size": 1024
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0213,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 2048
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0148,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1536
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0124,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1280
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0124,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1152
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0124,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1088
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1056,
+          1056
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.6988,
+      "sha256": "a49b34a4ab2185aa682b1cdf33e06535081a7afb61d8bef8d0f1af2ac74803dd",
+      "size": 1056
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1072,
+          1072
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.8819,
+      "sha256": "c0b81104c41398e09e11369573969735e90459a380860b6afd44709719797c39",
+      "size": 1072
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1080,
+          1080
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.8984,
+      "sha256": "c732c4c14c37d6db224734ea6a73ed3fea177f3575cfd5abeca5365f5fdb9789",
+      "size": 1080
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.013,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1084
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0136,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1082
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "aex_guest_error: invalid frame input: resident session requires dimensions within 1x1..=1920x1080 and nonzero time scale\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0128,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1081
+    }
+  ],
+  "wide": [
+    {
+      "depth": 8,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 3.5381,
+      "sha256": "e9392927f76d762cd6129d619e2ed85d396681a99f953737cc3e45adc5500ff8"
+    },
+    {
+      "depth": 16,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 3.6476,
+      "sha256": "bd50466e0c3d39867ebbb99fb24275b57e9c77f28a10a835e934497e36340a3c"
+    },
+    {
+      "depth": 32,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "diagnostic": "aex_guest_error: selector SMART_PRE_RENDER failed in guest: guest data arena exhausted\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0305,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "workload": "defaults, fixed varying 4-pixel SDR, square full output, unit downsample/aspect, zero padding; bounded search to 4096, not a universal performance ceiling"
+}

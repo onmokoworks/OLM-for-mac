@@ -1,0 +1,1159 @@
+{
+  "both_routes": true,
+  "cases": 10,
+  "identical": true,
+  "provenance": {
+    "after": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "candidate_sha256": "c2ad72f8fc141e8293661f7196102957c889c8168eaf32c0a24c594bc6e45217",
+      "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+      "dependencies_sha256": {
+        "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+        "mac/OLMColorKey/OLMColorKey.cpp": "b815bcc4450e46583f7c5a144131caef1bc42e55680d38485df4c7dae87e2179",
+        "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
+        "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+        "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+        "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+        "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+        "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+        "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+        "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+        "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+        "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+        "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+        "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [],
+      "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "triage": {
+        "bypass": false,
+        "host_flags_control": false,
+        "sanitizers": false,
+        "trace": true
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+      "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    },
+    "before": {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "candidate_sha256": "c2ad72f8fc141e8293661f7196102957c889c8168eaf32c0a24c594bc6e45217",
+      "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+      "dependencies_sha256": {
+        "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+        "mac/OLMColorKey/OLMColorKey.cpp": "b815bcc4450e46583f7c5a144131caef1bc42e55680d38485df4c7dae87e2179",
+        "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
+        "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+        "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+        "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+        "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+        "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+        "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+        "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+        "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+        "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+        "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+        "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+      },
+      "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+      "layer": "None; independent layer worlds outside this adapter",
+      "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+      "oracle_render_path": "smartfx",
+      "oracle_routes": {
+        "classic": "classic",
+        "smart": "smart"
+      },
+      "original_routes": {
+        "classic": "render",
+        "smart": "render"
+      },
+      "out_of_range_builder_defaults": [],
+      "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+      "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+      "stage_support": "existing public replay helpers expose final raw output only",
+      "time": {
+        "scale": 24,
+        "step": 1,
+        "total": 1,
+        "value": 0
+      },
+      "triage": {
+        "bypass": false,
+        "host_flags_control": false,
+        "sanitizers": false,
+        "trace": true
+      },
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+      "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+      "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+    }
+  },
+  "results": {
+    "after": [
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "755ba9519eb08efb2d4c68ccfee9d69ceb372301b3a701ad6a3ac309ba37edb6",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 1664,
+              "actual_word_hex": "4040",
+              "different_bytes": 1430,
+              "different_words": 742,
+              "expected_bytes": 1664,
+              "expected_word_hex": "0000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "cb92b2277c7e07535d3df05479d7f0fa8a2f5f920ba92ed4acbcbc58a7b14227",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 752,
+              "actual_word_hex": "8520",
+              "different_bytes": 657,
+              "different_words": 342,
+              "expected_bytes": 752,
+              "expected_word_hex": "0000",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "696bda342649ec9268da57b6a279df6f24b0e857d5e6d0605fd25af95adc3cee",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 504,
+              "actual_word_hex": "ff",
+              "different_bytes": 300,
+              "different_words": 300,
+              "expected_bytes": 504,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 240,
+              "actual_word_hex": "6345",
+              "different_bytes": 215,
+              "different_words": 113,
+              "expected_bytes": 240,
+              "expected_word_hex": "0000",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "782972264d2f448a7741cb6afbc10275ffde7e1d3f5f9005fd45543a7c2b81b5",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 4032,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 3192,
+              "different_words": 926,
+              "expected_bytes": 4032,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "5cc201eb697e57027dcf74bac0995467bc9b787848be4c0d740956a97ddf65a5",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 1120,
+              "actual_word_hex": "0000003f",
+              "different_bytes": 535,
+              "different_words": 159,
+              "expected_bytes": 1120,
+              "expected_word_hex": "00000000",
+              "first_byte": 35,
+              "first_word": 8
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 4,
+              "actual_word_hex": "a1",
+              "different_bytes": 3,
+              "different_words": 3,
+              "expected_bytes": 4,
+              "expected_word_hex": "00",
+              "first_byte": 1,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "d38935ed0eff0e0647f2865ee1f4c7c51b03249dce7ed0da44a19b36f46a6d46",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 3312,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 1780,
+              "different_words": 485,
+              "expected_bytes": 3312,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "0345bffb28f80f4d0ded1a2af09a337b18ab3a80c68205bc8321a6ad4d409500",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 552,
+              "actual_word_hex": "69",
+              "different_bytes": 505,
+              "different_words": 505,
+              "expected_bytes": 552,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "4beb641f77c3df2749a5dffc0a23f4270dc4b94e1e940287fc3ebfa05b720662",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 608,
+              "actual_word_hex": "0000003f",
+              "different_bytes": 511,
+              "different_words": 142,
+              "expected_bytes": 608,
+              "expected_word_hex": "00000000",
+              "first_byte": 3,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    ],
+    "before": [
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "755ba9519eb08efb2d4c68ccfee9d69ceb372301b3a701ad6a3ac309ba37edb6",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 1664,
+              "actual_word_hex": "4040",
+              "different_bytes": 1430,
+              "different_words": 742,
+              "expected_bytes": 1664,
+              "expected_word_hex": "0000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "9de95d206a3b15f6ec3de5792ea66b5996a673c3aa7e96775c189b9cd5c85d9b",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "cb92b2277c7e07535d3df05479d7f0fa8a2f5f920ba92ed4acbcbc58a7b14227",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 752,
+              "actual_word_hex": "8520",
+              "different_bytes": 657,
+              "different_words": 342,
+              "expected_bytes": 752,
+              "expected_word_hex": "0000",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "911bf315c3ee8eb4da5ecb3a7131c243a2179db4b19a4209ed5b57c8d6fd71d7",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "696bda342649ec9268da57b6a279df6f24b0e857d5e6d0605fd25af95adc3cee",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 504,
+              "actual_word_hex": "ff",
+              "different_bytes": 300,
+              "different_words": 300,
+              "expected_bytes": 504,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a418cea812429d70aa58cefd999b96d2e0440a611dbbd638b7b433ee8f72c282",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 240,
+              "actual_word_hex": "6345",
+              "different_bytes": 215,
+              "different_words": 113,
+              "expected_bytes": 240,
+              "expected_word_hex": "0000",
+              "first_byte": 2,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "80dac89777c0d8ffb02b632d5e16c075310a31cc579054657a98a5f0ae6dd9af",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "782972264d2f448a7741cb6afbc10275ffde7e1d3f5f9005fd45543a7c2b81b5",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 4032,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 3192,
+              "different_words": 926,
+              "expected_bytes": 4032,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ee435f54d3cda7f9c7f504355bcf5a0acd491cfbc71af198313b024280b7d160",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "5cc201eb697e57027dcf74bac0995467bc9b787848be4c0d740956a97ddf65a5",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 1120,
+              "actual_word_hex": "0000003f",
+              "different_bytes": 535,
+              "different_words": 159,
+              "expected_bytes": 1120,
+              "expected_word_hex": "00000000",
+              "first_byte": 35,
+              "first_word": 8
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "99c8718e9b5669fd90a82328ac542fa76ea07f4607c62b05a336f3352b1c96cf",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 4,
+              "actual_word_hex": "a1",
+              "different_bytes": 3,
+              "different_words": 3,
+              "expected_bytes": 4,
+              "expected_word_hex": "00",
+              "first_byte": 1,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "ebfb34c9807672a6541acd711cc621f6de91cb158f8643e04f9db98c0938b612",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "d38935ed0eff0e0647f2865ee1f4c7c51b03249dce7ed0da44a19b36f46a6d46",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 3312,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 1780,
+              "different_words": 485,
+              "expected_bytes": 3312,
+              "expected_word_hex": "00000000",
+              "first_byte": 2,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "263a8b65b5c5a31eb787e070263f27d9e27bab3c8275f0b99189c57d0f97f36f",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "0345bffb28f80f4d0ded1a2af09a337b18ab3a80c68205bc8321a6ad4d409500",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 552,
+              "actual_word_hex": "69",
+              "different_bytes": 505,
+              "different_words": 505,
+              "expected_bytes": 552,
+              "expected_word_hex": "00",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "a26d60243133352588215228163e2b781a8da2d9ef96ec697bcc9a38939a0a51",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "raw_sha256": "4beb641f77c3df2749a5dffc0a23f4270dc4b94e1e940287fc3ebfa05b720662",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 608,
+              "actual_word_hex": "0000003f",
+              "different_bytes": 511,
+              "different_words": 142,
+              "expected_bytes": 608,
+              "expected_word_hex": "00000000",
+              "first_byte": 3,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e115ee14caee63a5fd90c84d4cfb2352ed3978a3402c0e47f12276eb258549d",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    ]
+  }
+}

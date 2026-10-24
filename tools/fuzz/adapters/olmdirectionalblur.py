@@ -18,7 +18,7 @@ class Adapter(PublicAdapter):
 
     def build(self, scratch, deadline):
         body = HARNESS.read_text().replace('../../mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp',str(SOURCE))
-        for old,new in [('argc!=6','argc!=8'),('w>64||h>64','w>256||h>256'),
+        for old,new in [('argc!=6','argc!=8'),('w>64||h>64','w>4096||h>4096'),
             ('(depth!=16&&depth!=32)','(depth!=8&&depth!=16&&depth!=32)'),
             ('ps=depth==16?8:16','ps=depth==8?4:depth==16?8:16'),
             ('irb=active+5,orb=active+11','irb=active+atoi(argv[6]),orb=active+atoi(argv[7])'),

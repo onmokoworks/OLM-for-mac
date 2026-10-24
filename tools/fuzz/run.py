@@ -50,6 +50,9 @@ def options():
     p.add_argument('--plugin', required=True)
     p.add_argument('--geometry', choices=('default', 'realistic'), default='default',
                    help='Opt-in sampler; requires a geometry-qualified candidate host')
+    p.add_argument('--size-sampler', choices=('default', 'odd-even-v1'), default='default',
+                   help='Opt-in independently sampled full-comp width/height parity')
+    p.add_argument('--size-max-height', type=int, help='Opt-in height ceiling; otherwise --max-size')
     p.add_argument('--candidate', choices=('source', 'plugin-bundle'), default='source')
     p.add_argument('--plugin-bundle', type=Path)
     p.add_argument('--n', type=int, default=2000)
@@ -76,8 +79,10 @@ def options():
         p.error('plugin must be an adapter module name')
     if not (args.n > 0 and 1 <= args.jobs <= 32 and args.budget_minutes > 0
             and (args.case_timeout is None or (math.isfinite(args.case_timeout) and args.case_timeout > 0))
-            and args.corpus_max_bytes >= 0 and 1 <= args.max_size <= 256 and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
+            and args.corpus_max_bytes >= 0 and 1 <= args.max_size <= (256 if args.size_sampler == "default" else 4096) and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
         p.error('invalid count, jobs, time budget, shrink budget or size')
+    if args.size_max_height is not None and (args.size_sampler == 'default' or not 1 <= args.size_max_height <= 4096):
+        p.error('--size-max-height requires opt-in sampling and a bound in 1..4096')
     if not args.replay:
         args.worker = args.worker or (Path.home()/'.cache/olm-emu/worker-F52c-geom/aex-guest-worker' if args.geometry=='realistic' else default_worker())
         args.case_timeout = args.case_timeout if args.case_timeout is not None else DEFAULT_CASE_TIMEOUT
@@ -266,7 +271,7 @@ def main():
               'started_utc':datetime.now(timezone.utc).isoformat(),
               'seed':args.seed, 'requested':args.n, 'jobs':args.jobs,
               'budget_minutes':args.budget_minutes, 'case_timeout_seconds':args.case_timeout,
-              'max_size':args.max_size, 'shrink_attempts':args.shrink_attempts,
+              'max_size':args.max_size, 'size_sampler':args.size_sampler, 'size_max_height':args.size_max_height, 'shrink_attempts':args.shrink_attempts,
               'shrink_seconds':args.shrink_seconds, 'corpus_max_bytes':args.corpus_max_bytes, 'cases':[],
               'claims_not_made':['Signature clusters are not proven root causes.',
                                  'Finite random coverage is not all-input compatibility.',

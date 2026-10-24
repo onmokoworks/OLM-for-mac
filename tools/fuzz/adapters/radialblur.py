@@ -33,6 +33,8 @@ class Adapter:
 
     def __init__(self, options):
         self.max_size = options.max_size
+        self.size_max_height = getattr(options, "size_max_height", None)
+        self.size_sampler = getattr(options, "size_sampler", "default")
         self.timeout = options.case_timeout
         self.main = options.main.resolve()
         self.worker = options.worker.resolve()
@@ -73,6 +75,8 @@ class Adapter:
         else:
             limit = min(self.max_size, 24 if mode < .80 else 64 if mode < .95 else self.max_size)
             w, h = rng.randint(1, limit), rng.randint(1, limit)
+        from sizes import selected
+        w, h = selected(self, seed, index, (w, h))
         depth = rng.choice([8, 16, 32])
         params = self.defaults(w, h)
         # Sparse and dense mixtures include the entire declared domain without
@@ -139,7 +143,7 @@ class Adapter:
             raise ValueError('Original AEX hash differs from the public probe binding')
         self.env.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
         body = public.initial.HARNESS.read_text()
-        replacements = [('argc!=6', 'argc!=8'), ('w>64||h>64', 'w>256||h>256'),
+        replacements = [('argc!=6', 'argc!=8'), ('w>64||h>64', 'w>4096||h>4096'),
                         ('irb=active+3*ps,orb=active+5*ps', 'irb=active+atoi(argv[6]),orb=active+atoi(argv[7])')]
         for old, new in replacements:
             if body.count(old) != 1:

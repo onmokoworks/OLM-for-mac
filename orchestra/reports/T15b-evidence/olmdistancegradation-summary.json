@@ -1,0 +1,932 @@
+{
+  "anchors": [
+    {
+      "depth": 16,
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/anchor-PF16.json"
+    },
+    {
+      "depth": 8,
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/anchor-PF8.json"
+    },
+    {
+      "depth": 32,
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/anchor-PF32.json"
+    }
+  ],
+  "counts": {
+    "E": 288,
+    "M": 4,
+    "R": 2,
+    "U": 6
+  },
+  "depth": {
+    "16": {
+      "E": 89
+    },
+    "32": {
+      "E": 102,
+      "M": 4,
+      "R": 2,
+      "U": 4
+    },
+    "8": {
+      "E": 97,
+      "U": 2
+    }
+  },
+  "downsample": {
+    "1/1": {
+      "E": 46,
+      "R": 1
+    },
+    "2/2": {
+      "E": 55
+    },
+    "2/3": {
+      "E": 44
+    },
+    "3/3": {
+      "E": 47
+    },
+    "4/4": {
+      "E": 45,
+      "M": 3,
+      "U": 6
+    },
+    "8/8": {
+      "E": 51,
+      "M": 1,
+      "R": 1
+    }
+  },
+  "height_maximum": 1080,
+  "maximum": 1920,
+  "parity": {
+    "even/even": {
+      "E": 83,
+      "M": 1,
+      "U": 3
+    },
+    "even/odd": {
+      "E": 70,
+      "U": 1
+    },
+    "odd/even": {
+      "E": 65,
+      "M": 2,
+      "U": 2
+    },
+    "odd/odd": {
+      "E": 70,
+      "M": 1,
+      "R": 2
+    }
+  },
+  "route": "smart",
+  "witnesses": [
+    {
+      "failure_class": "pixels:PF32:nonfinite",
+      "first_index": 16,
+      "first_seed": 2026,
+      "geometry": [
+        365,
+        64
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/4b9c0044ee31.json",
+      "reduction": {
+        "accepted": [
+          {
+            "kind": "params",
+            "values": {
+              "10": 1.0
+            }
+          },
+          {
+            "kind": "pixels",
+            "value": "binary"
+          }
+        ],
+        "attempts": 18,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {},
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            365,
+            64
+          ],
+          "raw_sha256": "b25abd2f3f6f416a309cb2ece67223a1fa260f477b9cb55029f426165a386b7b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              365,
+              64
+            ],
+            "raw_sha256": "2d27057f415e630df101e9315cdf4bd73cbbc25e41c0c81ec5fd584448bb8379",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              365,
+              64
+            ],
+            "raw_sha256": "b25abd2f3f6f416a309cb2ece67223a1fa260f477b9cb55029f426165a386b7b",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 373760,
+              "actual_word_hex": "69830d3f",
+              "different_bytes": 90308,
+              "different_words": 34257,
+              "expected_bytes": 373760,
+              "expected_word_hex": "00000000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "1459 256 1 4 1 4 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              365,
+              64
+            ],
+            "raw_sha256": "896c18f4f99f2b77233eb17e651a775c72d221e88a69af5c3acfb914adb73bae",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 373760,
+              "actual_word_hex": "25ea213f",
+              "different_bytes": 7613,
+              "different_words": 7613,
+              "expected_bytes": 373760,
+              "expected_word_hex": "24ea213f",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 365 64",
+              "GEOMETRY_INPUT": "1459 256 1 4 1 4 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              365,
+              64
+            ],
+            "raw_sha256": "f520406ed2364005bbf2d78bc26a2eb08564b5c86cb3a686aed201e730762856",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "unavailable_routes": []
+    },
+    {
+      "failure_class": "refusal:RenderBits:pf32-smart-bounded-sdr@2163",
+      "first_index": 19,
+      "first_seed": 2026,
+      "geometry": [
+        1,
+        1
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/e6be9386e614.json",
+      "reduction": {
+        "accepted": [
+          {
+            "geometry": [
+              1,
+              1
+            ],
+            "kind": "crop"
+          },
+          {
+            "kind": "params",
+            "values": {
+              "1": 0
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "3": 128
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "4": 128
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "5": 1
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "7": [
+                255,
+                255,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "8": [
+                255,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "10": 1.9468071382964123
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "10": 1.4734035691482061
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "10": 1.236701784574103
+            }
+          }
+        ],
+        "attempts": 40,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {
+        "smart": [
+          "RenderBits:pf32-smart-bounded-sdr@2163"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "1 1 1 1 1 1 4 3 3"
+            },
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "status": "exact"
+          },
+          "smart": {
+            "error": -1,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "-1",
+              "GEOMETRY_INPUT": "1 1 1 1 1 1 4 3 3"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "unavailable_routes": []
+    },
+    {
+      "failure_class": "pixels:PF32:sdr",
+      "first_index": 54,
+      "first_seed": 2027,
+      "geometry": [
+        61,
+        43
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/103466a82ea3.json",
+      "reduction": {
+        "accepted": [
+          {
+            "geometry": [
+              123,
+              87
+            ],
+            "kind": "crop"
+          },
+          {
+            "geometry": [
+              61,
+              43
+            ],
+            "kind": "crop"
+          },
+          {
+            "kind": "params",
+            "values": {
+              "11": 1,
+              "12": 0,
+              "4": 128
+            }
+          },
+          {
+            "kind": "pixels",
+            "value": "binary"
+          }
+        ],
+        "attempts": 22,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {},
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            61,
+            43
+          ],
+          "raw_sha256": "969b036c2ce1de4044144067311879fcce68b5142f4edee2eae615566c4c4f45",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              61,
+              43
+            ],
+            "raw_sha256": "7a27c35c631a5fb99d013029327c8282f79ccde649b1f428ecbc0da253b210fc",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              61,
+              43
+            ],
+            "raw_sha256": "969b036c2ce1de4044144067311879fcce68b5142f4edee2eae615566c4c4f45",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 41968,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 11718,
+              "different_words": 4241,
+              "expected_bytes": 41968,
+              "expected_word_hex": "00000000",
+              "first_byte": 6,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "244 172 1 4 1 4 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              61,
+              43
+            ],
+            "raw_sha256": "c73b575a09adaaaeb5f2090e65af3ed4b359264f8f8a491bdb24eb10dfbf116c",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 41968,
+              "actual_word_hex": "8a3ba33e",
+              "different_bytes": 1,
+              "different_words": 1,
+              "expected_bytes": 41968,
+              "expected_word_hex": "8c3ba33e",
+              "first_byte": 9360,
+              "first_word": 2340
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 61 43",
+              "GEOMETRY_INPUT": "244 172 1 4 1 4 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              61,
+              43
+            ],
+            "raw_sha256": "2eaeb5a88a264bfaa31ce5935762ca55c3b88f952757393e47eda5348aae0377",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "unavailable_routes": []
+    },
+    {
+      "failure_class": "pixels:PF32:sdr",
+      "first_index": 99,
+      "first_seed": 2027,
+      "geometry": [
+        211,
+        128
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/seed2027-case99.json",
+      "reduction": {
+        "accepted": [
+          {
+            "geometry": [
+              211,
+              128
+            ],
+            "kind": "crop"
+          },
+          {
+            "kind": "params",
+            "values": {
+              "1": 0,
+              "6": 0,
+              "8": [
+                255,
+                0,
+                0,
+                0
+              ],
+              "11": 1
+            }
+          }
+        ],
+        "attempts": 14,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {},
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            143,
+            116,
+            195,
+            123
+          ],
+          "raw_sha256": "c4249c4f6c4c986b7fcea672a29daf137573b3b4c98b4fc042a71434abe31c1a",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              211,
+              128
+            ],
+            "raw_sha256": "6b1bf323566e5a8bc40b194608c26334020dbf6cb8eb046ab5c224f77891c114",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              143,
+              116,
+              195,
+              123
+            ],
+            "raw_sha256": "c4249c4f6c4c986b7fcea672a29daf137573b3b4c98b4fc042a71434abe31c1a",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 432128,
+              "actual_word_hex": "0000803f",
+              "different_bytes": 205105,
+              "different_words": 74087,
+              "expected_bytes": 432128,
+              "expected_word_hex": "00000000",
+              "first_byte": 6,
+              "first_word": 1
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "844 512 1 4 1 4 10 11 0"
+            },
+            "output_rect": [
+              0,
+              0,
+              211,
+              128
+            ],
+            "raw_sha256": "32bd7904c47a03b2aa386992447300d522f39820def0b968542f716570a461e9",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 5824,
+              "actual_word_hex": "89b2ae3e",
+              "different_bytes": 5,
+              "different_words": 5,
+              "expected_bytes": 5824,
+              "expected_word_hex": "8ab2ae3e",
+              "first_byte": 2400,
+              "first_word": 600
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "0",
+              "GEOMETRY": "143 116 195 123",
+              "GEOMETRY_INPUT": "844 512 1 4 1 4 10 11 0"
+            },
+            "output_rect": [
+              143,
+              116,
+              195,
+              123
+            ],
+            "raw_sha256": "0ebbe8f7449f37eae5ef10e17e38309ddc29ab6098b04ee97fbea5cb81e81675",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "failure_class": "pixels:PF32:sdr",
+      "first_index": 118,
+      "first_seed": 2027,
+      "geometry": [
+        12,
+        8
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/seed2027-case118.json",
+      "reduction": {
+        "accepted": [
+          {
+            "kind": "params",
+            "values": {
+              "5": 1,
+              "10": 1.0,
+              "11": 1
+            }
+          }
+        ],
+        "attempts": 12,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {},
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            12,
+            8
+          ],
+          "raw_sha256": "c064edc35fb66c125d7c5d6916d0162ba06d180ca2e5fe3cd7c2564f65771951",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              12,
+              8
+            ],
+            "raw_sha256": "1dfc1bb5add21bb1395fafb11119907bc46d39b2070fb91191af57e63c3617ec",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              12,
+              8
+            ],
+            "raw_sha256": "c064edc35fb66c125d7c5d6916d0162ba06d180ca2e5fe3cd7c2564f65771951",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 1536,
+              "actual_word_hex": "b20baf3e",
+              "different_bytes": 718,
+              "different_words": 260,
+              "expected_bytes": 1536,
+              "expected_word_hex": "00000000",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "96 60 1 8 1 8 10 11 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              12,
+              8
+            ],
+            "raw_sha256": "f648500d336f2296104854bc9b186c346e1df91c9b0349e0914cbbb6876f6ff4",
+            "status": "mismatch"
+          },
+          "smart": {
+            "diff": {
+              "actual_bytes": 1536,
+              "actual_word_hex": "c091c33e",
+              "different_bytes": 4,
+              "different_words": 4,
+              "expected_bytes": 1536,
+              "expected_word_hex": "c291c33e",
+              "first_byte": 1040,
+              "first_word": 260
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 12 8",
+              "GEOMETRY_INPUT": "96 60 1 8 1 8 10 11 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              12,
+              8
+            ],
+            "raw_sha256": "d30068cde3ec21672523b586747d6e9a002ab89c0a2a3aff3b4bae57f3b33d41",
+            "status": "mismatch"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "failure_class": "refusal:RenderBits:pf32-smart-bounded-sdr@2163",
+      "first_index": 143,
+      "first_seed": 2027,
+      "geometry": [
+        3,
+        1
+      ],
+      "path": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/seed2027-case143.json",
+      "reduction": {
+        "accepted": [
+          {
+            "geometry": [
+              51,
+              8
+            ],
+            "kind": "crop"
+          },
+          {
+            "geometry": [
+              25,
+              4
+            ],
+            "kind": "crop"
+          },
+          {
+            "geometry": [
+              12,
+              2
+            ],
+            "kind": "crop"
+          },
+          {
+            "geometry": [
+              6,
+              1
+            ],
+            "kind": "crop"
+          },
+          {
+            "geometry": [
+              3,
+              1
+            ],
+            "kind": "crop"
+          },
+          {
+            "kind": "params",
+            "values": {
+              "2": 1
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "3": 128
+            }
+          },
+          {
+            "kind": "params",
+            "values": {
+              "10": 1.0
+            }
+          }
+        ],
+        "attempts": 25,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {
+        "smart": [
+          "RenderBits:pf32-smart-bounded-sdr@2163"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            3,
+            1
+          ],
+          "raw_sha256": "295297fba24929f85892d96dd66e77611c61b8ab5488b2fab32011cc9cd15fad",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "c407585265a938822ed84e6bee3eb265b26ec0508f8f3956feac983a3c907394",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "295297fba24929f85892d96dd66e77611c61b8ab5488b2fab32011cc9cd15fad",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "diff": {
+              "actual_bytes": 48,
+              "actual_word_hex": "00000000",
+              "different_bytes": 20,
+              "different_words": 8,
+              "expected_bytes": 48,
+              "expected_word_hex": "99250080",
+              "first_byte": 0,
+              "first_word": 0
+            },
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 0",
+              "ERROR": "0",
+              "GEOMETRY_INPUT": "24 8 1 8 1 8 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "483825b218ab4d7a38504bc8373c6bbe5c1c947dfbf3b84f89a6a9449359594b",
+            "status": "mismatch"
+          },
+          "smart": {
+            "error": -1,
+            "metadata": {
+              "COUNTS": "1 1 1 1 12 12",
+              "ERROR": "-1",
+              "GEOMETRY_INPUT": "24 8 1 8 1 8 2 1 32"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ]
+}

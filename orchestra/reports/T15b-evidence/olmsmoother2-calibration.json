@@ -1,0 +1,872 @@
+{
+  "maxima": {
+    "16": {
+      "first_noncompletion": 624,
+      "largest_completed": 623
+    },
+    "32": {
+      "first_noncompletion": 624,
+      "largest_completed": 623
+    },
+    "8": {
+      "first_noncompletion": 624,
+      "largest_completed": 623
+    }
+  },
+  "rows": [
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0187,
+      "sha256": "f390648070bd2d8965cc8475b2aef8575be59943de0575a845398ba5a4461e4f",
+      "size": 1
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0185,
+      "sha256": "7210d8916e019c9241e6f48771e471aa87ed5a472140b0261283dae9eda8bf9d",
+      "size": 16
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.022,
+      "sha256": "f037c24c6bce93f65b023aabca78e31780fe9164fcf9fbefd5e7a82e3c7ee274",
+      "size": 32
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0278,
+      "sha256": "4ba12e56211c561324094064e169037de77569f4ddd8a213073b4fa164e0f619",
+      "size": 64
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0806,
+      "sha256": "ddfa19f9c704533ee3c8c583045b60b86d8324e9c1f5d1bfa20de1c1f282cc2f",
+      "size": 128
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.3621,
+      "sha256": "4b052f80e23fd6e24b6bbe29b9972fcae5d66e47de7feae030f4fb08ed6f1fe1",
+      "size": 256
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 2.1019,
+      "sha256": "ccfe87a741e71c67ab2d529a3e7f3f3382684d850ccaac9a35610cbd7009ad43",
+      "size": 512
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 1024, 1024] max=[0, 0, 1024, 1024] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0054,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1024
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 768, 768] max=[0, 0, 768, 768] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0048,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 768
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 640, 640] max=[0, 0, 640, 640] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0044,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 640
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          576,
+          576
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 5.6698,
+      "sha256": "c80f261a6e7625b137f7806eed9acbca3c63b6c8b0eb3e7a6cfca9e8043e76a4",
+      "size": 576
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          608,
+          608
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 8.8573,
+      "sha256": "0f2ee3146d7f3c0a66e7459a753ffe47c8afa244164c115e0cdf83c48d3c3ebf",
+      "size": 608
+    },
+    {
+      "depth": 8,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 624, 624] max=[0, 0, 624, 624] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0048,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 624
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          616,
+          616
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.6138,
+      "sha256": "9bab7876faa351c00c041e1db543550a93f3d2865f8530bcf47e89875cd8873f",
+      "size": 616
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          620,
+          620
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.9716,
+      "sha256": "de168c4609b52a136cf68e8fdbc74e6012ad6a22ae7beaab595620172698d57c",
+      "size": 620
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          622,
+          622
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.8669,
+      "sha256": "09db6a72e4af75797b42fb16b987d06f04b1167caf24b3b2a6de7c06b4c4052f",
+      "size": 622
+    },
+    {
+      "depth": 8,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          623,
+          623
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 6.1539,
+      "sha256": "3a1ffd0194b036a24bd82b6bc568298b796841c9c34cdc6fd9e69c0da7e6f03f",
+      "size": 623
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.018,
+      "sha256": "9942e68f61b18d935832460ab31575d4eba261e49867c4954ae94809ae2624ba",
+      "size": 1
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0214,
+      "sha256": "ef529ffffa12652c6cce2a9052198b78d8f505e27ed48275ebcaf8672f01da27",
+      "size": 16
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0245,
+      "sha256": "fd95993afe38c4ff88282e1a818256d9145480a9d67a57abd695f65ab4e0887d",
+      "size": 32
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0327,
+      "sha256": "d0fb71e9564dce29a6d9b4fecc3474566d242bdc7890c20e551b082ac7e8f8d9",
+      "size": 64
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0862,
+      "sha256": "9a15fea95f995bb8419f04d14d4b1710c9b418693f546537fd45f7193edc400b",
+      "size": 128
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.2836,
+      "sha256": "9a0c079d4a3468085708e961d079beb82a84203bb06be6279422d2464f0f077b",
+      "size": 256
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 2.0998,
+      "sha256": "26cef17773c9165901e3e0bb33d821b7fc39a58cca0bd7496a71d08fdefb8fe3",
+      "size": 512
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 1024, 1024] max=[0, 0, 1024, 1024] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0087,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1024
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 768, 768] max=[0, 0, 768, 768] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0069,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 768
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 640, 640] max=[0, 0, 640, 640] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.006,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 640
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          576,
+          576
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 6.1678,
+      "sha256": "b791881b4be0117e9f3f79c0ed36cd12174947b5119cfad3a4007f2a085b5a5c",
+      "size": 576
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          608,
+          608
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 8.4627,
+      "sha256": "93ad2d43e2b3d562b3210d22863d3b46923febc17dc244162b750d17ca836d0f",
+      "size": 608
+    },
+    {
+      "depth": 16,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 624, 624] max=[0, 0, 624, 624] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0071,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 624
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          616,
+          616
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.7909,
+      "sha256": "55829628743b3033f18fdfa67635ad870cf1a3a9344978b73176b9524a955749",
+      "size": 616
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          620,
+          620
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.5912,
+      "sha256": "15dcaf20e49c21ce458684d814df496191e4076e5b573ba728922b17a3c3d7cd",
+      "size": 620
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          622,
+          622
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.881,
+      "sha256": "0adbd6a6c5ab8bbc90d88171965b56302c42ae0430c97ff001a94b96fadd4c6b",
+      "size": 622
+    },
+    {
+      "depth": 16,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          623,
+          623
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 6.1559,
+      "sha256": "567fd509cded0feaeb4d3b4e3f35a42d2c3da5a605c84a524840b50260593af7",
+      "size": 623
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0183,
+      "sha256": "34b22c9aec0a0600be5772dd9b6c159f7a753d38e4f142959d23659e4ccb5c95",
+      "size": 1
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.021,
+      "sha256": "2e6fac48db7797b80ce3462d23f2ca1cfc8c3a7e56ca81dd86fc274456abb7b6",
+      "size": 16
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          32,
+          32
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0244,
+      "sha256": "d2504537700b05ff8f9fced895204083e4c6982f0c604e0ae55e5c17e5e21da7",
+      "size": 32
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0364,
+      "sha256": "961f97b88ccbcab75754086a843de80f73badb68a34e9b5d66a0299c540df12a",
+      "size": 64
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.0616,
+      "sha256": "0abc84de768a74e1567f88ef39d006b8362a15900d63d7c0ad88adb09ba25628",
+      "size": 128
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          256,
+          256
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 0.2816,
+      "sha256": "f3c66873a2c277ae6fd112bdfee42a2030a9f73e8e13111b39110be14596670e",
+      "size": 256
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.7501,
+      "sha256": "48a0ad8a5b9b4d68040e25b4511e26394f5588fe11a55234fbda016dc8ec2604",
+      "size": 512
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 1024, 1024] max=[0, 0, 1024, 1024] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0108,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 1024
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 768, 768] max=[0, 0, 768, 768] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0095,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 768
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 640, 640] max=[0, 0, 640, 640] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0073,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 640
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          576,
+          576
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 6.0664,
+      "sha256": "959d74d6a7b76ca66b9b5e91f9b7c652670464c48fd3a6b86b27fb56f1708da9",
+      "size": 576
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          608,
+          608
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 8.7204,
+      "sha256": "676bd45fd8806685357e9f5e3a9ece4d5ea9019a57b5a39c3fef3c49283072bb",
+      "size": 608
+    },
+    {
+      "depth": 32,
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 624, 624] max=[0, 0, 624, 624] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0087,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 624
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          616,
+          616
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.4959,
+      "sha256": "405e79bcaf918dbdd73c9b68f5dbd533ff8c99985976d48e4cb88cca837ebff0",
+      "size": 616
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          620,
+          620
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 9.9313,
+      "sha256": "5b65b071b79bc975d1492a9892bcfced1412369950e1f537cc66dbfef0fd388e",
+      "size": 620
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          622,
+          622
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 1.8153,
+      "sha256": "1e178b59241020c81b8811ac456e7104c6cb098f8bc3ce422b6e90328530d024",
+      "size": 622
+    },
+    {
+      "depth": 32,
+      "result": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          623,
+          623
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "seconds": 6.2177,
+      "sha256": "146b59c1801d92af5d5dd531e75ff50ac1c219cfe0c798e3f90b9e53777947b5",
+      "size": 623
+    }
+  ],
+  "wide": [
+    {
+      "depth": 8,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 1920, 1080] max=[0, 0, 1920, 1080] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0084,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "depth": 16,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "diagnostic": "F52C_NEGOTIATED result=[0, 0, 1920, 1080] max=[0, 0, 1920, 1080] flags=0\n",
+        "limit_seconds": 10,
+        "reason": "wall timeout",
+        "status": "budget"
+      },
+      "seconds": 10.0122,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "depth": 32,
+      "geometry": [
+        1920,
+        1080
+      ],
+      "result": {
+        "diagnostic": "aex_guest_error: selector SMART_PRE_RENDER failed in guest: guest data arena exhausted\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "seconds": 0.0408,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "workload": "defaults, fixed varying 4-pixel SDR, square full output, unit downsample/aspect, zero padding; bounded search to 4096, not a universal performance ceiling"
+}
