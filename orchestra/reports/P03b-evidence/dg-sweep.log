@@ -1,0 +1,12 @@
+2026 25 {'exact': 24, 'unavailable': 1}
+2026 50 {'exact': 49, 'unavailable': 1}
+2026 75 {'exact': 73, 'unavailable': 2}
+2026 100 {'exact': 97, 'unavailable': 3}
+2026 125 {'exact': 121, 'unavailable': 4}
+2026 150 {'exact': 146, 'unavailable': 4}
+2027 25 {'exact': 171, 'unavailable': 4}
+2027 50 {'exact': 195, 'unavailable': 5}
+2027 75 {'exact': 220, 'unavailable': 5}
+2027 100 {'exact': 245, 'unavailable': 5}
+2027 125 {'exact': 270, 'unavailable': 5}
+2027 150 {'exact': 294, 'unavailable': 6}

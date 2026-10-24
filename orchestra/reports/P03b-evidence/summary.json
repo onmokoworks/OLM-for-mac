@@ -1,0 +1,557 @@
+{
+  "olmdirectionalblur": {
+    "default": {
+      "before": {
+        "aex_budget": 2,
+        "aex_classic_ok": 300,
+        "aex_ok": 298,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 298,
+        "both_routes_exact": 4,
+        "classic_exact": 4,
+        "classic_mismatch": 296,
+        "pixel_mismatch_cases": 296,
+        "smart_exact": 298,
+        "smart_uncompared": 2
+      },
+      "after": {
+        "aex_budget": 2,
+        "aex_classic_ok": 300,
+        "aex_ok": 298,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 298,
+        "both_routes_exact": 4,
+        "classic_exact": 4,
+        "classic_mismatch": 296,
+        "pixel_mismatch_cases": 296,
+        "smart_exact": 298,
+        "smart_uncompared": 2
+      },
+      "status_hash_changes": [],
+      "candidate_hash_error_changes": [],
+      "exact_regressions": [],
+      "oracle_availability_losses": []
+    },
+    "sweep": {
+      "exact": 296,
+      "unavailable": 4
+    },
+    "matrix": {
+      "exact": 36
+    },
+    "units": {
+      "before": [
+        "Ran 102 tests",
+        "FAILED (failures=19, errors=44)"
+      ],
+      "after": [
+        "Ran 102 tests",
+        "FAILED (failures=19, errors=44)"
+      ],
+      "same_failure_names": true
+    },
+    "corpora": [
+      {
+        "directory": "default",
+        "completed": 83,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "P02j",
+        "completed": 200,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "T15b",
+        "completed": 4,
+        "replay_matches_saved": true
+      }
+    ]
+  },
+  "olmdistancegradation": {
+    "default": {
+      "before": {
+        "aex_budget": 2,
+        "aex_classic_ok": 300,
+        "aex_ok": 290,
+        "aex_reject": 8,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 290,
+        "aex_smart_reject": 8,
+        "both_routes_exact": 9,
+        "classic_exact": 10,
+        "classic_mismatch": 290,
+        "pixel_mismatch_cases": 290,
+        "smart_exact": 290,
+        "smart_refusal": 3,
+        "smart_uncompared": 7
+      },
+      "after": {
+        "aex_budget": 2,
+        "aex_classic_ok": 300,
+        "aex_ok": 290,
+        "aex_reject": 8,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 290,
+        "aex_smart_reject": 8,
+        "both_routes_exact": 9,
+        "classic_exact": 10,
+        "classic_mismatch": 290,
+        "pixel_mismatch_cases": 290,
+        "smart_exact": 290,
+        "smart_refusal": 3,
+        "smart_uncompared": 7
+      },
+      "status_hash_changes": [],
+      "candidate_hash_error_changes": [],
+      "exact_regressions": [],
+      "oracle_availability_losses": []
+    },
+    "sweep": {
+      "exact": 294,
+      "unavailable": 6
+    },
+    "matrix": {
+      "exact": 67,
+      "refusal": 21
+    },
+    "units": {
+      "before": [
+        "Ran 140 tests",
+        "FAILED (failures=15, errors=59)",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_c6osdy1l/ready.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_yesor_4v/malformed.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_8az0ew60/multi.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716__l0mk1bm/report.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716__l0mk1bm/report.md",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_dj1bx5bu/path-traversal.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_d9wuthwg/pgrep_timeout.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_d9wuthwg/pgrep_oserror.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_d9wuthwg/vmmap_timeout.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_d9wuthwg/vmmap_oserror.json"
+      ],
+      "after": [
+        "Ran 140 tests",
+        "FAILED (failures=15, errors=59)",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_3nhz3mps/ready.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_xhzwn58r/malformed.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_fo1vs4uh/multi.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_8f187ujn/report.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_8f187ujn/report.md",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_68szoax3/path-traversal.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_inwa2sqn/pgrep_timeout.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_inwa2sqn/pgrep_oserror.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_inwa2sqn/vmmap_timeout.json",
+        "OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/olmdg_preflight_20260716_inwa2sqn/vmmap_oserror.json"
+      ],
+      "same_failure_names": true
+    },
+    "corpora": [
+      {
+        "directory": "tests/fuzz_corpus/olmdistancegradation",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmdistancegradation",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmdistancegradation",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation.json"
+        ],
+        "returncode": 0,
+        "completed": 147,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmdistancegradation",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic",
+          "--max-size",
+          "1920",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation-T15b-odd-even-realistic",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation-T15b-odd-even-realistic.json",
+          "--geometry",
+          "realistic",
+          "--size-sampler",
+          "odd-even-v1",
+          "--size-max-height",
+          "1080"
+        ],
+        "returncode": 0,
+        "completed": 9,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmdistancegradation_realistic_P02b",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmdistancegradation",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmdistancegradation_realistic_P02b",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation_realistic_P02b",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmdistancegradation_realistic_P02b.json",
+          "--geometry",
+          "realistic"
+        ],
+        "returncode": 0,
+        "completed": 226,
+        "replay_matches_saved": true
+      }
+    ]
+  },
+  "olmkirakira": {
+    "default": {
+      "before": {
+        "aex_classic_ok": 300,
+        "aex_ok": 287,
+        "aex_reject": 13,
+        "aex_smart_ok": 287,
+        "aex_smart_reject": 13,
+        "both_routes_exact": 0,
+        "classic_mismatch": 48,
+        "classic_refusal": 252,
+        "pixel_mismatch_cases": 48,
+        "smart_exact": 287,
+        "smart_refusal": 13
+      },
+      "after": {
+        "aex_classic_ok": 300,
+        "aex_ok": 287,
+        "aex_reject": 13,
+        "aex_smart_ok": 287,
+        "aex_smart_reject": 13,
+        "both_routes_exact": 0,
+        "classic_mismatch": 48,
+        "classic_refusal": 252,
+        "pixel_mismatch_cases": 48,
+        "smart_exact": 287,
+        "smart_refusal": 13
+      },
+      "status_hash_changes": [],
+      "candidate_hash_error_changes": [],
+      "exact_regressions": [],
+      "oracle_availability_losses": []
+    },
+    "sweep": {
+      "exact": 298,
+      "unavailable": 2
+    },
+    "matrix": {
+      "exact": 44
+    },
+    "units": {
+      "before": [
+        "Ran 134 tests",
+        "FAILED (failures=17, errors=44)"
+      ],
+      "after": [
+        "Ran 134 tests",
+        "FAILED (failures=17, errors=44)"
+      ],
+      "same_failure_names": true
+    },
+    "corpora": [
+      {
+        "directory": "tests/fuzz_corpus/olmkirakira",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmkirakira",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmkirakira",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira.json"
+        ],
+        "returncode": 0,
+        "completed": 8,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmkirakira",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic",
+          "--max-size",
+          "1080",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira-T15b-odd-even-realistic",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira-T15b-odd-even-realistic.json",
+          "--geometry",
+          "realistic",
+          "--size-sampler",
+          "odd-even-v1",
+          "--size-max-height",
+          "1080"
+        ],
+        "returncode": 0,
+        "completed": 4,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmkirakira_gate_off_T06",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmkirakira",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmkirakira_gate_off_T06",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_gate_off_T06",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_gate_off_T06.json"
+        ],
+        "returncode": 0,
+        "completed": 62,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmkirakira_gate_off_T06/other_reductions",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmkirakira",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmkirakira_gate_off_T06/other_reductions",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_gate_off_T06-other_reductions",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_gate_off_T06-other_reductions.json"
+        ],
+        "returncode": 0,
+        "completed": 41,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/olmkirakira_realistic_P02c",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "olmkirakira",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/olmkirakira_realistic_P02c",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_realistic_P02c",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-olmkirakira_realistic_P02c.json",
+          "--geometry",
+          "realistic"
+        ],
+        "returncode": 0,
+        "completed": 272,
+        "replay_matches_saved": true
+      }
+    ]
+  },
+  "radialblur": {
+    "default": {
+      "before": {
+        "aex_budget": 4,
+        "aex_classic_ok": 300,
+        "aex_ok": 276,
+        "aex_reject": 20,
+        "aex_smart_budget": 4,
+        "aex_smart_ok": 276,
+        "aex_smart_reject": 20,
+        "both_routes_exact": 2,
+        "classic_exact": 2,
+        "classic_mismatch": 126,
+        "classic_refusal": 172,
+        "pixel_mismatch_cases": 126,
+        "smart_exact": 276,
+        "smart_uncompared": 24
+      },
+      "after": {
+        "aex_budget": 4,
+        "aex_classic_ok": 300,
+        "aex_ok": 276,
+        "aex_reject": 20,
+        "aex_smart_budget": 4,
+        "aex_smart_ok": 276,
+        "aex_smart_reject": 20,
+        "both_routes_exact": 2,
+        "classic_exact": 2,
+        "classic_mismatch": 126,
+        "classic_refusal": 172,
+        "pixel_mismatch_cases": 126,
+        "smart_exact": 276,
+        "smart_uncompared": 24
+      },
+      "status_hash_changes": [
+        [
+          62,
+          "smart",
+          "uncompared",
+          "exact"
+        ],
+        [
+          280,
+          "smart",
+          "exact",
+          "uncompared"
+        ]
+      ],
+      "candidate_hash_error_changes": [],
+      "exact_regressions": [],
+      "oracle_availability_losses": [
+        {
+          "index": 280,
+          "route": "smart",
+          "reason": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          },
+          "unchanged_candidate_sha256": "5a19de28aece7b23b644e5f2533da7f662677e3d6a837b9a96d88a53726487f8"
+        }
+      ]
+    },
+    "sweep": {
+      "exact": 267,
+      "unavailable": 33
+    },
+    "matrix": {
+      "exact": 44
+    },
+    "units": {
+      "before": [
+        "Ran 197 tests",
+        "FAILED (failures=25, errors=54)"
+      ],
+      "after": [
+        "Ran 197 tests",
+        "FAILED (failures=25, errors=54)"
+      ],
+      "same_failure_names": true
+    },
+    "corpora": [
+      {
+        "directory": "tests/fuzz_corpus/radialblur",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "radialblur",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/radialblur",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur.json"
+        ],
+        "returncode": 1,
+        "completed": 61,
+        "replay_matches_saved": false
+      },
+      {
+        "directory": "tests/fuzz_corpus/radialblur/T15b-odd-even-realistic",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "radialblur",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/radialblur/T15b-odd-even-realistic",
+          "--max-size",
+          "1920",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur-T15b-odd-even-realistic",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur-T15b-odd-even-realistic.json",
+          "--geometry",
+          "realistic",
+          "--size-sampler",
+          "odd-even-v1",
+          "--size-max-height",
+          "1080"
+        ],
+        "returncode": 0,
+        "completed": 4,
+        "replay_matches_saved": true
+      },
+      {
+        "directory": "tests/fuzz_corpus/radialblur_realistic_P02d",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/run.py",
+          "--plugin",
+          "radialblur",
+          "--jobs",
+          "1",
+          "--replay",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/fuzz_corpus/radialblur_realistic_P02d",
+          "--max-size",
+          "256",
+          "--scratch",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur_realistic_P02d",
+          "--report",
+          "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/state/P03b-nonfinite-hdr-admission/replay-radialblur_realistic_P02d.json",
+          "--geometry",
+          "realistic"
+        ],
+        "returncode": 0,
+        "completed": 180,
+        "replay_matches_saved": true
+      }
+    ]
+  }
+}

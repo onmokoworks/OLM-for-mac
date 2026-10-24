@@ -1811,7 +1811,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info, false, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
-			return GenericPF32FiniteInput(input)
+			// PF32 AEX rotation/prepass use unordered-or-nonzero alpha tests;
+			// the core preserves SSE NaN arithmetic and final MINSS RGB clamps.
+			// Keep the independently guarded Classic owner unchanged.
+			return (smart_render || GenericPF32FiniteInput(input))
 				? RenderGenericNeutral32(input, output, info) : OLM_DIRECTIONAL_REFUSAL("pf32-neutral-nonfinite-input");
 		}
 		if (!retained_exact && IsGenericNeutralShape(info)) {

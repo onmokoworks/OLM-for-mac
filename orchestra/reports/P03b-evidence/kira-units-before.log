@@ -1,0 +1,1297 @@
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py", line 512, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py", line 306, in main
+    validate_saved_report()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py", line 254, in validate_saved_report
+    assert report["source_sha256"] == sha(SOURCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+EF.F...E.F.....FF............FE.E...............EETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.py", line 17, in <module>
+    runpy.run_path(
+    ~~~~~~~~~~~~~~^
+        os.path.join(os.path.dirname(__file__), "test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        run_name="__main__",
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+ETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_closure_20260812.py", line 432, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_closure_20260812.py", line 366, in main
+    if sha(AEX.read_bytes()) != EXPECTED_AEX_SHA:
+           ~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+ETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_closure_20260812.py", line 432, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_closure_20260812.py", line 366, in main
+    if sha(AEX.read_bytes()) != EXPECTED_AEX_SHA:
+           ~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+ETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 284, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 278, in main
+    validate(data)
+    ~~~~~~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 248, in validate
+    fresh = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 214, in generate
+    oracle = run_oracle_probe()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 203, in run_oracle_probe
+    raise RuntimeError(ran.stdout + ran.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode3_32x18_exported_candidate_20260814.py", line 158, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode3_32x18_exported_candidate_20260814.py", line 125, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+
+ETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_failclose_20260814.py", line 171, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_failclose_20260814.py", line 151, in main
+    current = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_failclose_20260814.py", line 114, in generate
+    probe_sha, stdout = execute()
+                        ~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_failclose_20260814.py", line 109, in execute
+    raise AssertionError((result.returncode, result.stdout, result.stderr))
+AssertionError: (1, 'PF8=10 PF16=10 PF32=10\n', '')
+EETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_exported_effectmain_all_depths_20260812.py", line 16, in <module>
+    runpy.run_path(
+    ~~~~~~~~~~~~~~^
+        os.path.join(os.path.dirname(__file__), "test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        run_name="__main__",
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+EE....FF.....F...F.E.Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.py", line 466, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.py", line 371, in main
+    if sha(AEX.read_bytes()) != EXPECTED_AEX_SHA:
+           ~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+EE....Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py", line 484, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py", line 358, in main
+    if sha(path.read_bytes()) != EXPECTED[key]:
+           ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+E..Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py", line 484, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py", line 358, in main
+    if sha(path.read_bytes()) != EXPECTED[key]:
+           ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.py", line 51, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.py", line 20, in main
+    subprocess.run(["python3", str(GENERATOR)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py']' returned non-zero exit status 1.
+EETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+{"status": "unexpected", "cases": [{"case": "horizontal_solo", "exact": [true, true, true], "expected": [true, true, true], "lifecycle": true, "valid": false}, {"case": "diagonal2_solo", "exact": [true, true, true], "expected": [true, true, true], "lifecycle": true, "valid": false}, {"case": "highlight_solo", "exact": [true, true, true], "expected": [true, true, true], "lifecycle": true, "valid": false}, {"case": "multiray_ramp_merge2_rotation1", "exact": [true, true, true], "expected": [true, true, true], "lifecycle": true, "valid": false}]}
+EEETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 244, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 138, in main
+    raise RuntimeError("AEXCompat worker missing")
+RuntimeError: AEXCompat worker missing
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_modes123_rotation_exported_effectmain_all_depths_20260812.py", line 70, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_modes123_rotation_exported_effectmain_all_depths_20260812.py", line 39, in main
+    subprocess.run(["python3", str(BASE)], cwd=ROOT, env=environment, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+E..F.............E..Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_pf8_source_decode_closure_20260812.py", line 581, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_pf8_source_decode_closure_20260812.py", line 483, in main
+    if sha(path.read_bytes()) != EXPECTED[key]:
+           ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex'
+ETraceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py", line 308, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py", line 292, in main
+    validate(saved)
+    ~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py", line 193, in validate
+    assert identities["production_source_sha256"] == sha(SOURCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+EEEFEEEEEEEEE.EF.F.......FEEEEEFF...
+======================================================================
+ERROR: setUpClass (test_olmkirakira_classic_smart_admission_guard_20260812.KiraClassicSmartAdmissionGuardTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_classic_smart_admission_guard_20260812.py", line 17, in setUpClass
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        ["python3", str(SCRIPT), "--validate-only"], cwd=ROOT, check=True
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py', '--validate-only']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_fp_contract_candidate_20260813.KiraFpContractCandidateTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_fp_contract_candidate_20260813.py", line 39, in setUpClass
+    cls.report = json.loads(REPORT.read_text())
+                            ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_fp_contract_universal_candidate_20260813/build_identity.json'
+
+======================================================================
+ERROR: test_driver_covers_four_modes_and_three_depths (test_olmkirakira_generic_perf_runner_20260820.KiraKiraGenericPerfRunnerTests.test_driver_covers_four_modes_and_three_depths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_generic_perf_runner_20260820.py", line 24, in test_driver_covers_four_modes_and_three_depths
+    set(module.MODES),
+        ^^^^^^^^^^^^
+AttributeError: module 'kira_perf' has no attribute 'MODES'
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_hotspot_outer_stage_reconciliation_20260730.HotspotOuterStageReconciliationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_hotspot_outer_stage_reconciliation_20260730.py", line 178, in setUpClass
+    cls.asm = ASM_PATH.read_text(encoding="utf-8")
+              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/disasm/OLMKiraKira.aex.asm.txt'
+
+======================================================================
+ERROR: test_olmkirakira_merge2_outer_compose_static_20260728 (unittest.loader._FailedTest.test_olmkirakira_merge2_outer_compose_static_20260728)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_olmkirakira_merge2_outer_compose_static_20260728
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_merge2_outer_compose_static_20260728.py", line 6, in <module>
+    ASM = (ROOT / "disasm/OLMKiraKira.aex.asm.txt").read_text(encoding="utf-8")
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/disasm/OLMKiraKira.aex.asm.txt'
+
+
+======================================================================
+ERROR: test_three_depths_are_exact (test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.Mode1ExportedEffectMainAllDepthsTests.test_three_depths_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py", line 17, in test_three_depths_are_exact
+    subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode1_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_ramp_merge2_all_depths_exact (test_olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.KiraMode2RampMerge2ExportedOwnerTest.test_ramp_merge2_all_depths_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.py", line 14, in test_ramp_merge2_all_depths_exact
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode2_rotation22_closure_20260812.KiraMode2Rotation22ClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode2_rotation22_closure_20260812.py", line 27, in setUpClass
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_closure_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_checkpointed_pf32_seam_is_closed_by_natural_owner_mapping (test_olmkirakira_mode2_rotation22_pf32_seam_20260812.KiraMode2Rotation22SeamTest.test_checkpointed_pf32_seam_is_closed_by_natural_owner_mapping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode2_rotation22_pf32_seam_20260812.py", line 6, in test_checkpointed_pf32_seam_is_closed_by_natural_owner_mapping
+    subprocess.run(["python3",str(ROOT/"tools/emulation/test_olmkirakira_mode2_rotation22_pf32_seam_20260812.py")],cwd=ROOT,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode2_rotation22_pf32_seam_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode3_32x18_public_closure_20260814.KiraMode332x18PublicClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_32x18_public_closure_20260814.py", line 16, in setUpClass
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode3_32x18_public_failclose_20260814.KiraMode332x18PublicFailCloseTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_32x18_public_failclose_20260814.py", line 17, in setUpClass
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_32x18_public_failclose_20260814.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode3_32x18_universal_candidate_20260815.KiraMode332x18UniversalCandidateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_32x18_universal_candidate_20260815.py", line 15, in setUpClass
+    cls.before = REPORT.read_bytes()
+                 ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_mode3_32x18_candidate_20260815/build_identity.json'
+
+======================================================================
+ERROR: test_gaussian_length50_all_depths_exact (test_olmkirakira_mode3_exported_effectmain_all_depths_20260812.KiraMode3ExportedOwnerTest.test_gaussian_length50_all_depths_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_exported_effectmain_all_depths_20260812.py", line 14, in test_gaussian_length50_all_depths_exact
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode3_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode3_ui_length_beta_20260821.KiraKiraMode3UiLengthBetaTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_ui_length_beta_20260821.py", line 46, in setUpClass
+    raise AssertionError(normal.stderr[-16000:])
+AssertionError: clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/AEGP_SuiteHandler.cpp'
+clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/MissingSuiteError.cpp'
+
+
+======================================================================
+ERROR: test_compose_matrix_is_raw_exact (test_olmkirakira_mode4_compose_matrix_actual_aex_20260811.Mode4ComposeMatrixActualAexTests.test_compose_matrix_is_raw_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_compose_matrix_actual_aex_20260811.py", line 18, in test_compose_matrix_is_raw_exact
+    subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_compose_matrix_actual_aex_20260811.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.KiraMode4Diagonal2OwnerAngleClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.py", line 27, in setUpClass
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_actual_aex_fullcaller_is_exact_through_all_typed_writers (test_olmkirakira_mode4_fullcaller_hostless_exact_20260807.Mode4FullCallerHostlessExactTests.test_actual_aex_fullcaller_is_exact_through_all_typed_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_fullcaller_hostless_exact_20260807.py", line 18, in test_actual_aex_fullcaller_is_exact_through_all_typed_writers
+    subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_mode4_highlight_gradient_closure_20260812.KiraMode4HighlightGradientClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py", line 27, in setUpClass
+    subprocess.run(["python3", str(GENERATOR)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_old_seam_redirects_to_raw_exact_closure (test_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.KiraMode4HighlightGradientSeamTest.test_old_seam_redirects_to_raw_exact_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.py", line 6, in test_old_seam_redirects_to_raw_exact_closure
+    subprocess.run(["python3",str(ROOT/"tools/emulation/probe_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.py")],cwd=ROOT,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_actual_aex_aggregation_compose_writer_is_word_exact (test_olmkirakira_mode4_highlight_hostless_actual_aex_20260807.Mode4HighlightHostlessActualAexTests.test_actual_aex_aggregation_compose_writer_is_word_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_highlight_hostless_actual_aex_20260807.py", line 15, in test_actual_aex_aggregation_compose_writer_is_word_exact
+    result = subprocess.run(
+        ["python3", str(PROBE)],
+    ...<3 lines>...
+        text=True,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_highlight_hostless_actual_aex_20260807.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_public_owner_admitted_subset_is_raw_exact (test_olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.KiraMode4MultirayExportedOwnerTest.test_public_owner_admitted_subset_is_raw_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.py", line 19, in test_public_owner_admitted_subset_is_raw_exact
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_five_same_run_families_are_exact (test_olmkirakira_mode4_natural_families_exact_20260811.Mode4NaturalFamiliesExactTests.test_five_same_run_families_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_natural_families_exact_20260811.py", line 17, in test_five_same_run_families_are_exact
+    subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_natural_families_exact_20260811.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_same_run_seed_direction_ray_and_typed_outputs_are_exact (test_olmkirakira_mode4_natural_fullframe_exact_20260811.Mode4NaturalFullFrameExactTests.test_same_run_seed_direction_ray_and_typed_outputs_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode4_natural_fullframe_exact_20260811.py", line 17, in test_same_run_seed_direction_ray_and_typed_outputs_are_exact
+    subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/probe_olmkirakira_mode4_natural_fullframe_exact_20260811.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_nine_rotation_rows_are_exact (test_olmkirakira_modes123_rotation_exported_effectmain_all_depths_20260812.KiraModes123RotationOwnerTest.test_nine_rotation_rows_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_modes123_rotation_exported_effectmain_all_depths_20260812.py", line 14, in test_nine_rotation_rows_are_exact
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_modes123_rotation_exported_effectmain_all_depths_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_parameter_surface_contract_20260717.OLMKiraKiraSurfaceContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_parameter_surface_contract_20260717.py", line 20, in setUpClass
+    cls.windows_rows, _ = contract.load_windows_surface()
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/scripts/validate_olmkirakira_surface_contract_20260717.py", line 165, in load_windows_surface
+    manifest = load_json(path)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/scripts/validate_olmkirakira_surface_contract_20260717.py", line 62, in load_json
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
+                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/reference_manifest.json'
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_pf8_source_decode_closure_20260812.KiraPF8SourceDecodeClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_pf8_source_decode_closure_20260812.py", line 26, in setUpClass
+    subprocess.run(["python3", str(GENERATOR)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_pf8_source_decode_closure_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_public_smart_bounded_closure_20260812.KiraPublicSmartBoundedClosureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_public_smart_bounded_closure_20260812.py", line 21, in setUpClass
+    subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: test_build_log_and_arch_evidence_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_build_log_and_arch_evidence_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 61, in test_build_log_and_arch_evidence_tamper
+    self.reject(lambda report: report["build_evidence"].__setitem__("sha256", "0" * 64))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_canonical_inventory_and_binary_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_canonical_inventory_and_binary_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 68, in test_canonical_inventory_and_binary_tamper
+    self.reject(lambda report: report["bundles"]["staged"]["manifest"].pop())
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_deployment_codesign_and_universal_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_deployment_codesign_and_universal_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 76, in test_deployment_codesign_and_universal_tamper
+    self.reject(lambda report: report["bundles"]["source"]["deployment"]["macho_slice_minimum_versions"].__setitem__("arm64", "12.0"))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_generated_at_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_generated_at_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 91, in test_generated_at_tamper
+    self.reject(lambda report: report.__setitem__("generated_at", "1999-01-01T00:00:00+00:00"))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_identity_manifest_and_transition_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_identity_manifest_and_transition_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 81, in test_identity_manifest_and_transition_tamper
+    self.reject(lambda report: report.__setitem__("pre_identity_manifest_sha256", "0" * 64))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_markdown_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_markdown_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 99, in test_markdown_tamper
+    self.module.validate(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_observation_wording_boundary_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_observation_wording_boundary_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 87, in test_observation_wording_boundary_tamper
+    self.reject(lambda report: report["observed_retention"].__setitem__("transaction_method_or_order_inferred", True))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_retained_inventory_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_retained_inventory_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 72, in test_retained_inventory_tamper
+    self.reject(lambda report: report["bundles"]["retained_installed_backup"]["manifest"].pop())
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_smoke_artifact_and_all10_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_smoke_artifact_and_all10_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 103, in test_smoke_artifact_and_all10_tamper
+    self.reject(lambda report: report["retained_post_install_ae_smoke"].__setitem__("report_sha256", "0" * 64))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_smoke_kira_claim_boundary_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_smoke_kira_claim_boundary_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 107, in test_smoke_kira_claim_boundary_tamper
+    self.reject(lambda report: report["retained_post_install_ae_smoke"]["kira"].__setitem__("effect_enabled_numerical_render_attempted", True))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_source_and_project_tamper (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_source_and_project_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 55, in test_source_and_project_tamper
+    self.reject(lambda report: report.__setitem__("production_source_sha256", "0" * 64))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 37, in reject
+    self.module.validate(report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_validate (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_validate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 41, in test_validate
+    self.module.validate(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+======================================================================
+ERROR: test_identity_tamper (test_olmkirakira_worldsuite_incremental_install_20260814.InstallAuditTest.test_identity_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_incremental_install_20260814.py", line 12, in test_identity_tamper
+    r=copy.deepcopy(m.generate()); r["new_binary_sha256"]="0"*64
+                    ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 46, in generate
+    live = {"identity_before": sha(PRE_IDENTITY), "identity_after": sha(IDENTITY),
+                               ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 30, in sha
+    def sha(path: Path) -> str: return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                      ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_worldsuite_lifecycle_install_20260814/olm_installed_identity_manifest_before.json'
+
+======================================================================
+ERROR: test_live (test_olmkirakira_worldsuite_incremental_install_20260814.InstallAuditTest.test_live)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_incremental_install_20260814.py", line 6, in test_live
+    def test_live(self): m.validate(m.generate())
+                                    ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 46, in generate
+    live = {"identity_before": sha(PRE_IDENTITY), "identity_after": sha(IDENTITY),
+                               ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 30, in sha
+    def sha(path: Path) -> str: return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                      ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_worldsuite_lifecycle_install_20260814/olm_installed_identity_manifest_before.json'
+
+======================================================================
+ERROR: test_report (test_olmkirakira_worldsuite_incremental_install_20260814.InstallAuditTest.test_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_incremental_install_20260814.py", line 7, in test_report
+    def test_report(self): m.validate(json.loads(m.REPORT.read_text()))
+                           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 69, in validate
+    if r != generate(): raise RuntimeError("report differs from live audit")
+            ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 46, in generate
+    live = {"identity_before": sha(PRE_IDENTITY), "identity_after": sha(IDENTITY),
+                               ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 30, in sha
+    def sha(path: Path) -> str: return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                      ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_worldsuite_lifecycle_install_20260814/olm_installed_identity_manifest_before.json'
+
+======================================================================
+ERROR: test_schema_tamper (test_olmkirakira_worldsuite_incremental_install_20260814.InstallAuditTest.test_schema_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_incremental_install_20260814.py", line 9, in test_schema_tamper
+    r=m.generate(); r["extra"]=1
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 46, in generate
+    live = {"identity_before": sha(PRE_IDENTITY), "identity_after": sha(IDENTITY),
+                               ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_worldsuite_incremental_install_20260814.py", line 30, in sha
+    def sha(path: Path) -> str: return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                      ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_worldsuite_lifecycle_install_20260814/olm_installed_identity_manifest_before.json'
+
+======================================================================
+ERROR: setUpClass (test_olmkirakira_worldsuite_lifecycle_candidate_20260814.KiraCandidateTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_lifecycle_candidate_20260814.py", line 9, in setUpClass
+    def setUpClass(cls):cls.m=load();cls.r=json.loads(REPORT.read_text())
+                                                      ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_worldsuite_lifecycle_candidate_20260814/build_identity.json'
+
+======================================================================
+FAIL: test_canonical_artifact_hashes (test_olmkirakira_current_installed_public_closure_20260813.KiraCurrentInstalledPublicClosureTest.test_canonical_artifact_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_current_installed_public_closure_20260813.py", line 54, in test_canonical_artifact_hashes
+    self.assertEqual(sha256(GENERATOR), GENERATOR_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ef5b46eabf0b8af3a2b27aa9c1ab5de78704c692d5d1d8e61fded15768c00e7f' != 'bb6bbe20dc1588c3e7bb53f875f73db713a18f04b7492da1cf30d77e0f16e94b'
+- ef5b46eabf0b8af3a2b27aa9c1ab5de78704c692d5d1d8e61fded15768c00e7f
++ bb6bbe20dc1588c3e7bb53f875f73db713a18f04b7492da1cf30d77e0f16e94b
+
+
+======================================================================
+FAIL: test_default_live_read_only (test_olmkirakira_current_installed_public_closure_20260813.KiraCurrentInstalledPublicClosureTest.test_default_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_current_installed_public_closure_20260813.py", line 49, in test_default_live_read_only
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL_OLMKIRAKIRA_CURRENT_INSTALLED_PUBLIC_CLOSURE: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira'
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py", line 258, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py", line 240, in main
+    live = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py", line 115, in generate
+    pins = authorities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py", line 93, in authorities
+    "installed_binary": sha256(INSTALLED),
+                        ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_current_installed_public_closure_20260813.py", line 54, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira'
+
+
+======================================================================
+FAIL: test_default_live_read_only (test_olmkirakira_fp_contract_incremental_install_20260813.KiraFpContractIncrementalInstallTest.test_default_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_fp_contract_incremental_install_20260813.py", line 49, in test_default_live_read_only
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL_OLMKIRAKIRA_FP_CONTRACT_INSTALL_IDENTITY: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_fp_contract_universal_candidate_20260813/build_identity.json'
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_fp_contract_incremental_install_20260813.py", line 224, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_fp_contract_incremental_install_20260813.py", line 206, in main
+    live = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_fp_contract_incremental_install_20260813.py", line 94, in generate
+    "build_identity": sha256(BUILD_IDENTITY),
+                      ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_fp_contract_incremental_install_20260813.py", line 43, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_fp_contract_universal_candidate_20260813/build_identity.json'
+
+
+======================================================================
+FAIL: test_canonical_artifact_hashes (test_olmkirakira_fp_contract_installed_seam_20260813.KiraInstalledFpContractSeamTest.test_canonical_artifact_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 61, in test_canonical_artifact_hashes
+    self.assertEqual(sha256(GENERATOR), GENERATOR_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '287d9de9d508456e88eee82d6ca20f3b3925bebec72a20da5b50d61a5dfcd308' != 'a419e6644a2ee6e3712139c11ec75be052d13812dfa9e8de4a384016b2ec6ab6'
+- 287d9de9d508456e88eee82d6ca20f3b3925bebec72a20da5b50d61a5dfcd308
++ a419e6644a2ee6e3712139c11ec75be052d13812dfa9e8de4a384016b2ec6ab6
+
+
+======================================================================
+FAIL: test_default_live_read_only (test_olmkirakira_fp_contract_installed_seam_20260813.KiraInstalledFpContractSeamTest.test_default_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 56, in test_default_live_read_only
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL_OLMKIRAKIRA_INSTALLED_FP_CONTRACT_SEAM: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_fp_contract_incremental_install_20260813/moved_old/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira'
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 223, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 205, in main
+    live = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 113, in generate
+    live = {"base_generator": sha256(BASE), "harness": sha256(HARNESS), "shim": sha256(SHIM), "old_binary": sha256(OLD), "current_binary": sha256(CURRENT)}
+                                                                                                            ~~~~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_fp_contract_installed_seam_20260813.py", line 54, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmkirakira_fp_contract_incremental_install_20260813/moved_old/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira'
+
+
+======================================================================
+FAIL: test_production_entries_are_clean_and_deterministic (test_olmkirakira_generic_beta_sanitizers_20260820.KiraKiraGenericBetaSanitizerTests.test_production_entries_are_clean_and_deterministic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_generic_beta_sanitizers_20260820.py", line 34, in test_production_entries_are_clean_and_deterministic
+    self.assertEqual(built.returncode, 0, built.stderr[-12000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/AEGP_SuiteHandler.cpp'
+clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/MissingSuiteError.cpp'
+
+
+======================================================================
+FAIL: test_current_mac_source_closure_is_bound_and_drift_is_rejected (test_olmkirakira_mode3_ui_windows_owner_20260821.KiraMode3UiWindowsOwnerTests.test_current_mac_source_closure_is_bound_and_drift_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py", line 624, in test_current_mac_source_closure_is_bound_and_drift_is_rejected
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        self.report["identities"]["repository_source"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.module.repository_source_records(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: [{'path': 'tools/emulation/test_olmkirakira_[2275 chars]971}] != [{'role': 'capture_verifier', 'path': 'tools[2276 chars]52'}]
+
+First differing element 0:
+{'path': 'tools/emulation/test_olmkirakira_[158 chars]2510}
+{'role': 'capture_verifier', 'path': 'tools[158 chars]34b'}
+
+Diff is 3458 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_default_cli_is_read_only_and_capture_cli_fails_closed (test_olmkirakira_mode3_ui_windows_owner_20260821.KiraMode3UiWindowsOwnerTests.test_default_cli_is_read_only_and_capture_cli_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py", line 759, in test_default_cli_is_read_only_and_capture_cli_fails_closed
+    self.assertEqual(verified.returncode, 0, verified.stdout + verified.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL: identities.repository_source identity[0].size_bytes value mismatch
+
+
+======================================================================
+FAIL: test_optional_external_artifacts_are_hash_checked_when_supplied (test_olmkirakira_mode3_ui_windows_owner_20260821.KiraMode3UiWindowsOwnerTests.test_optional_external_artifacts_are_hash_checked_when_supplied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py", line 729, in test_optional_external_artifacts_are_hash_checked_when_supplied
+    self.assertTrue(self.verify(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_tracked_report_is_semantically_valid_and_whole_file_pinned (test_olmkirakira_mode3_ui_windows_owner_20260821.KiraMode3UiWindowsOwnerTests.test_tracked_report_is_semantically_valid_and_whole_file_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py", line 250, in test_tracked_report_is_semantically_valid_and_whole_file_pinned
+    self.assertTrue(self.verify(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_closed_smoke_tuple_renders_hd_at_all_depths (test_olmkirakira_native_smoke_tuple_20260820.KiraKiraNativeSmokeTupleTests.test_closed_smoke_tuple_renders_hd_at_all_depths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_native_smoke_tuple_20260820.py", line 96, in test_closed_smoke_tuple_renders_hd_at_all_depths
+    self.assertEqual(build.returncode, 0, build.stderr[-8000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/AEGP_SuiteHandler.cpp'
+clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/MissingSuiteError.cpp'
+
+
+======================================================================
+FAIL: test_default_cli_is_read_only (test_olmkirakira_smart_incremental_install_identity_20260812.KiraSmartIncrementalInstallIdentity.test_default_cli_is_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_incremental_install_identity_20260812.py", line 47, in test_default_cli_is_read_only
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 427, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 421, in main
+    validate(json.loads(REPORT.read_text(encoding="utf-8")))
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 307, in validate
+    assert report == generate()
+                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 278, in generate
+    "pre_identity_manifest_sha256": sha(PRE_IDENTITY),
+                                    ~~~^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/audit_olmkirakira_smart_incremental_install_identity_20260812.py", line 77, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoff/mac_plugin_backups/mediacore_20260812_kira_smart_before_install/olm_installed_identity_manifest_20260806.json'
+
+
+======================================================================
+FAIL: test_all_dependency_hashes_match_live_workspace (test_olmkirakira_smart_workspace_dependency_manifest_20260812.KiraSmartWorkspaceDependencyManifestTests.test_all_dependency_hashes_match_live_workspace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_workspace_dependency_manifest_20260812.py", line 56, in test_all_dependency_hashes_match_live_workspace
+    self.assertEqual(sha256(path), entry["sha256"], entry["path"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f' != 'abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab'
+- 5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f
++ abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab
+ : mac/OLMKiraKira/OLMKiraKira.cpp
+
+======================================================================
+FAIL: test_each_hash_is_a_tamper_gate (test_olmkirakira_smart_workspace_dependency_manifest_20260812.KiraSmartWorkspaceDependencyManifestTests.test_each_hash_is_a_tamper_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_smart_workspace_dependency_manifest_20260812.py", line 61, in test_each_hash_is_a_tamper_gate
+    self.assertEqual(hashlib.sha256(live).hexdigest(), entry["sha256"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f' != 'abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab'
+- 5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f
++ abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab
+
+
+======================================================================
+FAIL: test_preflight_is_hash_bound_and_non_launching (test_olmkirakira_windows_boundary_mac_ae_20260806.KiraBoundaryMacRunnerTest.test_preflight_is_hash_bound_and_non_launching)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_windows_boundary_mac_ae_20260806.py", line 24, in test_preflight_is_hash_bound_and_non_launching
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/scripts/run_olmkirakira_windows_boundary_mac_ae_20260806.py", line 226, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/scripts/run_olmkirakira_windows_boundary_mac_ae_20260806.py", line 93, in main
+    request_files = safe_files(REQUEST)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/scripts/run_olmkirakira_windows_boundary_mac_ae_20260806.py", line 38, in safe_files
+    with zipfile.ZipFile(path) as archive:
+         ~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/zipfile/__init__.py", line 1462, in __init__
+    self.fp = io.open(file, filemode)
+              ~~~~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/windows_batch/olm_windows_ae_release_boundary_minimal_20260806.zip'
+
+
+======================================================================
+FAIL: test_generator_identity (test_olmkirakira_worldsuite_lifecycle_closure_20260814.KiraWorldSuiteLifecycleTest.test_generator_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_lifecycle_closure_20260814.py", line 17, in test_generator_identity
+    if GEN_SHA!="PENDING": self.assertEqual(hashlib.sha256(GEN.read_bytes()).hexdigest(),GEN_SHA)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '630598f9e51c495062c6be86e97b3b2dc2bf22e85897d42bf75039bd72c82415' != '872047a865e2262c66d2746c33d148df69d73cc3a18d0ef551da06c07e7052d8'
+- 630598f9e51c495062c6be86e97b3b2dc2bf22e85897d42bf75039bd72c82415
++ 872047a865e2262c66d2746c33d148df69d73cc3a18d0ef551da06c07e7052d8
+
+
+======================================================================
+FAIL: test_report (test_olmkirakira_worldsuite_lifecycle_closure_20260814.KiraWorldSuiteLifecycleTest.test_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmkirakira_worldsuite_lifecycle_closure_20260814.py", line 18, in test_report
+    def test_report(self): self.m.validate(self.r)
+                           ~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmkirakira_worldsuite_lifecycle_closure_20260814.py", line 126, in validate
+    assert sha(SOURCE.read_bytes())==SOURCE_SHA256
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+----------------------------------------------------------------------
+Ran 134 tests in 6.980s
+
+FAILED (failures=17, errors=44)

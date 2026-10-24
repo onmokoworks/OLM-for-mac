@@ -1,0 +1,1258 @@
+F.F..FF...FEEEEEEEEE.EEEEFEEE....FF..........EF.F.EFEEEE..F.F........EF.EEEEEEEEEEEEEEEEEEE.F.FF.......F.EEF...
+======================================================================
+ERROR: test_identity_tamper (test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.InstalledOwnerBoundaryTest.test_identity_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 42, in test_identity_tamper
+    self.assertFalse(self.module.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 186, in validate
+    expected_identities = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 79, in identities
+    "source_sha256": sha256(SOURCE), "installed_binary_sha256": sha256(INSTALLED),
+                                                                ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 66, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_installed_runtime_tamper (test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.InstalledOwnerBoundaryTest.test_installed_runtime_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 47, in test_installed_runtime_tamper
+    self.assertFalse(self.module.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 186, in validate
+    expected_identities = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 79, in identities
+    "source_sha256": sha256(SOURCE), "installed_binary_sha256": sha256(INSTALLED),
+                                                                ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 66, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_live_report (test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.InstalledOwnerBoundaryTest.test_live_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 33, in test_live_report
+    self.assertTrue(self.module.validate(self.report))
+                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 186, in validate
+    expected_identities = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 79, in identities
+    "source_sha256": sha256(SOURCE), "installed_binary_sha256": sha256(INSTALLED),
+                                                                ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 66, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_recanonicalized_claim_tamper (test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.InstalledOwnerBoundaryTest.test_recanonicalized_claim_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 38, in test_recanonicalized_claim_tamper
+    self.assertFalse(self.module.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 186, in validate
+    expected_identities = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 79, in identities
+    "source_sha256": sha256(SOURCE), "installed_binary_sha256": sha256(INSTALLED),
+                                                                ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 66, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_recanonicalized_cell_tamper_rejected (test_olmdirectionalblur_current_installed_source_bound_union_20260813.DirectionalInstalledSourceBoundUnionTest.test_recanonicalized_cell_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 50, in test_recanonicalized_cell_tamper_rejected
+    self.module.validate(tampered)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 295, in validate
+    if report["status"] != STATUS or report["authorities"] != authorities():
+                                                              ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 225, in authorities
+    return {name: sha(path) for name, path in paths.items()}
+                  ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 52, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_recanonicalized_count_tamper_rejected (test_olmdirectionalblur_current_installed_source_bound_union_20260813.DirectionalInstalledSourceBoundUnionTest.test_recanonicalized_count_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 43, in test_recanonicalized_count_tamper_rejected
+    self.module.validate(tampered)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 295, in validate
+    if report["status"] != STATUS or report["authorities"] != authorities():
+                                                              ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 225, in authorities
+    return {name: sha(path) for name, path in paths.items()}
+                  ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 52, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_recanonicalized_type3_tamper_rejected (test_olmdirectionalblur_current_installed_source_bound_union_20260813.DirectionalInstalledSourceBoundUnionTest.test_recanonicalized_type3_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 57, in test_recanonicalized_type3_tamper_rejected
+    self.module.validate(tampered)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 295, in validate
+    if report["status"] != STATUS or report["authorities"] != authorities():
+                                                              ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 225, in authorities
+    return {name: sha(path) for name, path in paths.items()}
+                  ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 52, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_saved_report_validates (test_olmdirectionalblur_current_installed_source_bound_union_20260813.DirectionalInstalledSourceBoundUnionTest.test_saved_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 30, in test_saved_report_validates
+    self.module.validate(self.report)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 295, in validate
+    if report["status"] != STATUS or report["authorities"] != authorities():
+                                                              ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 225, in authorities
+    return {name: sha(path) for name, path in paths.items()}
+                  ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 52, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_slice_digest_tamper_rejected (test_olmdirectionalblur_current_installed_source_bound_union_20260813.DirectionalInstalledSourceBoundUnionTest.test_slice_digest_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 36, in test_slice_digest_tamper_rejected
+    self.module.validate(tampered)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 295, in validate
+    if report["status"] != STATUS or report["authorities"] != authorities():
+                                                              ~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 225, in authorities
+    return {name: sha(path) for name, path in paths.items()}
+                  ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_source_bound_union_20260813.py", line 52, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_identity_tamper_rejected (test_olmdirectionalblur_current_installed_type3_layer_20260814.CurrentInstalledType3.test_identity_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 26, in test_identity_tamper_rejected
+    self.assertFalse(MODULE.validate(value))
+                     ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 130, in validate
+    if value["identities"] != identities() or value["after_effects_processes"] != []:
+                              ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 92, in identities
+    "installed_binary_sha256": sha256(INSTALLED),
+                               ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 34, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_recanonicalized_count_tamper_rejected (test_olmdirectionalblur_current_installed_type3_layer_20260814.CurrentInstalledType3.test_recanonicalized_count_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 32, in test_recanonicalized_count_tamper_rejected
+    self.assertFalse(MODULE.validate(value))
+                     ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 130, in validate
+    if value["identities"] != identities() or value["after_effects_processes"] != []:
+                              ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 92, in identities
+    "installed_binary_sha256": sha256(INSTALLED),
+                               ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 34, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_report_validates (test_olmdirectionalblur_current_installed_type3_layer_20260814.CurrentInstalledType3.test_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 21, in test_report_validates
+    self.assertTrue(MODULE.validate(self.report))
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 130, in validate
+    if value["identities"] != identities() or value["after_effects_processes"] != []:
+                              ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 92, in identities
+    "installed_binary_sha256": sha256(INSTALLED),
+                               ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_type3_layer_20260814.py", line 34, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+======================================================================
+ERROR: test_arm64_and_x86_fifteen_boundary (test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.DirectionalDualSideExportedSmartClosureTest.test_arm64_and_x86_fifteen_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 44, in test_arm64_and_x86_fifteen_boundary
+    self.assertTrue(self.generator.validate(self.report))
+                    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 285, in validate
+    if report["identities"] != identities():
+                               ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 247, in identities
+    "worker_sha256": sha256(WORKER), "worker_identity_sha256": sha256(WORKER_IDENTITY),
+                     ~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 74, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'
+
+======================================================================
+ERROR: test_identity_and_unknown_key_tamper_rejected (test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.DirectionalDualSideExportedSmartClosureTest.test_identity_and_unknown_key_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 70, in test_identity_and_unknown_key_tamper_rejected
+    self.assertFalse(self.generator.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 285, in validate
+    if report["identities"] != identities():
+                               ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 247, in identities
+    "worker_sha256": sha256(WORKER), "worker_identity_sha256": sha256(WORKER_IDENTITY),
+                     ~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 74, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'
+
+======================================================================
+ERROR: test_promotion_and_scope_tamper_rejected (test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.DirectionalDualSideExportedSmartClosureTest.test_promotion_and_scope_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 62, in test_promotion_and_scope_tamper_rejected
+    self.assertFalse(self.generator.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 285, in validate
+    if report["identities"] != identities():
+                               ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 247, in identities
+    "worker_sha256": sha256(WORKER), "worker_identity_sha256": sha256(WORKER_IDENTITY),
+                     ~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 74, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'
+
+======================================================================
+ERROR: test_recanonicalized_row_tamper_rejected (test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.DirectionalDualSideExportedSmartClosureTest.test_recanonicalized_row_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 56, in test_recanonicalized_row_tamper_rejected
+    self.assertFalse(self.generator.validate(changed, live=False))
+                     ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 285, in validate
+    if report["identities"] != identities():
+                               ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 247, in identities
+    "worker_sha256": sha256(WORKER), "worker_identity_sha256": sha256(WORKER_IDENTITY),
+                     ~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 74, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'
+
+======================================================================
+ERROR: test_capture_code_and_file_set_mutations_fail_closed (test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.DirectionalRemainingSixUcrtRequestTest.test_capture_code_and_file_set_mutations_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.py", line 107, in test_capture_code_and_file_set_mutations_fail_closed
+    shutil.copytree(PACKAGE, base)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 652, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814'
+
+======================================================================
+ERROR: test_vector_and_manifest_mutations_fail_closed (test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.DirectionalRemainingSixUcrtRequestTest.test_vector_and_manifest_mutations_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.py", line 67, in test_vector_and_manifest_mutations_fail_closed
+    shutil.copytree(PACKAGE, base)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 652, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814'
+
+======================================================================
+ERROR: test_live_report_and_exact_key_census (test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.DirectionalPowfCensusTest.test_live_report_and_exact_key_census)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 32, in test_live_report_and_exact_key_census
+    self.assertTrue(self.module.validate(self.report))
+                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 107, in validate
+    expected = build()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 76, in build
+    "identities": identities(),
+                  ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 61, in identities
+    "aex_sha256": sha256(AEX),
+                  ~~~~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 41, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/plugins_2025/OLMDirectionalBlur.aex'
+
+======================================================================
+ERROR: test_recanonicalized_pair_and_scope_tamper_rejected (test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.DirectionalPowfCensusTest.test_recanonicalized_pair_and_scope_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 53, in test_recanonicalized_pair_and_scope_tamper_rejected
+    self.assertFalse(self.module.validate(changed))
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 107, in validate
+    expected = build()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 76, in build
+    "identities": identities(),
+                  ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 61, in identities
+    "aex_sha256": sha256(AEX),
+                  ~~~~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 41, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/plugins_2025/OLMDirectionalBlur.aex'
+
+======================================================================
+ERROR: test_live_request_is_exact_and_ae_free (test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.DirectionalPowfRequestTest.test_live_request_is_exact_and_ae_free)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.py", line 31, in test_live_request_is_exact_and_ae_free
+    self.assertEqual(self.module.build_report(), self.report)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.py", line 159, in build_report
+    "package": {"path": str(PACKAGE.relative_to(ROOT)), "files": validate_package()},
+                                                                 ~~~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.py", line 141, in validate_package
+    if tuple(sorted(path.name for path in PACKAGE.iterdir() if path.is_file())) != FILES:
+                                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 836, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_powf_20260814'
+
+======================================================================
+ERROR: test_vector_and_manifest_tamper_rejected (test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.DirectionalPowfRequestTest.test_vector_and_manifest_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_powf_request_20260814.py", line 41, in test_vector_and_manifest_tamper_rejected
+    shutil.copytree(original, copy)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 652, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_powf_20260814'
+
+======================================================================
+ERROR: test_external_identities_and_live_validation (test_olmdirectionalblur_smart_cleanup_candidate_20260813.DirectionalSmartCleanupCandidate.test_external_identities_and_live_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_smart_cleanup_candidate_20260813.py", line 22, in test_external_identities_and_live_validation
+    self.assertEqual(sha(VALIDATOR), "5c964d0f3194761222655a82b367640e49e1dc30d82ad3719aa893600d5bd1da")
+                     ~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_smart_cleanup_candidate_20260813.py", line 17, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_smart_cleanup_universal_candidate_20260813/test_build_identity.py'
+
+======================================================================
+ERROR: test_checked_in_report_validates (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_checked_in_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 39, in test_checked_in_report_validates
+    self.module.validate_report(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_claim_boundary_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_claim_boundary_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 105, in test_claim_boundary_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_counterfactual_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_counterfactual_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 99, in test_counterfactual_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_identity_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_identity_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 64, in test_identity_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_lifecycle_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_lifecycle_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 70, in test_lifecycle_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='pre_checkout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='pixel_checkout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='output_checkout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='input_checkin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='noise_layer_optional_and_absent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='padding')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_contract_mutations_fail_closed) (field='input_unchanged')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 81, in test_public_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_hash_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_public_hash_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 58, in test_public_hash_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_source_basis_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_source_basis_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 87, in test_source_basis_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_source_identity_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_source_identity_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 93, in test_source_identity_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_worker_contract_mutations_fail_closed) (field='pixel_format')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 52, in test_worker_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_worker_contract_mutations_fail_closed) (field='suite_requests')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 52, in test_worker_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_contract_mutations_fail_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_worker_contract_mutations_fail_closed) (field='setup')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 52, in test_worker_contract_mutations_fail_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_hash_mutation_fails_closed (test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.DirectionalBlurNatural64ClosureTest.test_worker_hash_mutation_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 45, in test_worker_hash_mutation_fails_closed
+    self.module.validate_report(mutated)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 679, in validate_report
+    current = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 212, in identities
+    "worker_sha256": sha256_file(WORKER),
+                     ~~~~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py", line 189, in sha256_file
+    return sha256_bytes(path.read_bytes())
+                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: setUpClass (test_olmdirectionalblur_worldsuite_candidate_20260814.DirectionalWorldSuiteCandidateTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_worldsuite_candidate_20260814.py", line 32, in setUpClass
+    cls.module = load_validator()
+                 ~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_worldsuite_candidate_20260814.py", line 25, in load_validator
+    spec.loader.exec_module(module)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 892, in get_code
+  File "<frozen importlib._bootstrap_external>", line 950, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_worldsuite_lifecycle_candidate_20260814/test_build_identity.py'
+
+======================================================================
+ERROR: test_live (test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.DirectionalWorldSuiteTest.test_live)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.py", line 8, in test_live
+    def test_live(self):m.validate(m.generate())
+                                   ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.py", line 49, in generate
+    rows=run_probe();return {"schema":"olm.directionalblur-worldsuite-lifecycle/1","status":"pass","source":{"path":str(SOURCE.relative_to(ROOT)),"sha256":sha(SOURCE.read_bytes())},"rows":rows,"rows_sha256":canonical(rows),"claims":{"real_sdk_source_included":True,"two_formats_then_release_once":True,"success_null_and_function_null_fail_closed":True,"returned_errors_and_throws_are_bounded":True,"primary_error_precedes_release_error":True,"numerical_admission_changed":False,"installed_binary":False,"native_ae":False}}
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.py", line 42, in run_probe
+    if b.returncode:raise RuntimeError(b.stdout+b.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/AEGP_SuiteHandler.cpp'
+clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/Util/MissingSuiteError.cpp'
+
+
+======================================================================
+FAIL: test_default_is_read_only (test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.DirectionalInstalledCompleteBoundedUnionTest.test_default_is_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 51, in test_default_is_read_only
+    self.assertEqual(run.returncode, 0, run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 234, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 222, in main
+    current = generate()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 77, in generate
+    ids = identities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 66, in identities
+    "installed_binary_sha256": sha256(INSTALLED),
+                               ~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 38, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+
+======================================================================
+FAIL: test_hashes_and_live_validation (test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.DirectionalInstalledCompleteBoundedUnionTest.test_hashes_and_live_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_complete_bounded_union_20260814.py", line 46, in test_hashes_and_live_validation
+    self.assertTrue(self.module.validate(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_hashes (test_olmdirectionalblur_current_installed_dual_side_20260813.DirectionalInstalledDualSideTest.test_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 16, in test_hashes
+    def test_hashes(self):self.assertEqual(sha(GEN),GEN_SHA);self.assertEqual(sha(REPORT),REPORT_SHA);self.assertEqual(sha(MD),MD_SHA)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: '25fdc568b4a314bf244f74518da7a735c111741735ea59c8f855b384e8273e52' != 'e15da8d8825bfef6a9f74837f650abed88557a556a0f88e1d9e003bd85bba638'
+- 25fdc568b4a314bf244f74518da7a735c111741735ea59c8f855b384e8273e52
++ e15da8d8825bfef6a9f74837f650abed88557a556a0f88e1d9e003bd85bba638
+
+
+======================================================================
+FAIL: test_live_read_only (test_olmdirectionalblur_current_installed_dual_side_20260813.DirectionalInstalledDualSideTest.test_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 15, in test_live_read_only
+    b=(REPORT.read_bytes(),MD.read_bytes());p=subprocess.run([sys.executable,str(GEN)],cwd=ROOT,text=True,capture_output=True);self.assertEqual(p.returncode,0,p.stdout+p.stderr);self.assertEqual(b,(REPORT.read_bytes(),MD.read_bytes()))
+                                                                                                                               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 57, in <module>
+    if __name__=="__main__":raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 51, in main
+    p=argparse.ArgumentParser();p.add_argument("--write",action="store_true");a=p.parse_args();fresh=generate();validate(fresh)
+                                                                                                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 38, in generate
+    a=auth()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 20, in auth
+    def auth():return {k:sha(v) for k,v in FILES.items()}
+                         ~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_current_installed_dual_side_20260813.py", line 19, in sha
+    def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur'
+
+
+======================================================================
+FAIL: test_generator_pin (test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.InstalledOwnerBoundaryTest.test_generator_pin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_current_installed_internal_owner_boundary_20260814.py", line 30, in test_generator_pin
+    self.assertEqual(hashlib.sha256(GEN.read_bytes()).hexdigest(), GEN_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ab58d990005d0554f1ea2372f744583ccbaa34ca9efb9970837ce94e89e20ae2' != '2d357c3f94ef710742d0af7386f17914b988139ca439b8089573478b7d484e49'
+- ab58d990005d0554f1ea2372f744583ccbaa34ca9efb9970837ce94e89e20ae2
++ 2d357c3f94ef710742d0af7386f17914b988139ca439b8089573478b7d484e49
+
+
+======================================================================
+FAIL: test_generator_pin_and_read_only_validation (test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.DirectionalDualSideExportedSmartClosureTest.test_generator_pin_and_read_only_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 40, in test_generator_pin_and_read_only_validation
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 351, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 344, in main
+    if not validate(report):
+           ~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 285, in validate
+    if report["identities"] != identities():
+                               ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 247, in identities
+    "worker_sha256": sha256(WORKER), "worker_identity_sha256": sha256(WORKER_IDENTITY),
+                     ~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_dual_side_exported_smart_closure_20260814.py", line 74, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/handoffs/olmdirectionalblur_exported_smart_worker_ceil_20260814/bin/aex-guest-worker'
+
+
+======================================================================
+FAIL: test_checked_in_report_validates (test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813.DirectionalDualSidePublicSourceGuardClosureTest.test_checked_in_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813.py", line 46, in test_checked_in_report_validates
+    self.assertTrue(self.module.validate_report(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_generator_identity_is_externally_pinned (test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813.DirectionalDualSidePublicSourceGuardClosureTest.test_generator_identity_is_externally_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_dual_side_public_source_guard_closure_20260813.py", line 43, in test_generator_identity_is_externally_pinned
+    self.assertEqual(sha256(TOOL), TOOL_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'd147bd2bad89893d9346dcd64245cfb6669d3a6eb9e70228d1efbf62d9baa7d8' != '40e86f9c878d688043afef508ffbd9c885093a432c82a47e2f5b03f4676e2eb8'
+- d147bd2bad89893d9346dcd64245cfb6669d3a6eb9e70228d1efbf62d9baa7d8
++ 40e86f9c878d688043afef508ffbd9c885093a432c82a47e2f5b03f4676e2eb8
+
+
+======================================================================
+FAIL: test_default_and_validate_only_are_read_only (test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.DirectionalRemainingSixUcrtRequestTest.test_default_and_validate_only_are_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.py", line 52, in test_default_and_validate_only_are_read_only
+    self.assertEqual(run.returncode, 0, run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FAIL_OLMDIRECTIONALBLUR_REMAINING6_NATIVE_UCRT_REQUEST: request package missing
+
+
+======================================================================
+FAIL: test_generator_and_persisted_report (test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.DirectionalRemainingSixUcrtRequestTest.test_generator_and_persisted_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_expf_request_20260814.py", line 43, in test_generator_and_persisted_report
+    self.assertTrue(self.module.validate(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_default_is_read_only (test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.DirectionalPowfCensusTest.test_default_is_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 40, in test_default_is_read_only
+    self.assertEqual(run.returncode, 0, run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 143, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 129, in main
+    value = build()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 76, in build
+    "identities": identities(),
+                  ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 61, in identities
+    "aex_sha256": sha256(AEX),
+                  ~~~~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_remaining6_ucrt_powf_census_20260814.py", line 41, in sha256
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/plugins_2025/OLMDirectionalBlur.aex'
+
+
+======================================================================
+FAIL: test_external_file_pins (test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.SameTableDualOwnerPlumbingTest.test_external_file_pins)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.py", line 49, in test_external_file_pins
+    self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), expected, path)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'f5b4c4112c467a1ef627e46a243943430643faf132284cda263f041fe4312792' != '8f11d24a0e9dfb1943493e5aef6f32a7b089de7575e577d827a5434e677da626'
+- f5b4c4112c467a1ef627e46a243943430643faf132284cda263f041fe4312792
++ 8f11d24a0e9dfb1943493e5aef6f32a7b089de7575e577d827a5434e677da626
+ : /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.py
+
+======================================================================
+FAIL: test_live_report_and_markdown (test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.SameTableDualOwnerPlumbingTest.test_live_report_and_markdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_same_table_dual_owner_plumbing_20260814.py", line 44, in test_live_report_and_markdown
+    self.assertTrue(self.tool.validate(self.value))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_live_and_default_read_only (test_olmdirectionalblur_testseam_install_closure_20260814.DirectionalTestSeamInstallClosureTest.test_live_and_default_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_testseam_install_closure_20260814.py", line 26, in test_live_and_default_read_only
+    self.assertTrue(module.validate(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_current_workspace_supersedes_historical_snapshot (test_olmdirectionalblur_type2_natural64_current_install_smoke_20260812.DirectionalBlurNatural64CurrentInstallSmokeTest.test_current_workspace_supersedes_historical_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type2_natural64_current_install_smoke_20260812.py", line 162, in test_current_workspace_supersedes_historical_snapshot
+    self.assertEqual(sha256(SOURCE), CURRENT_SOURCE_SHA)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6' != '494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845'
+- cf77bd659c85c025d2c179be8fff0b789c97ec2f0a1bdfe6680a696098d66bb6
++ 494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845
+
+
+======================================================================
+FAIL: test_checked_in_report_validates (test_olmdirectionalblur_type3_layer_source_guard_closure_20260813.DirectionalType3LayerSourceGuardClosureTest.test_checked_in_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type3_layer_source_guard_closure_20260813.py", line 48, in test_checked_in_report_validates
+    self.assertTrue(self.module.validate_report(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_generator_identity_is_externally_pinned (test_olmdirectionalblur_type3_layer_source_guard_closure_20260813.DirectionalType3LayerSourceGuardClosureTest.test_generator_identity_is_externally_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type3_layer_source_guard_closure_20260813.py", line 45, in test_generator_identity_is_externally_pinned
+    self.assertEqual(sha256(TOOL), TOOL_SHA256)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '51b090b4ab7db2ad2c76202ad50c7db3a4ad680ed8dbfd8d58af1a8e62a3b583' != '2b869b1de1143c5d7029753d9474182d19a2972af1f3ef6545f9c2cb2a307fcd'
+- 51b090b4ab7db2ad2c76202ad50c7db3a4ad680ed8dbfd8d58af1a8e62a3b583
++ 2b869b1de1143c5d7029753d9474182d19a2972af1f3ef6545f9c2cb2a307fcd
+
+
+======================================================================
+FAIL: test_saved_report_validates (test_olmdirectionalblur_type3_public_owner_boundary_20260814.DirectionalType3PublicOwnerBoundaryTest.test_saved_report_validates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_type3_public_owner_boundary_20260814.py", line 35, in test_saved_report_validates
+    self.assertTrue(self.module.validate(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_report (test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.DirectionalWorldSuiteTest.test_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tests/test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.py", line 9, in test_report
+    def test_report(self):m.validate(self.report)
+                          ~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/emulation/test_olmdirectionalblur_worldsuite_lifecycle_closure_20260814.py", line 51, in validate
+    assert set(v)=={"schema","status","source","rows","rows_sha256","claims"};assert v["schema"]=="olm.directionalblur-worldsuite-lifecycle/1" and v["status"]=="pass";assert v["source"]=={"path":"mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp","sha256":SOURCE_SHA};assert sha(SOURCE.read_bytes())==SOURCE_SHA;assert [r["name"] for r in v["rows"]]==NAMES;assert v["rows_sha256"]==canonical(v["rows"])
+                                                                                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+----------------------------------------------------------------------
+Ran 102 tests in 1.655s
+
+FAILED (failures=19, errors=44)

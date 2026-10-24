@@ -1,0 +1,101 @@
+AEX SHA256 ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb
+
+RVA 0x8162 0x81f0
+180008162 cmp        dword ptr [rbx + 0x50], 1
+180008166 sete       al
+180008169 mov        byte ptr [rbx + 0xf8], al
+18000816f mov        r8, qword ptr [rbx + 8]
+180008173 movss      xmm11, dword ptr [rip + 0x19158]
+18000817c xorps      xmm6, xmm6
+18000817f cmp        byte ptr [rbx + 0x44], 0
+180008183 je         0x18000822b
+180008189 xor        r10d, r10d
+18000818c cmp        dword ptr [r8 + 0x28], r10d
+180008190 jle        0x1800081f6
+180008192 nop        dword ptr [rax]
+180008196 nop        word ptr [rax + rax]
+1800081a0 mov        ecx, dword ptr [r8 + 0x24]
+1800081a4 mov        eax, ecx
+1800081a6 imul       eax, r10d
+1800081aa movsxd     rdx, eax
+1800081ad add        rdx, rsi
+1800081b0 lea        eax, [rax*4]
+1800081b7 movsxd     r11, eax
+1800081ba mov        rax, qword ptr [rbx + 0x98]
+1800081c1 xor        r9d, r9d
+1800081c4 test       ecx, ecx
+1800081c6 jle        0x1800081ed
+1800081c8 lea        rcx, [rax + 0xc]
+1800081cc lea        rcx, [rcx + r11*4]
+1800081d0 comiss     xmm6, dword ptr [rcx]
+1800081d3 setb       al
+1800081d6 mov        byte ptr [rdx], al
+1800081d8 inc        r9d
+1800081db lea        rdx, [rdx + 1]
+1800081df lea        rcx, [rcx + 0x10]
+1800081e3 mov        r8, qword ptr [rbx + 8]
+1800081e7 cmp        r9d, dword ptr [r8 + 0x24]
+1800081eb jl         0x1800081d0
+1800081ed inc        r10d
+
+RVA 0x9d80 0x9e70
+180009d80 mov        qword ptr [rsp + 8], rbx
+180009d85 mov        qword ptr [rsp + 0x10], rsi
+180009d8a push       rdi
+180009d8b sub        rsp, 0x20
+180009d8f xor        r11d, r11d
+180009d92 movaps     xmmword ptr [rsp + 0x10], xmm6
+180009d97 movss      xmm6, dword ptr [rsp + 0x60]
+180009d9d mov        r10, rdx
+180009da0 movaps     xmmword ptr [rsp], xmm7
+180009da4 mov        rsi, rcx
+180009da7 movss      xmm7, dword ptr [rsp + 0x58]
+180009dad dec        r9d
+180009db0 cvttss2si  ecx, xmm6
+180009db4 mov        qword ptr [rdx + 8], r11
+180009db8 mov        qword ptr [rdx], r11
+180009dbb cvttss2si  edx, xmm7
+180009dbf lea        eax, [rcx + 1]
+180009dc2 movd       xmm1, ecx
+180009dc6 cvtdq2ps   xmm1, xmm1
+180009dc9 movd       xmm0, edx
+180009dcd subss      xmm6, xmm1
+180009dd1 cvtdq2ps   xmm0, xmm0
+180009dd4 subss      xmm7, xmm0
+180009dd8 test       ecx, ecx
+180009dda jns        0x180009de1
+180009ddc mov        ecx, r9d
+180009ddf jmp        0x180009deb
+180009de1 cmp        ecx, r9d
+180009de4 cmove      eax, r11d
+180009de8 mov        r11d, eax
+180009deb imul       ecx, dword ptr [rsp + 0x50]
+180009df0 lea        eax, [rdx*4]
+180009df7 movss      xmm5, dword ptr [rip + 0x174d5]
+180009dff imul       r11d, dword ptr [rsp + 0x50]
+180009e05 movaps     xmm4, xmm5
+180009e08 subss      xmm4, xmm7
+180009e0c movsxd     r8, eax
+180009e0f movaps     xmm3, xmm5
+180009e12 subss      xmm3, xmm6
+180009e16 movsxd     rax, ecx
+180009e19 add        rax, r8
+180009e1c lea        rcx, [rsi + rax*4]
+180009e20 movsxd     rax, r11d
+180009e23 movaps     xmm2, xmm4
+180009e26 add        rax, r8
+180009e29 mulss      xmm4, xmm6
+180009e2d mulss      xmm2, xmm3
+180009e31 mulss      xmm3, xmm7
+180009e35 mulss      xmm2, dword ptr [rcx + 0xc]
+180009e3a mulss      xmm6, xmm7
+180009e3e movaps     xmm0, xmm2
+180009e41 movaps     xmm1, xmm2
+180009e44 addss      xmm0, dword ptr [r10 + 0xc]
+180009e4a movss      dword ptr [r10 + 0xc], xmm0
+180009e50 movaps     xmm0, xmm2
+180009e53 mulss      xmm1, dword ptr [rcx + 8]
+180009e58 addss      xmm1, dword ptr [r10 + 8]
+180009e5e movss      dword ptr [r10 + 8], xmm1
+180009e64 mulss      xmm0, dword ptr [rcx + 4]
+180009e69 addss      xmm0, dword ptr [r10 + 4]

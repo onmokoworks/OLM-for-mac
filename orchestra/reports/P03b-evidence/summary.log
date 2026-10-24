@@ -1,0 +1,4 @@
+olmdirectionalblur sweep {'exact': 296, 'unavailable': 4} matrix {'exact': 36} regressions [] corpora [(83, True), (200, True), (4, True)] units True
+olmdistancegradation sweep {'exact': 294, 'unavailable': 6} matrix {'exact': 67, 'refusal': 21} regressions [] corpora [(147, True), (9, True), (226, True)] units True
+olmkirakira sweep {'exact': 298, 'unavailable': 2} matrix {'exact': 44} regressions [] corpora [(8, True), (4, True), (62, True), (41, True), (272, True)] units True
+radialblur sweep {'exact': 267, 'unavailable': 33} matrix {'exact': 44} regressions [] corpora [(61, False), (4, True), (180, True)] units True
