@@ -118,6 +118,8 @@ def main():
     p.add_argument('--timeout',type=float,default=60)
     p.add_argument('--jobs',type=int,choices=[1],default=1)
     p.add_argument('--plugins',nargs='+',choices=PLUGINS,default=list(PLUGINS))
+    p.add_argument('--cases',nargs='+',help='Optional case identities for disjoint sequential audit lanes')
+    p.add_argument('--situations',nargs='+',choices=[n for n,g in situations()],help='Optional disjoint situation subset')
     a=p.parse_args();a.state.mkdir(parents=True,exist_ok=True)
     if a.build_host:
         build_host(a.state,a.cache)
@@ -153,6 +155,7 @@ def main():
                 cases += [(f'corpus{i:02d}',v['case']['parameters']) for i,(f,v) in enumerate(chosen)]
             (a.state/(a.phase+'-manifest.json')).write_text(json.dumps(manifest,indent=2)+'\n')
             for identity,params in cases:
+                if a.cases and identity not in a.cases:continue
                 config=a.state/'parameters.txt';lines=[]
                 for q in params:
                     kind=q['kind'];val=q['value']
@@ -160,6 +163,7 @@ def main():
                     lines.append(f"{q['slot']} {kind} "+(' '.join(map(str,val)) if isinstance(val,list) else str(val))+'\n')
                 config.write_text(''.join(lines))
                 for situation,g in ([v for v in situations() if v[0] in ('full','half','quarter','4k','4k-half','4k-quarter')] if a.phase=='baseline' else situations()):
+                    if a.situations and situation not in a.situations:continue
                     for depth in ((8,) if a.phase=='baseline' else (8,16,32)):
                         if (plugin,identity,situation,depth) in existing:
                             assert existing[(plugin,identity,situation,depth)]['geometry']==g

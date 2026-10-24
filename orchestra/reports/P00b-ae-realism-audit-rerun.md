@@ -76,7 +76,7 @@ baseline: 60 rows; {'ok': 60}
 | olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
 | olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
 
-matrix: 6458 rows; {'ok': 6153, 'refusal': 305}
+matrix: 6578 rows; {'ok': 6259, 'refusal': 311, 'timeout': 8}
 
 | Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
 |---|---|---|---|
@@ -248,30 +248,30 @@ matrix: 6458 rows; {'ok': 6153, 'refusal': 305}
 | olmsmoother / cropped-expand | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
 | olmsmoother / aspect09 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
 | olmsmoother / aspect2 | {'ok': 22, 'refusal': 11} | {'ValidatePublicWorlds:world-depth-32-unsupported@4062': 11} | 22/22 |
-| olmdirectionalblur / full | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / half | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / quarter | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / third | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / eighth | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / asymmetric | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / 4k | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / 4k-half | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / 4k-quarter | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / square | {'ok': 27} | {} | 27/27 |
-| olmdirectionalblur / odd | {'ok': 26} | {} | 26/26 |
-| olmdirectionalblur / odd-half | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / large-layer | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / aligned-odd | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / padded | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / extent | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / roi | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / expanded | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 20} | {'SmartRender:smart-generic-world-or-budget@2707': 20} | 4/4 |
-| olmdirectionalblur / aspect09 | {'ok': 24} | {} | 24/24 |
-| olmdirectionalblur / aspect2 | {'ok': 24} | {} | 24/24 |
-| radialblur / full | {'ok': 18} | {} | 18/18 |
-| radialblur / half | {'ok': 18} | {} | 18/18 |
-| radialblur / quarter | {'ok': 18} | {} | 18/18 |
+| olmdirectionalblur / full | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / half | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / quarter | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / third | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / eighth | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / asymmetric | {'ok': 33} | {} | 33/33 |
+| olmdirectionalblur / 4k | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / 4k-half | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / 4k-quarter | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / square | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / odd | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / odd-half | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / large-layer | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / aligned-odd | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / padded | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / extent | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / roi | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / expanded | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / cropped-expand | {'ok': 4, 'refusal': 26} | {'SmartRender:smart-generic-world-or-budget@2707': 26} | 4/4 |
+| olmdirectionalblur / aspect09 | {'ok': 30} | {} | 30/30 |
+| olmdirectionalblur / aspect2 | {'ok': 30} | {} | 30/30 |
+| radialblur / full | {'ok': 18, 'timeout': 3} | {} | 18/18 |
+| radialblur / half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
+| radialblur / quarter | {'ok': 18, 'timeout': 2} | {} | 18/18 |
 | radialblur / third | {'ok': 18} | {} | 18/18 |
 | radialblur / eighth | {'ok': 18} | {} | 18/18 |
 | radialblur / asymmetric | {'ok': 18} | {} | 18/18 |
@@ -304,9 +304,9 @@ Heaviest means the largest observed render time among sampled corpus tuples for 
 | olmcolorkey | 8 | 0.017 | 0.069 | 1.873 (corpus05) | 7.351 (corpus05) |
 | olmcolorkey | 16 | 0.019 | 0.075 | 1.857 (corpus05) | 7.328 (corpus05) |
 | olmcolorkey | 32 | 0.025 | 0.110 | 1.858 (corpus05) | 7.489 (corpus05) |
-| olmdirectionalblur | 8 | 0.003 | 0.010 | **5.363** (corpus07) | 22.269 (corpus07) |
-| olmdirectionalblur | 16 | 0.004 | 0.017 | **5.416** (corpus07) | 22.292 (corpus07) |
-| olmdirectionalblur | 32 | 0.008 | 0.038 | **5.505** (corpus07) | 22.177 (corpus07) |
+| olmdirectionalblur | 8 | 0.003 | 0.010 | **17.579** (corpus09) | 22.269 (corpus07) |
+| olmdirectionalblur | 16 | 0.004 | 0.017 | **17.662** (corpus09) | 22.292 (corpus07) |
+| olmdirectionalblur | 32 | 0.008 | 0.038 | **17.571** (corpus09) | 22.177 (corpus07) |
 | olmdistancegradation | 8 | 0.077 | 0.340 | 0.032 (corpus02) | 0.112 (corpus04) |
 | olmdistancegradation | 16 | 0.077 | 0.334 | 0.031 (corpus04) | 0.135 (corpus01) |
 | olmdistancegradation | 32 | refusal | refusal | 0.041 (corpus01) | 0.250 (corpus02) |
@@ -319,9 +319,9 @@ Heaviest means the largest observed render time among sampled corpus tuples for 
 | olmtoondilate | 8 | 0.011 | 0.043 | 0.011 (corpus06) | 0.043 (corpus06) |
 | olmtoondilate | 16 | 0.012 | 0.052 | 0.015 (corpus08) | 0.054 (corpus03) |
 | olmtoondilate | 32 | 0.015 | 0.067 | 0.019 (corpus03) | 0.066 (corpus06) |
-| radialblur | 8 | 0.002 | 0.004 | 0.776 (corpus01) | 2.189 (corpus01) |
-| radialblur | 16 | 0.002 | 0.010 | 0.745 (corpus01) | 2.178 (corpus01) |
-| radialblur | 32 | 0.005 | 0.024 | 0.746 (corpus01) | 2.149 (corpus01) |
+| radialblur | 8 | 0.002 | 0.004 | **>=60 wall (timeout)** (corpus05) | 2.189 (corpus01) |
+| radialblur | 16 | 0.002 | 0.010 | **>=60 wall (timeout)** (corpus05) | 2.178 (corpus01) |
+| radialblur | 32 | 0.005 | 0.024 | **>=60 wall (timeout)** (corpus05) | 2.149 (corpus01) |
 | olmsmoother | 8 | 0.346 | 1.399 | 1.535 (corpus00) | 6.125 (corpus00) |
 | olmsmoother | 16 | 1.077 | 4.269 | **2.151** (corpus00) | 8.585 (corpus00) |
 | olmsmoother | 32 | refusal | refusal | unavailable | unavailable |

@@ -47,6 +47,13 @@ def main():
    if phase=='matrix' and (STATE/'radial/matrix.jsonl').exists():
     with (STATE/'radial/matrix.jsonl').open() as f:
      for line in f:
+      try:
+       row=json.loads(line)
+       rows.append(row)
+      except json.JSONDecodeError:break
+   if phase=='matrix' and (STATE/'radial-tail/matrix.jsonl').exists():
+    with (STATE/'radial-tail/matrix.jsonl').open() as f:
+     for line in f:
       try:rows.append(json.loads(line))
       except json.JSONDecodeError:break
    with (DEST/(phase+'.jsonl.gz')).open('wb') as raw, gzip.GzipFile(filename='',mode='wb',fileobj=raw,mtime=0) as compressed, io.TextIOWrapper(compressed) as f:
@@ -62,6 +69,9 @@ def main():
    if phase=='matrix' and (STATE/'radial/matrix-manifest.json').exists():
     other=json.loads((STATE/'radial/matrix-manifest.json').read_text())
     for key in ('bundles','samples'):data[key].update(other[key])
+    data['memory']+=other['memory']
+   if phase=='matrix' and (STATE/'radial-tail/matrix-manifest.json').exists():
+    other=json.loads((STATE/'radial-tail/matrix-manifest.json').read_text())
     data['memory']+=other['memory']
    data['counts']=dict(collections.Counter(r['status'] for r in rows))
    (DEST/m.name).write_text(json.dumps(data,indent=2)+'\n')

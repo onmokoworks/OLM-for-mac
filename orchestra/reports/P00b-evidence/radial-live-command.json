@@ -1,0 +1,6 @@
+{
+  "ps": "77083 71338 /Users/onmk/.cache/olm-emu/P00b/plugin-host /Users/onmk/.cache/olm-emu/P00b/xcode/OLMRadialBlur/products/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur 1920 1080 32 1 1 0 0 0 1 1 0 orchestra/state/P00b-ae-realism-audit-rerun/radial/parameters.txt 0",
+  "case": "corpus05",
+  "situation": "full",
+  "depth": 32
+}
