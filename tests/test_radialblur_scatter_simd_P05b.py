@@ -43,7 +43,8 @@ int main() {
         with tempfile.TemporaryDirectory(dir=base) as d:
             d=Path(d);(d/'check.cpp').write_text(source)
             env=dict(os.environ,TMPDIR=str(d),TMP=str(d),TEMP=str(d))
-            subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
+            arch=['-arch',os.environ['P05B_TEST_ARCH']] if os.environ.get('P05B_TEST_ARCH') else []
+            subprocess.run(['clang++',*arch,'-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
                             '-I'+str(ROOT),str(d/'check.cpp'),'-o',str(d/'check')],check=True,env=env)
             result=subprocess.check_output([str(d/'check')],text=True,env=env)
             self.assertEqual(result.strip(),'105832 scatter tuples exact')

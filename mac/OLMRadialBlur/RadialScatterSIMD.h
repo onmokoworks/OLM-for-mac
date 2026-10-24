@@ -33,8 +33,25 @@ inline void scatter_accumulate(float *accum, const float *source,
     std::memcpy(&src, source, sizeof(src));
     std::memcpy(&previous, accum, sizeof(previous));
     // Alpha uses contribution directly; source alpha is not multiplied.
-    src[3] = 0.0f;
+    src[3] = contribution;
+    ScatterWord4 source_bits, previous_bits;
+    std::memcpy(&source_bits, &src, sizeof(source_bits));
+    std::memcpy(&previous_bits, &previous, sizeof(previous_bits));
+    const ScatterWord4 exceptional =
+        ((source_bits & 0x7f800000u) == 0x7f800000u) |
+        ((previous_bits & 0x7f800000u) == 0x7f800000u);
     const ScatterFloat4 factor = {contribution, contribution, contribution, 0.0f};
+    src[3] = 0.0f;
+    // Finite operands cannot generate NaN in these separate multiply/add
+    // operations: multiplication may overflow to infinity, but the addend is
+    // finite. Native lane arithmetic is then exactly the scalar SSE result.
+    if ((exceptional[0] | exceptional[1] | exceptional[2] | exceptional[3]) == 0) {
+        ScatterFloat4 product = factor * src;
+        product[3] = contribution;
+        const ScatterFloat4 result = product + previous;
+        std::memcpy(accum, &result, sizeof(result));
+        return;
+    }
     ScatterFloat4 product = scatter_sse_result(factor * src, factor, src);
     product[3] = contribution;
     const ScatterFloat4 result = scatter_sse_result(product + previous, product, previous);

@@ -1,3 +1,4 @@
+#include "RadialScatterSIMD.h"
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
 #include "../../core/dblur_noise.h"
@@ -4931,11 +4932,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
 					const size_t dst = dst_cell * 4;
 					const float contribution = RadialF32Mul(seed_alpha, row_weights[(size_t)offset]);
-					for (int c = 0; c < 3; ++c) {
-						accum.rgba[dst + c] = RadialF32Add(
-							RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
-					}
-					accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
+					olm::radial::scatter_accumulate(accum.rgba.data() + dst,
+						polar.rgba.data() + source, contribution);
 					if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 						max_alpha[dst_cell] = contribution;
 					}
@@ -4961,11 +4959,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 						const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
 						const size_t dst = dst_cell * 4;
 						const float contribution = RadialF32Mul(seed_alpha, inner_weights[(size_t)offset]);
-						accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
-						for (int c = 2; c >= 0; --c) {
-							accum.rgba[dst + c] = RadialF32Add(
-								RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
-						}
+						olm::radial::scatter_accumulate(accum.rgba.data() + dst,
+							polar.rgba.data() + source, contribution);
 						if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 							max_alpha[dst_cell] = contribution;
 						}

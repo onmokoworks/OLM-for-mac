@@ -1,0 +1,38 @@
+[
+  {
+    "case": "corpus05",
+    "situation": "full",
+    "depth": 8,
+    "status": "timeout"
+  },
+  {
+    "case": "corpus05",
+    "situation": "full",
+    "depth": 16,
+    "status": "timeout"
+  },
+  {
+    "case": "corpus05",
+    "situation": "full",
+    "depth": 32,
+    "status": "timeout"
+  },
+  {
+    "case": "corpus05",
+    "situation": "4k",
+    "depth": 8,
+    "status": "timeout"
+  },
+  {
+    "case": "corpus05",
+    "situation": "4k",
+    "depth": 16,
+    "status": "timeout"
+  },
+  {
+    "case": "corpus05",
+    "situation": "4k",
+    "depth": 32,
+    "status": "timeout"
+  }
+]
