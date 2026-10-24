@@ -13,6 +13,8 @@ SOURCE = ROOT/'mac/OLMColorKey/OLMColorKey.cpp'
 
 class Adapter(ColorTriage, PublicAdapter):
     name = 'olmcolorkey'
+    # T15 qualifies transport; numerical ROI failures remain recorded separately.
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMColorKey'
     output_format = 'raw'
     small_controls = (18,)
@@ -50,7 +52,8 @@ class Adapter(ColorTriage, PublicAdapter):
         header = HOST.read_text().replace('../../mac/OLMColorKey/OLMColorKey.cpp',str(SOURCE))
         body = HARNESS.read_text()
         for old,new in [('argc != 6','argc != 7'),('rb = w * ps + 8','rb = w * ps + atoi(argv[6])'),
-            ('count < 1','count < 0')]:
+            ('count < 1','count < 0'),
+            ('PF_PreRenderInput pi{};', 'PF_PreRenderInput pi{}; pi.bitdepth = depth;')]:
             body = replace_once(body,old,new)
         body = replace_once(body,
             'if (input != before || state.acquire != 2 || state.release != 2 || state.world_calls != 2 || state.color_calls != 2 * count) return 102;',

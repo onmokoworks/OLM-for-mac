@@ -10,6 +10,8 @@ CORES = [ROOT/'core'/n for n in ('dblur_frontonly.cpp','dblur_rotate.cpp','dblur
 
 class Adapter(PublicAdapter):
     name = 'olmdirectionalblur'
+    # T15 qualifies transport; numerical ROI failures remain recorded separately.
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMDirectionalBlur'
     small_controls = (5,10)
     output_format = 'hex'
