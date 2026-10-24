@@ -121,7 +121,7 @@ int main() {
             if (invalid==1) bad.height=-1;
             if (invalid==2) bad.width=8193;
             if (invalid==3) bad.height=8193;
-            if (invalid==4) bad.downsample_x={1,2};
+            if (invalid==4) bad.downsample_x={1,0}; // invalid denominator; previews are supported
             if (invalid==5) bad.downsample_y={0,0};
             if (!EffectMain(PF_Cmd_SMART_PRE_RENDER,&bad,&out,nullptr,nullptr,&bx) || calls ||
                 memcmp(&rejected,&pristine,sizeof(rejected))) return 20+invalid;

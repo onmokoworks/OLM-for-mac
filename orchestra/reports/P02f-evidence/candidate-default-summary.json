@@ -1,0 +1,8 @@
+{
+  "seed": 1,
+  "n": 300,
+  "geometry": "default",
+  "counts": {
+    "exact": 300
+  }
+}

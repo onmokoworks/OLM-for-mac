@@ -1,0 +1,286 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "full_geometry": [
+      1,
+      1
+    ],
+    "geometry": [
+      1,
+      1
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 23,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 3,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 7,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 2.4000000953674316
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          128,
+          20,
+          203,
+          136
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "rowbytes_padding": 7,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 23,
+  "input_sha256": "17279b2952f010395a2bc25742785ab9fa46ac8ab69ec1b003888497a749f15e",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpbsifHXuvwHLuoZzX20ted7AFB/wdB",
+  "plugin": "olmsmoother2",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother2.aex",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "candidate_sha256": "4b5e625601ddbc97d336715bae4f1c955b02a7db95425d623fb5ecd906cf8ba2",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "f07c33d4026db5e63ab823f7831f49a0992e889836a2161e6712990bad91587f",
+    "dependencies_sha256": {
+      "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_decode_lut_10000.h": "3f42b42800e4ea1542210f4a678e36777d8707132b13c9447213a18f2e9e3ba2",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "18f5520cbcc69b6f52961d125a79a974187b61a8a373c9dbabb816740d030609",
+      "tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp": "22636eb61f2893fbc6b644b6326410a61a6b7eb6b0487e057d774cb3558fe3bc",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing public key/gamma CLI SDK shim, production EffectMain; Classic added using same params/worlds",
+    "mac_stride": "shared randomly padded input/output stride plus 32-byte guards",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "no-write",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "raw_sha256": "17279b2952f010395a2bc25742785ab9fa46ac8ab69ec1b003888497a749f15e",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "semantics": "no-write; AEX destination initially zero",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "raw_sha256": "17279b2952f010395a2bc25742785ab9fa46ac8ab69ec1b003888497a749f15e",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 25,
+        "metadata": {
+          "CALLBACKS": "0,0,0,0,0,0",
+          "ERROR": "25",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 1 1 7"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "CALLBACKS": "1,1,1,15,15,1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 1 1",
+          "GEOMETRY_INPUT": "1 1 1 2 1 3 1 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "raw_sha256": "17279b2952f010395a2bc25742785ab9fa46ac8ab69ec1b003888497a749f15e",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

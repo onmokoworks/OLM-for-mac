@@ -5309,20 +5309,30 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	// The classifier is not a finite-radius filter: several cardinal and
 	// diagonal walkers continue along a connected class run until a frame edge.
 	// Consequently a fixed tile halo cannot preserve full-frame results.  Ask AE
-	// for the complete 1:1 source and advertise that complete result instead.
+	// for the complete sampled source and advertise that complete result instead.
 	// SmartRender's full-world validation then fails closed if the host supplies
 	// only the requested tile despite this checkout.
 	if (in_data->width < 1 || in_data->height < 1 ||
 	    in_data->width > 8192 || in_data->height > 8192 ||
 	    in_data->downsample_x.num <= 0 ||
-	    in_data->downsample_x.num != in_data->downsample_x.den ||
+	    in_data->downsample_x.den < in_data->downsample_x.num ||
 	    in_data->downsample_y.num <= 0 ||
-	    in_data->downsample_y.num != in_data->downsample_y.den) {
+	    in_data->downsample_y.den < in_data->downsample_y.num) {
 		return OLM_SM2_REFUSAL("prerender-frame-contract");
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
-	const PF_LRect full_rect = {0, 0, in_data->width, in_data->height};
+	// PF_InData dimensions are full resolution; requests/worlds are sampled.
+	// Keep the whole sampled frame for the unbounded classifier. The original
+	// builder (0x180004e10) sizes its working planes from the output world and
+	// reads Smoothness/Extra Smooth/Smooth Range without downsample scaling.
+	const A_long sampled_width = (A_long)(((int64_t)in_data->width *
+		in_data->downsample_x.num + in_data->downsample_x.den - 1) /
+		in_data->downsample_x.den);
+	const A_long sampled_height = (A_long)(((int64_t)in_data->height *
+		in_data->downsample_y.num + in_data->downsample_y.den - 1) /
+		in_data->downsample_y.den);
+	const PF_LRect full_rect = {0, 0, sampled_width, sampled_height};
 	req.rect = full_rect;
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	PF_CheckoutResult in_result;
