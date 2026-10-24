@@ -2,10 +2,14 @@
 import importlib.util,inspect,os,subprocess,sys,json,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3]
-if sys.argv[1]=='--module':
+if sys.argv[1] in ('--module','--classes-module'):
  p=Path(sys.argv[2]);scratch=Path(sys.argv[3]);sys.path.insert(0,str(ROOT))
- spec=importlib.util.spec_from_file_location(p.stem,p);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+ spec=importlib.util.spec_from_file_location('tests.'+p.stem,p);module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
  if hasattr(module,'SCRATCH'):module.SCRATCH=scratch
+ if sys.argv[1]=='--classes-module':
+  suite=unittest.defaultTestLoader.loadTestsFromModule(module)
+  count=suite.countTestCases();result=unittest.TextTestRunner(verbosity=2).run(suite)
+  sys.exit(5 if count==0 else int(not result.wasSuccessful()))
  suite=unittest.TestSuite()
  for name,fn in inspect.getmembers(module,inspect.isfunction):
   if not name.startswith('test_'):continue

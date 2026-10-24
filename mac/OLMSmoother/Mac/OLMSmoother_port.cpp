@@ -2388,18 +2388,21 @@ struct SubHandler8Regs {
 	uint64_t rax=0,rbx=0,rcx=0,rdx=0,rsi=0,rdi=0,rbp=0,rsp=0;
 	uint64_t r8=0,r9=0,r10=0,r11=0,r12=0,r13=0,r14=0,r15=0;
 };
-struct SubHandler8Memory {
+template<size_t StackBegin, size_t StackSize>
+struct SubHandlerMemory {
 	static constexpr uint64_t kModule=0x180000000ull, kStack=0x700000000000ull;
-	uint8_t stack[0x1000]{}; bool zf=false,sf=false,of=false; PF_EffectWorld *world=nullptr;
+	static_assert(StackSize > 0 && StackBegin + StackSize <= 0x1000, "virtual stack window");
+	static constexpr uint64_t kStorage = kStack + StackBegin;
+	uint8_t stack[StackSize]{}; bool zf=false,sf=false,of=false; PF_EffectWorld *world=nullptr;
 	RenderState *state=nullptr; bool pf16=false;
 	template<class T> T raw(uint64_t a) const { T v{}; memcpy(&v,(const void*)(uintptr_t)a,sizeof(v));return v; }
 	// Bound the integer offset before forming a native pointer; a+n can wrap.
-	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&n<=sizeof(stack)&&a-kStack<=sizeof(stack)-n; }
-	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+(a-kStack)):(void*)(uintptr_t)a; }
-	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStack]; return raw<uint8_t>(a); }
-	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+(a-kStack),2);return v;} return raw<uint16_t>(a); }
+	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStorage&&n<=sizeof(stack)&&a-kStorage<=sizeof(stack)-n; }
+	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+(a-kStorage)):(void*)(uintptr_t)a; }
+	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStorage]; return raw<uint8_t>(a); }
+	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+(a-kStorage),2);return v;} return raw<uint16_t>(a); }
 	uint32_t read32(uint64_t a) const {
-		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+(a-kStack),4);return v;}
+		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+(a-kStorage),4);return v;}
 		if(state&&a==(uintptr_t)state+8)return uint32_t(state->tolerance_lo);
 		if(state&&a==(uintptr_t)state+0xc)return uint32_t(state->tolerance_hi);
 		if(state&&pf16&&a==(uintptr_t)state+0x10)return uint32_t(state->threshold);
@@ -2419,21 +2422,29 @@ struct SubHandler8Memory {
 		}
 		return raw<uint32_t>(a);
 	}
-	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+(a-kStack),8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
-	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
-	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+(a-kStack),&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
-	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+(a-kStack),&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
-	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+(a-kStack),&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
+	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+(a-kStorage),8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
+	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStorage]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
+	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+(a-kStorage),&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
+	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+(a-kStorage),&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
+	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+(a-kStorage),&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
 	uint64_t subflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a-b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=(((a^b)&(a^r))>>(w-1))&1;return r;}
 	uint64_t addflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a+b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=((~(a^b)&(a^r))>>(w-1))&1;return r;}
 	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
 };
+// The two PF16 generated CFGs never copy/escape RSP. Their complete
+// reachable stack accesses (including wrapper arguments) are [0x7a8,0x830)
+// and [0x7d8,0x848), relative to kStack. Keep padding around both intervals.
+// See orchestra/reports/P05c-evidence/smoother_stack_bounds.py for CFG proof.
+// Other helpers keep the original full window; all virtual addresses stay fixed.
+using SubHandler8Memory = SubHandlerMemory<0, 0x1000>;
+using Classifier16Memory = SubHandlerMemory<0x780, 0xc0>;
+using EdgeWalker16Memory = SubHandlerMemory<0x7c0, 0xa0>;
 
 static int32_t
 Classifier16Exact(RenderState *state, uint32_t x, uint32_t y,
                   const uintptr_t *neigh, uint32_t dir)
 {
-	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0;
+	SubHandler8Regs R; Classifier16Memory M; uint64_t T=0;
 	M.state=state; M.world=state->src_world; M.pf16=true;
 	R.rcx=(uintptr_t)state; R.rdx=x; R.r8=y; R.r9=(uintptr_t)neigh;
 	R.rsp=SubHandler8Memory::kStack+0x800;
@@ -2446,7 +2457,7 @@ static uint16_t*
 EdgeWalker16Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,
                   int *out_x, int *out_y, int threshold)
 {
-	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0;
+	SubHandler8Regs R; EdgeWalker16Memory M; uint64_t T=0;
 	M.state=state; M.world=state->src_world; M.pf16=true;
 	R.rcx=(uintptr_t)state; R.rdx=uint32_t(x); R.r8=uint32_t(y); R.r9=uint32_t(dir1);
 	R.rsp=SubHandler8Memory::kStack+0x800; M.write64(R.rsp,0xdeadbeefdeadbeefull);

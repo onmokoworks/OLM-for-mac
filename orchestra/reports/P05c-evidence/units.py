@@ -10,7 +10,7 @@ rows=[]
 for path in sorted((ROOT/'tests').glob('test_'+plugin+'*.py')):
  if plugin=='olmsmoother' and path.name.startswith('test_olmsmoother2'):continue
  with (s/(path.stem+'.log')).open('w') as log:
-  r=subprocess.run([sys.executable,'-m','unittest',str(path.relative_to(ROOT))],cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT)
+  r=subprocess.run([sys.executable,str(ROOT/'orchestra/reports/P05c-evidence/functions.py'),'--classes-module',str(path),str(s)],cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT)
  rows.append(dict(file=str(path.relative_to(ROOT)),returncode=r.returncode))
 (s/'summary.json').write_text(json.dumps(rows,indent=2)+'\n')
 print('modules',len(rows),'nonzero',sum(r['returncode']!=0 for r in rows))

@@ -1,10 +1,10 @@
-status: partial
+status: done
 summary:
-- Blur: preserve all scalar arithmetic; execute six independent parts on two joined lanes at dimensions >=256x256.
-- Heavy Blur corpus05 is now 1.61–1.75 s at 1080p and 6.41–6.86 s at 4K in the P00b SDK host.
-- Final Smart campaigns: 800/800 exact; all 139 saved corpora replay true. Unit exit statuses are unchanged: 7 zero, 24 failure/error, 3 empty unittest collections; function tests are collected separately.
-- Rejected volatile-removal optimization changed NaN payloads and was fully reverted.
-- ColorKey cache, differential/performance checks, and before/after unit comparison complete. See `P05c-evidence/colorkey.md`. Smoother remains pending.
+- Blur: two joined lanes, unchanged scalar arithmetic; heavy 1080p 1.61–1.75 s / 4K 6.41–6.86 s.
+- ColorKey: exact Lab-key caching; 1080p 0.84–0.86 s / 4K 3.57–3.73 s. See [ColorKey report](P05c-evidence/colorkey.md).
+- Smoother PF16: bounded virtual-stack storage; 1080p 1.42 s / 4K 5.77 s. See [Smoother report](P05c-evidence/smoother.md).
+- All required contract campaigns have 0 mismatches / 0 Mac-only refusals; all 486 corpus records replay true. Original rejects and unchanged historical unit failures are separately reported.
+- No arithmetic/UCRT replacement, release-gate or ledger edits, oracle rebuild, MAIN modification, push or history rewrite. A corrected legacy test scratch deviation is documented in the Smoother report.
 
 facts:
 
@@ -33,6 +33,10 @@ inference:
 - Baseline unit evidence failures prevent claiming an entirely green test suite; identical module outcomes establish only no observed module-status regression.
 
 changed_files:
+- mac/OLMColorKey/OLMColorKey.cpp (details in linked report)
+- mac/OLMSmoother/Mac/OLMSmoother_port.cpp (details in linked report)
+- tests/fuzz_corpus/olmcolorkey/P05c-lab-key-cache/*.json
+- tests/fuzz_corpus/olmsmoother/P05c-stack-frames/*.json
 - core/olmblur_parallel_parts.h
 - core/olmblur_worker_orchestration.cpp
 - core/olmblur_worker16_nonlegacy.cpp
@@ -42,16 +46,17 @@ changed_files:
 - orchestra/reports/P05c-blur-colorkey-smoother-performance.md
 
 verify:
+Run these commands in this worktree; linked per-plugin reports contain ColorKey and Smoother commands.
 ```sh
 python3 orchestra/reports/P05c-evidence/check_plugin.py olmblur blur-recheck
 python3 orchestra/reports/P05c-evidence/compare_blur_helper.py
 python3 orchestra/reports/P05c-evidence/units.py olmblur units-recheck
-python3 orchestra/reports/P05c-evidence/check_blur_functions.py
+python3 orchestra/reports/P05c-evidence/functions.py olmblur blur-functions-recheck
 python3 tools/fuzz/run.py --plugin olmblur --geometry realistic --size-sampler odd-even-v1 --max-size 1920 --replay tests/fuzz_corpus/olmblur/P05c-parallel-boundary --jobs 1 --scratch orchestra/state/P05c-blur-colorkey-smoother-performance/recheck-witness --report orchestra/state/P05c-blur-colorkey-smoother-performance/recheck-witness.json
 python3 tools/fuzz/ae_realism_audit.py --phase matrix --cache "$HOME/.cache/olm-emu/P05c-blur" --state orchestra/state/P05c-blur-colorkey-smoother-performance/recheck-performance --plugins olmblur --cases corpus05 --situations full 4k --jobs 1
 ```
 Expected: campaign Smart counts 300/100/100/150/150 exact; five corpus sets true; helper 4,310,640 exact words; unit statuses as baseline, not all green; six performance rows OK. Set `TMPDIR`, `TMP`, `TEMP` to the ticket scratch and `OLM_TEST_JOBS=1` when invoking fuzz directly.
 
 next:
-- Complete Smoother with independent evidence and commit.
+- All three requested optimizations are complete. Per-plugin verification commands and before/after tables are in this report and the linked ColorKey/Smoother reports.
 - Separate environment follow-up: restore historical unittest evidence dependencies without modifying MAIN or changing numerical expectations.
