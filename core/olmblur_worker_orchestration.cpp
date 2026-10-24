@@ -2,6 +2,7 @@
 #include "olmblur_worker_orchestration.h"
 
 #include "olmblur_helper.h"
+#include "olmblur_parallel_parts.h"
 
 #include <algorithm>
 #include <cmath>
@@ -23,13 +24,13 @@ void horizontal_pass(const std::uint8_t* flags,
                      std::size_t width,
                      std::size_t height,
                      std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
             width, height, chunk6(height, part), (height / 6) * part, radius};
         if (pass.passes != 0) {
             olm::blur::horizontal(flags, src, dst, weights, pass);
         }
-    }
+    });
 }
 
 void vertical_pass(const std::uint8_t* flags,
@@ -39,13 +40,13 @@ void vertical_pass(const std::uint8_t* flags,
                    std::size_t width,
                    std::size_t height,
                    std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
             width, height, chunk6(width, part), (width / 6) * part, radius};
         if (pass.passes != 0) {
             olm::blur::vertical(flags, src, dst, weights, pass);
         }
-    }
+    });
 }
 
 }  // namespace
