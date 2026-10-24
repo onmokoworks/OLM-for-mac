@@ -107,3 +107,12 @@ separately, and the baseline was rerun after this host-only correction.
 
 This callback has no compositor/transform semantics beyond ordinary coordinate
 intersection. It does not establish native AE numerical conformance.
+
+`--cases` and `--situations` optionally restrict a lane without changing corpus
+selection or parameter identities. P00b split the expensive RadialBlur Rotation
+sample into alternating situation lists, with separate state directories and
+one host at a time per lane. Combined evidence checks uniqueness and complete
+coverage. A resumed lane requires the original baseline manifest to bind host
+and bundle hashes; interrupted calls are discarded and rerun, never recorded
+as completed timings. The final read-only verifier also checks the installed
+cache identities.

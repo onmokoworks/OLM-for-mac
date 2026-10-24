@@ -82,7 +82,7 @@ baseline: 60 rows; {'ok': 60}
 | olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
 | olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
 
-matrix: 6635 rows; {'ok': 6301, 'refusal': 314, 'timeout': 20}
+matrix: 6656 rows; {'ok': 6301, 'refusal': 314, 'timeout': 41}
 
 | Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
 |---|---|---|---|
@@ -278,20 +278,20 @@ matrix: 6635 rows; {'ok': 6301, 'refusal': 314, 'timeout': 20}
 | radialblur / full | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / third | {'ok': 18, 'timeout': 1} | {} | 18/18 |
+| radialblur / third | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / eighth | {'ok': 21} | {} | 21/21 |
-| radialblur / asymmetric | {'ok': 18} | {} | 18/18 |
+| radialblur / asymmetric | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / 4k | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / 4k-half | {'ok': 18} | {} | 18/18 |
+| radialblur / 4k-half | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / 4k-quarter | {'ok': 18, 'timeout': 3} | {} | 18/18 |
-| radialblur / square | {'ok': 18} | {} | 18/18 |
-| radialblur / odd | {'ok': 18, 'timeout': 1} | {} | 18/18 |
+| radialblur / square | {'ok': 18, 'timeout': 3} | {} | 18/18 |
+| radialblur / odd | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / odd-half | {'ok': 18} | {} | 18/18 |
-| radialblur / large-layer | {'ok': 18} | {} | 18/18 |
+| radialblur / large-layer | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / aligned-odd | {'ok': 18} | {} | 18/18 |
-| radialblur / padded | {'ok': 18} | {} | 18/18 |
+| radialblur / padded | {'ok': 18, 'timeout': 3} | {} | 18/18 |
 | radialblur / extent | {'ok': 18} | {} | 18/18 |
-| radialblur / roi | {'ok': 18} | {} | 18/18 |
+| radialblur / roi | {'ok': 18, 'timeout': 2} | {} | 18/18 |
 | radialblur / expanded | {'ok': 18} | {} | 18/18 |
 | radialblur / cropped-expand | {'ok': 18} | {} | 18/18 |
 | radialblur / aspect09 | {'ok': 18} | {} | 18/18 |
@@ -368,7 +368,10 @@ Refusal interpretation (FACT and INFERENCE kept separate):
   depths, while the real Mac bundle returns 516 with this tag only at PF32.
   Original guard/session checks pass; AEX and worker hashes and output hashes
   are retained. INFERENCE: this is a confirmed Mac-only default PF32 admission
-  group; original success at 4K remains unmeasured.
+  group; original success at 4K remains unmeasured. The three original 32×24
+  output hashes match all-zero raw buffers of their recorded lengths. Thus the
+  Mac PF8/PF16 all-zero sanity result has a bounded original counterpart; an
+  all-zero output alone is not classified as a refusal.
 
 - **Smoother2 / `ValidatePublicWorlds:validate-world-shape@5240`**.
   FACT: cropped-expand supplies 960×540 input and allocates 1920×1080 output
@@ -383,7 +386,7 @@ Refusal interpretation (FACT and INFERENCE kept separate):
   do not remove the guard. Whether Mac PreRender unnecessarily creates this
   unequal layout in native AE remains a negotiation question.
 
-- **Smoother v1 / `world-depth-32-unsupported`** (if observed).
+- **Smoother v1 / `world-depth-32-unsupported@4062`**.
   FACT: Smoother does not advertise FLOAT_COLOR_AWARE. T15b original calibration
   rejects PF32 even at 1×1, and its sweep has 112 unsupported-PF32 rows.
   INFERENCE: a deliberate direct PF32 host call is unsupported on both sides;

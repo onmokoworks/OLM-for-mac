@@ -344,7 +344,7 @@
   "counts": {
     "ok": 6301,
     "refusal": 314,
-    "timeout": 20
+    "timeout": 41
   },
   "supplement_source_head": "7389ab09effeb6a4470bac3280e6bbddcddbb195"
 }

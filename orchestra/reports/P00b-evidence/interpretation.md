@@ -34,7 +34,10 @@ Refusal interpretation (FACT and INFERENCE kept separate):
   depths, while the real Mac bundle returns 516 with this tag only at PF32.
   Original guard/session checks pass; AEX and worker hashes and output hashes
   are retained. INFERENCE: this is a confirmed Mac-only default PF32 admission
-  group; original success at 4K remains unmeasured.
+  group; original success at 4K remains unmeasured. The three original 32×24
+  output hashes match all-zero raw buffers of their recorded lengths. Thus the
+  Mac PF8/PF16 all-zero sanity result has a bounded original counterpart; an
+  all-zero output alone is not classified as a refusal.
 
 - **Smoother2 / `ValidatePublicWorlds:validate-world-shape@5240`**.
   FACT: cropped-expand supplies 960×540 input and allocates 1920×1080 output
@@ -49,7 +52,7 @@ Refusal interpretation (FACT and INFERENCE kept separate):
   do not remove the guard. Whether Mac PreRender unnecessarily creates this
   unequal layout in native AE remains a negotiation question.
 
-- **Smoother v1 / `world-depth-32-unsupported`** (if observed).
+- **Smoother v1 / `world-depth-32-unsupported@4062`**.
   FACT: Smoother does not advertise FLOAT_COLOR_AWARE. T15b original calibration
   rejects PF32 even at 1×1, and its sweep has 112 unsupported-PF32 rows.
   INFERENCE: a deliberate direct PF32 host call is unsupported on both sides;
