@@ -40,7 +40,7 @@ class ColorKeepWindowsContractTests(unittest.TestCase):
         self.assertIn("elseif(!err&&bpc==16)", compact)
         self.assertIn("ColorKeepRenderMapped<PF_Pixel16>", compact)
         self.assertIn("elseif(!err&&bpc==32)", compact)
-        self.assertIn("ColorKeepRenderMapped<PF_PixelFloat>", compact)
+        self.assertIn("ColorKeepRenderSmart(in_data,suites.IterateFloatSuite2()", compact)
         self.assertIn(
             "for(A_longi=0;i<=COLORKEEP_MAX_COLORS;++i)", compact
         )
