@@ -88,3 +88,4 @@ R03-harness-ucrt-link
 R04-assertion-drift-and-corpus
 R05-regenerate-stale-bindings
 T14-classic-route-triage
+R06-release-gate-closure
