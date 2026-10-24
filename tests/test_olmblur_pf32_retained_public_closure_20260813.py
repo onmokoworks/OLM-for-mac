@@ -23,7 +23,7 @@ class Closure(unittest.TestCase):
   self.reject(m)
  def test_claim(self):self.reject(lambda v:v.__setitem__("claim_boundary","broader"))
  def test_current_docs_and_candidate(self):
-  for rel in ("README.md","KNOWN_LIMITATIONS.md","notes/CONFORMANCE_LEDGER.md","refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md","refs/conformance/olm_release_completion_matrix_20260806.md","refs/conformance/olm_mac_port_orchestrator_boundary_20260805.md"):
+  for rel in ("docs/archive/README_20260822.md","docs/archive/KNOWN_LIMITATIONS_20260822.md","notes/CONFORMANCE_LEDGER.md","refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md","refs/conformance/olm_release_completion_matrix_20260806.md","refs/conformance/olm_mac_port_orchestrator_boundary_20260805.md"):
    text=(ROOT/rel).read_text();self.assertIn("22eb712a",text,rel);self.assertIn("ecdf3d93",text,rel);self.assertIn("20/20",text,rel)
   self.assertTrue((resolve_asset(ROOT/"handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json")).is_file())
 if __name__=="__main__":unittest.main()

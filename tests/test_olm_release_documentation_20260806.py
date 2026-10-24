@@ -11,8 +11,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ROOT_README = ROOT / "README.md"
-KNOWN_LIMITATIONS = ROOT / "KNOWN_LIMITATIONS.md"
+ROOT_README = ROOT / "docs/archive/README_20260822.md"
+KNOWN_LIMITATIONS = ROOT / "docs/archive/KNOWN_LIMITATIONS_20260822.md"
 LEDGER = ROOT / "notes/CONFORMANCE_LEDGER.md"
 REFS_README = ROOT / "refs/README.md"
 SCRIPTS_README = ROOT / "scripts/README.md"

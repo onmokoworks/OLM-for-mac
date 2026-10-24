@@ -79,7 +79,7 @@ MANIFEST = [
     ("ae-output-completion", "tests/test_ae_png_completion.py", "scripts/run_ae_single_case.py"),
     ("ae-batch-output-integrity", "tests/test_ae_batch_png_integrity.py", "scripts/run_ae_validation_batch.py"),
     ("gate-self", "tests/test_run_olm_generic_beta_gate.py", "scripts/run_olm_generic_beta_gate.py"),
-    ("documentation", "tests/test_beta_support_documentation.py", "docs/BETA_SUPPORT.md"),
+    ("documentation", "tests/test_beta_support_documentation.py", "docs/archive/BETA_SUPPORT_20260822.md"),
     ("performance", "tests/test_generic_beta_perf_smoke_runner.py", "tools/perf/run_generic_beta_smoke.py"),
     ("package-hash", "tests/test_verify_mac_plugin_package_hash.py", "scripts/verify_mac_plugin_package.py"),
 ]
@@ -275,9 +275,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         *PERFORMANCE_DRIVERS,
     ),
     "tests/test_beta_support_documentation.py": (
-        "docs/BETA_SUPPORT.md",
+        "docs/archive/BETA_SUPPORT_20260822.md",
         "docs/PUBLIC_BETA_3_GATES.md",
-        "README.md",
+        "docs/archive/README_20260822.md",
         "refs/conformance/olm_public_beta_rc_identity_20260822.json",
         "refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json",
         "reports/public_beta_completion_audit_20260820.json",

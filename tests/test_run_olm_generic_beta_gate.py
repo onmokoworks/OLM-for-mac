@@ -217,7 +217,7 @@ class GenericBetaGateTests(unittest.TestCase):
                 *GATE.PERFORMANCE_DRIVERS,
             },
             "tests/test_beta_support_documentation.py": {
-                "docs/BETA_SUPPORT.md",
+                "docs/archive/BETA_SUPPORT_20260822.md",
                 "reports/public_beta_completion_audit_20260820.json",
                 "reports/public_beta_roi_v2_package_20260820.json",
                 "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json",

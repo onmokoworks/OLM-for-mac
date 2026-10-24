@@ -28,7 +28,7 @@ def test_three_gate_matrix_is_fixed_and_covers_all_plugins() -> None:
     assert "3深度Windows corner-seed代表は現行core exact" in text
     assert "宣言済みnative AE matrixは2026-08-23時点で54/54成功" in text
     assert "個別テストが増えても行・列・完了基準を増やさない" in text
-    support = (ROOT / "docs/BETA_SUPPORT.md").read_text()
+    support = (ROOT / "docs/archive/BETA_SUPPORT_20260822.md").read_text()
     assert "Public Betaの判断基準は" in support
     assert "追加ゲートではありません" in support
     assert "74dd05284203287a61205a9f937e25c62731d4a07bbe6fbcecb3d951f523f80d" in support

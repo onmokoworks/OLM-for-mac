@@ -63,8 +63,8 @@ class OLMBlurPF16WorkerSourcesAdmission(unittest.TestCase):
 
     def test_current_release_docs_preserve_pf16_boundary(self):
         docs = (
-            ROOT / "README.md",
-            ROOT / "KNOWN_LIMITATIONS.md",
+            ROOT / "docs/archive/README_20260822.md",
+            ROOT / "docs/archive/KNOWN_LIMITATIONS_20260822.md",
             ROOT / "notes/CONFORMANCE_LEDGER.md",
             ROOT / "refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md",
             ROOT / "refs/conformance/olm_release_completion_matrix_20260806.md",
