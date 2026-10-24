@@ -208,6 +208,7 @@
     "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
     "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
     "candidate_sha256": "ee8e46ddf95e3e4927d7621e49bd60fa62836fde20704b6d36b7b07c36e9c335",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
     "dependencies_sha256": {
       "mac/OLMKiraKira/OLMKiraKira.cpp": "5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f",
@@ -229,6 +230,7 @@
     "layer": "None; independent layer worlds outside this adapter",
     "oracle_render_path": "smartfx",
     "oracle_routes": {
+      "classic": "classic",
       "smart": "smart"
     },
     "original_routes": {
@@ -254,7 +256,7 @@
     },
     "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
     "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
-    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
     "accepted": []
@@ -273,7 +275,42 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          3,
+          1
+        ],
+        "raw_sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          3,
+          1
+        ],
+        "raw_sha256": "a1910a6bf4c8754f2299d1a4db8429ee44f947a0a693c7d582ce81fccf6c45e9",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "516",
+          "GEOMETRY_INPUT": "17 5 1 8 1 8 2 1 1"
+        },
+        "status": "refusal"
+      },
       "smart": {
         "error": 0,
         "metadata": {

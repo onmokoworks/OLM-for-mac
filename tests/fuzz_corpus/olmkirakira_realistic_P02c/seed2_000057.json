@@ -208,6 +208,7 @@
     "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
     "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
     "candidate_sha256": "ee8e46ddf95e3e4927d7621e49bd60fa62836fde20704b6d36b7b07c36e9c335",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
     "dependencies_sha256": {
       "mac/OLMKiraKira/OLMKiraKira.cpp": "5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f",
@@ -229,6 +230,7 @@
     "layer": "None; independent layer worlds outside this adapter",
     "oracle_render_path": "smartfx",
     "oracle_routes": {
+      "classic": "classic",
       "smart": "smart"
     },
     "original_routes": {
@@ -254,7 +256,7 @@
     },
     "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
     "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
-    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
     "accepted": []
@@ -273,7 +275,59 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          14,
+          14
+        ],
+        "raw_sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          10,
+          3,
+          14,
+          12
+        ],
+        "raw_sha256": "066dcbe445726cf112d87c7abae1ef4536fe8c49429b52a7c3dfcb17a32b0a2a",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 3136,
+          "actual_word_hex": "0000803f",
+          "different_bytes": 1734,
+          "different_words": 784,
+          "expected_bytes": 3136,
+          "expected_word_hex": "00000000",
+          "first_byte": 2,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "14 14 1 1 1 1 4 3 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          14,
+          14
+        ],
+        "raw_sha256": "55faf592aad1eee0fd9e0a5801afd618295b62d0942a375f1951344a4edcf0d8",
+        "status": "mismatch"
+      },
       "smart": {
         "error": 0,
         "metadata": {
