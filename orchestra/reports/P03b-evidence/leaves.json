@@ -1,0 +1,110 @@
+{
+  "radial_COMISS_SETB": [
+    {
+      "input": "00000000",
+      "mask": 0
+    },
+    {
+      "input": "80000000",
+      "mask": 0
+    },
+    {
+      "input": "00000001",
+      "mask": 1
+    },
+    {
+      "input": "3f000000",
+      "mask": 1
+    },
+    {
+      "input": "3f800000",
+      "mask": 1
+    },
+    {
+      "input": "bf800000",
+      "mask": 0
+    },
+    {
+      "input": "7f7fffff",
+      "mask": 1
+    },
+    {
+      "input": "ff7fffff",
+      "mask": 0
+    },
+    {
+      "input": "7f800000",
+      "mask": 1
+    },
+    {
+      "input": "ff800000",
+      "mask": 0
+    },
+    {
+      "input": "7fc12345",
+      "mask": 1
+    },
+    {
+      "input": "ffc54321",
+      "mask": 1
+    },
+    {
+      "input": "7f812345",
+      "mask": 1
+    }
+  ],
+  "kira_clamp": [
+    {
+      "input": "00000000",
+      "clamped": "00000000"
+    },
+    {
+      "input": "80000000",
+      "clamped": "00000000"
+    },
+    {
+      "input": "00000001",
+      "clamped": "00000001"
+    },
+    {
+      "input": "3f000000",
+      "clamped": "3f000000"
+    },
+    {
+      "input": "3f800000",
+      "clamped": "3f800000"
+    },
+    {
+      "input": "bf800000",
+      "clamped": "00000000"
+    },
+    {
+      "input": "7f7fffff",
+      "clamped": "3f800000"
+    },
+    {
+      "input": "ff7fffff",
+      "clamped": "00000000"
+    },
+    {
+      "input": "7f800000",
+      "clamped": "3f800000"
+    },
+    {
+      "input": "ff800000",
+      "clamped": "00000000"
+    },
+    {
+      "input": "7fc12345",
+      "clamped": "00000000"
+    },
+    {
+      "input": "ffc54321",
+      "clamped": "00000000"
+    },
+    {
+      "input": "7f812345",
+      "clamped": "00000000"
+    }
+  ]
+}

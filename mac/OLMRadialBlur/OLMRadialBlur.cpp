@@ -1792,11 +1792,10 @@ static bool BuildRadialSizeFactorPlaneAEX(
 		for (A_long x = 0; x < w; ++x) {
 			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
 				LoadPixel<PixelT>(input, x, y), 3);
-			// NaN is accepted by the AEX's COMISS/SETC predicate, but it is not
-			// part of this bounded admission.  Label visible cells with four-neighbor
-			// connectivity, then reproduce the run scanner's right-edge count/write.
-			if (!std::isfinite(alpha)) return false;
-			mask[(size_t)y * w + x] = alpha > 0.0f ? 1 : 0;
+			// AEX 0x1800081d0: COMISS zero,alpha; SETB includes unordered
+			// alpha as well as positive alpha. Negative infinity stays outside.
+			// The same mask feeds four-neighbor component labelling.
+			mask[(size_t)y * w + x] = !(alpha <= 0.0f) ? 1 : 0;
 		}
 	}
 

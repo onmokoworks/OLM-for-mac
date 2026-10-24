@@ -1,4 +1,5 @@
 {
+  "P03b_note": "Smart nonfinite radius-one Bilateral / finite HDR Power+Gaussian admission; original output and Classic expectation preserved.",
   "case": {
     "depth": 32,
     "downsample": [
@@ -375,13 +376,21 @@
         "status": "mismatch"
       },
       "smart": {
-        "error": -1,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 1 12 12",
-          "ERROR": "-1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 3 1",
           "GEOMETRY_INPUT": "24 8 1 8 1 8 2 1 32"
         },
-        "status": "refusal"
+        "output_rect": [
+          0,
+          0,
+          3,
+          1
+        ],
+        "raw_sha256": "295297fba24929f85892d96dd66e77611c61b8ab5488b2fab32011cc9cd15fad",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

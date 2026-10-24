@@ -1,0 +1,356 @@
+{
+  "rows": [
+    {
+      "width": 1,
+      "input": [
+        "00000000"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "80000000"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "3bc0c0bf"
+      ],
+      "converted": [
+        1
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "3bc0c0c0"
+      ],
+      "converted": [
+        1
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "3bc0c0c1"
+      ],
+      "converted": [
+        2
+      ],
+      "owned": [
+        true
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "3f000000"
+      ],
+      "converted": [
+        128
+      ],
+      "owned": [
+        true
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "3f800000"
+      ],
+      "converted": [
+        255
+      ],
+      "owned": [
+        true
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "7f800000"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "ff800000"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "7fc12345"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "ff812346"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "4b00807f"
+      ],
+      "converted": [
+        255
+      ],
+      "owned": [
+        true
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "4b008080"
+      ],
+      "converted": [
+        255
+      ],
+      "owned": [
+        true
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "4b008081"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "7f7fffff"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "ff7fffff"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 1,
+      "input": [
+        "00000001"
+      ],
+      "converted": [
+        0
+      ],
+      "owned": [
+        false
+      ]
+    },
+    {
+      "width": 7,
+      "input": [
+        "00000000",
+        "80000000",
+        "3bc0c0bf",
+        "3bc0c0c0",
+        "3bc0c0c1",
+        "3f000000",
+        "3f800000"
+      ],
+      "converted": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        128,
+        255
+      ],
+      "owned": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "width": 7,
+      "input": [
+        "7f800000",
+        "ff800000",
+        "7fc12345",
+        "ff812346",
+        "4b00807f",
+        "4b008080",
+        "4b008081"
+      ],
+      "converted": [
+        0,
+        0,
+        0,
+        0,
+        255,
+        255,
+        0
+      ],
+      "owned": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "width": 3,
+      "input": [
+        "7f7fffff",
+        "ff7fffff",
+        "00000001"
+      ],
+      "converted": [
+        0,
+        0,
+        0
+      ],
+      "owned": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "width": 17,
+      "input": [
+        "00000000",
+        "80000000",
+        "3bc0c0bf",
+        "3bc0c0c0",
+        "3bc0c0c1",
+        "3f000000",
+        "3f800000",
+        "7f800000",
+        "ff800000",
+        "7fc12345",
+        "ff812346",
+        "4b00807f",
+        "4b008080",
+        "4b008081",
+        "7f7fffff",
+        "ff7fffff",
+        "00000001"
+      ],
+      "converted": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        128,
+        255,
+        0,
+        0,
+        0,
+        0,
+        255,
+        255,
+        0,
+        0,
+        0,
+        0
+      ],
+      "owned": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "reached_conversion_instructions": {
+    "18118809d": "cvtsi2sd xmm0, qword ptr [rsp + 0x30]",
+    "1811881b4": "cvtsi2sd xmm0, rcx",
+    "1811881be": "cvttsd2si rax, xmm0",
+    "1811e3f79": "cvtpd2ps xmm3, xmm3",
+    "1811e3f84": "cvtpd2ps xmm4, xmm4",
+    "1811e404c": "cvtss2si edx, xmm1",
+    "1811e400e": "cvtps2dq xmm2, xmm0",
+    "1811e4012": "cvtps2dq xmm0, xmm1"
+  }
+}

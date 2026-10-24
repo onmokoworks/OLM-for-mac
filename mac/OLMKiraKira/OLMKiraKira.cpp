@@ -2102,7 +2102,7 @@ static bool GenericBetaInputIsFiniteSDR(
 // and color box pipelines, and by Alpha Gaussian/approximation. C50 also
 // validates finite color box approximation with the recovered IPP edges. Preserve
 // tuple, geometry, ramp and work limits; nonfinite input has separate guards.
-static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
+static bool SmartFilteredInputIsSupported(const PF_EffectWorld *input,
     PF_PixelFormat format, const OLMKiraKiraInfo &info)
 {
     if (!input || format != PF_PixelFormat_ARGB128) return false;
@@ -2122,6 +2122,9 @@ static bool SmartFiniteInputIsSupported(const PF_EffectWorld *input,
         IsSmartApproximationTuple(info, format, input->width, input->height);
     if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
           IsSmartColorBoxTuple(info, format) || filtered_alpha || gaussian_source || approximated_scalar || approximated_color)) return false;
+    // The recovered color box aggregator and typed compose clamps discard
+    // unordered ray amounts. Preserve the existing constructor/filter tuples.
+    if (IsSmartColorBoxTuple(info, format) || approximated_color) return true;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
@@ -2924,7 +2927,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				 IsSmartZeroRayTuple(info, input_world->width, input_world->height)) &&
 				(GenericBetaInputIsFiniteSDR(input_world, format) ||
 				 SmartAlphaInputIsSupported(input_world, format, info) ||
-                 SmartFiniteInputIsSupported(input_world, format, info));
+                 SmartFilteredInputIsSupported(input_world, format, info));
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,

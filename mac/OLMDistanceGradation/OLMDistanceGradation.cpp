@@ -2013,7 +2013,8 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 	    input->width <= 0 || input->height <= 0 ||
 	    output->width <= 0 || output->height <= 0 ||
 	    output->width > input->width || output->height > input->height) return false;
-	// C52: finite extended samples share the proven scalar Bilateral field.
+	// Finite extended samples share the existing Box/Gaussian and scalar
+	// Bilateral fields. Source RGB is composed after filtering the finite mask.
 	// Normalize Power only for admission; rendering retains its UCRT exponent.
 	DGParams finite_admission = p;
 	if (p.interp_mode == INTERP_POWER && std::isfinite(p.power) &&
@@ -2044,18 +2045,21 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 		for (size_t x = 0; x < width; ++x) {
 			const PF_PixelFloat &pixel = row[x];
 			// C19 restores the original signed-int32 mask conversion and invalid
-			// weighted-sample arithmetic. Nonfinite inputs retain the witnessed
-			// identity-filter boundary; finite extended samples also use Box/Gaussian and radius-one Bilateral.
-			if (pixel.alpha * 255.0f >= 2147483648.0f && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
+			// weighted-sample arithmetic. The mask conversion maps invalid alpha
+			// to zero before filtering; radius-one Bilateral consumes that finite
+			// field, while source channels enter only the recovered composition.
+			const bool nonfinite_field = is_admitted_pf32_smart_unblurred_beta(p) ||
+			    is_admitted_pf32_smart_bilateral_beta(p);
+			if (pixel.alpha * 255.0f >= 2147483648.0f && !nonfinite_field) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
-				if (!std::isfinite(value) && !is_admitted_pf32_smart_unblurred_beta(p)) return false;
+				if (!std::isfinite(value) && !nonfinite_field) return false;
 				// C27 pairs finite extended samples through the existing Box/Gaussian
 				// field and callback. Median and larger-radius Bilateral retain their SDR boundary;
 				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
 				if ((value < 0.0f || value > 1.0f) &&
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
-				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(p, (long)width, (long)height)) &&
+				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(finite_admission, (long)width, (long)height)) &&
 				    !is_admitted_pf32_smart_bilateral_beta(p) &&
 				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) &&
 				    !is_admitted_pf32_smart_unblurred_beta(finite_admission)) return false;
