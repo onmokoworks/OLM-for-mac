@@ -3,10 +3,11 @@ import hashlib,json,os,sys,time,types
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/fuzz'))
+sys.dont_write_bytecode=True
 from adapters.olmkirakira import Adapter
 S=ROOT/'orchestra/state/P07a-parallel-helper-kirakira/threads'
 S.mkdir(parents=True,exist_ok=True)
-o=types.SimpleNamespace(max_size=256,case_timeout=60,main=ROOT.parent.parent,
+o=types.SimpleNamespace(max_size=256,case_timeout=60,main=(ROOT.parent.parent if ROOT.parent.name=='worktrees' else ROOT),
  worker=Path.home()/'.cache/olm-emu/worker-F46-pow/aex-guest-worker')
 a=Adapter(o)
 a.env.update(TMPDIR=str(S),TMP=str(S),TEMP=str(S),TSAN_OPTIONS='halt_on_error=1')

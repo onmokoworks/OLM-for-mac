@@ -1,0 +1,47 @@
+{
+  "source_head": "651bc587e3e5516cb030e79695fe80f11834b842",
+  "host_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "bundles": {
+    "olmkirakira": "192224922c48b1df1f0dc4f6f6848adb4569eb156efac8b3a374463a2860aa8d"
+  },
+  "samples": {
+    "olmkirakira": {
+      "eligible": 8,
+      "paths": [
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000016.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000038.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000003.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000000.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000002.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000008.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000001.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000007.json",
+        "tests/fuzz_corpus/olmkirakira/refusal_seed1_case000038.json"
+      ],
+      "sha256": [
+        "d0791674e627865f55a59ad16894e26777ee7dccf3bec2017b47378a03076770",
+        "ffa50ab228912e382c3327c34c2014c0210836f42821dc4102b45b2a56af5f1c",
+        "2e89098740eb6cc02d0dea9ba5935b21d5014b17404c47a90f97e2b0060c6edf",
+        "ca166cd269c0e847ce0c7b7e03ae2331efd5ac7141b105b432e0354c15faaf9e",
+        "14fe40c5ed14cb10e204e8cfe1faf1284f42819709d6ffb173c7ee63924a4301",
+        "397d581e136bdcc44c1bec7b18e3e279af4a39a91a848f4909fe95b928445d64",
+        "dd8fab29589fd507fc2be63fc9da08a3bbf81d1295500bdd14ec4aabb18a97d9",
+        "e625f4c71fd90d6578572dd827dd56cce4fdd67a7a33cd1a5bbd270d10b9e4b6",
+        "e625f4c71fd90d6578572dd827dd56cce4fdd67a7a33cd1a5bbd270d10b9e4b6",
+        "ffa50ab228912e382c3327c34c2014c0210836f42821dc4102b45b2a56af5f1c"
+      ]
+    }
+  },
+  "memory": [
+    {
+      "plugin": "olmkirakira",
+      "free_percent": 59
+    }
+  ],
+  "phase": "matrix",
+  "timeout": 60,
+  "counts": {
+    "ok": 12
+  }
+}

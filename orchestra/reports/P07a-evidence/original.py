@@ -2,6 +2,7 @@
 import hashlib,json,os,shutil,subprocess,sys,time,types
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3];sys.path.insert(0,str(ROOT/'tools/fuzz'))
+sys.dont_write_bytecode=True
 from adapters.olmkirakira import Adapter,SOURCE
 S=ROOT/'orchestra/state/P07a-parallel-helper-kirakira/original';S.mkdir(parents=True,exist_ok=True)
 snapshot=S/'source';snapshot.mkdir(exist_ok=True)
@@ -9,7 +10,7 @@ shutil.copytree(ROOT/'core',snapshot/'core',dirs_exist_ok=True)
 shutil.copytree(ROOT/'mac/OLMKiraKira',snapshot/'mac/OLMKiraKira',dirs_exist_ok=True)
 if not (snapshot/'ucrtmath').exists():(snapshot/'ucrtmath').symlink_to(ROOT/'ucrtmath')
 (snapshot/'core/kirakira_warp.h').write_bytes(subprocess.check_output(['git','show','c101e2880a4b423e5e285c36baf120cbedd609b3:core/kirakira_warp.h'],cwd=ROOT))
-o=types.SimpleNamespace(max_size=256,case_timeout=60,main=ROOT.parent.parent,worker=Path.home()/'.cache/olm-emu/worker-F46-pow/aex-guest-worker')
+o=types.SimpleNamespace(max_size=256,case_timeout=60,main=(ROOT.parent.parent if ROOT.parent.name=='worktrees' else ROOT),worker=Path.home()/'.cache/olm-emu/worker-F46-pow/aex-guest-worker')
 a=Adapter(o);a.env.update(TMPDIR=str(S),TMP=str(S),TEMP=str(S))
 original_compile=a.compile_sdk
 original_source=snapshot/'mac/OLMKiraKira/OLMKiraKira.cpp'
