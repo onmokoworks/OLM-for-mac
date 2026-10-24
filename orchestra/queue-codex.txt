@@ -127,3 +127,4 @@ P04d-colorkeep-cropped-checkout
 P05a-directionalblur-performance
 P05b-radialblur-rotation-performance
 P05c-blur-colorkey-smoother-performance
+P06a-directionalblur-pf32-cropped-mismatch
