@@ -19,7 +19,10 @@ and executable commands are in [README-F52c](../../tools/emulation/aexcompat_pat
 - Oracle SHA-256: `4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e`.
 - Universal bundle host SHA-256: `28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f`; arm64 executed here.
 - `build_F52c.py --verify-source` reconstructed the committed patch and matched
-  **every source file** and the registered build manifest/binary.
+  **every source file** and the registered build manifest/binary. The initial
+  staged whitespace check flagged blank unified-patch context lines; the patch
+  was reformatted with zero context and reverified byte-for-byte. Both patch
+  hashes are retained in `F52c-evidence/patch-format.json`; source/binary unchanged.
 - `--negotiate-output 1` allocates from PreRender result_rect, checks max_result_rect
   as a bound, sets world/input-relative origins, handles empty results, and returns
   packed output plus `frame_done.output.rect`. Default allocation stays unchanged.

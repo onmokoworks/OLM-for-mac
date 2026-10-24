@@ -15,8 +15,10 @@
     "aex-guest-worker"
   ],
   "memory_free_percent": 62,
+  "original_patch_sha256": "382f3f8702b1dd4c66002449cf3cfe8f882f37d9344d033ca65eecbc99420604",
   "parent_worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b",
-  "patch_sha256": "382f3f8702b1dd4c66002449cf3cfe8f882f37d9344d033ca65eecbc99420604",
+  "patch_format_note": "Post-build unified patch context changed from 3 lines to 0; source files and binary unchanged; verify-source reconstructs all files.",
+  "patch_sha256": "1c4642454f2985deecd98b4e18f1088459ab81475e84dc77c4792057e057e6fe",
   "source_manifest": {
     "Cargo.lock": "00693eb4dc59f522c0322dab241a8bc42d44e1b1e774c82a2228f50fad3e6cbc",
     "Cargo.toml": "319b2766f7d98d8b0517fc9ddf5f0a127b476d93e18345eaa7b912cc23247500",

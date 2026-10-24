@@ -1,0 +1,8 @@
+colorkeep {'classic': {'E': 5, 'M': 4, 'R': 91, 'U': 0}, 'smart': {'E': 11, 'M': 0, 'R': 89, 'U': 0}} host failures {}
+olmdistancegradation {'classic': {'E': 2, 'M': 98, 'R': 0, 'U': 0}, 'smart': {'E': 10, 'M': 3, 'R': 83, 'U': 4}} host failures {}
+olmkirakira {'classic': {'E': 0, 'M': 6, 'R': 94, 'U': 0}, 'smart': {'E': 11, 'M': 0, 'R': 89, 'U': 0}} host failures {}
+radialblur {'classic': {'E': 0, 'M': 59, 'R': 41, 'U': 0}, 'smart': {'E': 11, 'M': 5, 'R': 71, 'U': 13}} host failures {}
+olmtoondilate {'classic': {'E': 100, 'M': 0, 'R': 0, 'U': 0}, 'smart': {'E': 63, 'M': 37, 'R': 0, 'U': 0}} host failures {}
+olmsmoother2 {'classic': {'E': 0, 'M': 0, 'R': 100, 'U': 0}, 'smart': {'E': 11, 'M': 0, 'R': 50, 'U': 39}} host failures {}
+olmsmoother {'classic': {'E': 31, 'M': 0, 'R': 34, 'U': 35}} host failures {}
+olmblur {'classic': {'E': 3, 'M': 0, 'R': 80, 'U': 17}, 'smart': {'E': 30, 'M': 0, 'R': 70, 'U': 0}} host failures {}
