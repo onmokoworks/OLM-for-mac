@@ -114,3 +114,5 @@ P02h-blur-geometry
 P02i-colorkey-geometry
 P02j-directionalblur-geometry
 T15b-odd-even-random-comp-sweep
+P03a-distancegradation-pf32-downsample-ulp
+P03b-nonfinite-hdr-admission
