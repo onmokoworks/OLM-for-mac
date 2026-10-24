@@ -122,6 +122,7 @@ P04b-directionalblur-cropped-checkout
 P04c-smoother2-checkout-negotiation
 F53-oracle-cropped-checkout
 P04b2-directionalblur-cropped-checkout
+P04c2-smoother2-checkout-negotiation
 P05a-directionalblur-performance
 P05b-radialblur-rotation-performance
 P05c-blur-colorkey-smoother-performance
