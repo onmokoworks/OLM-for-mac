@@ -9,6 +9,7 @@ summary:
 facts:
 - Branch `orch/F53-oracle-cropped-checkout`; checkpoint commit `502d1364` preceded final measurement completion.
 - `python3 tools/emulation/aexcompat_patches/build_F53.py`: memory_pressure 61% free, cargo release/offline/locked, one job, 2m51s. Build tree under `~/.cache/olm-emu/build-F53/` was removed. `--register` and `--verify-source` passed.
+- Patch representation was normalized to a zero-context unified diff for whitespace checks; applying it to F52c reproduced the identical built source manifest. Cached metadata retains the original patch hash, updated equivalent patch hash, and unchanged binary hash.
 - Oracle: `~/.cache/olm-emu/worker-F53-geom/aex-guest-worker`, SHA256 `d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9`. Parent is F52c. Committed patch and build recipe reproduce/bind the cached source, and the INDEX entry is installed.
 - `python3 tools/emulation/aexcompat_patches/build_F53_bundle.py --refresh`: final Universal bundle host SHA256 `218f3a3e702dd509b99997aa4c98259c7264036ba2cad48e3dc7853ee7952c6b`, memory free 60%; registered separately. Final cache records are in `F53-evidence/cache-bindings.json`.
 - `PYTHONDONTWRITEBYTECODE=1 python3 tools/fuzz/test_F53_geometry.py`: PASS, 300 unchanged default/v1 generations, 100 v2 payload checks, 100 full and 100 reduced corpus replays.
