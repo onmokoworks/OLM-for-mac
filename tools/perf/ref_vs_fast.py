@@ -28,10 +28,11 @@ def build(kind, options, directory, deadline):
     base = importlib.import_module('adapters.' + options.plugin).Adapter
     class Native(base):
         def compile(self, argv, end):
-            if str(argv[0]) == 'clang++' and kind == 'reference':
+            if str(argv[0]) == 'clang++' and kind == 'reference' and not self.reference_build:
                 argv = [*argv, '-DOLM_REFERENCE_BUILD=1']
             return super().compile(argv, end)
     adapter = Native(options)
+    adapter.reference_build = kind == 'reference'
     adapter.env.update(TMPDIR=str(directory), TMP=str(directory), TEMP=str(directory))
     directory.mkdir(parents=True, exist_ok=True)
     adapter.binary, _ = adapter.build(directory, deadline)

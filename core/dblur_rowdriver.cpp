@@ -4,6 +4,9 @@
 #include "dblur_noise.h"
 
 #include <cstdint>
+#include <cstdlib>
+#include <cerrno>
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #if defined(__APPLE__)
@@ -69,7 +72,11 @@ float weight_at(const float* table, int index, float scale) {
 }
 
 __attribute__((noinline)) float powf_compat(float value, float exponent) {
+#ifdef OLM_REFERENCE_BUILD
+    volatile float r = ucrt_powf(value, exponent, UCRT_FMA);
+#else
     const float r = ucrt_powf(value, exponent, UCRT_FMA);
+#endif
     return r;
 }
 
@@ -361,7 +368,16 @@ void rowdriver_impl_fast(
     if (parallel && row_end - row_start >= 64) {
         // Scatter and prepass are clipped to their own row. Each partition
         // preserves the original x/i order and owns disjoint output cells.
-        constexpr size_t partitions = 8;
+        size_t partitions = 8;
+        if (const char* value = std::getenv("OLM_PARALLEL_MAX")) {
+            char* end = nullptr;
+            const int saved_errno = errno;
+            errno = 0;
+            const unsigned long maximum = std::strtoul(value, &end, 10);
+            if (*value >= '0' && *value <= '9' && end != value && *end == '\0' &&
+                errno == 0 && maximum > 0) partitions = std::min<size_t>(partitions, maximum);
+            errno = saved_errno;
+        }
         auto run = [&](size_t part) {
             const int begin = row_start + (row_end - row_start) * part / partitions;
             const int end = row_start + (row_end - row_start) * (part + 1) / partitions;

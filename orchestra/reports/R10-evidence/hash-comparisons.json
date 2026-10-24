@@ -1,0 +1,12 @@
+[
+  {
+    "label": "P05a-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  }
+]

@@ -19,6 +19,6 @@ for (directory,maximum,sampler),paths in sorted(groups.items()):
   cmd=[sys.executable,'tools/fuzz/run.py','--plugin',a.plugin,'--reference-build','--jobs','1','--shrink-attempts','0','--scratch',str(S/'build'),'--corpus',str(S/'failures'),'--replay',str(target),'--max-size',str(maximum),'--size-sampler',sampler,'--report',str(S/(label+'.json'))]
   with (S/(label+'.log')).open('w') as log:r=subprocess.run(cmd,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT)
   data=json.loads((S/(label+'.json')).read_text())
-  rows.append(dict(command=cmd,returncode=r.returncode,status=data.get('status'),summary=data.get('summary'),replay_matches=[x.get('replay_matches') for x in data.get('replays',[])]))
+  rows.append(dict(command=cmd,returncode=r.returncode,status=data.get('status'),summary=data.get('summary'),replay_matches=[x.get('matches_saved') for x in data.get('replays',[])]))
   (S/'commands.json').write_text(json.dumps(rows,indent=2)+'\n')
   print(label,r.returncode,data.get('status'),flush=True)
