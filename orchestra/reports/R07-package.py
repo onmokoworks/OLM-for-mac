@@ -14,6 +14,8 @@ if args.group=='f40':
  files += [S/'f40-adjudication.json']
 if args.group=='bindings':
  files += [p for p in sorted(S.glob('performance-*')) if p.is_file()]
+ files += [S/'bindings-before.json', S/'documentation-after-tests.log']
+ files += [p for p in sorted(S.glob('generic-after.*')) if p.is_file()]
 rows=[]
 archive=OUT/f'R07-{args.group}-evidence.tar.xz'
 with tarfile.open(archive,'w:xz') as tar:

@@ -100,3 +100,83 @@ python3 -B orchestra/reports/R07-verify-blur-owner.py
 ```
 
 Expected: seven current worker cases exact; owner reports reproduce twice; six focused commands exit0 (13 test methods total). ColorKeep diagnostic exits0 after recording the unresolved legacy probe4 and complete600-byte pixel equality; driver exit0 is not closure of fixture033. No numerical claims beyond the measured cells.
+
+Group3 facts — support documentation and performance bindings:
+
+The mixed R03 performance entry was rerun before changes: its two failures were invocation-executable prefix mismatch and stale command-catalog binding (the first reported lane varies with catalog iteration). `tools/perf/run_generic_beta_smoke.py --output orchestra/state/R07-gate-contracts-and-bindings/performance-current.json` then measured **20/20 HD/UHD cells successfully**, zero unavailable/failed cells. Pre/post dependency and toolchain identities match. The fresh measured report replaces `reports/generic_beta_perf_smoke.json`; no retrospective relabeling or verifier relaxation was used. The old report is preserved in the group3 archive and Git history.
+
+| Group3 check | Before | After |
+|---|---|---|
+| Performance runner / R03 mixed entry | exit1, two binding failures | exit0; all36 standalone test functions complete, including tamper/timeout/failed-measurement checks |
+| Canonical report strict `--verify-only` | old interpreter/worktree/catalog bindings | exit0 with fresh execution-pre-and-post provenance |
+| Performance measured cells | stale report, no new measurement | 20 passed / 0 failed / 0 unavailable |
+| Support documentation tests | 19 tests, 4 failures | 19 tests, 4 failures; timing binding is repaired, fourth test reaches an obsolete Radial policy assertion |
+| Full generic gate | R05:45 PASS /8 FAIL /0 SKIP | **46 PASS /7 FAIL /0 SKIP**, fresh completed run, exit1 |
+| Release aggregate | R05 `releasable=false` | Not rerun; unresolved contracts, bindings and host obligations prevent a completion claim |
+
+`docs/BETA_SUPPORT.md` now quotes the measured Kira HD36.90s /528,908,288 bytes and UHD136.29s /1,559,150,592 bytes. The new bounded Radial paragraph records HD10.68s /284,622,848 bytes and UHD23.62s /801,767,424 bytes for the existing12 cases/geometry. Historical Radial measurements remain explicitly historical. These are hostless Mac performance observations, **not original-AEX pixel or native-AE evidence**. No supported-domain or numerical-exactness claim was expanded from timing data.
+
+Remaining documentation failures, individually:
+
+1. ColorKeep native-AE source binding: retained report expects `7d47836709f9a6dc76285ce249ed0de55a04329e0fa1900f7214553563a8301e`, current source is `5a8502ad3cd11a78f16cd800736fb53ac43c6c4abf2eacdebb192f3a1924e284`. Renewing this current native-host claim **requires real AE/Windows**; no source-only repin is made.
+2. Dispatch-code text predicate: expects `PF_OutFlag2_SUPPORTS_SMART_RENDER` directly in Smoother v1 source. The current source lacks that literal. Replacing a source-string assertion requires a validated current registration/dispatch contract; the20 performance cells are not that proof. Blocked, assertion retained.
+3. Parameter/geometry text predicates: first failure is the old Blur `width > 4096 || height > 2160` literal; the same test also contains obsolete Radial/Directional support restrictions. No blanket token deletion or expanded supported-domain assertion is made without fresh original-backed coverage. Blocked.
+4. The performance/documentation test now passes the new Kira/Radial timing comparisons, then fails on absent `portable右端処理`. Current Radial arithmetic-policy documentation superseded that historical phrase. Adding the phrase solely to pass the test or silently removing its predicate would not establish the current policy's original-backed contract. Blocked; no Radial production or reserved fixture is edited.
+
+The performance verifier deliberately retains exact interpreter, worktree, source, SDK and toolchain bindings. This report is valid in the measured R07 checkout. The orchestrator must remeasure from its release checkout before claiming a current binding there; copying paths or weakening identity checks is not part of this change.
+
+Group3 changed_files:
+
+- `reports/generic_beta_perf_smoke.json`: fresh20-cell measurements and execution provenance.
+- `docs/BETA_SUPPORT.md`: measured timing/memory values and explicit hostless/worktree boundary only.
+- `orchestra/reports/R07-finalize.py`, `R07-results.json`, `R07-bindings-evidence.tar.xz`, `R07-bindings-manifest.json`; packaging extension and this report.
+
+Group3 verify:
+
+```sh
+export TMPDIR="$PWD/orchestra/state/R07-gate-contracts-and-bindings"
+export TMP="$TMPDIR" TEMP="$TMPDIR" OLM_TEST_JOBS=2 PYTHONDONTWRITEBYTECODE=1
+mkdir -p "$TMPDIR"
+PY="/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3"
+"$PY" -B tools/perf/run_generic_beta_smoke.py --verify-only reports/generic_beta_perf_smoke.json
+python3 -B orchestra/reports/R07-check-items.py --group bindings
+"$PY" -B scripts/run_olm_generic_beta_gate.py --report "$TMPDIR/generic-recheck.json" > "$TMPDIR/generic-recheck.log" 2>&1
+```
+
+Expected in this measured checkout: report verification0; documentation1 and performance tests0. A fresh performance run in another checkout uses `--output "$TMPDIR/performance-recheck.json"`; all20 cells must independently satisfy the unchanged budgets/shape/evidence checks. New timings need not equal these measurements.
+
+Final next:
+
+R07 is **blocked, not complete**. Six historical fixture commands and the mixed performance entry are repaired, but the requested release-gate closure is not achieved. Group1 needs per-contract admission/lifecycle/atomicity evidence (and separate production authorization where a real safety defect is confirmed). Remaining F40 consumers need complete replacement packages and twice-original/current-build proofs; the per-item inventory keeps their concrete failures visible. Documentation predicates need current semantic contracts rather than stale source snippets. Current installed/native-host evidence remains a separately authorized **requires real AE/Windows** task. R08 owns the reserved Radial152–181 fixtures. No measured genuine Mac-versus-original pixel mismatch was found in the new Blur/ColorKeep comparisons, so no fuzz-format numerical witness is manufactured.
+
+Final verification and cleanup facts:
+
+- Full generic gate:46 PASS /7 FAIL /0 SKIP. Remaining failures are Directional back-only and cleanup, Distance production, Kira UI length, Kira Windows-owner renewal (**requires real AE/Windows**), Radial baseline and support documentation.
+- All three evidence archives pass SHA-256/member-count/member-digest validation. All R07 Python drivers parse; `git diff --check` passes.
+- No task subprocess remains running. Scratch is3.0MiB after completed checks; regenerable ColorKeep products/build tree were removed and all temporary build contexts closed. No durable oracle worker was built or changed.
+- Release aggregate was not rerun and no release status/manifest is promoted.
+
+Offline retained-evidence verification:
+
+```sh
+python3 - <<'PY_VERIFY'
+import hashlib,json,tarfile
+from pathlib import Path
+p=Path('orchestra/reports')
+for name in ('contracts','f40','bindings'):
+    m=json.loads((p/f'R07-{name}-manifest.json').read_text())
+    with (p/m['archive']).open('rb') as f:
+        assert hashlib.file_digest(f,'sha256').hexdigest()==m['sha256']
+    with tarfile.open(p/m['archive']) as t:
+        assert len(t.getmembers())==len(m['files'])
+        for row in m['files']:
+            with t.extractfile(row['path']) as f:
+                assert hashlib.file_digest(f,'sha256').hexdigest()==row['sha256']
+r=json.loads((p/'R07-results.json').read_text())
+assert r['status']=='blocked'
+assert r['generic_counts']=={'PASS':46,'FAIL':7,'SKIP':0}
+assert all(x['exit']==0 for x in r['blur_after'])
+assert r['performance']['cells']==20 and r['performance']['status']=='PASS'
+print('R07 evidence intact; release closure remains blocked')
+PY_VERIFY
+```
