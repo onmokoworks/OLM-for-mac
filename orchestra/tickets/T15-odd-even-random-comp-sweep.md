@@ -1,8 +1,11 @@
-depends: P01a-blur-downsample
-depends: P01b-directionalblur-downsample
-depends: P01c-colorkey-downsample
-depends: F52c-geometry-hosts-and-campaigns
-
+depends: P02a-colorkeep-geometry
+depends: P02b-distancegradation-geometry
+depends: P02c-kirakira-geometry
+depends: P02d-radialblur-geometry
+depends: P02e-toondilate-geometry
+depends: P02f-smoother2-geometry
+depends: P02g-smoother-geometry
+depends: P02h-blur-geometry
 # T15: random odd/even comp-size sweep, with downsample, for all 10 plugins (user request)
 
 ## Why

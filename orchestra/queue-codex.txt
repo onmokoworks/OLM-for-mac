@@ -103,3 +103,11 @@ P01c-colorkey-downsample
 F52b-geometry-plumbing-all-plugins
 T15-odd-even-random-comp-sweep
 F52c-geometry-hosts-and-campaigns
+P02a-colorkeep-geometry
+P02b-distancegradation-geometry
+P02c-kirakira-geometry
+P02d-radialblur-geometry
+P02e-toondilate-geometry
+P02f-smoother2-geometry
+P02g-smoother-geometry
+P02h-blur-geometry
