@@ -1,0 +1,585 @@
+{
+  "olmcolorkey": {
+    "total": {
+      "E": 10,
+      "M": 6,
+      "R": 3,
+      "U": 1,
+      "H": 0
+    },
+    "by_full_parity": {
+      "even/even": {
+        "E": 1,
+        "M": 0,
+        "R": 1,
+        "U": 1,
+        "H": 0
+      },
+      "even/odd": {
+        "E": 2,
+        "M": 3,
+        "R": 1,
+        "U": 0,
+        "H": 0
+      },
+      "odd/even": {
+        "E": 2,
+        "M": 1,
+        "R": 1,
+        "U": 0,
+        "H": 0
+      },
+      "odd/odd": {
+        "E": 5,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "by_downsample": {
+      "1/1x1/1": {
+        "E": 1,
+        "M": 1,
+        "R": 0,
+        "U": 1,
+        "H": 0
+      },
+      "1/2x1/2": {
+        "E": 2,
+        "M": 1,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "1/3x1/3": {
+        "E": 2,
+        "M": 2,
+        "R": 1,
+        "U": 0,
+        "H": 0
+      },
+      "1/4x1/4": {
+        "E": 5,
+        "M": 0,
+        "R": 2,
+        "U": 0,
+        "H": 0
+      },
+      "1/8x1/8": {
+        "E": 0,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "by_depth": {
+      "16": {
+        "E": 1,
+        "M": 1,
+        "R": 1,
+        "U": 0,
+        "H": 0
+      },
+      "32": {
+        "E": 6,
+        "M": 1,
+        "R": 1,
+        "U": 1,
+        "H": 0
+      },
+      "8": {
+        "E": 3,
+        "M": 4,
+        "R": 1,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "failures": [
+      {
+        "index": 1,
+        "classification": "Mac-only admission refusal",
+        "first_difference": null,
+        "geometry_difference": null,
+        "refusals": {
+          "classic": [
+            "PrepareRenderWorld:public-admission@2598"
+          ],
+          "smart": [
+            "PrepareRenderWorld:public-admission@2598"
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 72,
+          "actual_word_hex": "00",
+          "different_bytes": 63,
+          "different_words": 63,
+          "expected_bytes": 72,
+          "expected_word_hex": "ff",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 3,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 16,
+          "actual_word_hex": "5e4a",
+          "different_bytes": 12,
+          "different_words": 6,
+          "expected_bytes": 16,
+          "expected_word_hex": "6345",
+          "first_byte": 2,
+          "first_word": 1
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 8,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 20,
+          "actual_word_hex": "36",
+          "different_bytes": 19,
+          "different_words": 19,
+          "expected_bytes": 20,
+          "expected_word_hex": "69",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 9,
+        "classification": "Mac-only admission refusal",
+        "first_difference": null,
+        "geometry_difference": null,
+        "refusals": {
+          "classic": [
+            "PrepareRenderWorld:public-admission@2598"
+          ],
+          "smart": [
+            "PrepareRenderWorld:public-admission@2598"
+          ]
+        }
+      },
+      {
+        "index": 10,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 16,
+          "actual_word_hex": "22b16f3e",
+          "different_bytes": 13,
+          "different_words": 4,
+          "expected_bytes": 16,
+          "expected_word_hex": "477f3c3f",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 11,
+        "classification": "Mac-only admission refusal",
+        "first_difference": null,
+        "geometry_difference": null,
+        "refusals": {
+          "classic": [
+            "PrepareRenderWorld:public-admission@2598"
+          ],
+          "smart": [
+            "PrepareRenderWorld:public-admission@2598"
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 20,
+          "actual_word_hex": "00",
+          "different_bytes": 18,
+          "different_words": 18,
+          "expected_bytes": 20,
+          "expected_word_hex": "dc",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 17,
+        "classification": "pixel mismatch with equal rectangles",
+        "first_difference": {
+          "actual_bytes": 8,
+          "actual_word_hex": "94",
+          "different_bytes": 7,
+          "different_words": 7,
+          "expected_bytes": 8,
+          "expected_word_hex": "4d",
+          "first_byte": 1,
+          "first_word": 1
+        },
+        "geometry_difference": null,
+        "refusals": {}
+      },
+      {
+        "index": 19,
+        "classification": "Mac-only admission refusal",
+        "first_difference": null,
+        "geometry_difference": null,
+        "refusals": {
+          "smart": [
+            "PrepareRenderWorld:public-admission@2598"
+          ]
+        }
+      }
+    ]
+  },
+  "olmdirectionalblur": {
+    "total": {
+      "E": 12,
+      "M": 8,
+      "R": 0,
+      "U": 0,
+      "H": 0
+    },
+    "by_full_parity": {
+      "even/even": {
+        "E": 1,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "even/odd": {
+        "E": 3,
+        "M": 3,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "odd/even": {
+        "E": 3,
+        "M": 1,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "odd/odd": {
+        "E": 5,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "by_downsample": {
+      "1/1x1/1": {
+        "E": 1,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "1/2x1/2": {
+        "E": 2,
+        "M": 1,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "1/3x1/3": {
+        "E": 2,
+        "M": 3,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "1/4x1/4": {
+        "E": 7,
+        "M": 0,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "1/8x1/8": {
+        "E": 0,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "by_depth": {
+      "16": {
+        "E": 2,
+        "M": 1,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "32": {
+        "E": 7,
+        "M": 2,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      },
+      "8": {
+        "E": 3,
+        "M": 5,
+        "R": 0,
+        "U": 0,
+        "H": 0
+      }
+    },
+    "failures": [
+      {
+        "index": 2,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 168,
+          "actual_word_hex": "00",
+          "different_bytes": 96,
+          "different_words": 96,
+          "expected_bytes": 72,
+          "expected_word_hex": "",
+          "first_byte": 72,
+          "first_word": 72
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            42,
+            1
+          ],
+          "expected": [
+            16,
+            0,
+            34,
+            1
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 3,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 40,
+          "actual_word_hex": "0000",
+          "different_bytes": 24,
+          "different_words": 12,
+          "expected_bytes": 16,
+          "expected_word_hex": "",
+          "first_byte": 16,
+          "first_word": 8
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            5,
+            1
+          ],
+          "expected": [
+            2,
+            0,
+            4,
+            1
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 8,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 144,
+          "actual_word_hex": "69",
+          "different_bytes": 139,
+          "different_words": 139,
+          "expected_bytes": 20,
+          "expected_word_hex": "00",
+          "first_byte": 4,
+          "first_word": 4
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            3,
+            12
+          ],
+          "expected": [
+            1,
+            7,
+            2,
+            12
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 10,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 176,
+          "actual_word_hex": "00000000",
+          "different_bytes": 160,
+          "different_words": 40,
+          "expected_bytes": 16,
+          "expected_word_hex": "",
+          "first_byte": 16,
+          "first_word": 4
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            11,
+            1
+          ],
+          "expected": [
+            7,
+            0,
+            8,
+            1
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 11,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 168,
+          "actual_word_hex": "6a",
+          "different_bytes": 147,
+          "different_words": 147,
+          "expected_bytes": 40,
+          "expected_word_hex": "69",
+          "first_byte": 21,
+          "first_word": 21
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            7,
+            6
+          ],
+          "expected": [
+            0,
+            2,
+            5,
+            4
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 12,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 64,
+          "actual_word_hex": "60",
+          "different_bytes": 45,
+          "different_words": 45,
+          "expected_bytes": 20,
+          "expected_word_hex": "34",
+          "first_byte": 8,
+          "first_word": 8
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            8,
+            2
+          ],
+          "expected": [
+            0,
+            1,
+            5,
+            2
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 17,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 180,
+          "actual_word_hex": "6f",
+          "different_bytes": 180,
+          "different_words": 180,
+          "expected_bytes": 8,
+          "expected_word_hex": "5d",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            5,
+            9
+          ],
+          "expected": [
+            2,
+            0,
+            3,
+            2
+          ]
+        },
+        "refusals": {}
+      },
+      {
+        "index": 19,
+        "classification": "negotiated output rectangle",
+        "first_difference": {
+          "actual_bytes": 2304,
+          "actual_word_hex": "3864db3e",
+          "different_bytes": 2259,
+          "different_words": 569,
+          "expected_bytes": 160,
+          "expected_word_hex": "c40f023d",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "geometry_difference": {
+          "actual": [
+            0,
+            0,
+            8,
+            18
+          ],
+          "expected": [
+            6,
+            8,
+            7,
+            18
+          ]
+        },
+        "refusals": {}
+      }
+    ]
+  }
+}
