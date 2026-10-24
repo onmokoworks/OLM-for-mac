@@ -1,0 +1,6 @@
+{
+  "command": "export TMPDIR=\"$PWD/orchestra/state/P07a-parallel-helper-kirakira\"\nclang++ -std=c++17 -O2 -I \"$PWD\" orchestra/reports/P07a-evidence/helper_test.cpp -o \"$TMPDIR/helper-test\"\n\"$TMPDIR/helper-test\"",
+  "exit_code": 0,
+  "cases": 385,
+  "binary_sha256": "318f0d44b4b67bb203c8fe472612ebfae7af40c2068ab9a7055b80ac50ed85e8"
+}

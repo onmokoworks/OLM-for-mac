@@ -1,0 +1,37 @@
+{
+  "name": "P07a-kirakira",
+  "worker_path": "/Users/onmk/.cache/olm-emu/P07a-kirakira/plugin-host",
+  "worker_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "bundles_path": "/Users/onmk/.cache/olm-emu/P07a-kirakira",
+  "bundle_sha256": {
+    "OLMKiraKira": "1589a493f2730faea9bd5ca061216f1be48af15986860acd62044c8219a60575"
+  },
+  "source_sha256": {
+    "core/kirakira_warp.h": "67a5b8e092db4f0e70e55f432c4d6e26e28e89122a5192960c593bd2f8651965",
+    "core/olm_parallel.h": "862c69702f73775e8c74fe738bb182b14cf05424d7042ab3ac1c13de7c429bec",
+    "mac/OLMKiraKira/OLMKiraKira.cpp": "12451e7b6ff6eec65956099b8928cb396dc53a036620893ed888e2778030d1af"
+  },
+  "capability": "P07a Universal parallel warp candidate; P00b host reused; not an oracle",
+  "command": [
+    "xcodebuild",
+    "-project",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj",
+    "-configuration",
+    "Release",
+    "-jobs",
+    "1",
+    "SRCROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/mac/OLMKiraKira/Mac",
+    "INFOPLIST_FILE=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/mac/OLMKiraKira/Mac/OLMKiraKira.plugin-Info.plist",
+    "ARCHS=arm64 x86_64",
+    "ONLY_ACTIVE_ARCH=NO",
+    "MACOSX_DEPLOYMENT_TARGET=11.0",
+    "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/build/obj",
+    "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/build/products",
+    "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/build/pch",
+    "CONFIGURATION_BUILD_DIR=/Users/onmk/.cache/olm-emu/P07a-kirakira/xcode/OLMKiraKira/products",
+    "GCC_OPTIMIZATION_LEVEL=2",
+    "ENABLE_TESTABILITY=NO",
+    "CODE_SIGNING_ALLOWED=NO",
+    "build"
+  ]
+}

@@ -4,6 +4,7 @@
 #include "../ucrtmath/include/ucrtmath.h"
 #include <cstddef>
 #include <vector>
+#include "olm_parallel.h"
 
 namespace olm::kirakira {
 
@@ -63,7 +64,11 @@ inline std::vector<float> warp_get_rotation_matrix_2d(
 	constexpr int kAbScale = 1 << 10;
 	constexpr int kRoundDelta = 1 << 4;
 	std::vector<float> output(static_cast<std::size_t>(dst_width) * dst_height);
-	for (int y = 0; y < dst_height; ++y) {
+	// Keep all interpolation operands and their order inside one row.
+	const auto grain = output.size() < 65536 ? static_cast<std::size_t>(dst_height) :
+		std::max<std::size_t>(1, 32768 / std::max(1, dst_width));
+	olm::parallel_rows(static_cast<std::size_t>(dst_height), grain, [&](std::size_t row) {
+		const int y = static_cast<int>(row);
 		const int base_x = static_cast<int>(std::lrint((i01 * y + i02) * kAbScale)) + kRoundDelta;
 		const int base_y = static_cast<int>(std::lrint((i11 * y + i12) * kAbScale)) + kRoundDelta;
 		for (int x = 0; x < dst_width; ++x) {
@@ -72,7 +77,7 @@ inline std::vector<float> warp_get_rotation_matrix_2d(
 			output[static_cast<std::size_t>(y) * dst_width + x] =
 				warp_sample_bilinear_zero(input, src_width, src_height, xf, yf);
 		}
-	}
+	});
 	return output;
 }
 

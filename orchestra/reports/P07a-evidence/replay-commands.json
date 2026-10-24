@@ -1,0 +1,122 @@
+[
+  {
+    "label": "replay-default",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmkirakira",
+      "--jobs",
+      "1",
+      "--shrink-attempts",
+      "0",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-default",
+      "--corpus",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-default-corpus",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-default.json",
+      "--replay",
+      "tests/fuzz_corpus/olmkirakira"
+    ],
+    "returncode": 0
+  },
+  {
+    "label": "replay-gate-off",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmkirakira",
+      "--jobs",
+      "1",
+      "--shrink-attempts",
+      "0",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-off",
+      "--corpus",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-off-corpus",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-off.json",
+      "--replay",
+      "tests/fuzz_corpus/olmkirakira_gate_off_T06"
+    ],
+    "returncode": 0
+  },
+  {
+    "label": "replay-gate-reductions",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmkirakira",
+      "--jobs",
+      "1",
+      "--shrink-attempts",
+      "0",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-reductions",
+      "--corpus",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-reductions-corpus",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-gate-reductions.json",
+      "--replay",
+      "tests/fuzz_corpus/olmkirakira_gate_off_T06/other_reductions"
+    ],
+    "returncode": 0
+  },
+  {
+    "label": "replay-realistic",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmkirakira",
+      "--jobs",
+      "1",
+      "--shrink-attempts",
+      "0",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-realistic",
+      "--corpus",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-realistic-corpus",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-realistic.json",
+      "--replay",
+      "tests/fuzz_corpus/olmkirakira_realistic_P02c",
+      "--geometry",
+      "realistic"
+    ],
+    "returncode": 0
+  },
+  {
+    "label": "replay-odd",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmkirakira",
+      "--jobs",
+      "1",
+      "--shrink-attempts",
+      "0",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-odd",
+      "--corpus",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-odd-corpus",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07a-parallel-helper-kirakira/orchestra/state/P07a-parallel-helper-kirakira/replay-odd.json",
+      "--replay",
+      "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic",
+      "--geometry",
+      "realistic",
+      "--size-sampler",
+      "odd-even-v1",
+      "--max-size",
+      "1920",
+      "--size-max-height",
+      "1080"
+    ],
+    "returncode": 2
+  }
+]
