@@ -3,6 +3,7 @@ import contextlib
 import copy
 import io
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -12,7 +13,7 @@ import rebaseline_corpus
 
 class ProductionRebaseline(unittest.TestCase):
     def test_policy_and_history(self):
-        scratch=Path('orchestra/state/F23-corpus-rebaseline-all').resolve()
+        scratch=Path(os.environ.get('OLM_FUZZ_TEST_SCRATCH', 'orchestra/state/F23-corpus-rebaseline-all')).resolve()
         scratch.mkdir(parents=True,exist_ok=True)
         for before, after, changed_hash, allowed in [
             ('mismatch','exact',True,True), ('mismatch','mismatch',True,True),
@@ -51,7 +52,7 @@ class ProductionRebaseline(unittest.TestCase):
                     for p in paths:self.assertEqual(json.loads(p.read_text()),initial)
 
     def test_oracle_and_route_drift(self):
-        scratch = Path('orchestra/state/F23-corpus-rebaseline-all').resolve()
+        scratch = Path(os.environ.get('OLM_FUZZ_TEST_SCRATCH', 'orchestra/state/F23-corpus-rebaseline-all')).resolve()
         scratch.mkdir(parents=True, exist_ok=True)
         for drift in ('oracle', 'route_oracle', 'route_set', 'duplicate'):
             with self.subTest(drift=drift), tempfile.TemporaryDirectory(dir=scratch) as td:

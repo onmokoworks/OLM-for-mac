@@ -18,7 +18,7 @@ from run import ROOT, default_worker, main_checkout, run_one, disk_bytes
 
 PLUGINS = ('olmdirectionalblur','olmcolorkey','olmsmoother2','olmkirakira','olmblur',
            'colorkeep','olmdistancegradation','olmsmoother','olmtoondilate')
-SCRATCH = ROOT/'orchestra/state/T04-fuzz-adapters-all-plugins'
+SCRATCH = Path(os.environ.get('OLM_FUZZ_TEST_SCRATCH', ROOT/'orchestra/state/T04-fuzz-adapters-all-plugins'))
 
 
 def adapter(name, max_size=32):
