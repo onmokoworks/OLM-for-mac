@@ -1,0 +1,1265 @@
+{
+  "ColorKeep": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/ColorKeep.aex.asm.txt",
+    "sha256": "9b8af3b010371ca654ca85b9b0fb8888c25946d0be6cce3cc50377c2a57e746d",
+    "nonstack_0x11c_sites": [],
+    "snippets": [
+      {
+        "line": 6,
+        "text": "180001000  MOV qword ptr [RSP + 0x10],RBX"
+      },
+      {
+        "line": 7,
+        "text": "180001005  MOV qword ptr [RSP + 0x18],RBP"
+      },
+      {
+        "line": 8,
+        "text": "18000100a  PUSH RSI"
+      },
+      {
+        "line": 9,
+        "text": "18000100b  PUSH RDI"
+      },
+      {
+        "line": 10,
+        "text": "18000100c  PUSH R14"
+      },
+      {
+        "line": 11,
+        "text": "18000100e  SUB RSP,0x980"
+      },
+      {
+        "line": 12,
+        "text": "180001015  MOV RDI,R9"
+      },
+      {
+        "line": 13,
+        "text": "180001018  MOV RBP,R8"
+      },
+      {
+        "line": 14,
+        "text": "18000101b  MOV RSI,RCX"
+      },
+      {
+        "line": 15,
+        "text": "18000101e  MOV RDX,qword ptr [RCX + 0x180]"
+      },
+      {
+        "line": 16,
+        "text": "180001025  LEA RCX,[RSP + 0x4e0]"
+      },
+      {
+        "line": 17,
+        "text": "18000102d  CALL 0x180002b90"
+      },
+      {
+        "line": 18,
+        "text": "180001032  NOP"
+      },
+      {
+        "line": 19,
+        "text": "180001033  MOV R14D,dword ptr [RDI + 0x38]"
+      },
+      {
+        "line": 20,
+        "text": "180001037  SUB R14D,dword ptr [RDI + 0x30]"
+      },
+      {
+        "line": 21,
+        "text": "18000103b  MOV RAX,qword ptr [RSI + 0xb0]"
+      },
+      {
+        "line": 22,
+        "text": "180001042  MOV qword ptr [RSP + 0x20],0x0"
+      },
+      {
+        "line": 23,
+        "text": "18000104b  XOR R9D,R9D"
+      },
+      {
+        "line": 24,
+        "text": "18000104e  MOV R8,RDI"
+      },
+      {
+        "line": 25,
+        "text": "180001051  MOV RDX,RBP"
+      },
+      {
+        "line": 26,
+        "text": "180001054  MOV RCX,qword ptr [RSI + 0xb8]"
+      },
+      {
+        "line": 27,
+        "text": "18000105b  CALL qword ptr [RAX + 0x40]"
+      },
+      {
+        "line": 28,
+        "text": "18000105e  MOV EBX,EAX"
+      },
+      {
+        "line": 29,
+        "text": "180001060  TEST EAX,EAX"
+      },
+      {
+        "line": 30,
+        "text": "180001062  JNZ 0x180001116"
+      },
+      {
+        "line": 31,
+        "text": "180001068  MOV RBX,qword ptr [RSP + 0x9c0]"
+      },
+      {
+        "line": 32,
+        "text": "180001070  MOV qword ptr [RBX + 0x8],RBP"
+      },
+      {
+        "line": 33,
+        "text": "180001074  MOV qword ptr [RBX + 0x10],RDI"
+      },
+      {
+        "line": 34,
+        "text": "180001078  MOV RDX,qword ptr [RSI + 0x180]"
+      },
+      {
+        "line": 35,
+        "text": "18000107f  LEA RCX,[RSP + 0x40]"
+      },
+      {
+        "line": 36,
+        "text": "180001084  CALL 0x180002b90"
+      },
+      {
+        "line": 37,
+        "text": "180001089  NOP"
+      },
+      {
+        "line": 38,
+        "text": "18000108a  MOV R10,qword ptr [RSP + 0x300]"
+      },
+      {
+        "line": 39,
+        "text": "180001092  TEST R10,R10"
+      },
+      {
+        "line": 40,
+        "text": "180001095  JNZ 0x1800010dc"
+      },
+      {
+        "line": 41,
+        "text": "180001097  LEA R8,[RSP + 0x9a0]"
+      },
+      {
+        "line": 42,
+        "text": "18000109f  LEA EDX,[R10 + 0x1]"
+      },
+      {
+        "line": 43,
+        "text": "1800010a3  LEA RCX,[0x180005258]"
+      },
+      {
+        "line": 44,
+        "text": "1800010aa  MOV RAX,qword ptr [RSP + 0x40]"
+      },
+      {
+        "line": 45,
+        "text": "1800010af  CALL qword ptr [RAX]"
+      },
+      {
+        "line": 46,
+        "text": "1800010b1  TEST EAX,EAX"
+      },
+      {
+        "line": 47,
+        "text": "1800010b3  JNZ 0x1800010c2"
+      },
+      {
+        "line": 48,
+        "text": "1800010b5  MOV R10,qword ptr [RSP + 0x9a0]"
+      },
+      {
+        "line": 49,
+        "text": "1800010bd  TEST R10,R10"
+      },
+      {
+        "line": 50,
+        "text": "1800010c0  JNZ 0x1800010d4"
+      },
+      {
+        "line": 51,
+        "text": "1800010c2  LEA RCX,[RSP + 0x40]"
+      },
+      {
+        "line": 52,
+        "text": "1800010c7  CALL 0x180003b70"
+      },
+      {
+        "line": 53,
+        "text": "1800010cc  MOV R10,qword ptr [RSP + 0x9a0]"
+      },
+      {
+        "line": 54,
+        "text": "1800010d4  MOV qword ptr [RSP + 0x300],R10"
+      },
+      {
+        "line": 55,
+        "text": "1800010dc  LEA RAX,[RDI + 0x2c]"
+      },
+      {
+        "line": 56,
+        "text": "1800010e0  MOV qword ptr [RSP + 0x38],RDI"
+      },
+      {
+        "line": 57,
+        "text": "1800010e5  LEA RCX,[0x180001280]"
+      },
+      {
+        "line": 58,
+        "text": "1800010ec  MOV qword ptr [RSP + 0x30],RCX"
+      },
+      {
+        "line": 59,
+        "text": "1800010f1  MOV qword ptr [RSP + 0x28],RBX"
+      },
+      {
+        "line": 60,
+        "text": "1800010f6  MOV qword ptr [RSP + 0x20],RAX"
+      },
+      {
+        "line": 61,
+        "text": "1800010fb  MOV R9,RBP"
+      },
+      {
+        "line": 62,
+        "text": "1800010fe  MOV R8D,R14D"
+      },
+      {
+        "line": 63,
+        "text": "180001101  XOR EDX,EDX"
+      },
+      {
+        "line": 64,
+        "text": "180001103  MOV RCX,RSI"
+      },
+      {
+        "line": 65,
+        "text": "180001106  CALL qword ptr [R10]"
+      },
+      {
+        "line": 66,
+        "text": "180001109  MOV EBX,EAX"
+      },
+      {
+        "line": 67,
+        "text": "18000110b  LEA RCX,[RSP + 0x40]"
+      },
+      {
+        "line": 68,
+        "text": "180001110  CALL 0x180002bd0"
+      },
+      {
+        "line": 69,
+        "text": "180001115  NOP"
+      },
+      {
+        "line": 70,
+        "text": "180001116  LEA RCX,[RSP + 0x4e0]"
+      },
+      {
+        "line": 71,
+        "text": "18000111e  CALL 0x180002bd0"
+      },
+      {
+        "line": 72,
+        "text": "180001123  MOV EAX,EBX"
+      },
+      {
+        "line": 73,
+        "text": "180001125  LEA R11,[RSP + 0x980]"
+      },
+      {
+        "line": 74,
+        "text": "18000112d  MOV RBX,qword ptr [R11 + 0x28]"
+      },
+      {
+        "line": 75,
+        "text": "180001131  MOV RBP,qword ptr [R11 + 0x30]"
+      },
+      {
+        "line": 76,
+        "text": "180001135  MOV RSP,R11"
+      },
+      {
+        "line": 77,
+        "text": "180001138  POP R14"
+      },
+      {
+        "line": 78,
+        "text": "18000113a  POP RDI"
+      },
+      {
+        "line": 79,
+        "text": "18000113b  POP RSI"
+      },
+      {
+        "line": 80,
+        "text": "18000113c  RET"
+      }
+    ]
+  },
+  "DistanceGradation": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/DistanceGradation.aex.asm.txt",
+    "sha256": "b830129adaf05dc2e32a357902b0a60d6cf8f0429340f8cbf869b8287507229c",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 3597264,
+        "function": "; === FUN_181170ff0 @ 181170ff0 ===",
+        "text": "18117177f  MOVD XMM0,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3597534,
+        "function": "; === FUN_181170ff0 @ 181170ff0 ===",
+        "text": "181171bb0  IMUL EAX,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3598029,
+        "function": "; === FUN_181171d00 @ 181171d00 ===",
+        "text": "18117248f  MOVD XMM0,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3598299,
+        "function": "; === FUN_181171d00 @ 181171d00 ===",
+        "text": "1811728c0  IMUL EAX,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3598794,
+        "function": "; === FUN_181172a10 @ 181172a10 ===",
+        "text": "18117319f  MOVD XMM0,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3599064,
+        "function": "; === FUN_181172a10 @ 181172a10 ===",
+        "text": "1811735d0  IMUL EAX,dword ptr [RSI + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 3597260,
+        "text": "18117176d  MOV EAX,dword ptr [RSI + 0x120]"
+      },
+      {
+        "line": 3597261,
+        "text": "181171773  IMUL EAX,dword ptr [RBX + 0x24]"
+      },
+      {
+        "line": 3597262,
+        "text": "181171777  XORPS XMM1,XMM1"
+      },
+      {
+        "line": 3597263,
+        "text": "18117177a  CVTSI2SS XMM1,RAX"
+      },
+      {
+        "line": 3597264,
+        "text": "18117177f  MOVD XMM0,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3597265,
+        "text": "181171787  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 3597266,
+        "text": "18117178a  DIVSS XMM1,XMM0"
+      },
+      {
+        "line": 3597267,
+        "text": "18117178e  CVTTSS2SI EAX,XMM1"
+      },
+      {
+        "line": 3597268,
+        "text": "181171792  MOV dword ptr [RSP + 0x50],EAX"
+      },
+      {
+        "line": 3597269,
+        "text": "181171796  MOV EAX,dword ptr [RBX + 0x28]"
+      },
+      {
+        "line": 3597270,
+        "text": "181171799  IMUL EAX,dword ptr [RSI + 0x128]"
+      },
+      {
+        "line": 3597271,
+        "text": "1811717a0  XORPS XMM1,XMM1"
+      },
+      {
+        "line": 3597272,
+        "text": "1811717a3  CVTSI2SS XMM1,RAX"
+      },
+      {
+        "line": 3597273,
+        "text": "1811717a8  MOVD XMM0,dword ptr [RSI + 0x124]"
+      },
+      {
+        "line": 3597274,
+        "text": "1811717b0  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 3597275,
+        "text": "1811717b3  DIVSS XMM1,XMM0"
+      },
+      {
+        "line": 3597276,
+        "text": "1811717b7  CVTTSS2SI EAX,XMM1"
+      },
+      {
+        "line": 3597277,
+        "text": "1811717bb  MOV dword ptr [RSP + 0x4c],EAX"
+      },
+      {
+        "line": 3597527,
+        "text": "181171b92  MOV RCX,R13"
+      },
+      {
+        "line": 3597528,
+        "text": "181171b95  CALL 0x18117bca0"
+      },
+      {
+        "line": 3597529,
+        "text": "181171b9a  MOV R8D,dword ptr [R15 + 0xd4]"
+      },
+      {
+        "line": 3597530,
+        "text": "181171ba1  CMP R8D,0x1"
+      },
+      {
+        "line": 3597531,
+        "text": "181171ba5  JZ 0x181171bf6"
+      },
+      {
+        "line": 3597532,
+        "text": "181171ba7  MOV ECX,dword ptr [R15 + 0xd8]"
+      },
+      {
+        "line": 3597533,
+        "text": "181171bae  MOV EAX,ECX"
+      },
+      {
+        "line": 3597534,
+        "text": "181171bb0  IMUL EAX,dword ptr [RSI + 0x11c]"
+      },
+      {
+        "line": 3597535,
+        "text": "181171bb7  XOR EDX,EDX"
+      },
+      {
+        "line": 3597536,
+        "text": "181171bb9  DIV dword ptr [RSI + 0x120]"
+      },
+      {
+        "line": 3597537,
+        "text": "181171bbf  LEA R9D,[0x1 + RAX*0x2]"
+      },
+      {
+        "line": 3597538,
+        "text": "181171bc7  IMUL ECX,dword ptr [RSI + 0x124]"
+      },
+      {
+        "line": 3597539,
+        "text": "181171bce  XOR EDX,EDX"
+      },
+      {
+        "line": 3597540,
+        "text": "181171bd0  MOV EAX,ECX"
+      },
+      {
+        "line": 3597541,
+        "text": "181171bd2  DIV dword ptr [RSI + 0x128]"
+      },
+      {
+        "line": 3597542,
+        "text": "181171bd8  LEA EAX,[0x1 + RAX*0x2]"
+      },
+      {
+        "line": 3597543,
+        "text": "181171bdf  DEC R8D"
+      },
+      {
+        "line": 3597544,
+        "text": "181171be2  MOVUPS xmmword ptr [RSP + 0x28],XMM6"
+      },
+      {
+        "line": 3597545,
+        "text": "181171be7  MOV dword ptr [RSP + 0x20],EAX"
+      }
+    ]
+  },
+  "OLMKiraKira": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMKiraKira.aex.asm.txt",
+    "sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 3566090,
+        "function": "; === FUN_18114cc50 @ 18114cc50 ===",
+        "text": "18114ccac  MOVD XMM2,dword ptr [R15 + 0x11c]"
+      },
+      {
+        "line": 3566432,
+        "function": "; === FUN_18114d220 @ 18114d220 ===",
+        "text": "18114d27c  MOVD XMM2,dword ptr [R15 + 0x11c]"
+      },
+      {
+        "line": 3566774,
+        "function": "; === FUN_18114d7f0 @ 18114d7f0 ===",
+        "text": "18114d84c  MOVD XMM2,dword ptr [R15 + 0x11c]"
+      },
+      {
+        "line": 3789926,
+        "function": "; === FUN_181232560 @ 181232560 ===",
+        "text": "18123258c  MOVD XMM0,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 3789940,
+        "function": "; === FUN_1812325c0 @ 1812325c0 ===",
+        "text": "1812325cf  CVTSI2SD XMM0,dword ptr [RCX + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 3566080,
+        "text": "18114cc88  MOV R13,R9"
+      },
+      {
+        "line": 3566081,
+        "text": "18114cc8b  MOV RBX,R8"
+      },
+      {
+        "line": 3566082,
+        "text": "18114cc8e  MOV R15,RCX"
+      },
+      {
+        "line": 3566083,
+        "text": "18114cc91  MOV RDI,qword ptr [RBP + 0x310]"
+      },
+      {
+        "line": 3566084,
+        "text": "18114cc98  MOV ECX,dword ptr [R8 + 0x28]"
+      },
+      {
+        "line": 3566085,
+        "text": "18114cc9c  MOV dword ptr [RDI + 0x5c],ECX"
+      },
+      {
+        "line": 3566086,
+        "text": "18114cc9f  MOV dword ptr [RDI + 0x54],ECX"
+      },
+      {
+        "line": 3566087,
+        "text": "18114cca2  MOV EDX,dword ptr [R8 + 0x24]"
+      },
+      {
+        "line": 3566088,
+        "text": "18114cca6  MOV dword ptr [RDI + 0x60],EDX"
+      },
+      {
+        "line": 3566089,
+        "text": "18114cca9  MOV dword ptr [RDI + 0x58],EDX"
+      },
+      {
+        "line": 3566090,
+        "text": "18114ccac  MOVD XMM2,dword ptr [R15 + 0x11c]"
+      },
+      {
+        "line": 3566091,
+        "text": "18114ccb5  CVTDQ2PS XMM2,XMM2"
+      },
+      {
+        "line": 3566092,
+        "text": "18114ccb8  MOV EAX,dword ptr [R15 + 0x120]"
+      },
+      {
+        "line": 3566093,
+        "text": "18114ccbf  XORPS XMM0,XMM0"
+      },
+      {
+        "line": 3566094,
+        "text": "18114ccc2  CVTSI2SS XMM0,RAX"
+      },
+      {
+        "line": 3566095,
+        "text": "18114ccc7  DIVSS XMM2,XMM0"
+      },
+      {
+        "line": 3566096,
+        "text": "18114cccb  MOVSS XMM3,dword ptr [0x181486c1c]"
+      },
+      {
+        "line": 3566097,
+        "text": "18114ccd3  COMISS XMM2,XMM3"
+      },
+      {
+        "line": 3566098,
+        "text": "18114ccd6  JA 0x18114ccde"
+      },
+      {
+        "line": 3566099,
+        "text": "18114ccd8  MOV byte ptr [RDI + 0x50],0x0"
+      },
+      {
+        "line": 3566100,
+        "text": "18114ccdc  JMP 0x18114cd0c"
+      },
+      {
+        "line": 3566101,
+        "text": "18114ccde  CMP byte ptr [RDI + 0x50],0x0"
+      },
+      {
+        "line": 3566102,
+        "text": "18114cce2  JZ 0x18114cd0c"
+      },
+      {
+        "line": 3566103,
+        "text": "18114cce4  MULSS XMM2,XMM3"
+      },
+      {
+        "line": 3566104,
+        "text": "18114cce8  MOVD XMM0,ECX"
+      },
+      {
+        "line": 3566105,
+        "text": "18114ccec  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 3566106,
+        "text": "18114ccef  MULSS XMM0,XMM3"
+      },
+      {
+        "line": 3566107,
+        "text": "18114ccf3  CVTTSS2SI EAX,XMM0"
+      },
+      {
+        "line": 3566108,
+        "text": "18114ccf7  MOV dword ptr [RDI + 0x5c],EAX"
+      },
+      {
+        "line": 3566109,
+        "text": "18114ccfa  MOVD XMM1,EDX"
+      },
+      {
+        "line": 3566110,
+        "text": "18114ccfe  CVTDQ2PS XMM1,XMM1"
+      },
+      {
+        "line": 3566111,
+        "text": "18114cd01  MULSS XMM1,XMM3"
+      },
+      {
+        "line": 3566112,
+        "text": "18114cd05  CVTTSS2SI EAX,XMM1"
+      },
+      {
+        "line": 3566113,
+        "text": "18114cd09  MOV dword ptr [RDI + 0x60],EAX"
+      },
+      {
+        "line": 3566114,
+        "text": "18114cd0c  MOVD XMM0,dword ptr [RDI + 0x18]"
+      },
+      {
+        "line": 3566115,
+        "text": "18114cd11  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 3566116,
+        "text": "18114cd14  MULSS XMM0,XMM2"
+      },
+      {
+        "line": 3566117,
+        "text": "18114cd18  CVTTSS2SI R9D,XMM0"
+      },
+      {
+        "line": 3566118,
+        "text": "18114cd1d  MOV dword ptr [RDI + 0x18],R9D"
+      },
+      {
+        "line": 3566119,
+        "text": "18114cd21  MOVD XMM0,dword ptr [RDI + 0x10]"
+      },
+      {
+        "line": 3566120,
+        "text": "18114cd26  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 3566121,
+        "text": "18114cd29  MULSS XMM0,XMM2"
+      },
+      {
+        "line": 3566122,
+        "text": "18114cd2d  CVTTSS2SI R8D,XMM0"
+      },
+      {
+        "line": 3566123,
+        "text": "18114cd32  MOV dword ptr [RDI + 0x10],R8D"
+      }
+    ]
+  },
+  "OLMRadialBlur": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMRadialBlur.aex.asm.txt",
+    "sha256": "feaf9366c4cff7fc726bea62af94f8b6a638d08fb597844463e3a6274c0b3971",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 5655,
+        "function": "; === FUN_180006d10 @ 180006d10 ===",
+        "text": "180006df8  MOVD XMM1,dword ptr [RDI + 0x11c]"
+      },
+      {
+        "line": 6148,
+        "function": "; === FUN_180007520 @ 180007520 ===",
+        "text": "180007608  MOVD XMM1,dword ptr [RDI + 0x11c]"
+      },
+      {
+        "line": 6641,
+        "function": "; === FUN_180007d30 @ 180007d30 ===",
+        "text": "180007e18  MOVD XMM1,dword ptr [RDI + 0x11c]"
+      },
+      {
+        "line": 23985,
+        "function": "; === FUN_18001a190 @ 18001a190 ===",
+        "text": "18001a1bc  MOVD XMM0,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 23999,
+        "function": "; === FUN_18001a1f0 @ 18001a1f0 ===",
+        "text": "18001a1ff  CVTSI2SD XMM0,dword ptr [RCX + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 5645,
+        "text": "180006dc8  MOVD XMM0,dword ptr [R15 + 0x68]"
+      },
+      {
+        "line": 5646,
+        "text": "180006dce  CVTDQ2PD XMM0,XMM0"
+      },
+      {
+        "line": 5647,
+        "text": "180006dd2  MOVSD XMM4,qword ptr [RBX + 0x28]"
+      },
+      {
+        "line": 5648,
+        "text": "180006dd7  SUBSD XMM4,XMM0"
+      },
+      {
+        "line": 5649,
+        "text": "180006ddb  MOVSD qword ptr [RBX + 0x28],XMM4"
+      },
+      {
+        "line": 5650,
+        "text": "180006de0  MOVD XMM0,dword ptr [R15 + 0x6c]"
+      },
+      {
+        "line": 5651,
+        "text": "180006de6  CVTDQ2PD XMM0,XMM0"
+      },
+      {
+        "line": 5652,
+        "text": "180006dea  MOVSD XMM3,qword ptr [RBX + 0x30]"
+      },
+      {
+        "line": 5653,
+        "text": "180006def  SUBSD XMM3,XMM0"
+      },
+      {
+        "line": 5654,
+        "text": "180006df3  MOVSD qword ptr [RBX + 0x30],XMM3"
+      },
+      {
+        "line": 5655,
+        "text": "180006df8  MOVD XMM1,dword ptr [RDI + 0x11c]"
+      },
+      {
+        "line": 5656,
+        "text": "180006e00  CVTDQ2PS XMM1,XMM1"
+      },
+      {
+        "line": 5657,
+        "text": "180006e03  MOV EAX,dword ptr [RDI + 0x120]"
+      },
+      {
+        "line": 5658,
+        "text": "180006e09  XORPS XMM0,XMM0"
+      },
+      {
+        "line": 5659,
+        "text": "180006e0c  CVTSI2SS XMM0,RAX"
+      },
+      {
+        "line": 5660,
+        "text": "180006e11  DIVSS XMM1,XMM0"
+      },
+      {
+        "line": 5661,
+        "text": "180006e15  MOVSS dword ptr [RBX + 0x48],XMM1"
+      },
+      {
+        "line": 5662,
+        "text": "180006e1a  MOVAPS XMM0,XMM1"
+      },
+      {
+        "line": 5663,
+        "text": "180006e1d  MULSS XMM0,dword ptr [RBX + 0x104]"
+      },
+      {
+        "line": 5664,
+        "text": "180006e25  MOVSS dword ptr [RBX + 0x104],XMM0"
+      },
+      {
+        "line": 5665,
+        "text": "180006e2d  CVTPS2PD XMM2,XMM1"
+      },
+      {
+        "line": 5666,
+        "text": "180006e30  MOVAPS XMM1,XMM2"
+      },
+      {
+        "line": 5667,
+        "text": "180006e33  MULSD XMM1,XMM4"
+      },
+      {
+        "line": 5668,
+        "text": "180006e37  MOVSD qword ptr [RBX + 0x28],XMM1"
+      },
+      {
+        "line": 5669,
+        "text": "180006e3c  MULSD XMM2,XMM3"
+      },
+      {
+        "line": 5670,
+        "text": "180006e40  MOVSD qword ptr [RBX + 0x30],XMM2"
+      }
+    ]
+  },
+  "OLMToonDilate": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMToonDilate.aex.asm.txt",
+    "sha256": "d6bf7f8e5760b555f16ad1ce58ca1b9cfb09c15bb050c9ae85dd6a856c79607f",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 386532,
+        "function": "; === FUN_1801a5a90 @ 1801a5a90 ===",
+        "text": "1801a5ad4  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 386996,
+        "function": "; === FUN_1801a6150 @ 1801a6150 ===",
+        "text": "1801a6194  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 387456,
+        "function": "; === FUN_1801a6800 @ 1801a6800 ===",
+        "text": "1801a6844  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 396644,
+        "function": "; === FUN_1801b0650 @ 1801b0650 ===",
+        "text": "1801b067c  MOVD XMM0,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 396658,
+        "function": "; === FUN_1801b06b0 @ 1801b06b0 ===",
+        "text": "1801b06bf  CVTSI2SD XMM0,dword ptr [RCX + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 386530,
+        "text": "1801a5ace  MOV RDI,R8"
+      },
+      {
+        "line": 386531,
+        "text": "1801a5ad1  MOV RSI,RCX"
+      },
+      {
+        "line": 386532,
+        "text": "1801a5ad4  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 386533,
+        "text": "1801a5adc  CVTDQ2PS XMM7,XMM7"
+      },
+      {
+        "line": 386534,
+        "text": "1801a5adf  MOV EAX,dword ptr [RCX + 0x120]"
+      },
+      {
+        "line": 386535,
+        "text": "1801a5ae5  XORPS XMM0,XMM0"
+      },
+      {
+        "line": 386536,
+        "text": "1801a5ae8  CVTSI2SS XMM0,RAX"
+      },
+      {
+        "line": 386537,
+        "text": "1801a5aed  DIVSS XMM7,XMM0"
+      },
+      {
+        "line": 386538,
+        "text": "1801a5af1  MOV RAX,qword ptr [RBP + 0x100]"
+      },
+      {
+        "line": 386539,
+        "text": "1801a5af8  MULSS XMM7,dword ptr [RAX]"
+      },
+      {
+        "line": 386540,
+        "text": "1801a5afc  CVTTSS2SI ECX,XMM7"
+      },
+      {
+        "line": 386541,
+        "text": "1801a5b00  CMP ECX,0x80000000"
+      },
+      {
+        "line": 386542,
+        "text": "1801a5b06  JZ 0x1801a5b29"
+      },
+      {
+        "line": 386543,
+        "text": "1801a5b08  MOVD XMM0,ECX"
+      },
+      {
+        "line": 386544,
+        "text": "1801a5b0c  CVTDQ2PS XMM0,XMM0"
+      },
+      {
+        "line": 386545,
+        "text": "1801a5b0f  UCOMISS XMM0,XMM7"
+      },
+      {
+        "line": 386546,
+        "text": "1801a5b12  JZ 0x1801a5b29"
+      },
+      {
+        "line": 386547,
+        "text": "1801a5b14  UNPCKLPS XMM7,XMM7"
+      },
+      {
+        "line": 386548,
+        "text": "1801a5b17  MOVMSKPS EAX,XMM7"
+      },
+      {
+        "line": 386549,
+        "text": "1801a5b1a  AND EAX,0x1"
+      },
+      {
+        "line": 386550,
+        "text": "1801a5b1d  XOR EAX,0x1"
+      },
+      {
+        "line": 386551,
+        "text": "1801a5b20  ADD ECX,EAX"
+      },
+      {
+        "line": 386552,
+        "text": "1801a5b22  MOVD XMM7,ECX"
+      },
+      {
+        "line": 386553,
+        "text": "1801a5b26  CVTDQ2PS XMM7,XMM7"
+      },
+      {
+        "line": 386554,
+        "text": "1801a5b29  MOVSXD R12,dword ptr [R8 + 0x28]"
+      },
+      {
+        "line": 386555,
+        "text": "1801a5b2d  MOV dword ptr [RSP + 0x48],R12D"
+      }
+    ]
+  },
+  "OLMSmoother2": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMSmoother2.aex.asm.txt",
+    "sha256": "48d01096d8394c6dd57d924d87415b21edcebe133ac5380cf0a098687406f0f3",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 21216,
+        "function": "; === FUN_180016870 @ 180016870 ===",
+        "text": "18001689c  MOVD XMM0,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 21230,
+        "function": "; === FUN_1800168d0 @ 1800168d0 ===",
+        "text": "1800168df  CVTSI2SD XMM0,dword ptr [RCX + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 21207,
+        "text": "180016870  MOV EAX,dword ptr [RCX + 0x128]"
+      },
+      {
+        "line": 21208,
+        "text": "180016876  XORPS XMM2,XMM2"
+      },
+      {
+        "line": 21209,
+        "text": "180016879  MOVD XMM0,dword ptr [RCX + 0x124]"
+      },
+      {
+        "line": 21210,
+        "text": "180016881  XORPS XMM1,XMM1"
+      },
+      {
+        "line": 21211,
+        "text": "180016884  CVTDQ2PD XMM0,XMM0"
+      },
+      {
+        "line": 21212,
+        "text": "180016888  CVTSI2SD XMM2,RAX"
+      },
+      {
+        "line": 21213,
+        "text": "18001688d  MOV EAX,dword ptr [RCX + 0x120]"
+      },
+      {
+        "line": 21214,
+        "text": "180016893  CVTSI2SD XMM1,RAX"
+      },
+      {
+        "line": 21215,
+        "text": "180016898  DIVSD XMM2,XMM0"
+      },
+      {
+        "line": 21216,
+        "text": "18001689c  MOVD XMM0,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 21217,
+        "text": "1800168a4  CVTDQ2PD XMM0,XMM0"
+      },
+      {
+        "line": 21218,
+        "text": "1800168a8  DIVSD XMM1,XMM0"
+      },
+      {
+        "line": 21219,
+        "text": "1800168ac  MULSD XMM1,qword ptr [RDX]"
+      },
+      {
+        "line": 21220,
+        "text": "1800168b0  MOVSD qword ptr [RDX],XMM1"
+      },
+      {
+        "line": 21221,
+        "text": "1800168b4  MULSD XMM2,qword ptr [R8]"
+      },
+      {
+        "line": 21222,
+        "text": "1800168b9  MOVSD qword ptr [R8],XMM2"
+      },
+      {
+        "line": 21223,
+        "text": "1800168be  RET"
+      }
+    ]
+  },
+  "OLMSmoother": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMSmoother.aex.asm.txt",
+    "sha256": "e006c1b02faab3cfc9cf4e7f9ecbc58e979698d8020871af4e3ccb1f471cfde8",
+    "nonstack_0x11c_sites": [],
+    "snippets": [
+      {
+        "line": 139,
+        "text": "180001209  MOV RSI,R9"
+      },
+      {
+        "line": 140,
+        "text": "18000120c  MOV R14,R8"
+      },
+      {
+        "line": 141,
+        "text": "18000120f  MOV RDI,RCX"
+      },
+      {
+        "line": 142,
+        "text": "180001212  MOV RBP,qword ptr [RSP + 0x5d0]"
+      },
+      {
+        "line": 143,
+        "text": "18000121a  MOV RDX,qword ptr [RCX + 0x180]"
+      },
+      {
+        "line": 144,
+        "text": "180001221  LEA RCX,[RSP + 0x40]"
+      },
+      {
+        "line": 145,
+        "text": "180001226  CALL 0x18000a5e0"
+      },
+      {
+        "line": 146,
+        "text": "18000122b  NOP"
+      },
+      {
+        "line": 147,
+        "text": "18000122c  MOV R13D,dword ptr [RSI + 0x38]"
+      },
+      {
+        "line": 148,
+        "text": "180001230  SUB R13D,dword ptr [RSI + 0x30]"
+      },
+      {
+        "line": 149,
+        "text": "180001234  MOV RAX,qword ptr [RDI + 0xb0]"
+      },
+      {
+        "line": 150,
+        "text": "18000123b  XOR R12D,R12D"
+      },
+      {
+        "line": 151,
+        "text": "18000123e  MOV qword ptr [RSP + 0x20],R12"
+      },
+      {
+        "line": 152,
+        "text": "180001243  XOR R9D,R9D"
+      },
+      {
+        "line": 153,
+        "text": "180001246  MOV R8,RSI"
+      },
+      {
+        "line": 154,
+        "text": "180001249  MOV RDX,R14"
+      },
+      {
+        "line": 155,
+        "text": "18000124c  MOV RCX,qword ptr [RDI + 0xb8]"
+      },
+      {
+        "line": 156,
+        "text": "180001253  CALL qword ptr [RAX + 0x40]"
+      },
+      {
+        "line": 157,
+        "text": "180001256  MOV EBX,EAX"
+      },
+      {
+        "line": 158,
+        "text": "180001258  TEST EAX,EAX"
+      },
+      {
+        "line": 159,
+        "text": "18000125a  JNZ 0x1800013bf"
+      },
+      {
+        "line": 160,
+        "text": "180001260  MOV R8D,dword ptr [R14 + 0x28]"
+      },
+      {
+        "line": 161,
+        "text": "180001264  MOV EDX,dword ptr [R14 + 0x24]"
+      },
+      {
+        "line": 162,
+        "text": "180001268  MOV RCX,qword ptr [RDI + 0xb8]"
+      },
+      {
+        "line": 163,
+        "text": "18000126f  MOV RAX,qword ptr [RDI + 0xb0]"
+      },
+      {
+        "line": 164,
+        "text": "180001276  MOV R10,qword ptr [RAX + 0x70]"
+      },
+      {
+        "line": 165,
+        "text": "18000127a  LEA RAX,[RSP + 0x4e0]"
+      },
+      {
+        "line": 166,
+        "text": "180001282  MOV qword ptr [RSP + 0x20],RAX"
+      },
+      {
+        "line": 167,
+        "text": "180001287  TEST byte ptr [RSI + 0x10],0x1"
+      },
+      {
+        "line": 168,
+        "text": "18000128b  JZ 0x180001294"
+      }
+    ]
+  },
+  "OLMBlur": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMBlur.aex.asm.txt",
+    "sha256": "e18b5afdf2fe67d5246fec77cf50904929f6bb5ab392a32acb9ce3580c8d6023",
+    "nonstack_0x11c_sites": [
+      {
+        "line": 1177,
+        "function": "; === FUN_180002280 @ 180002280 ===",
+        "text": "1800022ee  MOVD XMM1,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 2521,
+        "function": "; === FUN_180003710 @ 180003710 ===",
+        "text": "18000377e  MOVD XMM1,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 3868,
+        "function": "; === FUN_180004b80 @ 180004b80 ===",
+        "text": "180004bf1  MOVD XMM1,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 5194,
+        "function": "; === FUN_180005f20 @ 180005f20 ===",
+        "text": "180005f67  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 6486,
+        "function": "; === FUN_180007300 @ 180007300 ===",
+        "text": "180007347  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 7779,
+        "function": "; === FUN_1800086d0 @ 1800086d0 ===",
+        "text": "180008717  MOVD XMM7,dword ptr [RCX + 0x11c]"
+      }
+    ],
+    "snippets": [
+      {
+        "line": 1177,
+        "text": "1800022ee  MOVD XMM1,dword ptr [RCX + 0x11c]"
+      },
+      {
+        "line": 1178,
+        "text": "1800022f6  CVTDQ2PS XMM1,XMM1"
+      },
+      {
+        "line": 1179,
+        "text": "1800022f9  MOV EAX,dword ptr [RCX + 0x120]"
+      },
+      {
+        "line": 1180,
+        "text": "1800022ff  XORPS XMM0,XMM0"
+      },
+      {
+        "line": 1181,
+        "text": "180002302  CVTSI2SS XMM0,RAX"
+      },
+      {
+        "line": 1182,
+        "text": "180002307  DIVSS XMM1,XMM0"
+      },
+      {
+        "line": 1183,
+        "text": "18000230b  MULSS XMM2,XMM1"
+      },
+      {
+        "line": 1184,
+        "text": "18000230f  MOVSS dword ptr [R9 + 0x20],XMM2"
+      },
+      {
+        "line": 1185,
+        "text": "180002315  CVTTSS2SI ESI,XMM2"
+      }
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+--- a/crates/aex-guest-worker/src/classic.rs
++++ b/crates/aex-guest-worker/src/classic.rs
+@@ -433,0 +434 @@
++    pub output_rect: [i32; 4],
+@@ -2001 +2002 @@
+-        if output_request[0] < 0
++        if (!geometry.is_some_and(|g| g.negotiate) && (output_request[0] < 0
+@@ -2004 +2005 @@
+-            || output_request[3] > height as i32
++            || output_request[3] > height as i32))
+@@ -2016 +2016,0 @@
+-        let packed_rowbytes=rowbytes as usize;
+@@ -2497,0 +2498,11 @@
++        let mut output_header=vec![0;abi::PF_LAYER_DEF_SIZE];
++        self.engine.read(output_world,&mut output_header)?;
++        let output_pixels=read_u64(&output_header,abi::LAYER_DATA_OFFSET);
++        let out_width=read_i32(&output_header,abi::LAYER_WIDTH_OFFSET) as u32;
++        let out_height=read_i32(&output_header,abi::LAYER_HEIGHT_OFFSET) as u32;
++        let rowbytes=read_i32(&output_header,abi::LAYER_ROWBYTES_OFFSET) as usize;
++        let packed_rowbytes=out_width as usize*format.bytes_per_pixel();
++        let pixel_bytes=rowbytes*out_height as usize;
++        let ox=read_i32(&output_header,LAYER_ORIGIN_X_OFFSET);
++        let oy=read_i32(&output_header,LAYER_ORIGIN_Y_OFFSET);
++        let output_rect=[ox,oy,ox+out_width as i32,oy+out_height as i32];
+@@ -2501 +2512 @@
+-            .read(resources.output_guard_base, &mut leading_guard)?;
++            .read(output_pixels-OUTPUT_GUARD_BYTES as u64, &mut leading_guard)?;
+@@ -2515 +2526 @@
+-        if pad!=0 {
++        if pad!=0 && out_height>0 {
+@@ -2583,0 +2595 @@
++                output_rect,
+@@ -3039,0 +3052 @@
++            output_world,
+@@ -3057,0 +3071 @@
++        output_world: u64,
+@@ -3066,0 +3081 @@
++        let mut empty_output = false;
+@@ -3292,0 +3308,38 @@
++                        if return_value as i32 == 0 && crate::geometry::SESSION.get().is_some_and(|g| g.negotiate) {
++                            let rect = std::array::from_fn::<_, 4, _>(|i| read_i32(&pre_output_bytes, abi::PRE_OUTPUT_RESULT_RECT_OFFSET+i*4));
++                            let maximum = std::array::from_fn::<_, 4, _>(|i| read_i32(&pre_output_bytes, abi::PRE_OUTPUT_MAX_RESULT_RECT_OFFSET+i*4));
++                            let w = i64::from(rect[2])-i64::from(rect[0]);
++                            let h = i64::from(rect[3])-i64::from(rect[1]);
++                            // AE_Effect.h PF_PreRenderOutput: result is actual output, max is a bound.
++                            // Reject invalid bounds as a HOST limitation, never a plugin PF_Err.
++                            if w<0 || h<0 || w>i64::from(MAX_RENDER_WIDTH) || h>i64::from(MAX_RENDER_HEIGHT)
++                                || rect[0]==i32::MIN || rect[1]==i32::MIN
++                                || (w>0 && h>0 && (rect[0]<maximum[0] || rect[1]<maximum[1] || rect[2]>maximum[2] || rect[3]>maximum[3])) {
++                                return Err(ClassicError::Input(format!("F52c output bounds unsupported: result={rect:?} max={maximum:?}")));
++                            }
++                            empty_output = w==0 || h==0;
++                            let w=if empty_output {0} else {w as u32};
++                            let h=if empty_output {0} else {h as u32};
++                            let stride=w*format.bytes_per_pixel() as u32 + crate::geometry::SESSION.get().unwrap().pad;
++                            let size=stride as usize*h as usize;
++                            let base=self.engine.allocate(size+OUTPUT_GUARD_BYTES*2,64)?;
++                            self.engine.write(base,&vec![OUTPUT_GUARD_PATTERN;OUTPUT_GUARD_BYTES])?;
++                            self.engine.write(base+OUTPUT_GUARD_BYTES as u64,&vec![0;size])?;
++                            self.engine.write(base+OUTPUT_GUARD_BYTES as u64+size as u64,&vec![OUTPUT_GUARD_PATTERN;OUTPUT_GUARD_BYTES])?;
++                            let mut world=vec![0;abi::PF_LAYER_DEF_SIZE];
++                            self.engine.read(output_world,&mut world)?;
++                            write_u64(&mut world,abi::LAYER_DATA_OFFSET,base+OUTPUT_GUARD_BYTES as u64);
++                            write_i32(&mut world,abi::LAYER_WIDTH_OFFSET,w as i32);
++                            write_i32(&mut world,abi::LAYER_HEIGHT_OFFSET,h as i32);
++                            write_i32(&mut world,abi::LAYER_ROWBYTES_OFFSET,stride as i32);
++                            write_rect(&mut world,abi::LAYER_EXTENT_HINT_OFFSET,w,h);
++                            write_i32(&mut world,LAYER_ORIGIN_X_OFFSET,rect[0]);
++                            write_i32(&mut world,LAYER_ORIGIN_Y_OFFSET,rect[1]);
++                            self.engine.write(output_world,&world)?;
++                            let mut input=vec![0;abi::PF_IN_DATA_SIZE];
++                            self.engine.read(self.input,&mut input)?;
++                            write_i32(&mut input,abi::IN_OUTPUT_ORIGIN_X_OFFSET,-rect[0]);
++                            write_i32(&mut input,abi::IN_OUTPUT_ORIGIN_Y_OFFSET,-rect[1]);
++                            self.engine.write(self.input,&input)?;
++                            eprintln!("F52C_NEGOTIATED result={rect:?} max={maximum:?} flags={output_flags}");
++                        }
+@@ -3298,0 +3352 @@
++                        if empty_output { return Ok(LifecycleReply::Render { error: 0, output: None }); }
+--- a/crates/aex-guest-worker/src/geometry.rs
++++ b/crates/aex-guest-worker/src/geometry.rs
+@@ -7 +7 @@
+-    pub pad: u32, pub extent: Option<[i32; 4]>, pub request: Option<[i32; 4]>,
++    pub negotiate: bool, pub pad: u32, pub extent: Option<[i32; 4]>, pub request: Option<[i32; 4]>,
+@@ -11 +11 @@
+-    fn default() -> Self { Self { full: [0,0], scale: [[1,1];2], aspect: [1,1], pad: 0, extent: None, request: None } }
++    fn default() -> Self { Self { full: [0,0], scale: [[1,1];2], aspect: [1,1], negotiate: false, pad: 0, extent: None, request: None } }
+@@ -16,0 +17,4 @@
++        "--negotiate-output" => {
++            if v.len()!=1 || !(0..=1).contains(&v[0]) { return Err("expected 0 or 1".into()); }
++            g.negotiate=v[0]==1;
++        },
+@@ -46 +50 @@
+-        for r in [self.extent,self.request].into_iter().flatten() {
++        for r in [self.extent,if self.negotiate {None} else {self.request}].into_iter().flatten() {
+--- a/crates/aex-guest-worker/src/main.rs
++++ b/crates/aex-guest-worker/src/main.rs
+@@ -437 +437 @@
+-    for option in ["--downsample-x", "--downsample-y", "--rowbytes-pad", "--extent-hint", "--request-rect", "--pixel-aspect"] {
++    for option in ["--negotiate-output", "--downsample-x", "--downsample-y", "--rowbytes-pad", "--extent-hint", "--request-rect", "--pixel-aspect"] {
+--- a/crates/aex-guest-worker/src/resident.rs
++++ b/crates/aex-guest-worker/src/resident.rs
+@@ -78,0 +79 @@
++    rect: [i32; 4],
+@@ -634,3 +635,4 @@
+-                        width,
+-                        height,
+-                        rowbytes,
++                        rect: report.output_rect,
++                        width: (report.output_rect[2]-report.output_rect[0]) as u32,
++                        height: (report.output_rect[3]-report.output_rect[1]) as u32,
++                        rowbytes: (report.output_rect[2]-report.output_rect[0]) as u32*pixel_format.bytes_per_pixel() as u32,
+--- a/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -4173,0 +4174,9 @@
++        }
++        // F52c: checked-out aspect and reference dimensions are layer metadata,
++        // not the sampled world dimensions (AE_Effect.h PF_CheckoutResult).
++        if index == 0 {
++            if let Some(g)=crate::geometry::SESSION.get().filter(|g| g.negotiate) {
++                for (at,v) in [(32,g.aspect[0]),(36,g.aspect[1]),(44,g.full[0] as i32),(48,g.full[1] as i32)] {
++                    bytes[at..at+4].copy_from_slice(&v.to_le_bytes());
++                }
++            }

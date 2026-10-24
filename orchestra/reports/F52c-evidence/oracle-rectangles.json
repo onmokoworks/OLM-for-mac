@@ -1,0 +1,808 @@
+[
+  {
+    "plugin": "colorkeep",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "f2931f9d200b0bd4b6eedeefa47f0756f039fe18cb786b204981cfa23a91683a",
+    "observed": [
+      {
+        "stdout_bytes": 55193,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "colorkeep",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "f2931f9d200b0bd4b6eedeefa47f0756f039fe18cb786b204981cfa23a91683a",
+    "observed": [
+      {
+        "stdout_bytes": 55193,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "colorkeep",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        2,
+        1,
+        4,
+        3
+      ]
+    },
+    "output_bytes": 16,
+    "sha256": "f6366390bb81b110e9ebb80d5348cac30a9aa048d989c71b5d0151752781f1b0",
+    "observed": [
+      {
+        "stdout_bytes": 55192,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "colorkeep",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 55145,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "24045c10c12a89f4c11e3b88ea34558fcdf926a8c1008cd08cc33bc71407c774",
+    "observed": [
+      {
+        "stdout_bytes": 7096,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "24045c10c12a89f4c11e3b88ea34558fcdf926a8c1008cd08cc33bc71407c774",
+    "observed": [
+      {
+        "stdout_bytes": 7096,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        2,
+        1,
+        4,
+        3
+      ]
+    },
+    "output_bytes": 16,
+    "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+    "observed": [
+      {
+        "stdout_bytes": 7095,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 7027,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmkirakira",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "55bc213a5c81ab0420998d11a2bbbe5d6eb75e5b030602de376cefcca5fab23f",
+    "observed": [
+      {
+        "stdout_bytes": 20242,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmkirakira",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "55bc213a5c81ab0420998d11a2bbbe5d6eb75e5b030602de376cefcca5fab23f",
+    "observed": [
+      {
+        "stdout_bytes": 20242,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmkirakira",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        2,
+        1,
+        4,
+        3
+      ]
+    },
+    "output_bytes": 16,
+    "sha256": "5ac6a5945f16500911219129984ba8b387a06f24fe383ce4e81a73294065461b",
+    "observed": [
+      {
+        "stdout_bytes": 20241,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmkirakira",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 20217,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "radialblur",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 14820,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "radialblur",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 14820,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "radialblur",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        2,
+        1,
+        4,
+        3
+      ]
+    },
+    "output_bytes": 16,
+    "sha256": "8309cb747e6cd5d6511ef6eaed899975228f73929340d1c7abb6012b17f3afe3",
+    "observed": [
+      {
+        "stdout_bytes": 14819,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "radialblur",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 14795,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmtoondilate",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 2204,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmtoondilate",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 2204,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmtoondilate",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        2,
+        1,
+        4,
+        3
+      ]
+    },
+    "output_bytes": 16,
+    "sha256": "8309cb747e6cd5d6511ef6eaed899975228f73929340d1c7abb6012b17f3afe3",
+    "observed": [
+      {
+        "stdout_bytes": 2203,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmtoondilate",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 2203,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmsmoother2",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 8885,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmsmoother2",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 8885,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmsmoother2",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "reject",
+      "returncode": 1,
+      "diagnostic": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest callback failed: VCRUNTIME exception owned string 0x180022410 is not a live CRT allocation\n"
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 8666,
+        "stderr": "F52C_NEGOTIATED result=[2, 1, 4, 3] max=[0, 0, 7, 5] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest callback failed: VCRUNTIME exception owned string 0x180022410 is not a live CRT allocation\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmsmoother2",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "output_bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observed": [
+      {
+        "stdout_bytes": 8864,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 0, 0] max=[0, 0, 7, 5] flags=0\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmsmoother",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 2691,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "plugin": "olmblur",
+    "request": [
+      0,
+      0,
+      7,
+      5
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 3469,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmblur",
+    "request": [
+      -2,
+      -1,
+      9,
+      7
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 3469,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmblur",
+    "request": [
+      2,
+      1,
+      4,
+      3
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 3469,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  },
+  {
+    "plugin": "olmblur",
+    "request": [
+      20,
+      20,
+      21,
+      21
+    ],
+    "result": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true,
+      "output_rect": [
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "output_bytes": 140,
+    "sha256": "bc2eb876877f88980928bd5fe36507a74ca74de698e289d3a2eb9e836ef72178",
+    "observed": [
+      {
+        "stdout_bytes": 3469,
+        "stderr": "F52C_NEGOTIATED result=[0, 0, 7, 5] max=[0, 0, 7, 5] flags=1\n"
+      }
+    ]
+  }
+]

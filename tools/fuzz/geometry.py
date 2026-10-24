@@ -66,3 +66,10 @@ def require_host(adapter, case):
     version = case.get('geometry_sampler')
     if version and version not in getattr(adapter, 'geometry_samplers', ()):
         raise ValueError(f'{adapter.name}: host has not qualified {version} geometry')
+
+    adapter.geometry_active=bool(version)
+    if version and getattr(adapter,'geometry_routes',None):
+        if not hasattr(adapter,'_default_geometry_routes'):adapter._default_geometry_routes=adapter.routes
+        adapter.routes=adapter.geometry_routes
+    elif not version and hasattr(adapter,'_default_geometry_routes'):
+        adapter.routes=adapter._default_geometry_routes

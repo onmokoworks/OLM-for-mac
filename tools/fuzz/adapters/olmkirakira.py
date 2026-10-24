@@ -11,6 +11,7 @@ SOURCE = ROOT/'mac/OLMKiraKira/OLMKiraKira.cpp'
 
 class Adapter(PublicAdapter):
     name = 'olmkirakira'
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMKiraKira'
     output_format = 'raw'
     small_controls = (10,16,22,28,34)

@@ -26,12 +26,16 @@ Adapter.generator_version = 1
 
 
 class BundleMixin:
+    # Source-host qualification must never leak into the independent bundle host.
+    geometry_samplers = ()
     routes = ('smart',)
     oracle_routes = {'smart':'smart'}
     original_routes = {'smart':'render'}
 
     def __init__(self, options):
         super().__init__(options)
+        if options.plugin in ('colorkeep','olmdistancegradation','olmkirakira','radialblur','olmtoondilate','olmsmoother2','olmsmoother','olmblur'):
+            self.geometry_samplers=('realistic-v1',)
         self.env.pop('OLM_NATIVE_BUNDLE_EXECUTABLE', None)
         self.env.pop('OLM_NATIVE_PARAMETER_PROFILE', None)
         self.bundle = options.plugin_bundle.resolve()
@@ -53,12 +57,15 @@ class BundleMixin:
             raise ValueError('AEX declaration binding changed')
         self.env.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
         self.binary = self.executable
-        return {'host':'F47d shared Rust ClassicHost arena; AEX setup, native candidate setup and selected render route',
+        from .bundle_geometry import HOST
+        geometry=getattr(self,'geometry_active',False)
+        return {'host':('F52c standalone Universal bundle host; negotiated geometry' if geometry else 'F47d shared Rust ClassicHost arena; AEX setup, native candidate setup and selected render route'),
+                **({'bundle_host_path':str(HOST),'bundle_host_sha256':sha(HOST.read_bytes())} if geometry else {}),
                 'worker_path':str(self.worker), 'worker_sha256':sha(self.worker.read_bytes()),
                 'aex_path':str(self.aex), 'aex_sha256':sha(self.aex.read_bytes()),
                 'candidate_path':str(self.bundle), 'candidate_sha256':sha(self.executable.read_bytes()),
                 'declarations_sha256':sha(self.declaration_path.read_bytes()),
-                'world':'same ARGB worlds: input padding rounded up to pixel alignment, 0xA5 fill; output packed in both runs; generated output_padding unused',
+                'world':('realistic-v1: byte padding, extent, aspect, downsample, request and negotiated output rect/origin' if geometry else 'same ARGB worlds: input padding rounded up to pixel alignment, 0xA5 fill; output packed in both runs; generated output_padding unused'),
                 'parameter_profile':'kirakira-default-ramps; raw ANGLE to native slider' if self.name == 'olmkirakira' else 'shared declarations',
                 'oracle_routes':self.oracle_routes, 'original_routes':self.original_routes}
 
@@ -66,6 +73,7 @@ class BundleMixin:
         return None
 
     def session_arguments(self, case, directory):
+        if case.get('geometry_sampler'):return []
         w,h = case['geometry']
         pixel = case['depth']//8*4
         padding = ((case['input_padding']+pixel-1)//pixel)*pixel
@@ -76,6 +84,9 @@ class BundleMixin:
         return ['--fixture-layers-v1', manifest]
 
     def candidate(self, case, directory, route, deadline):
+        if case.get('geometry_sampler'):
+            from .bundle_geometry import candidate
+            return candidate(self,case,directory,route,deadline)
         candidate = copy.copy(self)
         candidate.env = dict(self.env, OLM_NATIVE_BUNDLE_EXECUTABLE=str(self.executable),
                              OLM_REFUSAL_TRACE=str(directory/'native-refusal.txt'))

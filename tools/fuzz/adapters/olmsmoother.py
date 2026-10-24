@@ -1,6 +1,6 @@
 """Smoother v1: retained public admission host and original three controls."""
 from core import command
-from .public import PublicAdapter, ROOT, replace_once
+from .public import PublicAdapter, ROOT, replace_once, geometry_shim, geometry_environment
 
 HOST = ROOT/'tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp'
 MAIN = ROOT/'tools/fuzz/harnesses/smoother_main.cpp'
@@ -10,6 +10,8 @@ SHIM = ROOT/'cli/OLMSmoother/shim'
 
 class Adapter(PublicAdapter):
     name = 'olmsmoother'
+    geometry_samplers = ('realistic-v1',)
+    geometry_routes = ('classic',)
     aex_name = 'OLMSmoother'
     output_format = 'raw'
     oracle_route = None  # Original v1 advertises Classic only; use worker auto.
@@ -20,10 +22,12 @@ class Adapter(PublicAdapter):
     def build(self, scratch, deadline):
         body = HOST.read_text().split('static unsigned short Widen',1)[0]
         body = replace_once(body,'../../mac/OLMSmoother/Mac/OLMSmoother_port.cpp',str(SOURCE))
+        body = body.replace('#include "'+str(SOURCE)+'"', '#include "'+str(SOURCE)+'"\n#define OLM_F52_CLASSIC_ONLY\n#include "'+str(ROOT/'tools/fuzz/harnesses/geometry.hpp')+'"')
         body += '\n'+MAIN.read_text()
+        shim=geometry_shim(SHIM,scratch/'geometry-shim',classic=True)
         host = scratch/'host.cpp';host.write_text(body);binary = scratch/'mac'
         self.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
-                      '-I',SHIM,host,'-o',binary],deadline)
+                      '-I',shim,host,'-o',binary],deadline)
         return binary,[HOST,MAIN,SOURCE,*sorted(SHIM.glob('*.h'))]
 
     def scope(self):
@@ -42,6 +46,7 @@ class Adapter(PublicAdapter):
         trace = directory/f'refusal_trace_{route}.txt'
         trace.unlink(missing_ok=True)
         env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        geometry_environment(case,directory,env)
         status, raw, err = command(argv, data=data, timeout=self.timeout,
                                    deadline=deadline, env=env)
         # Optional attribution: the candidate binary appends "function:tag@line"
@@ -64,6 +69,6 @@ class Adapter(PublicAdapter):
                 return {'status':'refusal', 'error':error, 'metadata':metadata}, b'', guards
             if len(raw) != len(case['pixels']):
                 return {'status':'harness_error','diagnostic':'output size'}, b'', guards
-            return {'status':'ok','error':0,'metadata':metadata}, raw, guards
+            return {'status':'ok','error':0,'metadata':metadata,**({'output_rect':[0,0,*case['geometry']]} if case.get('geometry_sampler') else {})}, raw, guards
         except (ValueError, KeyError) as exc:
             return {'status':'harness_error','diagnostic':repr(exc)}, b'', guards

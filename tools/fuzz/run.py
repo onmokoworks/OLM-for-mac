@@ -79,7 +79,7 @@ def options():
             and args.corpus_max_bytes >= 0 and 1 <= args.max_size <= 256 and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
         p.error('invalid count, jobs, time budget, shrink budget or size')
     if not args.replay:
-        args.worker = args.worker or default_worker()
+        args.worker = args.worker or (Path.home()/'.cache/olm-emu/worker-F52c-geom/aex-guest-worker' if args.geometry=='realistic' else default_worker())
         args.case_timeout = args.case_timeout if args.case_timeout is not None else DEFAULT_CASE_TIMEOUT
     if (args.worker is None and not args.replay) or (args.worker is not None and not args.worker.is_file()):
         p.error('set --worker or OLM_AEX_WORKER to the retained AEXCompat executable')
