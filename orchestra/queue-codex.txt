@@ -94,3 +94,4 @@ R08-radial-fullsize-trace
 R09-release-gate-v2
 A01-real-ae-smoke
 A01b-real-ae-render-compare
+A01c-real-ae-render-aerender
