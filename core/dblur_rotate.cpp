@@ -1,4 +1,4 @@
-#include "x86_float.h"
+#include "dblur_float.h"
 #include "dblur_rotate.h"
 #include "../ucrtmath/include/ucrtmath.h"
 
@@ -6,23 +6,23 @@
 
 namespace {
 
-__attribute__((noinline)) float fmul(float a, float b) {
-    volatile float result = olm::x86_float::sse_mul(a, b);
+__attribute__((always_inline)) inline float fmul(float a, float b) {
+    volatile float result = olm::dblur_float::mul(a, b);
     return result;
 }
 
-__attribute__((noinline)) float fadd(float a, float b) {
-    volatile float result = olm::x86_float::sse_add(a, b);
+__attribute__((always_inline)) inline float fadd(float a, float b) {
+    volatile float result = olm::dblur_float::add(a, b);
     return result;
 }
 
-__attribute__((noinline)) float fsub(float a, float b) {
-    volatile float result = olm::x86_float::sse_sub(a, b);
+__attribute__((always_inline)) inline float fsub(float a, float b) {
+    volatile float result = olm::dblur_float::sub(a, b);
     return result;
 }
 
-__attribute__((noinline)) float fdiv(float a, float b) {
-    volatile float result = olm::x86_float::sse_div(a, b);
+__attribute__((always_inline)) inline float fdiv(float a, float b) {
+    volatile float result = olm::dblur_float::div(a, b);
     return result;
 }
 
