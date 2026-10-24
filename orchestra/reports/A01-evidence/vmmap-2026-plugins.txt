@@ -1,0 +1,49 @@
+Process:         After Effects [7512]
+Path:            /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects
+Code Type:       ARM64
+Date/Time:       2026-10-24 13:18:58.726 +0900
+OS Version:      macOS 15.7.2 (24G325)
+__TEXT                      16f574000-16f58c000    [   96K    48K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMColorKey.plugin/Contents/MacOS/OLMColorKey
+__DATA_CONST                16f58c000-16f590000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMColorKey.plugin/Contents/MacOS/OLMColorKey
+__LINKEDIT                  16f598000-16f5a0000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMColorKey.plugin/Contents/MacOS/OLMColorKey
+__TEXT                      16f5a0000-16f5a8000    [   32K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate
+__DATA_CONST                16f5a8000-16f5ac000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate
+__LINKEDIT                  16f5b0000-16f5b4000    [   16K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate
+__TEXT                      16f5b8000-16f5cc000    [   80K    48K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMBlur.plugin/Contents/MacOS/OLMBlur
+__DATA_CONST                16f5cc000-16f5d0000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMBlur.plugin/Contents/MacOS/OLMBlur
+__LINKEDIT                  16f5d4000-16f5dc000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMBlur.plugin/Contents/MacOS/OLMBlur
+__TEXT                      16f830000-16f84c000    [  112K    48K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira
+__DATA_CONST                16f84c000-16f850000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira
+__LINKEDIT                  16f858000-16f860000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira
+__TEXT                      16f884000-16f89c000    [   96K    48K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur
+__DATA_CONST                16f89c000-16f8a0000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur
+__LINKEDIT                  16f8a8000-16f8b0000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur
+__TEXT                      16f948000-16f960000    [   96K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation
+__DATA_CONST                16f960000-16f964000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation
+__LINKEDIT                  16f968000-16f970000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation
+__TEXT                      16f970000-16f99c000    [  176K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2
+__DATA_CONST                16f99c000-16f9a0000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2
+__LINKEDIT                  16f9a4000-16f9ac000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2
+__TEXT                      16f9cc000-16f9ec000    [  128K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother
+__DATA_CONST                16f9ec000-16f9f0000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother
+__LINKEDIT                  16f9f4000-16f9f8000    [   16K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother
+__TEXT                      3198cc000-3198d4000    [   32K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/ColorKeep.plugin/Contents/MacOS/ColorKeep
+__DATA_CONST                3198d4000-3198d8000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/ColorKeep.plugin/Contents/MacOS/ColorKeep
+__LINKEDIT                  3198dc000-3198e0000    [   16K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/ColorKeep.plugin/Contents/MacOS/ColorKeep
+__TEXT                      3199b8000-319a04000    [  304K    32K     0K     0K] r-x/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur
+__DATA_CONST                319a04000-319a08000    [   16K    16K    16K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur
+__LINKEDIT                  319a10000-319a18000    [   32K    16K     0K     0K] r--/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur
+__TEXT                      34dad8000-34def0000    [ 4192K   768K     0K     0K] r-x/rwx SM=COW          /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/nexpression.plugin/Contents/MacOS/nexpression
+__DATA_CONST                34def0000-34df10000    [  128K   128K   128K     0K] r--/rwx SM=COW          /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/nexpression.plugin/Contents/MacOS/nexpression
+__LINKEDIT                  34df14000-34e124000    [ 2112K    16K     0K     0K] r--/rwx SM=COW          /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/nexpression.plugin/Contents/MacOS/nexpression
+__DATA                      16f590000-16f598000    [   32K    32K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMColorKey.plugin/Contents/MacOS/OLMColorKey
+__DATA                      16f5ac000-16f5b0000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate
+__DATA                      16f5d0000-16f5d4000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMBlur.plugin/Contents/MacOS/OLMBlur
+__DATA                      16f850000-16f858000    [   32K    32K    32K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira
+__DATA                      16f8a0000-16f8a8000    [   32K    32K    32K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur
+__DATA                      16f964000-16f968000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation
+__DATA                      16f9a0000-16f9a4000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2
+__DATA                      16f9f0000-16f9f4000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother
+__DATA                      3198d8000-3198dc000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/ColorKeep.plugin/Contents/MacOS/ColorKeep
+__DATA                      319a08000-319a10000    [   32K    32K    16K     0K] rw-/rwx SM=COW          /Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur
+__DATA                      34df10000-34df14000    [   16K    16K    16K     0K] rw-/rwx SM=COW          /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/nexpression.plugin/Contents/MacOS/nexpression

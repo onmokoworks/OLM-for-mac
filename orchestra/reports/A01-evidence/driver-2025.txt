@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01-real-ae-smoke/tools/ae_smoke/run_ae_smoke.py", line 132, in <module>
+    p.add_argument('--year',type=int,choices=(2025,2026),default=2026)
+    ^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01-real-ae-smoke/tools/ae_smoke/run_ae_smoke.py", line 129, in main
+    p.add_argument('--run-id', default='', help='New subdirectory for a rerun')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01-real-ae-smoke/tools/ae_smoke/run_ae_smoke.py", line 107, in probe
+    with (STATE / f'doscript-{year}.log').open('w') as f:
+RuntimeError: AE did not complete probe; exit=None; inspect blocked-2025.png
