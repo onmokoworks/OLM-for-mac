@@ -1826,7 +1826,8 @@ static A_long WorldOriginY(const PF_EffectWorld *world)
 }
 
 template <typename PixelT>
-static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info)
+static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info,
+                          A_long classify_width = -1, A_long classify_height = -1)
 {
 #pragma clang fp contract(off)
 	A_long w = output->width;
@@ -1849,7 +1850,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		OLMColorKeyInfo matte_info = info;
 		matte_info.color_keep = true;
 		matte_info.enable_replace = false;
-		PF_Err err = RenderTyped<PixelT>(input, output, matte_info);
+		PF_Err err = RenderTyped<PixelT>(input, output, matte_info, classify_width, classify_height);
 		if (err) return err;
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
 			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
@@ -1875,8 +1876,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
+	// Smart workers classify only the output extent into an input-sized matte.
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
+			if ((classify_width >= 0 && x >= classify_width) ||
+			    (classify_height >= 0 && y >= classify_height)) continue;
 			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
 			float alpha = OLMCKPixelTraits<PixelT>::a(source_pixel);
 			float rgb[3] = {
@@ -2443,14 +2447,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 static PF_Err
 RenderWorldDirect(PF_EffectWorld *input, PF_EffectWorld *output,
-	              const OLMColorKeyInfo &info, short bitdepth)
+	              const OLMColorKeyInfo &info, short bitdepth,
+                  A_long classify_width = -1, A_long classify_height = -1)
 {
 	if (bitdepth == 8) {
-		return RenderTyped<PF_Pixel8>(input, output, info);
+		return RenderTyped<PF_Pixel8>(input, output, info, classify_width, classify_height);
 	} else if (bitdepth == 16) {
-		return RenderTyped<PF_Pixel16>(input, output, info);
+		return RenderTyped<PF_Pixel16>(input, output, info, classify_width, classify_height);
 	} else if (bitdepth == 32) {
-		return RenderTyped<PF_PixelFloat>(input, output, info);
+		return RenderTyped<PF_PixelFloat>(input, output, info, classify_width, classify_height);
 	}
 	return OLM_COLORKEY_REFUSAL("render-bitdepth");
 }
@@ -2614,6 +2619,58 @@ PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	prepared->input_world.data = reinterpret_cast<PF_PixelPtr>(prepared->input_storage.data());
 	prepared->output_world.data = reinterpret_cast<PF_PixelPtr>(prepared->output_storage.data());
 	return RenderWorldDirect(&prepared->input_world, &prepared->output_world, info, bitdepth);
+}
+
+// The original Smart workers (0x9000/0x94b0/0x9960) allocate their
+// neighborhood worlds at input size. Iterate uses local coordinates and the
+// output extent; 0x113c0/0x113f0/0x11420 address rows without world origins.
+// Keep this contract separate from the historical Classic ROI path.
+static PF_Err
+PrepareSmartRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+                        const OLMColorKeyInfo &info, short bitdepth,
+                        ColorKeyPreparedRender *prepared)
+{
+    if (!input || !output || !DisjointPayloads(input, output) ||
+        output->width <= 0 || output->height <= 0 ||
+        output->width > input->width || output->height > input->height)
+        return OLM_COLORKEY_REFUSAL("smart-world-dimensions");
+    const A_long pixel_bytes = bitdepth == 8 ? sizeof(PF_Pixel8) :
+        bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+    if (output->rowbytes <= 0 ||
+        (size_t)output->rowbytes < (size_t)output->width * pixel_bytes)
+        return OLM_COLORKEY_REFUSAL("smart-output-stride");
+    PF_EffectWorld local_input = *input;
+    PF_EffectWorld local_output = *output;
+#if !defined(OLMCOLORKEY_HOSTLESS_RENDER_HARNESS) || defined(OLMCOLORKEY_HOSTLESS_WORLD_HAS_ORIGIN)
+    local_input.origin_x = local_input.origin_y = 0;
+    local_output.origin_x = local_output.origin_y = 0;
+#endif
+    local_input.extent_hint = {0, 0, input->width, input->height};
+    local_output.width = input->width;
+    local_output.height = input->height;
+    local_output.rowbytes = input->rowbytes;
+    local_output.extent_hint = local_input.extent_hint;
+    size_t size = 0;
+    if (!CheckedPayloadBytes(&local_input, &size))
+        return OLM_COLORKEY_REFUSAL("smart-input-span");
+    // A full-size destination prevents the original raw neighborhood writer
+    // from overrunning a negotiated output. Only delivered rows are committed.
+    std::vector<std::uint8_t> storage(size, 0);
+    local_output.data = reinterpret_cast<PF_PixelPtr>(storage.data());
+    bool admitted = bitdepth == 8 ? IsPublicAdmission<PF_Pixel8>(&local_input, &local_output, info) :
+        bitdepth == 16 ? IsPublicAdmission<PF_Pixel16>(&local_input, &local_output, info) :
+        bitdepth == 32 && IsPublicAdmission<PF_PixelFloat>(&local_input, &local_output, info);
+    if (!admitted) return OLM_COLORKEY_REFUSAL("smart-public-admission");
+    prepared->input_storage.resize(size);
+    std::memcpy(prepared->input_storage.data(), input->data, size);
+    prepared->output_storage = std::move(storage);
+    prepared->input_world = local_input;
+    prepared->output_world = local_output;
+    prepared->input_world.data = reinterpret_cast<PF_PixelPtr>(prepared->input_storage.data());
+    prepared->output_world.data = reinterpret_cast<PF_PixelPtr>(prepared->output_storage.data());
+    prepared->active_row_bytes = (size_t)output->width * pixel_bytes;
+    return RenderWorldDirect(&prepared->input_world, &prepared->output_world,
+                             info, bitdepth, output->width, output->height);
 }
 
 static void CommitPreparedRender(const ColorKeyPreparedRender &prepared,
@@ -2789,7 +2846,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		OLMColorKeyInfo info;
 		if (!err) err = CheckoutSmartInfo(in_data, &info);
 		if (!err) {
-			err = PrepareRenderWorld(input_world, output_world, info,
+			err = PrepareSmartRenderWorld(input_world, output_world, info,
 			                         extra->input->bitdepth, &prepared);
 			prepared_ok = err == PF_Err_NONE;
 		}
