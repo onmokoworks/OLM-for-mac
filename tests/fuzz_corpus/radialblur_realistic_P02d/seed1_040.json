@@ -1,0 +1,338 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      19,
+      22
+    ],
+    "full_geometry": [
+      147,
+      169
+    ],
+    "geometry": [
+      19,
+      22
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 40,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          9.1875,
+          10.5625
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 70
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 1.0
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5.0
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      15,
+      6,
+      19,
+      16
+    ],
+    "rowbytes_padding": 32,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 40,
+  "input_sha256": "b316d332cd8c476a04687f92ecbb5fb8f09a2ec3118bed08ba5151f136b3fdd3",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "4320b115c979b03cb9404eed27c339d1cc51aa56ace1c1ddb4caa08caaf6a555",
+    "candidate_source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "01254c577fd991c5a410e8342c331de9f4b4ed59d82512ee523aca218d511230",
+    "header_sha256": "be783c134a37bbd0c5f2781bb6c7c572a4a17289646d01e0ec7a9bbdb49ad1a1",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        15,
+        6,
+        19,
+        16
+      ],
+      "raw_sha256": "d0687b73817d26b4b4ddc5e614f2798e63c7a363e6938a5c19abeb2efd761950",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          15,
+          6,
+          19,
+          16
+        ],
+        "raw_sha256": "d0687b73817d26b4b4ddc5e614f2798e63c7a363e6938a5c19abeb2efd761950",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "15 6 19 16",
+          "GEOMETRY_INPUT": "147 169 1 8 1 8 2 1 32",
+          "INFO": "0 0 70 0"
+        },
+        "output_rect": [
+          15,
+          6,
+          19,
+          16
+        ],
+        "raw_sha256": "d0687b73817d26b4b4ddc5e614f2798e63c7a363e6938a5c19abeb2efd761950",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

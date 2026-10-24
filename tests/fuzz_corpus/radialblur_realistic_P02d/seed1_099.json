@@ -1,0 +1,338 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      1,
+      127
+    ],
+    "full_geometry": [
+      1,
+      127
+    ],
+    "geometry": [
+      1,
+      127
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 99,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          0.5,
+          63.5
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 31
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 5.0
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5.0
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 58.3357716693219
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "hdr",
+    "request_rect": [
+      0,
+      27,
+      1,
+      116
+    ],
+    "rowbytes_padding": 7,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 99,
+  "input_sha256": "3fddcbe96412eb80497343d4efb68a1b2e318c2acc2478abd164ffd701bcef64",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "4320b115c979b03cb9404eed27c339d1cc51aa56ace1c1ddb4caa08caaf6a555",
+    "candidate_source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "01254c577fd991c5a410e8342c331de9f4b4ed59d82512ee523aca218d511230",
+    "header_sha256": "be783c134a37bbd0c5f2781bb6c7c572a4a17289646d01e0ec7a9bbdb49ad1a1",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        27,
+        1,
+        116
+      ],
+      "raw_sha256": "6ea5eb2825bc81fde04d8c796cb648bd01dde8a1d2d0ede6b2d9d06cf32a60bd",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          27,
+          1,
+          116
+        ],
+        "raw_sha256": "6ea5eb2825bc81fde04d8c796cb648bd01dde8a1d2d0ede6b2d9d06cf32a60bd",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 27 1 116",
+          "GEOMETRY_INPUT": "1 127 1 1 1 1 1 1 7",
+          "INFO": "0 0 31 0"
+        },
+        "output_rect": [
+          0,
+          27,
+          1,
+          116
+        ],
+        "raw_sha256": "6ea5eb2825bc81fde04d8c796cb648bd01dde8a1d2d0ede6b2d9d06cf32a60bd",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

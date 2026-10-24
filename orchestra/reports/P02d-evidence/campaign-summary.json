@@ -1,0 +1,50 @@
+[
+  {
+    "file": "candidate-fresh-results.jsonl",
+    "exact": 92,
+    "mismatch": 1,
+    "refusal": 0,
+    "unavailable": 7,
+    "other": 0
+  },
+  {
+    "file": "final-20261024-results.jsonl",
+    "exact": 93,
+    "mismatch": 0,
+    "refusal": 0,
+    "unavailable": 7,
+    "other": 0
+  },
+  {
+    "file": "candidate-seed1-results.jsonl",
+    "exact": 87,
+    "mismatch": 0,
+    "refusal": 0,
+    "unavailable": 13,
+    "other": 0
+  },
+  {
+    "file": "before-results.jsonl",
+    "exact": 11,
+    "mismatch": 5,
+    "refusal": 72,
+    "unavailable": 12,
+    "other": 0
+  },
+  {
+    "file": "final-1-results.jsonl",
+    "exact": 88,
+    "mismatch": 0,
+    "refusal": 0,
+    "unavailable": 12,
+    "other": 0
+  },
+  {
+    "file": "attempt1-results.jsonl",
+    "exact": 12,
+    "mismatch": 0,
+    "refusal": 0,
+    "unavailable": 3,
+    "other": 0
+  }
+]

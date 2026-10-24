@@ -132,6 +132,7 @@ typedef struct {
 	PF_FpLong thickness;
 	PF_FpLong comp_width;
 	PF_FpLong comp_height;
+	float smart_downsample = 1.0f;
 } OLMRadialBlurInfo;
 
 extern "C" {

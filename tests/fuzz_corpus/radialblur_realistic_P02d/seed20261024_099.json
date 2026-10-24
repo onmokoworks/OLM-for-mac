@@ -1,0 +1,338 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      22,
+      18
+    ],
+    "full_geometry": [
+      64,
+      52
+    ],
+    "geometry": [
+      22,
+      18
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 99,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          10.666671752929688,
+          8.666671752929688
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1481
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 10
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 36
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 1.0
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 89.73281860351562
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5.0
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 71.8291086677852
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      4,
+      3
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      20,
+      0,
+      22,
+      16
+    ],
+    "rowbytes_padding": 32,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 99,
+  "input_sha256": "514d7b283c1208f39cb3b980e886af00c74437434023a212954a74e7817267a3",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoN1IlfDAgfB+BfUmxMTZu09cqukNlUOuiSJmLXdJeKGFY6vN1WxztTvW+8HUglhOh6051NEV0qoyi6pubzKtshykiTkbwiVN99nz/iURBdFOKa/yjFCFh+D1320abXZ8lItBWOgc+pu6KBvgaGwbC9jqJKvqrfspmmpEs/IHuj4qPlPxvi+j5m/5qnNXR65y26dXtFFttWBTfHs3HsxXHKyuAgfzuT2lcP8p7e3oLn+3dC0j0NZo0W5SMHuj3DaZ/EKfS2QkDu97msY3oLMF7KI51EMzrivRYN0mKqMRrD2tYTkvMJvvAP8zEfrfbEL20zfYtGfMnaeDt+ZSl/WnbNAseXpGOQZOi3jWzUFkpph4oF6kzEi5u5p6mllmf2bdCkn+P/BSGuoXi/wRFuOztRecfpfoifNXVWz5BAEI6DtwKi/eY2yRf4956JG1mPPi9bBE5fRnx3CbmESdKU7sVCqLOXpIcsSOk7Ae1lt2ByXF9P8GyIuhVSsdjdhFKv0YOYzSvvtfeGkznPHjlFI3B4eFdv+7I4Ete1hLNHWmHDswG/KwfWJaPQOWeFG2q6eDs1SePx7bTKmqOUamXY6rRbE20BykiZPUP29Vy6WTH1JGmxclvPizqu/8cltF3BgIZY49hcZYqD6RIPu3KtB1ZkjDp2/PIjqd70fvjRlWCOvOqwvPVxMt9AX0bG6NQiRsKC9kfSKm9AWd5DKA6xkMhmwYb/Jf9zuj9t6FjzfUeGMgVFVAZKv7uK5NQVThPcKvxuOkCO1ELJeULyE9Rp7vCYwWDBKESjVdTunhLfHcFHnsUEeQZXU2JGCVnZeiH+tUxt4KMzcEwKQKehPc0JjIgt3U812l9Icsc7v356H7JMb5PTS3V4HeXjcmIxQ/3T2X80l97Lz4yZox0rNlYWqvLIcGUjtj6LJDVGsrHQ1oXkyzTwt/j8/yTVryHBiITxwdvAZGbeHdn8xBOhuuvokGW+4eNSZeq92BC2pzxlsRw/hSJ3fSQv1Uu0MjbgPE+jNVNhYzA1RX8mJm+CknyaEflewf3zhyyanU1A3J13pB3a6MvRTJ4IcpWs/hq9BCemBeTNW4pGlsTx6kLQptJcpu+y6z6Uumh1Cbv5LuUELFC/mxI1bU4jVkMXfXr8Ow4vFJD4QixVpzv3CTVu02q5SpKcF9XwSmdQ7qBCfmdzIRQ9kBUf7IfgXD6cDtcxpG8iLkT1XDjewrYEx1lE2YVqFJPYDmaTa3LGxRmy5ORu+7VNBsJjllEJIXKklcmnpn8PIzo8C+Uuavbnvz9JWbvcQ4qkI5jeewdXZVXfKEGpxcksBrFDGnTq+oeWfx7QR0BlFhjrS4mnHlqZO3cWP97wEHYwbgj/bvEHCQzkcV8UjVdJ/0XEQOekwPAj7v6rKtJbbjm9mvJwODBczzl3LArD0nXYjCqYP7GEWo9uz67eHznfnq6jep6Ejmg2obfSDWFR2VApbyZ992wc8liCwrAHe93Gm2C+9BupxHLRwzFFd2O6RpDrtrw4Z3Vy8LPDz25SuIUUUPPp5cR55wzXH55jVbkITjFN9LQ5hYKT5FDhFo9OuGCDIdPtoHMxDYZfwYEjZto9P43Qq4H/5f0ULECR3j2Sjz4My7VJ5OJsQ/N/FiAzxhpHu33BymySZI7tptaTFSDuG/UJ+VW4OltLJRGTj8MExls8M9LmUhz5jLCLSuD+2YFTOq147cImk/AziC+sxm9xqTQserzGeFE3WVb64ZArt6FL/BxaRbOvc0OvUO8eh0vTlxiQkwYr7prLhH/ZPCJv2jXUq5hT3Fg/7beaxNcutRb9BPsCo52e/09PRlf7l3myT9jK4Wf3PhlSTyWdqW14uftG2QtnGbIzUt7ixZTVHC9q2hqYY0OD3Xbo+yaLckxNqr00IMXxDipeLzsjp7ofLgO2xGSJxaFO64NawpeSscK5JOs2E+qbH8t+1eWK1G2N9DbAB2WKtXvsdl8gmdOmpGcQ8iwzN43KA59B1vooWOKTB/RVNcmzsxg5L7UwcP0PXFY3g887W6r3Cv0LkB4elA==",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "4320b115c979b03cb9404eed27c339d1cc51aa56ace1c1ddb4caa08caaf6a555",
+    "candidate_source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "01254c577fd991c5a410e8342c331de9f4b4ed59d82512ee523aca218d511230",
+    "header_sha256": "be783c134a37bbd0c5f2781bb6c7c572a4a17289646d01e0ec7a9bbdb49ad1a1",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        20,
+        0,
+        22,
+        16
+      ],
+      "raw_sha256": "6f279f8496c3e1f9ae14cb574dbbcab2b90084033e66f1e8acec8ccdc949a2d8",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          20,
+          0,
+          22,
+          16
+        ],
+        "raw_sha256": "6f279f8496c3e1f9ae14cb574dbbcab2b90084033e66f1e8acec8ccdc949a2d8",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "20 0 22 16",
+          "GEOMETRY_INPUT": "64 52 1 3 1 3 4 3 32",
+          "INFO": "89.732818603515625 0 36 0"
+        },
+        "output_rect": [
+          20,
+          0,
+          22,
+          16
+        ],
+        "raw_sha256": "6f279f8496c3e1f9ae14cb574dbbcab2b90084033e66f1e8acec8ccdc949a2d8",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

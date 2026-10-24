@@ -3333,12 +3333,12 @@ static PF_Err RenderZoomTyped(
 			int noise_width = 0;
 			int noise_height = 0;
 			if (!olm::dblur::generate_radial_noise_plane(
-					w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
+					w, h, RadialF32Mul((float)info.thickness, info.smart_downsample), (float)info.noise_offset, (std::uint32_t)info.seed,
 					&noise_plane, &noise_width, &noise_height)) {
 				return OLM_RADIAL_ERROR("zoom-noise-plane-failure", PF_Err_OUT_OF_MEMORY);
 			}
 			const olm::dblur::NoisePlaneView noise_view{
-				noise_plane.data(), noise_width, (float)info.thickness};
+				noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample)};
 			const float nv = (float)info.noise_variation * 0.01f;
 			for (A_long y = 0; y < h; ++y) {
 				for (A_long x = 0; x < w; ++x) {
@@ -3471,6 +3471,12 @@ static PF_Err RenderZoomTyped(
 	FloatImage blurred;
 	if (use_aex_outer_only) {
 		OLMRadialBlurInfo worker_info = info;
+		// AEX 57a4..5830: scale each Zoom table length in float32,
+		// then truncate. Admission and the caller's no-op test use raw controls.
+		worker_info.outer_strength = (A_long)RadialF32Mul((float)info.outer_strength, info.smart_downsample);
+		worker_info.inner_strength = (A_long)RadialF32Mul((float)info.inner_strength, info.smart_downsample);
+		worker_info.outer_edge_fade = (A_long)RadialF32Mul((float)info.outer_edge_fade, info.smart_downsample);
+		worker_info.inner_edge_fade = (A_long)RadialF32Mul((float)info.inner_edge_fade, info.smart_downsample);
 		if (use_aex_pf16_bounded_offset_small || use_aex_typed_zoom_offset_matrix ||
 			use_aex_typed_zoom_edge_fade_32x18 || use_aex_typed_zoom_edge_noise_32x18) {
 			// These bounded Strength-4 states all select the AEX's length-4
@@ -3478,34 +3484,34 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
-		const bool use_aex_zoom_inner = (use_native_zoom_baseline && info.inner_strength != 0) ||
+		const bool use_aex_zoom_inner = (use_native_zoom_baseline && worker_info.inner_strength != 0) ||
 			use_aex_pf32_zoom_inner_small ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise ||
 			use_aex_typed_zoom_dual_size_components_32x18 ||
 			use_aex_typed_zoom_inner_offset_pairwise ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18;
 		const std::vector<float> inner_weights = use_aex_zoom_inner
-			? (use_native_quality_setup ? RotationFadeGaussianWeights(info.inner_strength) : ZoomGaussianWeights(info.inner_strength))
+			? (use_native_quality_setup ? RotationFadeGaussianWeights(worker_info.inner_strength) : ZoomGaussianWeights(worker_info.inner_strength))
 			: std::vector<float>();
-		const A_long outer_fade_span = ((use_native_zoom_baseline && info.outer_edge_fade != 0) ||
+		const A_long outer_fade_span = ((use_native_zoom_baseline && worker_info.outer_edge_fade != 0) ||
 			use_aex_typed_zoom_edge_fade_32x18 ||
 			use_aex_typed_zoom_size_edge_components_32x18 ||
 			use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
 			use_aex_typed_zoom_edge_noise_32x18 ||
 			(use_aex_typed_zoom_transform_worker_32x18 && transform_axis_edge_tuple))
-			? info.outer_edge_fade : 0;
+			? worker_info.outer_edge_fade : 0;
 		const std::vector<float> outer_fade_weights = outer_fade_span > 0
 			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>();
-		const A_long inner_fade_span = (use_native_zoom_baseline && info.inner_edge_fade != 0) ||
+		const A_long inner_fade_span = (use_native_zoom_baseline && worker_info.inner_edge_fade != 0) ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18
-			? info.inner_edge_fade : 0;
+			? worker_info.inner_edge_fade : 0;
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
 			? RotationFadeGaussianWeights(inner_fade_span) : std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
-			polar, (use_native_quality_setup ? RotationFadeGaussianWeights(info.outer_strength) : ZoomGaussianWeights(ZoomEffectiveLength(worker_info))), polar_valid,
+			polar, (use_native_quality_setup ? RotationFadeGaussianWeights(worker_info.outer_strength) : ZoomGaussianWeights(ZoomEffectiveLength(worker_info))), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,
 			use_aex_zoom_inner ? &inner_weights : nullptr,
-			use_aex_zoom_inner ? info.inner_strength : 0,
+			use_aex_zoom_inner ? worker_info.inner_strength : 0,
 			outer_fade_span > 0 ? &outer_fade_weights : nullptr, outer_fade_span,
 			inner_fade_span > 0 ? &inner_fade_weights : nullptr, inner_fade_span,
 			info.noise_variation != 0.0 && !RadialSizeVariationEnabled(info.size_variation),
@@ -4634,12 +4640,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		int noise_width = 0;
 		int noise_height = 0;
 		if (!olm::dblur::generate_radial_noise_plane(
-				w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
+				w, h, RadialF32Mul((float)info.thickness, info.smart_downsample), (float)info.noise_offset, (std::uint32_t)info.seed,
 				&noise_plane, &noise_width, &noise_height)) {
 			return OLM_RADIAL_ERROR("rotation-noise-plane-failure", PF_Err_OUT_OF_MEMORY);
 		}
 		const olm::dblur::NoisePlaneView noise_view{
-			noise_plane.data(), noise_width, (float)info.thickness};
+			noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample)};
 		const float nv = (float)info.noise_variation * 0.01f;
 		const bool use_aex_rotation_type1_inverse_cell_32x18 =
 			info.noise_type == 1 &&
@@ -4664,8 +4670,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					(use_aex_typed_rotation_transform_worker_32x18 && rotation_quality_repeat_noise_tuple) ||
 					(use_aex_typed_rotation_any_size_edge_noise_components_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_size_noise_components_32x18 && info.noise_type == 2))
-					? SampleRadialBlockNoisePlaneAEX(noise_plane.data(), noise_width, (float)info.thickness, x, y)
-					: SampleRadialNoisePlaneAEX(noise_plane.data(), noise_width, (float)info.thickness, x, y);
+					? SampleRadialBlockNoisePlaneAEX(noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample), x, y)
+					: SampleRadialNoisePlaneAEX(noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample), x, y);
 				const size_t source_cell = (size_t)y * w + x;
 				const float mixed =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
@@ -5992,37 +5998,8 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 typedef struct {
 	PF_FpLong comp_width;
 	PF_FpLong comp_height;
-	PF_LRect full_frame_rect;
 	PF_Boolean requires_noise_layer;
 } PreRenderData;
-
-static bool NormalizeGlobalPolarRenderRequest(
-	const PF_InData *in_data,
-	PF_RenderRequest *request,
-	PF_LRect *full_frame_rect)
-{
-	if (!in_data || !request || !full_frame_rect || in_data->width <= 0 || in_data->height <= 0)
-		return false;
-	full_frame_rect->left = 0;
-	full_frame_rect->top = 0;
-	full_frame_rect->right = in_data->width;
-	full_frame_rect->bottom = in_data->height;
-	request->rect = *full_frame_rect;
-	request->preserve_rgb_of_zero_alpha = TRUE;
-	return true;
-}
-
-static bool IsGlobalPolarFullFrameWorld(
-	const PF_EffectWorld *world,
-	const PF_LRect &full_frame_rect)
-{
-	const long long width = (long long)full_frame_rect.right - full_frame_rect.left;
-	const long long height = (long long)full_frame_rect.bottom - full_frame_rect.top;
-	return world && world->data && width > 0 && height > 0 &&
-		width <= std::numeric_limits<A_long>::max() && height <= std::numeric_limits<A_long>::max() &&
-		world->width == (A_long)width && world->height == (A_long)height &&
-		world->origin_x == full_frame_rect.left && world->origin_y == full_frame_rect.top;
-}
 
 static bool RadialPayloadSpan(const PF_EffectWorld *world,
 	                          std::uintptr_t *begin,
@@ -6148,9 +6125,9 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		!in_data->inter.checkin_param) return OLM_RADIAL_REFUSAL("prerender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
-	PF_LRect full_frame_rect = {};
-	if (!NormalizeGlobalPolarRenderRequest(in_data, &req, &full_frame_rect))
-		return OLM_RADIAL_REFUSAL("prerender-request");
+	req.preserve_rgb_of_zero_alpha = TRUE;
+	// AEX 4010 forwards the requested rectangle and unions the checkout's
+	// result/max rectangles. Extent hints and pixel aspect do not crop it.
 	PF_CheckoutResult in_result = {};
 	PF_CheckoutResult noise_result = {};
 	PF_ParamDef noise_type;
@@ -6205,13 +6182,11 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		std::unique_ptr<PreRenderData> pre(new PreRenderData);
 		pre->comp_width = in_result.ref_width > 0 ? (PF_FpLong)in_result.ref_width : 0.0;
 		pre->comp_height = in_result.ref_height > 0 ? (PF_FpLong)in_result.ref_height : 0.0;
-		pre->full_frame_rect = full_frame_rect;
 		pre->requires_noise_layer = requires_noise_layer ? TRUE : FALSE;
-		// Radial polar transforms are global: advertise the requested full frame,
-		// never a source/layer content crop, and allow AE to consume it for a
-		// smaller downstream request.
-		extra->output->result_rect = full_frame_rect;
-		extra->output->max_result_rect = full_frame_rect;
+		// The source checkout defines the renderable result, including ROI and
+		// downsampled bounds. Do not advertise full-resolution composition size.
+		extra->output->result_rect = in_result.result_rect;
+		extra->output->max_result_rect = in_result.max_result_rect;
 		extra->output->flags = (PF_RenderOutputFlags)(
 			extra->output->flags | PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS);
 		extra->output->pre_render_data = pre.release();
@@ -6245,7 +6220,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_EffectWorld aligned_input_world = {};
 	PF_EffectWorld staged_world = {};
 	std::size_t active_row_bytes = 0;
+	std::size_t output_row_bytes = 0;
 	bool render_complete = false;
+	bool no_op_copy = false;
 	std::exception_ptr thrown;
 	try {
 		err = extra->cb->checkout_layer_pixels(
@@ -6268,14 +6245,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 			if (!err && (!output_world || !output_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-output-world");
 		}
-		if (!err && (!pre ||
-			!IsGlobalPolarFullFrameWorld(input_world, pre->full_frame_rect) ||
-			!IsGlobalPolarFullFrameWorld(output_world, pre->full_frame_rect))) {
-			// A partial checkout cannot be evaluated independently by a global polar
-			// transform. PreRender requested/advertised the full-frame overscan; if AE
-			// does not honor it, fail closed instead of rendering a tile-local result.
-			err = OLM_RADIAL_REFUSAL("smartrender-partial-checkout");
-		}
+		if (!err && (!pre || input_world->width <= 0 || input_world->height <= 0 ||
+			output_world->width <= 0 || output_world->height <= 0 ||
+			output_world->width > input_world->width || output_world->height > input_world->height))
+			err = OLM_RADIAL_REFUSAL("smartrender-world-bounds");
+
 		if (!err && (!RadialPayloadsDisjoint(input_world, output_world) ||
 			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world) ||
 			                 !RadialPayloadsDisjoint(output_world, noise_world))))) {
@@ -6300,6 +6274,22 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		}
 		if (!err) {
 			OLMRadialBlurInfo info = InfoFromParams(param_ptrs, comp_w, comp_h);
+			// Getter de60/1a190 undoes per-axis sampling before the caller
+			// subtracts source origins and applies the single float32 X ratio.
+			if (in_data->downsample_x.num && in_data->downsample_y.num &&
+				in_data->downsample_x.den && in_data->downsample_y.den) {
+				info.smart_downsample = RadialF32Div((float)in_data->downsample_x.num,
+					(float)in_data->downsample_x.den);
+				info.center_x = (info.center_x * ((double)in_data->downsample_x.den / in_data->downsample_x.num)
+					- input_world->origin_x) * (double)info.smart_downsample;
+				info.center_y = (info.center_y * ((double)in_data->downsample_y.den / in_data->downsample_y.num)
+					- input_world->origin_y) * (double)info.smart_downsample;
+			}
+			info.comp_width = input_world->width;
+			info.comp_height = input_world->height;
+			no_op_copy = info.outer_strength == 0 && info.inner_strength == 0 &&
+				info.outer_offset == 0 && info.inner_offset == 0 &&
+				info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
 			if (RequiresNoiseLayer(info) != requires_noise_layer) {
 				err = OLM_RADIAL_REFUSAL("smartrender-noise-requirement");
 			}
@@ -6342,8 +6332,13 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes))) {
 				err = OLM_RADIAL_REFUSAL("smartrender-output-span");
 			}
+			output_row_bytes = active_row_bytes;
+			if (!err && (!RadialActiveRowBytes(extra->input->bitdepth, input_world->width, &active_row_bytes) ||
+				active_row_bytes > static_cast<std::size_t>(input_world->rowbytes) ||
+				active_row_bytes > static_cast<std::size_t>(std::numeric_limits<A_long>::max())))
+				err = OLM_RADIAL_REFUSAL("smartrender-input-rowbytes");
 			if (!err) {
-				const std::size_t height = static_cast<std::size_t>(output_world->height);
+				const std::size_t height = static_cast<std::size_t>(input_world->height);
 				if (height == 0 || active_row_bytes >
 					std::numeric_limits<std::size_t>::max() / height) {
 					err = OLM_RADIAL_REFUSAL("smartrender-stage-overflow");
@@ -6352,7 +6347,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				}
 			}
 			if (!err) {
-				staged_world = *output_world;
+				staged_world = *input_world;
 				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
 				staged_world.rowbytes = static_cast<A_long>(active_row_bytes);
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
@@ -6428,11 +6423,15 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	}
 	if (thrown) std::rethrow_exception(thrown);
 	if (!err && render_complete) {
+		// AEX's typed writer indexes the computed plane with OUTPUT width,
+		// without an output-origin adjustment (7360..741b). Its initial suite
+		// copy, retained by the no-op branch, instead preserves source rows.
 		for (A_long y = 0; y < output_world->height; ++y) {
 			std::memcpy(reinterpret_cast<std::uint8_t *>(output_world->data) +
 					static_cast<std::size_t>(y) * output_world->rowbytes,
-				staged_output.data() + static_cast<std::size_t>(y) * staged_world.rowbytes,
-				active_row_bytes);
+				staged_output.data() + static_cast<std::size_t>(y) *
+					(no_op_copy ? active_row_bytes : output_row_bytes),
+				output_row_bytes);
 		}
 	}
 	return err;
