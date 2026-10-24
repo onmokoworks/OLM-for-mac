@@ -1,0 +1,26 @@
+[
+  {
+    "name": "P05c-smooth-before",
+    "bundles_path": "/Users/onmk/.cache/olm-emu/P05c-smooth-before",
+    "worker_path": "/Users/onmk/.cache/olm-emu/P05c-smooth-before/plugin-host",
+    "worker_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+    "bundle_sha256": {
+      "OLMSmoother": "425c069cb838b636910b7cf3dad6d421b12551abd41346e73ad9a0604bbcf92e"
+    },
+    "source_path": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+    "source_sha256": "eaac5c4585a54d6d7d675ca0ff05d8738a3094721472b101b486064d1f86091c",
+    "capability": "P05c SDK-host performance candidate; not an AEX oracle"
+  },
+  {
+    "name": "P05c-smooth",
+    "bundles_path": "/Users/onmk/.cache/olm-emu/P05c-smooth",
+    "worker_path": "/Users/onmk/.cache/olm-emu/P05c-smooth/plugin-host",
+    "worker_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+    "bundle_sha256": {
+      "OLMSmoother": "8580fa4cd6a4e9b9119f8e71892a25fe7f6a528e893e3af646bf9576201c9d64"
+    },
+    "source_path": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+    "source_sha256": "302de3ee37e752cbfed7e10c53d954134ad837ffda12f35abd46785a6821d531",
+    "capability": "P05c SDK-host performance candidate; not an AEX oracle"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "file": "tests/test_olmcolorkey_around_composition_owner_20261001.py",
+    "returncode": 0
+  },
+  {
+    "file": "tests/test_olmcolorkey_edge_blur_apply_differential_20260716.py",
+    "returncode": 1
+  },
+  {
+    "file": "tests/test_olmcolorkey_edge_blur_complete_family_20260806.py",
+    "returncode": 1
+  },
+  {
+    "file": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+    "returncode": 0
+  },
+  {
+    "file": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+    "returncode": 0
+  },
+  {
+    "file": "tests/test_olmcolorkey_generic_roi_tile.py",
+    "returncode": 1
+  },
+  {
+    "file": "tests/test_olmcolorkey_parameter_ui_parity_20260806.py",
+    "returncode": 0
+  },
+  {
+    "file": "tests/test_olmcolorkey_thin_public_owner_20261001.py",
+    "returncode": 0
+  }
+]

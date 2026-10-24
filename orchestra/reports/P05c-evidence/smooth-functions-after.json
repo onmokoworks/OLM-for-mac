@@ -1,0 +1,10 @@
+[
+  {
+    "file": "tests/test_olmsmoother_v1_pf16_classifier_direction_pair_20260806.py",
+    "returncode": 0
+  },
+  {
+    "file": "tests/test_olmsmoother_v1_pf16_macos_aexcompat_contract_20260805.py",
+    "returncode": 1
+  }
+]
