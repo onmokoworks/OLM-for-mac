@@ -1,0 +1,13 @@
+{
+  "baseline_commit": "ef2b582f",
+  "adapter_sha256": "a2d72c96f832f5559812a60ab6bac7fcd40aebf5a85fb4854272bcc2f83650e0",
+  "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+  "case": "tests/fuzz_corpus/radialblur/C49_seed1_case000117.json",
+  "input_sha256": "67378d354211b3009ba733219bacca6ec7f68b26997e636aafc7b525a79f859a",
+  "result": {
+    "status": "ok",
+    "guards_intact": true,
+    "session_clean": true
+  },
+  "output_sha256": "6958423267181cc23ab6aed257b5007841f3a39d3532abb0ea2a9e616947593d"
+}

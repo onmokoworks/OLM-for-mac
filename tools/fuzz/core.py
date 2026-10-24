@@ -152,7 +152,10 @@ def evaluate(adapter, case, directory, deadline, attribution=None):
                     unchanged = raw == bytes([adapter.no_write_fill]) * len(case['pixels'])
                     result['status'] = 'no_write' if unchanged else 'no_write_violation'
                 else:
-                    result['status'] = 'exact' if reference == raw else 'mismatch'
+                    same_rect = oracle.get('output_rect') == result.get('output_rect')
+                    result['status'] = 'exact' if reference == raw and same_rect else 'mismatch'
+                    if not same_rect:
+                        result['geometry_diff'] = {'expected':oracle.get('output_rect'),'actual':result.get('output_rect')}
                     if reference != raw:
                         result['diff'] = raw_diff(reference, raw, case['depth'])
             else:

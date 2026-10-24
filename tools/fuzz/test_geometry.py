@@ -69,6 +69,7 @@ class GeometryTests(unittest.TestCase):
 
     def test_unqualified_host_rejected(self):
         a = adapter('radialblur')
+        a.geometry_samplers=()
         require_host(a,a.generate(1,0))
         with self.assertRaisesRegex(ValueError,'not qualified'):
             require_host(a,sample(a.generate(1,0),'realistic'))
@@ -92,6 +93,33 @@ class GeometryTests(unittest.TestCase):
             reduced,_,reduction = shrink(a,case,observed,directory,deadline,32)
             self.assertGreater(len(reduction['accepted']),0)
             self.assertGeometry(reduced)
+
+    def test_oracle_geometry_arguments(self):
+        from adapters.public import geometry_arguments
+        case=sample(adapter('olmblur').generate(1,0),'realistic')
+        smart=geometry_arguments(case,'smart');classic=geometry_arguments(case,'classic')
+        self.assertIn('--negotiate-output',smart)
+        self.assertIn('--request-rect',smart)
+        self.assertNotIn('--request-rect',classic)  # Classic has no Smart request.
+        self.assertIn('--extent-hint',classic)
+        self.assertEqual(geometry_arguments(adapter('olmblur').generate(1,0)),[])
+
+    def test_equal_bytes_different_rect_is_mismatch(self):
+        class Rectangles:
+            routes=('smart',)
+            def oracle(self,*args):return {'status':'ok','output_rect':[0,0,1,1]},bytes(4)
+            def candidate(self,*args):return {'status':'ok','output_rect':[1,0,2,1]},bytes(4)
+            def first_stage(self,*args):return None
+        result=evaluate(Rectangles(),{'depth':8,'pixels':bytes(4)},Path('.'),time.monotonic()+1)
+        self.assertEqual(result['routes']['smart']['status'],'mismatch')
+        self.assertEqual(result['routes']['smart']['geometry_diff']['actual'],[1,0,2,1])
+
+    def test_classic_only_geometry_routes(self):
+        a=adapter('olmsmoother')
+        require_host(a,sample(a.generate(1,0),'realistic'))
+        self.assertEqual(a.routes,('classic',))
+        require_host(a,a.generate(1,0))
+        self.assertEqual(a.routes,('classic','smart'))
 
     def test_unknown_version_rejected(self):
         with self.assertRaises(ValueError):

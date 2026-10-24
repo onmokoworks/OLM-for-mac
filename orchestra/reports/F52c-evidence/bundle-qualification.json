@@ -1,0 +1,530 @@
+[
+  {
+    "plugin": "colorkeep",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 24 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=101 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartRender:smartrender-mapping@469"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "1b8a7f8468709548f829dcd88275cb537bbcc9ea85e4eeb6756fa87dbcf90271",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "colorkeep",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 24 error=516\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=101 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartRender:smartrender-mapping@469"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "1b8a7f8468709548f829dcd88275cb537bbcc9ea85e4eeb6756fa87dbcf90271",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "colorkeep",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 24 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=101 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartRender:smartrender-mapping@469"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "1b8a7f8468709548f829dcd88275cb537bbcc9ea85e4eeb6756fa87dbcf90271",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=12 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-size-downsample@2264"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "743a14b222d8448afdbb3667137172ab16aeb533df58b393c8b00bcc71b4a87f",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=12 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-size-downsample@2264"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "743a14b222d8448afdbb3667137172ab16aeb533df58b393c8b00bcc71b4a87f",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmdistancegradation",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=12 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-size-downsample@2264"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "743a14b222d8448afdbb3667137172ab16aeb533df58b393c8b00bcc71b4a87f",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmkirakira",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47d parameter ANGLE-to-FLOAT_SLIDER slot=40\nF47d register_ui events=4\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=40 acquire=6 release=6 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:request-not-admitted@2793"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "6d9993a54dd365a7505178c3e65cff7729d7e1675f8ca51daf948226123ed813",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmkirakira",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47d parameter ANGLE-to-FLOAT_SLIDER slot=40\nF47d register_ui events=4\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=40 acquire=6 release=6 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:request-not-admitted@2793"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "6d9993a54dd365a7505178c3e65cff7729d7e1675f8ca51daf948226123ed813",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmkirakira",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c AcquireSuite AEGP Utility Suite 13 supported=1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47c AcquireSuite PF Handle Suite 2 supported=1\nF47d parameter ANGLE-to-FLOAT_SLIDER slot=40\nF47d register_ui events=4\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=40 acquire=6 release=6 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:request-not-admitted@2793"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "6d9993a54dd365a7505178c3e65cff7729d7e1675f8ca51daf948226123ed813",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "radialblur",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 24 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=30 acquire=0 release=0 formats=0 checkout=2 checkin=2\n"
+    },
+    "guards": [
+      [
+        "SmartRender:smartrender-partial-checkout@6277"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "06b920da189076fc02cea45036ed3392016ae143ec44b635296b245d62644438",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "radialblur",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "ok",
+      "error": 0,
+      "output_rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1",
+        "GEOMETRY": "0 0 1 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c AcquireSuite PF World Suite 2 supported=1\nGEOMETRY 0 0 1 1\nF47c selector 24 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=30 acquire=1 release=1 formats=2 checkout=32 checkin=32\n"
+    },
+    "guards": [
+      []
+    ],
+    "raw_sha256": "e50b60e43e9f6e6389932f4ca12e01cdf082cb307ebebe851afb5c070ecf285b",
+    "bundle_sha256": "06b920da189076fc02cea45036ed3392016ae143ec44b635296b245d62644438",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "radialblur",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 24 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=30 acquire=0 release=0 formats=0 checkout=2 checkin=2\n"
+    },
+    "guards": [
+      [
+        "SmartRender:smartrender-partial-checkout@6277"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "06b920da189076fc02cea45036ed3392016ae143ec44b635296b245d62644438",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmtoondilate",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "ok",
+      "error": 0,
+      "output_rect": [
+        0,
+        0,
+        11,
+        7
+      ],
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3",
+        "GEOMETRY": "0 0 11 7"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c AcquireSuite PF World Suite 2 supported=1\nGEOMETRY 0 0 11 7\nF47c selector 24 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=1 acquire=1 release=1 formats=2 checkout=2 checkin=2\n"
+    },
+    "guards": [
+      []
+    ],
+    "raw_sha256": "4d979193e1f85a73586b3634ec7b7a2381ad589e4e43c5165110fb69318b2f13",
+    "bundle_sha256": "0c5bffbd0e612db3d201ab872487b2d15bee868feede4a5ff8112ab42a366369",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmtoondilate",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "ok",
+      "error": 0,
+      "output_rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1",
+        "GEOMETRY": "0 0 1 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c AcquireSuite PF World Suite 2 supported=1\nGEOMETRY 0 0 1 1\nF47c selector 24 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=1 acquire=1 release=1 formats=2 checkout=2 checkin=2\n"
+    },
+    "guards": [
+      []
+    ],
+    "raw_sha256": "26a98b57b8d093c1bfeded7c46636c9466dc14beb6c680b31118a67fdc1bdd7c",
+    "bundle_sha256": "0c5bffbd0e612db3d201ab872487b2d15bee868feede4a5ff8112ab42a366369",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmtoondilate",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "ok",
+      "error": 0,
+      "output_rect": [
+        0,
+        0,
+        4,
+        7
+      ],
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1",
+        "GEOMETRY": "0 0 4 7"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c AcquireSuite PF World Suite 2 supported=1\nGEOMETRY 0 0 4 7\nF47c selector 24 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=1 acquire=1 release=1 formats=2 checkout=2 checkin=2\n"
+    },
+    "guards": [
+      []
+    ],
+    "raw_sha256": "5f3728ed94a5903b8b203f2e702d15171eb65fbffd6ec02f155b1a73567f1b55",
+    "bundle_sha256": "0c5bffbd0e612db3d201ab872487b2d15bee868feede4a5ff8112ab42a366369",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother2",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=15 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-frame-contract@5321"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "bbe6a34d3ea681d219af4ff1521e2c2664ee1a2402ab3990b52257f5558634b3",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother2",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=15 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-frame-contract@5321"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "bbe6a34d3ea681d219af4ff1521e2c2664ee1a2402ab3990b52257f5558634b3",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother2",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=15 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "SmartPreRender:prerender-frame-contract@5321"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "bbe6a34d3ea681d219af4ff1521e2c2664ee1a2402ab3990b52257f5558634b3",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother",
+    "index": 0,
+    "route": "classic",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 11 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "ValidatePublicWorlds:world-extent-not-full-frame@4025"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "a7145be22672946d333131c0150344a79d6592783c49284186130adc3c5c8ee2",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother",
+    "index": 1,
+    "route": "classic",
+    "result": {
+      "status": "ok",
+      "error": 0,
+      "output_rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c AcquireSuite PF World Suite 2 supported=1\nF47c selector 11 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=2 release=2 formats=2 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      []
+    ],
+    "raw_sha256": "bd5edafd04228bfa2d689c5cf45bc2dadf20f23b5b4e5d621d052026cefccce6",
+    "bundle_sha256": "a7145be22672946d333131c0150344a79d6592783c49284186130adc3c5c8ee2",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmsmoother",
+    "index": 2,
+    "route": "classic",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 11 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=3 acquire=0 release=0 formats=0 checkout=0 checkin=0\n"
+    },
+    "guards": [
+      [
+        "ValidatePublicWorlds:world-extent-not-full-frame@4025"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "a7145be22672946d333131c0150344a79d6592783c49284186130adc3c5c8ee2",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmblur",
+    "index": 0,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "21 19 1 2 1 3 1 1 3"
+      },
+      "native_trace": "GEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 1 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 4 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 5 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 23 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 24 error=516\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 8 error=0\nGEOMETRY_INPUT 21 19 1 2 1 3 1 1 3\nF47c selector 3 error=0\nF47c counters declarations=5 acquire=0 release=0 formats=0 checkout=5 checkin=5\n"
+    },
+    "guards": [
+      [
+        "SmartRender:generic-input-world@2085"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "78569c3c900c15f01399acb4402b524bca2a6c1309205f48c0b9b193a7c069ef",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmblur",
+    "index": 1,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "1 1 1 2 1 3 10 11 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 24 error=516\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 1 1 1 2 1 3 10 11 1\nF47c selector 3 error=0\nF47c counters declarations=5 acquire=0 release=0 formats=0 checkout=5 checkin=5\n"
+    },
+    "guards": [
+      [
+        "SmartRender:generic-downsample@2087"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "78569c3c900c15f01399acb4402b524bca2a6c1309205f48c0b9b193a7c069ef",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  },
+  {
+    "plugin": "olmblur",
+    "index": 2,
+    "route": "smart",
+    "result": {
+      "status": "refusal",
+      "error": 516,
+      "metadata": {
+        "GEOMETRY_INPUT": "10 19 1 3 1 3 4 3 1"
+      },
+      "native_trace": "GEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 1 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 4 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 5 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 23 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 24 error=516\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 8 error=0\nGEOMETRY_INPUT 10 19 1 3 1 3 4 3 1\nF47c selector 3 error=0\nF47c counters declarations=5 acquire=0 release=0 formats=0 checkout=5 checkin=5\n"
+    },
+    "guards": [
+      [
+        "SmartRender:generic-input-world@2085"
+      ]
+    ],
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bundle_sha256": "78569c3c900c15f01399acb4402b524bca2a6c1309205f48c0b9b193a7c069ef",
+    "host_sha256": "28f6fc3fa5d644be05997c8c1e1b39ba71fcccf67d532e4725f440d8d7c1a51f"
+  }
+]

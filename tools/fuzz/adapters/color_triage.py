@@ -3,6 +3,7 @@ import os
 import re
 
 from core import command
+from .public import PublicAdapter
 
 
 class ColorTriage:
@@ -39,6 +40,13 @@ class ColorTriage:
         env = dict(self.env)
         if os.environ.get('OLM_COLOR_TRIAGE_NO_TRACE') != '1':
             env['OLM_REFUSAL_TRACE'] = str(trace)
+        if case.get('geometry_sampler'):
+            try:
+                result,raw=PublicAdapter.candidate(self,case,directory,route,deadline,env=env)
+                guards=trace.read_text().splitlines() if trace.exists() else []
+                return result,raw,guards
+            finally:
+                trace.unlink(missing_ok=True)
         status, out, err = command(argv, data=data, timeout=self.timeout, deadline=deadline, env=env)
         guards = trace.read_text().splitlines() if trace.exists() else []
         trace.unlink(missing_ok=True)

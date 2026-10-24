@@ -13,6 +13,7 @@ import tempfile
 import time
 
 from core import case_seed, command, sha
+from .public import geometry_arguments, geometry_environment, ROOT as FUZZ_ROOT
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
@@ -24,6 +25,7 @@ KINDS = {1: 'i', 3: 'a', 4: 'b', 6: 'p', 7: 'u', 10: 's'}
 
 class Adapter:
     name = 'radialblur'
+    geometry_samplers = ('realistic-v1',)
     generator_version = 1
     routes = ('classic', 'smart')
     oracle_routes = {'classic': 'classic', 'smart': 'smart'}
@@ -41,7 +43,7 @@ class Adapter:
         self.env = dict(os.environ)
         # Avoid diagnostic dump env vars inherited from other probe campaigns.
         for key in list(self.env):
-            if (key.startswith(('OLMRADIALBLUR_', 'OLM_RADIALBLUR_'))
+            if (key.startswith(('OLMRADIALBLUR_', 'OLM_RADIALBLUR_', 'OLM_F52_'))
                     or key.endswith(('_PROBE_DIRECTORY', '_PLANES_DIRECTORY'))):
                 del self.env[key]
 
@@ -143,6 +145,7 @@ class Adapter:
             if body.count(old) != 1:
                 raise ValueError(f'Harness changed: {old}')
             body = body.replace(old, new)
+        body = body.replace('#include "production_under_test.cpp"', '#include "production_under_test.cpp"\n#include "'+str(FUZZ_ROOT/'tools/fuzz/harnesses/geometry.hpp')+'"')
         harness = scratch/'fuzz_harness.cpp'
         harness.write_text(body)
         # Optional measurement switches, both off by default. Bypass names
@@ -233,7 +236,9 @@ class Adapter:
         request = json.dumps({'v':4, 'type':'render_frame', 'frame_index':0,
                               'current_time':{'value':0,'scale':24,'step':1,'total':1},
                               'parameters':'v4|'+';'.join(encoded)}).encode()
-        status, out, err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
+        status, out, err = command([self.worker,'session',self.aex,ip,op,*case.get('full_geometry',case['geometry']),'24',
+                                   *[v for axis,ratio in zip(('x','y'),case.get('downsample',[])) for v in ('--downsample-'+axis,'/'.join(map(str,ratio)))],
+                                   *geometry_arguments(case,route),
                                    '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
                                    '--fixture-render-path',route,
                                    *getattr(self, 'session_arguments', lambda case, directory: [])(case, directory)],
@@ -262,7 +267,7 @@ class Adapter:
                 return {'status':'reject', 'diagnostic':json.dumps(frame)[-1600:]}, b''
             raw = op.read_bytes()
             if not (frame['output']['guards_intact'] and frame['output']['checksum']==sha(raw)
-                    and len(raw)==len(case['pixels']) and frame['output']['render_path']=={'classic':'classic','smart':'smartfx'}[route]
+                    and len(raw)==(frame['output']['width']*frame['output']['height']*case['depth']//8*4 if case.get('geometry_sampler') else len(case['pixels'])) and frame['output']['render_path']=={'classic':'classic','smart':'smartfx'}[route]
                     and close['session_clean'] and not close['unsupported_suite_calls']
                     and not close['dropped_unsupported_suite_calls']):
                 return {'status':'harness_error', 'diagnostic':'guard/checksum/size/route/session invariant'}, b''
@@ -271,7 +276,7 @@ class Adapter:
                       for p in ready['parameters'] if p['param_type'] in KINDS]
             if actual != expected:
                 return {'status':'harness_error', 'diagnostic':'live declarations differ from retained ranges'}, b''
-            return {'status':'ok', 'guards_intact':True, 'session_clean':True}, raw
+            return {'status':'ok', 'guards_intact':True, 'session_clean':True,**({'output_rect':frame['output']['rect']} if case.get('geometry_sampler') else {})}, raw
         except (KeyError, ValueError, StopIteration, OSError, struct.error) as exc:
             return {'status':'harness_error', 'diagnostic':repr(exc), 'stderr':err.decode(errors='replace')[-1000:]}, b''
         finally:
@@ -284,6 +289,7 @@ class Adapter:
         trace = directory/f'refusal_trace_{route}.txt'
         trace.unlink(missing_ok=True)
         env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        geometry_environment(case,directory,env)
         status, raw, err = command([self.binary,*case['geometry'],case['depth'],route,config,
                                    case['input_padding'],case['output_padding']],
                                   data=case['pixels'], timeout=self.timeout, deadline=deadline, env=env)
@@ -319,13 +325,19 @@ class Adapter:
                 if sanitizer:
                     result['sanitizer'] = sanitizer
                 return result, b'', guards
-            if len(raw) != len(case['pixels']):
+            if case.get('geometry_sampler') and route=='smart':
+                raw=(directory/'geometry-output.raw').read_bytes()
+                rect=list(map(int,metadata['GEOMETRY'].split()))
+                expected=(rect[2]-rect[0])*(rect[3]-rect[1])*case['depth']//8*4
+            else:
+                rect=[0,0,*case['geometry']];expected=len(case['pixels'])
+            if len(raw) != expected:
                 return {'status':'harness_error','diagnostic':'output length'}, b'', guards
-            result = {'status':'ok','error':0,'metadata':metadata}
+            result = {'status':'ok','error':0,'metadata':metadata,**({'output_rect':rect} if case.get('geometry_sampler') else {})}
             if sanitizer:
                 result['sanitizer'] = sanitizer
             return result, raw, guards
-        except (ValueError,KeyError) as exc:
+        except (ValueError,KeyError,OSError) as exc:
             return {'status':'harness_error','diagnostic':repr(exc),
                     'stderr':stderr[-1000:], 'sanitizer':sanitizer}, b'', guards
 

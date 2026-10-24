@@ -12,6 +12,7 @@ CORES = [ROOT/'core'/name for name in ('olmblur_helper.cpp','olmblur_fullworker_
 
 class Adapter(PublicAdapter):
     name = 'olmblur'
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMBlur'
     output_format = 'raw'
     small_controls = (1,)

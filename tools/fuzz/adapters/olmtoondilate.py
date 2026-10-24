@@ -11,6 +11,7 @@ class Adapter(PublicAdapter):
     original_routes = {'classic': 'no-write', 'smart': 'render'}
     no_write_fill = 0xee
     name = 'olmtoondilate'
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMToonDilate'
     output_format = 'raw'
     small_controls = (1,)

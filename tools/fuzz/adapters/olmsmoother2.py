@@ -1,7 +1,7 @@
 """Smoother2: extend the retained public key/gamma replay host to Classic."""
 import copy
 
-from .public import PublicAdapter, ROOT, replace_once
+from .public import PublicAdapter, ROOT, replace_once, geometry_shim
 
 SOURCE = ROOT/'mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp'
 HARNESS = ROOT/'tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp'
@@ -12,12 +12,15 @@ class Adapter(PublicAdapter):
     original_routes = {'classic': 'no-write', 'smart': 'render'}
     no_write_fill = 0xee
     name = 'olmsmoother2'
+    geometry_samplers = ('realistic-v1',)
     aex_name = 'OLMSmoother2'
     output_format = 'hex'
 
     def build(self, scratch, deadline):
         (scratch/'production_under_test.cpp').write_text(SOURCE.read_text())
-        body = HARNESS.read_text()
+        shim=geometry_shim(SHIM,scratch/'geometry-shim')
+        body = HARNESS.read_text().replace('#include "production_under_test.cpp"','#include "production_under_test.cpp"\n#include "'+str(ROOT/'tools/fuzz/harnesses/geometry.hpp')+'"')
+        body=body.replace('PF_RenderRequest *request, A_long, A_long, A_long,','const PF_RenderRequest *request, A_long, A_long, A_u_long,')
         body = replace_once(body,'static PF_EffectWorld *source_world, *destination_world;',
                             'static bool fuzz_classic; static size_t fuzz_pad;\nstatic PF_EffectWorld *source_world, *destination_world;')
         body = replace_once(body,'const size_t pad = sizeof(Pixel) == 4 ? 5 : (sizeof(Pixel) == 8 ? 7 : 13);',
@@ -38,7 +41,7 @@ class Adapter(PublicAdapter):
             body = replace_once(body,old,new)
         host = scratch/'host.cpp';host.write_text(body);binary = scratch/'mac'
         self.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
-            '-Wno-deprecated-declarations','-I',scratch,'-I',SHIM,'-I',SOURCE.parent,host,'-o',binary],deadline)
+            '-Wno-deprecated-declarations','-I',scratch,'-I',shim,'-I',SOURCE.parent,host,'-o',binary],deadline)
         return binary,[HARNESS,SOURCE,*sorted(SHIM.glob('*.h')),
                        SOURCE.parent/'OLMSmoother2_decode_lut_10000.h',SOURCE.parent/'OLMSmoother2_encode_lut_10000.h']
 

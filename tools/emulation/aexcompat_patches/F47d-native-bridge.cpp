@@ -17,6 +17,14 @@
 #include <unordered_map>
 
 using Entry = PF_Err (*)(PF_Cmd, PF_InData*, PF_OutData*, PF_ParamDef**, PF_LayerDef*, void*);
+#ifdef OLM_F52_BUNDLE_GEOMETRY
+static Entry f52_bundle_entry;
+static PF_Err EffectMain(PF_Cmd cmd,PF_InData *in,PF_OutData *out,PF_ParamDef **params,PF_LayerDef *world,void *extra) {
+ return f52_bundle_entry(cmd,in,out,params,world,extra);
+}
+#include "../../fuzz/harnesses/geometry.hpp"
+#undef EffectMain
+#endif
 struct State {
  PF_EffectWorld *src, *dst;
  PF_ParamDef *params;
@@ -200,7 +208,12 @@ extern "C" int f47c_render(const char *path, const unsigned char *input_bytes,
  utils.host_unlock_handle=unlock_handle; utils.host_dispose_handle=dispose_handle; utils.host_get_handle_size=handle_size;
  bool global=false,sequence=false; PF_Err err=0;
  auto call=[&](PF_Cmd cmd,void *extra=nullptr) {
+#ifdef OLM_F52_BUNDLE_GEOMETRY
+  f52_bundle_entry=entry;
+  PF_Err e=f52_entry(cmd,&in,&out,pointers.data(),&dst,extra);
+#else
   PF_Err e=entry(cmd,&in,&out,pointers.data(),&dst,extra);
+#endif
   std::fprintf(stderr,"F47c selector %d error=%d\n",int(cmd),int(e));
   in.global_data=out.global_data; in.sequence_data=out.sequence_data; return e;
  };

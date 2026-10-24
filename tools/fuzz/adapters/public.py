@@ -164,7 +164,7 @@ class PublicAdapter:
                 'oracle_routes':self.oracle_routes, 'original_routes':self.original_routes,
                 'oracle_render_path':self.oracle_path,
                 'time':{'value':0,'scale':24,'step':1,'total':1},
-                'world':'full frame, origin 0, downsample 1:1, raw ARGB, no conversion',
+                'world':('realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB' if getattr(self,'geometry_active',False) else 'full frame, origin 0, downsample 1:1, raw ARGB, no conversion'),
                 'layer':'None; independent layer worlds outside this adapter',
                 'stage_support':'existing public replay helpers expose final raw output only',
                 'reference_limit':'Retained host imports are not native Windows UCRT or AE proof',
@@ -226,6 +226,7 @@ class PublicAdapter:
             'current_time':{'value':0,'scale':24,'step':1,'total':1},'parameters':'v4|'+';'.join(encoded)}).encode()
         status,out,err = command([self.worker,'session',self.aex,ip,op,*case.get('full_geometry',case['geometry']),'24',
             *[v for axis,ratio in zip(('x','y'),case.get('downsample',[])) for v in ('--downsample-'+axis, '/'.join(map(str,ratio)))],
+            *geometry_arguments(case,selected),
             '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
             *(['--fixture-render-path',selected] if selected else []),
             *getattr(self, 'session_arguments', lambda case, directory: [])(case, directory)],data=struct.pack('<I',len(request))+request,
@@ -252,11 +253,11 @@ class PublicAdapter:
                 return {'status':'reject','diagnostic':json.dumps(frame)[-1600:]},b''
             raw = op.read_bytes()
             if not (frame['output']['guards_intact'] and frame['output']['checksum']==sha(raw)
-                    and len(raw)==len(case['pixels']) and frame['output']['render_path']==expected_path
+                    and len(raw)==(frame['output']['width']*frame['output']['height']*case['depth']//8*4 if case.get('geometry_sampler') else len(case['pixels'])) and frame['output']['render_path']==expected_path
                     and close['session_clean'] and not close['unsupported_suite_calls']
                     and not close['dropped_unsupported_suite_calls']):
                 return {'status':'harness_error','diagnostic':'guard/checksum/size/route/session invariant'},b''
-            return {'status':'ok','guards_intact':True,'session_clean':True},raw
+            return {'status':'ok','guards_intact':True,'session_clean':True,**({'output_rect':frame['output']['rect']} if case.get('geometry_sampler') else {})},raw
         except (KeyError,ValueError,StopIteration,OSError,struct.error) as exc:
             return {'status':'harness_error','diagnostic':repr(exc)},b''
 
@@ -266,6 +267,7 @@ class PublicAdapter:
         if 'downsample' in case:
             values = [*case['full_geometry'], *case['downsample'][0], *case['downsample'][1]]
             environment['OLM_F52_DOWNSAMPLE'] = ','.join(map(str,values))
+        geometry_environment(case,directory,environment)
         status,out,err = command(argv,data=data,timeout=self.timeout,deadline=deadline,env=environment)
         if status['status']!='ok':
             return dict(status,diagnostic=err.decode(errors='replace')[-1600:]),b''
@@ -273,17 +275,65 @@ class PublicAdapter:
             if self.output_format=='hex':
                 metadata = dict(line.split(' ',1) for line in out.decode().splitlines())
                 raw = bytes.fromhex(metadata.pop('RAW'))
+                for line in err.decode().splitlines():
+                    if line.startswith('GEOMETRY'):
+                        key,value=line.split(' ',1);metadata[key]=value
             else:
                 metadata = dict(line.split(' ',1) for line in err.decode().splitlines())
                 raw = out
             error = int(metadata['ERROR'])
             if error:
                 return {'status':'refusal','error':error,'metadata':metadata},b''
-            if len(raw)!=len(case['pixels']):
+            if case.get('geometry_sampler') and route=='smart':
+                raw=(directory/'geometry-output.raw').read_bytes()
+                rect=list(map(int,metadata['GEOMETRY'].split()))
+                expected=(rect[2]-rect[0])*(rect[3]-rect[1])*case['depth']//8*4
+            else:
+                rect=[0,0,*case['geometry']];expected=len(case['pixels'])
+            if len(raw)!=expected:
                 return {'status':'harness_error','diagnostic':'output size'},b''
-            return {'status':'ok','error':0,'metadata':metadata},raw
-        except (ValueError,KeyError) as exc:
+            return {'status':'ok','error':0,'metadata':metadata,**({'output_rect':rect} if case.get('geometry_sampler') else {})},raw
+        except (ValueError,KeyError,OSError) as exc:
             return {'status':'harness_error','diagnostic':repr(exc)},b''
 
     def first_stage(self, *args):
         return None
+
+
+def geometry_arguments(case,route=None):
+    if not case.get('geometry_sampler'): return []
+    return ['--negotiate-output','1','--rowbytes-pad',str(case['rowbytes_padding']),
+            '--extent-hint',','.join(map(str,case['extent_hint'])),
+            *(['--request-rect',','.join(map(str,case['request_rect']))] if route!='classic' else []),
+            '--pixel-aspect','/'.join(map(str,case['pixel_aspect']))]
+
+
+def geometry_environment(case,directory,env):
+    if not case.get('geometry_sampler'): return
+    values=[*case['full_geometry'],*case['downsample'][0],*case['downsample'][1]]
+    env['OLM_F52_DOWNSAMPLE']=','.join(map(str,values))
+    env.update(OLM_F52_GEOMETRY_OUTPUT=str(directory/'geometry-output.raw'),
+               OLM_F52_EXTENT=','.join(map(str,case['extent_hint'])),
+               OLM_F52_REQUEST=','.join(map(str,case['request_rect'])),
+               OLM_F52_ASPECT=','.join(map(str,case['pixel_aspect'])),
+               OLM_F52_PADDING=str(case['rowbytes_padding']))
+    (directory/'geometry-output.raw').unlink(missing_ok=True)
+
+
+def geometry_shim(source, destination, classic=False):
+    """Extend only a scratch copy of the legacy CLI ABI; production stays untouched."""
+    import shutil
+    shutil.copytree(source,destination,dirs_exist_ok=True)
+    name='OLMSmoother.h' if classic else 'OLMSmoother2.h'
+    path=destination/name;body=path.read_text()
+    body=body.replace('struct PF_EffectWorld {','struct PF_EffectWorld {\n    struct { A_long num, den; } pix_aspect_ratio;')
+    if classic:
+        body=body.replace('struct PF_EffectWorld {','struct PF_EffectWorld {\n    A_long origin_x, origin_y;')
+        body=body.replace('struct PF_InData {','struct PF_InData {\n    A_long width,height;\n    struct { A_long num,den; } downsample_x,downsample_y;')
+    body=body.replace('struct PF_InData {','struct PF_InData {\n    A_long output_origin_x,output_origin_y;\n    PF_LRect extent_hint;\n    struct { A_long num,den; } pixel_aspect_ratio;')
+    if not classic:
+        body=body.replace('struct PF_CheckoutResult {','typedef A_long PF_ParamIndex;\nstruct PF_CheckoutResult {\n    struct { A_long num,den; } par;')
+        body=body.replace('A_long, A_long, PF_RenderRequest *,','A_long, A_long, const PF_RenderRequest *,')
+        body=body.replace('A_long, A_long, A_long, PF_CheckoutResult *);','A_long, A_long, A_u_long, PF_CheckoutResult *);')
+    path.write_text(body)
+    return destination
