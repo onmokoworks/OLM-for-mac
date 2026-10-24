@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 GENERIC = ROOT / "tests/test_olmtoondilate_generic_beta.py"
 
 
-def test_roi_halo_and_rect_arithmetic_fail_closed() -> None:
+def test_smart_geometry_bounds_and_ignored_origins() -> None:
     tree = ast.parse(GENERIC.read_text())
     assignment = next(node for node in tree.body if isinstance(node, ast.Assign) and
                       any(isinstance(target, ast.Name) and target.id == "STUB"
@@ -42,7 +42,19 @@ int main(){
  in.origin_x=std::numeric_limits<A_long>::min();
  out.origin_x=std::numeric_limits<A_long>::max();
  OLMToonDilateInfo info{1.0,1.0};size_t span=0;
- if(ValidateToonBetaAdmission<PF_Pixel8>(&data,&in,&out,info,&span)!=PF_Err_BAD_CALLBACK_PARAM)return 8;
+ if(ValidateToonBetaAdmission<PF_Pixel8>(&data,&in,&out,info,&span)!=PF_Err_NONE)return 8;
+ // Expanded allocation: only the input-sized plane is written. Odd stride
+ // and bytes outside the active plane must remain untouched.
+ uint8_t src[26]{}, dst[69]; std::memset(dst,0xa5,sizeof(dst));
+ PF_EffectWorld small{src,13,3,2}, expanded{dst,23,5,3};
+ PF_Pixel8 seed{255,11,33,55};WritePixel<PF_Pixel8>(&small,0,0,seed);
+ OLMToonDilateInfo expanded_info{2.0,3.0};
+ if(RenderTyped<PF_Pixel8>(&small,&expanded,expanded_info,true))return 9;
+ for(int y=0;y<3;++y)for(int x=0;x<23;++x){
+   if(y<2&&x<12){const uint8_t expected[]={255,11,33,55};
+     if(dst[y*23+x]!=expected[x%4])return 10;
+   }else if(dst[y*23+x]!=0xa5)return 11;
+ }
  return 0;
 }
 '''

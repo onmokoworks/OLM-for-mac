@@ -348,15 +348,6 @@ static PF_Err ValidateToonBetaAdmission(
 		  (in_data->downsample_y.num > 0 && in_data->downsample_y.den > 0))) {
 		return OLM_TOON_ERROR("beta-downsample", PF_Err_BAD_CALLBACK_PARAM);
 	}
-	const int64_t offset_x64 = (int64_t)output->origin_x - input->origin_x;
-	const int64_t offset_y64 = (int64_t)output->origin_y - input->origin_y;
-	const bool tiled = input->width != output->width || input->height != output->height;
-	if ((!tiled && (offset_x64 != 0 || offset_y64 != 0)) ||
-		(tiled && (offset_x64 < 0 || offset_y64 < 0 || offset_x64 > input->width ||
-			offset_y64 > input->height || output->width > input->width - offset_x64 ||
-			output->height > input->height - offset_y64))) {
-		return OLM_TOON_ERROR("beta-tile-bounds", PF_Err_BAD_CALLBACK_PARAM);
-	}
 	const size_t input_width = static_cast<size_t>(input->width);
 	const size_t input_height = static_cast<size_t>(input->height);
 	const size_t output_width = static_cast<size_t>(output->width);
@@ -464,15 +455,24 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	bool smart_render)
 {
 	if (!input || !output) return OLM_TOON_ERROR("render-inputs", PF_Err_BAD_CALLBACK_PARAM);
-	const A_long w = output->width;
-	const A_long h = output->height;
+	const A_long w = smart_render ? input->width : output->width;
+	const A_long h = smart_render ? input->height : output->height;
 	size_t pixel_count = 0;
-	PF_Err validation_err = ValidateWorlds<PixelT>(input, output, &pixel_count);
+	PF_Err validation_err = ValidateWorlds<PixelT>(smart_render ? output : input, output, &pixel_count);
 	if (validation_err != PF_Err_NONE) return validation_err;
+	if (smart_render) {
+		// The AEX distance plane spans the input, even for a smaller output.
+		validation_err = ValidateWorlds<PixelT>(input, input, &pixel_count);
+		if (validation_err) return validation_err;
+	}
+	auto write_visible = [&](A_long x, A_long y, const PixelT &pixel) {
+		if (x < output->width && y < output->height)
+			WritePixel<PixelT>(output, x, y, pixel);
+	};
 	if (w <= 0 || h <= 0 || info.search_radius <= 0.0) {
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				WritePixel<PixelT>(output, x, y, ReadPixel<PixelT>(input, x, y));
+				write_visible(x, y, ReadPixel<PixelT>(input, x, y));
 			}
 		}
 		return PF_Err_NONE;
@@ -492,7 +492,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (r_eff <= 0) {
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				WritePixel<PixelT>(output, x, y, ReadPixel<PixelT>(input, x, y));
+				write_visible(x, y, ReadPixel<PixelT>(input, x, y));
 			}
 		}
 		return PF_Err_NONE;
@@ -505,7 +505,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const PixelT input_pixel = ReadPixel<PixelT>(input, x, y);
-			WritePixel<PixelT>(output, x, y, input_pixel);
+			write_visible(x, y, input_pixel);
 				size_t idx = static_cast<size_t>(y) * static_cast<size_t>(w) + static_cast<size_t>(x);
 			if (ToonPixelTraits<PixelT>::opaque(input_pixel)) {
 				dist[idx] = 0;
@@ -537,8 +537,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		uint32_t candidate = best + 1;
 		if (candidate >= dist[(size_t)idx]) return;
 		dist[(size_t)idx] = candidate;
-		if (candidate <= (uint32_t)r_eff) {
-			WritePixel<PixelT>(output, x, y, ReadPixel<PixelT>(output, best_x, best_y));
+		if (candidate <= (uint32_t)r_eff &&
+			best_x < output->width && best_y < output->height) {
+			write_visible(x, y, ReadPixel<PixelT>(output, best_x, best_y));
 		}
 	};
 
@@ -650,40 +651,10 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
-	bool requested_halo = false;
 	PF_CheckoutResult in_result;
 	AEFX_CLR_STRUCT(in_result);
-	// Generic spatial tiles need an input halo. Parameter checkout is optional
-	// in older bounded hostless adapters; production hosts provide both callbacks.
-	if (in_data->inter.checkout_param && in_data->inter.checkin_param &&
-		req.rect.right > req.rect.left && req.rect.bottom > req.rect.top) {
-		PF_ParamDef radius_param;
-		AEFX_CLR_STRUCT(radius_param);
-		err = PF_CHECKOUT_PARAM(in_data, OLMTOONDILATE_SEARCH_RADIUS,
-			in_data->current_time, in_data->time_step, in_data->time_scale, &radius_param);
-		if (err) return err;
-		const PF_FpLong radius = radius_param.u.fs_d.value;
-		PF_Err checkin_err = PF_CHECKIN_PARAM(in_data, &radius_param);
-		if (checkin_err) return checkin_err;
-		if (!std::isfinite(radius) || radius < 0.0 || radius > 100.0)
-			return OLM_TOON_ERROR("prerender-radius", PF_Err_BAD_CALLBACK_PARAM);
-		A_long halo = 0;
-		if (!ToonCheckedHalo(radius, in_data->downsample_x.num,
-			in_data->downsample_x.den, &halo))
-			return OLM_TOON_ERROR("prerender-halo", PF_Err_BAD_CALLBACK_PARAM);
-		auto subtract_clamped = [halo](A_long value) -> A_long {
-			return value <= halo ? 0 : value - halo;
-		};
-		auto add_saturated = [halo](A_long value) -> A_long {
-			return value > std::numeric_limits<A_long>::max() - halo ?
-				std::numeric_limits<A_long>::max() : value + halo;
-		};
-		req.rect.left = subtract_clamped(req.rect.left);
-		req.rect.top = subtract_clamped(req.rect.top);
-		req.rect.right = add_saturated(req.rect.right);
-		req.rect.bottom = add_saturated(req.rect.bottom);
-		requested_halo = halo > 0;
-	}
+	// The original forwards the output request unchanged to checkout_layer.
+	// Publishing a radius-expanded checkout changes AE's output allocation.
 
 	// Match the exported Windows SmartPreRender request exactly. The admitted
 	// numerical cells independently require the complete source byte pattern,
@@ -698,7 +669,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		// leaves the host-owned pre-render result unchanged.
 		PreRenderData *pre = new PreRenderData;
 		pre->comp_width = in_result.ref_width > 0 ? (PF_FpLong)in_result.ref_width : 0.0;
-		pre->requires_layer_checkin = requested_halo;
+		pre->requires_layer_checkin = false;
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
 		extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
@@ -758,17 +729,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	OLMToonDilateInfo info;
 	info.search_radius = radius_param.u.fs_d.value;
 	info.comp_width = input_world->width;
-	if (in_data->downsample_x.num > 0 && in_data->downsample_x.den > 0) {
-		// The AEX worker scales Search Radius from the host's rational
-		// downsample_x pair.  Reconstructing this from integer ref/output
-		// widths is off by one for odd-sized worlds at enlarged render scales.
-		info.comp_width = (PF_FpLong)input_world->width *
-		                  (PF_FpLong)in_data->downsample_x.den /
-		                  (PF_FpLong)in_data->downsample_x.num;
-	} else if (input_world->width == output_world->width) {
-		if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data))
-			if (pre->comp_width > 0.0) info.comp_width = pre->comp_width;
-	}
 	// Only a successful checkout is checked in.  Propagate cleanup failure
 	// before numerical rendering so the destination remains untouched.
 	err = PF_CHECKIN_PARAM(in_data, &radius_param);
@@ -806,7 +766,18 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		std::memcpy(staged_bytes.data(), output_world->data, span);
 		PF_EffectWorld staged_world = *output_world;
 		staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_bytes.data());
-		err = RenderTileWorld(input_world, &staged_world, info, extra->input->bitdepth);
+		// AEX CVTDQ2PS / DIVSS / MULSS precede the integer ceiling.
+		const float scale = in_data->downsample_x.num > 0 ?
+			(float)in_data->downsample_x.num / (float)in_data->downsample_x.den : 1.0f;
+		OLMToonDilateInfo render_info = info;
+		render_info.search_radius = (float)info.search_radius * scale;
+		// Workers address both worlds locally; origin/extent/aspect do not
+		// offset pixel accesses. Out-of-output neighbor copies are no-ops.
+		switch (extra->input->bitdepth) {
+		case 8: err = RenderTyped<PF_Pixel8>(input_world, &staged_world, render_info, true); break;
+		case 16: err = RenderTyped<PF_Pixel16>(input_world, &staged_world, render_info, true); break;
+		case 32: err = RenderTyped<PF_PixelFloat>(input_world, &staged_world, render_info, true); break;
+		}
 		err = finish(err);
 		if (!err) std::memcpy(output_world->data, staged_bytes.data(), span);
 	} catch (const std::bad_alloc &) {

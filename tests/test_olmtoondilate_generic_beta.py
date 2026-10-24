@@ -186,11 +186,11 @@ def test_pf32_seed_boundaries_match_original_aex_raw_witnesses():
         assert hashlib.sha256(output[i*32:(i+1)*32]).hexdigest() == row["oracle_sha256"], row["name"]
 
 
-def test_smart_adapter_requests_halo_and_uses_coordinate_aware_tile_worker():
+def test_smart_adapter_preserves_request_and_uses_local_world_coordinates():
     source = SOURCE.read_text(encoding="utf-8")
-    assert "req.rect.left = subtract_clamped(req.rect.left);" in source
-    assert "req.rect.right = add_saturated(req.rect.right);" in source
-    assert "RenderTileWorld(input_world, &staged_world" in source
+    assert "req.rect.left = subtract_clamped(req.rect.left);" not in source
+    assert "req.rect.right = add_saturated(req.rect.right);" not in source
+    assert "RenderTyped<PF_Pixel8>(input_world, &staged_world, render_info, true)" in source
     assert "output->origin_x - input->origin_x" in source
     assert "extra->cb->checkin_layer_pixels" in source
 
