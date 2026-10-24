@@ -5235,8 +5235,8 @@ ValidatePublicWorlds(PF_InData *in_data,
 	    input->width <= 0 || input->height <= 0 ||
 	    input->width != output->width || input->height != output->height ||
 	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
-	    input->origin_x != 0 || input->origin_y != 0 ||
-	    output->origin_x != 0 || output->origin_y != 0) {
+	    input->origin_x != output->origin_x ||
+	    input->origin_y != output->origin_y) {
 		return OLM_SM2_REFUSAL("validate-world-shape");
 	}
 	short input_depth = 0, output_depth = 0;
@@ -5306,34 +5306,11 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 {
 	if (!in_data || !out_data || !extra || !extra->input || !extra->output ||
 	    !extra->cb || !extra->cb->checkout_layer) return OLM_SM2_REFUSAL("prerender-null-inputs");
-	// The classifier is not a finite-radius filter: several cardinal and
-	// diagonal walkers continue along a connected class run until a frame edge.
-	// Consequently a fixed tile halo cannot preserve full-frame results.  Ask AE
-	// for the complete sampled source and advertise that complete result instead.
-	// SmartRender's full-world validation then fails closed if the host supplies
-	// only the requested tile despite this checkout.
-	if (in_data->width < 1 || in_data->height < 1 ||
-	    in_data->width > 8192 || in_data->height > 8192 ||
-	    in_data->downsample_x.num <= 0 ||
-	    in_data->downsample_x.den < in_data->downsample_x.num ||
-	    in_data->downsample_y.num <= 0 ||
-	    in_data->downsample_y.den < in_data->downsample_y.num) {
-		return OLM_SM2_REFUSAL("prerender-frame-contract");
-	}
+	// Original SmartPreRender forwards the output request to checkout_layer.
+	// F53 cropped-checkout witnesses confirm that the returned availability,
+	// rather than the full layer dimensions, determines the output world.
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
-	// PF_InData dimensions are full resolution; requests/worlds are sampled.
-	// Keep the whole sampled frame for the unbounded classifier. The original
-	// builder (0x180004e10) sizes its working planes from the output world and
-	// reads Smoothness/Extra Smooth/Smooth Range without downsample scaling.
-	const A_long sampled_width = (A_long)(((int64_t)in_data->width *
-		in_data->downsample_x.num + in_data->downsample_x.den - 1) /
-		in_data->downsample_x.den);
-	const A_long sampled_height = (A_long)(((int64_t)in_data->height *
-		in_data->downsample_y.num + in_data->downsample_y.den - 1) /
-		in_data->downsample_y.den);
-	const PF_LRect full_rect = {0, 0, sampled_width, sampled_height};
-	req.rect = full_rect;
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	PF_CheckoutResult in_result;
 	memset(&in_result, 0, sizeof(in_result));
@@ -5344,17 +5321,8 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		&in_result));
 	if (err) return OLM_SM2_ERROR("prerender-checkout", err);
 
-	// result_rect/max_result_rect describe content bounds and may be empty for a
-	// transparent frame. ref dimensions are the checkout's full-frame authority.
-	if (!err && (in_result.ref_width != in_data->width ||
-	             in_result.ref_height != in_data->height)) {
-		err = OLM_SM2_REFUSAL("prerender-reference-size");
-	}
-	if (!err) {
-		extra->output->result_rect = full_rect;
-		extra->output->max_result_rect = full_rect;
-		extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
-	}
+	UnionLRect_inline(&in_result.result_rect, &extra->output->result_rect);
+	UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);
 	return err;
 }
 

@@ -77,6 +77,8 @@ int run(int w, int h, int depth, const char *parameters) {
     in.width = w; in.height = h;
     in.downsample_x = {1, 1}; in.downsample_y = {1, 1};
     PF_PreRenderInput pre_input{}; pre_input.bitdepth = depth; PF_PreRenderOutput pre_output{};
+    // Supply the full-frame request explicitly; production forwards this rect.
+    pre_input.output_request.rect = {0, 0, w, h};
     PF_PreRenderCallbacks pre_callbacks{&pre_checkout}; PF_PreRenderExtra pre{&pre_input, &pre_output, &pre_callbacks};
     int pre_error = EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out, nullptr, nullptr, &pre);
     PF_SmartRenderInput smart_input{short(depth)}; PF_SmartRenderCallbacks callbacks{&layer, &output};

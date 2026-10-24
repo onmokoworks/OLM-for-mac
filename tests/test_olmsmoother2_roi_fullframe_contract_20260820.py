@@ -21,8 +21,8 @@ class OLMSmoother2RoiContract(unittest.TestCase):
         validate = text.split("ValidatePublicWorlds(", 1)[1].split("// Classic Render", 1)[0]
         self.assertNotIn("extent_hint", validate)
         for token in (
-            "input->origin_x != 0", "input->origin_y != 0",
-            "output->origin_x != 0", "output->origin_y != 0",
+            "input->origin_x != output->origin_x",
+            "input->origin_y != output->origin_y",
         ):
             self.assertIn(token, validate)
 
@@ -47,7 +47,7 @@ class OLMSmoother2RoiContract(unittest.TestCase):
             self.assertEqual(near[: halo + 1], far[: halo + 1])
             self.assertNotEqual(near.index(0), far.index(0))
 
-    def test_prerender_requires_verified_full_frame_checkout(self) -> None:
+    def test_prerender_propagates_checkout_availability(self) -> None:
         compiler = shutil.which("clang++")
         if not compiler:
             self.skipTest("clang++ unavailable")
@@ -60,13 +60,13 @@ static bool wrong_ref = false;
 static A_long sampled_width = 37, sampled_height = 23;
 static PF_Err checkout(PF_ProgPtr, A_long, A_long, PF_RenderRequest *req,
                        A_long, A_long, A_long, PF_CheckoutResult *r) {{
-    if (req->rect.left != 0 || req->rect.top != 0 ||
-        req->rect.right != sampled_width || req->rect.bottom != sampled_height ||
+    if (req->rect.left != 11 || req->rect.top != 7 ||
+        req->rect.right != 19 || req->rect.bottom != 13 ||
         !req->preserve_rgb_of_zero_alpha) return 91;
     r->ref_width = wrong_ref ? 36 : 37; r->ref_height = 23;
-    // Transparent source: content bounds are legitimately empty even though
-    // the checked-out buffer authority is the complete 37x23 frame.
-    r->result_rect = r->max_result_rect = PF_LRect{{0, 0, 0, 0}};
+    // Exercise distinct actual and maximum availability, and empty content.
+    r->result_rect = wrong_ref ? PF_LRect{{0,0,0,0}} : req->rect;
+    r->max_result_rect = PF_LRect{{0,0,sampled_width,sampled_height}};
     return 0;
 }}
 
@@ -85,6 +85,8 @@ int main() {{
         if (Smart(f)) return 10; // transparent content bounds are not buffer bounds
         f.ow.origin_x = 1;
         if (!Smart(f)) return 11;
+        f.iw.origin_x = 1;
+        if (Smart(f)) return 12;
     }}
     for (short depth : {{8, 16, 32}}) for (A_long divisor : {{1, 2, 3, 4, 8}}) {{
         PF_InData in{{}}; PF_OutData out{{}};
@@ -98,13 +100,16 @@ int main() {{
         PF_PreRenderCallbacks cb{{}}; cb.checkout_layer = checkout;
         PF_PreRenderExtra ex{{&pri, &pro, &cb}};
         if (EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out, nullptr, nullptr, &ex)) return 1;
-        if (pro.result_rect.left != 0 || pro.result_rect.top != 0 ||
-            pro.result_rect.right != sampled_width || pro.result_rect.bottom != sampled_height ||
-            !(pro.flags & PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS)) return 2;
+        if (pro.result_rect.left != 11 || pro.result_rect.top != 7 ||
+            pro.result_rect.right != 19 || pro.result_rect.bottom != 13 ||
+            pro.max_result_rect.right != sampled_width ||
+            pro.max_result_rect.bottom != sampled_height || pro.flags) return 2;
         wrong_ref = true;
         PF_PreRenderOutput bad{{}};
         PF_PreRenderExtra bx{{&pri, &bad, &cb}};
-        if (!EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out, nullptr, nullptr, &bx)) return 3;
+        if (EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out, nullptr, nullptr, &bx)) return 3;
+        if (bad.result_rect.right || bad.result_rect.bottom ||
+            bad.max_result_rect.right != sampled_width) return 4;
         wrong_ref = false;
     }}
     return 0;
