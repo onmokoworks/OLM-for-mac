@@ -215,7 +215,10 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	}
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
 	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
-	if (input_begin % pixel_alignment != 0 || output_begin % pixel_alignment != 0) {
+	// Cropped Smart checkouts can start on any byte of an odd-stride row.
+	// Ordinary iterate owns addressing; our callbacks copy into aligned locals.
+	// The original Smart dispatch has no pointer-alignment precondition.
+	if (!smart && (input_begin % pixel_alignment != 0 || output_begin % pixel_alignment != 0)) {
 		return OLM_COLORKEEP_REFUSAL("world-alignment");
 	}
 	const size_t input_span = (size_t)input->rowbytes * (size_t)input->height;
