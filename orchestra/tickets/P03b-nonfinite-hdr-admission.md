@@ -18,3 +18,6 @@ For each plugin, determine from disassembly what the original does with NaN/Inf/
 ## Rules
 - Use 1-2 processes. Do not touch the release gate or ledger, never edit `04_Tools/AEXCompat*`, do not rebuild the oracle.
 - The stop rule applies. Partial progress, plugin by plugin, is valuable.
+
+## Extra witness (orchestrator)
+- DistanceGradation default geometry, `tools/fuzz/run.py --plugin olmdistancegradation --seed 909`: case index 16 (PF32). Mac Smart refuses while the original renders; this is pre-existing on main. Include it in the classification.
