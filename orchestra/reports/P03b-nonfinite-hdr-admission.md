@@ -223,7 +223,9 @@ Expected:26 leaf cases and51 mask-ownership comparisons, all assertions pass.
 Final housekeeping: `git diff --check`, shell syntax and Python AST checks pass.
 Largest measured scratch sample:31MiB (below5GiB); regenerable build trees/corpora were removed.
 All started process sessions have exited. Evidence occupies2.8MiB; logs and
-reports remain in scratch and the committed evidence directory.
+reports remain in scratch and the committed evidence directory. Text logs and
+disassembly excerpts have trailing whitespace normalized; raw JSON results are
+unchanged. Evidence logs are explicitly tracked despite repository ignore rules.
 
 next:
 

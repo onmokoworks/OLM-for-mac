@@ -1,0 +1,6 @@
+olmdirectionalblur tests/fuzz_corpus/olmdirectionalblur/T15b-odd-even-realistic/f34b941132e9.json {'classic': 'refusal', 'smart': 'exact'}
+olmkirakira tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/b0e34d548337.json {'classic': 'refusal', 'smart': 'exact'}
+olmdistancegradation tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/e6be9386e614.json {'classic': 'exact', 'smart': 'exact'}
+olmdistancegradation tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic/seed2027-case143.json {'classic': 'mismatch', 'smart': 'exact'}
+olmdistancegradation default-seed909-index16 {'classic': 'mismatch', 'smart': 'exact'}
+radialblur tests/fuzz_corpus/radialblur/T15b-odd-even-realistic/ebfedbc3ad69.json {'classic': 'refusal', 'smart': 'exact'}

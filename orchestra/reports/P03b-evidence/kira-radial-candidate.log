@@ -1,0 +1,2 @@
+olmkirakira tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/b0e34d548337.json {'classic': 'refusal', 'smart': 'exact'}
+radialblur tests/fuzz_corpus/radialblur/T15b-odd-even-realistic/ebfedbc3ad69.json {'classic': 'refusal', 'smart': 'exact'}
