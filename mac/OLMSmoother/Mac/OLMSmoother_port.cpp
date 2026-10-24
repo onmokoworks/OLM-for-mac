@@ -2388,6 +2388,48 @@ struct SubHandler8Regs {
 	uint64_t rax=0,rbx=0,rcx=0,rdx=0,rsi=0,rdi=0,rbp=0,rsp=0;
 	uint64_t r8=0,r9=0,r10=0,r11=0,r12=0,r13=0,r14=0,r15=0;
 };
+// Pre-4ebcfd7d full 4 KiB zeroed virtual stack, retained verbatim.
+struct SubHandlerMemoryReference {
+	static constexpr uint64_t kModule=0x180000000ull, kStack=0x700000000000ull;
+	uint8_t stack[0x1000]{}; bool zf=false,sf=false,of=false; PF_EffectWorld *world=nullptr;
+	RenderState *state=nullptr; bool pf16=false;
+	template<class T> T raw(uint64_t a) const { T v{}; memcpy(&v,(const void*)(uintptr_t)a,sizeof(v));return v; }
+	// Bound the integer offset before forming a native pointer; a+n can wrap.
+	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&n<=sizeof(stack)&&a-kStack<=sizeof(stack)-n; }
+	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+(a-kStack)):(void*)(uintptr_t)a; }
+	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStack]; return raw<uint8_t>(a); }
+	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+(a-kStack),2);return v;} return raw<uint16_t>(a); }
+	uint32_t read32(uint64_t a) const {
+		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+(a-kStack),4);return v;}
+		if(state&&a==(uintptr_t)state+8)return uint32_t(state->tolerance_lo);
+		if(state&&a==(uintptr_t)state+0xc)return uint32_t(state->tolerance_hi);
+		if(state&&pf16&&a==(uintptr_t)state+0x10)return uint32_t(state->threshold);
+		if(world&&(a==(uintptr_t)world+4||a==(uintptr_t)world+0x24))return uint32_t(world->width);
+		if(world&&(a==(uintptr_t)world+8||a==(uintptr_t)world+0x28))return uint32_t(world->height);
+		if(world&&(a==(uintptr_t)world+0xc||a==(uintptr_t)world+0x20))return uint32_t(world->rowbytes);
+		if(a>=kModule+0xf000&&a<kModule+0xf114){
+			const uint64_t o=a-kModule; const int32_t *p=nullptr; uint64_t base=0;
+			if(o>=0xf000&&o<0xf024){p=DAT_18000f000;base=0xf000;}
+			else if(o>=0xf028&&o<0xf04c){p=DAT_18000f028;base=0xf028;}
+			else if(o>=0xf050&&o<0xf074){p=DAT_18000f050;base=0xf050;}
+			else if(o>=0xf078&&o<0xf09c){p=DAT_18000f078;base=0xf078;}
+			else if(o>=0xf0a0&&o<0xf0c4){p=DAT_18000f0a0;base=0xf0a0;}
+			else if(o>=0xf0c8&&o<0xf0ec){p=DAT_18000f0c8;base=0xf0c8;}
+			else if(o>=0xf0f0&&o<0xf114){p=DAT_18000f0f0;base=0xf0f0;}
+			if(p)return uint32_t(p[(o-base)/4]);
+		}
+		return raw<uint32_t>(a);
+	}
+	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+(a-kStack),8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
+	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
+	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+(a-kStack),&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
+	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+(a-kStack),&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
+	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+(a-kStack),&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
+	uint64_t subflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a-b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=(((a^b)&(a^r))>>(w-1))&1;return r;}
+	uint64_t addflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a+b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=((~(a^b)&(a^r))>>(w-1))&1;return r;}
+	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
+};
+
 template<size_t StackBegin, size_t StackSize>
 struct SubHandlerMemory {
 	static constexpr uint64_t kModule=0x180000000ull, kStack=0x700000000000ull;
@@ -2436,9 +2478,15 @@ struct SubHandlerMemory {
 // and [0x7d8,0x848), relative to kStack. Keep padding around both intervals.
 // See orchestra/reports/P05c-evidence/smoother_stack_bounds.py for CFG proof.
 // Other helpers keep the original full window; all virtual addresses stay fixed.
+#ifdef OLM_REFERENCE_BUILD
+using SubHandler8Memory = SubHandlerMemoryReference;
+using Classifier16Memory = SubHandlerMemoryReference;
+using EdgeWalker16Memory = SubHandlerMemoryReference;
+#else
 using SubHandler8Memory = SubHandlerMemory<0, 0x1000>;
 using Classifier16Memory = SubHandlerMemory<0x780, 0xc0>;
 using EdgeWalker16Memory = SubHandlerMemory<0x7c0, 0xa0>;
+#endif
 
 static int32_t
 Classifier16Exact(RenderState *state, uint32_t x, uint32_t y,

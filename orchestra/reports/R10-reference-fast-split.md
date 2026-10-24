@@ -1,41 +1,68 @@
 status: partial
 summary:
-- DirectionalBlur reference scalar scatter, sequential rowdriver and pre-P05a rotation arithmetic restored alongside fast code.
-- Native streaming differential harness and fuzz `--reference-build` switch added.
-- DirectionalBlur reference Smart seed 1 n100: 100 exact; fast n300 hashes unchanged from P05a.
-- All 303 retained corpus cases replay true; Universal fast bundle builds; native 200 small / 20 HD / 5 UHD: 675 exact comparisons in 567.336 seconds.
-- RadialBlur scalar scatter restored; reference/fast default hashes match; repeated root-corpus oracle failure remains under investigation.
-- P05c/P07a splits and final expanded harness acceptance remain.
+- Implemented OLM_REFERENCE_BUILD for all six requested plugins; fast remains the default.
+- Added streaming native reference/fast differential testing and the fuzz runner's --reference-build option.
+- All retained seed1 n300 fast output hashes are unchanged; all reference n100 output hashes match fast.
+- Native runs have no numerical mismatches; unavailable/refused renders are counted separately.
+- Final DirectionalBlur heavy/thread coverage, wide sampling and final runtime accounting remain; RadialBlur has an inherited oracle replay blocker.
+
 facts:
-- `git log` identified P05a implementation 4dd1406c (merge f05c36af), P05b merge 738aed52, P05c implementations ec6cc82c/5602e329/4ebcfd7d (merge c7e63a63), P07a implementation 651bc587 (merge 4a0623d2).
-- `memory_pressure`: 61% free at the most recent check.
-- `python3 tools/perf/ref_vs_fast.py --plugin olmdirectionalblur --small 8 --hd 0 --uhd 0`: 24 exact comparisons, zero mismatches/refusals.
-- `python3 tools/fuzz/run.py --plugin olmdirectionalblur --reference-build --n 100 --seed 1 --jobs 1 --shrink-attempts 0 --scratch orchestra/state/R10-reference-fast-split/oracle-directional --corpus orchestra/state/R10-reference-fast-split/corpus-directional --report orchestra/state/R10-reference-fast-split/oracle-directional.json`: Smart 100 exact; Classic 100 mismatches.
-- Same command without `--reference-build`, n300 and fast-prefixed paths: Smart 298 exact + 2 oracle budgets; Classic 4 exact + 296 mismatches. Both route output hashes match `orchestra/reports/P05a-evidence/default-1.json` on all 300 cases (600 hashes); reference n100 matches fast on both routes (200 hashes).
-- `python3 orchestra/reports/R10-evidence/replay.py --plugin olmdirectionalblur`: 303/303 matches_saved across six corpus directories.
-- `python3 tools/fuzz/build_F47_bundles.py --plugins OLMDirectionalBlur --scratch orchestra/state/R10-reference-fast-split/release-directional`: x86_64 arm64 success.
-- RadialBlur reference seed1 n100: Smart 85 exact, 14 oracle rejects, 1 oracle budget; fast n300: 275 exact, 20 rejects, 5 budgets. Both route hashes match P05b on all 300 cases; reference n100 matches fast.
-- RadialBlur replay: 190/190 nested/realistic cases true; root 60/61 true on two runs. C49_seed1_case000117 original SMART_RENDER stops at RIP 0x180002cc3; reference candidate hash remains saved 6958423267181cc23ab6aed257b5007841f3a39d3532abb0ea2a9e616947593d. A fast single-case control replays true with the same worker SHA and 60-second timeout.
-- RadialBlur Universal fast bundle builds x86_64 arm64.
-- DirectionalBlur locked P00b heavy 1080p timings PF8/PF16/PF32: 1.354/1.320/1.377 s; retained P05a final2: 1.411/1.504/1.462 s. Default PF8 0.435 vs 0.379 s; default PF16/PF32 essentially unchanged at 0.024/0.048 s.
+- History: DirectionalBlur 4dd1406c / merge f05c36af; RadialBlur merge 738aed52; Blur ec6cc82c, ColorKey 5602e329, Smoother 4ebcfd7d / merge c7e63a63; KiraKira 651bc587 / merge 4a0623d2.
+- Reference forms: DirectionalBlur scalar helpers/scatter and sequential rowdriver, Clang rotation optimization disabled; RadialBlur scalar scatter with original channel order and the trig table retained; Blur six sequential parts; ColorKey per-pixel Lab conversion; Smoother original full 4 KiB virtual stack; KiraKira original sequential warp plus serial shared helper.
+- DirectionalBlur and Blur now honor OLM_PARALLEL_MAX=1 without changing their default caps (8 and 2). Reference builds require no environment setting.
+- `python3 orchestra/reports/R10-evidence/oracle.py --plugin <adapter> --label <label>` executes reference seed1 n100 and fast seed1 n300, one process at a time. DirectionalBlur/RadialBlur used the equivalent explicit commands preserved in the logs/reports. Contract-route results:
+
+| Plugin / label | Reference n100 | Fast n300 | Prior fast hashes |
+| --- | --- | --- | --- |
+| olmdirectionalblur / directional | 100 Smart exact | 298 exact, 2 oracle budgets | unchanged, both routes |
+| radialblur / radial | 85 exact, 14 oracle rejects, 1 budget | 275 exact, 20 rejects, 5 budgets | unchanged, both routes |
+| olmblur / blur | 100 Smart exact | 300 Smart exact | unchanged, both routes |
+| olmcolorkey / key | 100 Smart exact | 300 Smart exact | unchanged, both routes |
+| olmsmoother / smooth | 65 Classic exact, 35 PF32 rejects | 205 exact, 95 PF32 rejects | unchanged, both routes |
+| olmkirakira / kira | 97 Smart exact, 3 original rejects | 287 exact, 13 original rejects | unchanged, Smart (P07a retained route) |
+
+- `hash-comparisons.json` contains zero changed hashes in all twelve comparisons. Refused routes have no output hash; these are not claimed as rendered images. Reference n100 versus fast is checked on both routes for every plugin. Classic mismatches outside the contract route remain in the complete evidence.
+- `python3 tools/perf/ref_vs_fast.py --plugin <adapter>` built both source hosts and compared output bytes and rectangles. Initial measured runs:
+
+| Plugin | Cases (small / HD / UHD) | Exact comparisons | Matching refusals | Seconds |
+| --- | --- | --- | --- | --- |
+| DirectionalBlur | 200 / 20 / 5 | 675 | 0 | 567.336 |
+| RadialBlur | 200 / 20 / 5 | 675 | 0 | 845.422 |
+| Blur | 200 / 20 / 5 | 675 | 0 | 88.221 |
+| ColorKey | 200 / 20 / 5 | 225 | 0 | 76.538 |
+| Smoother | 200 / 20 / 5 | 156 | 69 (PF32) | 47.370 |
+| KiraKira | 200 / 20 / 5 | 648 | 27 (9 small cases × 3 caps) | 63.053 |
+
+- The first DirectionalBlur large run preceded the runtime cap addition. Its final-source separate small run has 600 exact comparisons under actual caps 1/2/8. Do not treat the earlier large run as three distinct partition counts.
+- Initial DirectionalBlur/RadialBlur sampling used `--no-large-corpus --no-cycle-depth --max-height 2160 --parallel 1 2 8`. The later default harness uses 64x64 small bounds, guarantees each large-frame depth, and uses retained P00b presets with the heavy preset at each depth in both large phases. Non-threaded plugins now run once by default. Large fixed-frame pixels tile fuzz-generated payloads; they are not independently randomized per coordinate.
+- KiraKira additional `--small 250 --hd 0 --uhd 0 --scratch orchestra/state/R10-reference-fast-split/kira-small-coverage`: 711 exact comparisons (237 successful small cases × 3 caps), 39 matching refusals, zero mismatches.
+- `python3 orchestra/reports/R10-evidence/replay.py --plugin <adapter>`: DirectionalBlur 303/303, Blur 139/139, ColorKey 44/44, Smoother 303/303 match saved results. KiraKira final accounting is pending collection.
+- RadialBlur: nested/realistic corpora 190/190 true; root 60/61 true on two runs. The original AEX stops at RIP 0x180002cc3 in C49_seed1_case000117; candidate raw SHA remains `6958423267181cc23ab6aed257b5007841f3a39d3532abb0ea2a9e616947593d`. A standalone fast control replays true. P05b explicitly records the identical root-corpus blocker. No corpus or worker was rewritten.
+- `python3 tools/fuzz/build_F47_bundles.py --plugins <name> --scratch orchestra/state/R10-reference-fast-split/release-<label>`: all six fast Universal bundles build with arm64 and x86_64.
+- `python3 orchestra/reports/R10-evidence/perf.py --plugin <adapter>` uses `lockf -k ~/.cache/olm-emu/bench.lock` and the unchanged P00b driver. Heavy selector timings: Blur 1.452/1.456/1.477 s (prior 1.612/1.753/1.691); ColorKey 0.755/0.767/0.767 s; Smoother PF8/PF16 1.490/1.426 s, expected PF32 refusal. DirectionalBlur heavy full-frame wall times 1.354/1.320/1.377 s versus prior 1.411/1.504/1.462; RadialBlur heavy eighth-resolution wall times 17.187/16.783/17.073 s, consistent with P05b's 16.8–17.4 s. KiraKira timing collection is pending.
+- `python3 orchestra/reports/R10-evidence/helpers.py`: both builds pass 385 row/grain/cap combinations plus three Blur cap combinations. Reference callbacks assert caller-thread identity; all callbacks assert downward rounding and exactly-once visitation.
+- Memory checks stayed above 30% free (observed 53–63% during these runs). Scratch stayed below 5 GiB. Completed regenerable host/bundle trees are being removed; retained evidence is compressed in R10-evidence.
+
 inference:
-- The measured default fast behavior is unchanged. Native equality is not new AE-exact evidence.
+- Measured default fast behavior is unchanged. Native reference/fast equality is not new AE-exact evidence.
+- The C49 original-worker failure is inherited, not a reference output mismatch. Its inconsistent standalone/full-corpus behavior remains unexplained here.
+- The initial RadialBlur runtime does not satisfy the roughly ten-minute target; repeating a non-threaded fast run three times contributed unnecessary cost. The final heavy-preset policy still requires measurement.
+
 changed_files:
-- mac/OLMRadialBlur/OLMRadialBlur.cpp
-- mac/OLMRadialBlur/RadialScatterSIMD.h
-- core/dblur_rowdriver.cpp
-- core/dblur_rotate.cpp
-- tools/fuzz/adapters/public.py
-- tools/fuzz/run.py
-- tools/perf/ref_vs_fast.py
-- tools/perf/README.md
-- orchestra/reports/R10-evidence/ (replay/archive scripts and compressed evidence)
-- tools/fuzz/adapters/radialblur.py (extract native host build from oracle preparation)
-- orchestra/reports/R10-reference-fast-split.md
+- core/dblur_rowdriver.cpp, core/dblur_rotate.cpp
+- core/olmblur_parallel_parts.h, core/kirakira_warp.h, core/olm_parallel.h
+- mac/OLMRadialBlur/OLMRadialBlur.cpp, mac/OLMRadialBlur/RadialScatterSIMD.h
+- mac/OLMColorKey/OLMColorKey.cpp, mac/OLMSmoother/Mac/OLMSmoother_port.cpp
+- tools/fuzz/adapters/public.py, tools/fuzz/adapters/radialblur.py, tools/fuzz/run.py
+- tools/perf/ref_vs_fast.py, tools/perf/README.md
+- orchestra/reports/R10-evidence/, orchestra/reports/R10-reference-fast-split.md
+
 verify:
-- Commands above reproduce the completed checks; original oracle timeouts can vary.
-- `python3 tools/perf/ref_vs_fast.py --plugin olmdirectionalblur`: requested 200 small / 20 HD / 5 UHD; final result still pending.
-- `python3 orchestra/reports/R10-evidence/replay.py --plugin olmdirectionalblur`: final result pending.
+- `python3 tools/perf/ref_vs_fast.py --plugin olmblur`: expected 675 exact comparisons, zero mismatches/refusals, including the heavy HD/UHD presets.
+- `python3 orchestra/reports/R10-evidence/helpers.py`: expected both builds' assertions pass.
+- Oracle/replay/build/performance commands above reproduce the corresponding checks. All scripts put scratch in this worktree; tools/perf/README.md documents bounded smoke and large-geometry options.
+- `python3 orchestra/reports/R10-evidence/archive.py`: collects compact evidence and recomputes baseline/reference hash comparisons; expected zero different hashes. Oracle timeouts can vary; the retained RadialBlur C49 replay blocker must not be called a pass.
+
 next:
-- Complete native large-frame and corpus checks, other five reference implementations, release bundles and serialized P00b timing.
-- DirectionalBlur now honors OLM_PARALLEL_MAX (default remains eight). Final 200-case small campaign: 600 exact comparisons under 1/2/8. Large campaign was built before this cap was added; do not claim its three runs used distinct partition counts.
+- Finish final-source DirectionalBlur heavy/cap acceptance, explicit max-size 3840 odd/even checks, extra successful Smoother small renders, and final heavy RadialBlur runtime measurement.
+- Resolve or explicitly waive the inherited RadialBlur oracle replay blocker in a separate ticket; do not change the retained oracle or rebaseline the corpus within R10.

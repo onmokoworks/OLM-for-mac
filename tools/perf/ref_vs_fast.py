@@ -21,6 +21,8 @@ sys.path.insert(0, str(ROOT / 'tools/fuzz'))
 from adapters.public import geometry_environment
 from geometry import sample, require_host
 
+HEAVY = dict(olmdirectionalblur=9, radialblur=5, olmblur=5, olmcolorkey=5, olmsmoother=0, olmkirakira=5)
+
 PLUGINS = ('olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmoother', 'olmkirakira')
 
 
@@ -108,6 +110,8 @@ def cases(adapter, args):
     # parameters and exceptional float words remain from the original generator.
     from ae_realism_audit import samples
     corpus, _ = samples(adapter.name)
+    if args.large_corpus and args.hd+args.uhd and not corpus:
+        raise RuntimeError('No retained exact P00b corpus samples')
     for index in range(args.small + args.hd + args.uhd):
         adapter.size_sampler = 'odd-even-v1' if index % 4 == 3 else 'default'
         adapter.max_size = args.max_size if index % 4 == 3 else 64
@@ -126,7 +130,11 @@ def cases(adapter, args):
             # Include all ten P00b corpus parameter sets, including corpus09.
             old = case['geometry']
             if corpus and args.large_corpus:
-                corpus_index = args.corpus_index if args.corpus_index is not None else (index-args.small) % len(corpus)
+                phase_count = args.hd if phase == '1080p' else args.uhd
+                phase_index = index-args.small-(args.hd if phase=='4k' else 0)
+                corpus_index = HEAVY[adapter.name] if phase_index >= max(0, phase_count-3) else (index-args.small) % len(corpus)
+                if args.corpus_index is not None:
+                    corpus_index = args.corpus_index
                 _, saved = corpus[corpus_index]
                 old = saved['case']['geometry']
                 case['parameters'] = copy.deepcopy(saved['case']['parameters'])
@@ -159,6 +167,12 @@ def main():
     p.add_argument('--parallel', type=int, nargs='+', help='Override thread caps (default: 1/2/8 for threaded plugins, 1 otherwise)')
     p.add_argument('--scratch', type=Path, default=ROOT/'orchestra/state/R10-reference-fast-split')
     args = p.parse_args()
+    if min(args.small,args.hd,args.uhd) < 0 or not (1 <= args.max_size <= 4096 and 1 <= args.max_height <= 4096) or args.case_timeout <= 0:
+        p.error('counts must be nonnegative, sizes 1..4096, and timeout positive')
+    if args.corpus_index is not None and not args.large_corpus:
+        p.error('--corpus-index requires --large-corpus')
+    if args.parallel is not None and any(n < 1 for n in args.parallel):
+        p.error('thread caps must be positive')
     if args.parallel is None:
         args.parallel = [1,2,8] if args.plugin in ('olmdirectionalblur','olmblur','olmkirakira') else [1]
     args.scratch = args.scratch.resolve() / args.plugin
@@ -193,6 +207,8 @@ def main():
                     status = 'mismatch' if ref != fast or first is not None else 'refusal' if ref['error'] else 'exact'
                     counts[status] += 1
                     record['fast'][parallel] = dict(fast, status=status, first_mismatch=first)
+                    if status == 'mismatch':
+                        break  # Keep this failing output; never overwrite it with the next cap.
                 report.write(json.dumps(record)+'\n'); report.flush()
                 print(phase, case['index'], case['depth'], counts, flush=True)
                 if counts['mismatch']:

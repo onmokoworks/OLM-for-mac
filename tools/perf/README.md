@@ -18,8 +18,9 @@ the seeded fuzz generator; each fixed-size phase explicitly cycles 8/16/32bpc. F
 point parameters; they are not independent random pixels at every coordinate.
 The default small-case size ceiling is 64×64.
 Use `--max-size 3840 --max-height 2160` to extend odd/even sampling to 4K;
-Large cases use the ten P00b retained parameter sets by default, including
-corpus09. `--no-large-corpus` instead keeps fuzz-generated parameters;
+Large cases use the ten P00b retained parameter sets by default. The last
+three frames of each fixed-size phase use that plugin’s heavy P05/P07 preset,
+one at each depth. `--no-large-corpus` instead keeps fuzz-generated parameters;
 `--corpus-index 9` selects only the heavy corpus09 set. These additional stress options can take substantially longer.
 
 Hosts are built twice from the existing fuzz adapters, with the definition added
