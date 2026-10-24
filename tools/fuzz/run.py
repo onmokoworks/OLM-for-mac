@@ -48,6 +48,7 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
+    p.add_argument('--reference-build', action='store_true', help='Build the faithful scalar/sequential implementation')
     p.add_argument('--geometry', choices=('default', 'realistic', 'realistic-v2'), default='default',
                    help='Opt-in sampler; requires a geometry-qualified candidate host')
     p.add_argument('--size-sampler', choices=('default', 'odd-even-v1'), default='default',

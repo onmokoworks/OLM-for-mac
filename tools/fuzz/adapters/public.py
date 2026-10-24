@@ -50,6 +50,7 @@ class PublicAdapter:
     small_controls = ()
 
     def __init__(self, options):
+        self.reference_build = getattr(options, "reference_build", False)
         self.max_size = options.max_size
         self.size_max_height = getattr(options, "size_max_height", None)
         self.size_sampler = getattr(options, "size_sampler", "default")
@@ -178,6 +179,8 @@ class PublicAdapter:
         return {}
 
     def compile(self, argv, deadline):
+        if str(argv[0]) == "clang++" and self.reference_build:
+            argv = [*argv, "-DOLM_REFERENCE_BUILD=1"]
         # Link the independent C implementation into every public harness.
         if str(argv[0]) == 'clang++' and '-o' in argv and '-c' not in argv:
             out = Path(argv[argv.index('-o') + 1]).parent / 'ucrtmath'
