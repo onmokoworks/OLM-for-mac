@@ -1,0 +1,11 @@
+{
+  "olmdirectionalblur": {
+    "counts": {
+      "mismatch": 4,
+      "exact": 4
+    },
+    "original_non_ok": {},
+    "mac_only_refusals": {},
+    "tags": {}
+  }
+}

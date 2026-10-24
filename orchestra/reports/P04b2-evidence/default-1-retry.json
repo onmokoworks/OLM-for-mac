@@ -1,0 +1,116 @@
+{
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "candidate_sha256": "324dfea148d5bfa7d26da58fe884f88950bac505bf5702dca628ff97d7933d2d",
+    "dependencies_sha256": {
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c08aae1dfcc6903610edc4c7f0ea89dca1e1ad80275261d727406de9cc46d292",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+    },
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "out_of_range_builder_defaults": [],
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "oracle_render_path": "smartfx",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion",
+    "layer": "None; independent layer worlds outside this adapter",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof"
+  },
+  "case_timeout": 60,
+  "rows": [
+    {
+      "index": 274,
+      "seed": 1,
+      "input_sha256": "c279f094bdc4085796df0b54718aabb1914d5e26ee3bd08922e3df3a8ce8edd9",
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800f0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800f0)\",\"registers\":{\"r10\":4361191428,\"r11\":1881102768,\"r12\":4299579744,\"r13\":4299729408,\"r14\":7376,\"r15\":4299729408,\"r8\":1881102784,\"r9\":4299728864,\"rax\":0,\"rbp\":1881103040,\"rbx\":4322873344,\"rcx\":4322873344,\"rdi\":1073741896,\"rdx\":2,\"rflags\":6,\"rip\":1611137264,\"rsi\":4322873344,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"0000803f000000000000000000000000\",\"f32_lanes\":[1.0,0.0,0.0,0.0],\"f64_lanes\":[5.263544247e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00005143000000000000000000000000\",\"f32_lanes\":[209.0,0.0,0.0,0.0],\"f64_lanes\":[5.57988792e-315,0.0]},{\"re8,24,56,56,24,8,16,40,8,64,16,16,24,8,8,8,8,16,8,8,16,8,8,8,8,16,8,8,8,32,8,8,8,8,16,8,8,8,8,16,16,8,16,16,24,16,32,8,8,8,24,8,16,8,96,16,24,56,48,24,16,40,8,24,8,32,8,8,8,8,24,8,24,8,8,16,16,24,8,8,16,8,8,8,8,8,8,8,8,32,16,8,24,8,8,8,8,16,8,8,96,32,72,56,8,8,24,8,8,8,16,24,8,24,8,16,16,24,8,24,8,64,8,24,16,32,48,8,8,8,16,8,16,8,8,8,8,8,8,16,16,8,80,8,32,160,8,24,24,8,16,8,40,8,8,8,40,24,16,8,8,8,16,32,8,8,16,32,8,8,72,8,8,16,16,24,32,24,64,40,24,40,16,40,8,8,24,32,24,24,8,8,24,8,8,8,16,16,16,8,48,8,16,8,8,8,16,8,8,8,8,8,8,16,24,32,24,8,48,40,8,8,16,16,24,8,24,16,8,8,16,8,24,8,29504],\"handle_allocation_failures\":[],\"live_handle_count\":4685,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4361224192,\"pf_handle_data_end\":12884901888}\n"
+          }
+        },
+        "oracle": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800f0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800f0)\",\"registers\":{\"r10\":4361191428,\"r11\":1881102768,\"r12\":4299579744,\"r13\":4299729408,\"r14\":7376,\"r15\":4299729408,\"r8\":1881102784,\"r9\":4299728864,\"rax\":0,\"rbp\":1881103040,\"rbx\":4322873344,\"rcx\":4322873344,\"rdi\":1073741896,\"rdx\":2,\"rflags\":6,\"rip\":1611137264,\"rsi\":4322873344,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"0000803f000000000000000000000000\",\"f32_lanes\":[1.0,0.0,0.0,0.0],\"f64_lanes\":[5.263544247e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00005143000000000000000000000000\",\"f32_lanes\":[209.0,0.0,0.0,0.0],\"f64_lanes\":[5.57988792e-315,0.0]},{\"re8,24,56,56,24,8,16,40,8,64,16,16,24,8,8,8,8,16,8,8,16,8,8,8,8,16,8,8,8,32,8,8,8,8,16,8,8,8,8,16,16,8,16,16,24,16,32,8,8,8,24,8,16,8,96,16,24,56,48,24,16,40,8,24,8,32,8,8,8,8,24,8,24,8,8,16,16,24,8,8,16,8,8,8,8,8,8,8,8,32,16,8,24,8,8,8,8,16,8,8,96,32,72,56,8,8,24,8,8,8,16,24,8,24,8,16,16,24,8,24,8,64,8,24,16,32,48,8,8,8,16,8,16,8,8,8,8,8,8,16,16,8,80,8,32,160,8,24,24,8,16,8,40,8,8,8,40,24,16,8,8,8,16,32,8,8,16,32,8,8,72,8,8,16,16,24,32,24,64,40,24,40,16,40,8,8,24,32,24,24,8,8,24,8,8,8,16,16,16,8,48,8,16,8,8,8,16,8,8,8,8,8,8,16,24,32,24,8,48,40,8,8,16,16,24,8,24,16,8,8,16,8,24,8,29504],\"handle_allocation_failures\":[],\"live_handle_count\":4685,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4361224192,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "routes": {
+          "smart": {
+            "status": "uncompared",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1"
+            },
+            "raw_sha256": "937af8f4a4355fb525d33d3db02239ef4eb597b06a38917a4a275cf1aafeb054"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 289,
+      "seed": 1,
+      "input_sha256": "6d226935828c157b40b471a132c3a7e05e466528ced2b99e17a4c83086e36b33",
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9812,\"r11\":1881102768,\"r12\":4301930496,\"r13\":4303881136,\"r14\":4301803520,\"r15\":236,\"r8\":1881102824,\"r9\":170,\"rax\":4384264192,\"rbp\":0,\"rbx\":4,\"rcx\":16,\"rdi\":4302244480,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000400000000000000000\",\"f32_lanes\":[0.0,2.0,0.0,0.0],\"f64_lanes\":[2.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00002e43000000000000000000000000\",\"f32_lanes\":[174.0,0.0,0.0,0.0],\"f64_lanes\":[5.56855524e-315,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000000000000000008,8,8,8,8,8,8,8,16,16,48,16,8,8,8,24,8,40,24,8,24,8,16,8,8,8,24,8,8,8,24,16,16,24,8,8,8,8,24,40,8,8,8,8,8,8,24,16,16,8,8,8,8,24,32,24,8,24,8,8,8,8,16,16,16,16,16,8,8,8,16,16,8,8,8,16,8,24,8,16,24,8,16,8,24,8,8,24,16,8,8,16,8,8,8,8,16,8,8,16,8,8,8,8,16,16,32,8,8,8,8,8,16,8,8,24,32,8,16,8,16,16,8,8,8,40,32,8,16,8,8,8,16,8,16,8,8,8,8,16,8,8,8,8,8,16,24,8,16,8,48,8,24,8,8,8,8,24,8,8,8,8,8,16,24,8,8,8,8,24,48,24,16,8,8,16,24,32,8,8,8,8,8,8,24,8,16,16,16,8,8,8,8,8,8,8,8,8,16,32,8,8,8,16,24,8,8,8,8,16,16,8,8,8,8,8,8,8,8,16,8,8,8,8,16,32,8,8,8,16,24,16,8,16,8,16,8,8,8,16,8,8,8,8,16,8,8,8,16],\"handle_allocation_failures\":[],\"live_handle_count\":9821,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4384272384,\"pf_handle_data_end\":12884901888}\n"
+          }
+        },
+        "oracle": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9812,\"r11\":1881102768,\"r12\":4301930496,\"r13\":4303881136,\"r14\":4301803520,\"r15\":236,\"r8\":1881102824,\"r9\":170,\"rax\":4384264192,\"rbp\":0,\"rbx\":4,\"rcx\":16,\"rdi\":4302244480,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000400000000000000000\",\"f32_lanes\":[0.0,2.0,0.0,0.0],\"f64_lanes\":[2.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00002e43000000000000000000000000\",\"f32_lanes\":[174.0,0.0,0.0,0.0],\"f64_lanes\":[5.56855524e-315,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"0000000000000000008,8,8,8,8,8,8,8,16,16,48,16,8,8,8,24,8,40,24,8,24,8,16,8,8,8,24,8,8,8,24,16,16,24,8,8,8,8,24,40,8,8,8,8,8,8,24,16,16,8,8,8,8,24,32,24,8,24,8,8,8,8,16,16,16,16,16,8,8,8,16,16,8,8,8,16,8,24,8,16,24,8,16,8,24,8,8,24,16,8,8,16,8,8,8,8,16,8,8,16,8,8,8,8,16,16,32,8,8,8,8,8,16,8,8,24,32,8,16,8,16,16,8,8,8,40,32,8,16,8,8,8,16,8,16,8,8,8,8,16,8,8,8,8,8,16,24,8,16,8,48,8,24,8,8,8,8,24,8,8,8,8,8,16,24,8,8,8,8,24,48,24,16,8,8,16,24,32,8,8,8,8,8,8,24,8,16,16,16,8,8,8,8,8,8,8,8,8,16,32,8,8,8,16,24,8,8,8,8,16,16,8,8,8,8,8,8,8,8,16,8,8,8,8,16,32,8,8,8,16,24,16,8,16,8,16,8,8,8,16,8,8,8,8,16,8,8,8,16],\"handle_allocation_failures\":[],\"live_handle_count\":9821,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4384272384,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "routes": {
+          "smart": {
+            "status": "uncompared",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1"
+            },
+            "raw_sha256": "8e1f3b88210436cb3a426ddfdb7bfdccd3271aa6d2818e176d9d369cf0d1c7d6"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ]
+}

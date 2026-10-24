@@ -1,0 +1,328 @@
+{
+  "campaigns": {
+    "default-1": {
+      "completed": 300,
+      "summary": {
+        "aex_budget": 2,
+        "aex_classic_ok": 300,
+        "aex_ok": 298,
+        "aex_smart_budget": 2,
+        "aex_smart_ok": 298,
+        "both_routes_exact": 4,
+        "classic_exact": 4,
+        "classic_mismatch": 296,
+        "pixel_mismatch_cases": 296,
+        "smart_exact": 298,
+        "smart_uncompared": 2
+      },
+      "smart_non_exact": [
+        {
+          "index": 274,
+          "seed": 1,
+          "geometry": [
+            139,
+            240
+          ],
+          "result": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "937af8f4a4355fb525d33d3db02239ef4eb597b06a38917a4a275cf1aafeb054",
+            "status": "uncompared"
+          },
+          "oracle": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        },
+        {
+          "index": 289,
+          "seed": 1,
+          "geometry": [
+            238,
+            251
+          ],
+          "result": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0"
+            },
+            "raw_sha256": "8e1f3b88210436cb3a426ddfdb7bfdccd3271aa6d2818e176d9d369cf0d1c7d6",
+            "status": "uncompared"
+          },
+          "oracle": {
+            "diagnostic": "",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        }
+      ]
+    },
+    "odd-even-2026": {
+      "completed": 150,
+      "summary": {
+        "aex_classic_ok": 150,
+        "aex_ok": 150,
+        "aex_smart_ok": 150,
+        "both_routes_exact": 3,
+        "classic_exact": 3,
+        "classic_mismatch": 146,
+        "classic_refusal": 1,
+        "pixel_mismatch_cases": 146,
+        "smart_exact": 150
+      },
+      "smart_non_exact": []
+    },
+    "odd-even-2027": {
+      "completed": 150,
+      "summary": {
+        "aex_budget": 3,
+        "aex_classic_ok": 150,
+        "aex_ok": 147,
+        "aex_smart_budget": 3,
+        "aex_smart_ok": 147,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 149,
+        "pixel_mismatch_cases": 149,
+        "smart_exact": 147,
+        "smart_uncompared": 3
+      },
+      "smart_non_exact": [
+        {
+          "index": 5,
+          "seed": 2027,
+          "geometry": [
+            924,
+            376
+          ],
+          "result": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 924 376",
+              "GEOMETRY_INPUT": "924 376 1 1 1 1 4 3 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              924,
+              376
+            ],
+            "raw_sha256": "b3a46ed45f14598606ec686395ddaffa726cc5a366543a0b34f714ad2b121881",
+            "status": "uncompared"
+          },
+          "oracle": {
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 924, 376] max=[0, 0, 924, 376] flags=0\n",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        },
+        {
+          "index": 50,
+          "seed": 2027,
+          "geometry": [
+            521,
+            462
+          ],
+          "result": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 521 462",
+              "GEOMETRY_INPUT": "1041 923 1 2 1 2 2 1 3"
+            },
+            "output_rect": [
+              0,
+              0,
+              521,
+              462
+            ],
+            "raw_sha256": "ee0c2012482a68dba715d1913351a8390c3cf46ab393803685931cff5277e872",
+            "status": "uncompared"
+          },
+          "oracle": {
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 521, 462] max=[0, 0, 521, 462] flags=0\n",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        },
+        {
+          "index": 54,
+          "seed": 2027,
+          "geometry": [
+            246,
+            175
+          ],
+          "result": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "21 21 1 1 1",
+              "ERROR": "0",
+              "GEOMETRY": "0 0 246 175",
+              "GEOMETRY_INPUT": "981 700 1 4 1 4 2 1 32"
+            },
+            "output_rect": [
+              0,
+              0,
+              246,
+              175
+            ],
+            "raw_sha256": "f23027f59c2feeb3d9268f7f497c6d0edc55ffdb6a29e87abb07f5e0e015da1c",
+            "status": "uncompared"
+          },
+          "oracle": {
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 246, 175] max=[0, 0, 246, 175] flags=0\n",
+            "limit_seconds": 10,
+            "reason": "wall timeout",
+            "status": "budget"
+          }
+        }
+      ]
+    },
+    "realistic-1": {
+      "completed": 100,
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 99,
+        "pixel_mismatch_cases": 99,
+        "smart_exact": 100
+      },
+      "smart_non_exact": []
+    },
+    "realistic-2049": {
+      "completed": 100,
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 2,
+        "classic_exact": 2,
+        "classic_mismatch": 98,
+        "pixel_mismatch_cases": 98,
+        "smart_exact": 100
+      },
+      "smart_non_exact": []
+    },
+    "realistic-v2-1": {
+      "completed": 100,
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 1,
+        "classic_exact": 1,
+        "classic_mismatch": 99,
+        "pixel_mismatch_cases": 99,
+        "smart_exact": 100
+      },
+      "smart_non_exact": []
+    },
+    "realistic-v2-2049": {
+      "completed": 100,
+      "summary": {
+        "aex_classic_ok": 100,
+        "aex_ok": 100,
+        "aex_smart_ok": 100,
+        "both_routes_exact": 2,
+        "classic_exact": 2,
+        "classic_mismatch": 98,
+        "pixel_mismatch_cases": 98,
+        "smart_exact": 100
+      },
+      "smart_non_exact": []
+    }
+  },
+  "replays": {
+    "replay-.": {
+      "completed": 83,
+      "requested": 83,
+      "matches": true,
+      "different": []
+    },
+    "replay-P04b2-cropped-checkout": {
+      "completed": 4,
+      "requested": 4,
+      "matches": true,
+      "different": []
+    },
+    "replay-T15b-odd-even-realistic": {
+      "completed": 4,
+      "requested": 4,
+      "matches": true,
+      "different": []
+    },
+    "replay-olmdirectionalblur": {
+      "completed": 83,
+      "requested": 83,
+      "matches": true,
+      "different": []
+    },
+    "replay-olmdirectionalblur_P04b2-cropped-checkout": {
+      "completed": 4,
+      "requested": 4,
+      "matches": true,
+      "different": []
+    },
+    "replay-olmdirectionalblur_T15b-odd-even-realistic": {
+      "completed": 4,
+      "requested": 4,
+      "matches": true,
+      "different": []
+    },
+    "replay-olmdirectionalblur_realistic_P02j": {
+      "completed": 200,
+      "requested": 200,
+      "matches": true,
+      "different": []
+    }
+  },
+  "unit_changes": [],
+  "units": {
+    "files": 39,
+    "before_pass": 7,
+    "after_pass": 7
+  },
+  "F53_refusals_now_exact": [
+    5,
+    12,
+    13,
+    15,
+    26,
+    27,
+    31,
+    34,
+    39,
+    40,
+    43,
+    52,
+    54,
+    63,
+    64,
+    66,
+    67,
+    69,
+    70,
+    73,
+    84,
+    85,
+    87,
+    89,
+    93,
+    99
+  ]
+}
