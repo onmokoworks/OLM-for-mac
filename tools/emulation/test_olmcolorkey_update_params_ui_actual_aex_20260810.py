@@ -11,9 +11,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
+from olm_assets import resolve_asset
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex"
+AEX = resolve_asset(ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex")
 AEX_SHA = "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
 UPDATE_METHOD = 0x180001A50
 REPORT = ROOT / "refs/conformance/olmcolorkey_update_params_ui_actual_aex_20260810.json"

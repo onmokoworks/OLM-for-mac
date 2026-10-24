@@ -18,9 +18,10 @@ from unicorn.x86_const import UC_X86_REG_RSP
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
+from olm_assets import resolve_asset
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex"
+AEX = resolve_asset(ROOT / "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex")
 AEX_SHA256 = "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
 ENTRY = 0x180009E60
 HARNESS = ROOT / "tools/emulation/olmsmoother2_ui_setup_production_harness_20260806.cpp"

@@ -18,9 +18,10 @@ from unicorn.x86_const import UC_X86_REG_RSP
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/emulation"))
+from olm_assets import resolve_asset
 from aex_loader import AexLoader  # noqa: E402
 
-AEX = ROOT / "plugins_2025/DistanceGradation.aex"
+AEX = resolve_asset(ROOT / "plugins_2025/DistanceGradation.aex")
 AEX_SHA256 = "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
 ENTRY = 0x181174BD0
 HARNESS = ROOT / "tools/emulation/olmdistancegradation_update_params_ui_production_harness_20260810.cpp"
