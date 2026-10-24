@@ -1,0 +1,207 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "extent_hint": [
+      1,
+      0,
+      34,
+      1
+    ],
+    "full_geometry": [
+      72,
+      1
+    ],
+    "geometry": [
+      36,
+      1
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 93,
+    "input_padding": 7,
+    "output_padding": 7,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 24.07721705024633
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 49.634918212890625
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      27,
+      0,
+      35,
+      1
+    ],
+    "rowbytes_padding": 7,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 93,
+  "input_sha256": "13b3e654d85b051b1d2bba241d6f39d625a16ea1f07bfc3d43e536a6ca42f81a",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoBIAHf/tkNAUqOHrpDAICFEVF6YXIAADtw1xQKOgCAiXzVG4UJAAD2LGdpi3C4F2Jw4iZOfAAARWR4HY1AAAAXUqBqRCUAAJNY7z8jZgCADWZWaqMYLE2RAhpFUCNGBmdd5GxxQLl8BH82Pnc2AID3NmddtUdIPFBvkR5eDwCAv3OJd5ErAICBfws9WTwAgMtO4xszJACAJBqAWgEVAAB4GFAX7HkAAEpEqRn/MgAAaV+XSa5ZAICQB/s1OFQAAGcb8XmgFMlQ73mrGU0pAADKSi9v3y+TC2Qaq09wbw8wwXBrDX5bAAAzRX8V5XIAgCJOSUUAJFE26Ht5E8duxk45aSc/gl38FlBzyBmoPmlHNCIDO3RGAACaA2IIRRIAAHBIbRVuX6TUXpg=",
+  "plugin": "olmblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "candidate_sha256": "e55dc3cbdff56c4839507c73147f7fdecdff34c5639d5f22628ee01785b651be",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+    "dependencies_sha256": {
+      "core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+      "core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+      "core/olmblur_worker16_legacy.cpp": "61eae0c2e1012472637a22f3bb482934d1631a48c7ce693981e4e60b213231d2",
+      "core/olmblur_worker16_nonlegacy.cpp": "2a64c0b999acb347e4a9c5d99faee97491a9b1b7db89372e5251f852b5b60c3e",
+      "core/olmblur_worker32_legacy.cpp": "495796652df0b418131e3a14fa09378953350cebd9fd51ae2b5e02121ee1507c",
+      "core/olmblur_worker32_nonlegacy.cpp": "993e119bde5c877a8086fda37dd3bd0aa69a88f3ab7ed8ca32baf9fdf17db3e4",
+      "core/olmblur_worker8_legacy.cpp": "970830b499533f2a7369fe2e79f10d85b680e9518abbff35a368342325a85054",
+      "core/olmblur_worker_orchestration.cpp": "c36db12f84bfd78ba425f4196dcddaedc5c87bc207ac2d3ca707a9dcb0f29023",
+      "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+      "mac/OLMBlur/OLMBlur.cpp": "9c4245d786ae88f677f971d086d8709aea763c23cdceeb12a632b7277fb944da",
+      "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+      "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+      "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride; host copy callback copies active pixels",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "units": "Smoothness PF_Fixed uses the retained public helper; no internal worker bypass",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        36,
+        1
+      ],
+      "raw_sha256": "c8db5bd07e2f456071eca0d8d1563c80978d86a0486a466e06e70aa418b6c3e9",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "diagnostic": "aex_guest_error: selector RENDER failed in guest: guest callback failed: PF Handle allocation failed for 4265804040 bytes: handle allocation exceeds 2147483648 bytes: 4265804040\n",
+        "returncode": 1,
+        "status": "reject"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          36,
+          1
+        ],
+        "raw_sha256": "c8db5bd07e2f456071eca0d8d1563c80978d86a0486a466e06e70aa418b6c3e9",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516",
+          "GEOMETRY_INPUT": "72 1 1 2 1 2 2 1 7"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 36 1",
+          "GEOMETRY_INPUT": "72 1 1 2 1 2 2 1 7"
+        },
+        "output_rect": [
+          0,
+          0,
+          36,
+          1
+        ],
+        "raw_sha256": "c8db5bd07e2f456071eca0d8d1563c80978d86a0486a466e06e70aa418b6c3e9",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
