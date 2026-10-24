@@ -1,0 +1,5 @@
+baseline 60 {'ok': 60}
+matrix 6930 {'ok': 6555, 'refusal': 314, 'timeout': 61}
+All 25 slow performance cells have successful stack samples.
+Cached host and all ten bundle hashes match.
+Evidence integrity OK; this does not assert pixel-exactness or native AE compatibility.
