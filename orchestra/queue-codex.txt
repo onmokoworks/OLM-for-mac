@@ -95,3 +95,5 @@ R09-release-gate-v2
 A01-real-ae-smoke
 A01b-real-ae-render-compare
 A01c-real-ae-render-aerender
+P00-ae-realism-refusal-audit
+F52-oracle-downsample-geometry
