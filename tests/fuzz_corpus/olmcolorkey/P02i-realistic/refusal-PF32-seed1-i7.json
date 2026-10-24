@@ -1,34 +1,34 @@
 {
   "case": {
-    "depth": 8,
+    "depth": 32,
     "downsample": [
       [
         1,
-        3
+        8
       ],
       [
         1,
-        3
+        8
       ]
     ],
     "extent_hint": [
-      1,
       0,
+      1,
       3,
-      1
+      2
     ],
     "full_geometry": [
-      15,
-      3
+      23,
+      24
     ],
     "geometry": [
-      5,
-      1
+      3,
+      3
     ],
     "geometry_sampler": "realistic-v1",
-    "index": 2,
-    "input_padding": 32,
-    "output_padding": 32,
+    "index": 7,
+    "input_padding": 1,
+    "output_padding": 1,
     "parameters": [
       {
         "kind": "b",
@@ -38,17 +38,17 @@
       {
         "kind": "s",
         "slot": 2,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "b",
         "slot": 4,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "u",
         "slot": 5,
-        "value": 1
+        "value": 6
       },
       {
         "kind": "u",
@@ -63,27 +63,27 @@
       {
         "kind": "b",
         "slot": 8,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "s",
         "slot": 9,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 10,
-        "value": 0.0
+        "value": 0.22216613995080026
       },
       {
         "kind": "s",
         "slot": 11,
-        "value": 0.0
+        "value": 0.7421351473130599
       },
       {
         "kind": "i",
         "slot": 14,
-        "value": 0
+        "value": -3644
       },
       {
         "kind": "u",
@@ -98,17 +98,17 @@
       {
         "kind": "u",
         "slot": 19,
-        "value": 1
+        "value": 2
       },
       {
         "kind": "u",
         "slot": 20,
-        "value": 2
+        "value": 3
       },
       {
         "kind": "i",
         "slot": 22,
-        "value": 1
+        "value": 0
       },
       {
         "kind": "b",
@@ -123,16 +123,16 @@
       {
         "kind": "b",
         "slot": 25,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 26,
         "value": [
           255,
-          0,
-          0,
-          0
+          186,
+          220,
+          6
         ]
       },
       {
@@ -140,9 +140,9 @@
         "slot": 27,
         "value": [
           255,
-          0,
-          0,
-          0
+          70,
+          35,
+          119
         ]
       },
       {
@@ -153,12 +153,12 @@
       {
         "kind": "s",
         "slot": 29,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 30,
-        "value": 0.0
+        "value": 0.8640827352823346
       },
       {
         "kind": "s",
@@ -173,37 +173,37 @@
       {
         "kind": "b",
         "slot": 33,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 34,
         "value": [
           255,
-          0,
-          0,
-          0
+          30,
+          141,
+          156
         ]
       },
       {
         "kind": "c",
         "slot": 35,
         "value": [
-          255,
           0,
-          0,
-          0
+          56,
+          90,
+          23
         ]
       },
       {
         "kind": "s",
         "slot": 36,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 37,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
@@ -213,7 +213,7 @@
       {
         "kind": "s",
         "slot": 39,
-        "value": 0.0
+        "value": 0.9419059244042748
       },
       {
         "kind": "b",
@@ -229,10 +229,10 @@
         "kind": "c",
         "slot": 42,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          165,
+          233,
+          219
         ]
       },
       {
@@ -240,15 +240,15 @@
         "slot": 43,
         "value": [
           255,
-          0,
-          0,
-          0
+          230,
+          6,
+          221
         ]
       },
       {
         "kind": "s",
         "slot": 44,
-        "value": 0.0
+        "value": 0.7563125692079002
       },
       {
         "kind": "s",
@@ -258,31 +258,31 @@
       {
         "kind": "s",
         "slot": 46,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 47,
-        "value": 0.0
+        "value": 0.49356253928546534
       },
       {
         "kind": "b",
         "slot": 48,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 49,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 50,
         "value": [
-          255,
           0,
-          0,
-          0
+          84,
+          110,
+          239
         ]
       },
       {
@@ -290,59 +290,59 @@
         "slot": 51,
         "value": [
           255,
-          0,
-          0,
-          0
+          51,
+          90,
+          59
         ]
       },
       {
         "kind": "s",
         "slot": 52,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 53,
-        "value": 0.0
+        "value": 0.16738122994140736
       },
       {
         "kind": "s",
         "slot": 54,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 55,
-        "value": 0.0
+        "value": 0.7222163984179918
       },
       {
         "kind": "b",
         "slot": 56,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 57,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 58,
         "value": [
           255,
-          0,
-          0,
-          0
+          15,
+          209,
+          159
         ]
       },
       {
         "kind": "c",
         "slot": 59,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          179,
+          241,
+          3
         ]
       },
       {
@@ -353,22 +353,22 @@
       {
         "kind": "s",
         "slot": 61,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 62,
-        "value": 0.0
+        "value": 0.3423050475501975
       },
       {
         "kind": "s",
         "slot": 63,
-        "value": 0.0
+        "value": 0.7830724655775902
       },
       {
         "kind": "b",
         "slot": 64,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -379,46 +379,46 @@
         "kind": "c",
         "slot": 66,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          85,
+          16,
+          21
         ]
       },
       {
         "kind": "c",
         "slot": 67,
         "value": [
-          255,
           0,
-          0,
-          0
+          234,
+          62,
+          91
         ]
       },
       {
         "kind": "s",
         "slot": 68,
-        "value": 0.0
+        "value": 0.4003739388506298
       },
       {
         "kind": "s",
         "slot": 69,
-        "value": 0.0
+        "value": 0.3861282757751171
       },
       {
         "kind": "s",
         "slot": 70,
-        "value": 0.0
+        "value": 0.12218934217790312
       },
       {
         "kind": "s",
         "slot": 71,
-        "value": 0.0
+        "value": 0.5979713179092576
       },
       {
         "kind": "b",
         "slot": 72,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -429,10 +429,10 @@
         "kind": "c",
         "slot": 74,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          105,
+          249,
+          47
         ]
       },
       {
@@ -440,9 +440,9 @@
         "slot": 75,
         "value": [
           255,
-          0,
-          0,
-          0
+          194,
+          220,
+          25
         ]
       },
       {
@@ -453,52 +453,52 @@
       {
         "kind": "s",
         "slot": 77,
-        "value": 0.0
+        "value": 0.2644776916683056
       },
       {
         "kind": "s",
         "slot": 78,
-        "value": 0.0
+        "value": 0.713485577274745
       },
       {
         "kind": "s",
         "slot": 79,
-        "value": 0.0
+        "value": 0.12437669809096097
       },
       {
         "kind": "b",
         "slot": 80,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 81,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 82,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          101,
+          108,
+          251
         ]
       },
       {
         "kind": "c",
         "slot": 83,
         "value": [
-          255,
           0,
-          0,
-          0
+          190,
+          142,
+          27
         ]
       },
       {
         "kind": "s",
         "slot": 84,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
@@ -513,7 +513,7 @@
       {
         "kind": "s",
         "slot": 87,
-        "value": 0.0
+        "value": 0.1349088877310688
       },
       {
         "kind": "b",
@@ -530,40 +530,40 @@
         "slot": 90,
         "value": [
           255,
-          0,
-          0,
-          0
+          254,
+          239,
+          207
         ]
       },
       {
         "kind": "c",
         "slot": 91,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          151,
+          187,
+          235
         ]
       },
       {
         "kind": "s",
         "slot": 92,
-        "value": 0.0
+        "value": 0.5881073976077379
       },
       {
         "kind": "s",
         "slot": 93,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 94,
-        "value": 0.0
+        "value": 0.3400685834669859
       },
       {
         "kind": "s",
         "slot": 95,
-        "value": 0.0
+        "value": 0.7924169783491148
       },
       {
         "kind": "b",
@@ -573,26 +573,26 @@
       {
         "kind": "b",
         "slot": 97,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 98,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          195,
+          108,
+          58
         ]
       },
       {
         "kind": "c",
         "slot": 99,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          97,
+          169,
+          34
         ]
       },
       {
@@ -608,17 +608,17 @@
       {
         "kind": "s",
         "slot": 102,
-        "value": 0.0
+        "value": 0.21890904239170283
       },
       {
         "kind": "s",
         "slot": 103,
-        "value": 0.0
+        "value": 0.9914244411988349
       },
       {
         "kind": "b",
         "slot": 104,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -629,41 +629,41 @@
         "kind": "c",
         "slot": 106,
         "value": [
-          255,
           0,
-          0,
-          0
+          49,
+          113,
+          162
         ]
       },
       {
         "kind": "c",
         "slot": 107,
         "value": [
-          255,
           0,
-          0,
-          0
+          89,
+          248,
+          253
         ]
       },
       {
         "kind": "s",
         "slot": 108,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 109,
-        "value": 0.0
+        "value": 0.8643039054165058
       },
       {
         "kind": "s",
         "slot": 110,
-        "value": 0.0
+        "value": 0.3480867330598173
       },
       {
         "kind": "s",
         "slot": 111,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "b",
@@ -673,47 +673,47 @@
       {
         "kind": "b",
         "slot": 113,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 114,
         "value": [
           255,
-          0,
-          0,
-          0
+          240,
+          205,
+          42
         ]
       },
       {
         "kind": "c",
         "slot": 115,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          180,
+          247,
+          100
         ]
       },
       {
         "kind": "s",
         "slot": 116,
-        "value": 0.0
+        "value": 0.5298696401339988
       },
       {
         "kind": "s",
         "slot": 117,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 118,
-        "value": 0.0
+        "value": 0.7712166268334039
       },
       {
         "kind": "s",
         "slot": 119,
-        "value": 0.0
+        "value": 0.7327331644328545
       },
       {
         "kind": "b",
@@ -723,47 +723,47 @@
       {
         "kind": "b",
         "slot": 121,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 122,
         "value": [
-          255,
           0,
-          0,
-          0
+          172,
+          59,
+          105
         ]
       },
       {
         "kind": "c",
         "slot": 123,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          94,
+          131,
+          116
         ]
       },
       {
         "kind": "s",
         "slot": 124,
-        "value": 0.0
+        "value": 0.624490978375245
       },
       {
         "kind": "s",
         "slot": 125,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 126,
-        "value": 0.0
+        "value": 0.9035744420295443
       },
       {
         "kind": "s",
         "slot": 127,
-        "value": 0.0
+        "value": 0.611482525984305
       },
       {
         "kind": "b",
@@ -773,26 +773,26 @@
       {
         "kind": "b",
         "slot": 129,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 130,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          126,
+          162,
+          103
         ]
       },
       {
         "kind": "c",
         "slot": 131,
         "value": [
-          255,
           0,
-          0,
-          0
+          102,
+          95,
+          140
         ]
       },
       {
@@ -803,72 +803,72 @@
       {
         "kind": "s",
         "slot": 133,
-        "value": 0.0
+        "value": 0.49048592909163513
       },
       {
         "kind": "s",
         "slot": 134,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 135,
-        "value": 0.0
+        "value": 0.08583724258596492
       },
       {
         "kind": "b",
         "slot": 136,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 137,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 138,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          211,
+          134,
+          5
         ]
       },
       {
         "kind": "c",
         "slot": 139,
         "value": [
-          255,
           0,
-          0,
-          0
+          105,
+          153,
+          220
         ]
       },
       {
         "kind": "s",
         "slot": 140,
-        "value": 0.0
+        "value": 0.015855886118331664
       },
       {
         "kind": "s",
         "slot": 141,
-        "value": 0.0
+        "value": 0.30378982394132115
       },
       {
         "kind": "s",
         "slot": 142,
-        "value": 0.0
+        "value": 0.6427549667183802
       },
       {
         "kind": "s",
         "slot": 143,
-        "value": 0.0
+        "value": 0.00133617137825226
       },
       {
         "kind": "b",
         "slot": 144,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -879,10 +879,10 @@
         "kind": "c",
         "slot": 146,
         "value": [
-          255,
           0,
-          0,
-          0
+          41,
+          58,
+          87
         ]
       },
       {
@@ -890,35 +890,35 @@
         "slot": 147,
         "value": [
           255,
-          0,
-          0,
-          0
+          238,
+          61,
+          210
         ]
       },
       {
         "kind": "s",
         "slot": 148,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 149,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 150,
-        "value": 0.0
+        "value": 0.9770992854428049
       },
       {
         "kind": "s",
         "slot": 151,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "b",
         "slot": 152,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -930,35 +930,35 @@
         "slot": 154,
         "value": [
           255,
-          0,
-          0,
-          0
+          240,
+          214,
+          157
         ]
       },
       {
         "kind": "c",
         "slot": 155,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          107,
+          7,
+          254
         ]
       },
       {
         "kind": "s",
         "slot": 156,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 157,
-        "value": 0.0
+        "value": 0.321711052145623
       },
       {
         "kind": "s",
         "slot": 158,
-        "value": 0.0
+        "value": 0.6433471931097672
       },
       {
         "kind": "s",
@@ -968,7 +968,7 @@
       {
         "kind": "b",
         "slot": 160,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -979,70 +979,70 @@
         "kind": "c",
         "slot": 162,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          244,
+          238,
+          142
         ]
       },
       {
         "kind": "c",
         "slot": 163,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          186,
+          178,
+          68
         ]
       },
       {
         "kind": "s",
         "slot": 164,
-        "value": 0.0
+        "value": 0.9826504927606461
       },
       {
         "kind": "s",
         "slot": 165,
-        "value": 0.0
+        "value": 0.31109047796841605
       },
       {
         "kind": "s",
         "slot": 166,
-        "value": 0.0
+        "value": 0.5376798792272398
       },
       {
         "kind": "s",
         "slot": 167,
-        "value": 0.0
+        "value": 0.042401548181351
       },
       {
         "kind": "b",
         "slot": 168,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 169,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 170,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          193,
+          176,
+          163
         ]
       },
       {
         "kind": "c",
         "slot": 171,
         "value": [
-          255,
           0,
-          0,
-          0
+          132,
+          28,
+          21
         ]
       },
       {
@@ -1053,36 +1053,36 @@
       {
         "kind": "s",
         "slot": 173,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 174,
-        "value": 0.0
+        "value": 0.40573574672046575
       },
       {
         "kind": "s",
         "slot": 175,
-        "value": 0.0
+        "value": 0.48407997322941376
       },
       {
         "kind": "b",
         "slot": 176,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 177,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 178,
         "value": [
-          255,
           0,
-          0,
-          0
+          88,
+          196,
+          17
         ]
       },
       {
@@ -1090,35 +1090,35 @@
         "slot": 179,
         "value": [
           255,
-          0,
-          0,
-          0
+          105,
+          229,
+          76
         ]
       },
       {
         "kind": "s",
         "slot": 180,
-        "value": 0.0
+        "value": 0.7034046359481316
       },
       {
         "kind": "s",
         "slot": 181,
-        "value": 0.0
+        "value": 0.5050088792354654
       },
       {
         "kind": "s",
         "slot": 182,
-        "value": 0.0
+        "value": 0.20251955898448337
       },
       {
         "kind": "s",
         "slot": 183,
-        "value": 0.0
+        "value": 0.9919975838608727
       },
       {
         "kind": "b",
         "slot": 184,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
@@ -1129,31 +1129,31 @@
         "kind": "c",
         "slot": 186,
         "value": [
-          255,
           0,
-          0,
-          0
+          116,
+          109,
+          122
         ]
       },
       {
         "kind": "c",
         "slot": 187,
         "value": [
-          255,
           0,
-          0,
-          0
+          18,
+          1,
+          77
         ]
       },
       {
         "kind": "s",
         "slot": 188,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 189,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
@@ -1163,26 +1163,26 @@
       {
         "kind": "s",
         "slot": 191,
-        "value": 0.0
+        "value": 0.07266790719667726
       },
       {
         "kind": "b",
         "slot": 192,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 193,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 194,
         "value": [
           255,
-          0,
-          0,
-          0
+          164,
+          135,
+          209
         ]
       },
       {
@@ -1190,9 +1190,9 @@
         "slot": 195,
         "value": [
           255,
-          0,
-          0,
-          0
+          19,
+          8,
+          230
         ]
       },
       {
@@ -1208,52 +1208,52 @@
       {
         "kind": "s",
         "slot": 198,
-        "value": 0.0
+        "value": 0.4402666304328744
       },
       {
         "kind": "s",
         "slot": 199,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "b",
         "slot": 200,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "b",
         "slot": 201,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 202,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          214,
+          56,
+          139
         ]
       },
       {
         "kind": "c",
         "slot": 203,
         "value": [
-          255,
           0,
-          0,
-          0
+          35,
+          51,
+          89
         ]
       },
       {
         "kind": "s",
         "slot": 204,
-        "value": 0.0
+        "value": 0.8006604899007047
       },
       {
         "kind": "s",
         "slot": 205,
-        "value": 0.0
+        "value": 0.6645719349900316
       },
       {
         "kind": "s",
@@ -1263,7 +1263,7 @@
       {
         "kind": "s",
         "slot": 207,
-        "value": 0.0
+        "value": 0.5612243531471302
       },
       {
         "kind": "b",
@@ -1280,19 +1280,19 @@
         "slot": 210,
         "value": [
           255,
-          0,
-          0,
-          0
+          233,
+          252,
+          50
         ]
       },
       {
         "kind": "c",
         "slot": 211,
         "value": [
-          255,
           0,
-          0,
-          0
+          121,
+          48,
+          38
         ]
       },
       {
@@ -1303,7 +1303,7 @@
       {
         "kind": "s",
         "slot": 213,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
@@ -1313,7 +1313,7 @@
       {
         "kind": "s",
         "slot": 215,
-        "value": 0.0
+        "value": 0.9305948484734369
       },
       {
         "kind": "b",
@@ -1323,16 +1323,16 @@
       {
         "kind": "b",
         "slot": 217,
-        "value": 0
+        "value": 1
       },
       {
         "kind": "c",
         "slot": 218,
         "value": [
-          255,
-          0,
-          0,
-          0
+          128,
+          228,
+          65,
+          79
         ]
       },
       {
@@ -1340,102 +1340,62 @@
         "slot": 219,
         "value": [
           255,
-          0,
-          0,
-          0
+          56,
+          181,
+          128
         ]
       },
       {
         "kind": "s",
         "slot": 220,
-        "value": 0.0
+        "value": 0.5396259032989715
       },
       {
         "kind": "s",
         "slot": 221,
-        "value": 0.0
+        "value": 1.0
       },
       {
         "kind": "s",
         "slot": 222,
-        "value": 0.0
+        "value": 0.1776091190190311
       },
       {
         "kind": "s",
         "slot": 223,
-        "value": 0.0
+        "value": 1.0
       }
     ],
     "pixel_aspect": [
-      2,
-      1
-    ],
-    "profile": "sdr",
-    "request_rect": [
       1,
-      0,
-      5,
       1
     ],
-    "rowbytes_padding": 32,
-    "seed": 2026
+    "profile": "hdr",
+    "request_rect": [
+      0,
+      0,
+      3,
+      3
+    ],
+    "rowbytes_padding": 1,
+    "seed": 1
   },
   "generator_version": 1,
   "geometry_sampler": "realistic-v1",
-  "index": 2,
-  "input_sha256": "d7d3ffef0aab83bae9021e2b0f8a8db34c0e56712191e16329589a78bbb517c7",
+  "index": 7,
+  "input_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
   "max_size": 256,
-  "operations": [
-    {
-      "geometry": [
-        21,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "geometry": [
-        10,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "geometry": [
-        5,
-        1
-      ],
-      "kind": "crop"
-    },
-    {
-      "kind": "params",
-      "values": {
-        "10": 0.0,
-        "39": 0.0,
-        "163": [
-          255,
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    {
-      "kind": "pixels",
-      "value": "binary"
-    }
-  ],
-  "pixels_zlib_base64": "eNr7//8/AwPDfxhgAHEAk4AM9A==",
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYGBgUG81cZhr/MKu1WepPZDLwFpyxWHL5x12ip+jHTb/mONw8JSl3aS+qXbbO/87gOQl17Q52Ot/cWg/dgrMt/khbc/5eqbdn+1Pgfob7MuVo+wexf5x0LnaATZv7yFlh41aGfYuCdscft/vtd+qX+Rg7jrN4WzbTAeQ+tm3HjtIP9jk8GzHW3sAhsw6Tg==",
   "plugin": "olmcolorkey",
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
     "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
-    "candidate_sha256": "ff24df9b27483de019bf025d65016363e4e2b653452e337399e4af41b186705b",
-    "case_timeout_seconds": 10,
+    "candidate_sha256": "c2ad72f8fc141e8293661f7196102957c889c8168eaf32c0a24c594bc6e45217",
     "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
     "dependencies_sha256": {
       "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
-      "mac/OLMColorKey/OLMColorKey.cpp": "0b3309f0d66d395ff9fb8901c01bb41ed96915d1d0683a5cf186e3697eb0d7da",
+      "mac/OLMColorKey/OLMColorKey.cpp": "b815bcc4450e46583f7c5a144131caef1bc42e55680d38485df4c7dae87e2179",
       "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
       "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
       "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
@@ -1482,65 +1442,19 @@
     "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
-    "accepted": [
-      {
-        "geometry": [
-          21,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "geometry": [
-          10,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "geometry": [
-          5,
-          1
-        ],
-        "kind": "crop"
-      },
-      {
-        "kind": "params",
-        "values": {
-          "10": 0.0,
-          "39": 0.0,
-          "163": [
-            255,
-            0,
-            0,
-            0
-          ]
-        }
-      },
-      {
-        "kind": "pixels",
-        "value": "binary"
-      }
-    ],
-    "attempts": 18,
-    "bounded": true,
-    "minimality_claimed": false,
-    "outcomes": {
-      "ok/exact": 13,
-      "ok/mismatch": 5
-    }
+    "accepted": []
   },
   "result": {
     "first_mismatching_stage": null,
     "oracle": {
       "guards_intact": true,
       "output_rect": [
-        1,
         0,
-        5,
-        1
+        0,
+        3,
+        3
       ],
-      "raw_sha256": "a2d9da3734433cf29d6f9e243394cf11d31cd56acc4c3b69cf269d54e9ff219b",
+      "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
       "session_clean": true,
       "status": "ok"
     },
@@ -1550,81 +1464,54 @@
         "output_rect": [
           0,
           0,
-          5,
-          1
+          3,
+          3
         ],
-        "raw_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
+        "raw_sha256": "81c611f35bff79491538b2f7cf201c7597a661a5c549633541c62bdc8af1613f",
         "session_clean": true,
         "status": "ok"
       },
       "smart": {
         "guards_intact": true,
         "output_rect": [
-          1,
           0,
-          5,
-          1
+          0,
+          3,
+          3
         ],
-        "raw_sha256": "a2d9da3734433cf29d6f9e243394cf11d31cd56acc4c3b69cf269d54e9ff219b",
+        "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
         "session_clean": true,
         "status": "ok"
       }
     },
     "routes": {
       "classic": {
-        "diff": {
-          "actual_bytes": 20,
-          "actual_word_hex": "ff",
-          "different_bytes": 13,
-          "different_words": 13,
-          "expected_bytes": 20,
-          "expected_word_hex": "00",
-          "first_byte": 0,
-          "first_word": 0
-        },
-        "error": 0,
+        "error": 516,
         "metadata": {
-          "ERROR": "0",
-          "GEOMETRY_INPUT": "15 3 1 3 1 3 2 1 32"
+          "ERROR": "516",
+          "GEOMETRY_INPUT": "23 24 1 8 1 8 1 1 1"
         },
-        "output_rect": [
-          0,
-          0,
-          5,
-          1
-        ],
-        "raw_sha256": "d7d3ffef0aab83bae9021e2b0f8a8db34c0e56712191e16329589a78bbb517c7",
-        "status": "mismatch"
+        "status": "refusal"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 16,
-          "actual_word_hex": "00",
-          "different_bytes": 10,
-          "different_words": 10,
-          "expected_bytes": 16,
-          "expected_word_hex": "ff",
-          "first_byte": 0,
-          "first_word": 0
-        },
         "error": 0,
         "metadata": {
           "ERROR": "0",
-          "GEOMETRY": "1 0 5 1",
-          "GEOMETRY_INPUT": "15 3 1 3 1 3 2 1 32"
+          "GEOMETRY": "0 0 3 3",
+          "GEOMETRY_INPUT": "23 24 1 8 1 8 1 1 1"
         },
         "output_rect": [
-          1,
           0,
-          5,
-          1
+          0,
+          3,
+          3
         ],
-        "raw_sha256": "616848d421d2c8906b4d36505858296a70bf07f66979eb50d120c0eada18a53b",
-        "status": "mismatch"
+        "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
   },
   "schema": "olm-fuzz-case/1",
-  "seed": 2026
+  "seed": 1
 }
