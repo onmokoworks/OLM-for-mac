@@ -1,0 +1,31 @@
+{
+  "default_result_differences": 0,
+  "exact_to_nonexact": 0,
+  "sanitizer_exit": 0,
+  "replays": {
+    "replay-olmblur": {
+      "completed": 39,
+      "matches_saved": true
+    },
+    "replay-olmblur_downsample_P01a": {
+      "completed": 43,
+      "matches_saved": true
+    },
+    "replay-olmblur_realistic_P02h": {
+      "completed": 36,
+      "matches_saved": true
+    }
+  },
+  "unit_status_changes": [],
+  "unit_baseline": {
+    "1": 24,
+    "5": 3,
+    "0": 7
+  },
+  "unit_candidate": {
+    "1": 24,
+    "5": 3,
+    "0": 7
+  },
+  "source_sha256": "9c4245d786ae88f677f971d086d8709aea763c23cdceeb12a632b7277fb944da"
+}

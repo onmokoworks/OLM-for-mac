@@ -1463,6 +1463,20 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		PF_Err_NONE : OLM_BLUR_REFUSAL("classic-commit");
 }
 
+// Original rectangle union, FUN_18000bd90. Empty destinations are replaced;
+// empty sources do not enlarge a nonempty destination.
+static void BlurUnionRect(const PF_LRect& source, PF_LRect& destination)
+{
+	if (destination.left >= destination.right || destination.top >= destination.bottom) {
+		destination = source;
+	} else if (source.left < source.right && source.top < source.bottom) {
+		destination.left = std::min(destination.left, source.left);
+		destination.top = std::min(destination.top, source.top);
+		destination.right = std::max(destination.right, source.right);
+		destination.bottom = std::max(destination.bottom, source.bottom);
+	}
+}
+
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
@@ -1471,6 +1485,10 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		!extra->cb->checkout_layer) return OLM_BLUR_REFUSAL("prerender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
+	// Original 0x18000ab01..0x18000ab85 unions the full InData bounds
+	// into the request before checkout (without downsample or aspect scaling).
+	const PF_LRect full_bounds = {0, 0, in_data->width, in_data->height};
+	BlurUnionRect(full_bounds, req.rect);
 	PF_CheckoutResult in_result;
 	AEFX_CLR_STRUCT(in_result);
 
@@ -1479,11 +1497,12 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		in_data->time_step, in_data->time_scale, &in_result));
 
 	if (!err) {
-		extra->output->result_rect     = in_result.result_rect;
-		extra->output->max_result_rect = in_result.max_result_rect;
+		BlurUnionRect(in_result.result_rect, extra->output->result_rect);
+		BlurUnionRect(in_result.max_result_rect, extra->output->max_result_rect);
 		extra->output->solid = FALSE;
 		extra->output->pre_render_data = NULL;
-		extra->output->flags = 0;
+		// Original 0x18000ab94 writes RETURNS_EXTRA_PIXELS.
+		extra->output->flags = PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
 	}
 	if (err) return BlurRefusal(__func__, "prerender-checkout", __LINE__, err);
 	return err;
@@ -1571,10 +1590,10 @@ GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
 {
 	if (!world || !world->data || !pixel_bytes || width <= 0 || height <= 0 ||
 		world->width != width || world->height != height || world->rowbytes <= 0 ||
-		world->origin_x != 0 || world->origin_y != 0 ||
-		world->extent_hint.left != 0 || world->extent_hint.top != 0 ||
-		world->extent_hint.right != width || world->extent_hint.bottom != height)
+		world->origin_x != 0 || world->origin_y != 0)
 		return false;
+	// The original workers consume the entire checked-out pixel world;
+	// extent_hint is not a clipping rectangle for their filtering passes.
 	const size_t usize_width = (size_t)width;
 	if (usize_width > ((size_t)-1) / pixel_bytes) return false;
 	const size_t active = usize_width * pixel_bytes;
