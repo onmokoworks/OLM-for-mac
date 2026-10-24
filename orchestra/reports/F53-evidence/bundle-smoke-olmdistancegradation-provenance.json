@@ -1,0 +1,20 @@
+{
+  "host": "F52c standalone Universal bundle host; negotiated geometry",
+  "bundle_host_path": "/Users/onmk/.cache/olm-emu/worker-F53-bundle/plugin-host",
+  "bundle_host_sha256": "218f3a3e702dd509b99997aa4c98259c7264036ba2cad48e3dc7853ee7952c6b",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "candidate_path": "/Users/onmk/.cache/olm-emu/P00b/xcode/OLMDistanceGradation/products/OLMDistanceGradation.plugin",
+  "candidate_sha256": "07c4aedb9b31247b0725431000293ac6d927bb4957816cdf15b55dcae4753584",
+  "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+  "world": "realistic-v1: byte padding, extent, aspect, downsample, request and negotiated output rect/origin",
+  "parameter_profile": "shared declarations",
+  "oracle_routes": {
+    "smart": "smart"
+  },
+  "original_routes": {
+    "smart": "render"
+  }
+}

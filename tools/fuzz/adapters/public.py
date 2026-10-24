@@ -306,7 +306,7 @@ class PublicAdapter:
 
 def geometry_arguments(case,route=None):
     if not case.get('geometry_sampler'): return []
-    return ['--negotiate-output','1','--rowbytes-pad',str(case['rowbytes_padding']),
+    return (['--checkout-rect',','.join(map(str,case['checkout_rect'])) if 'checkout_rect' in case else 'auto'] if case.get('geometry_sampler')=='realistic-v2' else []) + ['--negotiate-output','1','--rowbytes-pad',str(case['rowbytes_padding']),
             '--extent-hint',','.join(map(str,case['extent_hint'])),
             *(['--request-rect',','.join(map(str,case['request_rect']))] if route!='classic' else []),
             '--pixel-aspect','/'.join(map(str,case['pixel_aspect']))]
@@ -314,6 +314,10 @@ def geometry_arguments(case,route=None):
 
 def geometry_environment(case,directory,env):
     if not case.get('geometry_sampler'): return
+    if case.get('geometry_sampler')=='realistic-v2':
+        env['OLM_F53_CHECKOUT']=','.join(map(str,case['checkout_rect'])) if 'checkout_rect' in case else 'auto'
+    else:
+        env.pop('OLM_F53_CHECKOUT',None)
     values=[*case['full_geometry'],*case['downsample'][0],*case['downsample'][1]]
     env['OLM_F52_DOWNSAMPLE']=','.join(map(str,values))
     env.update(OLM_F52_GEOMETRY_OUTPUT=str(directory/'geometry-output.raw'),

@@ -25,7 +25,7 @@ KINDS = {1: 'i', 3: 'a', 4: 'b', 6: 'p', 7: 'u', 10: 's'}
 
 class Adapter:
     name = 'radialblur'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     generator_version = 1
     routes = ('classic', 'smart')
     oracle_routes = {'classic': 'classic', 'smart': 'smart'}
