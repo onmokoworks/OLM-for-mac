@@ -2202,8 +2202,22 @@ static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong re
 	info.seed = params[OLMDIRECTIONALBLUR_SEED]->u.sd.value;
 	info.noise_offset = static_cast<A_long>(WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_NOISE_OFFSET]->u.ad.value));
 	info.thickness = params[OLMDIRECTIONALBLUR_THICKNESS]->u.fs_d.value;
-	info.render_scale_x = render_scale_x;
-	info.render_scale_y = render_scale_y;
+	// AEX 0x180003d39..0x180003db8 (also PF16/PF32): pixel distances
+	// use the horizontal FLOAT32 ratio, irrespective of angle or Y ratio.
+	// Materialize once here so every core and its budget see sampled units.
+	if (render_scale_x > 0.0 && render_scale_x <= 1.0 &&
+		render_scale_y > 0.0 && render_scale_y <= 1.0) {
+		const float scale = static_cast<float>(render_scale_x);
+		info.front_strength = static_cast<A_long>(static_cast<float>(info.front_strength) * scale);
+		info.front_alpha_fade = static_cast<A_long>(static_cast<float>(info.front_alpha_fade) * scale);
+		info.back_strength = static_cast<A_long>(static_cast<float>(info.back_strength) * scale);
+		info.back_alpha_fade = static_cast<A_long>(static_cast<float>(info.back_alpha_fade) * scale);
+		info.thickness = static_cast<float>(info.thickness) * scale;
+		info.render_scale_x = info.render_scale_y = 1.0;
+	} else {
+		info.render_scale_x = render_scale_x;
+		info.render_scale_y = render_scale_y;
+	}
 	return info;
 }
 
@@ -2213,10 +2227,10 @@ static void RenderScaleFromInData(PF_InData *in_data, PF_FpLong &scale_x, PF_FpL
 	scale_y = 1.0;
 	if (in_data) {
 		if (in_data->downsample_x.den != 0) {
-			scale_x = (PF_FpLong)in_data->downsample_x.num / (PF_FpLong)in_data->downsample_x.den;
+			scale_x = static_cast<float>(in_data->downsample_x.num) / static_cast<float>(in_data->downsample_x.den);
 		}
 		if (in_data->downsample_y.den != 0) {
-			scale_y = (PF_FpLong)in_data->downsample_y.num / (PF_FpLong)in_data->downsample_y.den;
+			scale_y = static_cast<float>(in_data->downsample_y.num) / static_cast<float>(in_data->downsample_y.den);
 		}
 	}
 }
@@ -2308,21 +2322,20 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	bool request_contains_full_frame = false;
 #if !defined(OLM_DBLUR_TEST_SEAM)
 	if (in_data->width > 0 && in_data->height > 0) {
-		full_width = in_data->width;
-		full_height = in_data->height;
-		request_contains_full_frame = DirectionalNormalizeFullFrameRequest(
-			extra->input->output_request, full_width, full_height, &req);
-		const bool fixed_evidence_geometry =
-			(full_width == 16 && full_height == 16) ||
-			(full_width == 32 && full_height == 18) ||
-			(full_width == 64 && full_height == 36) ||
-			(full_width == 960 && full_height == 540);
-		if (!request_contains_full_frame && !fixed_evidence_geometry) {
-			// Generic DirectionalBlur needs its global rotated workspace. Refuse a
-			// partial tile before any checkout; fixed evidence geometries retain
-			// their historical admission and are classified after parameter checkout.
-			return OLM_DIRECTIONAL_REFUSAL("prerender-partial-frame");
-		}
+		// PF_InData dimensions are unsampled; requests/worlds are sampled.
+		// Use integer ceiling for the host's sampled layer bounds.
+		const auto sampled_size = [](A_long size, const PF_RationalScale &scale) -> A_long {
+			if (scale.num <= 0 || scale.den == 0 ||
+				static_cast<A_u_long>(scale.num) > scale.den) return size;
+			return static_cast<A_long>((static_cast<std::int64_t>(size) * scale.num +
+				scale.den - 1) / scale.den);
+		};
+		full_width = sampled_size(in_data->width, in_data->downsample_x);
+		full_height = sampled_size(in_data->height, in_data->downsample_y);
+		// The rotated workspace depends on the entire source even for an ROI.
+		// Negotiate full input instead of refusing a partial output request.
+		req.rect = PF_LRect{0, 0, full_width, full_height};
+		request_contains_full_frame = true;
 	}
 #endif
 	req.preserve_rgb_of_zero_alpha = TRUE;

@@ -17,7 +17,10 @@ int main(){
  if(EstimateGeneralDeepRender(4096,2160,32,4000,4000,100,100,true,true,1,0,&rejected)||rejected.plugin_owned_live_bytes!=123)return 5;
  if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,3,std::numeric_limits<std::size_t>::max(),&rejected))return 6;
  if(EstimateGeneralDeepRender(37,29,32,7,11,101,7,true,true,3,0,&rejected))return 7;
- if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,.5f,0,&rejected))return 8;
+ // Sampled Thickness can be smaller than the UI minimum.
+ if(!EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,.5f,0,&features))return 8;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,0,0,&rejected))return 32;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,std::numeric_limits<float>::denorm_min(),0,&rejected))return 33;
  if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,std::numeric_limits<float>::quiet_NaN(),0,&rejected))return 9;
  if(EstimateGeneralDeepRender(37,29,8,7,11,5,7,true,true,3,0,&rejected))return 10;
  if(EstimateGeneralDeepRender(-1,29,32,7,11,5,7,true,true,3,0,&rejected))return 11;
