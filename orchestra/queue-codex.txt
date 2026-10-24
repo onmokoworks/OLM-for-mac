@@ -89,3 +89,5 @@ R04-assertion-drift-and-corpus
 R05-regenerate-stale-bindings
 T14-classic-route-triage
 R06-release-gate-closure
+R07-gate-contracts-and-bindings
+R08-radial-fullsize-trace
