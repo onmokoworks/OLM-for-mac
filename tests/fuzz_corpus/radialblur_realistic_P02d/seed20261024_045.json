@@ -1,0 +1,378 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      22,
+      17
+    ],
+    "full_geometry": [
+      171,
+      129
+    ],
+    "geometry": [
+      22,
+      17
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 45,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          10.6875,
+          8.0625
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 13
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 5.0
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5.0
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 100.0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 85.83518759373796
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10.0
+      }
+    ],
+    "pixel_aspect": [
+      4,
+      3
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      16,
+      2,
+      17,
+      9
+    ],
+    "rowbytes_padding": 16,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 45,
+  "input_sha256": "1b6eab97791f514524b477cb7038006dd0614df8ef90d6352ac88b5eb9855be7",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "05e17a928ce91318102a325a44f714b5afd2c6f50d7287dc9e194827c7fab692",
+    "candidate_source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
+    "case_timeout_seconds": 10,
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "01254c577fd991c5a410e8342c331de9f4b4ed59d82512ee523aca218d511230",
+    "header_sha256": "be783c134a37bbd0c5f2781bb6c7c572a4a17289646d01e0ec7a9bbdb49ad1a1",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        16,
+        2,
+        17,
+        9
+      ],
+      "raw_sha256": "e098c539a24ad2a13eab1f3d6e8ffe7d2392378290bb511c832e47fc4aa2cbe0",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          22,
+          17
+        ],
+        "raw_sha256": "cda258b2a722a9336224ca9bb3997f0761213a8dac68d24b5fed88d80f18e2a3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          16,
+          2,
+          17,
+          9
+        ],
+        "raw_sha256": "e098c539a24ad2a13eab1f3d6e8ffe7d2392378290bb511c832e47fc4aa2cbe0",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 2992,
+          "actual_word_hex": "630d",
+          "different_bytes": 2982,
+          "different_words": 1496,
+          "expected_bytes": 2992,
+          "expected_word_hex": "0000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "171 129 1 8 1 8 4 3 16",
+          "INFO": "0 0 0 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          22,
+          17
+        ],
+        "raw_sha256": "29c40d2ec966efcab0a64d3fec21e2c2bb221f4ef56bb37f8ec31921f6c7c8cd",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "16 2 17 9",
+          "GEOMETRY_INPUT": "171 129 1 8 1 8 4 3 16",
+          "INFO": "0 0 0 0"
+        },
+        "output_rect": [
+          16,
+          2,
+          17,
+          9
+        ],
+        "raw_sha256": "e098c539a24ad2a13eab1f3d6e8ffe7d2392378290bb511c832e47fc4aa2cbe0",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

@@ -1,0 +1,378 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      4,
+      5
+    ],
+    "full_geometry": [
+      16,
+      17
+    ],
+    "geometry": [
+      4,
+      5
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 48,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          4.5745849609375,
+          -1.9401092529296875
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 6
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 3
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 5
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 1357
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 24
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 51
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 4.818273057678219
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 495.42852783203125
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 5.9425918871577865
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 100.0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 99.32294319427027
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 788
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": -429.1564483642578
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 67.76744828327871
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      4,
+      5
+    ],
+    "rowbytes_padding": 0,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 48,
+  "input_sha256": "02604ae2e3685c4eea4f1636e111bbb0a8096ee7fecd492f014d7e3049da6633",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoBUACv/3PXsmcAZcNUANVoLv8wut7/FLbRUKlYP//9BZwAHRTLlPXtYY7EErBVTR10FQQPW6zJFVCqgOahADzDXv+xKeMAmmwHExHyM/+AmQr/YiX9JDYmFQ==",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "05e17a928ce91318102a325a44f714b5afd2c6f50d7287dc9e194827c7fab692",
+    "candidate_source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
+    "case_timeout_seconds": 10,
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "01254c577fd991c5a410e8342c331de9f4b4ed59d82512ee523aca218d511230",
+    "header_sha256": "be783c134a37bbd0c5f2781bb6c7c572a4a17289646d01e0ec7a9bbdb49ad1a1",
+    "host": "AEXCompat Unicorn CPU per-route; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "ucrtmath_sha256": {
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        4,
+        5
+      ],
+      "raw_sha256": "a674cf14fbe0b5651015361c504f4a83b617cf33a5ec63cb205a1825ff3d0aad",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          4,
+          5
+        ],
+        "raw_sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          4,
+          5
+        ],
+        "raw_sha256": "a674cf14fbe0b5651015361c504f4a83b617cf33a5ec63cb205a1825ff3d0aad",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 80,
+          "actual_word_hex": "5b",
+          "different_bytes": 80,
+          "different_words": 80,
+          "expected_bytes": 80,
+          "expected_word_hex": "00",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "16 17 1 4 1 4 1 1 0",
+          "INFO": "495.42852783203125 5 51 -7"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          5
+        ],
+        "raw_sha256": "2f4f5cf1f2cef9d352c0deeb8526ce37915e5906a05790375bbe9509c8c0a80e",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 4 5",
+          "GEOMETRY_INPUT": "16 17 1 4 1 4 1 1 0",
+          "INFO": "495.42852783203125 5 51 -7"
+        },
+        "output_rect": [
+          0,
+          0,
+          4,
+          5
+        ],
+        "raw_sha256": "a674cf14fbe0b5651015361c504f4a83b617cf33a5ec63cb205a1825ff3d0aad",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}
