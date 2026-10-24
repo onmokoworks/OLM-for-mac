@@ -1,0 +1,1517 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "extent_hint": [
+      0,
+      1,
+      3,
+      2
+    ],
+    "full_geometry": [
+      23,
+      24
+    ],
+    "geometry": [
+      3,
+      3
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 7,
+    "input_padding": 1,
+    "output_padding": 1,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 6
+      },
+      {
+        "kind": "u",
+        "slot": 6,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 0.22216613995080026
+      },
+      {
+        "kind": "s",
+        "slot": 11,
+        "value": 0.7421351473130599
+      },
+      {
+        "kind": "i",
+        "slot": 14,
+        "value": -3644
+      },
+      {
+        "kind": "u",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 18,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 19,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 20,
+        "value": 3
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 23,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 24,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 26,
+        "value": [
+          255,
+          186,
+          220,
+          6
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 27,
+        "value": [
+          255,
+          70,
+          35,
+          119
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 30,
+        "value": 0.8640827352823346
+      },
+      {
+        "kind": "s",
+        "slot": 31,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 32,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 33,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 34,
+        "value": [
+          255,
+          30,
+          141,
+          156
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          0,
+          56,
+          90,
+          23
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 36,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 37,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 38,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 39,
+        "value": 0.9419059244042748
+      },
+      {
+        "kind": "b",
+        "slot": 40,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 41,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 42,
+        "value": [
+          128,
+          165,
+          233,
+          219
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 43,
+        "value": [
+          255,
+          230,
+          6,
+          221
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 44,
+        "value": 0.7563125692079002
+      },
+      {
+        "kind": "s",
+        "slot": 45,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 46,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 47,
+        "value": 0.49356253928546534
+      },
+      {
+        "kind": "b",
+        "slot": 48,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 49,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 50,
+        "value": [
+          0,
+          84,
+          110,
+          239
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 51,
+        "value": [
+          255,
+          51,
+          90,
+          59
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 52,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 53,
+        "value": 0.16738122994140736
+      },
+      {
+        "kind": "s",
+        "slot": 54,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 55,
+        "value": 0.7222163984179918
+      },
+      {
+        "kind": "b",
+        "slot": 56,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 57,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 58,
+        "value": [
+          255,
+          15,
+          209,
+          159
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 59,
+        "value": [
+          128,
+          179,
+          241,
+          3
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 60,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 61,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 62,
+        "value": 0.3423050475501975
+      },
+      {
+        "kind": "s",
+        "slot": 63,
+        "value": 0.7830724655775902
+      },
+      {
+        "kind": "b",
+        "slot": 64,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 65,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 66,
+        "value": [
+          128,
+          85,
+          16,
+          21
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 67,
+        "value": [
+          0,
+          234,
+          62,
+          91
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 68,
+        "value": 0.4003739388506298
+      },
+      {
+        "kind": "s",
+        "slot": 69,
+        "value": 0.3861282757751171
+      },
+      {
+        "kind": "s",
+        "slot": 70,
+        "value": 0.12218934217790312
+      },
+      {
+        "kind": "s",
+        "slot": 71,
+        "value": 0.5979713179092576
+      },
+      {
+        "kind": "b",
+        "slot": 72,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 73,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 74,
+        "value": [
+          128,
+          105,
+          249,
+          47
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 75,
+        "value": [
+          255,
+          194,
+          220,
+          25
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 76,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 77,
+        "value": 0.2644776916683056
+      },
+      {
+        "kind": "s",
+        "slot": 78,
+        "value": 0.713485577274745
+      },
+      {
+        "kind": "s",
+        "slot": 79,
+        "value": 0.12437669809096097
+      },
+      {
+        "kind": "b",
+        "slot": 80,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 81,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 82,
+        "value": [
+          128,
+          101,
+          108,
+          251
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 83,
+        "value": [
+          0,
+          190,
+          142,
+          27
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 84,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 85,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 86,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 87,
+        "value": 0.1349088877310688
+      },
+      {
+        "kind": "b",
+        "slot": 88,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 89,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 90,
+        "value": [
+          255,
+          254,
+          239,
+          207
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 91,
+        "value": [
+          128,
+          151,
+          187,
+          235
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 92,
+        "value": 0.5881073976077379
+      },
+      {
+        "kind": "s",
+        "slot": 93,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 94,
+        "value": 0.3400685834669859
+      },
+      {
+        "kind": "s",
+        "slot": 95,
+        "value": 0.7924169783491148
+      },
+      {
+        "kind": "b",
+        "slot": 96,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 97,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 98,
+        "value": [
+          128,
+          195,
+          108,
+          58
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 99,
+        "value": [
+          128,
+          97,
+          169,
+          34
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 100,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 101,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 102,
+        "value": 0.21890904239170283
+      },
+      {
+        "kind": "s",
+        "slot": 103,
+        "value": 0.9914244411988349
+      },
+      {
+        "kind": "b",
+        "slot": 104,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 105,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 106,
+        "value": [
+          0,
+          49,
+          113,
+          162
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 107,
+        "value": [
+          0,
+          89,
+          248,
+          253
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 108,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 109,
+        "value": 0.8643039054165058
+      },
+      {
+        "kind": "s",
+        "slot": 110,
+        "value": 0.3480867330598173
+      },
+      {
+        "kind": "s",
+        "slot": 111,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 112,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 113,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 114,
+        "value": [
+          255,
+          240,
+          205,
+          42
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 115,
+        "value": [
+          128,
+          180,
+          247,
+          100
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 116,
+        "value": 0.5298696401339988
+      },
+      {
+        "kind": "s",
+        "slot": 117,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 118,
+        "value": 0.7712166268334039
+      },
+      {
+        "kind": "s",
+        "slot": 119,
+        "value": 0.7327331644328545
+      },
+      {
+        "kind": "b",
+        "slot": 120,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 121,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 122,
+        "value": [
+          0,
+          172,
+          59,
+          105
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 123,
+        "value": [
+          128,
+          94,
+          131,
+          116
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 124,
+        "value": 0.624490978375245
+      },
+      {
+        "kind": "s",
+        "slot": 125,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 126,
+        "value": 0.9035744420295443
+      },
+      {
+        "kind": "s",
+        "slot": 127,
+        "value": 0.611482525984305
+      },
+      {
+        "kind": "b",
+        "slot": 128,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 129,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 130,
+        "value": [
+          128,
+          126,
+          162,
+          103
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 131,
+        "value": [
+          0,
+          102,
+          95,
+          140
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 132,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 133,
+        "value": 0.49048592909163513
+      },
+      {
+        "kind": "s",
+        "slot": 134,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 135,
+        "value": 0.08583724258596492
+      },
+      {
+        "kind": "b",
+        "slot": 136,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 137,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 138,
+        "value": [
+          128,
+          211,
+          134,
+          5
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 139,
+        "value": [
+          0,
+          105,
+          153,
+          220
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 140,
+        "value": 0.015855886118331664
+      },
+      {
+        "kind": "s",
+        "slot": 141,
+        "value": 0.30378982394132115
+      },
+      {
+        "kind": "s",
+        "slot": 142,
+        "value": 0.6427549667183802
+      },
+      {
+        "kind": "s",
+        "slot": 143,
+        "value": 0.00133617137825226
+      },
+      {
+        "kind": "b",
+        "slot": 144,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 145,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 146,
+        "value": [
+          0,
+          41,
+          58,
+          87
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 147,
+        "value": [
+          255,
+          238,
+          61,
+          210
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 148,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 149,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 150,
+        "value": 0.9770992854428049
+      },
+      {
+        "kind": "s",
+        "slot": 151,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 152,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 153,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 154,
+        "value": [
+          255,
+          240,
+          214,
+          157
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 155,
+        "value": [
+          128,
+          107,
+          7,
+          254
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 156,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 157,
+        "value": 0.321711052145623
+      },
+      {
+        "kind": "s",
+        "slot": 158,
+        "value": 0.6433471931097672
+      },
+      {
+        "kind": "s",
+        "slot": 159,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 160,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 161,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 162,
+        "value": [
+          128,
+          244,
+          238,
+          142
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 163,
+        "value": [
+          128,
+          186,
+          178,
+          68
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 164,
+        "value": 0.9826504927606461
+      },
+      {
+        "kind": "s",
+        "slot": 165,
+        "value": 0.31109047796841605
+      },
+      {
+        "kind": "s",
+        "slot": 166,
+        "value": 0.5376798792272398
+      },
+      {
+        "kind": "s",
+        "slot": 167,
+        "value": 0.042401548181351
+      },
+      {
+        "kind": "b",
+        "slot": 168,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 169,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 170,
+        "value": [
+          128,
+          193,
+          176,
+          163
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 171,
+        "value": [
+          0,
+          132,
+          28,
+          21
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 172,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 173,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 174,
+        "value": 0.40573574672046575
+      },
+      {
+        "kind": "s",
+        "slot": 175,
+        "value": 0.48407997322941376
+      },
+      {
+        "kind": "b",
+        "slot": 176,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 177,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 178,
+        "value": [
+          0,
+          88,
+          196,
+          17
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 179,
+        "value": [
+          255,
+          105,
+          229,
+          76
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 180,
+        "value": 0.7034046359481316
+      },
+      {
+        "kind": "s",
+        "slot": 181,
+        "value": 0.5050088792354654
+      },
+      {
+        "kind": "s",
+        "slot": 182,
+        "value": 0.20251955898448337
+      },
+      {
+        "kind": "s",
+        "slot": 183,
+        "value": 0.9919975838608727
+      },
+      {
+        "kind": "b",
+        "slot": 184,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 185,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 186,
+        "value": [
+          0,
+          116,
+          109,
+          122
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 187,
+        "value": [
+          0,
+          18,
+          1,
+          77
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 188,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 189,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 190,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 191,
+        "value": 0.07266790719667726
+      },
+      {
+        "kind": "b",
+        "slot": 192,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 193,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 194,
+        "value": [
+          255,
+          164,
+          135,
+          209
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 195,
+        "value": [
+          255,
+          19,
+          8,
+          230
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 196,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 197,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 198,
+        "value": 0.4402666304328744
+      },
+      {
+        "kind": "s",
+        "slot": 199,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 200,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 201,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 202,
+        "value": [
+          128,
+          214,
+          56,
+          139
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 203,
+        "value": [
+          0,
+          35,
+          51,
+          89
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 204,
+        "value": 0.8006604899007047
+      },
+      {
+        "kind": "s",
+        "slot": 205,
+        "value": 0.6645719349900316
+      },
+      {
+        "kind": "s",
+        "slot": 206,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 207,
+        "value": 0.5612243531471302
+      },
+      {
+        "kind": "b",
+        "slot": 208,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 209,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 210,
+        "value": [
+          255,
+          233,
+          252,
+          50
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 211,
+        "value": [
+          0,
+          121,
+          48,
+          38
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 212,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 213,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 214,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 215,
+        "value": 0.9305948484734369
+      },
+      {
+        "kind": "b",
+        "slot": 216,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 217,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 218,
+        "value": [
+          128,
+          228,
+          65,
+          79
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 219,
+        "value": [
+          255,
+          56,
+          181,
+          128
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 220,
+        "value": 0.5396259032989715
+      },
+      {
+        "kind": "s",
+        "slot": 221,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 222,
+        "value": 0.1776091190190311
+      },
+      {
+        "kind": "s",
+        "slot": 223,
+        "value": 1.0
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "hdr",
+    "request_rect": [
+      0,
+      0,
+      3,
+      3
+    ],
+    "rowbytes_padding": 1,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 7,
+  "input_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYGBgUG81cZhr/MKu1WepPZDLwFpyxWHL5x12ip+jHTb/mONw8JSl3aS+qXbbO/87gOQl17Q52Ot/cWg/dgrMt/khbc/5eqbdn+1Pgfob7MuVo+wexf5x0LnaATZv7yFlh41aGfYuCdscft/vtd+qX+Rg7jrN4WzbTAeQ+tm3HjtIP9jk8GzHW3sAhsw6Tg==",
+  "plugin": "olmcolorkey",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "candidate_sha256": "c2ad72f8fc141e8293661f7196102957c889c8168eaf32c0a24c594bc6e45217",
+    "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "dependencies_sha256": {
+      "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+      "mac/OLMColorKey/OLMColorKey.cpp": "b815bcc4450e46583f7c5a144131caef1bc42e55680d38485df4c7dae87e2179",
+      "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
+      "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+      "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          3,
+          3
+        ],
+        "raw_sha256": "81c611f35bff79491538b2f7cf201c7597a661a5c549633541c62bdc8af1613f",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          3,
+          3
+        ],
+        "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "ERROR": "516",
+          "GEOMETRY_INPUT": "23 24 1 8 1 8 1 1 1"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "GEOMETRY": "0 0 3 3",
+          "GEOMETRY_INPUT": "23 24 1 8 1 8 1 1 1"
+        },
+        "output_rect": [
+          0,
+          0,
+          3,
+          3
+        ],
+        "raw_sha256": "cd5135f61747660cac8a61933a82ef412897ba9f62a4d3a538a9573752a2ade9",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
