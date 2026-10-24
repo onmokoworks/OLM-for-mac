@@ -1,0 +1,35 @@
+{
+  "name": "P00b",
+  "worker_path": "/Users/onmk/.cache/olm-emu/P00b/plugin-host",
+  "worker_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "build_json": "/Users/onmk/.cache/olm-emu/P00b/build.json",
+  "bundles_path": "/Users/onmk/.cache/olm-emu/P00b",
+  "command": [
+    "clang++",
+    "-std=c++17",
+    "-O2",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-Wno-pragma-pack",
+    "-I/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P00b-ae-realism-audit-rerun/Headers",
+    "-I/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P00b-ae-realism-audit-rerun/Headers/SP",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P00b-ae-realism-audit-rerun/tools/emulation/aexcompat_patches/P00-host-realism.cpp",
+    "-o",
+    "/Users/onmk/.cache/olm-emu/P00b/plugin-host"
+  ],
+  "source_sha256": "ce56cc6e867429e67adccb81026aa4f0e005668b851a78c4210a766232aeb9b0",
+  "capability": "plugin-only AE realism host; arm64; no oracle",
+  "recipe": "python3 tools/fuzz/ae_realism_audit.py --build-host",
+  "bundle_sha256": {
+    "OLMBlur": "f12417559a6bebbebd8304fa81932561051083d8fdbf8df29ed70603fa07306f",
+    "ColorKeep": "b2e4316596a767a406dd012dec3b3f2f4b5be4b378cf14c2569fb642737e9b11",
+    "OLMColorKey": "58d959813039bb5c2d7901e4f0ed12152b30ef4608f0ab970c18a95cd2801bbe",
+    "OLMDirectionalBlur": "522a1120074c32ddefb87ec3f30e73cb706e7332e3355025e7818bdac96a5ba9",
+    "OLMDistanceGradation": "07c4aedb9b31247b0725431000293ac6d927bb4957816cdf15b55dcae4753584",
+    "OLMKiraKira": "a0c2358b97edbc5a7b3fc63bcdd37fbb2de797dfad2069fe69b916be86bd47e9",
+    "OLMSmoother2": "e21e07c0b5dcc510b5b4fc1382291b778b964cc48c0f2ae76ca833e8e3c4cdf8",
+    "OLMToonDilate": "b5a4dc6907704f96d8105c73157876bab2820cd75245f3f2d81a5f5c88244970",
+    "OLMRadialBlur": "6ccaaccbc823c771ab5a8f4d52ab35bc3f1d4b2287322f677c5e526437a40bf6",
+    "OLMSmoother": "94e96c0d001a56370b2ead5da16e6ac2c4bb6e885aae79c466cb694df42c8657"
+  }
+}

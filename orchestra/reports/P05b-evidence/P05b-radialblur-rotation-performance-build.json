@@ -1,0 +1,12 @@
+{
+  "name": "P05b-radialblur-rotation-performance",
+  "worker_path": "/Users/onmk/.cache/olm-emu/P05b-radialblur-rotation-performance/plugin-host",
+  "worker_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "bundles_path": "/Users/onmk/.cache/olm-emu/P05b-radialblur-rotation-performance",
+  "bundle_sha256": {
+    "OLMRadialBlur": "e5a3522acc013b57683cb82cb9f21a349a325ca74bcedc89110c8bc4eece00af"
+  },
+  "source_sha256": "fd4dcc1b4d3bb35e1d03d84caa7ceaaacbcdde9750e3a14aa96fdd973506fa30",
+  "capability": "P05b angle-hoist candidate; P00b host reused; not an oracle",
+  "build_json": "/Users/onmk/.cache/olm-emu/P05b-radialblur-rotation-performance/build.json"
+}
