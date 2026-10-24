@@ -4,7 +4,7 @@ summary:
 - Heavy Blur corpus05 is now 1.61–1.75 s at 1080p and 6.41–6.86 s at 4K in the P00b SDK host.
 - Final Smart campaigns: 800/800 exact; all 60 saved corpora replay true. Unit modules: 7 pass / 27 fail both before and after (pre-existing evidence/asset failures).
 - Rejected volatile-removal optimization changed NaN payloads and was fully reverted.
-- ColorKey and Smoother remain pending; no completion claim for the whole ticket.
+- ColorKey cache and differential/performance checks complete; full post-change unit suite still running. See `P05c-evidence/colorkey.md`. Smoother remains pending.
 
 facts:
 
@@ -53,5 +53,5 @@ python3 tools/fuzz/ae_realism_audit.py --phase matrix --cache "$HOME/.cache/olm-
 Expected: campaign Smart counts 300/100/100/150/150 exact; three corpus sets true; helper 4,310,640 exact words; unit statuses as baseline, not all green; six performance rows OK. Set `TMPDIR`, `TMP`, `TEMP` to the ticket scratch and `OLM_TEST_JOBS=1` when invoking fuzz directly.
 
 next:
-- Continue ColorKey, then Smoother; each needs independent evidence and commit.
+- Finish ColorKey post-change unit suites, then Smoother; each needs independent evidence and commit.
 - Separate environment follow-up: restore historical unittest evidence dependencies without modifying MAIN or changing numerical expectations.

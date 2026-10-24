@@ -1876,6 +1876,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
+	// Key RGB is invariant for this render. Cache the unmutated Lab triple
+	// lazily, retaining the original in-place conversion and comparator order.
+	// Disabled/unvisited keys still perform no conversion.
+	float lab_keys[OLMCOLORKEY_MAX_COLORS][3];
+	bool lab_key_ready[OLMCOLORKEY_MAX_COLORS] = {};
 	// Smart workers classify only the output extent into an input-sized matte.
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -1931,7 +1936,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				float key[3] = { info.colors[i].red, info.colors[i].green, info.colors[i].blue };
 				float comp_scale[3] = {1.0f, 1.0f, 1.0f};
 				if (info.color_space == 3 || info.color_space == 4) {
-					RGBToPluginLab76(key, key);
+					if (!lab_key_ready[i]) {
+						RGBToPluginLab76(key, key);
+						std::memcpy(lab_keys[i], key, sizeof(key));
+						lab_key_ready[i] = true;
+					} else {
+						std::memcpy(key, lab_keys[i], sizeof(key));
+					}
 					comp_scale[0] = 151.30099487304688f;
 					comp_scale[1] = 264.36700439453125f;
 					comp_scale[2] = 295.572998046875f;

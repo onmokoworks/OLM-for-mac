@@ -8,6 +8,7 @@ s.mkdir(parents=True,exist_ok=True)
 env=dict(os.environ,OLM_TEST_JOBS='1',TMPDIR=str(s),TMP=str(s),TEMP=str(s),PYTHONDONTWRITEBYTECODE='1')
 rows=[]
 for path in sorted((ROOT/'tests').glob('test_'+plugin+'*.py')):
+ if plugin=='olmsmoother' and path.name.startswith('test_olmsmoother2'):continue
  with (s/(path.stem+'.log')).open('w') as log:
   r=subprocess.run([sys.executable,'-m','unittest',str(path.relative_to(ROOT))],cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT)
  rows.append(dict(file=str(path.relative_to(ROOT)),returncode=r.returncode))
