@@ -65,6 +65,7 @@ If the result looks different from the Windows version, the Windows output for t
 
 ## License and rights
 
-This project is not affiliated with or endorsed by OLM Digital. Names, trademarks and rights in the original works belong to their respective owners.
-
-The code in this repository is licensed under the [Apache License 2.0](LICENSE). The license grants no rights to the original names, trademarks, binaries or assets.
+- This is an **unofficial port**. It has no connection with OLM Digital, who made the original plugins, and is not authorized or endorsed by them.
+- Names and logos such as "OLM", and the rights to the original Windows plugins, belong to OLM Digital and the other original rights holders.
+- The code in this repository is released under the [Apache License 2.0](LICENSE). As long as you follow its terms, you may use, modify and redistribute it.
+- The license covers **only the code in this repository**. It does not give you the right to use the OLM name or logo, or the original Windows plugins.
