@@ -31,3 +31,5 @@ depends: P02h-blur-geometry
 ## Rules
 - Use 1-2 processes. Do not touch the release gate or ledger, and never edit `04_Tools/AEXCompat*`.
 - The stop rule applies.
+
+- Save corpus witnesses so that standard `tools/fuzz/run.py --replay` (both routes, the matching `--geometry`) reports `replay_matches_saved: true`, and verify that before you finish. Exclude witnesses whose oracle exceeds the 10 s case timeout.
