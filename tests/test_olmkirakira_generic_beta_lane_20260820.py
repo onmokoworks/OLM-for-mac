@@ -79,41 +79,40 @@ class KiraKiraGenericBetaLaneTests(unittest.TestCase):
         budget = self.function_body("IsGenericBetaMode3BudgetAdmitted")
         self.assertIn("IsGenericBetaMode3HorizontalTuple", budget)
 
-    def test_generic_storage_authority_ignores_content_extent_and_requires_nonoverlap(self) -> None:
-        body = self.function_body("SmartGenericBetaWorldPairIsFullFrame")
+    def test_smart_storage_authority_ignores_content_extent_and_origin(self) -> None:
+        body = self.function_body("SmartWorldPairHasBoundedOutput")
         self.assertNotIn("extent_hint", body)
-        self.assertIn("input->origin_x == 0", body)
+        self.assertNotIn("origin_x", body)
         self.assertIn("WorldStorageRangesDoNotOverlap", body)
+        self.assertIn("output->width <= input->width", body)
+        self.assertIn("output->height <= input->height", body)
         classic = self.function_body("IsGenericBetaClassicLayout")
         self.assertNotIn("extent_hint", classic)
         self.assertIn("input->origin_x == 0", classic)
         self.assertIn("WorldStorageRangesDoNotOverlap", classic)
         smart = self.function_body("SmartRender")
-        self.assertIn("SmartGenericBetaWorldPairIsFullFrame", smart)
         self.assertIn("exact_world_layout &&", smart)
+        self.assertIn("SmartWorldPairHasBoundedOutput", smart)
         self.assertIn("GenericBetaInputIsFiniteSDR", smart)
         self.assertIn("IsGenericBetaTupleForGeometry", smart)
 
-    def test_generic_request_is_normalized_to_authoritative_render_dimensions(self) -> None:
-        admission = self.function_body("SmartOutputRequestIsAdmitted")
-        self.assertIn("rect.left == 0 && rect.top == 0", admission)
+    def test_request_and_checkout_bounds_follow_original(self) -> None:
         prerender = self.function_body("SmartPreRender")
-        self.assertIn("request_contains_generic_full_frame", prerender)
-        self.assertIn("PF_LRect{0, 0, generic_render_width, generic_render_height}", prerender)
-        self.assertIn("const A_long expected_width = full_rect.right", prerender)
-        self.assertIn("!generic_beta_request && !exact_checkout_rects_are_full", prerender)
-        self.assertIn("result_rect/max_result_rect describe content", prerender)
+        self.assertIn("req = extra->input->output_request", prerender)
+        self.assertNotIn("req.rect =", prerender)
+        self.assertIn("UnionSmartRect(in_result.result_rect", prerender)
+        self.assertIn("UnionSmartRect(in_result.max_result_rect", prerender)
+        self.assertNotIn("request-not-admitted", prerender)
+        self.assertNotIn("checkout-geometry", prerender)
 
-    def test_partial_roi_contract_is_explicitly_fail_closed(self) -> None:
-        prerender = self.function_body("SmartPreRender")
-        self.assertIn("Keep generic ROI/tile requests closed", prerender)
-        self.assertIn("passes * radius", prerender)
-        self.assertIn("bidirectional IIR", prerender)
-        self.assertIn("request_contains_generic_full_frame", prerender)
-        harness = HARNESS.read_text(encoding="utf-8")
-        self.assertIn('"--partial-guard"', harness)
-        self.assertIn('"--downsample-guard"', harness)
-        self.assertIn('"--overscan-matrix"', harness)
+    def test_smart_uses_float32_x_downsample_and_source_geometry(self) -> None:
+        smart = self.function_body("SmartRender")
+        self.assertIn("(float)in_data->downsample_x.num / (float)in_data->downsample_x.den", smart)
+        render = self.function_body("RenderTyped")
+        self.assertIn("smart_scale > 0.0f ? input->width", render)
+        self.assertIn("(float)value * (float)length_scale", render)
+        self.assertIn("y < output->height", render)
+        self.assertIn("x < output->width", render)
 
 
 if __name__ == "__main__":

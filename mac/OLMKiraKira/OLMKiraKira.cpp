@@ -418,7 +418,8 @@ static PF_Err ValidateWorldPair(
 	PF_EffectWorld *input,
 	PF_EffectWorld *output,
 	short declared_bitdepth,
-	PF_PixelFormat *format_out)
+	PF_PixelFormat *format_out,
+	bool smart_geometry = false)
 {
 	if (!in_data || !out_data || !input || !output || !format_out)
 		return OLM_KIRA_REFUSAL("world-null-argument");
@@ -432,7 +433,7 @@ static PF_Err ValidateWorldPair(
 	const short format_bitdepth = BitDepthForFormat(input_format);
 	if (!pixel_size || !format_bitdepth ||
 		(declared_bitdepth != 0 && declared_bitdepth != format_bitdepth) ||
-		input->width != output->width || input->height != output->height ||
+		(!smart_geometry && (input->width != output->width || input->height != output->height)) ||
 		!WorldLayoutIsSafe(input, pixel_size) ||
 		!WorldLayoutIsSafe(output, pixel_size)) {
 		return OLM_KIRA_REFUSAL("world-layout-unsafe");
@@ -857,15 +858,19 @@ static bool HasZeroRays(const OLMKiraKiraInfo &info)
 }
 
 template <typename PixelT>
-static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth)
+static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth, float smart_scale = 0.0f)
 {
-	const A_long w = output->width;
-	const A_long h = output->height;
-	if (w <= 0 || h <= 0 || input->width != w || input->height != h) return PF_Err_BAD_CALLBACK_PARAM;
+	const A_long w = smart_scale > 0.0f ? input->width : output->width;
+	const A_long h = smart_scale > 0.0f ? input->height : output->height;
+	if (w <= 0 || h <= 0 || input->width != w || input->height != h ||
+		output->width > w || output->height > h) return PF_Err_BAD_CALLBACK_PARAM;
 	const KiraKiraDebugConfig debug = LoadKiraKiraDebugConfig();
 
 	const PF_FpLong comp_width = info.comp_width > 0.0 ? info.comp_width : (PF_FpLong)w;
-	const double render_scale_ratio = comp_width > 0.0 ? (double)w / comp_width : 1.0;
+	// Typed AEX owners (18114ccac..18114cd6c) use DIVSS on X num/den,
+	// then MULSS and CVTTSS2SI. Preserve the historical Classic path.
+	const double render_scale_ratio = smart_scale > 0.0f ? smart_scale :
+		(comp_width > 0.0 ? (double)w / comp_width : 1.0);
 	const bool use_approximated_input = info.approximated_input && render_scale_ratio > 0.5;
 	const A_long work_w = use_approximated_input ? std::max<A_long>(1, w / 2) : w;
 	const A_long work_h = use_approximated_input ? std::max<A_long>(1, h / 2) : h;
@@ -873,6 +878,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		? render_scale_ratio * 0.5
 		: render_scale_ratio;
 	auto scaled_len = [&](A_long value) -> A_long {
+		if (smart_scale > 0.0f)
+			return std::max<A_long>(0, (A_long)((float)value * (float)length_scale));
 		return std::max<A_long>(0, (A_long)((double)value * length_scale));
 	};
 
@@ -1074,8 +1081,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		output_pixels = std::move(composed);
 	}
 
-	for (A_long y = 0; y < h; ++y) {
-		for (A_long x = 0; x < w; ++x) {
+	// Original outer writers ignore output origin: the negotiated output takes
+	// the top-left prefix of each full-source row, not an origin-shifted crop.
+	for (A_long y = 0; y < output->height; ++y) {
+		for (A_long x = 0; x < output->width; ++x) {
 			const size_t idx = (size_t)y * w + x;
 			const FloatRGBA &src = source_pixels[idx];
 			const float glow_a = Clamp01(glow_full[idx].a * (float)info.glow_opacity);
@@ -1090,11 +1099,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	return PF_Err_NONE;
 }
 
-static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth)
+static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth, float smart_scale = 0.0f)
 {
-	if (bitdepth == 8) return RenderTyped<PF_Pixel8>(input, output, info, bitdepth);
-	if (bitdepth == 16) return RenderTyped<PF_Pixel16>(input, output, info, bitdepth);
-	if (bitdepth == 32) return RenderTyped<PF_PixelFloat>(input, output, info, bitdepth);
+	if (bitdepth == 8) return RenderTyped<PF_Pixel8>(input, output, info, bitdepth, smart_scale);
+	if (bitdepth == 16) return RenderTyped<PF_Pixel16>(input, output, info, bitdepth, smart_scale);
+	if (bitdepth == 32) return RenderTyped<PF_PixelFloat>(input, output, info, bitdepth, smart_scale);
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
@@ -2712,19 +2721,30 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 		WorldStorageRangesDoNotOverlap(input, output);
 }
 
-static bool SmartGenericBetaWorldPairIsFullFrame(
+// The AEX writer uses source-width row strides and output-width/height loops
+// (18114de30..18114df58); world origins and content extents are not read.
+static bool SmartWorldPairHasBoundedOutput(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output,
-	A_long width,
-	A_long height)
+	const PF_EffectWorld *output)
 {
 	return input && output &&
-		IsSmartOwnerFullFrameDimensions(width, height) &&
-		input->width == width && input->height == height &&
-		output->width == width && output->height == height &&
-		input->origin_x == 0 && input->origin_y == 0 &&
-		output->origin_x == 0 && output->origin_y == 0 &&
+		IsSmartOwnerFullFrameDimensions(input->width, input->height) &&
+		output->width <= input->width && output->height <= input->height &&
 		WorldStorageRangesDoNotOverlap(input, output);
+}
+
+static void UnionSmartRect(const PF_LRect &source, PF_LRect &destination)
+{
+	// Original 181234f10: an empty destination is replaced, otherwise union
+	// only a nonempty source. Preserve host-initialized output bounds.
+	if (destination.left >= destination.right || destination.top >= destination.bottom) {
+		destination = source;
+	} else if (source.left < source.right && source.top < source.bottom) {
+		destination.left = std::min(destination.left, source.left);
+		destination.top = std::min(destination.top, source.top);
+		destination.right = std::max(destination.right, source.right);
+		destination.bottom = std::max(destination.bottom, source.bottom);
+	}
 }
 
 static void DeletePreRenderData(void *data)
@@ -2745,66 +2765,11 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		KiraDiagnosticLog("pre reject callback_shape");
 		return OLM_KIRA_REFUSAL("pre-callback-shape");
 	}
-	const PF_LRect &requested_rect = extra->input->output_request.rect;
-	A_long generic_render_width = 0;
-	A_long generic_render_height = 0;
-	const bool has_generic_render_dimensions = GenericBetaRenderDimensions(
-		in_data, &generic_render_width, &generic_render_height);
-	const bool request_contains_generic_full_frame =
-		has_generic_render_dimensions && requested_rect.left <= 0 &&
-		requested_rect.top <= 0 && requested_rect.right >= generic_render_width &&
-		requested_rect.bottom >= generic_render_height;
-	const bool mode3_32x18_request =
-		RectIsFullMode3SmartClosure(requested_rect);
-	const bool frame_dimensions_are_known =
-		in_data->width > 0 && in_data->height > 0;
-	const bool known_frame_is_one_to_one = frame_dimensions_are_known &&
-		in_data->downsample_x.num > 0 && in_data->downsample_x.den > 0 &&
-		in_data->downsample_y.num > 0 && in_data->downsample_y.den > 0 &&
-		in_data->downsample_x.num == in_data->downsample_x.den &&
-		in_data->downsample_y.num == in_data->downsample_y.den;
-	const bool request_contains_known_full_frame = known_frame_is_one_to_one &&
-		requested_rect.left <= 0 && requested_rect.top <= 0 &&
-		requested_rect.right >= in_data->width &&
-		requested_rect.bottom >= in_data->height;
-	// Keep generic ROI/tile requests closed.  The isotropic Highlight branch has
-	// finite per-axis halo passes * radius (Mode 1: radius, Modes 2/4: 3*radius).
-	// Directional Modes 1/2 use rotated-axis R = passes*max(floor(L/2),
-	// L-floor(L/2)-1), and Mode 3 uses R=2L.  Including both bilinear warps, a
-	// conservative source halo is Hx=ceil(R*abs(cos(theta))+2*(abs(cos(theta))+
-	// abs(sin(theta)))) and the corresponding Hy with sin(theta).  Those modes
-	// are finite, but every directional branch constructs its rotated canvas and
-	// center from full-frame dimensions.  Mode 4 additionally uses a bidirectional IIR
-	// recurrence whose support reaches the row boundary.  A tile-local world
-	// therefore changes coordinates and, for Mode 4, cannot have a finite exact
-	// halo.  Until SmartRender carries full-comp coordinates and a proved subset
-	// admission, only requests containing the complete frame may be normalized.
-	// Preserve the historical 5x3 requests. The separate 32x18 owner is only
-	// valid for an unknown legacy host geometry or for a proved 1:1 full-frame
-	// request; being outside the generic SD-DCI cap must not make dimensions
-	// appear unknown and reopen a partial exact tile.
-	const bool exact_request_matches_known_frame =
-		SmartOutputRequestIsAdmitted(requested_rect) &&
-		(!mode3_32x18_request || !frame_dimensions_are_known ||
-		 request_contains_known_full_frame);
-	if (!exact_request_matches_known_frame &&
-		!request_contains_generic_full_frame) {
-		KiraDiagnosticLog("pre reject request_not_admitted");
-		return OLM_KIRA_REFUSAL("request-not-admitted");
-	}
+	// Original 181151710 forwards the request unchanged; 181234f10 unions
+	// checkout bounds into the output. Neither aspect nor extent is a gate.
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
 	AEFX_CLR_STRUCT(in_result);
-
-	const bool generic_beta_request =
-		request_contains_generic_full_frame;
-	const PF_LRect full_rect = generic_beta_request
-		? PF_LRect{0, 0, generic_render_width, generic_render_height}
-		: (mode3_32x18_request
-			? PF_LRect{0, 0, kMode3SmartClosureWidth, kMode3SmartClosureHeight}
-			: FullSmartClosureRect());
-	req.rect = full_rect;
-	req.preserve_rgb_of_zero_alpha = TRUE;
 	PF_Err err = PF_Err_NONE;
 	try {
 		err = extra->cb->checkout_layer(in_data->effect_ref,
@@ -2828,43 +2793,20 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		(long)in_result.result_rect.right, (long)in_result.result_rect.bottom,
 		(long)in_result.max_result_rect.left, (long)in_result.max_result_rect.top,
 		(long)in_result.max_result_rect.right, (long)in_result.max_result_rect.bottom);
-	const A_long expected_width = full_rect.right;
-	const A_long expected_height = full_rect.bottom;
-	const bool exact_checkout_rects_are_full =
-		in_result.result_rect.left == 0 && in_result.result_rect.top == 0 &&
-		in_result.result_rect.right == expected_width &&
-		in_result.result_rect.bottom == expected_height &&
-		in_result.max_result_rect.left == 0 &&
-		in_result.max_result_rect.top == 0 &&
-		in_result.max_result_rect.right == expected_width &&
-		in_result.max_result_rect.bottom == expected_height;
-	// result_rect/max_result_rect describe content, not storage. Generic
-	// arbitrary images may therefore report empty or partial content bounds;
-	// ref_width/ref_height and the Smart worlds remain the storage authority.
-	if (in_result.ref_width != expected_width ||
-		in_result.ref_height != expected_height ||
-		(!generic_beta_request && !exact_checkout_rects_are_full)) {
-		KiraDiagnosticLog("pre reject checkout_geometry expected=%ldx%ld",
-			(long)expected_width, (long)expected_height);
-		return OLM_KIRA_REFUSAL("checkout-geometry");
-	}
 
 	PreRenderData *pre = new (std::nothrow) PreRenderData;
 	if (!pre) {
 		KiraDiagnosticLog("pre reject allocation");
 		return PF_Err_OUT_OF_MEMORY;
 	}
-	pre->comp_width = expected_width;
-	pre->comp_height = expected_height;
-	pre->generic_full_frame_request = generic_beta_request;
-	extra->output->result_rect = full_rect;
-	extra->output->max_result_rect = full_rect;
+	pre->comp_width = in_result.ref_width;
+	pre->comp_height = in_result.ref_height;
+	pre->generic_full_frame_request = true;
+	UnionSmartRect(in_result.result_rect, extra->output->result_rect);
+	UnionSmartRect(in_result.max_result_rect, extra->output->max_result_rect);
 	extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
 	extra->output->pre_render_data = pre;
 	extra->output->delete_pre_render_data_func = DeletePreRenderData;
-	KiraDiagnosticLog("pre success dimensions=%ldx%ld generic=%d mode3_32=%d",
-		(long)expected_width, (long)expected_height,
-		(int)generic_beta_request, (int)mode3_32x18_request);
 	return PF_Err_NONE;
 }
 
@@ -2911,7 +2853,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		PF_PixelFormat format = PF_PixelFormat_INVALID;
 		if (!err) {
 			err = ValidateWorldPair(in_data, out_data, input_world, output_world,
-				extra->input->bitdepth, &format);
+				extra->input->bitdepth, &format, true);
 		}
 		KiraDiagnosticLog("smart validate_world error=%d format=%d",
 			(int)err, (int)format);
@@ -2934,11 +2876,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				input_world, output_world, format,
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
-		const bool generic_world_layout = pre_is_generic_beta &&
-			SmartGenericBetaWorldPairIsFullFrame(
-				input_world, output_world,
-				static_cast<A_long>(pre->comp_width),
-				static_cast<A_long>(pre->comp_height));
+		const bool generic_world_layout = pre &&
+			SmartWorldPairHasBoundedOutput(input_world, output_world);
 		KiraDiagnosticLog(
 			"smart layout pre_classic=%d pre_mode3_32=%d pre_generic=%d exact=%d generic=%d pre=%gx%g",
 			(int)pre_is_classic, (int)pre_is_mode3_32x18,
@@ -2954,7 +2893,11 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		if (!err) err = CheckoutSmartInfo(in_data, &info);
 		KiraDiagnosticLog("smart checkout_info error=%d", (int)err);
 		if (!err) {
-			info.comp_width = pre->comp_width;
+			info.comp_width = input_world->width;
+			if (in_data->downsample_x.num <= 0 || in_data->downsample_x.den <= 0)
+				return OLM_KIRA_REFUSAL("invalid-downsample");
+			if ((float)in_data->downsample_x.num / (float)in_data->downsample_x.den <= 0.5f)
+				info.approximated_input = FALSE;
 			KiraDiagnosticInfo("smart", info);
 			const ClassicClosureSourceFamily source_family =
 				ClassicClosureSourceFamilyForTuple(info);
@@ -2969,7 +2912,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				source_family != ClassicClosureSource_None &&
 				ClassicClosureSourceMatches(input_world, format, source_family);
 			const bool generic_beta = !exact_closure &&
-				generic_world_layout && pre_is_generic_beta &&
+				generic_world_layout &&
 				KiraSmartGeometryFits(input_world->width, input_world->height, info) &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height, true) ||
@@ -2993,7 +2936,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		}
 		if (!err) {
 			err = RenderWorld(input_world, output_world, info,
-				BitDepthForFormat(format));
+				BitDepthForFormat(format),
+				(float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
 			KiraDiagnosticLog("smart render_world error=%d", (int)err);
 		}
 	} catch (PF_Err &thrown_err) {

@@ -1,0 +1,299 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      10,
+      6
+    ],
+    "full_geometry": [
+      19,
+      17
+    ],
+    "geometry": [
+      10,
+      6
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 47,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 3,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 5,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 100
+      },
+      {
+        "kind": "s",
+        "slot": 7,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 8,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 9,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 9
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          0,
+          13,
+          101,
+          62
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 16,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 17,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 19,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 23,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 28,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 29,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 31,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 34,
+        "value": 14
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 37,
+        "value": 0
+      },
+      {
+        "kind": "a",
+        "slot": 40,
+        "value": 0.0
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      10,
+      6
+    ],
+    "rowbytes_padding": 32,
+    "seed": 2
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 47,
+  "input_sha256": "e1eb12babee0553bcc0df0bb15e55203b41f1f2c22ea48d93ab6cddb0f026cc7",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNolkn9M1HUYx79yGASXOJApcsYKctBJeKYeHN/P8z4qRRIOgw7HLp0KOJRy5wWIxe5ECzj0upVi51g5R8ya3k7XYKATOGQEOn/hQAsCR0TLH8MWjYburO/jn6+9P8/7eX/eeyTpAIreq0bWR+EiU7opS/+z61EDnVD7KCs2Ll3hda9qRaVuTth7UqHwjrIgRNX4RIkxmyRJgkebTjHB2ThV2kZTmREUv/4finV55FcGflZ0KfjPIUq5Ph+rBpOgsP2lSDz1fkkH55YJhYN+M6NPp6I+S6Sio1YVjOmpk2T0jJGyb3X6GowG3BRunWR2j6tgXlIIo9nP+9elfE9Pln5AuzpKOd9I4S6YNBvg/beBcmPfoj61EY7UMTr2gxYWmx71rV/J/v40UFQB5zHkhdJQRhMFDNt4XjOzHE1v76aKkw5m068DYtwbjmddZ3jfs8N7MZNA0LVByQ9bSA99O3eFel16znebdDg10Ux0Lob9HUc/o4dhH+KNQzb2c3ftQOa7fwtt2afMs6t91JjyOhVlrWC/3O1X6btWJ1k64ng+tS4WORdN4vNrz/m0ai86xi6I1rb93JdjphhT04TEx3Xct9V3izrNbrph0LL/gngbNgZqaLRSDae+gTy/bEOG/X28vDyM9X6XBe3+ZhHxUy/PH37xCDkPvCMadTLvQ14RbXItROlaDb9v6A1BfdUfpMmxigVd6bTI9IC+ablB9rSAUHSp2QFP7V+yaSiI/SajmsjxRSslj1zn/x1pS0ZJgR1nB5PZ72BSGkb7lqDT8yPfQ0TAgRDNPIydG5AVXpbXQwnd8agunuX+K7xVZKzfKeJV+Zh+2E3B0Xqx05uLr49WsV9W/n7kSTJ9fPd53o3HjsvqqbVkOW/ChvJFKOjPx8KURBJpr3F/t1usWOx20hNhYf/OnK2YvjxM1uNbIJXr4It+AdcmspHhz5GdNTU0WZiAfSNbUTKo536kOi/V37lEw/eK2a9r/DLVllfgStww30N3O2E00oDeM4nY02jA6fsyqudPiB6nFbbZUNp8YiVKwqyi8pMH/P58SxIeHfLTLVlw/vW/PxUxl6rQHkqsR5vfxBr1HpTd34f/AF/DS80=",
+  "plugin": "olmkirakira",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+    "candidate_sha256": "ee8e46ddf95e3e4927d7621e49bd60fa62836fde20704b6d36b7b07c36e9c335",
+    "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+    "dependencies_sha256": {
+      "mac/OLMKiraKira/OLMKiraKira.cpp": "5824cdbf961ed2b335f41d8c0c3f1ad16de1014256f6e3bd283631cfd47bcb9f",
+      "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+      "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.10000000149011612,
+        "sampled_default": 1.0,
+        "slot": 5
+      }
+    ],
+    "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        10,
+        6
+      ],
+      "raw_sha256": "8e4e73af326f71ffe0c3b9453369cfbcf00bbcbaef18addf88c6647a50fbf5a1",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 25 25",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 10 6",
+          "GEOMETRY_INPUT": "19 17 1 2 1 3 10 11 32"
+        },
+        "output_rect": [
+          0,
+          0,
+          10,
+          6
+        ],
+        "raw_sha256": "8e4e73af326f71ffe0c3b9453369cfbcf00bbcbaef18addf88c6647a50fbf5a1",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 2
+}
