@@ -62,6 +62,7 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
     "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
     "candidate_sha256": "db3b8d5e67cef66be08fec36924033f940a885c2b24d849175b284c51301a904",
+    "case_timeout_seconds": 10,
     "classic_owner": "Production PF_Cmd_RENDER is an intentional successful no-op. Compare untouched destinations against their own initial fill (Mac 0xee, AEX zero); no numerical Classic output exists.",
     "classic_owner_evidence": "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub",
     "declarations_sha256": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc",
@@ -103,7 +104,7 @@
     },
     "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
     "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
-    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
     "accepted": []
@@ -123,6 +124,19 @@
       "status": "ok"
     },
     "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          7,
+          53
+        ],
+        "raw_sha256": "c1e8b3fa9c385db0176b8815c85d54ffc76fe696053cdf51ecb2eeea3f84021b",
+        "semantics": "no-write; AEX destination initially zero",
+        "session_clean": true,
+        "status": "ok"
+      },
       "smart": {
         "guards_intact": true,
         "output_rect": [
@@ -137,6 +151,22 @@
       }
     },
     "routes": {
+      "classic": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "19 158 1 3 1 3 2 1 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          7,
+          53
+        ],
+        "raw_sha256": "60740e0c6f20d8042528b93267ddcdd29426412d9b7636bcc00264a8e5f79855",
+        "status": "no_write"
+      },
       "smart": {
         "error": 0,
         "metadata": {
