@@ -1,0 +1,113 @@
+--- a/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
++++ b/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp
+@@ -2332,9 +2332,8 @@
+ 		};
+ 		full_width = sampled_size(in_data->width, in_data->downsample_x);
+ 		full_height = sampled_size(in_data->height, in_data->downsample_y);
+-		// The rotated workspace depends on the entire source even for an ROI.
+-		// Negotiate full input instead of refusing a partial output request.
+-		req.rect = PF_LRect{0, 0, full_width, full_height};
++		// AEX SmartPreRender forwards the request unchanged; checkout owns
++		// the returned result/max rectangles independently of input storage.
+ 		request_contains_full_frame = true;
+ 	}
+ #endif
+@@ -2604,13 +2603,39 @@
+ 				param_ptrs, render_scale_x, render_scale_y);
+             info = DirectionalDeepLayerInfo(info, input_world, noise_world,
+                 extra->input->bitdepth);
++			// The AEX copy and Iterate writers use world-local coordinates. Keep
++			// the full input-sized workspace, then publish the negotiated output's
++			// local rows. An ROI origin does not translate the worker's samples.
++			PF_EffectWorld workspace = *output_world;
++			std::vector<std::uint8_t> workspace_storage;
++			PF_EffectWorld *render_world = output_world;
++			std::size_t render_row_bytes = 0;
++			if (!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
++			                              &active_row_bytes) ||
++			    active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
++				err = OLM_DIRECTIONAL_REFUSAL("smart-output-span");
++			}
++			if (!err && (output_world->width != input_world->width ||
++			             output_world->height != input_world->height)) {
++				std::uintptr_t begin = 0, end = 0;
++				if (output_world->width > input_world->width ||
++				    output_world->height > input_world->height ||
++				    !PayloadSpan(input_world, &begin, &end)) {
++					err = OLM_DIRECTIONAL_REFUSAL("smart-workspace-span");
++				} else {
++					workspace = *input_world;
++					workspace_storage.assign(end - begin, 0);
++					workspace.data = reinterpret_cast<PF_PixelPtr>(workspace_storage.data());
++					render_world = &workspace;
++				}
++			}
+ 			if ((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
+ 				info.noise_variation > 0.0 && info.noise_type == 3) {
+ 				PF_PixelFormat source_format = PF_PixelFormat_INVALID;
+ 				PF_PixelFormat layer_format = PF_PixelFormat_INVALID;
+ 				const bool safe = extra->input->bitdepth == 16
+-					? GenericDeepLayerWorldSafe<PF_Pixel16>(input_world, output_world, noise_world, info)
+-					: GenericDeepLayerWorldSafe<PF_PixelFloat>(input_world, output_world, noise_world, info);
++					? GenericDeepLayerWorldSafe<PF_Pixel16>(input_world, render_world, noise_world, info)
++					: GenericDeepLayerWorldSafe<PF_PixelFloat>(input_world, render_world, noise_world, info);
+ 				if (!safe) err = OLM_DIRECTIONAL_REFUSAL("smart-layer-world");
+ 				else {
+ 					err = GetDirectionalPixelFormats(in_data, input_world, noise_world,
+@@ -2619,17 +2644,17 @@
+ 				}
+ 			}
+ 			std::uintptr_t output_begin = 0, output_end = 0;
+-			if (!PayloadSpan(output_world, &output_begin, &output_end) ||
+-				!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
+-				                           &active_row_bytes) ||
+-				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
++			if (!PayloadSpan(render_world, &output_begin, &output_end) ||
++				!DirectionalActiveRowBytes(extra->input->bitdepth, render_world->width,
++				                           &render_row_bytes) ||
++				render_row_bytes > static_cast<std::size_t>(render_world->rowbytes)) {
+ 				err = OLM_DIRECTIONAL_REFUSAL("smart-output-span");
+ 			}
+ 			const bool retained_exact = IsRetainedNeutralExact(
+-				input_world, output_world, info, extra->input->bitdepth);
++				input_world, render_world, info, extra->input->bitdepth);
+ 			const bool pf8_feature_fallback = extra->input->bitdepth == 8 &&
+                 IsGenericDeepFeatureShape(info) &&
+-                !CanUseExact8(input_world, output_world, noise_world, info);
++                !CanUseExact8(input_world, render_world, noise_world, info);
+ 			const bool generic_features = pf8_feature_fallback ||
+ 				((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
+ 				IsGenericDeepFeatureShape(info));
+@@ -2643,12 +2668,12 @@
+ 					&effective_back_strength, generic_features);
+ 				const bool worlds_safe = extra->input->bitdepth == 8
+ 					? (pf8_feature_fallback
+-                        ? CanUsePF8FeatureFallback(input_world, output_world, info, output_end - output_begin, true)
+-                        : CanUseGenericNeutral8(input_world, output_world, info, true))
++                        ? CanUsePF8FeatureFallback(input_world, render_world, info, output_end - output_begin, true)
++                        : CanUseGenericNeutral8(input_world, render_world, info, true))
+ 					: (extra->input->bitdepth == 16
+-						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features, true)
++						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, render_world, strength_info, generic_features, true)
+ 						: (extra->input->bitdepth == 32 &&
+-							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info, generic_features, true)));
++							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, render_world, strength_info, generic_features, true)));
+ 				olm::dblur::generic::RenderEstimate smart_estimate = {};
+ 				bool estimate_safe = generic_features
+ 					? GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
+@@ -2674,13 +2699,13 @@
+ 						 !DirectionalGenericWorldIsFullFrame(
+ 							 input_world, pre->full_width, pre->full_height) ||
+ 						 !DirectionalGenericWorldIsFullFrame(
+-							 output_world, pre->full_width, pre->full_height)))) {
++							 render_world, pre->full_width, pre->full_height)))) {
+ 					err = OLM_DIRECTIONAL_REFUSAL("smart-generic-world-or-budget");
+ 				}
+ 			}
+ 			if (!err) {
+ 				staged_output.assign(output_end - output_begin, 0);
+-				staged_world = *output_world;
++				staged_world = *render_world;
+ 				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
+ 				err = RenderWorld(input_world, &staged_world, noise_world, info,
+ 				                  extra->input->bitdepth, nullptr, true);
