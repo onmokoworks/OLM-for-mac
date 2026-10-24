@@ -1,0 +1,7554 @@
+{
+  "seed": 2053,
+  "sampler": "realistic-v2",
+  "filter": "depth32, downsample_x denominator>1, request area<input area",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+    "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+    "candidate_sha256": "1ad0978eb50548ed999add088bfbfa0ed43156a0318cc9d5ebc4e4849e90c0a0",
+    "dependencies_sha256": {
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c08aae1dfcc6903610edc4c7f0ea89dca1e1ad80275261d727406de9cc46d292",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "core/dblur_frontonly.cpp": "65cf6c0afdefbb38e88c26a06b04d1113ecee4a6add6320df0f94e26135e7c89",
+      "core/dblur_rotate.cpp": "f33b49503c8765aeee95daa4057a6c571b68d978fd86c225c181e8e0d94739e2",
+      "core/dblur_rowdriver.cpp": "fa3eff3ba0022e83fabcaffdfe4c90be33e419afa5e10c656dee7cf0968281cd",
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+    },
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "out_of_range_builder_defaults": [],
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "oracle_render_path": "smartfx",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB",
+    "layer": "None; independent layer worlds outside this adapter",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof"
+  },
+  "cases": [
+    {
+      "index": 7,
+      "profile": "hdr",
+      "geometry": [
+        40,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        4,
+        0,
+        12,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              0,
+              12,
+              1
+            ],
+            "raw_sha256": "4d07cfedfab24f512667188b78e2105f96b39d4f7ccc4a7fac35799056230f09"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            0,
+            12,
+            1
+          ],
+          "raw_sha256": "4d07cfedfab24f512667188b78e2105f96b39d4f7ccc4a7fac35799056230f09"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "80 1 1 2 1 3 4 3 1",
+              "GEOMETRY_CHECKOUT": "4 0 12 1",
+              "GEOMETRY_PRERENDER": "4 0 12 1",
+              "GEOMETRY": "4 0 12 1"
+            },
+            "output_rect": [
+              4,
+              0,
+              12,
+              1
+            ],
+            "raw_sha256": "4d07cfedfab24f512667188b78e2105f96b39d4f7ccc4a7fac35799056230f09"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 9,
+      "profile": "signed",
+      "geometry": [
+        7,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        6,
+        1,
+        7,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              6,
+              1,
+              7,
+              3
+            ],
+            "raw_sha256": "824d0ba58072992cc7cc50a479832596e1bef7d0fd3505d6362eb7da86b72ca5"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            6,
+            1,
+            7,
+            3
+          ],
+          "raw_sha256": "824d0ba58072992cc7cc50a479832596e1bef7d0fd3505d6362eb7da86b72ca5"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "19 15 1 3 1 3 1 1 32",
+              "GEOMETRY_CHECKOUT": "6 1 7 3",
+              "GEOMETRY_PRERENDER": "6 1 7 3",
+              "GEOMETRY": "6 1 7 3"
+            },
+            "output_rect": [
+              6,
+              1,
+              7,
+              3
+            ],
+            "raw_sha256": "824d0ba58072992cc7cc50a479832596e1bef7d0fd3505d6362eb7da86b72ca5"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 10,
+      "profile": "sdr",
+      "geometry": [
+        35,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        31,
+        0,
+        33,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              31,
+              0,
+              33,
+              1
+            ],
+            "raw_sha256": "75805375551f14ef17339db6e6d5b19e6bc82ec00d18a5db8c55780440a20215"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            31,
+            0,
+            33,
+            1
+          ],
+          "raw_sha256": "75805375551f14ef17339db6e6d5b19e6bc82ec00d18a5db8c55780440a20215"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "103 1 1 3 1 3 4 3 32",
+              "GEOMETRY_CHECKOUT": "31 0 33 1",
+              "GEOMETRY_PRERENDER": "31 0 33 1",
+              "GEOMETRY": "31 0 33 1"
+            },
+            "output_rect": [
+              31,
+              0,
+              33,
+              1
+            ],
+            "raw_sha256": "75805375551f14ef17339db6e6d5b19e6bc82ec00d18a5db8c55780440a20215"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 20,
+      "profile": "sdr",
+      "geometry": [
+        94,
+        78
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        85,
+        51,
+        86,
+        56
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              85,
+              51,
+              86,
+              56
+            ],
+            "raw_sha256": "d436d83827088e7f0c25ff4a8c441684f0bf5d694849455fe2c2e601d5986d28"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            85,
+            51,
+            86,
+            56
+          ],
+          "raw_sha256": "d436d83827088e7f0c25ff4a8c441684f0bf5d694849455fe2c2e601d5986d28"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "188 155 1 2 1 2 4 3 7",
+              "GEOMETRY_CHECKOUT": "85 51 86 56",
+              "GEOMETRY_PRERENDER": "85 51 86 56",
+              "GEOMETRY": "85 51 86 56"
+            },
+            "output_rect": [
+              85,
+              51,
+              86,
+              56
+            ],
+            "raw_sha256": "d436d83827088e7f0c25ff4a8c441684f0bf5d694849455fe2c2e601d5986d28"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 31,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "d5ba4d5e492c6fb9b02f015bd73e17cc83c1144aab35237df0906cbd0b36e830"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "raw_sha256": "d5ba4d5e492c6fb9b02f015bd73e17cc83c1144aab35237df0906cbd0b36e830"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "15 8 1 8 1 8 4 3 0",
+              "GEOMETRY_CHECKOUT": "0 0 1 1",
+              "GEOMETRY_PRERENDER": "0 0 1 1",
+              "GEOMETRY": "0 0 1 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "d5ba4d5e492c6fb9b02f015bd73e17cc83c1144aab35237df0906cbd0b36e830"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 35,
+      "profile": "signed",
+      "geometry": [
+        5,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        3,
+        1,
+        4,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              3,
+              1,
+              4,
+              3
+            ],
+            "raw_sha256": "54f35395202bf0d891bdf2959c6bd311f16d9b74587fcfda2fc2a7ebc6ac7218"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            3,
+            1,
+            4,
+            3
+          ],
+          "raw_sha256": "54f35395202bf0d891bdf2959c6bd311f16d9b74587fcfda2fc2a7ebc6ac7218"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "14 21 1 3 1 3 1 1 3",
+              "GEOMETRY_CHECKOUT": "3 1 4 3",
+              "GEOMETRY_PRERENDER": "3 1 4 3",
+              "GEOMETRY": "3 1 4 3"
+            },
+            "output_rect": [
+              3,
+              1,
+              4,
+              3
+            ],
+            "raw_sha256": "54f35395202bf0d891bdf2959c6bd311f16d9b74587fcfda2fc2a7ebc6ac7218"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 38,
+      "profile": "sdr",
+      "geometry": [
+        4,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              0,
+              3,
+              2
+            ],
+            "raw_sha256": "8db2314a0465d3b1deeabdde0ee52ce2791897af52da8074122fef0fbfab87f0"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            0,
+            3,
+            2
+          ],
+          "raw_sha256": "8db2314a0465d3b1deeabdde0ee52ce2791897af52da8074122fef0fbfab87f0"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "7 14 1 2 1 3 1 1 1",
+              "GEOMETRY_CHECKOUT": "2 0 3 2",
+              "GEOMETRY_PRERENDER": "2 0 3 2",
+              "GEOMETRY": "2 0 3 2"
+            },
+            "output_rect": [
+              2,
+              0,
+              3,
+              2
+            ],
+            "raw_sha256": "8db2314a0465d3b1deeabdde0ee52ce2791897af52da8074122fef0fbfab87f0"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 52,
+      "profile": "hdr",
+      "geometry": [
+        7,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        6,
+        0,
+        7,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              6,
+              0,
+              7,
+              1
+            ],
+            "raw_sha256": "50e2d4db3aa2364c9b85285855f3bbe5073953303f7162dc3c21f4d241d7301e"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            6,
+            0,
+            7,
+            1
+          ],
+          "raw_sha256": "50e2d4db3aa2364c9b85285855f3bbe5073953303f7162dc3c21f4d241d7301e"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "54 7 1 8 1 8 4 3 0",
+              "GEOMETRY_CHECKOUT": "6 0 7 1",
+              "GEOMETRY_PRERENDER": "6 0 7 1",
+              "GEOMETRY": "6 0 7 1"
+            },
+            "output_rect": [
+              6,
+              0,
+              7,
+              1
+            ],
+            "raw_sha256": "50e2d4db3aa2364c9b85285855f3bbe5073953303f7162dc3c21f4d241d7301e"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 53,
+      "profile": "sdr",
+      "geometry": [
+        6,
+        6
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        3,
+        2,
+        6,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              3,
+              2,
+              6,
+              4
+            ],
+            "raw_sha256": "49b5b5da7297797340093e207021cfa9c8f76a2e05d6c5a15ca28fe51b47b053"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            3,
+            2,
+            6,
+            4
+          ],
+          "raw_sha256": "49b5b5da7297797340093e207021cfa9c8f76a2e05d6c5a15ca28fe51b47b053"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "22 24 1 4 1 4 10 11 7",
+              "GEOMETRY_CHECKOUT": "3 2 6 4",
+              "GEOMETRY_PRERENDER": "3 2 6 4",
+              "GEOMETRY": "3 2 6 4"
+            },
+            "output_rect": [
+              3,
+              2,
+              6,
+              4
+            ],
+            "raw_sha256": "49b5b5da7297797340093e207021cfa9c8f76a2e05d6c5a15ca28fe51b47b053"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 54,
+      "profile": "sdr",
+      "geometry": [
+        8,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        4,
+        0,
+        6,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              0,
+              6,
+              1
+            ],
+            "raw_sha256": "280ae208f95d2518eed4a295ba6580f8162e8c8fca7f8aae6f55bde151620fb4"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            0,
+            6,
+            1
+          ],
+          "raw_sha256": "280ae208f95d2518eed4a295ba6580f8162e8c8fca7f8aae6f55bde151620fb4"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 1 1 3 1 3 1 1 32",
+              "GEOMETRY_CHECKOUT": "4 0 6 1",
+              "GEOMETRY_PRERENDER": "4 0 6 1",
+              "GEOMETRY": "4 0 6 1"
+            },
+            "output_rect": [
+              4,
+              0,
+              6,
+              1
+            ],
+            "raw_sha256": "280ae208f95d2518eed4a295ba6580f8162e8c8fca7f8aae6f55bde151620fb4"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 68,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        0,
+        3,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "805c765d156c978dacf1d4af6d7d4422c38c210195a2ea9863aad6ed444b9689"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            0,
+            3,
+            1
+          ],
+          "raw_sha256": "805c765d156c978dacf1d4af6d7d4422c38c210195a2ea9863aad6ed444b9689"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "7 5 1 3 1 3 1 1 32",
+              "GEOMETRY_CHECKOUT": "1 0 3 1",
+              "GEOMETRY_PRERENDER": "1 0 3 1",
+              "GEOMETRY": "1 0 3 1"
+            },
+            "output_rect": [
+              1,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "805c765d156c978dacf1d4af6d7d4422c38c210195a2ea9863aad6ed444b9689"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 85,
+      "profile": "nonfinite",
+      "geometry": [
+        4,
+        10
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        9,
+        3,
+        10
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              9,
+              3,
+              10
+            ],
+            "raw_sha256": "68eaed04da9a36f905a9de94d6c029b0a6f3fc0155b96ce5eb0e9a6dde0a22a1"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            9,
+            3,
+            10
+          ],
+          "raw_sha256": "68eaed04da9a36f905a9de94d6c029b0a6f3fc0155b96ce5eb0e9a6dde0a22a1"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "12 28 1 3 1 3 4 3 0",
+              "GEOMETRY_CHECKOUT": "2 9 3 10",
+              "GEOMETRY_PRERENDER": "2 9 3 10",
+              "GEOMETRY": "2 9 3 10"
+            },
+            "output_rect": [
+              2,
+              9,
+              3,
+              10
+            ],
+            "raw_sha256": "68eaed04da9a36f905a9de94d6c029b0a6f3fc0155b96ce5eb0e9a6dde0a22a1"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 87,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "11 11 1 8 1 8 4 3 7",
+              "GEOMETRY_CHECKOUT": "0 0 1 1",
+              "GEOMETRY_PRERENDER": "0 0 1 1",
+              "GEOMETRY": "0 0 1 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 96,
+      "profile": "sdr",
+      "geometry": [
+        56,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        1,
+        0,
+        5,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "07760f344a0533c3c807bd1a0f680ac093f5a0f402b34a5d0336284e2146d132"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            0,
+            5,
+            1
+          ],
+          "raw_sha256": "07760f344a0533c3c807bd1a0f680ac093f5a0f402b34a5d0336284e2146d132"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "112 1 1 2 1 2 10 11 0",
+              "GEOMETRY_CHECKOUT": "1 0 5 1",
+              "GEOMETRY_PRERENDER": "1 0 5 1",
+              "GEOMETRY": "1 0 5 1"
+            },
+            "output_rect": [
+              1,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "07760f344a0533c3c807bd1a0f680ac093f5a0f402b34a5d0336284e2146d132"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 104,
+      "profile": "hdr",
+      "geometry": [
+        20,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        18,
+        0,
+        20,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              18,
+              0,
+              20,
+              1
+            ],
+            "raw_sha256": "08b7dc54099ca212e3dbf05df97308aca3da5e028d8aeb4c945f347b64ed65d8"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            18,
+            0,
+            20,
+            1
+          ],
+          "raw_sha256": "08b7dc54099ca212e3dbf05df97308aca3da5e028d8aeb4c945f347b64ed65d8"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "59 1 1 3 1 3 2 1 3",
+              "GEOMETRY_CHECKOUT": "18 0 20 1",
+              "GEOMETRY_PRERENDER": "18 0 20 1",
+              "GEOMETRY": "18 0 20 1"
+            },
+            "output_rect": [
+              18,
+              0,
+              20,
+              1
+            ],
+            "raw_sha256": "08b7dc54099ca212e3dbf05df97308aca3da5e028d8aeb4c945f347b64ed65d8"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 105,
+      "profile": "sdr",
+      "geometry": [
+        79,
+        14
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        28,
+        9,
+        50,
+        11
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              28,
+              9,
+              50,
+              11
+            ],
+            "raw_sha256": "4400201e29b9cb326ce26ebd7b416c6e477328c6dcab732552635b3ace6bbca8"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            28,
+            9,
+            50,
+            11
+          ],
+          "raw_sha256": "4400201e29b9cb326ce26ebd7b416c6e477328c6dcab732552635b3ace6bbca8"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "235 42 1 3 1 3 4 3 32",
+              "GEOMETRY_CHECKOUT": "28 9 50 11",
+              "GEOMETRY_PRERENDER": "28 9 50 11",
+              "GEOMETRY": "28 9 50 11"
+            },
+            "output_rect": [
+              28,
+              9,
+              50,
+              11
+            ],
+            "raw_sha256": "4400201e29b9cb326ce26ebd7b416c6e477328c6dcab732552635b3ace6bbca8"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 114,
+      "profile": "sdr",
+      "geometry": [
+        7,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        5,
+        0,
+        6,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              5,
+              0,
+              6,
+              3
+            ],
+            "raw_sha256": "7bcf55f8b47b88d893d43512cab782b38e53861e6d6052cfec37451971e1f810"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            5,
+            0,
+            6,
+            3
+          ],
+          "raw_sha256": "7bcf55f8b47b88d893d43512cab782b38e53861e6d6052cfec37451971e1f810"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "13 6 1 2 1 2 4 3 32",
+              "GEOMETRY_CHECKOUT": "5 0 6 3",
+              "GEOMETRY_PRERENDER": "5 0 6 3",
+              "GEOMETRY": "5 0 6 3"
+            },
+            "output_rect": [
+              5,
+              0,
+              6,
+              3
+            ],
+            "raw_sha256": "7bcf55f8b47b88d893d43512cab782b38e53861e6d6052cfec37451971e1f810"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 122,
+      "profile": "sdr",
+      "geometry": [
+        6,
+        4
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        1,
+        1,
+        6,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              1,
+              6,
+              3
+            ],
+            "raw_sha256": "b75fc2fce5960c4eece05222b0321023778758d1b853dd4fd26ee1c6438cdff8"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            1,
+            6,
+            3
+          ],
+          "raw_sha256": "b75fc2fce5960c4eece05222b0321023778758d1b853dd4fd26ee1c6438cdff8"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 15 1 4 1 4 2 1 7",
+              "GEOMETRY_CHECKOUT": "1 1 6 3",
+              "GEOMETRY_PRERENDER": "1 1 6 3",
+              "GEOMETRY": "1 1 6 3"
+            },
+            "output_rect": [
+              1,
+              1,
+              6,
+              3
+            ],
+            "raw_sha256": "b75fc2fce5960c4eece05222b0321023778758d1b853dd4fd26ee1c6438cdff8"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 133,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        2,
+        0,
+        3,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "ce4f4215717f0d765851cb42734b6e56ca0b602eb9182276a35fc141fdd98d67"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "raw_sha256": "ce4f4215717f0d765851cb42734b6e56ca0b602eb9182276a35fc141fdd98d67"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "20 6 1 8 1 8 1 1 7",
+              "GEOMETRY_CHECKOUT": "2 0 3 1",
+              "GEOMETRY_PRERENDER": "2 0 3 1",
+              "GEOMETRY": "2 0 3 1"
+            },
+            "output_rect": [
+              2,
+              0,
+              3,
+              1
+            ],
+            "raw_sha256": "ce4f4215717f0d765851cb42734b6e56ca0b602eb9182276a35fc141fdd98d67"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 138,
+      "profile": "sdr",
+      "geometry": [
+        18,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        15,
+        0,
+        17,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              15,
+              0,
+              17,
+              3
+            ],
+            "raw_sha256": "7d7a4311ededa45b2169c2b40ecfb0868405c6f59cc9887d0c4b31955fcdaa25"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            15,
+            0,
+            17,
+            3
+          ],
+          "raw_sha256": "7d7a4311ededa45b2169c2b40ecfb0868405c6f59cc9887d0c4b31955fcdaa25"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "53 19 1 3 1 3 1 1 3",
+              "GEOMETRY_CHECKOUT": "15 0 17 3",
+              "GEOMETRY_PRERENDER": "15 0 17 3",
+              "GEOMETRY": "15 0 17 3"
+            },
+            "output_rect": [
+              15,
+              0,
+              17,
+              3
+            ],
+            "raw_sha256": "7d7a4311ededa45b2169c2b40ecfb0868405c6f59cc9887d0c4b31955fcdaa25"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 142,
+      "profile": "signed",
+      "geometry": [
+        58,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        18,
+        0,
+        26,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              18,
+              0,
+              26,
+              1
+            ],
+            "raw_sha256": "95aee3ce51661de93c4d131825ea674a3c9b9edeed812fef5c242a5b8260ad7e"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            18,
+            0,
+            26,
+            1
+          ],
+          "raw_sha256": "95aee3ce51661de93c4d131825ea674a3c9b9edeed812fef5c242a5b8260ad7e"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "173 1 1 3 1 3 1 1 7",
+              "GEOMETRY_CHECKOUT": "18 0 26 1",
+              "GEOMETRY_PRERENDER": "18 0 26 1",
+              "GEOMETRY": "18 0 26 1"
+            },
+            "output_rect": [
+              18,
+              0,
+              26,
+              1
+            ],
+            "raw_sha256": "95aee3ce51661de93c4d131825ea674a3c9b9edeed812fef5c242a5b8260ad7e"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 157,
+      "profile": "sdr",
+      "geometry": [
+        67,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        57,
+        0,
+        58,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              57,
+              0,
+              58,
+              1
+            ],
+            "raw_sha256": "d39f41cc2713ab0d3116180505fdf7671bdb3c37617780c6a1161d70cf51042b"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            57,
+            0,
+            58,
+            1
+          ],
+          "raw_sha256": "d39f41cc2713ab0d3116180505fdf7671bdb3c37617780c6a1161d70cf51042b"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "133 1 1 2 1 2 4 3 7",
+              "GEOMETRY_CHECKOUT": "57 0 58 1",
+              "GEOMETRY_PRERENDER": "57 0 58 1",
+              "GEOMETRY": "57 0 58 1"
+            },
+            "output_rect": [
+              57,
+              0,
+              58,
+              1
+            ],
+            "raw_sha256": "d39f41cc2713ab0d3116180505fdf7671bdb3c37617780c6a1161d70cf51042b"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 158,
+      "profile": "hdr",
+      "geometry": [
+        20,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        10,
+        0,
+        19,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              10,
+              0,
+              19,
+              1
+            ],
+            "raw_sha256": "7e00324bd227d843bfafc12ecad0eb033fd8405657c4e38f613eecf805411db9"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            10,
+            0,
+            19,
+            1
+          ],
+          "raw_sha256": "7e00324bd227d843bfafc12ecad0eb033fd8405657c4e38f613eecf805411db9"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "40 1 1 2 1 3 10 11 16",
+              "GEOMETRY_CHECKOUT": "10 0 19 1",
+              "GEOMETRY_PRERENDER": "10 0 19 1",
+              "GEOMETRY": "10 0 19 1"
+            },
+            "output_rect": [
+              10,
+              0,
+              19,
+              1
+            ],
+            "raw_sha256": "7e00324bd227d843bfafc12ecad0eb033fd8405657c4e38f613eecf805411db9"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 162,
+      "profile": "nonfinite",
+      "geometry": [
+        3,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              1,
+              3,
+              2
+            ],
+            "raw_sha256": "f6bb1294da2f78cd935b01c7656280df5eaa0439e9d97bc03775825a41a508e4"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            1,
+            3,
+            2
+          ],
+          "raw_sha256": "f6bb1294da2f78cd935b01c7656280df5eaa0439e9d97bc03775825a41a508e4"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "12 5 1 4 1 4 2 1 32",
+              "GEOMETRY_CHECKOUT": "2 1 3 2",
+              "GEOMETRY_PRERENDER": "2 1 3 2",
+              "GEOMETRY": "2 1 3 2"
+            },
+            "output_rect": [
+              2,
+              1,
+              3,
+              2
+            ],
+            "raw_sha256": "f6bb1294da2f78cd935b01c7656280df5eaa0439e9d97bc03775825a41a508e4"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 169,
+      "profile": "signed",
+      "geometry": [
+        9,
+        10
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        0,
+        1,
+        9,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              1,
+              9,
+              2
+            ],
+            "raw_sha256": "6868c4ee0b90de643e51e2f9a307b24d0b481deab92d8e5cecc8c47e2e6f5490"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            1,
+            9,
+            2
+          ],
+          "raw_sha256": "6868c4ee0b90de643e51e2f9a307b24d0b481deab92d8e5cecc8c47e2e6f5490"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "18 20 1 2 1 2 2 1 1",
+              "GEOMETRY_CHECKOUT": "0 1 9 2",
+              "GEOMETRY_PRERENDER": "0 1 9 2",
+              "GEOMETRY": "0 1 9 2"
+            },
+            "output_rect": [
+              0,
+              1,
+              9,
+              2
+            ],
+            "raw_sha256": "6868c4ee0b90de643e51e2f9a307b24d0b481deab92d8e5cecc8c47e2e6f5490"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 170,
+      "profile": "signed",
+      "geometry": [
+        7,
+        12
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        6,
+        2,
+        7,
+        12
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              6,
+              2,
+              7,
+              12
+            ],
+            "raw_sha256": "6b29a41639c0ea99820364aaa3fa49852728723806a34c9b0646c2f1bfbc43f6"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            6,
+            2,
+            7,
+            12
+          ],
+          "raw_sha256": "6b29a41639c0ea99820364aaa3fa49852728723806a34c9b0646c2f1bfbc43f6"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "14 34 1 2 1 3 2 1 7",
+              "GEOMETRY_CHECKOUT": "6 2 7 12",
+              "GEOMETRY_PRERENDER": "6 2 7 12",
+              "GEOMETRY": "6 2 7 12"
+            },
+            "output_rect": [
+              6,
+              2,
+              7,
+              12
+            ],
+            "raw_sha256": "6b29a41639c0ea99820364aaa3fa49852728723806a34c9b0646c2f1bfbc43f6"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 194,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        4
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        3,
+        3,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              3,
+              3,
+              4
+            ],
+            "raw_sha256": "e5b31a72c1ee99fced0b0ad1d0e58207b1ca24d225fdb24281c0fb5cd50a593b"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            3,
+            3,
+            4
+          ],
+          "raw_sha256": "e5b31a72c1ee99fced0b0ad1d0e58207b1ca24d225fdb24281c0fb5cd50a593b"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "7 12 1 3 1 3 1 1 3",
+              "GEOMETRY_CHECKOUT": "1 3 3 4",
+              "GEOMETRY_PRERENDER": "1 3 3 4",
+              "GEOMETRY": "1 3 3 4"
+            },
+            "output_rect": [
+              1,
+              3,
+              3,
+              4
+            ],
+            "raw_sha256": "e5b31a72c1ee99fced0b0ad1d0e58207b1ca24d225fdb24281c0fb5cd50a593b"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 195,
+      "profile": "signed",
+      "geometry": [
+        27,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        21,
+        0,
+        26,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              21,
+              0,
+              26,
+              1
+            ],
+            "raw_sha256": "ecd3104f41dce1c66f054378f175dea05dbba7e66c8d1a02910d9fe739cd0cf3"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            21,
+            0,
+            26,
+            1
+          ],
+          "raw_sha256": "ecd3104f41dce1c66f054378f175dea05dbba7e66c8d1a02910d9fe739cd0cf3"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "53 3 1 2 1 3 2 1 3",
+              "GEOMETRY_CHECKOUT": "21 0 26 1",
+              "GEOMETRY_PRERENDER": "21 0 26 1",
+              "GEOMETRY": "21 0 26 1"
+            },
+            "output_rect": [
+              21,
+              0,
+              26,
+              1
+            ],
+            "raw_sha256": "ecd3104f41dce1c66f054378f175dea05dbba7e66c8d1a02910d9fe739cd0cf3"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 198,
+      "profile": "sdr",
+      "geometry": [
+        11,
+        22
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        0,
+        8,
+        7,
+        20
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              8,
+              7,
+              20
+            ],
+            "raw_sha256": "547bc4c917c50bb4676b79b203e292adc7666b2a5fb220d7eb7ed36ce7d08d2f"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            8,
+            7,
+            20
+          ],
+          "raw_sha256": "547bc4c917c50bb4676b79b203e292adc7666b2a5fb220d7eb7ed36ce7d08d2f"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "22 44 1 2 1 2 10 11 1",
+              "GEOMETRY_CHECKOUT": "0 8 7 20",
+              "GEOMETRY_PRERENDER": "0 8 7 20",
+              "GEOMETRY": "0 8 7 20"
+            },
+            "output_rect": [
+              0,
+              8,
+              7,
+              20
+            ],
+            "raw_sha256": "547bc4c917c50bb4676b79b203e292adc7666b2a5fb220d7eb7ed36ce7d08d2f"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 200,
+      "profile": "hdr",
+      "geometry": [
+        2,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        1,
+        1,
+        2,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              1,
+              2,
+              3
+            ],
+            "raw_sha256": "9fde04d59271ff9dab8130b50506afe23c5814d197f5c144d38a2a3e212d3073"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            1,
+            2,
+            3
+          ],
+          "raw_sha256": "9fde04d59271ff9dab8130b50506afe23c5814d197f5c144d38a2a3e212d3073"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "14 23 1 8 1 8 2 1 1",
+              "GEOMETRY_CHECKOUT": "1 1 2 3",
+              "GEOMETRY_PRERENDER": "1 1 2 3",
+              "GEOMETRY": "1 1 2 3"
+            },
+            "output_rect": [
+              1,
+              1,
+              2,
+              3
+            ],
+            "raw_sha256": "9fde04d59271ff9dab8130b50506afe23c5814d197f5c144d38a2a3e212d3073"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 207,
+      "profile": "hdr",
+      "geometry": [
+        10,
+        4
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        6,
+        1,
+        10,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              6,
+              1,
+              10,
+              4
+            ],
+            "raw_sha256": "3b29123c6a30f3a5a1bd2271511ec4cee767102a697f39c3ba0cb9f57a05f287"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            6,
+            1,
+            10,
+            4
+          ],
+          "raw_sha256": "3b29123c6a30f3a5a1bd2271511ec4cee767102a697f39c3ba0cb9f57a05f287"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "20 8 1 2 1 2 2 1 0",
+              "GEOMETRY_CHECKOUT": "6 1 10 4",
+              "GEOMETRY_PRERENDER": "6 1 10 4",
+              "GEOMETRY": "6 1 10 4"
+            },
+            "output_rect": [
+              6,
+              1,
+              10,
+              4
+            ],
+            "raw_sha256": "3b29123c6a30f3a5a1bd2271511ec4cee767102a697f39c3ba0cb9f57a05f287"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 209,
+      "profile": "hdr",
+      "geometry": [
+        10,
+        17
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        8,
+        0,
+        9,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              8,
+              0,
+              9,
+              4
+            ],
+            "raw_sha256": "ecce032b52c461f072d92d2f50a8e2303ae07b851fa4153a667f7f967b8db3f5"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            8,
+            0,
+            9,
+            4
+          ],
+          "raw_sha256": "ecce032b52c461f072d92d2f50a8e2303ae07b851fa4153a667f7f967b8db3f5"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "29 49 1 3 1 3 1 1 32",
+              "GEOMETRY_CHECKOUT": "8 0 9 4",
+              "GEOMETRY_PRERENDER": "8 0 9 4",
+              "GEOMETRY": "8 0 9 4"
+            },
+            "output_rect": [
+              8,
+              0,
+              9,
+              4
+            ],
+            "raw_sha256": "ecce032b52c461f072d92d2f50a8e2303ae07b851fa4153a667f7f967b8db3f5"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 210,
+      "profile": "hdr",
+      "geometry": [
+        1,
+        55
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        40,
+        1,
+        54
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              40,
+              1,
+              54
+            ],
+            "raw_sha256": "9a3a6fd217c270655e61f9a7e2fb7b08aef4bd6a631cf3295ca7f7f7379813e7"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            40,
+            1,
+            54
+          ],
+          "raw_sha256": "9a3a6fd217c270655e61f9a7e2fb7b08aef4bd6a631cf3295ca7f7f7379813e7"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 220 1 4 1 4 4 3 0",
+              "GEOMETRY_CHECKOUT": "0 40 1 54",
+              "GEOMETRY_PRERENDER": "0 40 1 54",
+              "GEOMETRY": "0 40 1 54"
+            },
+            "output_rect": [
+              0,
+              40,
+              1,
+              54
+            ],
+            "raw_sha256": "9a3a6fd217c270655e61f9a7e2fb7b08aef4bd6a631cf3295ca7f7f7379813e7"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 211,
+      "profile": "signed",
+      "geometry": [
+        96,
+        54
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        21,
+        15,
+        64,
+        44
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              21,
+              15,
+              64,
+              44
+            ],
+            "raw_sha256": "1df9fcbc640c599bfdc16c3fd195b9ee06f8027935b65e5bc9b309e6dd1820ee"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            21,
+            15,
+            64,
+            44
+          ],
+          "raw_sha256": "1df9fcbc640c599bfdc16c3fd195b9ee06f8027935b65e5bc9b309e6dd1820ee"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "191 160 1 2 1 3 2 1 1",
+              "GEOMETRY_CHECKOUT": "21 15 64 44",
+              "GEOMETRY_PRERENDER": "21 15 64 44",
+              "GEOMETRY": "21 15 64 44"
+            },
+            "output_rect": [
+              21,
+              15,
+              64,
+              44
+            ],
+            "raw_sha256": "1df9fcbc640c599bfdc16c3fd195b9ee06f8027935b65e5bc9b309e6dd1820ee"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 212,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        2,
+        3,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              2,
+              3,
+              4
+            ],
+            "raw_sha256": "5207f74b220754431c47537f66d3fe286795c8f464d14c4643165a2ff88e6b13"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            2,
+            3,
+            4
+          ],
+          "raw_sha256": "5207f74b220754431c47537f66d3fe286795c8f464d14c4643165a2ff88e6b13"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "8 20 1 3 1 3 4 3 32",
+              "GEOMETRY_CHECKOUT": "2 2 3 4",
+              "GEOMETRY_PRERENDER": "2 2 3 4",
+              "GEOMETRY": "2 2 3 4"
+            },
+            "output_rect": [
+              2,
+              2,
+              3,
+              4
+            ],
+            "raw_sha256": "5207f74b220754431c47537f66d3fe286795c8f464d14c4643165a2ff88e6b13"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 232,
+      "profile": "hdr",
+      "geometry": [
+        6,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        1,
+        6,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              1,
+              6,
+              2
+            ],
+            "raw_sha256": "50013b2f8d4990b171e9aa990cb9a415127be99af2906fd588cedbd5b5464c73"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            1,
+            6,
+            2
+          ],
+          "raw_sha256": "50013b2f8d4990b171e9aa990cb9a415127be99af2906fd588cedbd5b5464c73"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 11 1 4 1 4 2 1 7",
+              "GEOMETRY_CHECKOUT": "0 1 6 2",
+              "GEOMETRY_PRERENDER": "0 1 6 2",
+              "GEOMETRY": "0 1 6 2"
+            },
+            "output_rect": [
+              0,
+              1,
+              6,
+              2
+            ],
+            "raw_sha256": "50013b2f8d4990b171e9aa990cb9a415127be99af2906fd588cedbd5b5464c73"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 236,
+      "profile": "sdr",
+      "geometry": [
+        9,
+        8
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        8,
+        3,
+        9,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              8,
+              3,
+              9,
+              4
+            ],
+            "raw_sha256": "a1b2a31519ab866ff3cbbb520e2d8b5e4bfd1d5284c09d7cd7781ea850abccf8"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            8,
+            3,
+            9,
+            4
+          ],
+          "raw_sha256": "a1b2a31519ab866ff3cbbb520e2d8b5e4bfd1d5284c09d7cd7781ea850abccf8"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "18 16 1 2 1 2 10 11 16",
+              "GEOMETRY_CHECKOUT": "8 3 9 4",
+              "GEOMETRY_PRERENDER": "8 3 9 4",
+              "GEOMETRY": "8 3 9 4"
+            },
+            "output_rect": [
+              8,
+              3,
+              9,
+              4
+            ],
+            "raw_sha256": "a1b2a31519ab866ff3cbbb520e2d8b5e4bfd1d5284c09d7cd7781ea850abccf8"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 261,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        15
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        5,
+        2,
+        13
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              5,
+              2,
+              13
+            ],
+            "raw_sha256": "10057a0bc8c0e483d67d5f16b59db2266abdf6f1d6a137eeb50150e07d7e0f0a"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            5,
+            2,
+            13
+          ],
+          "raw_sha256": "10057a0bc8c0e483d67d5f16b59db2266abdf6f1d6a137eeb50150e07d7e0f0a"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "3 44 1 2 1 3 10 11 0",
+              "GEOMETRY_CHECKOUT": "1 5 2 13",
+              "GEOMETRY_PRERENDER": "1 5 2 13",
+              "GEOMETRY": "1 5 2 13"
+            },
+            "output_rect": [
+              1,
+              5,
+              2,
+              13
+            ],
+            "raw_sha256": "10057a0bc8c0e483d67d5f16b59db2266abdf6f1d6a137eeb50150e07d7e0f0a"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 272,
+      "profile": "hdr",
+      "geometry": [
+        25,
+        9
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        4,
+        3,
+        6,
+        8
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              3,
+              6,
+              8
+            ],
+            "raw_sha256": "979c9e22b1b13930bcf5aca281ffe3d019c665d8a7fa9c747b165fb65a60e132"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            3,
+            6,
+            8
+          ],
+          "raw_sha256": "979c9e22b1b13930bcf5aca281ffe3d019c665d8a7fa9c747b165fb65a60e132"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "99 34 1 4 1 4 1 1 3",
+              "GEOMETRY_CHECKOUT": "4 3 6 8",
+              "GEOMETRY_PRERENDER": "4 3 6 8",
+              "GEOMETRY": "4 3 6 8"
+            },
+            "output_rect": [
+              4,
+              3,
+              6,
+              8
+            ],
+            "raw_sha256": "979c9e22b1b13930bcf5aca281ffe3d019c665d8a7fa9c747b165fb65a60e132"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 289,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              2
+            ],
+            "raw_sha256": "37a41722db359b4a7dbc9ce9b5c4a8e1b268390a0c6ff5f8e527f6ebd3b15b5a"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "raw_sha256": "37a41722db359b4a7dbc9ce9b5c4a8e1b268390a0c6ff5f8e527f6ebd3b15b5a"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "22 9 1 8 1 8 4 3 3",
+              "GEOMETRY_CHECKOUT": "0 0 1 2",
+              "GEOMETRY_PRERENDER": "0 0 1 2",
+              "GEOMETRY": "0 0 1 2"
+            },
+            "output_rect": [
+              0,
+              0,
+              1,
+              2
+            ],
+            "raw_sha256": "37a41722db359b4a7dbc9ce9b5c4a8e1b268390a0c6ff5f8e527f6ebd3b15b5a"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 303,
+      "profile": "hdr",
+      "geometry": [
+        8,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        3,
+        0,
+        5,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              3,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "3f554fae50c6ac52706c3938655c03c6048f66e7ec7151219df19bcbce643a80"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            3,
+            0,
+            5,
+            1
+          ],
+          "raw_sha256": "3f554fae50c6ac52706c3938655c03c6048f66e7ec7151219df19bcbce643a80"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "15 8 1 2 1 3 10 11 32",
+              "GEOMETRY_CHECKOUT": "3 0 5 1",
+              "GEOMETRY_PRERENDER": "3 0 5 1",
+              "GEOMETRY": "3 0 5 1"
+            },
+            "output_rect": [
+              3,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "3f554fae50c6ac52706c3938655c03c6048f66e7ec7151219df19bcbce643a80"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 312,
+      "profile": "sdr",
+      "geometry": [
+        89,
+        61
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        60,
+        2,
+        72,
+        51
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              60,
+              2,
+              72,
+              51
+            ],
+            "raw_sha256": "be1b40364a2ab96b63c0b69a3c0f5cc67a0cac163b2663a7f6f34732cc3d520d"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            60,
+            2,
+            72,
+            51
+          ],
+          "raw_sha256": "be1b40364a2ab96b63c0b69a3c0f5cc67a0cac163b2663a7f6f34732cc3d520d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "178 181 1 2 1 3 4 3 3",
+              "GEOMETRY_CHECKOUT": "60 2 72 51",
+              "GEOMETRY_PRERENDER": "60 2 72 51",
+              "GEOMETRY": "60 2 72 51"
+            },
+            "output_rect": [
+              60,
+              2,
+              72,
+              51
+            ],
+            "raw_sha256": "be1b40364a2ab96b63c0b69a3c0f5cc67a0cac163b2663a7f6f34732cc3d520d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 314,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        28
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        17,
+        1,
+        23
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              17,
+              1,
+              23
+            ],
+            "raw_sha256": "1d92a0a68048c979e221f61b84a78a2c2938d8d5f4b692996b97d1de3f162380"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            17,
+            1,
+            23
+          ],
+          "raw_sha256": "1d92a0a68048c979e221f61b84a78a2c2938d8d5f4b692996b97d1de3f162380"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 217 1 8 1 8 10 11 3",
+              "GEOMETRY_CHECKOUT": "0 17 1 23",
+              "GEOMETRY_PRERENDER": "0 17 1 23",
+              "GEOMETRY": "0 17 1 23"
+            },
+            "output_rect": [
+              0,
+              17,
+              1,
+              23
+            ],
+            "raw_sha256": "1d92a0a68048c979e221f61b84a78a2c2938d8d5f4b692996b97d1de3f162380"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 315,
+      "profile": "nonfinite",
+      "geometry": [
+        127,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        72,
+        0,
+        75,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              72,
+              0,
+              75,
+              1
+            ],
+            "raw_sha256": "b2a2370f3df1ccd849a0a8eaaa8213f682af68df330261c14bf81c49fd94a2fd"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            72,
+            0,
+            75,
+            1
+          ],
+          "raw_sha256": "b2a2370f3df1ccd849a0a8eaaa8213f682af68df330261c14bf81c49fd94a2fd"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "254 1 1 2 1 2 2 1 0",
+              "GEOMETRY_CHECKOUT": "72 0 75 1",
+              "GEOMETRY_PRERENDER": "72 0 75 1",
+              "GEOMETRY": "72 0 75 1"
+            },
+            "output_rect": [
+              72,
+              0,
+              75,
+              1
+            ],
+            "raw_sha256": "b2a2370f3df1ccd849a0a8eaaa8213f682af68df330261c14bf81c49fd94a2fd"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 327,
+      "profile": "hdr",
+      "geometry": [
+        1,
+        29
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        1,
+        1,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              1,
+              1,
+              3
+            ],
+            "raw_sha256": "7637c7578b25ec193c28f2b70dae64db6672d347e9534ba02211a6a07605b8bc"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            1,
+            1,
+            3
+          ],
+          "raw_sha256": "7637c7578b25ec193c28f2b70dae64db6672d347e9534ba02211a6a07605b8bc"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 86 1 2 1 3 2 1 3",
+              "GEOMETRY_CHECKOUT": "0 1 1 3",
+              "GEOMETRY_PRERENDER": "0 1 1 3",
+              "GEOMETRY": "0 1 1 3"
+            },
+            "output_rect": [
+              0,
+              1,
+              1,
+              3
+            ],
+            "raw_sha256": "7637c7578b25ec193c28f2b70dae64db6672d347e9534ba02211a6a07605b8bc"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 330,
+      "profile": "sdr",
+      "geometry": [
+        6,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        4,
+        2,
+        6,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              2,
+              6,
+              3
+            ],
+            "raw_sha256": "7cb33c13f9ff0f8cad7c6f982fb829fb8bfd22fb92f9d45dcd4a244083bf81b2"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            2,
+            6,
+            3
+          ],
+          "raw_sha256": "7cb33c13f9ff0f8cad7c6f982fb829fb8bfd22fb92f9d45dcd4a244083bf81b2"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "21 11 1 4 1 4 4 3 3",
+              "GEOMETRY_CHECKOUT": "4 2 6 3",
+              "GEOMETRY_PRERENDER": "4 2 6 3",
+              "GEOMETRY": "4 2 6 3"
+            },
+            "output_rect": [
+              4,
+              2,
+              6,
+              3
+            ],
+            "raw_sha256": "7cb33c13f9ff0f8cad7c6f982fb829fb8bfd22fb92f9d45dcd4a244083bf81b2"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 340,
+      "profile": "sdr",
+      "geometry": [
+        4,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        3,
+        1,
+        4,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              3,
+              1,
+              4,
+              2
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            3,
+            1,
+            4,
+            2
+          ],
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "27 14 1 8 1 8 4 3 16",
+              "GEOMETRY_CHECKOUT": "3 1 4 2",
+              "GEOMETRY_PRERENDER": "3 1 4 2",
+              "GEOMETRY": "3 1 4 2"
+            },
+            "output_rect": [
+              3,
+              1,
+              4,
+              2
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 341,
+      "profile": "hdr",
+      "geometry": [
+        1,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        2,
+        1,
+        4
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              2,
+              1,
+              4
+            ],
+            "raw_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            2,
+            1,
+            4
+          ],
+          "raw_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "3 17 1 4 1 4 1 1 32",
+              "GEOMETRY_CHECKOUT": "0 2 1 4",
+              "GEOMETRY_PRERENDER": "0 2 1 4",
+              "GEOMETRY": "0 2 1 4"
+            },
+            "output_rect": [
+              0,
+              2,
+              1,
+              4
+            ],
+            "raw_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 349,
+      "profile": "signed",
+      "geometry": [
+        4,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              0,
+              3,
+              2
+            ],
+            "raw_sha256": "fe9ca90690d215d3a1ced7e332bf865647b0811990f95e9066b9e0f032f2d752"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            0,
+            3,
+            2
+          ],
+          "raw_sha256": "fe9ca90690d215d3a1ced7e332bf865647b0811990f95e9066b9e0f032f2d752"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "11 5 1 3 1 3 2 1 16",
+              "GEOMETRY_CHECKOUT": "1 0 3 2",
+              "GEOMETRY_PRERENDER": "1 0 3 2",
+              "GEOMETRY": "1 0 3 2"
+            },
+            "output_rect": [
+              1,
+              0,
+              3,
+              2
+            ],
+            "raw_sha256": "fe9ca90690d215d3a1ced7e332bf865647b0811990f95e9066b9e0f032f2d752"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 360,
+      "profile": "sdr",
+      "geometry": [
+        10,
+        12
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        2,
+        7,
+        9,
+        8
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              7,
+              9,
+              8
+            ],
+            "raw_sha256": "2bee32730ec2d90c8e4bb49be65bf1bc6e0df8129aaf8b34b14810ce3f7238db"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            7,
+            9,
+            8
+          ],
+          "raw_sha256": "2bee32730ec2d90c8e4bb49be65bf1bc6e0df8129aaf8b34b14810ce3f7238db"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "19 24 1 2 1 2 4 3 1",
+              "GEOMETRY_CHECKOUT": "2 7 9 8",
+              "GEOMETRY_PRERENDER": "2 7 9 8",
+              "GEOMETRY": "2 7 9 8"
+            },
+            "output_rect": [
+              2,
+              7,
+              9,
+              8
+            ],
+            "raw_sha256": "2bee32730ec2d90c8e4bb49be65bf1bc6e0df8129aaf8b34b14810ce3f7238db"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 401,
+      "profile": "sdr",
+      "geometry": [
+        8,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        4,
+        4,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              4,
+              4,
+              5
+            ],
+            "raw_sha256": "73dafae8dc1f8735380fd9f2a5605e55ec8417c5f3cc0a9f38fdf2e4ab672ec5"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            4,
+            4,
+            5
+          ],
+          "raw_sha256": "73dafae8dc1f8735380fd9f2a5605e55ec8417c5f3cc0a9f38fdf2e4ab672ec5"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "15 15 1 2 1 3 2 1 32",
+              "GEOMETRY_CHECKOUT": "2 4 4 5",
+              "GEOMETRY_PRERENDER": "2 4 4 5",
+              "GEOMETRY": "2 4 4 5"
+            },
+            "output_rect": [
+              2,
+              4,
+              4,
+              5
+            ],
+            "raw_sha256": "73dafae8dc1f8735380fd9f2a5605e55ec8417c5f3cc0a9f38fdf2e4ab672ec5"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 402,
+      "profile": "signed",
+      "geometry": [
+        18,
+        4
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        7,
+        0,
+        11,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              7,
+              0,
+              11,
+              2
+            ],
+            "raw_sha256": "3bd866c0c953e53ac24ea8660f8d7212fc6049a5ac6e2f8b83709a28829156ad"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            7,
+            0,
+            11,
+            2
+          ],
+          "raw_sha256": "3bd866c0c953e53ac24ea8660f8d7212fc6049a5ac6e2f8b83709a28829156ad"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "36 7 1 2 1 2 2 1 3",
+              "GEOMETRY_CHECKOUT": "7 0 11 2",
+              "GEOMETRY_PRERENDER": "7 0 11 2",
+              "GEOMETRY": "7 0 11 2"
+            },
+            "output_rect": [
+              7,
+              0,
+              11,
+              2
+            ],
+            "raw_sha256": "3bd866c0c953e53ac24ea8660f8d7212fc6049a5ac6e2f8b83709a28829156ad"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 408,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        6
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        3,
+        1,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              3,
+              1,
+              5
+            ],
+            "raw_sha256": "3dd2ffda5207283ca7616ede33c4d2956a063f15f6f4005eebf0a2d6e230653a"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            3,
+            1,
+            5
+          ],
+          "raw_sha256": "3dd2ffda5207283ca7616ede33c4d2956a063f15f6f4005eebf0a2d6e230653a"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "3 17 1 3 1 3 1 1 16",
+              "GEOMETRY_CHECKOUT": "0 3 1 5",
+              "GEOMETRY_PRERENDER": "0 3 1 5",
+              "GEOMETRY": "0 3 1 5"
+            },
+            "output_rect": [
+              0,
+              3,
+              1,
+              5
+            ],
+            "raw_sha256": "3dd2ffda5207283ca7616ede33c4d2956a063f15f6f4005eebf0a2d6e230653a"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 419,
+      "profile": "sdr",
+      "geometry": [
+        12,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        8,
+        0,
+        9,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              8,
+              0,
+              9,
+              1
+            ],
+            "raw_sha256": "bcf3a53dd3764aa0e35aa65048286a776f733c1716701d2e53bcc45a4791214e"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "raw_sha256": "bcf3a53dd3764aa0e35aa65048286a776f733c1716701d2e53bcc45a4791214e"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 5 1 2 1 3 1 1 7",
+              "GEOMETRY_CHECKOUT": "8 0 9 1",
+              "GEOMETRY_PRERENDER": "8 0 9 1",
+              "GEOMETRY": "8 0 9 1"
+            },
+            "output_rect": [
+              8,
+              0,
+              9,
+              1
+            ],
+            "raw_sha256": "bcf3a53dd3764aa0e35aa65048286a776f733c1716701d2e53bcc45a4791214e"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 421,
+      "profile": "sdr",
+      "geometry": [
+        14,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        4,
+        0,
+        11,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              0,
+              11,
+              1
+            ],
+            "raw_sha256": "76b142c19177508107831560c553193287dabcbb1da92434d70f1e396faa6dfc"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            0,
+            11,
+            1
+          ],
+          "raw_sha256": "76b142c19177508107831560c553193287dabcbb1da92434d70f1e396faa6dfc"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "55 1 1 4 1 4 1 1 1",
+              "GEOMETRY_CHECKOUT": "4 0 11 1",
+              "GEOMETRY_PRERENDER": "4 0 11 1",
+              "GEOMETRY": "4 0 11 1"
+            },
+            "output_rect": [
+              4,
+              0,
+              11,
+              1
+            ],
+            "raw_sha256": "76b142c19177508107831560c553193287dabcbb1da92434d70f1e396faa6dfc"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 429,
+      "profile": "signed",
+      "geometry": [
+        6,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "c825d3881a6f2176804a6e5a471f70c205464021ee14b10082ae96502121f40b"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "raw_sha256": "c825d3881a6f2176804a6e5a471f70c205464021ee14b10082ae96502121f40b"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 3 1 4 1 4 2 1 16",
+              "GEOMETRY_CHECKOUT": "0 0 1 1",
+              "GEOMETRY_PRERENDER": "0 0 1 1",
+              "GEOMETRY": "0 0 1 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "c825d3881a6f2176804a6e5a471f70c205464021ee14b10082ae96502121f40b"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 430,
+      "profile": "sdr",
+      "geometry": [
+        31,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        26,
+        0,
+        31,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              26,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "b7572dc44daa2d19d7b56914d1baac7242c32cb7954588d9fe168f1d8603afab"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            26,
+            0,
+            31,
+            1
+          ],
+          "raw_sha256": "b7572dc44daa2d19d7b56914d1baac7242c32cb7954588d9fe168f1d8603afab"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "243 1 1 8 1 8 1 1 0",
+              "GEOMETRY_CHECKOUT": "26 0 31 1",
+              "GEOMETRY_PRERENDER": "26 0 31 1",
+              "GEOMETRY": "26 0 31 1"
+            },
+            "output_rect": [
+              26,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "b7572dc44daa2d19d7b56914d1baac7242c32cb7954588d9fe168f1d8603afab"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 449,
+      "profile": "sdr",
+      "geometry": [
+        4,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        2,
+        2,
+        4,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              2,
+              4,
+              3
+            ],
+            "raw_sha256": "ef0c12c919060d47cd3d94f21f4e67fd3287e259c4ea39bc9c1afd22f483dda2"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            2,
+            4,
+            3
+          ],
+          "raw_sha256": "ef0c12c919060d47cd3d94f21f4e67fd3287e259c4ea39bc9c1afd22f483dda2"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "27 22 1 8 1 8 4 3 16",
+              "GEOMETRY_CHECKOUT": "2 2 4 3",
+              "GEOMETRY_PRERENDER": "2 2 4 3",
+              "GEOMETRY": "2 2 4 3"
+            },
+            "output_rect": [
+              2,
+              2,
+              4,
+              3
+            ],
+            "raw_sha256": "ef0c12c919060d47cd3d94f21f4e67fd3287e259c4ea39bc9c1afd22f483dda2"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 454,
+      "profile": "sdr",
+      "geometry": [
+        7,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        6,
+        2,
+        7,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              6,
+              2,
+              7,
+              3
+            ],
+            "raw_sha256": "b0312a62c7417c6c1c3a4b8ae02cd0e27baeced835a081aeb00b5f43d92da145"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            6,
+            2,
+            7,
+            3
+          ],
+          "raw_sha256": "b0312a62c7417c6c1c3a4b8ae02cd0e27baeced835a081aeb00b5f43d92da145"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "21 7 1 3 1 3 2 1 0",
+              "GEOMETRY_CHECKOUT": "6 2 7 3",
+              "GEOMETRY_PRERENDER": "6 2 7 3",
+              "GEOMETRY": "6 2 7 3"
+            },
+            "output_rect": [
+              6,
+              2,
+              7,
+              3
+            ],
+            "raw_sha256": "b0312a62c7417c6c1c3a4b8ae02cd0e27baeced835a081aeb00b5f43d92da145"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 460,
+      "profile": "hdr",
+      "geometry": [
+        74,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        34,
+        0,
+        59,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              34,
+              0,
+              59,
+              1
+            ],
+            "raw_sha256": "ffac56570bb161bed6cd8f0cff01ca311452972e6b8090251bab1d14d1de1e00"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            34,
+            0,
+            59,
+            1
+          ],
+          "raw_sha256": "ffac56570bb161bed6cd8f0cff01ca311452972e6b8090251bab1d14d1de1e00"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "220 1 1 3 1 3 1 1 3",
+              "GEOMETRY_CHECKOUT": "34 0 59 1",
+              "GEOMETRY_PRERENDER": "34 0 59 1",
+              "GEOMETRY": "34 0 59 1"
+            },
+            "output_rect": [
+              34,
+              0,
+              59,
+              1
+            ],
+            "raw_sha256": "ffac56570bb161bed6cd8f0cff01ca311452972e6b8090251bab1d14d1de1e00"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 461,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "217b9a59ed33db08b46fdd3b0a99437da3fddfc662b80e9388bc0156ac764a82"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "raw_sha256": "217b9a59ed33db08b46fdd3b0a99437da3fddfc662b80e9388bc0156ac764a82"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "21 8 1 8 1 8 2 1 3",
+              "GEOMETRY_CHECKOUT": "0 0 2 1",
+              "GEOMETRY_PRERENDER": "0 0 2 1",
+              "GEOMETRY": "0 0 2 1"
+            },
+            "output_rect": [
+              0,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "217b9a59ed33db08b46fdd3b0a99437da3fddfc662b80e9388bc0156ac764a82"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 472,
+      "profile": "hdr",
+      "geometry": [
+        6,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        0,
+        5,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "e6f5441d837be50c87ca36d360813fa3f97619e1bd624f1c33617068b27163fc"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            0,
+            5,
+            1
+          ],
+          "raw_sha256": "e6f5441d837be50c87ca36d360813fa3f97619e1bd624f1c33617068b27163fc"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "16 6 1 3 1 3 4 3 32",
+              "GEOMETRY_CHECKOUT": "2 0 5 1",
+              "GEOMETRY_PRERENDER": "2 0 5 1",
+              "GEOMETRY": "2 0 5 1"
+            },
+            "output_rect": [
+              2,
+              0,
+              5,
+              1
+            ],
+            "raw_sha256": "e6f5441d837be50c87ca36d360813fa3f97619e1bd624f1c33617068b27163fc"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 486,
+      "profile": "sdr",
+      "geometry": [
+        19,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        18,
+        0,
+        19,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              18,
+              0,
+              19,
+              1
+            ],
+            "raw_sha256": "16853017ea99eaac72f5acae9965efb0981eed2acbdc1b45f291079dcdcbe4a0"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            18,
+            0,
+            19,
+            1
+          ],
+          "raw_sha256": "16853017ea99eaac72f5acae9965efb0981eed2acbdc1b45f291079dcdcbe4a0"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "38 1 1 2 1 2 2 1 16",
+              "GEOMETRY_CHECKOUT": "18 0 19 1",
+              "GEOMETRY_PRERENDER": "18 0 19 1",
+              "GEOMETRY": "18 0 19 1"
+            },
+            "output_rect": [
+              18,
+              0,
+              19,
+              1
+            ],
+            "raw_sha256": "16853017ea99eaac72f5acae9965efb0981eed2acbdc1b45f291079dcdcbe4a0"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 497,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        2,
+        2,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              2,
+              2,
+              3
+            ],
+            "raw_sha256": "b3999846d0a8b915f1829e589c1561b3634cb9999a3a60361748fd49833bcd16"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            2,
+            2,
+            3
+          ],
+          "raw_sha256": "b3999846d0a8b915f1829e589c1561b3634cb9999a3a60361748fd49833bcd16"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "14 24 1 8 1 8 1 1 1",
+              "GEOMETRY_CHECKOUT": "0 2 2 3",
+              "GEOMETRY_PRERENDER": "0 2 2 3",
+              "GEOMETRY": "0 2 2 3"
+            },
+            "output_rect": [
+              0,
+              2,
+              2,
+              3
+            ],
+            "raw_sha256": "b3999846d0a8b915f1829e589c1561b3634cb9999a3a60361748fd49833bcd16"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 505,
+      "profile": "signed",
+      "geometry": [
+        46,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        2,
+        0,
+        31,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "9eefc448cf5a0728bc0e3e9768d7c3ea41a1ebc92173b35dacd5188075900c25"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            0,
+            31,
+            1
+          ],
+          "raw_sha256": "9eefc448cf5a0728bc0e3e9768d7c3ea41a1ebc92173b35dacd5188075900c25"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "184 1 1 4 1 4 2 1 1",
+              "GEOMETRY_CHECKOUT": "2 0 31 1",
+              "GEOMETRY_PRERENDER": "2 0 31 1",
+              "GEOMETRY": "2 0 31 1"
+            },
+            "output_rect": [
+              2,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "9eefc448cf5a0728bc0e3e9768d7c3ea41a1ebc92173b35dacd5188075900c25"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 510,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        53
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        42,
+        1,
+        50
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              42,
+              1,
+              50
+            ],
+            "raw_sha256": "a61dc1c099bfd1a3cf82d434d60744683b187ff13c9bd080911d7040c3cc9726"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            42,
+            1,
+            50
+          ],
+          "raw_sha256": "a61dc1c099bfd1a3cf82d434d60744683b187ff13c9bd080911d7040c3cc9726"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 157 1 2 1 3 10 11 16",
+              "GEOMETRY_CHECKOUT": "0 42 1 50",
+              "GEOMETRY_PRERENDER": "0 42 1 50",
+              "GEOMETRY": "0 42 1 50"
+            },
+            "output_rect": [
+              0,
+              42,
+              1,
+              50
+            ],
+            "raw_sha256": "a61dc1c099bfd1a3cf82d434d60744683b187ff13c9bd080911d7040c3cc9726"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 511,
+      "profile": "sdr",
+      "geometry": [
+        9,
+        10
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        1,
+        6,
+        7,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              6,
+              7,
+              7
+            ],
+            "raw_sha256": "36e442d14890544ee3c9628489afa439da1762375280ef8db67fa084d5e9b0d9"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            6,
+            7,
+            7
+          ],
+          "raw_sha256": "36e442d14890544ee3c9628489afa439da1762375280ef8db67fa084d5e9b0d9"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "18 20 1 2 1 2 1 1 7",
+              "GEOMETRY_CHECKOUT": "1 6 7 7",
+              "GEOMETRY_PRERENDER": "1 6 7 7",
+              "GEOMETRY": "1 6 7 7"
+            },
+            "output_rect": [
+              1,
+              6,
+              7,
+              7
+            ],
+            "raw_sha256": "36e442d14890544ee3c9628489afa439da1762375280ef8db67fa084d5e9b0d9"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 517,
+      "profile": "hdr",
+      "geometry": [
+        6,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        4,
+        0,
+        6,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              0,
+              6,
+              1
+            ],
+            "raw_sha256": "a65ed26dc39b1842ce2e2db2b14a100464d627d9c2e5c977c40767102182b88d"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            0,
+            6,
+            1
+          ],
+          "raw_sha256": "a65ed26dc39b1842ce2e2db2b14a100464d627d9c2e5c977c40767102182b88d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "21 7 1 4 1 4 1 1 16",
+              "GEOMETRY_CHECKOUT": "4 0 6 1",
+              "GEOMETRY_PRERENDER": "4 0 6 1",
+              "GEOMETRY": "4 0 6 1"
+            },
+            "output_rect": [
+              4,
+              0,
+              6,
+              1
+            ],
+            "raw_sha256": "a65ed26dc39b1842ce2e2db2b14a100464d627d9c2e5c977c40767102182b88d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 521,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        2,
+        1,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              2,
+              1,
+              5
+            ],
+            "raw_sha256": "98556e3bb6a54955ff5e677d7ec0b41052236af426eda2a6c6213b663e94ef7d"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            2,
+            1,
+            5
+          ],
+          "raw_sha256": "98556e3bb6a54955ff5e677d7ec0b41052236af426eda2a6c6213b663e94ef7d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 20 1 2 1 3 4 3 3",
+              "GEOMETRY_CHECKOUT": "0 2 1 5",
+              "GEOMETRY_PRERENDER": "0 2 1 5",
+              "GEOMETRY": "0 2 1 5"
+            },
+            "output_rect": [
+              0,
+              2,
+              1,
+              5
+            ],
+            "raw_sha256": "98556e3bb6a54955ff5e677d7ec0b41052236af426eda2a6c6213b663e94ef7d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 533,
+      "profile": "hdr",
+      "geometry": [
+        3,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "raw_sha256": "8c16a7bd175e24412e511554d6cf78abffa144f496e6844ec64c64475c19d072"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            1,
+            2,
+            2
+          ],
+          "raw_sha256": "8c16a7bd175e24412e511554d6cf78abffa144f496e6844ec64c64475c19d072"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "6 6 1 2 1 3 10 11 32",
+              "GEOMETRY_CHECKOUT": "1 1 2 2",
+              "GEOMETRY_PRERENDER": "1 1 2 2",
+              "GEOMETRY": "1 1 2 2"
+            },
+            "output_rect": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "raw_sha256": "8c16a7bd175e24412e511554d6cf78abffa144f496e6844ec64c64475c19d072"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 535,
+      "profile": "hdr",
+      "geometry": [
+        9,
+        6
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        4,
+        4,
+        7,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              4,
+              7,
+              5
+            ],
+            "raw_sha256": "9f99dabe4a552eee644c4e4e186e7ae28ff56bc08bd7a528d76377cd8f3271ed"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            4,
+            7,
+            5
+          ],
+          "raw_sha256": "9f99dabe4a552eee644c4e4e186e7ae28ff56bc08bd7a528d76377cd8f3271ed"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "18 11 1 2 1 2 1 1 16",
+              "GEOMETRY_CHECKOUT": "4 4 7 5",
+              "GEOMETRY_PRERENDER": "4 4 7 5",
+              "GEOMETRY": "4 4 7 5"
+            },
+            "output_rect": [
+              4,
+              4,
+              7,
+              5
+            ],
+            "raw_sha256": "9f99dabe4a552eee644c4e4e186e7ae28ff56bc08bd7a528d76377cd8f3271ed"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 536,
+      "profile": "sdr",
+      "geometry": [
+        34,
+        34
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        10,
+        2,
+        21,
+        12
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              10,
+              2,
+              21,
+              12
+            ],
+            "raw_sha256": "423833e90fee2b62ee2c044cfed2b2e45d6b57184c6fe60287b7224e5b5632e4"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            10,
+            2,
+            21,
+            12
+          ],
+          "raw_sha256": "423833e90fee2b62ee2c044cfed2b2e45d6b57184c6fe60287b7224e5b5632e4"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "100 101 1 3 1 3 2 1 7",
+              "GEOMETRY_CHECKOUT": "10 2 21 12",
+              "GEOMETRY_PRERENDER": "10 2 21 12",
+              "GEOMETRY": "10 2 21 12"
+            },
+            "output_rect": [
+              10,
+              2,
+              21,
+              12
+            ],
+            "raw_sha256": "423833e90fee2b62ee2c044cfed2b2e45d6b57184c6fe60287b7224e5b5632e4"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 537,
+      "profile": "sdr",
+      "geometry": [
+        5,
+        8
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        4,
+        2,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              4,
+              2,
+              5
+            ],
+            "raw_sha256": "31c32dca1fe4c1364e5fe7c507e3cab3bfd67363dcd09c11bb4a7e802cf1aa06"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            4,
+            2,
+            5
+          ],
+          "raw_sha256": "31c32dca1fe4c1364e5fe7c507e3cab3bfd67363dcd09c11bb4a7e802cf1aa06"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "13 24 1 3 1 3 4 3 7",
+              "GEOMETRY_CHECKOUT": "0 4 2 5",
+              "GEOMETRY_PRERENDER": "0 4 2 5",
+              "GEOMETRY": "0 4 2 5"
+            },
+            "output_rect": [
+              0,
+              4,
+              2,
+              5
+            ],
+            "raw_sha256": "31c32dca1fe4c1364e5fe7c507e3cab3bfd67363dcd09c11bb4a7e802cf1aa06"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 538,
+      "profile": "nonfinite",
+      "geometry": [
+        36,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        23,
+        0,
+        31,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              23,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "4ec431939d4263cab76eac2d05f92bc1eac6dd9446e461615588f82a8bc7c68d"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            23,
+            0,
+            31,
+            1
+          ],
+          "raw_sha256": "4ec431939d4263cab76eac2d05f92bc1eac6dd9446e461615588f82a8bc7c68d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "107 1 1 3 1 3 1 1 1",
+              "GEOMETRY_CHECKOUT": "23 0 31 1",
+              "GEOMETRY_PRERENDER": "23 0 31 1",
+              "GEOMETRY": "23 0 31 1"
+            },
+            "output_rect": [
+              23,
+              0,
+              31,
+              1
+            ],
+            "raw_sha256": "4ec431939d4263cab76eac2d05f92bc1eac6dd9446e461615588f82a8bc7c68d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 541,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "raw_sha256": "066f45953787cfc692d87f5b3da1fd871b0f31eddecc6945f8861dad98790222"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "raw_sha256": "066f45953787cfc692d87f5b3da1fd871b0f31eddecc6945f8861dad98790222"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "8 13 1 8 1 8 2 1 32",
+              "GEOMETRY_CHECKOUT": "0 1 1 2",
+              "GEOMETRY_PRERENDER": "0 1 1 2",
+              "GEOMETRY": "0 1 1 2"
+            },
+            "output_rect": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "raw_sha256": "066f45953787cfc692d87f5b3da1fd871b0f31eddecc6945f8861dad98790222"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 543,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        6
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        2,
+        2,
+        6
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              2,
+              2,
+              6
+            ],
+            "raw_sha256": "3f2a440bc7dc201f58af57e3e68fd90dcf04b3b3918e1969e408d2e846123e51"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            2,
+            2,
+            6
+          ],
+          "raw_sha256": "3f2a440bc7dc201f58af57e3e68fd90dcf04b3b3918e1969e408d2e846123e51"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "4 16 1 3 1 3 10 11 3",
+              "GEOMETRY_CHECKOUT": "1 2 2 6",
+              "GEOMETRY_PRERENDER": "1 2 2 6",
+              "GEOMETRY": "1 2 2 6"
+            },
+            "output_rect": [
+              1,
+              2,
+              2,
+              6
+            ],
+            "raw_sha256": "3f2a440bc7dc201f58af57e3e68fd90dcf04b3b3918e1969e408d2e846123e51"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 557,
+      "profile": "sdr",
+      "geometry": [
+        6,
+        25
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        0,
+        12,
+        5,
+        20
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              12,
+              5,
+              20
+            ],
+            "raw_sha256": "d332e44e0a85e5ac60325617412d77c19b8564060e230317f689fb4974f61227"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            12,
+            5,
+            20
+          ],
+          "raw_sha256": "d332e44e0a85e5ac60325617412d77c19b8564060e230317f689fb4974f61227"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "11 49 1 2 1 2 2 1 1",
+              "GEOMETRY_CHECKOUT": "0 12 5 20",
+              "GEOMETRY_PRERENDER": "0 12 5 20",
+              "GEOMETRY": "0 12 5 20"
+            },
+            "output_rect": [
+              0,
+              12,
+              5,
+              20
+            ],
+            "raw_sha256": "d332e44e0a85e5ac60325617412d77c19b8564060e230317f689fb4974f61227"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 560,
+      "profile": "sdr",
+      "geometry": [
+        10,
+        10
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        7,
+        6,
+        9,
+        9
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              7,
+              6,
+              9,
+              9
+            ],
+            "raw_sha256": "45b9fb1dbb983a782fb56a8a4ba4952508a299143174710d101d9333193b315e"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            7,
+            6,
+            9,
+            9
+          ],
+          "raw_sha256": "45b9fb1dbb983a782fb56a8a4ba4952508a299143174710d101d9333193b315e"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "19 20 1 2 1 2 10 11 1",
+              "GEOMETRY_CHECKOUT": "7 6 9 9",
+              "GEOMETRY_PRERENDER": "7 6 9 9",
+              "GEOMETRY": "7 6 9 9"
+            },
+            "output_rect": [
+              7,
+              6,
+              9,
+              9
+            ],
+            "raw_sha256": "45b9fb1dbb983a782fb56a8a4ba4952508a299143174710d101d9333193b315e"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 561,
+      "profile": "hdr",
+      "geometry": [
+        1,
+        16
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        0,
+        9,
+        1,
+        16
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              9,
+              1,
+              16
+            ],
+            "raw_sha256": "266f5aadcdf293b5d09a2012cdc937f6e01bc07c18f6f114cc37017710c278bf"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            9,
+            1,
+            16
+          ],
+          "raw_sha256": "266f5aadcdf293b5d09a2012cdc937f6e01bc07c18f6f114cc37017710c278bf"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 121 1 8 1 8 4 3 7",
+              "GEOMETRY_CHECKOUT": "0 9 1 16",
+              "GEOMETRY_PRERENDER": "0 9 1 16",
+              "GEOMETRY": "0 9 1 16"
+            },
+            "output_rect": [
+              0,
+              9,
+              1,
+              16
+            ],
+            "raw_sha256": "266f5aadcdf293b5d09a2012cdc937f6e01bc07c18f6f114cc37017710c278bf"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 564,
+      "profile": "sdr",
+      "geometry": [
+        30,
+        19
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        22,
+        13,
+        25,
+        19
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              22,
+              13,
+              25,
+              19
+            ],
+            "raw_sha256": "98fb06789ffc7312345121ef24ba733c8f51aea9c761eeca095062cc8a387e76"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            22,
+            13,
+            25,
+            19
+          ],
+          "raw_sha256": "98fb06789ffc7312345121ef24ba733c8f51aea9c761eeca095062cc8a387e76"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "60 56 1 2 1 3 1 1 1",
+              "GEOMETRY_CHECKOUT": "22 13 25 19",
+              "GEOMETRY_PRERENDER": "22 13 25 19",
+              "GEOMETRY": "22 13 25 19"
+            },
+            "output_rect": [
+              22,
+              13,
+              25,
+              19
+            ],
+            "raw_sha256": "98fb06789ffc7312345121ef24ba733c8f51aea9c761eeca095062cc8a387e76"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 575,
+      "profile": "sdr",
+      "geometry": [
+        13,
+        17
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        3,
+        13,
+        10,
+        17
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              3,
+              13,
+              10,
+              17
+            ],
+            "raw_sha256": "bc26cca4d6f0c38869b7397695db2651b754941f52fc20348c83bc73ad4c2ca9"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            3,
+            13,
+            10,
+            17
+          ],
+          "raw_sha256": "bc26cca4d6f0c38869b7397695db2651b754941f52fc20348c83bc73ad4c2ca9"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "38 51 1 3 1 3 10 11 32",
+              "GEOMETRY_CHECKOUT": "3 13 10 17",
+              "GEOMETRY_PRERENDER": "3 13 10 17",
+              "GEOMETRY": "3 13 10 17"
+            },
+            "output_rect": [
+              3,
+              13,
+              10,
+              17
+            ],
+            "raw_sha256": "bc26cca4d6f0c38869b7397695db2651b754941f52fc20348c83bc73ad4c2ca9"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 589,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        0,
+        2,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "e453230ec8ede767c78e72d22d0ca44270153f03540bff6100d01010f9b0f58d"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "raw_sha256": "e453230ec8ede767c78e72d22d0ca44270153f03540bff6100d01010f9b0f58d"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "5 1 1 3 1 3 10 11 0",
+              "GEOMETRY_CHECKOUT": "1 0 2 1",
+              "GEOMETRY_PRERENDER": "1 0 2 1",
+              "GEOMETRY": "1 0 2 1"
+            },
+            "output_rect": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "e453230ec8ede767c78e72d22d0ca44270153f03540bff6100d01010f9b0f58d"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 599,
+      "profile": "sdr",
+      "geometry": [
+        7,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        4,
+        1,
+        7,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              4,
+              1,
+              7,
+              2
+            ],
+            "raw_sha256": "e3155dbeb0463681e34fed36de94f65dd18f6c20d8e7c48ba73cdf52c3f775a1"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            4,
+            1,
+            7,
+            2
+          ],
+          "raw_sha256": "e3155dbeb0463681e34fed36de94f65dd18f6c20d8e7c48ba73cdf52c3f775a1"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "19 13 1 3 1 3 1 1 7",
+              "GEOMETRY_CHECKOUT": "4 1 7 2",
+              "GEOMETRY_PRERENDER": "4 1 7 2",
+              "GEOMETRY": "4 1 7 2"
+            },
+            "output_rect": [
+              4,
+              1,
+              7,
+              2
+            ],
+            "raw_sha256": "e3155dbeb0463681e34fed36de94f65dd18f6c20d8e7c48ba73cdf52c3f775a1"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 601,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        3,
+        3,
+        6
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              3,
+              3,
+              6
+            ],
+            "raw_sha256": "73f753ef695c9c3466be605408e6679e910d08aa2c30c329dfe27996a4618419"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            3,
+            3,
+            6
+          ],
+          "raw_sha256": "73f753ef695c9c3466be605408e6679e910d08aa2c30c329dfe27996a4618419"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "6 19 1 2 1 3 1 1 7",
+              "GEOMETRY_CHECKOUT": "2 3 3 6",
+              "GEOMETRY_PRERENDER": "2 3 3 6",
+              "GEOMETRY": "2 3 3 6"
+            },
+            "output_rect": [
+              2,
+              3,
+              3,
+              6
+            ],
+            "raw_sha256": "73f753ef695c9c3466be605408e6679e910d08aa2c30c329dfe27996a4618419"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 605,
+      "profile": "sdr",
+      "geometry": [
+        20,
+        28
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        16,
+        2,
+        20,
+        20
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              16,
+              2,
+              20,
+              20
+            ],
+            "raw_sha256": "485d8cde9b86e2079a822b1b3ab64a2ff34e8cc76f189f1cb819a377ad23ebc9"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            16,
+            2,
+            20,
+            20
+          ],
+          "raw_sha256": "485d8cde9b86e2079a822b1b3ab64a2ff34e8cc76f189f1cb819a377ad23ebc9"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "39 83 1 2 1 3 4 3 3",
+              "GEOMETRY_CHECKOUT": "16 2 20 20",
+              "GEOMETRY_PRERENDER": "16 2 20 20",
+              "GEOMETRY": "16 2 20 20"
+            },
+            "output_rect": [
+              16,
+              2,
+              20,
+              20
+            ],
+            "raw_sha256": "485d8cde9b86e2079a822b1b3ab64a2ff34e8cc76f189f1cb819a377ad23ebc9"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 627,
+      "profile": "sdr",
+      "geometry": [
+        100,
+        1
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        5,
+        0,
+        70,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              5,
+              0,
+              70,
+              1
+            ],
+            "raw_sha256": "981c22603598c0ca52702f38e7f1037e79594f9a6b545df9d53e01e309603aed"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            5,
+            0,
+            70,
+            1
+          ],
+          "raw_sha256": "981c22603598c0ca52702f38e7f1037e79594f9a6b545df9d53e01e309603aed"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "200 1 1 2 1 2 4 3 0",
+              "GEOMETRY_CHECKOUT": "5 0 70 1",
+              "GEOMETRY_PRERENDER": "5 0 70 1",
+              "GEOMETRY": "5 0 70 1"
+            },
+            "output_rect": [
+              5,
+              0,
+              70,
+              1
+            ],
+            "raw_sha256": "981c22603598c0ca52702f38e7f1037e79594f9a6b545df9d53e01e309603aed"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 628,
+      "profile": "sdr",
+      "geometry": [
+        12,
+        9
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        9,
+        8,
+        10,
+        9
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              9,
+              8,
+              10,
+              9
+            ],
+            "raw_sha256": "f73df83edaf197c0f92aa210a0fc2c54c47f5e7be519ef157af3c76272d96824"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "raw_sha256": "f73df83edaf197c0f92aa210a0fc2c54c47f5e7be519ef157af3c76272d96824"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "24 17 1 2 1 2 4 3 0",
+              "GEOMETRY_CHECKOUT": "9 8 10 9",
+              "GEOMETRY_PRERENDER": "9 8 10 9",
+              "GEOMETRY": "9 8 10 9"
+            },
+            "output_rect": [
+              9,
+              8,
+              10,
+              9
+            ],
+            "raw_sha256": "f73df83edaf197c0f92aa210a0fc2c54c47f5e7be519ef157af3c76272d96824"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 631,
+      "profile": "sdr",
+      "geometry": [
+        1,
+        82
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        63,
+        1,
+        76
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              63,
+              1,
+              76
+            ],
+            "raw_sha256": "886fcefac1fc709c8da4a5830d761c073069e217b0cafefa42515e08ae1b2638"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            63,
+            1,
+            76
+          ],
+          "raw_sha256": "886fcefac1fc709c8da4a5830d761c073069e217b0cafefa42515e08ae1b2638"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 246 1 2 1 3 1 1 7",
+              "GEOMETRY_CHECKOUT": "0 63 1 76",
+              "GEOMETRY_PRERENDER": "0 63 1 76",
+              "GEOMETRY": "0 63 1 76"
+            },
+            "output_rect": [
+              0,
+              63,
+              1,
+              76
+            ],
+            "raw_sha256": "886fcefac1fc709c8da4a5830d761c073069e217b0cafefa42515e08ae1b2638"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 639,
+      "profile": "sdr",
+      "geometry": [
+        5,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "request": [
+        2,
+        6,
+        3,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              6,
+              3,
+              7
+            ],
+            "raw_sha256": "65221d7f129e792d335d41ab4665b344250db97fc993b66e84f7c38c9852f9cc"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            6,
+            3,
+            7
+          ],
+          "raw_sha256": "65221d7f129e792d335d41ab4665b344250db97fc993b66e84f7c38c9852f9cc"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "9 14 1 2 1 2 10 11 1",
+              "GEOMETRY_CHECKOUT": "2 6 3 7",
+              "GEOMETRY_PRERENDER": "2 6 3 7",
+              "GEOMETRY": "2 6 3 7"
+            },
+            "output_rect": [
+              2,
+              6,
+              3,
+              7
+            ],
+            "raw_sha256": "65221d7f129e792d335d41ab4665b344250db97fc993b66e84f7c38c9852f9cc"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 641,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        3
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              2,
+              1,
+              3
+            ],
+            "raw_sha256": "94fd43a360b8ecbdb496171b872584302735c0e99ec9e82696fcb18beac90675"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            2,
+            1,
+            3
+          ],
+          "raw_sha256": "94fd43a360b8ecbdb496171b872584302735c0e99ec9e82696fcb18beac90675"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "5 12 1 4 1 4 2 1 16",
+              "GEOMETRY_CHECKOUT": "0 2 1 3",
+              "GEOMETRY_PRERENDER": "0 2 1 3",
+              "GEOMETRY": "0 2 1 3"
+            },
+            "output_rect": [
+              0,
+              2,
+              1,
+              3
+            ],
+            "raw_sha256": "94fd43a360b8ecbdb496171b872584302735c0e99ec9e82696fcb18beac90675"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 643,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              2,
+              1,
+              3,
+              2
+            ],
+            "raw_sha256": "4209ef79a2476e95ff67921c52f879dd7b390045a1abb4446bc0426137aca4e0"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            2,
+            1,
+            3,
+            2
+          ],
+          "raw_sha256": "4209ef79a2476e95ff67921c52f879dd7b390045a1abb4446bc0426137aca4e0"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "9 6 1 3 1 3 2 1 0",
+              "GEOMETRY_CHECKOUT": "2 1 3 2",
+              "GEOMETRY_PRERENDER": "2 1 3 2",
+              "GEOMETRY": "2 1 3 2"
+            },
+            "output_rect": [
+              2,
+              1,
+              3,
+              2
+            ],
+            "raw_sha256": "4209ef79a2476e95ff67921c52f879dd7b390045a1abb4446bc0426137aca4e0"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 649,
+      "profile": "signed",
+      "geometry": [
+        6,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "request": [
+        0,
+        4,
+        3,
+        5
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              4,
+              3,
+              5
+            ],
+            "raw_sha256": "00574506b751f82c1b4879b1d2d2ca6e8229b4cd53ada4d5a7f9cccffc8f4ecf"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            4,
+            3,
+            5
+          ],
+          "raw_sha256": "00574506b751f82c1b4879b1d2d2ca6e8229b4cd53ada4d5a7f9cccffc8f4ecf"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "21 18 1 4 1 4 2 1 16",
+              "GEOMETRY_CHECKOUT": "0 4 3 5",
+              "GEOMETRY_PRERENDER": "0 4 3 5",
+              "GEOMETRY": "0 4 3 5"
+            },
+            "output_rect": [
+              0,
+              4,
+              3,
+              5
+            ],
+            "raw_sha256": "00574506b751f82c1b4879b1d2d2ca6e8229b4cd53ada4d5a7f9cccffc8f4ecf"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 665,
+      "profile": "hdr",
+      "geometry": [
+        6,
+        14
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        1,
+        4,
+        3,
+        12
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              4,
+              3,
+              12
+            ],
+            "raw_sha256": "4d7dc335d25ca81f502c40f56593da94f16f2125cd5a07ec34d630be33bf899b"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            4,
+            3,
+            12
+          ],
+          "raw_sha256": "4d7dc335d25ca81f502c40f56593da94f16f2125cd5a07ec34d630be33bf899b"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "41 112 1 8 1 8 1 1 7",
+              "GEOMETRY_CHECKOUT": "1 4 3 12",
+              "GEOMETRY_PRERENDER": "1 4 3 12",
+              "GEOMETRY": "1 4 3 12"
+            },
+            "output_rect": [
+              1,
+              4,
+              3,
+              12
+            ],
+            "raw_sha256": "4d7dc335d25ca81f502c40f56593da94f16f2125cd5a07ec34d630be33bf899b"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 695,
+      "profile": "hdr",
+      "geometry": [
+        1,
+        6
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        1,
+        1,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "raw_sha256": "d7f9a182d8e7e1ed16f0e82630f577381cf6b89df2a55694a5f1d006df0ffb42"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "raw_sha256": "d7f9a182d8e7e1ed16f0e82630f577381cf6b89df2a55694a5f1d006df0ffb42"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1 17 1 3 1 3 1 1 32",
+              "GEOMETRY_CHECKOUT": "0 1 1 2",
+              "GEOMETRY_PRERENDER": "0 1 1 2",
+              "GEOMETRY": "0 1 1 2"
+            },
+            "output_rect": [
+              0,
+              1,
+              1,
+              2
+            ],
+            "raw_sha256": "d7f9a182d8e7e1ed16f0e82630f577381cf6b89df2a55694a5f1d006df0ffb42"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 705,
+      "profile": "nonfinite",
+      "geometry": [
+        2,
+        2
+      ],
+      "downsample": [
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          8
+        ]
+      ],
+      "request": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "raw_sha256": "7766f8a9d2a5e9ba53b490c766c18822df53a34007d3f3f5235d24f5ecf6c1ab"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            1,
+            2,
+            2
+          ],
+          "raw_sha256": "7766f8a9d2a5e9ba53b490c766c18822df53a34007d3f3f5235d24f5ecf6c1ab"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "14 10 1 8 1 8 4 3 16",
+              "GEOMETRY_CHECKOUT": "1 1 2 2",
+              "GEOMETRY_PRERENDER": "1 1 2 2",
+              "GEOMETRY": "1 1 2 2"
+            },
+            "output_rect": [
+              1,
+              1,
+              2,
+              2
+            ],
+            "raw_sha256": "7766f8a9d2a5e9ba53b490c766c18822df53a34007d3f3f5235d24f5ecf6c1ab"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 708,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        5
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        0,
+        2,
+        1
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "246d5d41844837d96c703240a7d8113785068da5b2c03a775d396d5453a71d70"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "raw_sha256": "246d5d41844837d96c703240a7d8113785068da5b2c03a775d396d5453a71d70"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "3 15 1 2 1 3 2 1 16",
+              "GEOMETRY_CHECKOUT": "1 0 2 1",
+              "GEOMETRY_PRERENDER": "1 0 2 1",
+              "GEOMETRY": "1 0 2 1"
+            },
+            "output_rect": [
+              1,
+              0,
+              2,
+              1
+            ],
+            "raw_sha256": "246d5d41844837d96c703240a7d8113785068da5b2c03a775d396d5453a71d70"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 716,
+      "profile": "sdr",
+      "geometry": [
+        2,
+        8
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        5,
+        1,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              5,
+              1,
+              7
+            ],
+            "raw_sha256": "19c843741089604e36a8aa807c70059a478029742310a52de343fafa4eaff125"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            5,
+            1,
+            7
+          ],
+          "raw_sha256": "19c843741089604e36a8aa807c70059a478029742310a52de343fafa4eaff125"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "4 23 1 2 1 3 10 11 32",
+              "GEOMETRY_CHECKOUT": "0 5 1 7",
+              "GEOMETRY_PRERENDER": "0 5 1 7",
+              "GEOMETRY": "0 5 1 7"
+            },
+            "output_rect": [
+              0,
+              5,
+              1,
+              7
+            ],
+            "raw_sha256": "19c843741089604e36a8aa807c70059a478029742310a52de343fafa4eaff125"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 729,
+      "profile": "sdr",
+      "geometry": [
+        6,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        1,
+        4,
+        2,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              1,
+              4,
+              2,
+              7
+            ],
+            "raw_sha256": "45c78a023f7b0922d24027c8d8d59aa3f00a95add3d768766afb3a2b07bc0e1c"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            1,
+            4,
+            2,
+            7
+          ],
+          "raw_sha256": "45c78a023f7b0922d24027c8d8d59aa3f00a95add3d768766afb3a2b07bc0e1c"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "17 19 1 3 1 3 10 11 32",
+              "GEOMETRY_CHECKOUT": "1 4 2 7",
+              "GEOMETRY_PRERENDER": "1 4 2 7",
+              "GEOMETRY": "1 4 2 7"
+            },
+            "output_rect": [
+              1,
+              4,
+              2,
+              7
+            ],
+            "raw_sha256": "45c78a023f7b0922d24027c8d8d59aa3f00a95add3d768766afb3a2b07bc0e1c"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 741,
+      "profile": "sdr",
+      "geometry": [
+        3,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        0,
+        3,
+        2,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              0,
+              3,
+              2,
+              7
+            ],
+            "raw_sha256": "a4490ac2bfa8adf238aa8da9f564a0e842664cab20d59de7bd3bf63bec2f6738"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            3,
+            2,
+            7
+          ],
+          "raw_sha256": "a4490ac2bfa8adf238aa8da9f564a0e842664cab20d59de7bd3bf63bec2f6738"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "8 20 1 3 1 3 4 3 0",
+              "GEOMETRY_CHECKOUT": "0 3 2 7",
+              "GEOMETRY_PRERENDER": "0 3 2 7",
+              "GEOMETRY": "0 3 2 7"
+            },
+            "output_rect": [
+              0,
+              3,
+              2,
+              7
+            ],
+            "raw_sha256": "a4490ac2bfa8adf238aa8da9f564a0e842664cab20d59de7bd3bf63bec2f6738"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 746,
+      "profile": "hdr",
+      "geometry": [
+        28,
+        7
+      ],
+      "downsample": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "request": [
+        23,
+        6,
+        24,
+        7
+      ],
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "ok",
+            "guards_intact": true,
+            "session_clean": true,
+            "output_rect": [
+              23,
+              6,
+              24,
+              7
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "oracle": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            23,
+            6,
+            24,
+            7
+          ],
+          "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        "routes": {
+          "smart": {
+            "status": "exact",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "56 19 1 2 1 3 2 1 7",
+              "GEOMETRY_CHECKOUT": "23 6 24 7",
+              "GEOMETRY_PRERENDER": "23 6 24 7",
+              "GEOMETRY": "23 6 24 7"
+            },
+            "output_rect": [
+              23,
+              6,
+              24,
+              7
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ]
+}

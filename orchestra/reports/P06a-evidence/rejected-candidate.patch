@@ -1,0 +1,32 @@
+diff --git a/core/dblur_frontonly.cpp b/core/dblur_frontonly.cpp
+index 9562873a..4e286cbc 100644
+--- a/core/dblur_frontonly.cpp
++++ b/core/dblur_frontonly.cpp
+@@ -673,7 +673,9 @@ static int render_minimal_argb32(const float* input_argb,
+         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
+             back_sharp_tail_percent != 0.0f) {
+             component_divisor = build_component_map(a, ww, wh, &map);
+-            if (component_divisor <= 0.0f) component_divisor = 1.0f;
++            // AEX 0x61f6 stores the component maximum even when it is zero.
++            // Signed PF32 alpha can leave the positive-alpha mask empty;
++            // the resulting 0/0 coefficient is consumed by the x86 prepass.
+         } else {
+             for (std::size_t p = 0; p < wp; ++p) { map[p * 4] = 1.0f; map[p * 4 + 3] = 1.0f; }
+         }
+diff --git a/core/dblur_rowdriver.cpp b/core/dblur_rowdriver.cpp
+index 80f10db7..bd6ceada 100644
+--- a/core/dblur_rowdriver.cpp
++++ b/core/dblur_rowdriver.cpp
+@@ -111,7 +111,11 @@ extern "C" void olm_dblur_prepass_f32(int start, int offset,
+     }
+ 
+     int backward = trunc_i(static_cast<float>(back_count) * coefficient);
+-    if (start - backward < 0) {
++    // AEX 0x1234 CMP / 0x1237 CMOVS uses the sign of the wrapping 32-bit difference.
++    // A NaN coefficient converts to INT32_MIN; signed C++ subtraction would
++    // overflow and can erase this clipping branch under optimization.
++    if (((static_cast<std::uint32_t>(start) -
++          static_cast<std::uint32_t>(backward)) & 0x80000000u) != 0) {
+         backward = start;
+     }
+     if (backward > 1) {
