@@ -240,8 +240,9 @@
     ],
     "candidate_bypass": "",
     "candidate_sanitize": false,
-    "candidate_sha256": "4320b115c979b03cb9404eed27c339d1cc51aa56ace1c1ddb4caa08caaf6a555",
-    "candidate_source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "candidate_sha256": "05e17a928ce91318102a325a44f714b5afd2c6f50d7287dc9e194827c7fab692",
+    "candidate_source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
+    "case_timeout_seconds": 10,
     "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
     "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
     "core_sha256": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
@@ -259,7 +260,7 @@
       "smart": "render"
     },
     "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
-    "source_sha256": "1a709da45df6dd1af18d6f2f3b0ea952978baadd8dc3e4c60f09eea7d4d0650e",
+    "source_sha256": "ce92fc95fea31806a02a5cd940f9c05937fdaf48f57857ce2d30049f5fdaded9",
     "stage_support": "session protocol + public EffectMain harness expose final raw only",
     "time": {
       "scale": 24,
@@ -297,6 +298,18 @@
       "status": "ok"
     },
     "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          203,
+          211
+        ],
+        "raw_sha256": "14353413e1605943c4eff3cee79075c349c9ce1775ffe9732f4324555b25cdbc",
+        "session_clean": true,
+        "status": "ok"
+      },
       "smart": {
         "guards_intact": true,
         "output_rect": [
@@ -311,6 +324,33 @@
       }
     },
     "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 342664,
+          "actual_word_hex": "0d33",
+          "different_bytes": 298388,
+          "different_words": 157142,
+          "expected_bytes": 342664,
+          "expected_word_hex": "0000",
+          "first_byte": 0,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "203 211 1 1 1 1 4 3 3",
+          "INFO": "0 0 0 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          203,
+          211
+        ],
+        "raw_sha256": "9e20f19b5d5b9fdc629a8715426ee677e1f892fce09ba868f6f06d0350fc8c27",
+        "status": "mismatch"
+      },
       "smart": {
         "error": 0,
         "metadata": {
