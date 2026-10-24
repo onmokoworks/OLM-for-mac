@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DOC = ROOT / "docs/BETA_SUPPORT.md"
+DOC = ROOT / "docs/archive/BETA_SUPPORT_20260822.md"
 THREE_GATES = ROOT / "docs/PUBLIC_BETA_3_GATES.md"
 CURRENT_RC_IDENTITY = ROOT / "refs/conformance/olm_public_beta_rc_identity_20260822.json"
 CURRENT_RC_NATIVE_AE = ROOT / "refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json"
@@ -37,7 +37,7 @@ COLORKEY_EDGE_BLUR_NATIVE_AE = (
 DISTANCE_LINEAR_GAUSSIAN_NATIVE_AE = (
     ROOT / "refs/conformance/olmdistancegradation_native_ae_linear_gaussian_major_ops_20260824.json"
 )
-README = ROOT / "README.md"
+README = ROOT / "docs/archive/README_20260822.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
 )
@@ -567,13 +567,13 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(report["beta_support"]["manifest_field"],
                          "beta_support_sha256")
         self.assertEqual(report["beta_support"]["live_repository_path"],
-                         "docs/BETA_SUPPORT.md")
+                         "docs/archive/BETA_SUPPORT_20260822.md")
         self.assertFalse(
             report["beta_support"]["live_repository_document_is_package_payload"]
         )
         self.assertNotEqual(hashlib.sha256(DOC.read_bytes()).hexdigest(),
                             report["beta_support_sha256"])
-        self.assertIn("not the SHA-256 of the live docs/BETA_SUPPORT.md",
+        self.assertIn("not the SHA-256 of the live docs/archive/BETA_SUPPORT_20260822.md",
                       report["beta_support_scope"])
         self.assertIn("intentionally not substituted",
                       report["beta_support"]["relationship"])
@@ -973,7 +973,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
 
     def test_readme_stays_concise_and_links_once(self) -> None:
         self.assertLessEqual(len(self.readme.splitlines()), 80)
-        self.assertEqual(self.readme.count("docs/BETA_SUPPORT.md"), 1)
+        self.assertEqual(self.readme.count("docs/archive/BETA_SUPPORT_20260822.md"), 1)
         self.assertNotIn("| プラグイン |", self.readme)
 
     def test_completion_audit_and_roi_dod_are_machine_readable(self) -> None:

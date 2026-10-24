@@ -50,7 +50,7 @@ class Type1WorkspaceHandoffDependencyManifestTests(unittest.TestCase):
 
     def test_old_ulp_language_is_not_a_current_claim(self) -> None:
         stale_exact = {
-            "KNOWN_LIMITATIONS.md": (
+            "docs/archive/KNOWN_LIMITATIONS_20260822.md": (
                 "sampled source scalarには1〜4 ULP差が残る",
                 "SV25 diagnostic source scalarには既知1 ULP差",
             ),

@@ -26,7 +26,7 @@ class NativeAEDeclaredMatrixEvidenceTests(unittest.TestCase):
 
     def test_public_docs_bind_the_summary_without_adding_a_gate(self) -> None:
         gates = (ROOT / "docs/PUBLIC_BETA_3_GATES.md").read_text()
-        support = (ROOT / "docs/BETA_SUPPORT.md").read_text()
+        support = (ROOT / "docs/archive/BETA_SUPPORT_20260822.md").read_text()
         report_name = REPORT.name
         self.assertIn(report_name, gates)
         self.assertIn(report_name, support)

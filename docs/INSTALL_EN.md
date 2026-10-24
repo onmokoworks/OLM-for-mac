@@ -1,0 +1,72 @@
+# Installation guide
+
+[日本語](INSTALL_JA.md) (Japanese is the primary version; this is a translation)
+
+## Requirements
+
+- macOS 11 or later (Apple Silicon or Intel)
+- Mainly tested with Adobe After Effects 2026 (26.3)
+- CPU rendering (GPU rendering is not supported)
+
+> [!NOTE]
+> The plugins are not yet signed with an Apple Developer ID or notarized, so macOS Gatekeeper may block plugins you downloaded. If that happens, do not force a workaround. Report the message you saw and your macOS version.
+
+## Installing
+
+1. Quit After Effects.
+2. Unzip the release ZIP.
+3. Copy the 10 `.plugin` files inside into:
+
+   ```text
+   ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
+   ```
+
+4. Check that no older plugin or backup with the same name is left in `MediaCore` or any folder inside it.
+   - AE searches the folders inside it too, so a leftover copy causes a duplicate error.
+   - Move backups outside `MediaCore`.
+5. Start After Effects and check that the OLM plugins appear in the Effect menu.
+
+### Installing from the repository
+
+From the development repository, quit After Effects and run the following. Plugins already installed are moved to a backup folder inside the repository.
+
+```sh
+scripts/install_mac_plugins_to_mediacore.sh --package /path/to/OLM_Mac_Plugins.zip
+```
+
+To check for duplicates only:
+
+```sh
+scripts/install_mac_plugins_to_mediacore.sh --audit-only
+```
+
+## First checks
+
+- Duplicate your project before opening it
+- At the bit depth you actually use (8 / 16 / 32 bpc), render a representative frame and compare it with the Windows version or earlier output
+- Switch the preview resolution and check that the result looks the same
+
+## If you see a warning
+
+- **Duplicate plugin**: look for plugins with the same name in `MediaCore`, including the folders inside it, and keep only one set. Move backups outside `MediaCore`.
+- **Preview control warning**: note the plugin name and the warning text, then quit AE. Check for leftover settings from the Windows version's custom UI, or an older plugin that is still installed.
+- **Bit depth warning**: check the bit depth in AE's Project Settings and include it in your report.
+
+Force-quitting a warning dialog or AE itself can make AE show crash recovery on the next launch. If you can close it normally, do that instead.
+
+## Uninstalling
+
+Quit After Effects and move the 10 OLM plugins out of `MediaCore`. You do not need to delete them: AE ignores anything outside `MediaCore`.
+
+## Reporting problems
+
+Please include:
+
+- macOS and After Effects versions, and whether your Mac is Apple Silicon or Intel
+- The plugin name
+- Bit depth, comp size and preview resolution
+- All parameter values
+- Any warning text or crash log
+- If possible, the smallest project and footage you can share
+
+See [Known limitations](../KNOWN_LIMITATIONS.en.md) for what is known not to work.

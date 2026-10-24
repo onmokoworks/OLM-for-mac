@@ -36,8 +36,8 @@ class ColorKeyPublicSourceBoundDocs(unittest.TestCase):
 
     def test_release_docs_name_current_boundary(self) -> None:
         docs = {
-            "README.md": ("OLMColorKey 63セル", "Classic／Smart各63セル"),
-            "KNOWN_LIMITATIONS.md": ("Classic／Smart各63セル", "installed版は60セル"),
+            "docs/archive/README_20260822.md": ("OLMColorKey 63セル", "Classic／Smart各63セル"),
+            "docs/archive/KNOWN_LIMITATIONS_20260822.md": ("Classic／Smart各63セル", "installed版は60セル"),
             "notes/CONFORMANCE_LEDGER.md": ("OLMColorKey fixed-source public-entry closure", "Direct arm64 and Rosetta x86_64"),
             "refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md": ("Classic／Smart両public route", "Classic 63／Smart 63"),
             "refs/conformance/olm_release_completion_matrix_20260806.md": ("Classic and Smart: exact-source Edge Blur", "701ae919"),

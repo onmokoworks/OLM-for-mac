@@ -18,7 +18,7 @@ def main() -> int:
         (ROOT / "refs/conformance/olmradialblur_rotation_pf16_inner_640x360_20260807.json").read_text()
     )
     matrix = (ROOT / "refs/conformance/olm_release_completion_matrix_20260806.md").read_text()
-    limitations = (ROOT / "KNOWN_LIMITATIONS.md").read_text()
+    limitations = (ROOT / "docs/archive/KNOWN_LIMITATIONS_20260822.md").read_text()
     kira_ui = json.loads(
         (ROOT / "refs/conformance/olmkirakira_ui_setup_actual_aex_20260806.json").read_text()
     )

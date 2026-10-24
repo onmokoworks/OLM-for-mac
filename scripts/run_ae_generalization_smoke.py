@@ -372,7 +372,7 @@ def main() -> int:
                 })
             excluded_depths = sorted(set(DEPTHS) - set(state["declared_depths"]))
             for depth in excluded_depths:
-                reason = "docs/BETA_SUPPORT.md does not declare this depth for the selected native AE route"
+                reason = "docs/archive/BETA_SUPPORT_20260822.md does not declare this depth for the selected native AE route"
                 report["unsupported_routes"].append({
                     "plugin": state["binary"], "depth": depth,
                     "reason": reason,
