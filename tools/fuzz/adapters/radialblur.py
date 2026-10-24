@@ -187,10 +187,12 @@ class Adapter:
         self.build(scratch, deadline)
         source, body, bypass, sanitize = self._build_info
         provenance = {
+            'reference_build': self.reference_build,
             'aex_path': str(self.aex), 'aex_sha256': sha(self.aex.read_bytes()),
             'worker_path': str(self.worker), 'worker_sha256': sha(self.worker.read_bytes()),
             'candidate_sha256': sha(self.binary.read_bytes()),
             'source_sha256': sha(public.SOURCE.read_bytes()),
+            'scatter_sha256': sha(public.SOURCE.with_name('RadialScatterSIMD.h').read_bytes()),
             'ucrtmath_sha256': {str(p.relative_to(Path(__file__).resolve().parents[3])):sha(p.read_bytes()) for p in sorted((Path(__file__).resolve().parents[3]/'ucrtmath').glob('src/*'))},
             'candidate_source_sha256': sha(source.encode()),
             'candidate_bypass': bypass,

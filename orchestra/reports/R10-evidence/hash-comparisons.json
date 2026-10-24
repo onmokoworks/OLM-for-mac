@@ -1,11 +1,21 @@
 [
   {
-    "label": "P05a-fast",
+    "label": "directional-baseline-fast",
     "cases": 300,
     "different_hashes": []
   },
   {
-    "label": "reference-fast",
+    "label": "directional-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "radial-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "radial-reference-fast",
     "cases": 100,
     "different_hashes": []
   }

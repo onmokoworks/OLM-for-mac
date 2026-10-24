@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <cstring>
+#include "../../core/x86_float.h"
 
 namespace olm::radial {
 using ScatterFloat4 = float __attribute__((vector_size(16)));
@@ -27,7 +28,7 @@ inline ScatterFloat4 scatter_sse_result(ScatterFloat4 result,
     return result;
 }
 
-inline void scatter_accumulate(float *accum, const float *source,
+inline void scatter_accumulate_fast(float *accum, const float *source,
                                float contribution) {
     ScatterFloat4 src, previous;
     std::memcpy(&src, source, sizeof(src));
@@ -56,5 +57,28 @@ inline void scatter_accumulate(float *accum, const float *source,
     product[3] = contribution;
     const ScatterFloat4 result = scatter_sse_result(product + previous, product, previous);
     std::memcpy(accum, &result, sizeof(result));
+}
+// P05b parent (738aed52^1): independent scalar channels, preserving
+// the reverse channel visitation of the inner scatter. Keep the trig table.
+inline void scatter_accumulate_reference(float *accum, const float *source,
+                                          float contribution, bool inner) {
+    if (inner) {
+        accum[3] = x86_float::sse_add(contribution, accum[3]);
+        for (int c = 2; c >= 0; --c)
+            accum[c] = x86_float::sse_add(x86_float::sse_mul(contribution, source[c]), accum[c]);
+    } else {
+        for (int c = 0; c < 3; ++c)
+            accum[c] = x86_float::sse_add(x86_float::sse_mul(contribution, source[c]), accum[c]);
+        accum[3] = x86_float::sse_add(contribution, accum[3]);
+    }
+}
+
+inline void scatter_accumulate(float *accum, const float *source,
+                               float contribution, bool inner = false) {
+#ifdef OLM_REFERENCE_BUILD
+    scatter_accumulate_reference(accum, source, contribution, inner);
+#else
+    scatter_accumulate_fast(accum, source, contribution);
+#endif
 }
 } // namespace olm::radial

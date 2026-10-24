@@ -14,17 +14,19 @@ python3 tools/perf/ref_vs_fast.py --plugin olmdirectionalblur
 The default requests 200 small cases, 20 full 1920×1080 frames and five full
 3840×2160 frames. Small cases cycle default, realistic-v1, realistic-v2 and
 odd-even-v1 fuzz samplers. Depths and exceptional floating-point inputs come from
-the seeded fuzz generator. Fixed large frames tile its pixel payload and resize
+the seeded fuzz generator; each fixed-size phase explicitly cycles 8/16/32bpc. Fixed large frames tile its pixel payload and resize
 point parameters; they are not independent random pixels at every coordinate.
+The default small-case size ceiling is 64×64.
 Use `--max-size 3840 --max-height 2160` to extend odd/even sampling to 4K;
-`--large-corpus` substitutes the ten P00b retained parameter sets in large cases,
-including corpus09. These additional stress options can take substantially longer.
+Large cases use the ten P00b retained parameter sets by default, including
+corpus09. `--no-large-corpus` instead keeps fuzz-generated parameters;
+`--corpus-index 9` selects only the heavy corpus09 set. These additional stress options can take substantially longer.
 
 Hosts are built twice from the existing fuzz adapters, with the definition added
 only to the reference compiler command. No oracle, emulator build, installed
 bundle or release gate is used. Raw output streams go to disk; byte comparisons
-are chunked and output rectangles are compared independently. Fast runs use
-`OLM_PARALLEL_MAX=1,2,8`. Matching refusals are counted separately and **are not
+are chunked and output rectangles are compared independently. Threaded fast plugins use
+`OLM_PARALLEL_MAX=1,2,8`; scalar plugins run once. Matching refusals are counted separately and **are not
 successful image comparisons**. A timeout or host failure fails the command.
 The first mismatch preserves the exact input, outputs and case metadata.
 

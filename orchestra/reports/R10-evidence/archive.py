@@ -11,11 +11,12 @@ for path in S.rglob('*'):
  with path.open('rb') as source,gzip.open(E/name,'wb') as target:
   while chunk:=source.read(1048576):target.write(chunk)
 comparisons=[]
-a=S/'fast-oracle-directional.json';b=S/'oracle-directional.json'
-if a.exists() and b.exists():
+for plugin, baseline in [('directional','P05a-evidence/default-1.json'),('radial','P05b-evidence/default.json.gz')]:
+ a=S/f'fast-oracle-{plugin}.json';b=S/f'oracle-{plugin}.json'
+ if not a.exists() or not b.exists():continue
  fast=json.loads(a.read_text())
- for label,path in [('P05a-fast',ROOT/'orchestra/reports/P05a-evidence/default-1.json'),('reference-fast',b)]:
-  prior=json.loads(path.read_text());diff=[]
+ for label,path in [(plugin+'-baseline-fast',ROOT/'orchestra/reports'/baseline),(plugin+'-reference-fast',b)]:
+  prior=json.load(gzip.open(path) if path.suffix=='.gz' else path.open());diff=[]
   for x,y in zip(prior['cases'],fast['cases']):
    assert x['index']==y['index'] and x['input_sha256']==y['input_sha256']
    for route in ('classic','smart'):

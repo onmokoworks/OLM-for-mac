@@ -26,16 +26,14 @@ PLUGINS = ('olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmo
 
 def build(kind, options, directory, deadline):
     base = importlib.import_module('adapters.' + options.plugin).Adapter
-    class Native(base):
-        def compile(self, argv, end):
-            if str(argv[0]) == 'clang++' and kind == 'reference' and not self.reference_build:
-                argv = [*argv, '-DOLM_REFERENCE_BUILD=1']
-            return super().compile(argv, end)
-    adapter = Native(options)
+    adapter = base(options)
     adapter.reference_build = kind == 'reference'
     adapter.env.update(TMPDIR=str(directory), TMP=str(directory), TEMP=str(directory))
     directory.mkdir(parents=True, exist_ok=True)
-    adapter.binary, _ = adapter.build(directory, deadline)
+    adapter.binary, dependencies = adapter.build(directory, deadline)
+    sources = set(dependencies) | set((ROOT/'core').glob('*.h'))
+    sources.update(header for source in dependencies for header in source.parent.glob('*.h'))
+    adapter.build_sources = {str(path.relative_to(ROOT)): digest(path) for path in sorted(sources)}
     return adapter
 
 
@@ -114,15 +112,25 @@ def cases(adapter, args):
         adapter.size_sampler = 'odd-even-v1' if index % 4 == 3 else 'default'
         adapter.max_size = args.max_size if index % 4 == 3 else 64
         adapter.size_max_height = args.max_height
-        case = adapter.generate(args.seed, index)
         phase = 'small' if index < args.small else '1080p' if index < args.small + args.hd else '4k'
+        case = adapter.generate(args.seed, index)
+        if phase != 'small' and args.cycle_depth:
+            phase_index = index-args.small-(args.hd if phase=='4k' else 0)
+            desired = (8,16,32)[phase_index % 3]
+            attempt = 0
+            while case['depth'] != desired:
+                attempt += 1
+                case = adapter.generate(args.seed, index+attempt*100000)
+        case['sequence_index'] = index
         if phase != 'small':
             # Include all ten P00b corpus parameter sets, including corpus09.
-            if corpus and args.large_corpus:
-                _, saved = corpus[(index-args.small) % len(corpus)]
-                case['parameters'] = copy.deepcopy(saved['case']['parameters'])
-                case['parameter_source'] = str(corpus[(index-args.small) % len(corpus)][0].relative_to(ROOT))
             old = case['geometry']
+            if corpus and args.large_corpus:
+                corpus_index = args.corpus_index if args.corpus_index is not None else (index-args.small) % len(corpus)
+                _, saved = corpus[corpus_index]
+                old = saved['case']['geometry']
+                case['parameters'] = copy.deepcopy(saved['case']['parameters'])
+                case['parameter_source'] = str(corpus[corpus_index][0].relative_to(ROOT))
             case['geometry'] = [1920,1080] if phase == '1080p' else [3840,2160]
             n = case['geometry'][0]*case['geometry'][1]*case['depth']//8*4
             payload = case['pixels']
@@ -142,17 +150,23 @@ def main():
     p.add_argument('--hd', type=int, default=20)
     p.add_argument('--uhd', type=int, default=5)
     p.add_argument('--seed', type=int, default=1)
+    p.add_argument('--cycle-depth', action=argparse.BooleanOptionalAction, default=True, help='Guarantee every depth in each fixed-size phase')
     p.add_argument('--max-size', type=int, default=64)
-    p.add_argument('--large-corpus', action='store_true', help='Use P00b corpus parameters for fixed-size frames')
-    p.add_argument('--max-height', type=int, default=2160)
+    p.add_argument('--large-corpus', action=argparse.BooleanOptionalAction, default=True, help='Use P00b corpus parameters for fixed-size frames (default: enabled)')
+    p.add_argument('--corpus-index', type=int, choices=range(10), help='Choose one P00b corpus parameter set (requires --large-corpus)')
+    p.add_argument('--max-height', type=int, default=64)
     p.add_argument('--case-timeout', type=float, default=180)
-    p.add_argument('--parallel', type=int, nargs='+', default=[1,2,8])
+    p.add_argument('--parallel', type=int, nargs='+', help='Override thread caps (default: 1/2/8 for threaded plugins, 1 otherwise)')
     p.add_argument('--scratch', type=Path, default=ROOT/'orchestra/state/R10-reference-fast-split')
     args = p.parse_args()
+    if args.parallel is None:
+        args.parallel = [1,2,8] if args.plugin in ('olmdirectionalblur','olmblur','olmkirakira') else [1]
     args.scratch = args.scratch.resolve() / args.plugin
     if not args.scratch.is_relative_to(ROOT/'orchestra/state'):
         p.error('scratch must be inside this worktree/orchestra/state')
     args.scratch.mkdir(parents=True, exist_ok=True)
+    for stale in ('summary.json','failure.json','builds.json','current-case.json'):
+        (args.scratch/stale).unlink(missing_ok=True)
     options = SimpleNamespace(**vars(args), main=ROOT.parent.parent if ROOT.parent.name=='worktrees' else ROOT,
                               worker=Path('/unused'), size_sampler='default', size_max_height=args.max_height)
     free = re.search(r'System-wide memory free percentage: (\d+)%', subprocess.check_output(['memory_pressure'], text=True))
@@ -164,7 +178,7 @@ def main():
         for kind in ('fast','reference'):
             adapters[kind] = build(kind, options, args.scratch/kind, time.monotonic()+300)
             print('built', kind, flush=True)
-        (args.scratch/'builds.json').write_text(json.dumps({kind: {'binary_sha256': digest(adapter.binary), 'reference_definition': kind=='reference'} for kind, adapter in adapters.items()}, indent=2)+'\n')
+        (args.scratch/'builds.json').write_text(json.dumps({kind: {'binary_sha256': digest(adapter.binary), 'reference_definition': kind=='reference', 'sources': adapter.build_sources} for kind, adapter in adapters.items()}, indent=2)+'\n')
         counts = {'exact':0, 'refusal':0, 'mismatch':0}
         with (args.scratch/'results.jsonl').open('w') as report:
             for phase, case in cases(adapters['fast'], args):
@@ -185,6 +199,9 @@ def main():
                     # Retain the exact input and both outputs at the first failure.
                     return 1
         (args.scratch/'summary.json').write_text(json.dumps(dict(counts=counts, seconds=time.monotonic()-started, requested=vars(args)), default=str, indent=2)+'\n')
+        for kind in adapters:
+            for name in ('input.raw','output.raw','stdout','stderr','geometry-input.raw','geometry-output.raw'):
+                (args.scratch/kind/name).unlink(missing_ok=True)
         return 0
     except Exception as exc:
         (args.scratch/'failure.json').write_text(json.dumps({'error':str(exc), 'seconds':time.monotonic()-started}, indent=2)+'\n')
