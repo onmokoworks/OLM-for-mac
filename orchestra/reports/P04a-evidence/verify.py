@@ -9,7 +9,7 @@ def run(label,extra):
  cmd=[sys.executable,str(R/'tools/fuzz/run.py'),'--plugin','olmdistancegradation','--jobs','1','--shrink-attempts','0','--scratch',str(work),'--corpus',str(S/(label+'-corpus')),'--report',str(out),*extra]
  with (S/(label+'.log')).open('w') as f:rc=subprocess.call(cmd,cwd=R,stdout=f,stderr=subprocess.STDOUT)
  data=json.loads(out.read_text()) if out.exists() else {}
- row=dict(label=label,command=cmd,returncode=rc,completed=data.get('completed'),counts=data.get('counts'),replay_matches_saved=data.get('replay_matches_saved'));rows.append(row)
+ row=dict(label=label,command=cmd,returncode=rc,completed=data.get('completed'),counts=data.get('summary'),replay_matches_saved=data.get('replay_matches_saved'));rows.append(row)
  print(json.dumps(row),flush=True);(S/'verification.json').write_text(json.dumps(rows,indent=2))
  # Keep result JSON and logs; discard reproducible host products.
  shutil.rmtree(work,ignore_errors=True)
