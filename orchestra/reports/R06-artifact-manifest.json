@@ -1,0 +1,1896 @@
+{
+  "archive": "R06-evidence.tar.xz",
+  "sha256": "bc38a820c4ee82b41be3c21ad66a0f06a476897b619d3414908e778e5a93d669",
+  "files": [
+    {
+      "path": "152/mac-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "152/mac-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "152/mac-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "152/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "152/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "152/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "152/original-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "152/original-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "152/original-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "152/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "152/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "152/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "152/planes.json",
+      "bytes": 3420,
+      "sha256": "7a1120702120a227c0d3b6aae61932ac6381ab8379aa1a032b6a011aa84fbf92"
+    },
+    {
+      "path": "152/report.json",
+      "bytes": 1979,
+      "sha256": "328eef13a1eb7194aed3fd406deaf3b9192d9d4ab8e7b2660e55a08c564220ae"
+    },
+    {
+      "path": "152/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "152/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "152/worker-C53b-trace-1/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "152/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "152/worker-C53b-trace-2/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "152/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "152/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "153/mac-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "153/mac-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "153/mac-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "153/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "153/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "153/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "153/original-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "153/original-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "153/original-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "153/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "153/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "153/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "153/planes.json",
+      "bytes": 3420,
+      "sha256": "797e9ad4c92682af518ff4a4486644f3e0ca12a654cfbaae1c32cb49462353f0"
+    },
+    {
+      "path": "153/report.json",
+      "bytes": 1979,
+      "sha256": "cd65f6819f9460961163128f4a33746d02fe3e0faaba47d7bf8d4e5e33d9bbb2"
+    },
+    {
+      "path": "153/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "153/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "153/worker-C53b-trace-1/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "153/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "153/worker-C53b-trace-2/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "153/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "153/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "155/mac-accum.zlib",
+      "bytes": 161896,
+      "sha256": "4492e3d4ba0c6a538818431d66cd81ee15cd59cee6cefd51583ef90e2d790447"
+    },
+    {
+      "path": "155/mac-final_rgba.zlib",
+      "bytes": 927,
+      "sha256": "4a28eade39e1215618e0ff751a0cf9c91ef7a0e0ba3773dda9a1cedb05df0c30"
+    },
+    {
+      "path": "155/mac-max_alpha.zlib",
+      "bytes": 20262,
+      "sha256": "760bb486c3cc88c8d56a8a0aaf37c42f5dcd8e43306b29404f085c84519cde4a"
+    },
+    {
+      "path": "155/mac-polar.zlib",
+      "bytes": 161338,
+      "sha256": "48f07037d8223ddc73c6928a804e71edb51dd5c12b8d4fffd98ce7a97bd7a553"
+    },
+    {
+      "path": "155/mac-prepass_alpha.zlib",
+      "bytes": 20260,
+      "sha256": "0b2fb649ed0998d51181ebe0b65e3b62d2c37f5e6fa5f55650fc912cca4ce34c"
+    },
+    {
+      "path": "155/mac-source_scalar.zlib",
+      "bytes": 6264,
+      "sha256": "342838172d264a16bea262eb12062aaeb86c446493bd3b70826e2f3f9ab5b6a7"
+    },
+    {
+      "path": "155/original-accum.zlib",
+      "bytes": 161896,
+      "sha256": "4492e3d4ba0c6a538818431d66cd81ee15cd59cee6cefd51583ef90e2d790447"
+    },
+    {
+      "path": "155/original-final_rgba.zlib",
+      "bytes": 927,
+      "sha256": "4a28eade39e1215618e0ff751a0cf9c91ef7a0e0ba3773dda9a1cedb05df0c30"
+    },
+    {
+      "path": "155/original-max_alpha.zlib",
+      "bytes": 20262,
+      "sha256": "760bb486c3cc88c8d56a8a0aaf37c42f5dcd8e43306b29404f085c84519cde4a"
+    },
+    {
+      "path": "155/original-polar.zlib",
+      "bytes": 161338,
+      "sha256": "48f07037d8223ddc73c6928a804e71edb51dd5c12b8d4fffd98ce7a97bd7a553"
+    },
+    {
+      "path": "155/original-prepass_alpha.zlib",
+      "bytes": 20260,
+      "sha256": "0b2fb649ed0998d51181ebe0b65e3b62d2c37f5e6fa5f55650fc912cca4ce34c"
+    },
+    {
+      "path": "155/original-source_scalar.zlib",
+      "bytes": 6264,
+      "sha256": "342838172d264a16bea262eb12062aaeb86c446493bd3b70826e2f3f9ab5b6a7"
+    },
+    {
+      "path": "155/planes.json",
+      "bytes": 3420,
+      "sha256": "5b7ec27ac1d5d3d8217c04fc94630b31701901f08ce5036a6760a2a9c65ec442"
+    },
+    {
+      "path": "155/report.json",
+      "bytes": 1979,
+      "sha256": "2acaf4d5aee8b92bfd58af44d9d3d9e28b9854fe5b66cbb0522223b14aa95074"
+    },
+    {
+      "path": "155/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "155/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 922,
+      "sha256": "7211efe60fc2ee469c531d048fd3d7f659c739b8e3198e2c379966a40892f27c"
+    },
+    {
+      "path": "155/worker-C53b-trace-1/trace.json",
+      "bytes": 7363922,
+      "sha256": "cb29c1c1700dd2f115dfdf2e0a0c85df01c1bf88147ef22f5a9edef432653223"
+    },
+    {
+      "path": "155/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 922,
+      "sha256": "7211efe60fc2ee469c531d048fd3d7f659c739b8e3198e2c379966a40892f27c"
+    },
+    {
+      "path": "155/worker-C53b-trace-2/trace.json",
+      "bytes": 7363922,
+      "sha256": "cb29c1c1700dd2f115dfdf2e0a0c85df01c1bf88147ef22f5a9edef432653223"
+    },
+    {
+      "path": "155/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 922,
+      "sha256": "7211efe60fc2ee469c531d048fd3d7f659c739b8e3198e2c379966a40892f27c"
+    },
+    {
+      "path": "155/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 922,
+      "sha256": "7211efe60fc2ee469c531d048fd3d7f659c739b8e3198e2c379966a40892f27c"
+    },
+    {
+      "path": "156/mac-accum.zlib",
+      "bytes": 441115,
+      "sha256": "229ecd81be0741c83779546ec450d77248714948216f67db26ecab42b9ea419f"
+    },
+    {
+      "path": "156/mac-final_rgba.zlib",
+      "bytes": 7664,
+      "sha256": "bf1ce42bef9801e65c3a78ed7bd34147a2288440a4efa36fc01e7c1698615a2a"
+    },
+    {
+      "path": "156/mac-max_alpha.zlib",
+      "bytes": 41739,
+      "sha256": "1926777a3fadc1e8c43ac32e5984beb4e6f40bcb3a160020fb721a59bc9271d1"
+    },
+    {
+      "path": "156/mac-polar.zlib",
+      "bytes": 439409,
+      "sha256": "52d914d2cf31f797ad8b329f7ae1947e5b7e1c182dc97af5b3364b307f03d5d8"
+    },
+    {
+      "path": "156/mac-prepass_alpha.zlib",
+      "bytes": 41738,
+      "sha256": "c11b1aa00350ef9a588ef2010b2baf33afc1f94b90d77cb9464a466ac1498fc8"
+    },
+    {
+      "path": "156/mac-source_scalar.zlib",
+      "bytes": 6160,
+      "sha256": "a91d9feb8b2b041f2601fb461998a69e7c36163fb74c4b8ad3583a2543120337"
+    },
+    {
+      "path": "156/original-accum.zlib",
+      "bytes": 441115,
+      "sha256": "229ecd81be0741c83779546ec450d77248714948216f67db26ecab42b9ea419f"
+    },
+    {
+      "path": "156/original-final_rgba.zlib",
+      "bytes": 7664,
+      "sha256": "bf1ce42bef9801e65c3a78ed7bd34147a2288440a4efa36fc01e7c1698615a2a"
+    },
+    {
+      "path": "156/original-max_alpha.zlib",
+      "bytes": 41739,
+      "sha256": "1926777a3fadc1e8c43ac32e5984beb4e6f40bcb3a160020fb721a59bc9271d1"
+    },
+    {
+      "path": "156/original-polar.zlib",
+      "bytes": 439409,
+      "sha256": "52d914d2cf31f797ad8b329f7ae1947e5b7e1c182dc97af5b3364b307f03d5d8"
+    },
+    {
+      "path": "156/original-prepass_alpha.zlib",
+      "bytes": 41738,
+      "sha256": "c11b1aa00350ef9a588ef2010b2baf33afc1f94b90d77cb9464a466ac1498fc8"
+    },
+    {
+      "path": "156/original-source_scalar.zlib",
+      "bytes": 6160,
+      "sha256": "a91d9feb8b2b041f2601fb461998a69e7c36163fb74c4b8ad3583a2543120337"
+    },
+    {
+      "path": "156/planes.json",
+      "bytes": 3423,
+      "sha256": "ce0851b7707bc2e59f2bc284fdac385ef32366c8a7522b0fae073579b9da8451"
+    },
+    {
+      "path": "156/report.json",
+      "bytes": 1979,
+      "sha256": "348c1c9636aa8b5e03a81f04a410237e2b50c0de94f5df74200e987085051c98"
+    },
+    {
+      "path": "156/watches.json",
+      "bytes": 1888,
+      "sha256": "0cfe7fe9ceabf6c0474694a7b74b7ceb6511083abcb324d4a9cc1d84a79a0f58"
+    },
+    {
+      "path": "156/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 7662,
+      "sha256": "123c34aa5db16236f661289c40c9425cc1c219744592a8b189dd05761ecd194e"
+    },
+    {
+      "path": "156/worker-C53b-trace-1/trace.json",
+      "bytes": 17057658,
+      "sha256": "6f2dba3b41f1859c8533edeff67d2b321c1c409c88e3aa25e1208becad1d5ee4"
+    },
+    {
+      "path": "156/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 7662,
+      "sha256": "123c34aa5db16236f661289c40c9425cc1c219744592a8b189dd05761ecd194e"
+    },
+    {
+      "path": "156/worker-C53b-trace-2/trace.json",
+      "bytes": 17057658,
+      "sha256": "6f2dba3b41f1859c8533edeff67d2b321c1c409c88e3aa25e1208becad1d5ee4"
+    },
+    {
+      "path": "156/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 7662,
+      "sha256": "123c34aa5db16236f661289c40c9425cc1c219744592a8b189dd05761ecd194e"
+    },
+    {
+      "path": "156/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 7662,
+      "sha256": "123c34aa5db16236f661289c40c9425cc1c219744592a8b189dd05761ecd194e"
+    },
+    {
+      "path": "157/mac-accum.zlib",
+      "bytes": 173685,
+      "sha256": "253175cd0e686927a9e460747cca7ac536d24646a19632cbcc0c94edbde8bb8f"
+    },
+    {
+      "path": "157/mac-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "41c59ae2777b2c85ade2b79667e93ecc63e149a85fa9243b09689d2feeda82b1"
+    },
+    {
+      "path": "157/mac-max_alpha.zlib",
+      "bytes": 20998,
+      "sha256": "02220d2af9bb3f65d44008bb723cc5d9b7fc330cf43cc532fc9de29389be72c7"
+    },
+    {
+      "path": "157/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "157/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "157/mac-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "157/original-accum.zlib",
+      "bytes": 173685,
+      "sha256": "253175cd0e686927a9e460747cca7ac536d24646a19632cbcc0c94edbde8bb8f"
+    },
+    {
+      "path": "157/original-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "41c59ae2777b2c85ade2b79667e93ecc63e149a85fa9243b09689d2feeda82b1"
+    },
+    {
+      "path": "157/original-max_alpha.zlib",
+      "bytes": 20998,
+      "sha256": "02220d2af9bb3f65d44008bb723cc5d9b7fc330cf43cc532fc9de29389be72c7"
+    },
+    {
+      "path": "157/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "157/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "157/original-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "157/planes.json",
+      "bytes": 3420,
+      "sha256": "407fb768a1726e20e04c58e528e92207de2d3d37ff61c158b162f27ffa070344"
+    },
+    {
+      "path": "157/report.json",
+      "bytes": 1979,
+      "sha256": "c769305d4252822ca70d25b91c5a5cd2e29dc2077f48de339206fc6a643b4cd4"
+    },
+    {
+      "path": "157/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "157/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "00b8e0e9b39994e6a286fc7d951970d3e3608266a7d722fcb4c73207802204ec"
+    },
+    {
+      "path": "157/worker-C53b-trace-1/trace.json",
+      "bytes": 7540939,
+      "sha256": "21f5b8662057ebd62d9a6682542b6cac8a7e7bd2746cf215c17c6aa39c9628fd"
+    },
+    {
+      "path": "157/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "00b8e0e9b39994e6a286fc7d951970d3e3608266a7d722fcb4c73207802204ec"
+    },
+    {
+      "path": "157/worker-C53b-trace-2/trace.json",
+      "bytes": 7540939,
+      "sha256": "21f5b8662057ebd62d9a6682542b6cac8a7e7bd2746cf215c17c6aa39c9628fd"
+    },
+    {
+      "path": "157/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "00b8e0e9b39994e6a286fc7d951970d3e3608266a7d722fcb4c73207802204ec"
+    },
+    {
+      "path": "157/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "00b8e0e9b39994e6a286fc7d951970d3e3608266a7d722fcb4c73207802204ec"
+    },
+    {
+      "path": "158/mac-accum.zlib",
+      "bytes": 173989,
+      "sha256": "6570dc8d19b50b31a12a3727408cf75bb3353e18c33d51540d507deff1b9881a"
+    },
+    {
+      "path": "158/mac-final_rgba.zlib",
+      "bytes": 907,
+      "sha256": "783e3d420de0f9bf4245acad40a2fbbe7d5ee7b7cfcc8e0eeaece5d25ff60878"
+    },
+    {
+      "path": "158/mac-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "158/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "158/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "158/mac-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "158/original-accum.zlib",
+      "bytes": 173989,
+      "sha256": "6570dc8d19b50b31a12a3727408cf75bb3353e18c33d51540d507deff1b9881a"
+    },
+    {
+      "path": "158/original-final_rgba.zlib",
+      "bytes": 907,
+      "sha256": "783e3d420de0f9bf4245acad40a2fbbe7d5ee7b7cfcc8e0eeaece5d25ff60878"
+    },
+    {
+      "path": "158/original-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "158/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "158/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "158/original-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "158/planes.json",
+      "bytes": 3420,
+      "sha256": "df65991e08dbeb01de1e874ccfc9f06d5676c46203d3b8f0e771370f913c290b"
+    },
+    {
+      "path": "158/report.json",
+      "bytes": 1979,
+      "sha256": "9ae98e6405b7406df84520cbf134b95ea860e80d009b12b113c38232e8f0c309"
+    },
+    {
+      "path": "158/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "158/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 907,
+      "sha256": "7eb05d7ace97c6068c3d6ae766fe9b0748c628db38c888e0881b594fd01d0ff4"
+    },
+    {
+      "path": "158/worker-C53b-trace-1/trace.json",
+      "bytes": 6851212,
+      "sha256": "98dbdda0a26c7b26aa7ac75868e47c91b8f5261bbe5ab2d90859d17443a2bb20"
+    },
+    {
+      "path": "158/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 907,
+      "sha256": "7eb05d7ace97c6068c3d6ae766fe9b0748c628db38c888e0881b594fd01d0ff4"
+    },
+    {
+      "path": "158/worker-C53b-trace-2/trace.json",
+      "bytes": 6851212,
+      "sha256": "98dbdda0a26c7b26aa7ac75868e47c91b8f5261bbe5ab2d90859d17443a2bb20"
+    },
+    {
+      "path": "158/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 907,
+      "sha256": "7eb05d7ace97c6068c3d6ae766fe9b0748c628db38c888e0881b594fd01d0ff4"
+    },
+    {
+      "path": "158/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 907,
+      "sha256": "7eb05d7ace97c6068c3d6ae766fe9b0748c628db38c888e0881b594fd01d0ff4"
+    },
+    {
+      "path": "159/mac-post_blur.zlib",
+      "bytes": 175432,
+      "sha256": "b5f2afa0ae2dea5df5501ab517d2a9b8473c9bc6c4ab3578d054c72b2a6e8281"
+    },
+    {
+      "path": "159/mac-pre_blur.zlib",
+      "bytes": 174807,
+      "sha256": "1bc876bcc635af129c2c587ee2bbaf52dcb6eb15f08bc0fb145861357d7e4fd0"
+    },
+    {
+      "path": "159/original-post_blur.zlib",
+      "bytes": 175432,
+      "sha256": "b5f2afa0ae2dea5df5501ab517d2a9b8473c9bc6c4ab3578d054c72b2a6e8281"
+    },
+    {
+      "path": "159/original-pre_blur.zlib",
+      "bytes": 174807,
+      "sha256": "1bc876bcc635af129c2c587ee2bbaf52dcb6eb15f08bc0fb145861357d7e4fd0"
+    },
+    {
+      "path": "159/planes.json",
+      "bytes": 1703,
+      "sha256": "5bddc3f398566cf4088a44065d818c05263fc9eef56737784896887f71305f33"
+    },
+    {
+      "path": "159/report.json",
+      "bytes": 1979,
+      "sha256": "f4bdc48ceef1b1392e3eb1662acf06ee2abd53ea980af152e826f1ae9e922940"
+    },
+    {
+      "path": "159/watches.json",
+      "bytes": 550,
+      "sha256": "5857c740f68898e41b477b21dd5121971d9ae1f71eb65c18332634e18c640006"
+    },
+    {
+      "path": "159/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 915,
+      "sha256": "c468be2d13be478723f37241695010fc7b563c3cb8bd166102df8cf286c196eb"
+    },
+    {
+      "path": "159/worker-C53b-trace-1/trace.json",
+      "bytes": 2090170,
+      "sha256": "193dc08b05181430ed422258a2455e987cc32bd4e39c926312b8dad6ce93a7a8"
+    },
+    {
+      "path": "159/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 915,
+      "sha256": "c468be2d13be478723f37241695010fc7b563c3cb8bd166102df8cf286c196eb"
+    },
+    {
+      "path": "159/worker-C53b-trace-2/trace.json",
+      "bytes": 2090170,
+      "sha256": "193dc08b05181430ed422258a2455e987cc32bd4e39c926312b8dad6ce93a7a8"
+    },
+    {
+      "path": "159/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 915,
+      "sha256": "c468be2d13be478723f37241695010fc7b563c3cb8bd166102df8cf286c196eb"
+    },
+    {
+      "path": "159/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 915,
+      "sha256": "c468be2d13be478723f37241695010fc7b563c3cb8bd166102df8cf286c196eb"
+    },
+    {
+      "path": "167/mac-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "167/mac-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "167/mac-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "167/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "167/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "167/original-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "167/original-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "167/original-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "167/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "167/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "167/planes.json",
+      "bytes": 2986,
+      "sha256": "aae8aae7389150b5dfe7ba8249074a5749af13cf1bce19106ca7b51c3e49fd47"
+    },
+    {
+      "path": "167/report.json",
+      "bytes": 1975,
+      "sha256": "20e19eddfa48c238e0cbb29f4a60e04eef64f588f16ae9b39f3d8ba8d8a94c72"
+    },
+    {
+      "path": "167/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "167/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "202284b7171ddc66df5f6dbd4f611de7c105a47f71e1d9f1d994479c9c48407e"
+    },
+    {
+      "path": "167/worker-C53b-trace-1/trace.json",
+      "bytes": 7549444,
+      "sha256": "a3283bcf59f9a200eab28a60ecca6a12c7904d8f66fc82397b57be66317601a1"
+    },
+    {
+      "path": "167/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "202284b7171ddc66df5f6dbd4f611de7c105a47f71e1d9f1d994479c9c48407e"
+    },
+    {
+      "path": "167/worker-C53b-trace-2/trace.json",
+      "bytes": 7549444,
+      "sha256": "a3283bcf59f9a200eab28a60ecca6a12c7904d8f66fc82397b57be66317601a1"
+    },
+    {
+      "path": "167/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "202284b7171ddc66df5f6dbd4f611de7c105a47f71e1d9f1d994479c9c48407e"
+    },
+    {
+      "path": "167/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "202284b7171ddc66df5f6dbd4f611de7c105a47f71e1d9f1d994479c9c48407e"
+    },
+    {
+      "path": "168/mac-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "168/mac-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "168/mac-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "168/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "168/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "168/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "168/original-accum.zlib",
+      "bytes": 174118,
+      "sha256": "257914136b0f6a2bb7c020ae9b4e08042d2c6491735edc37bf35ed9ef3b47565"
+    },
+    {
+      "path": "168/original-final_rgba.zlib",
+      "bytes": 919,
+      "sha256": "8cbaa124149e38622c7345e664ee87c9ad1ba67163ece91467629f1bea41f3be"
+    },
+    {
+      "path": "168/original-max_alpha.zlib",
+      "bytes": 21006,
+      "sha256": "1c2b0e28222043e37c8676c5a440a8da2b65585a7d5600a51322446d286fb659"
+    },
+    {
+      "path": "168/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "168/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "168/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "168/planes.json",
+      "bytes": 3420,
+      "sha256": "dbfdafbe49817d47b567e02505f4023727c62f7daac5e1023981ade8a9346a1f"
+    },
+    {
+      "path": "168/report.json",
+      "bytes": 1979,
+      "sha256": "ce687fe996d7ef458c438bb709bd2fadfbb4af3e800441ebc015e5b207c38978"
+    },
+    {
+      "path": "168/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "168/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "168/worker-C53b-trace-1/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "168/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "168/worker-C53b-trace-2/trace.json",
+      "bytes": 7549444,
+      "sha256": "04acaeb3c4ca0baa48971b11f4838110741389d3b87341414b2e0ec1f76abff1"
+    },
+    {
+      "path": "168/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "168/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 918,
+      "sha256": "69471e5896f86009b68a9371ca270f0c3795a3511c57276da4527ff26d22fd50"
+    },
+    {
+      "path": "169/mac-accum.zlib",
+      "bytes": 179502,
+      "sha256": "4ff8de67e8cd306b63d0e85cdd38337191c4cd0e53b00d1cae809d30ec7c1222"
+    },
+    {
+      "path": "169/mac-final_rgba.zlib",
+      "bytes": 943,
+      "sha256": "c8f215b673c324933052a6ce6a07736803aa2ebef3a70fdcebca9e8f990e9829"
+    },
+    {
+      "path": "169/mac-max_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "7aa51aeb13cb3ebf18cc6cc6e3a850c0d3cd36b3d4bdf2b927bca7cee4ad5c16"
+    },
+    {
+      "path": "169/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "169/mac-prepass_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "103e875000c8b82282d88d56973452497e29101958da472298c123c087d71b86"
+    },
+    {
+      "path": "169/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "169/original-accum.zlib",
+      "bytes": 179502,
+      "sha256": "4ff8de67e8cd306b63d0e85cdd38337191c4cd0e53b00d1cae809d30ec7c1222"
+    },
+    {
+      "path": "169/original-final_rgba.zlib",
+      "bytes": 943,
+      "sha256": "c8f215b673c324933052a6ce6a07736803aa2ebef3a70fdcebca9e8f990e9829"
+    },
+    {
+      "path": "169/original-max_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "7aa51aeb13cb3ebf18cc6cc6e3a850c0d3cd36b3d4bdf2b927bca7cee4ad5c16"
+    },
+    {
+      "path": "169/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "169/original-prepass_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "103e875000c8b82282d88d56973452497e29101958da472298c123c087d71b86"
+    },
+    {
+      "path": "169/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "169/planes.json",
+      "bytes": 3420,
+      "sha256": "d50f54adbb31e8a858ae9b9b3c5cab0f9f35f027a3eff95aebcc7542a258c130"
+    },
+    {
+      "path": "169/report.json",
+      "bytes": 1979,
+      "sha256": "9a841c5ec9420a67d70d4e8020c844e9b48b7d2a17bdcf8e0bf68cf2957ce95c"
+    },
+    {
+      "path": "169/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "169/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "6cae535b37b3dff93b7273aa86c5ade933d66c9431cd0dc3116ba8b9c67c75db"
+    },
+    {
+      "path": "169/worker-C53b-trace-1/trace.json",
+      "bytes": 7430983,
+      "sha256": "83cacad21c5358f73b04ffe4b3201495482d331fd827c0bc0fbce0e21ee64a78"
+    },
+    {
+      "path": "169/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "6cae535b37b3dff93b7273aa86c5ade933d66c9431cd0dc3116ba8b9c67c75db"
+    },
+    {
+      "path": "169/worker-C53b-trace-2/trace.json",
+      "bytes": 7430983,
+      "sha256": "83cacad21c5358f73b04ffe4b3201495482d331fd827c0bc0fbce0e21ee64a78"
+    },
+    {
+      "path": "169/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "6cae535b37b3dff93b7273aa86c5ade933d66c9431cd0dc3116ba8b9c67c75db"
+    },
+    {
+      "path": "169/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "6cae535b37b3dff93b7273aa86c5ade933d66c9431cd0dc3116ba8b9c67c75db"
+    },
+    {
+      "path": "170/mac-accum.zlib",
+      "bytes": 179215,
+      "sha256": "9d92cf37fa41854acf162c60691971f44c0a7f08261207215482bdd78d9aa7d8"
+    },
+    {
+      "path": "170/mac-final_rgba.zlib",
+      "bytes": 939,
+      "sha256": "1357b3f16cbff9c2e48acbfd00a5278ac7e6847f0b87eb8720d72dd7d5c386a6"
+    },
+    {
+      "path": "170/mac-max_alpha.zlib",
+      "bytes": 27197,
+      "sha256": "58d2030f0d06915e24c40a24d597a5e89e08b9eaf3e00d1d0f5cb4f3739234e0"
+    },
+    {
+      "path": "170/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "170/mac-prepass_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "103e875000c8b82282d88d56973452497e29101958da472298c123c087d71b86"
+    },
+    {
+      "path": "170/mac-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "170/original-accum.zlib",
+      "bytes": 179215,
+      "sha256": "9d92cf37fa41854acf162c60691971f44c0a7f08261207215482bdd78d9aa7d8"
+    },
+    {
+      "path": "170/original-final_rgba.zlib",
+      "bytes": 939,
+      "sha256": "1357b3f16cbff9c2e48acbfd00a5278ac7e6847f0b87eb8720d72dd7d5c386a6"
+    },
+    {
+      "path": "170/original-max_alpha.zlib",
+      "bytes": 27197,
+      "sha256": "58d2030f0d06915e24c40a24d597a5e89e08b9eaf3e00d1d0f5cb4f3739234e0"
+    },
+    {
+      "path": "170/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "170/original-prepass_alpha.zlib",
+      "bytes": 27194,
+      "sha256": "103e875000c8b82282d88d56973452497e29101958da472298c123c087d71b86"
+    },
+    {
+      "path": "170/original-source_scalar.zlib",
+      "bytes": 46309,
+      "sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    {
+      "path": "170/planes.json",
+      "bytes": 3420,
+      "sha256": "ca830b4e50d1900caf239baa777c3f352b6703aa33d4590ddfbf28897f8939a4"
+    },
+    {
+      "path": "170/report.json",
+      "bytes": 1979,
+      "sha256": "1b0795f29b9e5e1d1ad36f4aed471454a2fdbb37f8d7787db1681023e46d713f"
+    },
+    {
+      "path": "170/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "170/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "24f6f9e8240fb9ebba8c28a221d723ccc951790af48edc4983515b1258f07fd2"
+    },
+    {
+      "path": "170/worker-C53b-trace-1/trace.json",
+      "bytes": 7549584,
+      "sha256": "34b9667f911f2ab9c41bd89b543805fc12f8304ccb708d25a33ac01a03f82ff7"
+    },
+    {
+      "path": "170/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "24f6f9e8240fb9ebba8c28a221d723ccc951790af48edc4983515b1258f07fd2"
+    },
+    {
+      "path": "170/worker-C53b-trace-2/trace.json",
+      "bytes": 7549584,
+      "sha256": "34b9667f911f2ab9c41bd89b543805fc12f8304ccb708d25a33ac01a03f82ff7"
+    },
+    {
+      "path": "170/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "24f6f9e8240fb9ebba8c28a221d723ccc951790af48edc4983515b1258f07fd2"
+    },
+    {
+      "path": "170/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 939,
+      "sha256": "24f6f9e8240fb9ebba8c28a221d723ccc951790af48edc4983515b1258f07fd2"
+    },
+    {
+      "path": "171/mac-accum.zlib",
+      "bytes": 174590,
+      "sha256": "115bc08a406519b4a452ef57361f5af0ec10d265221123a415b7571d1c75d211"
+    },
+    {
+      "path": "171/mac-final_rgba.zlib",
+      "bytes": 924,
+      "sha256": "e43508546c17ff4eab55b4ee098d83b95632922eb487c00cbcbe789f5230569e"
+    },
+    {
+      "path": "171/mac-max_alpha.zlib",
+      "bytes": 21003,
+      "sha256": "a35e92fd438bdd6695b0284912916bbb41f3b71fd95d9eb48c70375252919f98"
+    },
+    {
+      "path": "171/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "171/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "171/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "171/original-accum.zlib",
+      "bytes": 174590,
+      "sha256": "115bc08a406519b4a452ef57361f5af0ec10d265221123a415b7571d1c75d211"
+    },
+    {
+      "path": "171/original-final_rgba.zlib",
+      "bytes": 924,
+      "sha256": "e43508546c17ff4eab55b4ee098d83b95632922eb487c00cbcbe789f5230569e"
+    },
+    {
+      "path": "171/original-max_alpha.zlib",
+      "bytes": 21003,
+      "sha256": "a35e92fd438bdd6695b0284912916bbb41f3b71fd95d9eb48c70375252919f98"
+    },
+    {
+      "path": "171/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "171/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "171/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "171/planes.json",
+      "bytes": 3420,
+      "sha256": "cb0ba5914d006ec2e21031070bea323ec27a0eda28657e7c018228eca71b650e"
+    },
+    {
+      "path": "171/report.json",
+      "bytes": 1979,
+      "sha256": "cd55a730f7c52b0bec7d1784c580871598a4650881489ededd2c442d0f755491"
+    },
+    {
+      "path": "171/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "171/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 923,
+      "sha256": "b36704b39b3f4db7524ff2f8a3aafb0b16d202fa3bcc215f75589b520a450ce1"
+    },
+    {
+      "path": "171/worker-C53b-trace-1/trace.json",
+      "bytes": 7295787,
+      "sha256": "5c366df16f06207bca6768df3e7368d1695a44ee94cd005efda4e7a1eb8c0914"
+    },
+    {
+      "path": "171/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 923,
+      "sha256": "b36704b39b3f4db7524ff2f8a3aafb0b16d202fa3bcc215f75589b520a450ce1"
+    },
+    {
+      "path": "171/worker-C53b-trace-2/trace.json",
+      "bytes": 7295787,
+      "sha256": "5c366df16f06207bca6768df3e7368d1695a44ee94cd005efda4e7a1eb8c0914"
+    },
+    {
+      "path": "171/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 923,
+      "sha256": "b36704b39b3f4db7524ff2f8a3aafb0b16d202fa3bcc215f75589b520a450ce1"
+    },
+    {
+      "path": "171/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 923,
+      "sha256": "b36704b39b3f4db7524ff2f8a3aafb0b16d202fa3bcc215f75589b520a450ce1"
+    },
+    {
+      "path": "172/mac-accum.zlib",
+      "bytes": 174590,
+      "sha256": "115bc08a406519b4a452ef57361f5af0ec10d265221123a415b7571d1c75d211"
+    },
+    {
+      "path": "172/mac-final_rgba.zlib",
+      "bytes": 924,
+      "sha256": "e43508546c17ff4eab55b4ee098d83b95632922eb487c00cbcbe789f5230569e"
+    },
+    {
+      "path": "172/mac-max_alpha.zlib",
+      "bytes": 21003,
+      "sha256": "a35e92fd438bdd6695b0284912916bbb41f3b71fd95d9eb48c70375252919f98"
+    },
+    {
+      "path": "172/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "172/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "172/original-accum.zlib",
+      "bytes": 174590,
+      "sha256": "115bc08a406519b4a452ef57361f5af0ec10d265221123a415b7571d1c75d211"
+    },
+    {
+      "path": "172/original-final_rgba.zlib",
+      "bytes": 924,
+      "sha256": "e43508546c17ff4eab55b4ee098d83b95632922eb487c00cbcbe789f5230569e"
+    },
+    {
+      "path": "172/original-max_alpha.zlib",
+      "bytes": 21003,
+      "sha256": "a35e92fd438bdd6695b0284912916bbb41f3b71fd95d9eb48c70375252919f98"
+    },
+    {
+      "path": "172/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "172/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "172/planes.json",
+      "bytes": 2986,
+      "sha256": "44fcfd6151beb03c7df62eb60bd848a0d827789ef1a149cde8474e50450eee36"
+    },
+    {
+      "path": "172/report.json",
+      "bytes": 1975,
+      "sha256": "a70add308fea5fa0662cff78d8018d2c2caa920a00383dc82ff0b1f92d75680a"
+    },
+    {
+      "path": "172/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "172/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "36b65c19e9e0682ead8b76dfdb75908cb27575682c676e8f3f6121293087b6d1"
+    },
+    {
+      "path": "172/worker-C53b-trace-1/trace.json",
+      "bytes": 7295787,
+      "sha256": "ca74d48b94aa31859c895c017d4fc0bfff942d4145521e79a8408d89c2bc4983"
+    },
+    {
+      "path": "172/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "36b65c19e9e0682ead8b76dfdb75908cb27575682c676e8f3f6121293087b6d1"
+    },
+    {
+      "path": "172/worker-C53b-trace-2/trace.json",
+      "bytes": 7295787,
+      "sha256": "ca74d48b94aa31859c895c017d4fc0bfff942d4145521e79a8408d89c2bc4983"
+    },
+    {
+      "path": "172/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "36b65c19e9e0682ead8b76dfdb75908cb27575682c676e8f3f6121293087b6d1"
+    },
+    {
+      "path": "172/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "36b65c19e9e0682ead8b76dfdb75908cb27575682c676e8f3f6121293087b6d1"
+    },
+    {
+      "path": "174/mac-post_blur.zlib",
+      "bytes": 183048,
+      "sha256": "9821d6f8d02cfc1e34fb59e151342cc57fb06406bbd9aef216222ef08782923e"
+    },
+    {
+      "path": "174/mac-pre_blur.zlib",
+      "bytes": 175991,
+      "sha256": "25ea86099c1168b122dba225079c1708b3e67695ac7613ca4d72b47cbf03ed5a"
+    },
+    {
+      "path": "174/original-post_blur.zlib",
+      "bytes": 183048,
+      "sha256": "9821d6f8d02cfc1e34fb59e151342cc57fb06406bbd9aef216222ef08782923e"
+    },
+    {
+      "path": "174/original-pre_blur.zlib",
+      "bytes": 175991,
+      "sha256": "25ea86099c1168b122dba225079c1708b3e67695ac7613ca4d72b47cbf03ed5a"
+    },
+    {
+      "path": "174/planes.json",
+      "bytes": 1702,
+      "sha256": "403a43f6aed539e3a0f17fdf2a0a9974359cd6753578de442b3d5bc61197093a"
+    },
+    {
+      "path": "174/report.json",
+      "bytes": 1975,
+      "sha256": "7065a781b8ced78a68eae79a70b99e6d26e0118ae6eb9ba28bf8d8c9d2dc48d9"
+    },
+    {
+      "path": "174/watches.json",
+      "bytes": 550,
+      "sha256": "5857c740f68898e41b477b21dd5121971d9ae1f71eb65c18332634e18c640006"
+    },
+    {
+      "path": "174/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "e647ff67b4057daabad94a419a1d4946cf806d6173169716112e0f0fccdfea3e"
+    },
+    {
+      "path": "174/worker-C53b-trace-1/trace.json",
+      "bytes": 2090339,
+      "sha256": "0ef52a650d597d778d28e1eecd485f94ad264541d5029be2b161e64f00e267cd"
+    },
+    {
+      "path": "174/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "e647ff67b4057daabad94a419a1d4946cf806d6173169716112e0f0fccdfea3e"
+    },
+    {
+      "path": "174/worker-C53b-trace-2/trace.json",
+      "bytes": 2090339,
+      "sha256": "0ef52a650d597d778d28e1eecd485f94ad264541d5029be2b161e64f00e267cd"
+    },
+    {
+      "path": "174/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "e647ff67b4057daabad94a419a1d4946cf806d6173169716112e0f0fccdfea3e"
+    },
+    {
+      "path": "174/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "e647ff67b4057daabad94a419a1d4946cf806d6173169716112e0f0fccdfea3e"
+    },
+    {
+      "path": "178/mac-accum.zlib",
+      "bytes": 173924,
+      "sha256": "ff1b470d0f6a74d7cf6b77668c649d783932a4990f9887574f3f9804f4bd879e"
+    },
+    {
+      "path": "178/mac-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "f4ec9142a62604065cdbf08d3f17f31958a9b3dfc5e90a7122f159cf84ee7c18"
+    },
+    {
+      "path": "178/mac-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "178/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "178/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "178/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "178/original-accum.zlib",
+      "bytes": 173924,
+      "sha256": "ff1b470d0f6a74d7cf6b77668c649d783932a4990f9887574f3f9804f4bd879e"
+    },
+    {
+      "path": "178/original-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "f4ec9142a62604065cdbf08d3f17f31958a9b3dfc5e90a7122f159cf84ee7c18"
+    },
+    {
+      "path": "178/original-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "178/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "178/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "178/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "178/planes.json",
+      "bytes": 3420,
+      "sha256": "e0229a8f5aa8e8659e0b27c1cdcc8eb57bdb144386b43f63317e8adc5b080fb3"
+    },
+    {
+      "path": "178/report.json",
+      "bytes": 1979,
+      "sha256": "37acc0bc0b2d502e16fcc71b0da5686f3df43f8ebcb4275ebd7392c36a8c1233"
+    },
+    {
+      "path": "178/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "178/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "132d06ef59e6aa472ce4ed382a582a8abf81a2792639090123d0774b28b4f0c5"
+    },
+    {
+      "path": "178/worker-C53b-trace-1/trace.json",
+      "bytes": 7105291,
+      "sha256": "0596eae72d5556641d00b2e929cf3ce4450802751a16e9ab4312bb69c96fb4e2"
+    },
+    {
+      "path": "178/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "132d06ef59e6aa472ce4ed382a582a8abf81a2792639090123d0774b28b4f0c5"
+    },
+    {
+      "path": "178/worker-C53b-trace-2/trace.json",
+      "bytes": 7105291,
+      "sha256": "0596eae72d5556641d00b2e929cf3ce4450802751a16e9ab4312bb69c96fb4e2"
+    },
+    {
+      "path": "178/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "132d06ef59e6aa472ce4ed382a582a8abf81a2792639090123d0774b28b4f0c5"
+    },
+    {
+      "path": "178/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 917,
+      "sha256": "132d06ef59e6aa472ce4ed382a582a8abf81a2792639090123d0774b28b4f0c5"
+    },
+    {
+      "path": "179/mac-accum.zlib",
+      "bytes": 173880,
+      "sha256": "82095b44468dc2df3e1e918f7e52304e9b87c45828308a3a6470159beadd79b6"
+    },
+    {
+      "path": "179/mac-final_rgba.zlib",
+      "bytes": 920,
+      "sha256": "a3f5c38cd28024c650ba7b1506718317406895d77bb69355cc4828b5156275fd"
+    },
+    {
+      "path": "179/mac-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "179/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "179/mac-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "179/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "179/original-accum.zlib",
+      "bytes": 173880,
+      "sha256": "82095b44468dc2df3e1e918f7e52304e9b87c45828308a3a6470159beadd79b6"
+    },
+    {
+      "path": "179/original-final_rgba.zlib",
+      "bytes": 920,
+      "sha256": "a3f5c38cd28024c650ba7b1506718317406895d77bb69355cc4828b5156275fd"
+    },
+    {
+      "path": "179/original-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "179/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "179/original-prepass_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "179/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "179/planes.json",
+      "bytes": 3420,
+      "sha256": "a8a7a3c5bdaa3520709993d5f1528a0c6ef138ebb817dd3de32068c7b09908ad"
+    },
+    {
+      "path": "179/report.json",
+      "bytes": 1979,
+      "sha256": "cae4a53964f102c768ad6b6ce6bd1d0f6ded6a8bba4d09289db392c7edffe0d5"
+    },
+    {
+      "path": "179/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "179/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 921,
+      "sha256": "0ff25d8265faa73a70d1ffa5618486d612519d6005bc3e6fbaf0265cf41e0562"
+    },
+    {
+      "path": "179/worker-C53b-trace-1/trace.json",
+      "bytes": 7261429,
+      "sha256": "f5fca21580a683c84c103217099705ef83a51766d6f8ffbd691dec495d187b67"
+    },
+    {
+      "path": "179/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 921,
+      "sha256": "0ff25d8265faa73a70d1ffa5618486d612519d6005bc3e6fbaf0265cf41e0562"
+    },
+    {
+      "path": "179/worker-C53b-trace-2/trace.json",
+      "bytes": 7261429,
+      "sha256": "f5fca21580a683c84c103217099705ef83a51766d6f8ffbd691dec495d187b67"
+    },
+    {
+      "path": "179/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 921,
+      "sha256": "0ff25d8265faa73a70d1ffa5618486d612519d6005bc3e6fbaf0265cf41e0562"
+    },
+    {
+      "path": "179/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 921,
+      "sha256": "0ff25d8265faa73a70d1ffa5618486d612519d6005bc3e6fbaf0265cf41e0562"
+    },
+    {
+      "path": "181/mac-accum.zlib",
+      "bytes": 173924,
+      "sha256": "ff1b470d0f6a74d7cf6b77668c649d783932a4990f9887574f3f9804f4bd879e"
+    },
+    {
+      "path": "181/mac-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "f4ec9142a62604065cdbf08d3f17f31958a9b3dfc5e90a7122f159cf84ee7c18"
+    },
+    {
+      "path": "181/mac-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "181/mac-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "181/mac-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "181/original-accum.zlib",
+      "bytes": 173924,
+      "sha256": "ff1b470d0f6a74d7cf6b77668c649d783932a4990f9887574f3f9804f4bd879e"
+    },
+    {
+      "path": "181/original-final_rgba.zlib",
+      "bytes": 918,
+      "sha256": "f4ec9142a62604065cdbf08d3f17f31958a9b3dfc5e90a7122f159cf84ee7c18"
+    },
+    {
+      "path": "181/original-max_alpha.zlib",
+      "bytes": 21005,
+      "sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    {
+      "path": "181/original-polar.zlib",
+      "bytes": 173465,
+      "sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    {
+      "path": "181/original-source_scalar.zlib",
+      "bytes": 5037,
+      "sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    {
+      "path": "181/planes.json",
+      "bytes": 2986,
+      "sha256": "dc64d08a8e3e6fdada26937cfc9ab4d59aa87a47c20496cd083f9fee4e0bfa35"
+    },
+    {
+      "path": "181/report.json",
+      "bytes": 1975,
+      "sha256": "ab9f19c3047beb873b48a2cb2677307bfeb77762622d27b6c24d7564c7cb4e11"
+    },
+    {
+      "path": "181/watches.json",
+      "bytes": 1882,
+      "sha256": "04030675ad5a34d0737b74d343a3c3eaa78f5b80b41a8c1bc7a0f1c11096cdc9"
+    },
+    {
+      "path": "181/worker-C53b-trace-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "240711b79a7b45883fa0ce8471c13978110ee247b948d032769190792fbeeb1e"
+    },
+    {
+      "path": "181/worker-C53b-trace-1/trace.json",
+      "bytes": 7105291,
+      "sha256": "a5846e34d73244fb9c046a11f69032f3fd4f88e68f51b9ec7a60510e01b9b6d5"
+    },
+    {
+      "path": "181/worker-C53b-trace-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "240711b79a7b45883fa0ce8471c13978110ee247b948d032769190792fbeeb1e"
+    },
+    {
+      "path": "181/worker-C53b-trace-2/trace.json",
+      "bytes": 7105291,
+      "sha256": "a5846e34d73244fb9c046a11f69032f3fd4f88e68f51b9ec7a60510e01b9b6d5"
+    },
+    {
+      "path": "181/worker-F46-pow-1/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "240711b79a7b45883fa0ce8471c13978110ee247b948d032769190792fbeeb1e"
+    },
+    {
+      "path": "181/worker-F46-pow-2/output.argb.zlib",
+      "bytes": 515,
+      "sha256": "240711b79a7b45883fa0ce8471c13978110ee247b948d032769190792fbeeb1e"
+    },
+    {
+      "path": "capability/displaced-window/stderr.log",
+      "bytes": 353,
+      "sha256": "57ad33fa72414bc92b565b2e3ca65e8d896334611414a78bb9d7ddb82e4d9332"
+    },
+    {
+      "path": "capability/displaced-window/stdout.bin",
+      "bytes": 7078,
+      "sha256": "3659cce75b853144551307ca0bb871b227647398dcb72b35e3e3ad29d0df592b"
+    },
+    {
+      "path": "capability/displaced-window/watches.json",
+      "bytes": 181,
+      "sha256": "458f544e5279737c9431863ffdc012151564256c6893616dbab23040ea5c763a"
+    },
+    {
+      "path": "capability/report.json",
+      "bytes": 1646,
+      "sha256": "7fb4a0856ec560903f0d72f1e9cbc43db5a0946fd60ccfdacea9575c0971ef69"
+    },
+    {
+      "path": "capability/whole-plane/stderr.log",
+      "bytes": 196,
+      "sha256": "6bdcdd40c2ab1e7678af3c62fe0f43e0fb4a06fe4cf3079ad3d03b0b9cd17f53"
+    },
+    {
+      "path": "capability/whole-plane/stdout.bin",
+      "bytes": 7078,
+      "sha256": "bd6bfb7779dd5749e847f3fbb03633bc89e0fa37d957df326d5974e8a37c3dbb"
+    },
+    {
+      "path": "capability/whole-plane/watches.json",
+      "bytes": 152,
+      "sha256": "c6227ede0a8ba38715e66af85e0d9200543a9579ca74d53717f37cb6a8433210"
+    },
+    {
+      "path": "capability.log",
+      "bytes": 594,
+      "sha256": "c044557651a32c339f39760187669117db2c6cf3013b6dcd02297b0be85eba3c"
+    },
+    {
+      "path": "compare152.log",
+      "bytes": 3420,
+      "sha256": "7a1120702120a227c0d3b6aae61932ac6381ab8379aa1a032b6a011aa84fbf92"
+    },
+    {
+      "path": "compare153.log",
+      "bytes": 3420,
+      "sha256": "797e9ad4c92682af518ff4a4486644f3e0ca12a654cfbaae1c32cb49462353f0"
+    },
+    {
+      "path": "compare155.log",
+      "bytes": 3420,
+      "sha256": "5b7ec27ac1d5d3d8217c04fc94630b31701901f08ce5036a6760a2a9c65ec442"
+    },
+    {
+      "path": "compare156.log",
+      "bytes": 3423,
+      "sha256": "ce0851b7707bc2e59f2bc284fdac385ef32366c8a7522b0fae073579b9da8451"
+    },
+    {
+      "path": "compare157.log",
+      "bytes": 3420,
+      "sha256": "407fb768a1726e20e04c58e528e92207de2d3d37ff61c158b162f27ffa070344"
+    },
+    {
+      "path": "compare158.log",
+      "bytes": 3420,
+      "sha256": "df65991e08dbeb01de1e874ccfc9f06d5676c46203d3b8f0e771370f913c290b"
+    },
+    {
+      "path": "compare159.log",
+      "bytes": 1703,
+      "sha256": "5bddc3f398566cf4088a44065d818c05263fc9eef56737784896887f71305f33"
+    },
+    {
+      "path": "compare167.log",
+      "bytes": 2986,
+      "sha256": "aae8aae7389150b5dfe7ba8249074a5749af13cf1bce19106ca7b51c3e49fd47"
+    },
+    {
+      "path": "compare168.log",
+      "bytes": 3420,
+      "sha256": "dbfdafbe49817d47b567e02505f4023727c62f7daac5e1023981ade8a9346a1f"
+    },
+    {
+      "path": "compare169.log",
+      "bytes": 3420,
+      "sha256": "d50f54adbb31e8a858ae9b9b3c5cab0f9f35f027a3eff95aebcc7542a258c130"
+    },
+    {
+      "path": "compare170.log",
+      "bytes": 3420,
+      "sha256": "ca830b4e50d1900caf239baa777c3f352b6703aa33d4590ddfbf28897f8939a4"
+    },
+    {
+      "path": "compare171.log",
+      "bytes": 3420,
+      "sha256": "cb0ba5914d006ec2e21031070bea323ec27a0eda28657e7c018228eca71b650e"
+    },
+    {
+      "path": "compare172.log",
+      "bytes": 2986,
+      "sha256": "44fcfd6151beb03c7df62eb60bd848a0d827789ef1a149cde8474e50450eee36"
+    },
+    {
+      "path": "compare174.log",
+      "bytes": 1702,
+      "sha256": "403a43f6aed539e3a0f17fdf2a0a9974359cd6753578de442b3d5bc61197093a"
+    },
+    {
+      "path": "compare178.log",
+      "bytes": 3420,
+      "sha256": "e0229a8f5aa8e8659e0b27c1cdcc8eb57bdb144386b43f63317e8adc5b080fb3"
+    },
+    {
+      "path": "compare179.log",
+      "bytes": 3420,
+      "sha256": "a8a7a3c5bdaa3520709993d5f1528a0c6ef138ebb817dd3de32068c7b09908ad"
+    },
+    {
+      "path": "compare181.log",
+      "bytes": 2986,
+      "sha256": "dc64d08a8e3e6fdada26937cfc9ab4d59aa87a47c20496cd083f9fee4e0bfa35"
+    },
+    {
+      "path": "sdk.log",
+      "bytes": 748,
+      "sha256": "f83ba5a532a368d0a4bc96522d8302a4a1640d5576b105dccd65dd0301e64004"
+    },
+    {
+      "path": "trace152.log",
+      "bytes": 1510,
+      "sha256": "fe889644b0a30783b8a7465ed96e7b36e6b58343daa98aa0e2962d2fcd937963"
+    },
+    {
+      "path": "trace153.log",
+      "bytes": 1510,
+      "sha256": "fe889644b0a30783b8a7465ed96e7b36e6b58343daa98aa0e2962d2fcd937963"
+    },
+    {
+      "path": "trace155.log",
+      "bytes": 1510,
+      "sha256": "07bdd8e84b96cdf1b4724990289e30ee0baf291fdf5ec113d1aa4e483651b233"
+    },
+    {
+      "path": "trace156.log",
+      "bytes": 1510,
+      "sha256": "ba477e3b0f4f133cb39f0335b44e307b6ba1aa81353b2c3f7df09e87d55c7833"
+    },
+    {
+      "path": "trace157.log",
+      "bytes": 1510,
+      "sha256": "3e33438d8a150303c35a30c43985affd1789db107f71a1ca15c7ac27c2d120a8"
+    },
+    {
+      "path": "trace158.log",
+      "bytes": 1510,
+      "sha256": "67bd3d6374c732e47bf1b9fb5289b4c630fb66102370d89c993f8b854a170465"
+    },
+    {
+      "path": "trace159.log",
+      "bytes": 1510,
+      "sha256": "7710c9678574db07ad46d295ca22a1fb4e030199d7c19e1bbdb2199ae58a0b37"
+    },
+    {
+      "path": "trace167.log",
+      "bytes": 1506,
+      "sha256": "9416ca47f8991e1c07a08c704da62f2716339c876334b1f324c5cf4f6233d2f8"
+    },
+    {
+      "path": "trace168.log",
+      "bytes": 1510,
+      "sha256": "fe889644b0a30783b8a7465ed96e7b36e6b58343daa98aa0e2962d2fcd937963"
+    },
+    {
+      "path": "trace169.log",
+      "bytes": 1510,
+      "sha256": "7b1aa34f3b39b3aee35423b584dbfe990fb78bbcb0787ffb9d268c8efc0b637b"
+    },
+    {
+      "path": "trace170.log",
+      "bytes": 1510,
+      "sha256": "89ee472e2f03502483aac113fba04de983190b60e06bb75249f137606be1e0ee"
+    },
+    {
+      "path": "trace171.log",
+      "bytes": 1510,
+      "sha256": "4409f9dea2108fb802c3fde3b48536df7de3d6137d3e21ae8f5217c6fbe00711"
+    },
+    {
+      "path": "trace172.log",
+      "bytes": 1506,
+      "sha256": "a2ae9e5368fc49a8498d88dd59234c8cc570f0a5119052057280599aefaac057"
+    },
+    {
+      "path": "trace174.log",
+      "bytes": 1506,
+      "sha256": "2ac3d14102987673109d1f3c93c5a43afd84ee5260e26ecb3f0a406a1860933d"
+    },
+    {
+      "path": "trace178.log",
+      "bytes": 1510,
+      "sha256": "cd286856ddd6c95cf7d94cb5271b66c81a562d751deed3b59e081f6f33fcd760"
+    },
+    {
+      "path": "trace179.log",
+      "bytes": 1510,
+      "sha256": "f32c3ecb08fd9bfd0f9d40bb92767da670de15ed9c93dfffeb976396f2c75e1f"
+    },
+    {
+      "path": "trace181.log",
+      "bytes": 1506,
+      "sha256": "1381a476df413ccc43df5286ec858dad593690f2ebf8d8a29d68f34dc1dd3906"
+    }
+  ]
+}
