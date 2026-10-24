@@ -1,5 +1,5 @@
 """Bitwise old/new helper comparison, including exceptional float words."""
-import os,subprocess
+import os,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3]
 S=ROOT/'orchestra/state/P05c-blur-colorkey-smoother-performance/helper'
@@ -70,6 +70,10 @@ int main() {
 }
 '''.replace('CANDIDATE_HEADER',str(ROOT/'core/olmblur_helper.h'))
 (S/'compare.cpp').write_text(source)
-cmd=['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-I'+str(ROOT/'core'),str(S/'compare.cpp'),str(S/'olmblur_helper.cpp'),str(ROOT/'core/olmblur_helper.cpp'),'-o',str(S/'compare')]
+candidate=ROOT/'core/olmblur_helper.cpp'
+if '--rejected-volatile-removal' in sys.argv:
+ text=candidate.read_text().replace('volatile float','float').replace('#include "olmblur_helper.h"','#include "'+str(ROOT/'core/olmblur_helper.h')+'"')
+ candidate=S/'rejected.cpp';candidate.write_text(text)
+cmd=['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-I'+str(ROOT/'core'),str(S/'compare.cpp'),str(S/'olmblur_helper.cpp'),str(candidate),'-o',str(S/'compare')]
 subprocess.run(cmd,env=env,check=True)
 subprocess.run([str(S/'compare')],env=env,check=True)
