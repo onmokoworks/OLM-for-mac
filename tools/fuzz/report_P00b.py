@@ -138,6 +138,6 @@ def main():
   start=out.index('next:');out=out[:start+1]+[(DEST/'followups.md').read_text()]
  body='\n'.join(out)+'\n'
  for field in ('summary','facts','inference','changed_files','verify','next'):body=body.replace('\n'+field+':\n-', '\n'+field+':\n\n-')
- (ROOT/'orchestra/reports/P00b-ae-realism-audit-rerun.md').write_text(body)
+ (ROOT/'orchestra/reports/P00b-ae-realism-audit-rerun.md').write_text(body.rstrip()+'\n')
  print({k:len(v) for k,v in allrows.items()})
 if __name__=='__main__':main()

@@ -606,4 +606,3 @@ next:
 - **P00c-corpus-diversity** — retain ten independent exact tuples for
   ColorKeep, ColorKey, KiraKira and Smoother2. This audit explicitly samples
   smaller corpora with replacement and does not invent independent witnesses.
-
