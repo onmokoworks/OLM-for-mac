@@ -85,3 +85,25 @@ Empty output is a sanity datum, not automatically a failure: a valid key/matte
 can be transparent. `render_seconds` on a PreRender refusal measures a skipped
 render and must not be interpreted as successful frame performance. A timeout
 is a lower bound on process time, not a measured rendering time.
+
+## P00b rerun changes
+
+P00b uses cache `~/.cache/olm-emu/P00b`, a 60-second process timeout, and
+first runs 8bpc defaults for all ten plugins at 1080p/4K with 1/1, 1/2 and
+1/4 downsample (60 rows). The full matrix adds 4K half/quarter probes (21
+situations). If a plugin has no top-level corpus JSON, the driver also searches
+nested retained cases; this supplies three ColorKeep T15b anchors, sampled with
+replacement and labelled by their original geometry provenance.
+
+Current ColorKeep supplies an explicit area to ordinary iterate. P00's callback
+rejected every non-null area, yielding six baseline host errors. P00b clips the
+requested rectangle to the source/destination world intersection, preserving
+independent rowbytes and leaving other destination pixels untouched. The SDK
+`AE_EffectCBSuites.h` documents NULL as all pixels; current ColorKeep's
+`ColorKeepRenderSmart` passes output extent explicitly. `test_P00b_iterate.cpp`
+checks explicit-area clipping, unequal world sizes, NULL/full intersection,
+and untouched destination bytes. The original host-error rows are retained
+separately, and the baseline was rerun after this host-only correction.
+
+This callback has no compositor/transform semantics beyond ordinary coordinate
+intersection. It does not establish native AE numerical conformance.

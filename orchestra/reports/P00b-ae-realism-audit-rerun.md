@@ -76,7 +76,52 @@ baseline: 60 rows; {'ok': 60}
 | olmsmoother / 4k-half | {'ok': 1} | {} | 1/1 |
 | olmsmoother / 4k-quarter | {'ok': 1} | {} | 1/1 |
 
-matrix: 0 rows; {}
+matrix: 741 rows; {'ok': 738, 'refusal': 3}
+
+| Plugin / situation | Status counts | Refusal tags | OK nonzero / OK |
+|---|---|---|---|
+| olmblur / full | {'ok': 30} | {} | 30/30 |
+| olmblur / half | {'ok': 30} | {} | 30/30 |
+| olmblur / quarter | {'ok': 30} | {} | 30/30 |
+| olmblur / third | {'ok': 30} | {} | 30/30 |
+| olmblur / eighth | {'ok': 30} | {} | 30/30 |
+| olmblur / asymmetric | {'ok': 30} | {} | 30/30 |
+| olmblur / 4k | {'ok': 30} | {} | 30/30 |
+| olmblur / 4k-half | {'ok': 27} | {} | 27/27 |
+| olmblur / 4k-quarter | {'ok': 27} | {} | 27/27 |
+| olmblur / square | {'ok': 27} | {} | 27/27 |
+| olmblur / odd | {'ok': 27} | {} | 27/27 |
+| olmblur / odd-half | {'ok': 27} | {} | 27/27 |
+| olmblur / large-layer | {'ok': 27} | {} | 27/27 |
+| olmblur / aligned-odd | {'ok': 27} | {} | 27/27 |
+| olmblur / padded | {'ok': 27} | {} | 27/27 |
+| olmblur / extent | {'ok': 27} | {} | 27/27 |
+| olmblur / roi | {'ok': 27} | {} | 27/27 |
+| olmblur / expanded | {'ok': 27} | {} | 27/27 |
+| olmblur / cropped-expand | {'ok': 27} | {} | 27/27 |
+| olmblur / aspect09 | {'ok': 27} | {} | 27/27 |
+| olmblur / aspect2 | {'ok': 27} | {} | 27/27 |
+| olmdirectionalblur / full | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / half | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / quarter | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / third | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / eighth | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / asymmetric | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / 4k | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / 4k-half | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / 4k-quarter | {'ok': 9} | {} | 9/9 |
+| olmdirectionalblur / square | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / odd | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / odd-half | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / large-layer | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / aligned-odd | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / padded | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / extent | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / roi | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / expanded | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / cropped-expand | {'ok': 3, 'refusal': 3} | {'SmartRender:smart-generic-world-or-budget@2707': 3} | 3/3 |
+| olmdirectionalblur / aspect09 | {'ok': 6} | {} | 6/6 |
+| olmdirectionalblur / aspect2 | {'ok': 6} | {} | 6/6 |
 
 inference:
 - Successful return and nonzero output are sanity checks only; no numerical compatibility inference.

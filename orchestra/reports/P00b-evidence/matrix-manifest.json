@@ -1,0 +1,80 @@
+{
+  "source_head": "c9d5e54455ddebf880d7087d115397f10e3f2a27",
+  "host_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "bundles": {
+    "olmblur": "f12417559a6bebbebd8304fa81932561051083d8fdbf8df29ed70603fa07306f",
+    "olmdirectionalblur": "522a1120074c32ddefb87ec3f30e73cb706e7332e3355025e7818bdac96a5ba9"
+  },
+  "samples": {
+    "olmblur": {
+      "eligible": 39,
+      "paths": [
+        "tests/fuzz_corpus/olmblur/seed1_case000203_ced0f1718a01.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000210_656ab133c0a9.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000008_92552f06afe6.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000127_83728685d1c5.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000244_37726b848558.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000236_fac8522494e3.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000206_656ab133c0a9.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000159_92552f06afe6.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000235_2fcbc7b4fbce.json",
+        "tests/fuzz_corpus/olmblur/seed1_case000122_ced0f1718a01.json"
+      ],
+      "sha256": [
+        "15bbd9b7dbefb72c31c34a508ed2501c3af2cea52a62abb40fe66218e2dc2646",
+        "4df7aa4767c0f0692b36534bb0059d37ace795aa02460aeec42e7b6894422caf",
+        "46cd9ea5aa1242efbd8715e7de313def56a400957ee4ebb0600e87917d2e355a",
+        "b74d84502f4375076fe89550dca7c82357f7077a7f72297d5da3fa33ae64bf06",
+        "70b9811730d25a628c58befb2ebdb709e532358e5518ae9aed4caece5a9f39ac",
+        "29bb7022c647f04e2b728ed99539a5e104c62708465bd095b10b14084f6109a3",
+        "cbb5ccec74822f064a0336535098d030031e0302d1a8edfe260be7a1aafacdbe",
+        "5a281812cd278998a4a5d4cdf0a36358b9612287997b0165c40dd4d79c15202f",
+        "7ca9fe465e90ea4a374142b9d0896cf230b3410ea76befb84f9e63bbe716220a",
+        "e0f35ebd6a8fd7445a5c5d90c4c270f1fc6cec199eb025b85669963bb69b46a6"
+      ]
+    },
+    "olmdirectionalblur": {
+      "eligible": 83,
+      "paths": [
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000112_0ff79f8bee87.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000139_0f4b356bb556.json",
+        "tests/fuzz_corpus/olmdirectionalblur/C45_seed1_case000284.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000048_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000174_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000167_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000131_0f4b356bb556.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000067_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000163_0ff79f8bee87.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000084_9e50cab1bcf7.json"
+      ],
+      "sha256": [
+        "c7efca5c92c4a4c6d05dccbd814f868ce12b1d23c18204f66a73d12f99980d6e",
+        "044553e99811e5de5a3c40ef22dbfbbde21c639a40328525a4e8cd3d9a38eeb0",
+        "2ecaac36cf3f97d4efdd9ee5fd25ba71360f132266e546aaab1aa33c6659e66b",
+        "89311758890b40ca07977766359f6149ace2a4afae846464431db39f1619d6cf",
+        "667f9f432c5b056fc613925eb76c6d67ec43c405f635d537050121d2f0877287",
+        "a47c8ba8ea24773b71b76f0f69487c6cddf5010902b97b0669c61e395f86ed04",
+        "3260ca33d58e0448375c5706d27305a5540ef55559709869430ea19ac4f73300",
+        "4c328d853034ebdd2bdeee50d92228ba97d03affb03045b9a1060f60892786a9",
+        "2c2e4883f852ca014835456d1764110c3937ff53f9823fe9d0aec5051b321d66",
+        "e3d12a441c60f48e320d7357dc51617cb9b97bf76dd2882f27a041bd8f7c6d85"
+      ]
+    }
+  },
+  "memory": [
+    {
+      "plugin": "olmblur",
+      "free_percent": 62
+    },
+    {
+      "plugin": "olmdirectionalblur",
+      "free_percent": 62
+    }
+  ],
+  "phase": "matrix",
+  "timeout": 60.0,
+  "counts": {
+    "ok": 738,
+    "refusal": 3
+  }
+}

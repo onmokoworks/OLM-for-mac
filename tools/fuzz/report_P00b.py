@@ -17,11 +17,23 @@ def main():
     for line in f:
      try: rows.append(json.loads(line))
      except json.JSONDecodeError: break # a live checkpoint may catch the last write
+   if phase=='matrix' and (STATE/'heavy/matrix.jsonl').exists():
+    with (STATE/'heavy/matrix.jsonl').open() as f:
+     for line in f:
+      try: rows.append(json.loads(line))
+      except json.JSONDecodeError: break
    with gzip.open(DEST/(phase+'.jsonl.gz'),'wt') as f:
     for row in rows:f.write(json.dumps(row,sort_keys=True)+'\n')
   allrows[phase]=rows
   m=STATE/(phase+'-manifest.json')
-  if m.exists():shutil.copy2(m,DEST/m.name)
+  if m.exists():
+   data=json.loads(m.read_text())
+   if phase=='matrix' and (STATE/'heavy/matrix-manifest.json').exists():
+    other=json.loads((STATE/'heavy/matrix-manifest.json').read_text())
+    for key in ('bundles','samples'):data[key].update(other[key])
+    data['memory']+=other['memory']
+   data['counts']=dict(collections.Counter(r['status'] for r in rows))
+   (DEST/m.name).write_text(json.dumps(data,indent=2)+'\n')
  for p in (STATE/'build/bundle-builds.json',Path.home()/'.cache/olm-emu/P00b/build.json'):
   if p.exists():shutil.copy2(p,DEST/p.name)
  out=['status: partial','summary:', '- Fresh-bundle audit checkpoint; matrix/performance work is still in progress.', '- No plugin source, release gate, ledger, MAIN or AEXCompat edits.', '', 'facts:', '- Source build HEAD: d1b18b9accaee821543548c1d2d7adf33781dcca (merge of P00).', '- Host and bundle identities, parameter paths/hashes and raw rows are in `P00b-evidence/`.', '- This is an oracle-free SDK host loading real arm64 plugin bundles, not native AE or a pixel-exact comparison.', '- Matrix uses independent host-shape probes, with two additional 4K downsample probes.', '- ColorKeep has zero eligible corpus files. ColorKey/KiraKira/Smoother2 sample with replacement (9/8/8 unique paths).', '- Timeouts are 60-second process wall limits; successful times below are render-selector seconds.', '']

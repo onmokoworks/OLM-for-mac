@@ -43,7 +43,11 @@ def situations():
 
 def samples(plugin):
     eligible=[]
-    for p in sorted((ROOT/'tests/fuzz_corpus'/plugin).glob('*.json')):
+    corpus=ROOT/'tests/fuzz_corpus'/plugin
+    paths=sorted(corpus.glob('*.json'))
+    # Preserve P00 samples where present; newer nested anchors fill absent corpora.
+    if not paths: paths=sorted(corpus.rglob('*.json'))
+    for p in paths:
         v=json.loads(p.read_text())
         route='classic' if plugin=='olmsmoother' else 'smart'
         if v.get('result',{}).get('routes',{}).get(route,{}).get('status')=='exact':
