@@ -27,6 +27,8 @@ Blur timings are single render-selector measurements on the shared machine, usin
 - Final dispatch propagates the caller's floating-point environment to each lane and restores the worker environment. Each pass joins before the next pass reads its destination.
 - Fresh baseline/final bundles retained and registered at `~/.cache/olm-emu/P05c-blur-before` and `~/.cache/olm-emu/P05c-blur`; host remains an absolute link to P00b. Identity hashes are in `P05c-evidence/blur-cache.json`.
 
+- Final handoff: all six retained cache hosts/bundles verified against registered SHA-256 values; current ColorKey/Smoother source hashes match candidate records. Regenerable scratch build trees removed (logs/JSON preserved); remaining scratch 63,881,925 bytes. No ticket-owned background test/render process remains. Final `memory_pressure`: 58% free; `git diff --check` clean.
+
 inference:
 - The measured gain comes from independent row/column execution; scalar helper operations, weights, accumulation order, writers, and UCRT math are unchanged.
 - Volatile removal allowed a different NaN operand selection despite ordinary SDR fuzz passing. This is evidence against removing those qualifiers without stronger arithmetic constraints, not an AEX NaN conformance claim.
