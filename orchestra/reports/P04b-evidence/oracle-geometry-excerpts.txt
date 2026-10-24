@@ -121,7 +121,7 @@
 431:         _ => unreachable!(),
 432:     }
 433: }
-434: 
+434:
 435: fn run_session_command(mut arguments: Vec<std::ffi::OsString>) -> ExitCode {
 436:     let mut geometry = aex_guest_worker::geometry::Geometry::default();
 437:     for option in ["--negotiate-output", "--downsample-x", "--downsample-y", "--rowbytes-pad", "--extent-hint", "--request-rect", "--pixel-aspect"] {
