@@ -1,4 +1,4 @@
-depends: P04b-directionalblur-cropped-checkout
+depends: P04b2-directionalblur-cropped-checkout
 # P05a: DirectionalBlur speed: 17.6 s per 1080p frame and >60 s at 4K with heavy params
 
 ## Facts (P00b report, Performance and Profile tables)

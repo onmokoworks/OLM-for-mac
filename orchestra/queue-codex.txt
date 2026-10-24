@@ -120,6 +120,8 @@ P00b-ae-realism-audit-rerun
 P04a-distancegradation-default-pf32
 P04b-directionalblur-cropped-checkout
 P04c-smoother2-checkout-negotiation
+F53-oracle-cropped-checkout
+P04b2-directionalblur-cropped-checkout
 P05a-directionalblur-performance
 P05b-radialblur-rotation-performance
 P05c-blur-colorkey-smoother-performance
