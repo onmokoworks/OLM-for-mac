@@ -1,0 +1,117 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "full_geometry": [
+      1,
+      249
+    ],
+    "geometry": [
+      1,
+      83
+    ],
+    "index": 4,
+    "input_padding": 0,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 5.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 100.0
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 4,
+  "input_sha256": "4542728a9707af5a2d746f23b17023f4e850d67d9aa2cda1e884e88803d86f48",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoBTAGz/v/yvkoASkI/XU8Tk/8078DbfPZw/2/6qP+mZpUA4NX8/3jSA5z/kmL9/V+RAJHtMP8hAG3Q5djSAIgilf/q5jr/SisUAF4ZCwCFw4wAb5lqAFhWT/+uQ3r/cy6hAAWPNwAUWdsAncw9//2QoT0ATUQAiIfvz01uDAAB9uPJsCqA/43q/f8IDMgAbqIDqjZR0uKGEUj/qKIu2KcJlP+BTH5PmyWv/xbC0kmQXNoAvxhB/8wsCoD5gTP/6mo5AKyi9ACm6ZP/Uvhm/wE3Iv9W074AD718/3LhiADDy14Axu+SftnT4rljFdgADVYd555iKQAPSVr/VtLMruAwmf+Z96NyOJm4AJcTUwB/n9TR1C0gZHI6XgDrb8v/JxZl/3Vz3P872oH/Z0OcAAiJJv/n4Z8AwZLl/9FFfhG0UWT/pf1Ak2+szv+KGk4Au+Uq/gOq5g==",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "ee21e84ef262d826465ed49ecb133c5fbd1576d5b02b1a1cb1d9d64813d4f3f9",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "4542728a9707af5a2d746f23b17023f4e850d67d9aa2cda1e884e88803d86f48",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "ee21e84ef262d826465ed49ecb133c5fbd1576d5b02b1a1cb1d9d64813d4f3f9",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "4542728a9707af5a2d746f23b17023f4e850d67d9aa2cda1e884e88803d86f48",
+        "status": "exact"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "ee21e84ef262d826465ed49ecb133c5fbd1576d5b02b1a1cb1d9d64813d4f3f9",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

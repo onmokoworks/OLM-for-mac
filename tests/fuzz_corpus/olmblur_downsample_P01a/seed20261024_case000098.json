@@ -1,0 +1,116 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "full_geometry": [
+      48,
+      246
+    ],
+    "geometry": [
+      6,
+      31
+    ],
+    "index": 98,
+    "input_padding": 3,
+    "output_padding": 5,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 5.0
+      },
+      {
+        "kind": "f",
+        "slot": 2,
+        "value": 68.1976318359375
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 5
+      },
+      {
+        "kind": "u",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 5,
+        "value": 0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "index": 98,
+  "input_sha256": "3f7f5e9b591d44985a85c6e5d7a0e7e607c0502ee0c2796006f85d9c7f5174f3",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNoB6AIX/dU2VsUA/ODUbMvA5AC4mXQADkR1Cqs8iKoBWhg6CHrpJAx0WQCIoGYARRdv/8l6xACRrbb/xGJGAOHXa/+M49Z7J4IQVhP2c/+8wpeLL7iLjRsC8f8xFSkA+qKpB6xtGZlERaeUAaCoAGybfP8mEuX/JBZmAOvh3b/wah3/Oz/W/6Bq+v+NwPa6Zi5wAC6DP97/fe8A4XCMy28JqwDUU6QA30pF00p87f+6DhgAPjoZ/02auADj/IAAwIILAOkuyf/xgzkABrtf/yFl1gCKDakA+Mi7AO1tmdgBlGQARhQOcL7OUv9YoaP/8e6e/4UOHBo1xKn9cHfe/1ftEbQ//YH/zXM9AONTOMkST9H/jTWLAJwQoAAEigL/cx0r/w0AwP+C3tAA4uhb/92LSgB2YEH/cUjKAV9+YDC+shT/XilywfnsvgAJEK2teJOZALsKyf8Jcw7/APhoncAMonKtCkb/ffu6APhqpCjZFqs7gC99/0xTLf/FblcAyoyI/2HC1v8HZjtNuI1TAH8WuAAYaroAKCpcWZL7pv/8Jpb/M+g3/2Ep1AC5DzP/jXcFAEI0YO+/zTz/knZ8/wHbOkJRrY7/jbInAJwWzwA2fX9S8fdf/0XHLACLB57/uRsTAGXIqv9A3SUATe1uAK9ow2ePTpgsLruh9JXIW/+fpvUADiwTAB/Djf9pgHKQeOD8AO4oggCytiEATQYDJMbqrVuD/H3/gZeXrCc2znZYK4cA3fd2/6mG1gAWG+QAek47AMis5cIFyNb//DIa/12Y7f/qa9cAAA+gAA2Wbv9w03//15fk/2RQJOxHgFz/SLdz/1+1SP8g12UAN9q4ADUyCP+ErsEA1exB/3e3wFT96VH/p1qEAKXV9AAnP3UAOZa6AGwNGmszi9f/4urd/6oLOf/yRfP/1bQ2MwE4kAAmaWoAR+PiMeeWC+qe5k0XvmWpAHsGgWSqHbIAoauU/0GWXv8mrfPgaJJZALJmmNK4cIc=",
+  "plugin": "olmblur",
+  "provenance": {
+    "case_timeout_seconds": 10,
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52-geom/aex-guest-worker",
+    "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "3f7f5e9b591d44985a85c6e5d7a0e7e607c0502ee0c2796006f85d9c7f5174f3",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "3f7f5e9b591d44985a85c6e5d7a0e7e607c0502ee0c2796006f85d9c7f5174f3",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "3f7f5e9b591d44985a85c6e5d7a0e7e607c0502ee0c2796006f85d9c7f5174f3",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 5 5 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "3f7f5e9b591d44985a85c6e5d7a0e7e607c0502ee0c2796006f85d9c7f5174f3",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}
