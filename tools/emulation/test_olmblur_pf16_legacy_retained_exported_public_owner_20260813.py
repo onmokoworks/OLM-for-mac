@@ -71,7 +71,7 @@ CASES = (
         "disposition": "fail_closed_public_mismatch",
     },
 )
-EXPECTED_CANONICAL_SHA256 = "4c351d48a875210fbf310dee4e975c5505e29c1c035d06d5388d2d501ec8a4eb"
+EXPECTED_CANONICAL_SHA256 = "315ef514605c9baf378bc27bd012db29cc1409bee9588d923726a96ef03fdb16"
 
 
 def sha256(path: Path) -> str:

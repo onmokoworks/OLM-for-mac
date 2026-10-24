@@ -128,8 +128,8 @@ Directionalは各geometryでFront／Back／Dual×PF8/PF16/PF32の9 casesを各ac
 実行前後でhash照合し、exact matchでない測定を成功扱いにしません。対応セルはすべて成功を要求し、
 非対応セルはreasonとsupport predicate付きで明示します。未計測セルを成功扱いにしていません。
 KiraKiraは各geometryでMode 1／2／3／4の既存代表4件に、Mode 3 Horizontal Length 300・Rotation 1を
-全深度で加えた15 casesを実行します。current reportではHD 40.20秒／peak 487,194,624 bytes、
-UHD 151.27秒／peak 1,492,664,320 bytesで、各caseのSmart対Classic parity、Classic再実行の決定性、
+全深度で加えた15 casesを実行します。current reportではHD 36.90秒／peak 528,908,288 bytes、
+UHD 136.29秒／peak 1,559,150,592 bytesで、各caseのSmart対Classic parity、Classic再実行の決定性、
 独立stride、input／padding不変、active output変更を確認しました。これはHD/UHDの実測であり、
 budget predicateが許可するDCI 4096×2160 endpointの実測やWindows／native AE数値一致ではありません。
 このhostless性能証拠は、上記immutable ROI v2 packageへ後付けされるnative AE証拠ではなく、
@@ -170,6 +170,11 @@ Public Betaの判断基準は [PUBLIC_BETA_3_GATES.md](PUBLIC_BETA_3_GATES.md) �
 - macOS版AEで少なくともHDと4Kのnative renderを確認
 
 固定fixtureごとの詳細な証拠と研究上の制限は、[既知の制限](../KNOWN_LIMITATIONS.md)を参照してください。
+
+R07で現行sourceの性能20セルを再実測し、20/20成功しました。Radialの同一12 cases/geometryは、HD 10.68 s / 284622848 B、UHD 23.62 s / 801767424 Bです。
+これはhostless Macの時間・メモリー測定で、元AEXとの数値一致やnative AEの証拠ではありません。
+実行source／toolchainとworktreeのbindingは[`generic_beta_perf_smoke.json`](../reports/generic_beta_perf_smoke.json)に保存しています。
+別checkoutでcurrent bindingを主張する際は同じrunnerを再実行します。
 
 ## 次フェーズ: ROI／tile／halo
 

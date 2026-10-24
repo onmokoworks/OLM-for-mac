@@ -1,0 +1,333 @@
+{
+  "status": "blocked",
+  "release_aggregate_rerun": false,
+  "contracts": [
+    {
+      "key": "fixture-047",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-m",
+        "unittest",
+        "tests.test_olmcolorkey_real_sdk_suite_lifecycle_20260813",
+        "tests.test_olmcolorkey_source_bound_atomic_20260813",
+        "tests.test_olmcolorkey_public_entries_real_sdk_20260813"
+      ],
+      "exit": 1,
+      "seconds": 9.87,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-00.log"
+    },
+    {
+      "key": "fixture-063",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+      ],
+      "exit": 1,
+      "seconds": 5.21,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-01.log"
+    },
+    {
+      "key": "fixture-083",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
+      ],
+      "exit": 1,
+      "seconds": 2.72,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-02.log"
+    },
+    {
+      "key": "fixture-126",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-m",
+        "unittest",
+        "tests.test_olmkirakira_mode3_32x18_public_failclose_20260814"
+      ],
+      "exit": 1,
+      "seconds": 3.26,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-03.log"
+    },
+    {
+      "key": "fixture-184",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmradialblur_type3_host_plumbing_20260811.py"
+      ],
+      "exit": 1,
+      "seconds": 9.49,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-04.log"
+    },
+    {
+      "key": "generic:tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+      ],
+      "exit": 1,
+      "seconds": 7.94,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-05.log"
+    },
+    {
+      "key": "generic:tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+      ],
+      "exit": 1,
+      "seconds": 4.8,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-06.log"
+    },
+    {
+      "key": "generic:tests/test_olmdistancegradation_generic_production_beta_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmdistancegradation_generic_production_beta_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 9.68,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-07.log"
+    },
+    {
+      "key": "generic:tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmkirakira_mode3_ui_length_beta_20260821.py"
+      ],
+      "exit": 1,
+      "seconds": 40.74,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-08.log"
+    },
+    {
+      "key": "generic:tests/test_olmradialblur_generic_baseline_20260820.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 5.26,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/contracts-09.log"
+    }
+  ],
+  "f40_baseline_counts": {
+    "0": 3,
+    "1": 96,
+    "2": 1
+  },
+  "f40_dispositions": {
+    "passed": 9,
+    "blocked": 83,
+    "requires real AE/Windows": 11,
+    "group1 contract finding": 4,
+    "reserved for R08": 3
+  },
+  "blur_after": [
+    {
+      "key": "fixture-012",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmblur_pf16_7x5_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 0.2,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-012.log"
+    },
+    {
+      "key": "fixture-013",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmblur_pf16_7x5_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 0.32,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-013.log"
+    },
+    {
+      "key": "fixture-018",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmblur_pf16_retained_tuples_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 1.38,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-018.log"
+    },
+    {
+      "key": "fixture-019",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmblur_pf16_retained_tuples_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 4.59,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-019.log"
+    },
+    {
+      "key": "fixture-020",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tools/emulation/test_olmblur_pf16_legacy_retained_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 2.77,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-020.log"
+    },
+    {
+      "key": "fixture-021",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_olmblur_pf16_legacy_retained_exported_public_owner_20260813.py"
+      ],
+      "exit": 0,
+      "seconds": 2.76,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/blur-after-021.log"
+    }
+  ],
+  "bindings_before": [
+    {
+      "key": "tests/test_beta_support_documentation.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_beta_support_documentation.py"
+      ],
+      "exit": 1,
+      "seconds": 0.21,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/bindings-00.log"
+    },
+    {
+      "key": "tests/test_generic_beta_perf_smoke_runner.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_generic_beta_perf_smoke_runner.py"
+      ],
+      "exit": 1,
+      "seconds": 18.14,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/bindings-01.log"
+    }
+  ],
+  "bindings_after": [
+    {
+      "key": "tests/test_beta_support_documentation.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_beta_support_documentation.py"
+      ],
+      "exit": 1,
+      "seconds": 0.22,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/bindings-00.log"
+    },
+    {
+      "key": "tests/test_generic_beta_perf_smoke_runner.py",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/tests/test_generic_beta_perf_smoke_runner.py"
+      ],
+      "exit": 0,
+      "seconds": 18.49,
+      "log": "orchestra/state/R07-gate-contracts-and-bindings/bindings-01.log"
+    }
+  ],
+  "generic_counts": {
+    "FAIL": 7,
+    "PASS": 46,
+    "SKIP": 0
+  },
+  "generic_status": "FAIL",
+  "generic_failures": [
+    {
+      "test": "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
+      "exit": 1
+    },
+    {
+      "test": "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py",
+      "exit": 1
+    },
+    {
+      "test": "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
+      "exit": 1
+    },
+    {
+      "test": "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+      "exit": 1
+    },
+    {
+      "test": "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+      "exit": 1
+    },
+    {
+      "test": "tests/test_olmradialblur_generic_baseline_20260820.py",
+      "exit": 1
+    },
+    {
+      "test": "tests/test_beta_support_documentation.py",
+      "exit": 1
+    }
+  ],
+  "performance": {
+    "cells": 20,
+    "status": "PASS",
+    "measurement_source_identity": "exact_pre_and_post_match",
+    "report_sha256": "47c32417bad89c5008c0cade7cdc944caad6cef97bcc46e0e0a7a5bf436d275d"
+  },
+  "colorkeep": {
+    "build_command": [
+      "xcodebuild",
+      "-project",
+      "mac/ColorKeep/Mac/ColorKeep.xcodeproj",
+      "-target",
+      "ColorKeep",
+      "-configuration",
+      "Release",
+      "-jobs",
+      "1",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "CODE_SIGNING_ALLOWED=NO",
+      "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/orchestra/state/R07-gate-contracts-and-bindings/colorkeep-oracle/build/Product",
+      "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/orchestra/state/R07-gate-contracts-and-bindings/colorkeep-oracle/build/Obj",
+      "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R07-gate-contracts-and-bindings/orchestra/state/R07-gate-contracts-and-bindings/colorkeep-oracle/build/Sym",
+      "build"
+    ],
+    "build_exit": 0,
+    "binary_sha256": "bf001b1de9401233e8c3f8d7e066a9b02eac3e32cda9e6701aa9f82f5964c020",
+    "positive_exit": 4,
+    "error": "positive rc=4 ",
+    "header-positive_exit": 4,
+    "completed_header": {
+      "error": "positive rc=4 depth=8 smart=1 rc=0 life=0 phase=1 pads=1 unchanged=1 request=1 iterate=1\ndepth=16 smart=1 rc=0 life=0 phase=1 pads=1 unchanged=1 request=1 iterate=1\ndepth=32 smart=1 rc=0 life=0 phase=1 pads=1 unchanged=1 request=1 iterate=1\n"
+    },
+    "header_diagnostic_pixels": {
+      "bytes": 600,
+      "expected_bytes": 600,
+      "exact": true,
+      "sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+      "first_mismatch": null
+    }
+  },
+  "reserved_radial_fixtures": [
+    162,
+    163,
+    164
+  ],
+  "boundary": "No release promotion, native AE renewal, installed identity renewal, or all-input exactness claim."
+}

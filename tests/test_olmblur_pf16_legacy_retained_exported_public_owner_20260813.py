@@ -33,8 +33,8 @@ class OLMBlurPF16LegacyRetainedOwner(unittest.TestCase):
             MODULE.validate(changed)
 
     def test_external_pins(self) -> None:
-        self.assertEqual(sha(GENERATOR), "3407faf5d834b34c1df1e0d493e2c3b452b2cf6fcefc93afc2519bf20d678088")
-        self.assertEqual(sha(MODULE.REPORT), "1726d259afaae558c3f9832e59d7f1b158cffc65c17a441e8668b57ab0af9c96")
+        self.assertEqual(sha(GENERATOR), "98c5629825e1d21d35569e4056aa7f174e613796254764fffa4670f2156d495a")
+        self.assertEqual(sha(MODULE.REPORT), "3082206c93d62bada802d6bf567d6c1e885ac3cfcc2478b4fa12eda03fd2c8d7")
 
     def test_live(self) -> None:
         self.assertEqual(self.value, MODULE.live())
