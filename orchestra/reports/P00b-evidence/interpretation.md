@@ -22,14 +22,19 @@ Refusal interpretation (FACT and INFERENCE kept separate):
 - **DistanceGradation / `RenderBits:pf32-smart-profile@2201`**.
   FACT: all default PF32 probes fail the explicit union of retained admission
   profiles at `mac/OLMDistanceGradation/OLMDistanceGradation.cpp:2180–2201`.
-  T15b default original calibration completed PF32 at 1080×1080 in 0.9041 s
+  T15b legal-default original calibration completed PF32 at 1080×1080 in 0.9041 s
   (`T15b-odd-even-random-comp-sweep.md`, calibration table and
   `T15b-evidence/olmdistancegradation-calibration.json`). Its original full-HD
   PF32 limitation is the oracle arena, not a measured AEX profile rejection.
-  INFERENCE: the Mac-only default PF32 admission gap remains, and would return
-  an error/black frame when AE supplies that supported float path. A smaller
-  successful original default plus the Mac profile guard supports the group;
-  it does not establish original 4K acceptance or pixel equality.
+  IMPORTANT: the fuzz adapter clamps DistanceGradation’s out-of-range builder
+  In/Out default 0 to legal value 1. P00 uses the real PARAMS_SETUP defaults.
+  Therefore T15b alone does not prove original acceptance of this exact default.
+  The new `original-default-probe.json` closes that boundary: at 32×24 with
+  zero parameter overrides, the registered F52c original succeeds at all three
+  depths, while the real Mac bundle returns 516 with this tag only at PF32.
+  Original guard/session checks pass; AEX and worker hashes and output hashes
+  are retained. INFERENCE: this is a confirmed Mac-only default PF32 admission
+  group; original success at 4K remains unmeasured.
 
 - **Smoother2 / `ValidatePublicWorlds:validate-world-shape@5240`**.
   FACT: cropped-expand supplies 960×540 input and allocates 1920×1080 output
@@ -51,6 +56,6 @@ Refusal interpretation (FACT and INFERENCE kept separate):
   this is not evidence that an AE 32bpc composition renders black, because AE
   can convert to the plugin's supported depth.
 
-These are host-return observations and bounded prior evidence, not a new
-original-AEX run or native-AE numerical validation. No pixel mismatch count or
-first differing byte exists for this oracle-free audit.
+These are host-return observations, bounded prior evidence, and the explicitly
+labelled small DistanceGradation original-AEX probe, not native-AE numerical validation. The matrix has no pixel oracle, so no pixel mismatch count or first differing
+byte is claimed; the small probe establishes return behavior only.

@@ -10,7 +10,8 @@
     "olmsmoother2": "e21e07c0b5dcc510b5b4fc1382291b778b964cc48c0f2ae76ca833e8e3c4cdf8",
     "olmtoondilate": "b5a4dc6907704f96d8105c73157876bab2820cd75245f3f2d81a5f5c88244970",
     "olmsmoother": "94e96c0d001a56370b2ead5da16e6ac2c4bb6e885aae79c466cb694df42c8657",
-    "olmdirectionalblur": "522a1120074c32ddefb87ec3f30e73cb706e7332e3355025e7818bdac96a5ba9"
+    "olmdirectionalblur": "522a1120074c32ddefb87ec3f30e73cb706e7332e3355025e7818bdac96a5ba9",
+    "radialblur": "6ccaaccbc823c771ab5a8f4d52ab35bc3f1d4b2287322f677c5e526437a40bf6"
   },
   "samples": {
     "olmblur": {
@@ -41,9 +42,31 @@
       ]
     },
     "colorkeep": {
-      "eligible": 0,
-      "paths": [],
-      "sha256": []
+      "eligible": 3,
+      "paths": [
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF8.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF16.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF8.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json",
+        "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json"
+      ],
+      "sha256": [
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "3dab97769cb4d8c5a9a8e13752c11496a1bf52b973564c980f9679f613a77e4e",
+        "f36abd33c37107ff312d22b4d47740a691e1128d596949ad3321b0133fdcd3bd",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "3dab97769cb4d8c5a9a8e13752c11496a1bf52b973564c980f9679f613a77e4e",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2",
+        "4920f2234ccafaf8fb68fb2656ec853973a10271fcfe4489f0ecced5c33f1dd2"
+      ]
     },
     "olmcolorkey": {
       "eligible": 9,
@@ -233,6 +256,33 @@
         "2c2e4883f852ca014835456d1764110c3937ff53f9823fe9d0aec5051b321d66",
         "e3d12a441c60f48e320d7357dc51617cb9b97bf76dd2882f27a041bd8f7c6d85"
       ]
+    },
+    "radialblur": {
+      "eligible": 61,
+      "paths": [
+        "tests/fuzz_corpus/radialblur/seed1_case000440_e04d91d93cb4.json",
+        "tests/fuzz_corpus/radialblur/seed102_case000008_S01.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000369_90303525f87f.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000448_d1d38fe702c9.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000029_b099428e963b.json",
+        "tests/fuzz_corpus/radialblur/C45_seed1_case000108.json",
+        "tests/fuzz_corpus/radialblur/C46_seed1_case000096.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000081_9774c69c219e.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000050_aa6536a877df.json",
+        "tests/fuzz_corpus/radialblur/seed1_case000006_253d4390d90b.json"
+      ],
+      "sha256": [
+        "0f6a5d754030c25ded72a30bb7659650efff8c890f2057be09dfdce7c309ffff",
+        "07fe83c937bb2e5b3078affeab08c0ccc059b95cba763b6bc4e0c32b924a9891",
+        "897902bec6cdfc49ec58a12e74041bd3539450dc4cbe3cc36b1e9d88ccee6d11",
+        "46e2dccd7270804495d2a1458aea18f1abee1c463031b43e40555ad7a8a8b7e9",
+        "d73a5a2cd9fe58640b1168806149444a4dbf83d45b05611a37efc3b17dc80d57",
+        "5cbc86ebe5aede9cd4f4a4c6ea5098e7c8911a4e83c1bc35b4cc70abfdad2621",
+        "a971e765930c3391c671fe7fde07249f60af08c3ae3382d8bcde4f7e0a895e18",
+        "87de60e3d1ab5d2021ef5bb5d44574e84d808f93ed8fd5dcae9c2b8433c531b9",
+        "82c4a4017ca1dbc26aac706eb4d0dfc384994cb624efb39a2929c306b83256f8",
+        "f96d3a1ed963e894fe1dc9d9706649253658241825f11bea6509d32a37a59e3e"
+      ]
     }
   },
   "memory": [
@@ -269,14 +319,23 @@
       "free_percent": 60
     },
     {
+      "plugin": "colorkeep",
+      "free_percent": 61
+    },
+    {
       "plugin": "olmdirectionalblur",
+      "free_percent": 62
+    },
+    {
+      "plugin": "radialblur",
       "free_percent": 62
     }
   ],
   "phase": "matrix",
   "timeout": 60.0,
   "counts": {
-    "ok": 4619,
-    "refusal": 104
-  }
+    "ok": 6153,
+    "refusal": 305
+  },
+  "supplement_source_head": "7389ab09effeb6a4470bac3280e6bbddcddbb195"
 }
