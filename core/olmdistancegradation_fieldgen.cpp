@@ -71,11 +71,39 @@ void precise_l2_edt(const std::uint8_t* mask, std::size_t width, std::size_t hei
         }
         for (std::size_t u = width; u-- > 0;) {
             const float squared = edt_value(static_cast<std::int64_t>(u), sites[q], row[sites[q]]);
-            dst[y * width + u] = std::sqrt(squared);
+            dst[y * width + u] = squared;
             if (static_cast<std::int64_t>(u) == starts[q]) {
                 --q;
             }
         }
+        // Embedded IPP FUN_181449920: align the destination, then process
+        // sixteen squared distances at a time. A zero in any lane sends the
+        // whole block through SQRTPS; the prefix and tail also use SQRTPS/SS.
+        // The retained Unicorn oracle's RSQRTPS is float(1 / sqrtf(x)).
+        // Keep its subsequent MULPS/SUBPS Newton step separately rounded.
+        // Evidence: orchestra/reports/P03a-evidence/probe.py (pre-resize field).
+        float* out = dst + y * width;
+        std::size_t x = 0;
+        for (; x < width && ((y * width + x) % 4) != 0; ++x)
+            out[x] = std::sqrt(out[x]);
+        for (; x + 16 <= width; x += 16) {
+            bool regular = true;
+            for (std::size_t k = 0; k < 16; ++k)
+                regular = regular && out[x + k] > 0.0f;
+            for (std::size_t k = 0; k < 16; ++k) {
+                const float squared = out[x + k];
+                const float root = std::sqrt(squared);
+                if (regular) {
+                    const float inverse = 1.0f / root;
+                    const float product = squared * inverse;
+                    const float correction = inverse * product - 3.0f;
+                    out[x + k] = correction * (product * -0.5f);
+                } else {
+                    out[x + k] = root;
+                }
+            }
+        }
+        for (; x < width; ++x) out[x] = std::sqrt(out[x]);
     }
 }
 
