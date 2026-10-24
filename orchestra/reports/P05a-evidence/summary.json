@@ -1,0 +1,107 @@
+{
+  "status": "blocked",
+  "blocking_case": "realistic-v1 seed 2053 index 9; inherited parent mismatch",
+  "campaigns": [
+    {
+      "label": "default-1",
+      "n": 300,
+      "smart_exact": 298,
+      "smart_uncompared": 2,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "realistic-1",
+      "n": 100,
+      "smart_exact": 100,
+      "smart_uncompared": 0,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "realistic-2053",
+      "n": 100,
+      "smart_exact": 99,
+      "smart_uncompared": 0,
+      "smart_mismatch": 1,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "realistic-v2-1",
+      "n": 100,
+      "smart_exact": 100,
+      "smart_uncompared": 0,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "realistic-v2-2053",
+      "n": 100,
+      "smart_exact": 100,
+      "smart_uncompared": 0,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "odd-even-2026",
+      "n": 150,
+      "smart_exact": 150,
+      "smart_uncompared": 0,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    },
+    {
+      "label": "odd-even-2027",
+      "n": 150,
+      "smart_exact": 147,
+      "smart_uncompared": 3,
+      "smart_mismatch": 0,
+      "mac_only_refusals": 0
+    }
+  ],
+  "default_exact_to_nonexact": [],
+  "bundle_smart_exact": 100,
+  "replays": [
+    {
+      "file": "replay-olmdirectionalblur.json",
+      "count": 83,
+      "matches": true
+    },
+    {
+      "file": "replay-olmdirectionalblur_P04b2-cropped-checkout.json",
+      "count": 4,
+      "matches": true
+    },
+    {
+      "file": "replay-olmdirectionalblur_P05a-performance.json",
+      "count": 7,
+      "matches": true
+    },
+    {
+      "file": "replay-olmdirectionalblur_T15b-odd-even-realistic.json",
+      "count": 4,
+      "matches": true
+    },
+    {
+      "file": "replay-olmdirectionalblur_realistic_P02j.json",
+      "count": 200,
+      "matches": true
+    }
+  ],
+  "replay_count": 298,
+  "unit_files": 39,
+  "unit_pass": 9,
+  "unit_exit_changes": 0,
+  "source_sha256": {
+    "core/dblur_float.h": "156bd96773f4d3860abf6e0c0e1e942774ea828f211c3f443be7a34e04796dd6",
+    "core/dblur_rotate.cpp": "f33b49503c8765aeee95daa4057a6c571b68d978fd86c225c181e8e0d94739e2",
+    "core/dblur_rowdriver.cpp": "aec536865bec24e911c27cc702501767bad7e5c2a4ef0c6520a8b44e0368b690",
+    "mac/OLMDirectionalBlur/Mac/OLMDirectionalBlur.xcodeproj/project.pbxproj": "0907e5f3edb25f6ee06cdae8379c57a48c079db00a8050e6e12365ee24b6f699"
+  },
+  "memory_pressure": "System-wide memory free percentage: 62%",
+  "machine": [
+    "Apple M1 Pro",
+    "17179869184"
+  ],
+  "bundle_sha256": "0eda8c52b02c6f44493be2afde66889b6d1763431fea54f59696d3cf5309b016"
+}

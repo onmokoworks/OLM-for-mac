@@ -1,3 +1,4 @@
+#include "RadialScatterSIMD.h"
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
 #include "../../core/dblur_noise.h"
@@ -4699,14 +4700,23 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const float sin_a_f = (float)ucrt_sin((double)base_angle_fixed_radians, UCRT_FMA);
 	const double cos_a = ucrt_cos(base_angle, UCRT_FMA);
 	const double sin_a = ucrt_sin(base_angle, UCRT_FMA);
+	// The angle depends only on ai, not radius. Retain the exact FLOAT32
+	// multiplication and paired AEX polynomial, including signed-zero bits.
+	std::vector<RadialPairedTrig> rotation_angles;
+	if (use_aex_exact || use_generic_two_stage) {
+		rotation_angles.resize((size_t)angular_count);
+		for (A_long ai = 0; ai < angular_count; ++ai) {
+			rotation_angles[(size_t)ai] = RadialAEXPairedSinCos(
+				RadialF32Mul((float)ai, step_rad_f));
+		}
+	}
 	for (A_long ri = 0; ri < radius_count; ++ri) {
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			float sx = 0.0f;
 			float sy = 0.0f;
 			if (use_aex_exact || use_generic_two_stage) {
 				const float r = (float)(min_r + ri);
-				const float theta = RadialF32Mul((float)ai, step_rad_f);
-				const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
+				const RadialPairedTrig angle_trig = rotation_angles[(size_t)ai];
 				const float sx0 = RadialF32Mul(r, angle_trig.cosine);
 				// Rotation's AEX core differs from Zoom here: radius is multiplied by
 				// Ratio first, then by sin(theta).
@@ -4922,11 +4932,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
 					const size_t dst = dst_cell * 4;
 					const float contribution = RadialF32Mul(seed_alpha, row_weights[(size_t)offset]);
-					for (int c = 0; c < 3; ++c) {
-						accum.rgba[dst + c] = RadialF32Add(
-							RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
-					}
-					accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
+					olm::radial::scatter_accumulate(accum.rgba.data() + dst,
+						polar.rgba.data() + source, contribution);
 					if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 						max_alpha[dst_cell] = contribution;
 					}
@@ -4952,11 +4959,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 						const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
 						const size_t dst = dst_cell * 4;
 						const float contribution = RadialF32Mul(seed_alpha, inner_weights[(size_t)offset]);
-						accum.rgba[dst + 3] = RadialF32Add(contribution, accum.rgba[dst + 3]);
-						for (int c = 2; c >= 0; --c) {
-							accum.rgba[dst + c] = RadialF32Add(
-								RadialF32Mul(contribution, polar.rgba[source + c]), accum.rgba[dst + c]);
-						}
+						olm::radial::scatter_accumulate(accum.rgba.data() + dst,
+							polar.rgba.data() + source, contribution);
 						if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 							max_alpha[dst_cell] = contribution;
 						}

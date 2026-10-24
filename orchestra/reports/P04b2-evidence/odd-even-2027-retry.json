@@ -1,0 +1,172 @@
+{
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "candidate_sha256": "324dfea148d5bfa7d26da58fe884f88950bac505bf5702dca628ff97d7933d2d",
+    "dependencies_sha256": {
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "c08aae1dfcc6903610edc4c7f0ea89dca1e1ad80275261d727406de9cc46d292",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "core/dblur_frontonly.cpp": "739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276",
+      "core/dblur_rotate.cpp": "1660ded38bb1e233c2e8017dce7ed2baf84b20a82286342f62219da4b5caf5f3",
+      "core/dblur_rowdriver.cpp": "893ce82c177d7de6b62b22a3959e86c9aed8d1e44ed0f2f5d73438439c562979",
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+    },
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "out_of_range_builder_defaults": [],
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "oracle_render_path": "smartfx",
+    "time": {
+      "value": 0,
+      "scale": 24,
+      "step": 1,
+      "total": 1
+    },
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion",
+    "layer": "None; independent layer worlds outside this adapter",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof"
+  },
+  "case_timeout": 60,
+  "rows": [
+    {
+      "index": 5,
+      "seed": 2027,
+      "input_sha256": "1144b0ba0789793390d0f92361fe7f22cb97dbb16e287633439203903a722134",
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 924, 376] max=[0, 0, 924, 376] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9868,\"r11\":1881102784,\"r12\":4352036864,\"r13\":4368044804,\"r14\":4351029248,\"r15\":193,\"r8\":1881102840,\"r9\":607,\"rax\":4448886784,\"rbp\":0,\"rbx\":2,\"rcx\":8,\"rdi\":4352352640,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101560},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"000000000000f03f0000000000000000\",\"f32_lanes\":[0.0,1.875,0.0,0.0],\"f64_lanes\":[1.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"0000fa43000000000000000000000000\",\"f32_lanes\":[500.0,0.0,0.0,0.0],\"f64_lanes\":[,8,88,24,8,8,8,8,48,8,8,24,40,16,16,8,8,8,8,8,8,32,8,8,16,8,16,8,8,8,24,8,24,8,16,8,16,16,8,8,24,8,8,24,16,8,16,8,8,32,8,8,8,16,32,8,8,16,16,8,8,56,8,16,8,8,8,8,56,16,8,56,8,16,8,8,32,16,24,16,8,32,8,24,8,8,24,8,16,8,8,8,24,24,16,8,8,64,16,32,16,32,16,32,40,8,8,16,16,16,40,40,16,32,24,8,16,8,16,8,64,16,8,8,24,32,48,24,72,8,8,8,8,8,16,24,8,8,8,24,8,32,24,8,8,16,8,8,8,8,32,16,48,8,8,16,16,8,8,8,16,40,40,16,8,32,8,16,16,32,24,24,8,16,8,32,16,64,8,40,8,8,16,8,8,24,8,16,24,32,8,16,24,16,16,32,8,8,16,24,8,8,16,8,16,8,8,8,64,8,8,16,32,32,16,8,8,32,40,24,16,16,8,8,8,8,8,16,8,8,16,8,8,24,8,8],\"handle_allocation_failures\":[],\"live_handle_count\":9879,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4448894976,\"pf_handle_data_end\":12884901888}\n"
+          }
+        },
+        "oracle": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "F52C_NEGOTIATED result=[0, 0, 924, 376] max=[0, 0, 924, 376] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9868,\"r11\":1881102784,\"r12\":4352036864,\"r13\":4368044804,\"r14\":4351029248,\"r15\":193,\"r8\":1881102840,\"r9\":607,\"rax\":4448886784,\"rbp\":0,\"rbx\":2,\"rcx\":8,\"rdi\":4352352640,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101560},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"000000000000f03f0000000000000000\",\"f32_lanes\":[0.0,1.875,0.0,0.0],\"f64_lanes\":[1.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"0000fa43000000000000000000000000\",\"f32_lanes\":[500.0,0.0,0.0,0.0],\"f64_lanes\":[,8,88,24,8,8,8,8,48,8,8,24,40,16,16,8,8,8,8,8,8,32,8,8,16,8,16,8,8,8,24,8,24,8,16,8,16,16,8,8,24,8,8,24,16,8,16,8,8,32,8,8,8,16,32,8,8,16,16,8,8,56,8,16,8,8,8,8,56,16,8,56,8,16,8,8,32,16,24,16,8,32,8,24,8,8,24,8,16,8,8,8,24,24,16,8,8,64,16,32,16,32,16,32,40,8,8,16,16,16,40,40,16,32,24,8,16,8,16,8,64,16,8,8,24,32,48,24,72,8,8,8,8,8,16,24,8,8,8,24,8,32,24,8,8,16,8,8,8,8,32,16,48,8,8,16,16,8,8,8,16,40,40,16,8,32,8,16,16,32,24,24,8,16,8,32,16,64,8,40,8,8,16,8,8,24,8,16,24,32,8,16,24,16,16,32,8,8,16,24,8,8,16,8,16,8,8,8,64,8,8,16,32,32,16,8,8,32,40,24,16,16,8,8,8,8,8,16,8,8,16,8,8,24,8,8],\"handle_allocation_failures\":[],\"live_handle_count\":9879,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4448894976,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "routes": {
+          "smart": {
+            "status": "uncompared",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "924 376 1 1 1 1 4 3 1",
+              "GEOMETRY": "0 0 924 376"
+            },
+            "output_rect": [
+              0,
+              0,
+              924,
+              376
+            ],
+            "raw_sha256": "b3a46ed45f14598606ec686395ddaffa726cc5a366543a0b34f714ad2b121881"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 50,
+      "seed": 2027,
+      "input_sha256": "cc53ed1da9143b9872fe1ad2b9b0da73946c41e398fbdda36c7b8a706ffca7d3",
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 521, 462] max=[0, 0, 521, 462] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9808,\"r11\":1881102768,\"r12\":4323069952,\"r13\":4330926864,\"r14\":4322574336,\"r15\":196,\"r8\":1881102824,\"r9\":538,\"rax\":4411277312,\"rbp\":0,\"rbx\":2,\"rcx\":8,\"rdi\":4323383808,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"000000000000f03f0000000000000000\",\"f32_lanes\":[0.0,1.875,0.0,0.0],\"f64_lanes\":[1.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"0000af43000000000000000000000000\",\"f32_lanes\":[350.0,0.0,0.0,0.0],\"f64_lanes\":[,16,24,8,8,16,40,24,8,16,40,8,32,16,8,8,8,8,8,40,24,8,8,16,8,8,16,8,8,8,8,24,8,8,8,8,16,8,16,8,16,32,16,8,8,16,8,16,8,16,8,24,8,16,16,8,32,8,16,8,8,24,24,8,8,8,16,24,8,16,24,8,8,16,8,16,8,8,40,16,16,8,8,8,8,8,16,8,8,8,16,8,16,8,8,8,8,24,8,8,8,8,8,16,32,8,8,8,8,24,8,8,8,48,8,16,8,8,24,8,16,8,16,24,8,16,24,16,8,8,8,8,8,16,8,8,8,8,8,24,8,40,8,8,16,8,8,8,8,8,8,8,72,16,8,16,16,8,16,8,8,8,40,8,16,24,8,8,8,8,8,8,24,8,8,24,16,8,8,8,8,8,40,8,8,8,8,32,16,40,8,16,24,16,16,8,8,16,24,8,8,24,16,8,16,16,32,32,32,8,8,16,16,8,8,8,8,16,8,24,16,8,8,16,8,8,8,24,16,16,8,8,8,8,24,8,16,16,16,8,8,16,16,8,8],\"handle_allocation_failures\":[],\"live_handle_count\":9819,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4411285504,\"pf_handle_data_end\":12884901888}\n"
+          }
+        },
+        "oracle": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "F52C_NEGOTIATED result=[0, 0, 521, 462] max=[0, 0, 521, 462] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800c0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800c0)\",\"registers\":{\"r10\":9808,\"r11\":1881102768,\"r12\":4323069952,\"r13\":4330926864,\"r14\":4322574336,\"r15\":196,\"r8\":1881102824,\"r9\":538,\"rax\":4411277312,\"rbp\":0,\"rbx\":2,\"rcx\":8,\"rdi\":4323383808,\"rdx\":2,\"rflags\":2,\"rip\":1611137216,\"rsi\":1073741896,\"rsp\":1881101544},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"000000000000f03f0000000000000000\",\"f32_lanes\":[0.0,1.875,0.0,0.0],\"f64_lanes\":[1.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"0000af43000000000000000000000000\",\"f32_lanes\":[350.0,0.0,0.0,0.0],\"f64_lanes\":[,16,24,8,8,16,40,24,8,16,40,8,32,16,8,8,8,8,8,40,24,8,8,16,8,8,16,8,8,8,8,24,8,8,8,8,16,8,16,8,16,32,16,8,8,16,8,16,8,16,8,24,8,16,16,8,32,8,16,8,8,24,24,8,8,8,16,24,8,16,24,8,8,16,8,16,8,8,40,16,16,8,8,8,8,8,16,8,8,8,16,8,16,8,8,8,8,24,8,8,8,8,8,16,32,8,8,8,8,24,8,8,8,48,8,16,8,8,24,8,16,8,16,24,8,16,24,16,8,8,8,8,8,16,8,8,8,8,8,24,8,40,8,8,16,8,8,8,8,8,8,8,72,16,8,16,16,8,16,8,8,8,40,8,16,24,8,8,8,8,8,8,24,8,8,24,16,8,8,8,8,8,40,8,8,8,8,32,16,40,8,16,24,16,16,8,8,16,24,8,8,24,16,8,16,16,32,32,32,8,8,16,16,8,8,8,8,16,8,24,16,8,8,16,8,8,8,24,16,16,8,8,8,8,24,8,16,16,16,8,8,16,16,8,8],\"handle_allocation_failures\":[],\"live_handle_count\":9819,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4411285504,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "routes": {
+          "smart": {
+            "status": "uncompared",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "1041 923 1 2 1 2 2 1 3",
+              "GEOMETRY": "0 0 521 462"
+            },
+            "output_rect": [
+              0,
+              0,
+              521,
+              462
+            ],
+            "raw_sha256": "ee0c2012482a68dba715d1913351a8390c3cf46ab393803685931cff5277e872"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "index": 54,
+      "seed": 2027,
+      "input_sha256": "797e260c05b6ac0c4dc3fb77930aa5f2b6579b95c1881ea0e0549e3f761b6108",
+      "result": {
+        "oracles": {
+          "smart": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "F52C_NEGOTIATED result=[0, 0, 246, 175] max=[0, 0, 246, 175] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800f0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800f0)\",\"registers\":{\"r10\":4367347716,\"r11\":1881102784,\"r12\":4300359360,\"r13\":4300552256,\"r14\":8002,\"r15\":4300552256,\"r8\":1881102800,\"r9\":4300552096,\"rax\":0,\"rbp\":1881103056,\"rbx\":4317962240,\"rcx\":4317962240,\"rdi\":1073741896,\"rdx\":2,\"rflags\":6,\"rip\":1611137264,\"rsi\":4317962240,\"rsp\":1881101560},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"0000803f000000000000000000000000\",\"f32_lanes\":[1.0,0.0,0.0,0.0],\"f64_lanes\":[5.263544247e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00808943000000000000000000000000\",\"f8,8,8,32,16,8,32,16,16,8,112,8,8,48,32,16,24,8,8,24,8,16,8,8,16,16,8,8,32,24,24,8,16,8,24,40,8,40,16,16,16,56,16,40,8,24,16,8,8,40,16,8,32,8,8,24,16,40,24,16,32,16,8,8,8,8,24,8,16,24,8,24,40,8,32,8,16,16,8,32,8,8,24,16,48,16,72,48,8,32,8,16,8,8,40,24,8,16,8,24,8,56,64,8,8,16,8,16,16,16,24,40,8,32,8,8,16,8,8,8,16,24,8,8,8,32,24,8,40,8,8,8,8,8,8,8,16,8,48,32,8,8,16,24,8,16,8,16,24,16,16,24,56,24,16,72,8,24,32,16,40,24,16,16,56,8,24,16,16,16,8,24,8,16,8,48,8,8,8,16,32,8,16,24,40,16,8,8,8,16,8,24,40,8,16,8,16,8,32,32,32,8,8,8,8,16,8,8,8,16,32,32,8,72,24,16,32,32,32,104,8,32,16,8,8,32008],\"handle_allocation_failures\":[],\"live_handle_count\":6036,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4367380480,\"pf_handle_data_end\":12884901888}\n"
+          }
+        },
+        "oracle": {
+          "status": "reject",
+          "returncode": 1,
+          "diagnostic": "F52C_NEGOTIATED result=[0, 0, 246, 175] max=[0, 0, 246, 175] flags=0\naex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x600800f0); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x600800f0)\",\"registers\":{\"r10\":4367347716,\"r11\":1881102784,\"r12\":4300359360,\"r13\":4300552256,\"r14\":8002,\"r15\":4300552256,\"r8\":1881102800,\"r9\":4300552096,\"rax\":0,\"rbp\":1881103056,\"rbx\":4317962240,\"rcx\":4317962240,\"rdi\":1073741896,\"rdx\":2,\"rflags\":6,\"rip\":1611137264,\"rsi\":4317962240,\"rsp\":1881101560},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"0000803f000000000000000000000000\",\"f32_lanes\":[1.0,0.0,0.0,0.0],\"f64_lanes\":[5.263544247e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00808943000000000000000000000000\",\"f8,8,8,32,16,8,32,16,16,8,112,8,8,48,32,16,24,8,8,24,8,16,8,8,16,16,8,8,32,24,24,8,16,8,24,40,8,40,16,16,16,56,16,40,8,24,16,8,8,40,16,8,32,8,8,24,16,40,24,16,32,16,8,8,8,8,24,8,16,24,8,24,40,8,32,8,16,16,8,32,8,8,24,16,48,16,72,48,8,32,8,16,8,8,40,24,8,16,8,24,8,56,64,8,8,16,8,16,16,16,24,40,8,32,8,8,16,8,8,8,16,24,8,8,8,32,24,8,40,8,8,8,8,8,8,8,16,8,48,32,8,8,16,24,8,16,8,16,24,16,16,24,56,24,16,72,8,24,32,16,40,24,16,16,56,8,24,16,16,16,8,24,8,16,8,48,8,8,8,16,32,8,16,24,40,16,8,8,8,16,8,24,40,8,16,8,16,8,32,32,32,8,8,8,8,16,8,8,8,16,32,32,8,72,24,16,32,32,32,104,8,32,16,8,8,32008],\"handle_allocation_failures\":[],\"live_handle_count\":6036,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4367380480,\"pf_handle_data_end\":12884901888}\n"
+        },
+        "routes": {
+          "smart": {
+            "status": "uncompared",
+            "error": 0,
+            "metadata": {
+              "ERROR": "0",
+              "COUNTS": "21 21 1 1 1",
+              "GEOMETRY_INPUT": "981 700 1 4 1 4 2 1 32",
+              "GEOMETRY": "0 0 246 175"
+            },
+            "output_rect": [
+              0,
+              0,
+              246,
+              175
+            ],
+            "raw_sha256": "f23027f59c2feeb3d9268f7f497c6d0edc55ffdb6a29e87abb07f5e0e015da1c"
+          }
+        },
+        "first_mismatching_stage": null,
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ]
+}

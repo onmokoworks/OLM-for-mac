@@ -7,7 +7,7 @@ import sys
 import traceback
 import unittest
 ROOT = Path(__file__).resolve().parents[3]
-S = ROOT/'orchestra/state/P02a-colorkeep-geometry'
+S = Path(os.environ.get('OLM_COLORKEEP_TEST_SCRATCH', ROOT/'orchestra/state/P02a-colorkeep-geometry'))
 os.environ.update(TMPDIR=str(S), OLM_TEST_JOBS='1', PYTHONDONTWRITEBYTECODE='1')
 rows = []
 for path in sorted((ROOT/'tests').glob('test_colorkeep*.py')):

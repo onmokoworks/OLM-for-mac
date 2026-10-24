@@ -1,4 +1,4 @@
-#include "x86_float.h"
+#include "dblur_float.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "dblur_rowdriver.h"
 #include "dblur_noise.h"
@@ -6,26 +6,29 @@
 #include <cstdint>
 #include <cmath>
 #include <limits>
+#if defined(__APPLE__)
+#include <dispatch/dispatch.h>
+#endif
 
 namespace {
 
-// Keep every elementary operation in a separately observed float operation.
-// This matches the scalar SSE instructions in the AEX and prevents the host
-// compiler from contracting or reassociating the arithmetic.
+// Each helper performs one binary32 operation. The plugin and harness compile
+// this file with -fno-fast-math -ffp-contract=off, preserving SSE operation order
+// and rounding without forcing each intermediate through a volatile stack slot.
 __attribute__((always_inline)) inline float addf(float a, float b) {
-    volatile float r = olm::x86_float::sse_add(a, b);
+    const float r = olm::dblur_float::add(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float mulf(float a, float b) {
-    volatile float r = olm::x86_float::sse_mul(a, b);
+    const float r = olm::dblur_float::mul(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float divf(float a, float b) {
-    volatile float r = olm::x86_float::sse_div(a, b);
+    const float r = olm::dblur_float::div(a, b);
     return r;
 }
 __attribute__((always_inline)) inline float int_scale(int value, float scale) {
-    volatile float r = static_cast<float>(value) * scale;
+    const float r = static_cast<float>(value) * scale;
     return r;
 }
 __attribute__((always_inline)) inline int trunc_i(float value) {
@@ -44,7 +47,7 @@ float weight_at(const float* table, int index, float scale) {
 }
 
 __attribute__((noinline)) float powf_compat(float value, float exponent) {
-    volatile float r = ucrt_powf(value, exponent, UCRT_FMA);
+    const float r = ucrt_powf(value, exponent, UCRT_FMA);
     return r;
 }
 
@@ -152,16 +155,43 @@ extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
     if (length <= 1) {
         return;
     }
+#if defined(__aarch64__)
+    const float colors[4] = {red, green, blue, 1.0f};
+    const bool bounded_rgb = std::fabs(red) <= 1.0f && std::fabs(green) <= 1.0f && std::fabs(blue) <= 1.0f;
+    const float32x4_t rgb = vld1q_f32(colors);
+#endif
     for (int i = 1; i < length; ++i) {
         const float contribution = mulf(alpha, weight_at(weights, i, scale));
         const int target = pixel + direction * i;
         // AEX scatter adds contribution first; MAXSS selects it on unordered.
+#if defined(__aarch64__)
+        // SIMD lanes are independent channels, never successive contributions.
+        // Lane 3 carries the denominator's original add (no extra multiply).
+        const float32x4_t c = vdupq_n_f32(contribution);
+        const float32x4_t previous = vld1q_f32(destination + target * 4);
+        const float32x4_t accum = vsetq_lane_f32(denominator[target], previous, 3);
+        float32x4_t sum;
+        if (bounded_rgb && std::isfinite(contribution)) {
+            // Finite contribution times |RGB| <= 1 stays finite. Thus the
+            // add cannot generate NaN or have two NaN operands: a NaN can only
+            // come from accum, whose sole payload ARM quiets just as SSE does.
+            const float32x4_t product = vsetq_lane_f32(contribution, vmulq_f32(c, rgb), 3);
+            sum = vaddq_f32(product, accum);
+        } else {
+            const float32x4_t product = vsetq_lane_f32(contribution, olm::dblur_float::mul4(c, rgb), 3);
+            sum = olm::dblur_float::add4(product, accum);
+        }
+        const float a = olm::x86_float::sse_max(vgetq_lane_f32(previous, 3), contribution);
+        vst1q_f32(destination + target * 4, vsetq_lane_f32(a, sum, 3));
+        denominator[target] = vgetq_lane_f32(sum, 3);
+#else
         destination[target * 4 + 0] = addf(mulf(contribution, red), destination[target * 4 + 0]);
         destination[target * 4 + 1] = addf(mulf(contribution, green), destination[target * 4 + 1]);
         destination[target * 4 + 2] = addf(mulf(contribution, blue), destination[target * 4 + 2]);
         denominator[target] = addf(contribution, denominator[target]);
         float& destination_alpha = destination[target * 4 + 3];
         destination_alpha = olm::x86_float::sse_max(destination_alpha, contribution);
+#endif
     }
 }
 
@@ -176,7 +206,28 @@ void rowdriver_impl(
     const float* comp_map, int scatter_front_count, int scatter_back_count,
     int prepass_front_count, int prepass_back_count,
     const float* field, const olm::dblur::NoisePlaneView* noise_plane,
-    bool interpolate_noise) {
+    bool interpolate_noise, bool parallel = true) {
+#if defined(__APPLE__)
+    if (parallel && row_end - row_start >= 64) {
+        // Scatter and prepass are clipped to their own row. Each partition
+        // preserves the original x/i order and owns disjoint output cells.
+        constexpr size_t partitions = 8;
+        auto run = [&](size_t part) {
+            const int begin = row_start + (row_end - row_start) * part / partitions;
+            const int end = row_start + (row_end - row_start) * (part + 1) / partitions;
+            rowdriver_impl(begin, end, source, destination, width, mode, opacity,
+                exponent, scale, edge_x, edge_y, scatter_front, scatter_back,
+                prepass_front, prepass_back, denominator, alpha_max, comp_map,
+                scatter_front_count, scatter_back_count, prepass_front_count,
+                prepass_back_count, field, noise_plane, interpolate_noise, false);
+        };
+        dispatch_apply_f(partitions, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0),
+            &run, [](void* context, size_t part) {
+                (*static_cast<decltype(run)*>(context))(part);
+            });
+        return;
+    }
+#endif
     if ((mode == 2 && field == nullptr) ||
         (mode == 3 && noise_plane == nullptr)) {
         return;

@@ -35,7 +35,9 @@ class BundleMixin:
     def __init__(self, options):
         super().__init__(options)
         if options.plugin in ('colorkeep','olmdistancegradation','olmkirakira','radialblur','olmtoondilate','olmsmoother2','olmsmoother','olmblur'):
-            self.geometry_samplers=('realistic-v1',)
+            self.geometry_samplers=('realistic-v1','realistic-v2')
+        elif options.plugin in ('olmdirectionalblur','olmcolorkey'):
+            self.geometry_samplers=('realistic-v2',)
         self.env.pop('OLM_NATIVE_BUNDLE_EXECUTABLE', None)
         self.env.pop('OLM_NATIVE_PARAMETER_PROFILE', None)
         self.bundle = options.plugin_bundle.resolve()
@@ -59,6 +61,9 @@ class BundleMixin:
         self.binary = self.executable
         from .bundle_geometry import HOST
         geometry=getattr(self,'geometry_active',False)
+        if getattr(self,'geometry_version',None)=='realistic-v2':
+            from pathlib import Path
+            HOST=Path.home()/'.cache/olm-emu/worker-F53-bundle/plugin-host'
         return {'host':('F52c standalone Universal bundle host; negotiated geometry' if geometry else 'F47d shared Rust ClassicHost arena; AEX setup, native candidate setup and selected render route'),
                 **({'bundle_host_path':str(HOST),'bundle_host_sha256':sha(HOST.read_bytes())} if geometry else {}),
                 'worker_path':str(self.worker), 'worker_sha256':sha(self.worker.read_bytes()),

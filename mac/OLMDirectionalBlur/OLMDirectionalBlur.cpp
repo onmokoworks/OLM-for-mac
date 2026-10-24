@@ -2700,13 +2700,12 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
                         GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
                             extra->input->bitdepth, output_end - output_begin, &smart_estimate, layer_bound, true);
                 }
-				if (!parameters_safe || !worlds_safe || !estimate_safe ||
-					(pre && pre->full_width > 0 && pre->full_height > 0 &&
-						(!pre->request_contains_full_frame ||
-						 !DirectionalGenericWorldIsFullFrame(
-							 input_world, pre->full_width, pre->full_height) ||
-						 !DirectionalGenericWorldIsFullFrame(
-							 render_world, pre->full_width, pre->full_height)))) {
+				// AEX 0x180004a20 derives its planes from the checked-out input,
+				// not PF_InData's layer dimensions. F53's 40x30 layer / 20x15
+				// checkout witnesses also cover nonzero checkout origins. The
+				// input-sized workspace and world/budget checks above suffice;
+				// requiring a full-layer world rejects valid cropped checkouts.
+				if (!parameters_safe || !worlds_safe || !estimate_safe) {
 					err = OLM_DIRECTIONAL_REFUSAL("smart-generic-world-or-budget");
 				}
 			}

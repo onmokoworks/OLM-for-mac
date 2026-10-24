@@ -13,7 +13,7 @@ SOURCE = ROOT/'mac/ColorKeep/ColorKeep.cpp'
 
 class Adapter(ColorTriage, PublicAdapter):
     name = 'colorkeep'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'ColorKeep'
     output_format = 'raw'
 

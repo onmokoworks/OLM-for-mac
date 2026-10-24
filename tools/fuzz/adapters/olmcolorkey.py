@@ -14,7 +14,7 @@ SOURCE = ROOT/'mac/OLMColorKey/OLMColorKey.cpp'
 class Adapter(ColorTriage, PublicAdapter):
     name = 'olmcolorkey'
     # T15 qualifies transport; numerical ROI failures remain recorded separately.
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'OLMColorKey'
     output_format = 'raw'
     small_controls = (18,)

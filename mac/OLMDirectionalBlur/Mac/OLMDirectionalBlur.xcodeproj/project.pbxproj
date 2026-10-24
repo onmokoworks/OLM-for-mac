@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7EF36FB716F29701002A3CB3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF36FB616F29701002A3CB3 /* Cocoa.framework */; };
-		DB1100010000000000000001 /* dblur_rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100110000000000000001 /* dblur_rotate.cpp */; settings = {COMPILER_FLAGS = "-O0 -fno-fast-math -ffp-contract=off"; }; };
+		DB1100010000000000000001 /* dblur_rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100110000000000000001 /* dblur_rotate.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };
 		DB1100020000000000000001 /* dblur_rowdriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100120000000000000001 /* dblur_rowdriver.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };
 		DB1100030000000000000001 /* dblur_frontonly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100130000000000000001 /* dblur_frontonly.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };
 		DB1100040000000000000001 /* dblur_field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100140000000000000001 /* dblur_field.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };

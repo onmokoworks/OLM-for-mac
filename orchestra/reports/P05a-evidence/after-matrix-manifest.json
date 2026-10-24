@@ -1,0 +1,47 @@
+{
+  "source_head": "9123f22a0cee8a7592ca7a89ec4f0a962d02b9a8",
+  "host_sha256": "7ec265ebee76465adc0a0aef743cc8af46fff3f96e6c4d431ab724d1e9c5620e",
+  "bundles": {
+    "olmdirectionalblur": "1115625eb88a4e53e66a503e77134779288e6b95c2d3d00f25f3e2bb6d506451"
+  },
+  "samples": {
+    "olmdirectionalblur": {
+      "eligible": 83,
+      "paths": [
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000112_0ff79f8bee87.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000139_0f4b356bb556.json",
+        "tests/fuzz_corpus/olmdirectionalblur/C45_seed1_case000284.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000048_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000174_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000167_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000131_0f4b356bb556.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000067_876ee866f02e.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000163_0ff79f8bee87.json",
+        "tests/fuzz_corpus/olmdirectionalblur/seed1_case000084_9e50cab1bcf7.json"
+      ],
+      "sha256": [
+        "c7efca5c92c4a4c6d05dccbd814f868ce12b1d23c18204f66a73d12f99980d6e",
+        "044553e99811e5de5a3c40ef22dbfbbde21c639a40328525a4e8cd3d9a38eeb0",
+        "2ecaac36cf3f97d4efdd9ee5fd25ba71360f132266e546aaab1aa33c6659e66b",
+        "89311758890b40ca07977766359f6149ace2a4afae846464431db39f1619d6cf",
+        "667f9f432c5b056fc613925eb76c6d67ec43c405f635d537050121d2f0877287",
+        "a47c8ba8ea24773b71b76f0f69487c6cddf5010902b97b0669c61e395f86ed04",
+        "3260ca33d58e0448375c5706d27305a5540ef55559709869430ea19ac4f73300",
+        "4c328d853034ebdd2bdeee50d92228ba97d03affb03045b9a1060f60892786a9",
+        "2c2e4883f852ca014835456d1764110c3937ff53f9823fe9d0aec5051b321d66",
+        "e3d12a441c60f48e320d7357dc51617cb9b97bf76dd2882f27a041bd8f7c6d85"
+      ]
+    }
+  },
+  "memory": [
+    {
+      "plugin": "olmdirectionalblur",
+      "free_percent": 61
+    }
+  ],
+  "phase": "matrix",
+  "timeout": 60.0,
+  "counts": {
+    "ok": 12
+  }
+}

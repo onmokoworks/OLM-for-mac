@@ -1,0 +1,16 @@
+{
+  "olmsmoother2": {
+    "counts": {
+      "refusal": 4,
+      "exact": 4
+    },
+    "original_non_ok": {},
+    "mac_only_refusals": {
+      "refusal": 4
+    },
+    "tags": {
+      "Render:classic-entry-unowned@5289": 3,
+      "ValidatePublicWorlds:validate-world-shape@5240": 1
+    }
+  }
+}
