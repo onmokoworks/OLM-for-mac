@@ -1,0 +1,35 @@
+{
+  "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b",
+  "rows": [
+    {
+      "request": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "result": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "output_sha256": "c380b89b8bd6a0f2c08f378493dc412d7aa1b0cae4b2074358ac3cfdd6220c22",
+      "output_bytes": 4
+    },
+    {
+      "request": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "result": {
+        "status": "reject",
+        "returncode": 2,
+        "diagnostic": "aex_guest_error: rectangle outside sampled world\n"
+      },
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_bytes": 0
+    }
+  ]
+}

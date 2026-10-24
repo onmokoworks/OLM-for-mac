@@ -185,7 +185,8 @@ def apply_operation(adapter, case, op):
     changed = copy.deepcopy(case)
     if op['kind'] == 'crop':
         changed = crop(case, *op['geometry'])
-        return adapter.resize(changed, case['geometry'])
+        from geometry import resize
+        return resize(adapter.resize(changed, case['geometry']), case['geometry'])
     if op['kind'] == 'params':
         values = {int(k): v for k, v in op['values'].items()}
         for parameter in changed['parameters']:
@@ -282,6 +283,8 @@ def save_corpus(path, adapter, original, case, result, reduction, provenance):
             'case': {k: v for k, v in case.items() if k != 'pixels'},
             'input_sha256': sha(case['pixels']), 'result': result,
             'reduction': reduction, 'provenance': provenance}
+    if 'geometry_sampler' in original:
+        data['geometry_sampler'] = original['geometry_sampler']
     compressed = zlib.compress(case['pixels'], 9)
     # Large unreduced random inputs stay procedural: seed + accepted operations.
     if len(compressed) <= 32768:
@@ -299,7 +302,9 @@ def load_corpus(path, adapter):
     if 'pixels_zlib_base64' in data:
         case = dict(data['case'], pixels=zlib.decompress(base64.b64decode(data['pixels_zlib_base64'])))
     else:
-        case = adapter.generate(data['seed'], data['index'])
+        from geometry import sample
+        case = sample(adapter.generate(data['seed'], data['index']),
+                      data.get('geometry_sampler', 'default'))
         for op in data['operations']:
             case = apply_operation(adapter, case, op)
     if sha(case['pixels']) != data['input_sha256']:
