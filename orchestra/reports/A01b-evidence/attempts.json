@@ -1,0 +1,24 @@
+[
+  {
+    "year": 2025,
+    "pid": 16164,
+    "probe_json_exists": false,
+    "project_count": 0,
+    "memory": "The system has 17179869184 (1048576 pages with a page size of 16384).\n\nStats: \nPages free: 6584 \nPages purgeable: 349 \nPages purged: 269155 \n\nSwap I/O:\nSwapins: 0 \nSwapouts: 0 \n\nPage Q counts:\nPages active: 261664 \nPages inactive: 256238 \nPages speculative: 4945 \nPages throttled: 0 \nPages wired down: 151231 \n\nCompressor Stats:\nPages used by compressor: 328483 \nPages decompressed: 1656935 \nPages compressed: 2785347 \n\nFile I/O:\nPageins: 2200261 \nPageouts: 17519 \n\nSystem-wide memory free percentage: 52%\n",
+    "log": "2026-10-24 13:32:49.237 After Effects[16164:102165] CoreText registered PingFang for compatibility.\n2026-10-24 13:33:22.239 After Effects[16164:102165] .sdef warning for argument 'FileType' of command 'save' in suite 'Standard Suite': 'saveable file format' is not a valid type name.\n",
+    "dispatch_log": "1\n",
+    "driver_log": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 165, in <module>\n    raise RuntimeError('Stage not validated yet; run probe and io first (see A01b report)')\n    ^^\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 162, in main\n    subprocess.run(['python3',str(ROOT/'tools/fuzz/build_F47_bundles.py'),'--scratch',str(CACHE)],stdout=log,stderr=subprocess.STDOUT,check=True)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 129, in probe\n    subprocess.run(['sips','-Z','1000',str(screens / f'blocked-{year}.png')], stdout=subprocess.DEVNULL, check=True)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: AE did not complete probe; exit=None; inspect blocked-2025.png\n",
+    "wrapper_sha256": "fcf766c71109a269fe267af788aab3443d0f4227c731d25de95280b70c2d75c5"
+  },
+  {
+    "year": 2026,
+    "pid": 17521,
+    "probe_json_exists": false,
+    "project_count": 0,
+    "memory": "The system has 17179869184 (1048576 pages with a page size of 16384).\n\nStats: \nPages free: 33574 \nPages purgeable: 656 \nPages purged: 283187 \n\nSwap I/O:\nSwapins: 0 \nSwapouts: 0 \n\nPage Q counts:\nPages active: 252434 \nPages inactive: 254105 \nPages speculative: 3293 \nPages throttled: 0 \nPages wired down: 152169 \n\nCompressor Stats:\nPages used by compressor: 313470 \nPages decompressed: 1782787 \nPages compressed: 2937936 \n\nFile I/O:\nPageins: 2309644 \nPageouts: 19850 \n\nSystem-wide memory free percentage: 53%\n",
+    "log": "2026-10-24 13:35:26.284 After Effects[17521:110662] CoreText registered PingFang for compatibility.\n2026-10-24 13:35:59.839 After Effects[17521:110662] .sdef warning for argument 'FileType' of command 'save' in suite 'Standard Suite': 'saveable file format' is not a valid type name.\n",
+    "dispatch_log": "",
+    "driver_log": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 174, in <module>\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 168, in main\n    probe(args.year,args.timeout,args.prepare_inputs,args.stage == 'io')\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A01b-real-ae-render-compare/tools/ae_smoke/run_ae_smoke.py\", line 130, in probe\n    raise RuntimeError(f'AE did not complete probe; exit={process.poll()}; inspect blocked-{year}.png')\nRuntimeError: AE did not complete probe; exit=None; inspect blocked-2026.png\n",
+    "wrapper_sha256": "1b28828f29fd6f9e7c75fdb2989a256c2440e03dbcc26ff9ead9f7e02fa76ea1"
+  }
+]

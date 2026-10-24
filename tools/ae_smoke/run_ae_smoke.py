@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""A01 staged real-AE probe. Currently implements build/install/load/param capture.
+"""Staged real-AE probe and no-effect project preparation.
 
 Fail closed on launch timeout; captures the screen without interacting with dialogs.
-Render/corpus/host comparison stages are not yet implemented (see A01 report).
+Render/corpus/host comparison stages are not yet implemented (see A01b report).
 """
 import argparse
 import hashlib
@@ -17,7 +17,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 CACHE = Path.home() / '.cache/olm-emu/A01'
-STATE = ROOT / 'orchestra/state/A01-real-ae-smoke'
+STATE = ROOT / 'orchestra/state/A01b-real-ae-render-compare'
 PLUGINS = ['OLMBlur','ColorKeep','OLMColorKey','OLMDirectionalBlur',
            'OLMDistanceGradation','OLMKiraKira','OLMSmoother2','OLMToonDilate',
            'OLMRadialBlur','OLMSmoother']
@@ -57,13 +57,12 @@ def install():
 
 
 def running():
-    p = subprocess.run(['pgrep','-f','After Effects'], capture_output=True, text=True)
-    if p.returncode not in (0,1):
-        raise RuntimeError('pgrep failed')
-    return p.stdout.split()
+    listing = capture(['ps', '-axo', 'pid=,command='])
+    return [line.strip().split(None, 1)[0] for line in listing.splitlines()
+            if re.search(r'MacOS/After Effects$', line)]
 
 
-def probe(year, timeout, inputs=None):
+def probe(year, timeout, inputs=None, controls_only=False):
     deadline = time.monotonic() + 7200
     while running():
         if time.monotonic() >= deadline:
@@ -83,7 +82,7 @@ def probe(year, timeout, inputs=None):
         pipl=(ROOT / f'mac/{name}/{name}PiPL.r').read_text()
         specs.append(dict(plugin=name, matchName=re.search(r'AE_Effect_Match_Name\s*\{\s*"([^"]+)"',pipl)[1]))
     wrapper=STATE / f'launch-{year}.jsx'
-    config=dict(output=str(out),plugins=specs,directory=str(STATE))
+    config=dict(output=str(out),plugins=[] if controls_only else specs,directory=str(STATE))
     if inputs: config['inputs']=json.loads(inputs.read_text())
     payload='prepare.jsx' if inputs else 'probe.jsx'
     wrapper.write_text('var A01='+json.dumps(config)+';\n$.evalFile(new File('+json.dumps(str(Path(__file__).with_name(payload)))+'));\n')
@@ -124,9 +123,16 @@ def probe(year, timeout, inputs=None):
                         except subprocess.TimeoutExpired:
                             pass
                 time.sleep(1)
-            screens=ROOT / 'orchestra/reports/A01-evidence/screens'
+            screens=STATE / 'screens'
             screens.mkdir(parents=True,exist_ok=True)
             subprocess.run(['screencapture','-x',str(screens / f'blocked-{year}.png')],check=True)
+            shot = screens / f'blocked-{year}.png'
+            edge = 1000
+            while True:
+                subprocess.run(['sips','-Z',str(edge),str(shot)], stdout=subprocess.DEVNULL, check=True)
+                if shot.stat().st_size <= 400_000:
+                    break
+                edge = max(1, edge * 3 // 4)
             raise RuntimeError(f'AE did not complete probe; exit={process.poll()}; inspect blocked-{year}.png')
         finally:
             # Only signal the exact child started here, never another AE process.
@@ -145,6 +151,7 @@ def probe(year, timeout, inputs=None):
 def main():
     global STATE
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--stage', choices=('probe','io','matrix','compare','screens','all'), default='probe')
     p.add_argument('--prepare-inputs', type=Path, help='Prepare default render projects using this inputs.json')
     p.add_argument('--run-id', default='', help='New subdirectory for a rerun')
     p.add_argument('--build',action='store_true')
@@ -155,12 +162,18 @@ def main():
     if args.run_id:
         if not re.fullmatch(r'[A-Za-z0-9_-]+', args.run_id): p.error('invalid run id')
         STATE = STATE / args.run_id
+    if args.stage in ('matrix', 'compare', 'screens', 'all'):
+        p.error('Stage not implemented; see A01b report')
+    if args.stage == 'io' and not args.prepare_inputs:
+        p.error('--stage io requires --prepare-inputs')
     preflight(); STATE.mkdir(parents=True,exist_ok=True)
     if args.build:
         with (STATE/'build.log').open('w') as log:
             subprocess.run(['python3',str(ROOT/'tools/fuzz/build_F47_bundles.py'),'--scratch',str(CACHE)],stdout=log,stderr=subprocess.STDOUT,check=True)
     if args.install: install()
-    probe(args.year,args.timeout,args.prepare_inputs)
+    probe(args.year,args.timeout,args.prepare_inputs,args.stage == 'io')
+    if args.stage == 'io':
+        print('No-effect projects prepared only; render/decode gate is not implemented.', flush=True)
 
 if __name__=='__main__':
     main()

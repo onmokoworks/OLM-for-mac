@@ -74,3 +74,22 @@ tolerance:
 ```sh
 python3 tools/ae_smoke/compare.py ae.argb host.argb --width 32 --height 24 --depth 16
 ```
+
+## A01b continuation (blocked before rendering)
+
+See `orchestra/reports/A01b-real-ae-render-compare.md`. The new default scratch
+root is `orchestra/state/A01b-real-ae-render-compare/`. Busy detection now uses
+`ps` and matches only command lines ending in `MacOS/After Effects`, per the
+ticket. Helpers are not treated as a user AE session.
+
+`--stage probe` is the default. `--stage io --prepare-inputs <inputs.json>` attempts
+to prepare **control-only** projects using the existing JSX. It does not render,
+decode images, or validate an I/O gate. `matrix`, `compare`, `screens` and `all`
+are reserved choices that fail explicitly; the whole pipeline is not implemented.
+Both the 2025 probe and 2026 preparation timed out in A01b with startup dialogs.
+No effect comparison should be inferred from these commands.
+
+`source_popups.py <output.json>` resolves all 20 `PF_ADD_POPUP` declarations from
+source string tables across the ten plugins. This covers source popup metadata
+only, not the full parameter audit. AE has no third-party popup-label getter in
+the existing scripting probe; labels are not claimed as verified in AE.

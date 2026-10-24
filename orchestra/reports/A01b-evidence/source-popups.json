@@ -1,0 +1,350 @@
+[
+  {
+    "plugin": "OLMBlur",
+    "source": "mac/OLMBlur/OLMBlur.cpp",
+    "source_sha256": "b91706aff22b1aae3c2f4c7bfec719a73c27647b4f65f5739deb0f2f502fc08b",
+    "strings_sha256": "4a073c0b78cb475c6eff4db54ea02f248c721202f7f8cc7750c1207e7f282c04",
+    "header_sha256": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+    "popups": [
+      {
+        "name": "Bias Direction",
+        "labels": [
+          "Vertical",
+          "Horizontal"
+        ],
+        "count": 2,
+        "default": 1,
+        "line": 93,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "ColorKeep",
+    "source": "mac/ColorKeep/ColorKeep.cpp",
+    "source_sha256": "5a8502ad3cd11a78f16cd800736fb53ac43c6c4abf2eacdebb192f3a1924e284",
+    "strings_sha256": "5a27982f511dd737fac20f9745d37435a80299055024a133b98e977aa9bdde1d",
+    "header_sha256": "db7922d80175d608d662ed954a284a61ad32a126e102300d7388e9ed29f3c7a0",
+    "popups": []
+  },
+  {
+    "plugin": "OLMColorKey",
+    "source": "mac/OLMColorKey/OLMColorKey.cpp",
+    "source_sha256": "8dcf692569fbcd03269a509930a9a577ee1149234d3b9e962d711c616f9ef175",
+    "strings_sha256": "f999375d3608b8c7950df6bfc3d23de8dc771003904ba910e788d9bbd8ce0725",
+    "header_sha256": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+    "popups": [
+      {
+        "name": "Color Space",
+        "labels": [
+          "RGB",
+          "HSV",
+          "Lab76",
+          "Lab94",
+          "YUV",
+          "YCrCb"
+        ],
+        "count": 6,
+        "default": 1,
+        "line": 242,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Force Lower Precision",
+        "labels": [
+          "Full",
+          "16bit",
+          "8bit"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 247,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Distance Type",
+        "labels": [
+          "Box",
+          "Approximate",
+          "Euclidean"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 290,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Distance Type",
+        "labels": [
+          "Box",
+          "Approximate",
+          "Euclidean"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 308,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Direction",
+        "labels": [
+          "Inside",
+          "Around",
+          "Outside"
+        ],
+        "count": 3,
+        "default": 2,
+        "line": 313,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMDirectionalBlur",
+    "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "source_sha256": "6f3207c4b4fd5ec8b4630c9b2755bc9f692ba6256f47041c10ba9e2e1cb7457b",
+    "strings_sha256": "a9898e0e2cdd9d9c4e6f234c680081f68bb229772254a10ab1c1810fbf348daf",
+    "header_sha256": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+    "popups": [
+      {
+        "name": "Noise Type",
+        "labels": [
+          "Smooth ",
+          " Block ",
+          " Layer"
+        ],
+        "count": 2,
+        "default": 1,
+        "line": 181,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMDistanceGradation",
+    "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+    "source_sha256": "e1d5c652e1a716448bf9f79dc1452b6899d58d6114c12bfa509e5ac75a92fa8a",
+    "strings_sha256": "7c8e13d4490e67f9cb918199891d96831b50929d4faa87744830f1fa35d93dd8",
+    "header_sha256": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
+    "popups": [
+      {
+        "name": "In/Out",
+        "labels": [
+          "Inside",
+          "Outside",
+          "Both"
+        ],
+        "count": 3,
+        "default": 0,
+        "line": 79,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Render Mode",
+        "labels": [
+          "RGB",
+          "Layer"
+        ],
+        "count": 2,
+        "default": 1,
+        "line": 95,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Interpolation Mode",
+        "labels": [
+          "Constant",
+          "Linear",
+          "Sphere",
+          "Power"
+        ],
+        "count": 4,
+        "default": 2,
+        "line": 117,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Blur Mode",
+        "labels": [
+          "No Blur",
+          "Blur No Scale",
+          "Blur"
+        ],
+        "count": 5,
+        "default": 1,
+        "line": 129,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMKiraKira",
+    "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
+    "source_sha256": "ac0f133785090baf85bca2b2df78979e2a268b7c43f676857822d77ea20be40d",
+    "strings_sha256": "6fd2b40d6ab80da6fa0419fd0b0698ff8b51b34c08e1f6506008993c1908fd4e",
+    "header_sha256": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+    "popups": [
+      {
+        "name": "Channel",
+        "labels": [
+          "Alpha",
+          "Luminance",
+          "RGB",
+          "Brightness"
+        ],
+        "count": 6,
+        "default": 1,
+        "line": 2410,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Blur Mode",
+        "labels": [
+          "Box",
+          "Approximated Gaussian",
+          "Gaussian",
+          "Exponential"
+        ],
+        "count": 3,
+        "default": 2,
+        "line": 2414,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Merge mode",
+        "labels": [
+          "premultiply",
+          "add"
+        ],
+        "count": 2,
+        "default": 1,
+        "line": 2418,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMSmoother2",
+    "source": "mac/OLMSmoother2/OLMSmoother2.cpp",
+    "source_sha256": "2d98d36b62a13e9aec84d79ee5651ac5738ba02943fd43b4348f852b19b6d0cd",
+    "strings_sha256": "f79e5cc65618c838a5a8b538e65e79730ce975a920fc360be03b7f43f6194b13",
+    "header_sha256": "cca0ff9262d01201ed7ee98dc43f31c7824f7d0589ff896a824b4bc86677531d",
+    "popups": [
+      {
+        "name": "Smoother Version",
+        "labels": [
+          "v1",
+          "v2"
+        ],
+        "count": 2,
+        "default": 2,
+        "line": 866,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Gamma Correction",
+        "labels": [
+          "None",
+          "Gamma Colors",
+          "All Colors"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 872,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMToonDilate",
+    "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
+    "source_sha256": "6be071fd3fb875b1189281cc0c74058b981e421cc01b339b1069e8423ca0c2fb",
+    "strings_sha256": "b9cb4219645add26e457ad1fc1d7521df98cc6b810a9ea0a974c7574133f738e",
+    "header_sha256": "40eef7a6c652dbd3ef77bc3a5a0eddcc3cf59796599ab53f2c245f8c6770ff70",
+    "popups": []
+  },
+  {
+    "plugin": "OLMRadialBlur",
+    "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+    "source_sha256": "8ea892bcae5882b8d212c1d1494b68dbf8fe39dce212f133ad2491c200ea200e",
+    "strings_sha256": "84a223ca4254290e64ede0814fe7d561392389a06c766efd4712b834539aed8b",
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "popups": [
+      {
+        "name": "Blur Type",
+        "labels": [
+          "Zoom ",
+          " Rotation"
+        ],
+        "count": 2,
+        "default": 1,
+        "line": 689,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Offset Mode",
+        "labels": [
+          "Add ",
+          " Max ",
+          " Override"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 711,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Offset Mode",
+        "labels": [
+          "Add ",
+          " Max ",
+          " Override"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 745,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      },
+      {
+        "name": "Noise Type",
+        "labels": [
+          "Smooth ",
+          " Block ",
+          " Layer"
+        ],
+        "count": 3,
+        "default": 1,
+        "line": 823,
+        "ae_labels": null,
+        "ae_label_status": "unavailable: ExtendScript has no third-party popup label getter"
+      }
+    ]
+  },
+  {
+    "plugin": "OLMSmoother",
+    "source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+    "source_sha256": "6b64edfc16c5e513ca9fe9e6bdffe83bbb7c8debac80082668ff14c33b80a129",
+    "strings_sha256": "ce4ed37933a67172f6cba6570a55a5f2ea592284e8a9f48cd852bf4fcf1484e7",
+    "header_sha256": "426b0f8c7b7a6f317d2b6042d4d1e0c55f294258d4a9ec58b4cfbae9214b00e2",
+    "popups": []
+  }
+]
