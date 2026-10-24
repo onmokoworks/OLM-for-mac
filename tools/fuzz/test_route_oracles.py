@@ -3,6 +3,7 @@ import tempfile
 import contextlib
 import io
 import json
+import os
 import sys
 from unittest.mock import patch
 import time
@@ -81,7 +82,7 @@ class RouteOracles(unittest.TestCase):
 class RouteMigration(unittest.TestCase):
     def test_correction_preserves_previous_result_and_preflights_every_file(self):
         import rebaseline_corpus
-        scratch=Path(__file__).resolve().parents[2]/'orchestra/state/F17-fuzz-per-route-oracle'
+        scratch=Path(os.environ.get('OLM_FUZZ_TEST_SCRATCH', Path(__file__).resolve().parents[2]/'orchestra/state/F17-fuzz-per-route-oracle'))
         scratch.mkdir(parents=True,exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as td:
             root=Path(td)
