@@ -48,6 +48,8 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
+    p.add_argument('--geometry', choices=('default', 'realistic'), default='default',
+                   help='Opt-in sampler; requires a geometry-qualified candidate host')
     p.add_argument('--candidate', choices=('source', 'plugin-bundle'), default='source')
     p.add_argument('--plugin-bundle', type=Path)
     p.add_argument('--n', type=int, default=2000)
@@ -168,6 +170,8 @@ def replay(adapter_type, args, scratch, deadline, report):
                 if time.monotonic() >= deadline:
                     break
                 case, saved = load_corpus(path, adapter)
+                from geometry import require_host
+                require_host(adapter, case)
                 with tempfile.TemporaryDirectory(prefix='replay_', dir=directory) as name:
                     observed = evaluate(adapter, case, Path(name), deadline)
                 report['replays'].append({'path':str(path), 'result':observed, 'group':group_index,
@@ -182,7 +186,9 @@ def replay(adapter_type, args, scratch, deadline, report):
 
 def run_one(adapter, seed, index, scratch, deadline, args, provenance):
     started = time.monotonic()
-    case = adapter.generate(seed, index)
+    from geometry import sample, require_host
+    case = sample(adapter.generate(seed, index), getattr(args, 'geometry', 'default'))
+    require_host(adapter, case)
     with tempfile.TemporaryDirectory(prefix=f'case_{index}_', dir=scratch) as name:
         directory = Path(name)
         attribution = {}
@@ -274,6 +280,9 @@ def main():
                 exitcode = replay(adapter_type, args, scratch, deadline, report)
             else:
                 adapter = adapter_type(args)
+                if args.geometry != 'default':
+                    from geometry import require_host, VERSION
+                    require_host(adapter, {'geometry_sampler': VERSION})
                 report['provenance'] = prepare(adapter, scratch, deadline, args.case_timeout)
                 next_index = 0
                 with ThreadPoolExecutor(max_workers=args.jobs) as pool:
