@@ -1311,7 +1311,7 @@ static void build_distance_field(
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
 		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
-	} else { // BOTH
+	} else if (!p.smart_owner || p.in_out == IN_OUT_BOTH) { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
 		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
@@ -1322,6 +1322,9 @@ static void build_distance_field(
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
+	// 18117349a..1811735a8 skips all three distance producers for an
+	// out-of-range popup. The allocated scalar plane then enters the same
+	// copy/filter/compose path; do not alias that branch to Both.
 	bool blurred = has_effective_blur(p);
 	bool constant_blur = p.interp_mode == INTERP_CONSTANT && blurred;
 	if (constant_blur) {
@@ -1447,7 +1450,8 @@ static inline void compose_pixel(
 	// three color lanes. The blurred owner merges the post-blur scalar into
 	// R/G and the pre-blur scalar into B (181172906..18117291b).
 	if (p.smart_owner) {
-		float ownership = 1.0f;
+		// 181170e77: only Both replaces source alpha with one.
+		float ownership = p.in_out == IN_OUT_BOTH ? 1.0f : src_a;
 		if (p.in_out == IN_OUT_INSIDE) ownership = src_a;
 		else if (p.in_out == IN_OUT_OUTSIDE) ownership = 1.0f - src_a;
 		if (ownership < 0.0001f) {
@@ -1521,7 +1525,7 @@ static inline void compose_pixel(
 		// Negative source alpha must not amplify the Outside alpha above one.
 		if (p.smart_owner && d_alpha > 1.0f) d_alpha = 1.0f;
 		break;
-	default:             d_alpha = 1.0f; break; // BOTH
+	default:             d_alpha = p.smart_owner && p.in_out != IN_OUT_BOTH ? src_a : 1.0f; break;
 	}
 	if (!p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg &&
@@ -1943,7 +1947,6 @@ static bool is_admitted_pf32_smart_unblurred_beta(const DGParams &p)
 	         p.blur_mode <= BLUR_MODE_MEDIAN)) &&
 	       (p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR ||
 	        p.interp_mode == INTERP_SPHERE) &&
-	       p.in_out >= IN_OUT_INSIDE && p.in_out <= IN_OUT_BOTH &&
 	       p.render_mode >= RENDER_MODE_RGB && p.render_mode <= RENDER_MODE_LAYER &&
 	       p.inside_threshold >= 0 && p.outside_threshold >= 0 &&
 	       p.ds_x > 0.0f && p.ds_y > 0.0f;
@@ -1988,7 +1991,6 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 		 p.interp_mode != INTERP_SPHERE) ||
 		p.blur_mode < BLUR_MODE_NO_SCALE || p.blur_mode > BLUR_MODE_MEDIAN ||
 		p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_MEDIAN ? 500 : 4096) ||
-		p.in_out < IN_OUT_INSIDE || p.in_out > IN_OUT_BOTH ||
 		p.render_mode < RENDER_MODE_RGB || p.render_mode > RENDER_MODE_LAYER ||
 		p.inside_threshold < 0 || p.inside_threshold > 1000 ||
 		p.outside_threshold < 0 || p.outside_threshold > 1000 ||
