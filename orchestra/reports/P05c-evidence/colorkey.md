@@ -1,10 +1,10 @@
-status: partial
+status: done
 summary:
 - Lazily cache each enabled key's unmutated Lab triple within RenderTyped; copy it before each ordered comparator mutation.
 - UCRT, Lab conversion arithmetic, per-pixel cmp mutation, and key traversal order are unchanged.
 - Heavy corpus05 improved from 1.85–1.87 to 0.84–0.86 s at 1080p and 7.41–7.61 to 3.57–3.73 s at 4K.
 - Contract Smart: 766 exact / 34 original-AEX rejects across 800 generated cases; 0 mismatches / 0 Mac-only refusals. All 44 corpora replay true.
-- Full post-change unit suites are still running; no final acceptance claim yet.
+- Post-change class and function module exit statuses exactly match baseline; no newly failing module.
 
 facts:
 
@@ -19,7 +19,7 @@ facts:
 - Default seed 1 n300: Smart 300 exact before and after; all 600 paired Classic/Smart output hashes are unchanged. Classic already had 300 mismatches before: first case index 0, byte/word 1, expected `00`, actual `93`, 1461 differing bytes. This ticket does not promote Classic to exact.
 - Final realistic-v1 n100: seed 1 = 91 exact / 9 original-AEX rejects; fresh seed 2026102505 = 90 exact / 10 rejects. Final odd-even-v1 n150, max width 1920 / height 1080: seed 2026 = 142 exact / 8 rejects; seed 2027 = 143 exact / 7 rejects. All contract-route mismatches and Mac-only refusals are zero. The prior date-seed 20261024 run (89 exact / 11 rejects) is retained as an additional 100-case check; it is not counted as the fresh seed. Uncompared cases are not counted as exact. Example original rejection: realistic seed 1 index 12, original worker reports corrupted output pixel guard after negotiated rectangle [1,0,2,1]; candidate returns 0.
 - Standard both-route corpus replay: root 9, P02i-realistic 8, T15b 3, new P05c-lab-key-cache 24; all `replay_matches_saved=true` (44 total). New actual-AEX witnesses cover PF8/PF16/PF32, Lab76/Lab94, component/scalar predicates, 2/25 keys, disabled keys and repeated palette pixels.
-- Pre-change unittest modules: 30 run / 21 nonzero returns. Pre-change module-level function suites: 8 run / 3 nonzero returns. Full logs retained. This includes successful O2/sanitizer owner, Lab94, Lab-boundary, typed-control and YUV replay tests; historical evidence/asset failures remain visible.
+- Pre-change unittest modules: 30 invoked, 9 exit 0, 12 exit 1, 9 exit 5 (no unittest class tests collected). Post-change class module statuses are identical. Before/after module-level function suites: 8 run / 3 nonzero returns, the same three modules. Full logs retained. This includes successful O2/sanitizer owner, Lab94, Lab-boundary, typed-control and YUV replay tests; pre-existing evidence/asset/static-extraction failures and empty collections remain visible.
 - A verification script initially required every realistic case to be oracle-comparable and stopped at the 9 AEX rejects. Its assertion was corrected to the requested contract (0 mismatches / 0 Mac-only refusals, with original rejects separately counted). The interrupted post-change unit process and its child were terminated and the suite restarted; no partial run is claimed as a completed test suite.
 - Registered generated bundles: `~/.cache/olm-emu/P05c-key-before` and `~/.cache/olm-emu/P05c-key`; SHA-256 identities are in `key-cache.json`. No original AEX, UCRT implementation, oracle worker, release gate, ledger, MAIN or emulator source was modified.
 
@@ -44,4 +44,4 @@ python3 tools/fuzz/ae_realism_audit.py --phase matrix --cache "$HOME/.cache/olm-
 Expected campaign/replay counts above, six OK timing rows. Historical unittest failures are not represented as a green suite. Do not run more than two build/emulator processes concurrently.
 
 next:
-- Finish and compare post-change unittest and function suites, then complete this per-plugin report and proceed to Smoother.
+- ColorKey performance/contract checks are complete. Proceed to Smoother. Restore historical unit evidence/assets in a separate ticket; no native AE or unavailable-AEX promotion is claimed.

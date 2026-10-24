@@ -13,4 +13,4 @@ for path in sorted((ROOT/'tests').glob('test_'+plugin+'*.py')):
   r=subprocess.run([sys.executable,'-m','unittest',str(path.relative_to(ROOT))],cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT)
  rows.append(dict(file=str(path.relative_to(ROOT)),returncode=r.returncode))
 (s/'summary.json').write_text(json.dumps(rows,indent=2)+'\n')
-print('modules',len(rows),'failed',sum(r['returncode']!=0 for r in rows))
+print('modules',len(rows),'nonzero',sum(r['returncode']!=0 for r in rows))

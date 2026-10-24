@@ -1,15 +1,15 @@
 """Retain ticket logs/reports and register generated performance bundles."""
-import pathlib,json,gzip,shutil,hashlib,subprocess,sys
+import pathlib,json,gzip,shutil,hashlib,subprocess,sys,io
 R=pathlib.Path(__file__).resolve().parents[3];S=R/'orchestra/state/P05c-blur-colorkey-smoother-performance';E=R/'orchestra/reports/P05c-evidence'
 label,name,source=sys.argv[1:];cache=pathlib.Path.home()/'.cache/olm-emu'
 for p in sorted(S.glob(label+'-*')):
  if p.is_file() and p.suffix in ('.json','.log','.txt'):
-  with p.open('rb') as src,gzip.open(E/(p.name+'.gz'),'wb') as dst:shutil.copyfileobj(src,dst)
+  with p.open('rb') as src,(E/(p.name+'.gz')).open('wb') as output,gzip.GzipFile(filename='',mode='wb',fileobj=output,mtime=0) as dst:shutil.copyfileobj(src,dst)
  if p.is_dir() and p.name in [label+'-timing-before',label+'-timing-after']:
   for f in p.glob('matrix*'):shutil.copyfile(f,E/(p.name+'-'+f.name))
  if p.is_dir() and ('-units-' in p.name or '-functions-' in p.name) and (p/'summary.json').exists():
   shutil.copyfile(p/'summary.json',E/(p.name+'.json'))
-  with gzip.open(E/(p.name+'-logs.json.gz'),'wt') as f:json.dump([dict(file=q.name,text=q.read_text()) for q in sorted(p.glob('*.log'))],f)
+  with (E/(p.name+'-logs.json.gz')).open('wb') as output,gzip.GzipFile(filename='',mode='wb',fileobj=output,mtime=0) as compressed,io.TextIOWrapper(compressed,encoding='utf-8') as f:json.dump([dict(file=q.name,text=q.read_text()) for q in sorted(p.glob('*.log'))],f)
 records=[]
 for stage in ['before','after']:
  identity='P05c-'+label+('-before' if stage=='before' else '')
