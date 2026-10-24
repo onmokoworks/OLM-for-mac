@@ -13,10 +13,11 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+from olm_assets import resolve_asset
 from aex_loader import AexLoader
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMBlur/Plugins/64/2025/OLMBlur.aex"
+AEX = resolve_asset(ROOT / "aex/OLMBlur/Plugins/64/2025/OLMBlur.aex")
 AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 ENTRY = 0x18000A970
 REPORT = ROOT / "refs/conformance/olmblur_update_params_ui_actual_aex_20260810.json"

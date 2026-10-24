@@ -10,11 +10,12 @@ from pathlib import Path
 
 from unicorn.x86_const import UC_X86_REG_RSP
 
+from olm_assets import resolve_asset
 from aex_loader import AexLoader
 
 
 ROOT = Path(__file__).resolve().parents[2]
-AEX = ROOT / "aex/OLMDirectionalBlur/Plugins/64/2025/OLMDirectionalBlur.aex"
+AEX = resolve_asset(ROOT / "aex/OLMDirectionalBlur/Plugins/64/2025/OLMDirectionalBlur.aex")
 AEX_SHA256 = "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
 ENTRY = 0x1800083F0
 REPORT = ROOT / "refs/conformance/olmdirectionalblur_update_params_ui_actual_aex_20260810.json"

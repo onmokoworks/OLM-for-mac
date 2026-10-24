@@ -20,6 +20,9 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools/emulation"))
+from olm_assets import main_assets
+
 MANIFEST = ROOT / "refs/conformance/olm_release_gate_manifest_20260806.json"
 IDENTITY_MANIFEST = ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json"
 CURRENT_HOST_SMOKE = ROOT / "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json"
@@ -42,6 +45,27 @@ WINDOWS_BOUNDARY_ROW_IDS = {
     f"olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__{depth}bpc"
     for depth in (8, 16, 32)
 } | {"olmsmoother_v1__canonical_3__case_0001__16bpc"}
+
+
+def boundary_archive_path(raw_path: str) -> Path:
+    """Resolve read-only archives in this checkout, then MAIN, without escapes.
+
+    An existing local input always wins, including a corrupt one: fallback must
+    never mask a failed digest. Source and generated evidence remain local.
+    """
+    relative = Path(raw_path)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError("Windows AE boundary archive outside repository")
+    local = ROOT / relative
+    if not local.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError("Windows AE boundary archive outside repository")
+    if local.exists() or local.is_symlink():
+        return local
+    main = main_assets(ROOT).resolve()
+    fallback = main / relative
+    if not fallback.resolve().is_relative_to(main):
+        raise ValueError("Windows AE boundary archive outside MAIN repository")
+    return fallback
 
 
 def windows_boundary_gate() -> dict[str, Any]:
@@ -71,11 +95,7 @@ def windows_boundary_gate() -> dict[str, Any]:
         expected_sha = payload.get(f"{field}_sha256")
         if not isinstance(raw_path, str) or not _hex_sha256(expected_sha):
             raise ValueError(f"Windows AE boundary {field} binding invalid")
-        path = ROOT / raw_path
-        try:
-            path.resolve().relative_to(ROOT.resolve())
-        except ValueError as exc:
-            raise ValueError(f"Windows AE boundary {field} outside repository") from exc
+        path = boundary_archive_path(raw_path)
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha:
             raise ValueError(f"Windows AE boundary {field} digest mismatch")
     return {
@@ -406,11 +426,14 @@ def installed_gate() -> dict[str, Any]:
     }
 
 
-def regression_gate(skip: bool) -> dict[str, Any]:
+def regression_gate(skip: bool, results_dir: Path | None = None) -> dict[str, Any]:
     if skip:
         return {"state": "pending", "reason": "skipped_by_audit_mode"}
+    command = [sys.executable, str(REGRESSION)]
+    if results_dir is not None:
+        command += ["--results-dir", str(results_dir.resolve())]
     proc = subprocess.run(
-        [sys.executable, str(REGRESSION)], cwd=ROOT, capture_output=True, text=True
+        command, cwd=ROOT, capture_output=True, text=True
     )
     output = proc.stdout + proc.stderr
     marker = "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10"
@@ -481,12 +504,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-regression", action="store_true", help="audit manifests/installs only; result stays pending")
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument("--results-dir", type=Path, help="fixed-fixture logs and scratch directory")
     args = parser.parse_args()
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     host_rows = validate_current_host_smoke(manifest)
     install = installed_gate()
-    regression = regression_gate(args.skip_regression)
+    regression = regression_gate(args.skip_regression, args.results_dir)
     parameter_ui = parameter_ui_gate()
     windows_boundary = windows_boundary_gate()
     host_counts = {state: sum(row["state"] == state for row in host_rows) for state in ("proven", "pending", "invalid")}
