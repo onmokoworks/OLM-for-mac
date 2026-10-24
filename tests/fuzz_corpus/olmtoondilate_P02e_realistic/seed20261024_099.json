@@ -1,0 +1,162 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      22,
+      18
+    ],
+    "full_geometry": [
+      64,
+      52
+    ],
+    "geometry": [
+      22,
+      18
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 99,
+    "input_padding": 32,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 30
+      }
+    ],
+    "pixel_aspect": [
+      4,
+      3
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      20,
+      0,
+      22,
+      16
+    ],
+    "rowbytes_padding": 32,
+    "seed": 20261024
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 99,
+  "input_sha256": "8281b1f82ee6d4980c66e483a3c5aa57bfa780af00c96c97ff57f5a9763cc840",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmtoondilate",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "candidate_sha256": "db3b8d5e67cef66be08fec36924033f940a885c2b24d849175b284c51301a904",
+    "classic_owner": "Production PF_Cmd_RENDER is an intentional successful no-op. Compare untouched destinations against their own initial fill (Mac 0xee, AEX zero); no numerical Classic output exists.",
+    "classic_owner_evidence": "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub",
+    "declarations_sha256": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc",
+    "dependencies_sha256": {
+      "mac/OLMToonDilate/OLMToonDilate.cpp": "15ec41c52d9da9872cad1ccd573006da4fc6d316eaa1de50050101c31fd4e8b2",
+      "mac/OLMToonDilate/OLMToonDilate.h": "40eef7a6c652dbd3ef77bc3a5a0eddcc3cf59796599ab53f2c245f8c6770ff70",
+      "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp": "17fcace86b9d5c95fe6d4d136a5df04f7659f60d39ac45296e8ecf335df10f00",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "tools/fuzz/harnesses/toondilate_main.cpp": "0d0704935eb0aa31d4d6e8dcc70a633648ebe79479ddb3c463d017577bacad51",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "no-write",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        20,
+        0,
+        22,
+        16
+      ],
+      "raw_sha256": "d569c5956c328a2e0c13686d0a5ab713c678c84ccff05b3076cc875cbac40fea",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          20,
+          0,
+          22,
+          16
+        ],
+        "raw_sha256": "d569c5956c328a2e0c13686d0a5ab713c678c84ccff05b3076cc875cbac40fea",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "20 0 22 16",
+          "GEOMETRY_INPUT": "64 52 1 3 1 3 4 3 32"
+        },
+        "output_rect": [
+          20,
+          0,
+          22,
+          16
+        ],
+        "raw_sha256": "d569c5956c328a2e0c13686d0a5ab713c678c84ccff05b3076cc875cbac40fea",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 20261024
+}

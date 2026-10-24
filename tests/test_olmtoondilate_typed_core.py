@@ -58,11 +58,11 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         self.assertIn("PF_OutFlag2_FLOAT_COLOR_AWARE", source)
         self.assertIn("RenderTyped<PF_Pixel16>", source)
         self.assertIn("RenderTyped<PF_PixelFloat>", source)
-        self.assertIn("RenderTileWorld(input_world, &staged_world, info, extra->input->bitdepth)", source)
+        self.assertIn("RenderTyped<PF_Pixel8>(input_world, &staged_world, render_info, true)", source)
         self.assertIn("ValidateToonBetaAdmission<PF_Pixel8>", source)
         self.assertIn("ValidateToonBetaAdmission<PF_Pixel16>", source)
         self.assertIn("ValidateToonBetaAdmission<PF_PixelFloat>", source)
-        self.assertIn("input->width != output->width", source)
+        self.assertIn("smart_render ? input->width : output->width", source)
         self.assertIn("static_cast<size_t>(input->rowbytes) < input_active_rowbytes", source)
         self.assertIn("output_height * static_cast<size_t>(output->rowbytes)", source)
         smart = source[source.index("static PF_Err\nSmartRender"):source.index(

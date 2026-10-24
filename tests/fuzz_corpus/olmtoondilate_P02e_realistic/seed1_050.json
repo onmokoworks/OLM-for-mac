@@ -1,0 +1,162 @@
+{
+  "case": {
+    "depth": 8,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      2,
+      1
+    ],
+    "full_geometry": [
+      16,
+      5
+    ],
+    "geometry": [
+      2,
+      1
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 50,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "s",
+        "slot": 1,
+        "value": 0.0
+      }
+    ],
+    "pixel_aspect": [
+      10,
+      11
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      2,
+      1
+    ],
+    "rowbytes_padding": 0,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 50,
+  "input_sha256": "89e7c056f036bf037e676f971602c6742ac69636fa998a6de1357657d8d7a185",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjEL8SuvCjfi4ADWwDbw==",
+  "plugin": "olmtoondilate",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "candidate_sha256": "db3b8d5e67cef66be08fec36924033f940a885c2b24d849175b284c51301a904",
+    "classic_owner": "Production PF_Cmd_RENDER is an intentional successful no-op. Compare untouched destinations against their own initial fill (Mac 0xee, AEX zero); no numerical Classic output exists.",
+    "classic_owner_evidence": "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py: legacy_render_public_noop; original owner FUN_1801a7840 constant-zero stub",
+    "declarations_sha256": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc",
+    "dependencies_sha256": {
+      "mac/OLMToonDilate/OLMToonDilate.cpp": "15ec41c52d9da9872cad1ccd573006da4fc6d316eaa1de50050101c31fd4e8b2",
+      "mac/OLMToonDilate/OLMToonDilate.h": "40eef7a6c652dbd3ef77bc3a5a0eddcc3cf59796599ab53f2c245f8c6770ff70",
+      "tools/emulation/probe_olmtoondilate_same_source_mac_public_20260813.cpp": "17fcace86b9d5c95fe6d4d136a5df04f7659f60d39ac45296e8ecf335df10f00",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "tools/fuzz/harnesses/toondilate_main.cpp": "0d0704935eb0aa31d4d6e8dcc70a633648ebe79479ddb3c463d017577bacad51",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "no-write",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": []
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "raw_sha256": "89e7c056f036bf037e676f971602c6742ac69636fa998a6de1357657d8d7a185",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ],
+        "raw_sha256": "89e7c056f036bf037e676f971602c6742ac69636fa998a6de1357657d8d7a185",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 0 1 1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 2 1",
+          "GEOMETRY_INPUT": "16 5 1 8 1 8 10 11 0"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          1
+        ],
+        "raw_sha256": "89e7c056f036bf037e676f971602c6742ac69636fa998a6de1357657d8d7a185",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
