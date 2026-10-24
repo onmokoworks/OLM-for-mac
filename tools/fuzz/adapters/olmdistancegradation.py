@@ -15,7 +15,7 @@ FIELDGEN = ROOT/'core/olmdistancegradation_fieldgen.cpp'
 
 class Adapter(PublicAdapter):
     name = 'olmdistancegradation'
-    geometry_samplers = ('realistic-v1',)
+    geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'DistanceGradation'
     output_format = 'raw'
     small_controls = (3,4,12)

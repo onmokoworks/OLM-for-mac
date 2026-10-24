@@ -48,7 +48,7 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
-    p.add_argument('--geometry', choices=('default', 'realistic'), default='default',
+    p.add_argument('--geometry', choices=('default', 'realistic', 'realistic-v2'), default='default',
                    help='Opt-in sampler; requires a geometry-qualified candidate host')
     p.add_argument('--size-sampler', choices=('default', 'odd-even-v1'), default='default',
                    help='Opt-in independently sampled full-comp width/height parity')
@@ -84,7 +84,7 @@ def options():
     if args.size_max_height is not None and (args.size_sampler == 'default' or not 1 <= args.size_max_height <= 4096):
         p.error('--size-max-height requires opt-in sampling and a bound in 1..4096')
     if not args.replay:
-        args.worker = args.worker or (Path.home()/'.cache/olm-emu/worker-F52c-geom/aex-guest-worker' if args.geometry=='realistic' else default_worker())
+        args.worker = args.worker or (Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker' if args.geometry=='realistic-v2' else None) or (Path.home()/'.cache/olm-emu/worker-F52c-geom/aex-guest-worker' if args.geometry=='realistic' else default_worker())
         args.case_timeout = args.case_timeout if args.case_timeout is not None else DEFAULT_CASE_TIMEOUT
     if (args.worker is None and not args.replay) or (args.worker is not None and not args.worker.is_file()):
         p.error('set --worker or OLM_AEX_WORKER to the retained AEXCompat executable')
@@ -287,7 +287,7 @@ def main():
                 adapter = adapter_type(args)
                 if args.geometry != 'default':
                     from geometry import require_host, VERSION
-                    require_host(adapter, {'geometry_sampler': VERSION})
+                    require_host(adapter, {'geometry_sampler': 'realistic-v2' if args.geometry=='realistic-v2' else VERSION})
                 report['provenance'] = prepare(adapter, scratch, deadline, args.case_timeout)
                 next_index = 0
                 with ThreadPoolExecutor(max_workers=args.jobs) as pool:

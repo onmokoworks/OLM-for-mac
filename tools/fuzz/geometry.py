@@ -13,7 +13,7 @@ VERSION = 'realistic-v1'
 def sample(case, mode='default'):
     if mode == 'default':
         return case
-    if mode not in ('realistic', VERSION):
+    if mode not in ('realistic', VERSION, 'realistic-v2'):
         raise ValueError('unknown geometry sampler: '+mode)
     from core import case_seed
     if 'geometry_sampler' in case:
@@ -42,6 +42,14 @@ def sample(case, mode='default'):
     # The F52 oracle exposes a single padding option. Match both candidate rows.
     result['rowbytes_padding'] = rng.choice([0,1,3,7,16,32])
     result['input_padding'] = result['output_padding'] = result['rowbytes_padding']
+    if mode=='realistic-v2':
+        result['geometry_sampler']='realistic-v2'
+        rect=rectangle()
+        l,t,r,b=rect
+        result['checkout_rect']=rect
+        result['pixels']=b''.join(result['pixels'][(y*w+l)*pixel:(y*w+r)*pixel] for y in range(t,b))
+        result['geometry']=[r-l,b-t]
+        result['extent_hint']=[0,0,r-l,b-t]
     return result
 
 
@@ -49,8 +57,15 @@ def resize(case, old_geometry):
     """Keep cropped worlds consistent with full dimensions and sampled rects."""
     if 'geometry_sampler' not in case:
         return case
-    if case['geometry_sampler'] != VERSION:
+    if case['geometry_sampler'] not in (VERSION,'realistic-v2'):
         raise ValueError('unknown geometry sampler version')
+    if case['geometry_sampler']=='realistic-v2':
+        ow,oh=old_geometry; w,h=case['geometry']; l,t,r,b=case['checkout_rect']
+        nl,nt=l*w//ow,t*h//oh
+        case['checkout_rect']=[nl,nt,nl+w,nt+h]
+        case['full_geometry']=[max((n*num+den-1)//den,edge)*den//num for n,(num,den),edge in zip(case['full_geometry'],case['downsample'],[nl+w,nt+h])]
+        case['extent_hint']=[0,0,w,h]
+        return case
     case['full_geometry'] = [(n*den+num-1)//num for n,(num,den) in zip(case['geometry'],case['downsample'])]
     for key in ('extent_hint','request_rect'):
         l,t,r,b = case[key]
@@ -68,6 +83,7 @@ def require_host(adapter, case):
         raise ValueError(f'{adapter.name}: host has not qualified {version} geometry')
 
     adapter.geometry_active=bool(version)
+    adapter.geometry_version=version
     if version and getattr(adapter,'geometry_routes',None):
         if not hasattr(adapter,'_default_geometry_routes'):adapter._default_geometry_routes=adapter.routes
         adapter.routes=adapter.geometry_routes

@@ -1,0 +1,53 @@
+{
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/ColorKeep.aex",
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "candidate_sha256": "dcec39a9f191be76258e6c5ce792a4a6af60f09fb1ea06cfe4c625b32e22f7ee",
+  "dependencies_sha256": {
+    "tools/emulation/test_colorkeep_installed_public_covering_matrix_20260812.py": "be2985791cc90016f7b17db918e70dc20f38ba4eb87eabbf54f4d7fe3529ea2c",
+    "tools/fuzz/harnesses/colorkeep_main.cpp": "dea7e634c20e2fa3ee53e8852a8cc128d05a5e0d15d2d717c68a6c8246d73c89",
+    "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+    "mac/ColorKeep/ColorKeep.cpp": "924d7978fb91bd70969c111440375b560916749bad11c2bccf27724583c2593d",
+    "mac/ColorKeep/ColorKeep.h": "db7922d80175d608d662ed954a284a61ad32a126e102300d7388e9ed29f3c7a0",
+    "tools/fuzz/harnesses/geometry.hpp": "55d0ddf8b843c4f5450940da071ecb7632c583ad2c751575c1fffb915bc8de66",
+    "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+    "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+    "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+    "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+    "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+    "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2",
+    "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+    "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212"
+  },
+  "declarations_sha256": "0b2011534d05ef459a23d85f06a7f0dbf347a331005b01a498300d236c4c925c",
+  "out_of_range_builder_defaults": [],
+  "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+  "oracle_routes": {
+    "classic": "classic",
+    "smart": "smart"
+  },
+  "original_routes": {
+    "classic": "render",
+    "smart": "render"
+  },
+  "oracle_render_path": "smartfx",
+  "time": {
+    "value": 0,
+    "scale": 24,
+    "step": 1,
+    "total": 1
+  },
+  "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB",
+  "layer": "None; independent layer worlds outside this adapter",
+  "stage_support": "existing public replay helpers expose final raw output only",
+  "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+  "triage": {
+    "trace": true,
+    "bypass": false,
+    "sanitizers": false,
+    "host_flags_control": false
+  },
+  "palette": "all 100 public colors supplied; counts 1/4/5/99/100 and random 1..100; mixed palette-member pixels",
+  "mac_host": "retained real-SDK public covering host callbacks, linked to worktree production EffectMain"
+}

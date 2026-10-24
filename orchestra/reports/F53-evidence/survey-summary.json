@@ -1,0 +1,33 @@
+{
+  "olmblur": {
+    "counts": {
+      "refusal": 100
+    },
+    "original_non_ok": {},
+    "mac_only_refusals": {
+      "refusal": 100
+    },
+    "tags": {
+      "SmartRender:generic-input-world@2107": 53,
+      "SmartRender:generic-formats@2072": 47
+    }
+  },
+  "colorkeep": {
+    "counts": {
+      "refusal": 100
+    },
+    "original_non_ok": {},
+    "mac_only_refusals": {
+      "refusal": 100
+    },
+    "tags": {}
+  },
+  "olmcolorkey": {
+    "counts": {
+      "exact": 100
+    },
+    "original_non_ok": {},
+    "mac_only_refusals": {},
+    "tags": {}
+  }
+}
