@@ -90,7 +90,9 @@ bool distance_to_normalized_u8(
     std::size_t output_rowbytes,
     float threshold,
     bool constant_interpolation,
-    float output_max) {
+    float output_max,
+    std::size_t reconstructed_width,
+    std::size_t reconstructed_height) {
     if (!mask || !output || width == 0 || height == 0 || input_rowbytes < width ||
         output_rowbytes < width * sizeof(float)) {
         return false;
@@ -102,7 +104,41 @@ bool distance_to_normalized_u8(
     }
 
     std::vector<float> field(width * height);
-    precise_l2_edt(packed_mask.data(), width, height, field.data());
+    const size_t rw = reconstructed_width ? reconstructed_width : width;
+    const size_t rh = reconstructed_height ? reconstructed_height : height;
+    if (rw > std::vector<float>().max_size() / rh ||
+        rw > (size_t)std::numeric_limits<int>::max() ||
+        rh > (size_t)std::numeric_limits<int>::max()) return false;
+    if (rw == width && rh == height) {
+        precise_l2_edt(packed_mask.data(), width, height, field.data());
+    } else {
+        // FUN_181174760: cvResize(mask, full, CV_INTER_NN), precise EDT,
+        // then cvResize(distance, sampled, CV_INTER_LINEAR), before threshold.
+        std::vector<uint8_t> expanded(rw * rh);
+        const double sx = (double)width / rw, sy = (double)height / rh;
+        for (size_t y = 0; y < rh; ++y)
+            for (size_t x = 0; x < rw; ++x)
+                expanded[y*rw+x] = packed_mask[std::min(height-1,(size_t)(y*sy))*width +
+                                               std::min(width-1,(size_t)(x*sx))];
+        std::vector<float> distance(rw * rh);
+        precise_l2_edt(expanded.data(), rw, rh, distance.data());
+        for (size_t y = 0; y < height; ++y) {
+            float fy = (float)((y+0.5)*(double)rh/height-0.5);
+            long iy = (long)std::floor(fy); fy -= (float)iy;
+            const size_t y0 = (size_t)std::max(0L,std::min((long)rh-1,iy));
+            const size_t y1 = (size_t)std::max(0L,std::min((long)rh-1,iy+1));
+            for (size_t x = 0; x < width; ++x) {
+                float fx = (float)((x+0.5)*(double)rw/width-0.5);
+                long ix = (long)std::floor(fx); fx -= (float)ix;
+                if (ix < 0) {ix=0;fx=0;}
+                if (ix >= (long)rw-1) {ix=(long)rw-1;fx=0;}
+                const size_t x1 = std::min(rw-1,(size_t)ix+1);
+                const float a = distance[y0*rw+ix]*(1.0f-fx) + distance[y0*rw+x1]*fx;
+                const float b = distance[y1*rw+ix]*(1.0f-fx) + distance[y1*rw+x1]*fx;
+                field[y*width+x] = a*(1.0f-fy)+b*fy;
+            }
+        }
+    }
     if (constant_interpolation) {
         for (float& value : field) {
             value = value > threshold ? output_max : 0.0f;

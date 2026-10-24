@@ -1,0 +1,12 @@
+{
+  "counts": {
+    "('seed1', 'smart', 'exact')": 96,
+    "('seed1', 'smart', 'unavailable')": 4,
+    "('seed20261024', 'smart', 'exact')": 100,
+    "('default', 'smart', 'retained')": 300
+  },
+  "failures": [],
+  "source_sha256": "0c49669c3c6393a4f1b3381263fc1ce38197a25742aef756beefe7d19cc7836c",
+  "fieldgen_sha256": "9a758fe4ba0b2da7f62d42f373439dec30f87a3964adca519793a4b837611525",
+  "binary_sha256": "16c9d77530ce93f05686aeec7c47b7609605f52edb46360780118a9ac3530294"
+}

@@ -237,6 +237,8 @@ struct DGParams {
 	// downsample scale (full-res -> current-res)
 	float         ds_x;
 	float         ds_y;
+	long          reconstructed_w, reconstructed_h;
+	long          blur_size_y;
 	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
 	bool          smart_owner;      // exported Smart owner routing, distinct from legacy classic owner
 	bool          degenerate_mask;  // original owner refcon +0x90: zero or all mask pixels set
@@ -249,7 +251,8 @@ struct DGParams {
 static bool has_effective_blur(const DGParams &p)
 {
 	return p.blur_mode != BLUR_MODE_NONE &&
-		(p.blur_size > 0 || (p.smart_owner && p.pixel_size != sizeof(PF_Pixel16) &&
+		(p.blur_size > 0 || (p.smart_owner && p.reconstructed_w && p.blur_size_y > 0 &&
+		 (p.blur_mode == BLUR_MODE_NO_SCALE || p.blur_mode == BLUR_MODE_SCALE)) || (p.smart_owner && p.pixel_size != sizeof(PF_Pixel16) &&
 		 p.blur_mode == BLUR_MODE_BILATERAL));
 }
 
@@ -515,6 +518,31 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool sma
 	}
 }
 
+// cvSmooth accepts independent horizontal and vertical Gaussian apertures.
+static void gauss_blur_rect(float *mat, long w, long h, int kx, int ky)
+{
+	if (kx == ky) { gauss_blur_separable(mat,w,h,kx,true); return; }
+	std::vector<float> a,b,tmp((size_t)w*h);
+	make_gauss_kernel_smart(a,kx); make_gauss_kernel_smart(b,ky);
+	for (long y=0;y<h;++y) for (long x=0;x<w;++x) {
+		const float *row=mat+(size_t)y*w;
+		float v=0;
+		if (w==1 || kx==1) v=row[x];
+		else if (kx==3) v=(row[std::max(0L,x-1)]+row[std::min(w-1,x+1)])*0.25f+row[x]*0.5f;
+		else for (int i=0;i<kx;++i) v+=row[std::max(0L,std::min(w-1,x+i-kx/2))]*a[i];
+		tmp[(size_t)y*w+x]=v;
+	}
+	for (long y=0;y<h;++y) for (long x=0;x<w;++x) {
+		float v=tmp[(size_t)y*w+x];
+		if (h!=1 && ky!=1) {
+			if (ky==3) v=(tmp[(size_t)std::max(0L,y-1)*w+x]+tmp[(size_t)std::min(h-1,y+1)*w+x])*0.25f+v*0.5f;
+			else { v*=b[ky/2]; for (int i=1;i<=ky/2;++i)
+				v+=(tmp[(size_t)std::max(0L,y-i)*w+x]+tmp[(size_t)std::min(h-1,y+i)*w+x])*b[ky/2+i]; }
+		}
+		mat[(size_t)y*w+x]=v;
+	}
+}
+
 // cvSmooth mode 1 (CV_BLUR) used by Constant + Blur is a normalized box
 // filter with replicated borders. Keep it separate from the Gaussian path
 // used by the other interpolation modes.
@@ -538,9 +566,10 @@ static bool box_sum_is_exact(const float *mat, size_t count, int ksize)
 	return std::ldexp(maximum, -quantum) <= (double)((UINT64_C(1) << 53) / taps);
 }
 
-static void box_blur_exact_sum(float *mat, long w, long h, int ksize, double area)
+static void box_blur_exact_sum(float *mat, long w, long h, int ksize, double area, int ksize_y)
 {
 	const long half = ksize / 2;
+	const long vertical_half = ksize_y / 2;
 	std::vector<double> rows((size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		const float *src = mat + (size_t)y * w;
@@ -557,34 +586,35 @@ static void box_blur_exact_sum(float *mat, long w, long h, int ksize, double are
 	}
 	for (long x = 0; x < w; ++x) {
 		double sum = 0.0;
-		sum += rows[x] * half;
-		for (long y = 0; y <= std::min(half, h - 1); ++y) sum += rows[(size_t)y * w + x];
-		if (half >= h) sum += rows[(size_t)(h - 1) * w + x] * (half - h + 1);
+		sum += rows[x] * vertical_half;
+		for (long y = 0; y <= std::min(vertical_half, h - 1); ++y) sum += rows[(size_t)y * w + x];
+		if (vertical_half >= h) sum += rows[(size_t)(h - 1) * w + x] * (vertical_half - h + 1);
 		mat[x] = (float)(sum / area);
 		for (long y = 1; y < h; ++y) {
-			sum -= rows[(size_t)std::max(0L, y - half - 1) * w + x];
-			sum += rows[(size_t)std::min(h - 1, y + half) * w + x];
+			sum -= rows[(size_t)std::max(0L, y - vertical_half - 1) * w + x];
+			sum += rows[(size_t)std::min(h - 1, y + vertical_half) * w + x];
 			mat[(size_t)y * w + x] = (float)(sum / area);
 		}
 	}
 }
 
-static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false, bool smart_owner = false)
+static void box_blur_separable(float *mat, long w, long h, int ksize, bool double_area = false, bool smart_owner = false, int ksize_y = 0)
 {
-	if (ksize <= 1) return;
+	if (!ksize_y) ksize_y = ksize;
+	if (ksize <= 1 && ksize_y <= 1) return;
 	const int half = ksize / 2;
 	// Smart typed paths retain the integer kernel area in double precision.
 	// Odd kernels above 4095 lose area bits when rounded through float.
-	const double area = double_area ? (double)ksize * (double)ksize : (double)(float)(ksize * ksize);
-	if (smart_owner && box_sum_is_exact(mat, (size_t)w * h, ksize)) {
-		box_blur_exact_sum(mat, w, h, ksize, area);
+	const double area = double_area ? (double)ksize * (double)ksize_y : (double)(float)(ksize * ksize);
+	if (smart_owner && box_sum_is_exact(mat, (size_t)w * h, std::max(ksize,ksize_y))) {
+		box_blur_exact_sum(mat, w, h, ksize, area, ksize_y);
 		return;
 	}
 	std::vector<float> src(mat, mat + (size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		for (long x = 0; x < w; ++x) {
 			double sum = 0.0;
-			for (int j = -half; j <= half; ++j) {
+			for (int j = -ksize_y/2; j <= ksize_y/2; ++j) {
 				long yi = y + j;
 				if (yi < 0) yi = 0;
 				if (yi >= h) yi = h - 1;
@@ -1090,7 +1120,7 @@ struct DistanceField {
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging = false, bool smart_pf8_blurred = false);
+	bool smart_pf8_staging = false, bool smart_pf8_blurred = false, long rw = 0, long rh = 0);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -1210,12 +1240,12 @@ static void invert_mask(u_char *mask, long w, long h)
 // scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp,
-	bool smart_pf8_staging, bool smart_pf8_blurred)
+	bool smart_pf8_staging, bool smart_pf8_blurred, long rw, long rh)
 {
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
 		out, (size_t)w * sizeof(float), (float)threshold, constant_interp,
-		(smart_pf8_staging || smart_pf8_blurred) ? 255.0f : 1.0f);
+		(smart_pf8_staging || smart_pf8_blurred) ? 255.0f : 1.0f, rw, rh);
 	if (smart_pf8_staging) {
 		// FUN_181174760 normalizes directly to [0,255] before cvConvertScale.
 		// A normalize-to-one followed by *255 introduces an extra rounding:
@@ -1275,20 +1305,20 @@ static void build_distance_field(
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
 			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
-			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+			                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
 		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
 		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
-		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled);
+		                 p.interp_mode == INTERP_CONSTANT, smart_pf8_staging, smart_pf8_scaled, p.reconstructed_w, p.reconstructed_h);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
@@ -1308,14 +1338,16 @@ static void build_distance_field(
 	// PF8 uses the same IPP bodies on its byte-scaled float field.
 	if (has_effective_blur(p)) {
 		long bs = (long)((float)p.blur_size * ds + 0.5f);
-		if (bs < 1) bs = 1;
+		if (bs < 1 && (!p.smart_owner || p.blur_mode == BLUR_MODE_BILATERAL)) bs = 1;
 		int ksize = (int)(2 * bs + 1);
-		if (ksize > 1) {
+		const int ksize_y = p.smart_owner && p.reconstructed_w ? (int)(2*p.blur_size_y+1) : ksize;
+		if (ksize > 1 || ksize_y > 1) {
 			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
 				box_blur_separable(df.x.data(), w, h, ksize,
-				    p.smart_owner, p.smart_owner);
+				    p.smart_owner, p.smart_owner, ksize_y);
 			} else if (p.blur_mode == BLUR_MODE_SCALE) {
-				gauss_blur_separable(df.x.data(), w, h, ksize, p.smart_owner);
+				if (p.smart_owner) gauss_blur_rect(df.x.data(), w, h, ksize, ksize_y);
+				else gauss_blur_separable(df.x.data(), w, h, ksize, false);
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
@@ -1955,7 +1987,7 @@ static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long 
 		(p.interp_mode != INTERP_CONSTANT && p.interp_mode != INTERP_LINEAR &&
 		 p.interp_mode != INTERP_SPHERE) ||
 		p.blur_mode < BLUR_MODE_NO_SCALE || p.blur_mode > BLUR_MODE_MEDIAN ||
-		p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_NO_SCALE ? 4096 : 500) ||
+		p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_MEDIAN ? 500 : 4096) ||
 		p.in_out < IN_OUT_INSIDE || p.in_out > IN_OUT_BOTH ||
 		p.render_mode < RENDER_MODE_RGB || p.render_mode > RENDER_MODE_LAYER ||
 		p.inside_threshold < 0 || p.inside_threshold > 1000 ||
@@ -1979,7 +2011,8 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 {
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
-	    input->width != output->width || input->height != output->height) return false;
+	    output->width <= 0 || output->height <= 0 ||
+	    output->width > input->width || output->height > input->height) return false;
 	// C52: finite extended samples share the proven scalar Bilateral field.
 	// Normalize Power only for admission; rendering retains its UCRT exponent.
 	DGParams finite_admission = p;
@@ -2000,7 +2033,7 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 	const olm::world_safety::ConstWorld source = {
 		input->data, width, height, (size_t)input->rowbytes, sizeof(PF_PixelFloat)};
 	const olm::world_safety::ConstWorld destination = {
-		output->data, width, height, (size_t)output->rowbytes, sizeof(PF_PixelFloat)};
+		output->data, (size_t)output->width, (size_t)output->height, (size_t)output->rowbytes, sizeof(PF_PixelFloat)};
 	if (olm::world_safety::validate_layout(source) != olm::world_safety::Status::ok ||
 	    olm::world_safety::validate_layout(destination) != olm::world_safety::Status::ok ||
 	    olm::world_safety::require_disjoint(source, destination) !=
@@ -2072,18 +2105,16 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
            PF_LayerDef *input, PF_LayerDef *output, bool smart_owner = false)
 {
 	PF_Err err = PF_Err_NONE;
-	// RenderBits is a same-shape typed kernel.  The Windows owner stages any
-	// host resize/depth conversion before entering its typed body, and the Mac
-	// port must not silently reinterpret a differently-sized or short-stride
-	// host world.  Fail closed at that boundary instead of reading past a row.
+	// Classic retains its same-shape contract. Smart builds the field from the
+	// entire input, then stages the packed prefix consumed by the original owner
+	// for a smaller result_rect allocation. Validate each world independently.
 	if (!input || !output || !input->data || !output->data ||
-	    !in_data || in_data->output_origin_x != 0 || in_data->output_origin_y != 0 ||
+	    !in_data || (!smart_owner && (in_data->output_origin_x != 0 || in_data->output_origin_y != 0 ||
 	    in_data->pre_effect_source_origin_x != 0 || in_data->pre_effect_source_origin_y != 0 ||
-	    input->width != output->width || input->height != output->height ||
+	    input->width != output->width || input->height != output->height)) ||
+	    output->width <= 0 || output->height <= 0 ||
+	    output->width > input->width || output->height > input->height ||
 	    input->width <= 0 || input->height <= 0 ||
-	    (smart_owner &&
-	     (input->origin_x != 0 || input->origin_y != 0 ||
-	      output->origin_x != 0 || output->origin_y != 0)) ||
 	    input->width > std::numeric_limits<A_long>::max() / (A_long)sizeof(P) ||
 	    input->rowbytes < input->width * (A_long)sizeof(P) ||
 	    output->rowbytes < output->width * (A_long)sizeof(P)) {
@@ -2093,13 +2124,34 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	DGParams p; AEFX_CLR_STRUCT(p);
 	ERR(FetchParams(in_data, params, &p));
 	if (err) return err;
-	long w = output->width;
-	long h = output->height;
+	long w = input->width;
+	long h = input->height;
 	size_t pixel_count = 0;
 	if (!checked_pixel_count(w, h, &pixel_count)) return OLM_DG_REFUSAL("pixel-count");
 	p.w = w; p.h = h;
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
+	if (smart_owner) {
+		// Typed owners: uint32 multiply, float32 inverse-size divide, truncation.
+		// cvSmooth separately uses uint32 multiply/divide for each axis.
+		if (in_data->downsample_x.num <= 0 || in_data->downsample_x.den <= 0 ||
+		    in_data->downsample_y.num <= 0 || in_data->downsample_y.den <= 0)
+			return OLM_DG_REFUSAL("smart-scale");
+		const float rw = (float)(uint32_t)((uint64_t)w * in_data->downsample_x.den) / (float)in_data->downsample_x.num;
+		const float rh = (float)(uint32_t)((uint64_t)h * in_data->downsample_y.den) / (float)in_data->downsample_y.num;
+		if (!(rw >= 1 && rh >= 1 && rw < 2147483648.0f && rh < 2147483648.0f))
+			return OLM_DG_REFUSAL("smart-reconstructed-size");
+		p.reconstructed_w = (long)rw; p.reconstructed_h = (long)rh;
+		size_t reconstructed_count;
+		if (!checked_pixel_count(p.reconstructed_w,p.reconstructed_h,&reconstructed_count))
+			return OLM_DG_REFUSAL("smart-reconstructed-count");
+		const long bx = (uint32_t)((uint64_t)p.blur_size * in_data->downsample_x.num) / (uint32_t)in_data->downsample_x.den;
+		const long by = (uint32_t)((uint64_t)p.blur_size * in_data->downsample_y.num) / (uint32_t)in_data->downsample_y.den;
+		p.blur_size_y = by;
+		p.blur_size = bx;
+		p.ds_x = p.ds_y = 1.0f;
+	}
+
 	// Power with exponent exactly one is the same finite-field operation as
 	// Linear. Normalize this control before applying the existing Smart domain
 	// and filter admission rules; arbitrary Power retains its separate guard.
@@ -2172,16 +2224,17 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	build_distance_field(alpha.data(), df, p, w, h);
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
-	// Shade
-	for (long y = 0; y < h; ++y) {
+	// Original owner copies a packed prefix of the field to the output world;
+	// Iterate reads the source at local coordinates, without world-origin adjustment.
+	for (long y = 0; y < output->height; ++y) {
 		const P *src = (const P *)((char *)input->data  + (size_t)y * input->rowbytes);
 		P *dst       = (P *)      ((char *)output->data + (size_t)y * output->rowbytes);
-		const float *xrow = df.x.data()       + (size_t)y * w;
+		const float *xrow = df.x.data()       + (size_t)y * output->width;
 		const bool blurred = has_effective_blur(p);
 		const float *aux = !df.pre_blur_x.empty() ? df.pre_blur_x.data()
 		                 : (blurred ? df.x.data() : df.d_alpha.data());
-		const float *arow = aux + (size_t)y * w;
-		shade_scanline<P>(src, dst, xrow, arow, p, w, h, y, input);
+		const float *arow = aux + (size_t)y * output->width;
+		shade_scanline<P>(src, dst, xrow, arow, p, output->width, output->height, y, input);
 	}
 
 	return err;
@@ -2258,14 +2311,11 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	PF_Err err = PF_Err_NONE;
 	if (in_data->width <= 0 || in_data->height <= 0 ||
 	    in_data->downsample_x.num <= 0 || in_data->downsample_x.den <= 0 ||
-	    in_data->downsample_y.num <= 0 || in_data->downsample_y.den <= 0 ||
-	    in_data->downsample_x.num != in_data->downsample_x.den ||
-	    in_data->downsample_y.num != in_data->downsample_y.den) {
+	    in_data->downsample_y.num <= 0 || in_data->downsample_y.den <= 0) {
 		return OLM_DG_REFUSAL("prerender-size-downsample");
 	}
 	PF_RenderRequest req = extra->input->output_request;
-	const PF_LRect full_rect = {0, 0, in_data->width, in_data->height};
-	req.rect = full_rect;
+	// Original public command 0x17 forwards the requested rectangle unchanged.
 	PF_CheckoutResult in_result;
 	AEFX_CLR_STRUCT(in_result);
 
@@ -2274,21 +2324,9 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		in_data->current_time, in_data->time_step, in_data->time_scale,
 		&in_result));
 
-	// ref_width/ref_height describe storage authority. result/max_result are
-	// content bounds and may legitimately be empty or smaller for transparent
-	// frames, so they must not be used to reject a full-frame checkout.
-	if (!err && (in_result.ref_width != in_data->width ||
-	             in_result.ref_height != in_data->height)) {
-		err = OLM_DG_REFUSAL("prerender-reference-size");
-	}
 	if (!err) {
-		DGPreRenderData *pre = new (std::nothrow) DGPreRenderData{in_data->width, in_data->height};
-		if (!pre) return PF_Err_OUT_OF_MEMORY;
-		extra->output->result_rect = full_rect;
-		extra->output->max_result_rect = full_rect;
-		extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
-		extra->output->pre_render_data = pre;
-		extra->output->delete_pre_render_data_func = DeleteDGPreRenderData;
+		UnionLRect_inline(&in_result.result_rect, &extra->output->result_rect);
+		UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);
 	}
 	return err;
 }
@@ -2380,6 +2418,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	bool input_checked_out = false;
 	bool render_complete = false;
 	olm::world_safety::TightStaging staging;
+	std::vector<uint8_t> full_output;
+	PF_EffectWorld backing_output{};
 	PF_ParamDef param_list[DG_NUM_PARAMS];
 	bool param_checked_out[DG_NUM_PARAMS] = {};
 	for (A_long i = 0; i < DG_NUM_PARAMS; ++i) AEFX_CLR_STRUCT(param_list[i]);
@@ -2417,22 +2457,27 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			err = OLM_DG_REFUSAL("smart-format-mismatch");
 		}
 
-		if (!err) {
-			const DGPreRenderData *pre = reinterpret_cast<const DGPreRenderData *>(
-				extra->input->pre_render_data);
-			if (pre && (input_world->width != pre->width || input_world->height != pre->height ||
-			            output_world->width != pre->width || output_world->height != pre->height)) {
-				err = OLM_DG_REFUSAL("smart-predata-size");
-			}
-		}
+
 		if (!err) {
 			const size_t pixel_bytes = depth == 8 ? sizeof(PF_Pixel8) :
 				(depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
-			const olm::world_safety::Status stage_status = staging.prepare(
-				{input_world->data, (size_t)input_world->width, (size_t)input_world->height,
-				 (size_t)input_world->rowbytes, pixel_bytes},
-				{output_world->data, (size_t)output_world->width, (size_t)output_world->height,
-				 (size_t)output_world->rowbytes, pixel_bytes});
+			using namespace olm::world_safety;
+			const ConstWorld source{input_world->data, (size_t)input_world->width,
+				(size_t)input_world->height, (size_t)input_world->rowbytes, pixel_bytes};
+			const ConstWorld dest{output_world->data, (size_t)output_world->width,
+				(size_t)output_world->height, (size_t)output_world->rowbytes, pixel_bytes};
+			Layout layout{};
+			if (input_world->rowbytes <= 0 || output_world->rowbytes <= 0 ||
+			    validate_layout(source, &layout) != Status::ok ||
+			    validate_layout(dest) != Status::ok || require_disjoint(source, dest) != Status::ok ||
+			    output_world->width > input_world->width || output_world->height > input_world->height)
+				throw OLM_DG_REFUSAL("smart-world-layout");
+			full_output.resize(layout.tight_bytes);
+			backing_output = *input_world;
+			backing_output.data = (decltype(backing_output.data))full_output.data();
+			backing_output.rowbytes = (A_long)layout.active_row_bytes;
+			const Status stage_status = staging.prepare(source,
+				{backing_output.data, source.width, source.height, layout.active_row_bytes, pixel_bytes});
 			if (stage_status != olm::world_safety::Status::ok) {
 				err = stage_status == olm::world_safety::Status::out_of_memory ?
 					PF_Err_OUT_OF_MEMORY : PF_Err_BAD_CALLBACK_PARAM;
@@ -2484,9 +2529,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 		}
 	}
-	if (!err && render_complete &&
-		staging.commit() != olm::world_safety::Status::ok) {
-		err = OLM_DG_REFUSAL("smart-commit");
+	if (!err && render_complete) {
+		const size_t active = (size_t)output_world->width * (extra->input->bitdepth / 8 * 4);
+		for (A_long y = 0; y < output_world->height; ++y)
+			std::memcpy((uint8_t*)output_world->data + (size_t)y * output_world->rowbytes,
+				staging.output_data() + (size_t)y * staging.row_bytes(), active);
 	}
 	return err;
 }

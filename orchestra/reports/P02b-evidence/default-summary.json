@@ -1,0 +1,16 @@
+{
+  "n": 300,
+  "seed": 1,
+  "base": "5bb598413d4a40fc8b23480c7bc3a1a6b036ff18",
+  "counts": {
+    "('classic', 'mismatch', 'mismatch')": 290,
+    "('smart', 'exact', 'exact')": 290,
+    "('smart', 'uncompared', 'uncompared')": 10,
+    "('classic', 'exact', 'exact')": 10
+  },
+  "regressions": [],
+  "before_sha256": "643ea9cfd0d5da531f88e991856401f11008a2f978cafa56bc9cf412706e6e16",
+  "after_sha256": "43f1642f2652f7c47e9286e6de24edab2df3e0e1366f738ebde015fa15c6ac0c",
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903"
+}

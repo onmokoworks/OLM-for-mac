@@ -41,7 +41,7 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
         self.assertIn("p.interp_mode != INTERP_LINEAR", body)
         self.assertIn("p.interp_mode != INTERP_SPHERE", body)
         self.assertIn("p.blur_mode > BLUR_MODE_MEDIAN", body)
-        self.assertIn("p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_NO_SCALE ? 4096 : 500)", body)
+        self.assertIn("p.blur_size < 1 || p.blur_size > (p.blur_mode == BLUR_MODE_MEDIAN ? 500 : 4096)", body)
         # F41b merge 7a0cd797d52c9564c1f89191488f095c73f11b02.
         self.assertNotIn("kSeparableWorkBudget", body)
         self.assertNotIn("kMedianWorkBudget", body)
