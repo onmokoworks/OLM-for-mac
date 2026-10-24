@@ -117,3 +117,9 @@ T15b-odd-even-random-comp-sweep
 P03a-distancegradation-pf32-downsample-ulp
 P03b-nonfinite-hdr-admission
 P00b-ae-realism-audit-rerun
+P04a-distancegradation-default-pf32
+P04b-directionalblur-cropped-checkout
+P04c-smoother2-checkout-negotiation
+P05a-directionalblur-performance
+P05b-radialblur-rotation-performance
+P05c-blur-colorkey-smoother-performance
