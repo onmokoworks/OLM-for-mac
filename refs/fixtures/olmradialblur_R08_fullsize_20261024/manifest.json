@@ -1,0 +1,117 @@
+{
+  "schema": "olm-radial-fullsize-planes/R08",
+  "command_index": 165,
+  "input_sha256": "56e34962532d6917ee72a11cc8ee9de81ed6d1d891d48e21876c807ff20bb255",
+  "runs": [
+    {
+      "worker": "worker-F46-pow",
+      "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+      "repeat": 1,
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+      "bytes": 8294400,
+      "memory_free_percent": 47,
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    {
+      "worker": "worker-F46-pow",
+      "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+      "repeat": 2,
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+      "bytes": 8294400,
+      "memory_free_percent": 49,
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    {
+      "worker": "worker-R08-trace",
+      "worker_sha256": "c56b76ed1400b9a9cf835271f1f77dc36fccee02325b727ff8e1d666bc1878f5",
+      "repeat": 1,
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+      "bytes": 8294400,
+      "memory_free_percent": 49,
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    {
+      "worker": "worker-R08-trace",
+      "worker_sha256": "c56b76ed1400b9a9cf835271f1f77dc36fccee02325b727ff8e1d666bc1878f5",
+      "repeat": 2,
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      },
+      "sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+      "bytes": 8294400,
+      "memory_free_percent": 44,
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "pre_scatter",
+      "planes": {
+        "normalized_or_polar_rgba": {
+          "path": "polar.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "ece535310c6ebe1d300e58d71412415bd1964f268656341f1efd3091b616f5c2",
+          "compressed_sha256": "d5cdcb45f9cf767a7cf0d178435683c95b09713165d6616111830e9eeb0bb4c2"
+        },
+        "slot_0x10": {
+          "path": "source_scalar.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+          "compressed_sha256": "b9a6823a844a71194d37ad132a5c0841053861f75d45c8da1f6cf2749ae7cafb"
+        }
+      }
+    },
+    {
+      "stage": "post_scatter_pre_gather",
+      "planes": {
+        "eligibility_mask": {
+          "path": "eligibility.zlib",
+          "raw_bytes": 1987200,
+          "raw_sha256": "f867434ff321374114d785248583da46aa42fed65515392dd05f31b490957a09",
+          "compressed_sha256": "93b050fc83de9dfacd63e565d58c82233519d321244b24193ff2e10c6f1e5ba8"
+        }
+      }
+    },
+    {
+      "stage": "post_normalize",
+      "planes": {
+        "accum_rgba": {
+          "path": "accum.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "676b4e11d4b718d029877ab8b7abd2ac220873ff36e619d8b38dce91735b261e",
+          "compressed_sha256": "c2553b8b4b6659d205c5a9e8ee99fe3463d39daf92a7ee2d279af9906612a7dc"
+        },
+        "max_alpha": {
+          "path": "max_alpha.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+          "compressed_sha256": "84f9f532f7b7a1f7e9dc64e4925756ef41b990e9b8c4ac5dd96ae46edf511288"
+        },
+        "normalized_or_polar_rgba": {
+          "path": "normalized.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "e589f933a82569ab1054174ce0b41aadb0f8514bc85ef16e2b7026bad2d1f014",
+          "compressed_sha256": "c1ed2da194aa44c266359272e466995df11a5f72fd1e69fde9e044c8d8c68a20"
+        }
+      }
+    }
+  ],
+  "scope": "Six full-size planes only; existing independent sampler/writeback assertions unchanged"
+}
