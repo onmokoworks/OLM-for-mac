@@ -1,0 +1,9 @@
+....s....s.......PREPARED {"calibration_matches": 0, "worker": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d", "case_timeout_seconds": 3}
+PREPARED {"calibration_matches": 0, "worker": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a", "case_timeout_seconds": 7}
+PREPARED {"calibration_matches": 0, "worker": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d", "case_timeout_seconds": 10}
+PREPARED {"calibration_matches": 0, "worker": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a", "case_timeout_seconds": 2}
+.................
+----------------------------------------------------------------------
+Ran 34 tests in 4.247s
+
+OK (skipped=2)

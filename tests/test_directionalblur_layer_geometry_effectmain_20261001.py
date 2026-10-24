@@ -33,10 +33,10 @@ class LayerGeometryPublicTests(unittest.TestCase):
      self.assertEqual(geo.sha(data),c['input_sha256']);self.assertEqual(geo.sha(field),c['layer_sha256'])
      self.assertTrue(c['native_disabled_control_exact']);self.assertTrue(c['frame_done']['output']['guards_intact']);self.assertEqual(c['frame_done']['output']['checksum'],c['native_raw_sha256'])
      params=','.join(f'{s}={v}' for s,v in c['parameters'].items())
-     for mode in ('classic','smart'):
+     for mode in ('classic','smart','partial'):
       q=subprocess.run([str(binary),str(w),str(h),str(depth),params,mode,str(lw),str(lh)],input=data+field,check=True,capture_output=True,env=env)
       lines=dict(l.split(' ',1) for l in q.stdout.decode().splitlines());self.assertEqual(int(lines['ERROR']),0);self.assertEqual(geo.sha(bytes.fromhex(lines['RAW'])),c['native_raw_sha256'])
-      counts=[int(x) for x in lines['COUNTS'].split()];self.assertEqual(counts[:3],[21,21,2] if mode=='smart' else [0,0,0]);self.assertEqual(counts[3],counts[4])
+      counts=[int(x) for x in lines['COUNTS'].split()];self.assertEqual(counts[:3],[21,21,2] if mode!='classic' else [0,0,0]);self.assertEqual(counts[3],counts[4])
     for c in none['cases']:
      w,h=c['geometry'];depth=c['depth'];data=geo.owner.typed(geo.owner.pixels(w,h,True),depth);field=geo.owner.typed(layer.layer_pixels(w,h,'inverse'),depth)
      self.assertTrue(c['frame_done']['output']['guards_intact']);params=','.join(f'{s}={v}' for s,v in c['parameters'].items())
@@ -55,7 +55,7 @@ class LayerGeometryPublicTests(unittest.TestCase):
     # A consumed Layer still requires valid dimensions, format and payload.
     for depth in (16,32):
      data=geo.owner.typed(geo.owner.pixels(9,7,True),depth);field=geo.owner.typed(layer.layer_pixels(9,7,'inverse'),depth)
-     modes=['partial','checkin','layercheckin','checkout','output','budget','budgetclassic','memorybudget']
+     modes=['checkin','layercheckin','checkout','output','budget','budgetclassic','memorybudget']
      modes += [m+suffix for m in ('rowbytes','origin','format','formaterror','alias') for suffix in ('','classic')]
      for mode in modes:
       q=subprocess.run([str(binary),'9','7',str(depth),'5=7,10=11,3=37.75',mode,'9','7'],input=data+field,check=True,capture_output=True,env=env)

@@ -1,0 +1,143 @@
+F..FFFF...EEEEFFF.
+======================================================================
+ERROR: test_classic_smart_odd_stride_native_outputs_and_atomic_cleanup (test_directionalblur_layer_general_effectmain_20261001.LayerPublicTests.test_classic_smart_odd_stride_native_outputs_and_atomic_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_layer_general_effectmain_20261001.py", line 43, in test_classic_smart_odd_stride_native_outputs_and_atomic_cleanup
+    q=subprocess.run([str(binary),'9','7',str(depth),'5=7,10=11,3=37.75',mode],input=data+field,check=True,capture_output=True,env=env)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/orchestra/state/P01b-directionalblur-downsample/dblur_layer_public_2an6kc9t/o2/dblur_generic_backonly_effectmain', '9', '7', '16', '5=7,10=11,3=37.75', 'budget']' died with <Signals.SIGSEGV: 11>.
+
+======================================================================
+ERROR: test_native_dimension_gate_and_classic_smart_no_field_identity (test_directionalblur_layer_geometry_effectmain_20261001.LayerGeometryPublicTests.test_native_dimension_gate_and_classic_smart_no_field_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_layer_geometry_effectmain_20261001.py", line 61, in test_native_dimension_gate_and_classic_smart_no_field_identity
+    q=subprocess.run([str(binary),'9','7',str(depth),'5=7,10=11,3=37.75',mode,'9','7'],input=data+field,check=True,capture_output=True,env=env)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/orchestra/state/P01b-directionalblur-downsample/dblur_geometry_public_1egk64dw/o2/dblur_generic_backonly_effectmain', '9', '7', '16', '5=7,10=11,3=37.75', 'budget', '9', '7']' died with <Signals.SIGSEGV: 11>.
+
+======================================================================
+ERROR: test_native_large_layer_outputs_actual_field_bound_and_preflight (test_directionalblur_layer_span_budget_20261001.LayerSpanBudgetTests.test_native_large_layer_outputs_actual_field_bound_and_preflight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_layer_span_budget_20261001.py", line 51, in test_native_large_layer_outputs_actual_field_bound_and_preflight
+    q=subprocess.run([str(binary),str(w),str(h),'32','5=7,10=11',mode],input=data+field,check=True,capture_output=True,env=env)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/orchestra/state/P01b-directionalblur-downsample/dblur_layer_span_public_u1m4mag1/o2/dblur_generic_backonly_effectmain', '720', '480', '32', '5=7,10=11', 'layerbudget']' died with <Signals.SIGSEGV: 11>.
+
+======================================================================
+ERROR: test_actual_aex_table_bounds (test_directionalblur_native_noise_bounds_20261001.NoiseBoundsTests.test_actual_aex_table_bounds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_native_noise_bounds_20261001.py", line 12, in test_actual_aex_table_bounds
+    self.assertEqual(r['aex_sha256'],native.sha(fixed.owner.AEX.read_bytes()))
+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/plugins_2025/OLMDirectionalBlur.aex'
+
+======================================================================
+FAIL: test_public_current_source (test_directionalblur_dual_independent_20261001.IndependentDualTests.test_public_current_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_dual_independent_20261001.py", line 29, in test_public_current_source
+    self.assertEqual(probe.sha((ROOT/dependency).read_bytes()), expected, dependency)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276' != '488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349'
+- 739e00dbc6e075a84d50f4c5b8170cc1365271af9e18a58a5ea655657adbb276
++ 488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349
+ : core/dblur_frontonly.cpp
+
+======================================================================
+FAIL: test_retained_candidate_against_native_owner (test_directionalblur_general_features_20261001.GeneralFeatureTests.test_retained_candidate_against_native_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_general_features_20261001.py", line 33, in test_retained_candidate_against_native_owner
+    self.assertEqual(probe.sha(bytes.fromhex(lines['RAW'])),c['native_raw_sha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'e27c16ee00128b50b629b8b5243eaddd3942b5665781f33a4259bcbd607d3c37' != 'f05d4c86389d67091ca888df535c6c58cc6311940932f0f8debb5a292f3e8029'
+- e27c16ee00128b50b629b8b5243eaddd3942b5665781f33a4259bcbd607d3c37
++ f05d4c86389d67091ca888df535c6c58cc6311940932f0f8debb5a292f3e8029
+
+
+======================================================================
+FAIL: test_classic_and_smart_native_hashes_and_cleanup (test_directionalblur_general_features_effectmain_20261001.GeneralPublicTests.test_classic_and_smart_native_hashes_and_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_general_features_effectmain_20261001.py", line 29, in test_classic_and_smart_native_hashes_and_cleanup
+    self.assertEqual(int(lines['ERROR']),0);self.assertEqual(owner.sha(bytes.fromhex(lines['RAW'])),c['native_raw_sha256'])
+                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'e27c16ee00128b50b629b8b5243eaddd3942b5665781f33a4259bcbd607d3c37' != 'f05d4c86389d67091ca888df535c6c58cc6311940932f0f8debb5a292f3e8029'
+- e27c16ee00128b50b629b8b5243eaddd3942b5665781f33a4259bcbd607d3c37
++ f05d4c86389d67091ca888df535c6c58cc6311940932f0f8debb5a292f3e8029
+
+
+======================================================================
+FAIL: test_current_parameter_getter_and_dispatcher_exact (test_directionalblur_general_input_owner_20261001.DirectionalOwnerTests.test_current_parameter_getter_and_dispatcher_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_general_input_owner_20261001.py", line 30, in test_current_parameter_getter_and_dispatcher_exact
+    self.assertEqual(r['probe_sha256'],probe.sha(PROBE.read_bytes()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28' != 'ca21610916b88df83d2239972374487cdec93f7500317d44b8d6b8f1a95bf022'
+- 8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28
++ ca21610916b88df83d2239972374487cdec93f7500317d44b8d6b8f1a95bf022
+
+
+======================================================================
+FAIL: test_public_hdr_native_hashes_and_nonfinite_rejection (test_directionalblur_hdr_effectmain_20261001.HDRPublicTests.test_public_hdr_native_hashes_and_nonfinite_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_hdr_effectmain_20261001.py", line 40, in test_public_hdr_native_hashes_and_nonfinite_rejection
+    self.assertNotEqual(int(lines['ERROR']),0);self.assertEqual(lines['RAW'],'')
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_candidate_rejects_invalid_reads_atomically (test_directionalblur_native_noise_bounds_20261001.NoiseBoundsTests.test_candidate_rejects_invalid_reads_atomically)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_native_noise_bounds_20261001.py", line 36, in test_candidate_rejects_invalid_reads_atomically
+    self.assertNotEqual(int(lines['ERROR']),0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_native_raw_range_classic_smart_odd_stride_and_cleanup (test_directionalblur_pf16_neutral_20261001.PF16NeutralTests.test_native_raw_range_classic_smart_odd_stride_and_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_pf16_neutral_20261001.py", line 15, in test_native_raw_range_classic_smart_odd_stride_and_cleanup
+    self.assertEqual(after['production_source_sha256'],probe.sha(probe.owner.SOURCE.read_bytes()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '54a4d79221ba067b72cde629ff6288cb1e81c0846af77ae441bc74a9cd78aaa5' != '84ba5974e84ef9760e09141c46efb1c5a4da07acc325c8deb4c8a69fe7c239b1'
+- 54a4d79221ba067b72cde629ff6288cb1e81c0846af77ae441bc74a9cd78aaa5
++ 84ba5974e84ef9760e09141c46efb1c5a4da07acc325c8deb4c8a69fe7c239b1
+
+
+======================================================================
+FAIL: test_native_range_classic_smart_and_actual_layer_bound (test_directionalblur_pf16_range_20261001.PF16RangeTests.test_native_range_classic_smart_and_actual_layer_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P01b-directionalblur-downsample/tests/test_directionalblur_pf16_range_20261001.py", line 16, in test_native_range_classic_smart_and_actual_layer_bound
+    self.assertEqual(after['budget_sha256'],probe.sha((ROOT/'core/dblur_generic_budget.h').read_bytes()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '63b03db92522c2222a73472681c3429b0b6768b9ea21b23e9db1c3e3f6267fd7' != '0c7fb6a260be78c8d1fb7185c68262dda5826f3945dd1e7c2f6350722f9b67a7'
+- 63b03db92522c2222a73472681c3429b0b6768b9ea21b23e9db1c3e3f6267fd7
++ 0c7fb6a260be78c8d1fb7185c68262dda5826f3945dd1e7c2f6350722f9b67a7
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 118.253s
+
+FAILED (failures=8, errors=4)

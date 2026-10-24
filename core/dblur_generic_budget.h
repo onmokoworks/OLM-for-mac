@@ -263,7 +263,7 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
 {
     if (!result || (depth != 16 && depth != 32) || front_fade < 0 ||
         front_fade > 100 || back_fade < 0 || back_fade > 100 ||
-        (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
+        (noise && (!std::isfinite(thickness) || thickness <= 0.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate,
             front_fade > 0 || back_fade > 0, smart_render)) return false;
@@ -289,8 +289,15 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
         !olm::allocation::image_bytes(width, height, 4, depth == 16 ? 2u : 4u,
             &layer_staging_bytes))) return false;
     if (noise) {
-        const int nw = static_cast<int>(static_cast<float>(estimate.work.width) / thickness + 3.0f);
-        const int nh = static_cast<int>(static_cast<float>(estimate.work.height) / thickness + 3.0f);
+        // Thickness is in sampled pixels and can be below the UI minimum 1.
+        // Check representability before converting a small-scale noise grid.
+        const float fw = static_cast<float>(estimate.work.width) / thickness + 3.0f;
+        const float fh = static_cast<float>(estimate.work.height) / thickness + 3.0f;
+        if (!std::isfinite(fw) || !std::isfinite(fh) ||
+            fw >= static_cast<float>(std::numeric_limits<int>::max()) ||
+            fh >= static_cast<float>(std::numeric_limits<int>::max())) return false;
+        const int nw = static_cast<int>(fw);
+        const int nh = static_cast<int>(fh);
         if (!olm::allocation::image_bytes(nw, nh, 1, sizeof(float), &noise_bytes) ||
             !olm::allocation::checked_add(noise_bytes, 101u * sizeof(float), &noise_bytes) ||
             !CheckedMulU64(nw, nh, &noise_pixels)) return false;
