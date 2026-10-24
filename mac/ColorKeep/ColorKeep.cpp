@@ -170,7 +170,7 @@ static bool ColorKeepIsOneToOne(const PF_InData *in_data,
 
 static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	                                      const PF_EffectWorld *output,
-	                                      short bitdepth)
+	                                      short bitdepth, bool smart = false)
 {
 	if (!input || !output || !input->data || !output->data) {
 		return OLM_COLORKEEP_REFUSAL("world-null");
@@ -207,10 +207,10 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	// The original SmartRender (0x180001ca0) dispatches on the requested
 	// bitdepth, without testing world_flags. Both callers additionally verify
 	// PF_GetPixelFormat; DEEP is not a discriminator for float worlds.
-	if ((int64_t)output->origin_x < input->origin_x ||
+	if (!smart && ((int64_t)output->origin_x < input->origin_x ||
 	    (int64_t)output->origin_y < input->origin_y ||
 	    (int64_t)output->origin_x + output->width > (int64_t)input->origin_x + input->width ||
-	    (int64_t)output->origin_y + output->height > (int64_t)input->origin_y + input->height) {
+	    (int64_t)output->origin_y + output->height > (int64_t)input->origin_y + input->height)) {
 		return OLM_COLORKEEP_REFUSAL("world-bounds");
 	}
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
@@ -365,6 +365,22 @@ static PF_Err ColorKeepRenderMapped(PF_InData *in_data,
 	return err;
 }
 
+// Smart PF8/PF16 dispatch at 0x180001daf/0x180001e33 and PF32 at
+// 0x180001ebd onward use output extent bottom-top and ordinary iterate.
+// The host owns clipping and source coordinates, including expanded worlds.
+template <typename IterateSuiteT, typename PixelFuncT>
+static PF_Err ColorKeepRenderSmart(PF_InData *in_data,
+                                   IterateSuiteT *suite,
+                                   PF_EffectWorld *input,
+                                   PF_EffectWorld *output,
+                                   ColorKeepInfo *info,
+                                   PixelFuncT pixel_func)
+{
+    return suite->iterate(in_data, 0,
+                          output->extent_hint.bottom - output->extent_hint.top,
+                          input, &output->extent_hint, info, pixel_func, output);
+}
+
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
@@ -464,9 +480,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	const bool input_checked_out = err == PF_Err_NONE;
 	if (!err) ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
 	if (!err) ERR(ColorKeepValidateWorldPair(input_world, output_world,
-	                                         extra->input->bitdepth));
-	if (!err && !ColorKeepIsOneToOne(in_data, output_world))
-		err = OLM_COLORKEEP_REFUSAL("smartrender-mapping");
+	                                         extra->input->bitdepth, true));
+	// Smart worlds are already sampled. The original performs its color test
+	// on those pixels without scaling the palette or requiring unit downsample.
+	// The original delegates the output extent to the ordinary iterate suite;
+	// do not replace that host operation with layer-origin offset arithmetic.
 	if (err || !input_world || !output_world) {
 		if (!err) err = OLM_COLORKEEP_REFUSAL("smartrender-world-null");
 		if (input_checked_out && extra->cb->checkin_layer_pixels) {
@@ -552,13 +570,13 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				smart_output_world.data = reinterpret_cast<PF_PixelPtr>(smart_output_stage.data());
 			}
 			if (!err && bpc == 8) {
-				ERR(ColorKeepRenderMapped<PF_Pixel8>(in_data, suites.Iterate8Suite2(),
+				ERR(ColorKeepRenderSmart(in_data, suites.Iterate8Suite2(),
 				                                     input_world, &smart_output_world, &info, ColorKeep8Func));
 			} else if (!err && bpc == 16) {
-				ERR(ColorKeepRenderMapped<PF_Pixel16>(in_data, suites.Iterate16Suite2(),
+				ERR(ColorKeepRenderSmart(in_data, suites.Iterate16Suite2(),
 				                                      input_world, &smart_output_world, &info, ColorKeep16Func));
 			} else if (!err && bpc == 32) {
-				ERR(ColorKeepRenderMapped<PF_PixelFloat>(in_data, suites.IterateFloatSuite2(),
+				ERR(ColorKeepRenderSmart(in_data, suites.IterateFloatSuite2(),
 				                                         input_world, &smart_output_world, &info, ColorKeepFloatFunc));
 			} else if (!err) {
 				err = OLM_COLORKEEP_REFUSAL("smartrender-bitdepth");

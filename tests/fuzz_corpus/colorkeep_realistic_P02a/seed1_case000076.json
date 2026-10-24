@@ -1,0 +1,1191 @@
+{
+  "case": {
+    "depth": 16,
+    "downsample": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      1,
+      2
+    ],
+    "full_geometry": [
+      6,
+      12
+    ],
+    "geometry": [
+      1,
+      2
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 76,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "i",
+        "slot": 1,
+        "value": 4
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          128,
+          3,
+          140,
+          245
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 3,
+        "value": [
+          128,
+          93,
+          120,
+          213
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 4,
+        "value": [
+          128,
+          21,
+          14,
+          194
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 5,
+        "value": [
+          128,
+          9,
+          89,
+          70
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 6,
+        "value": [
+          255,
+          38,
+          77,
+          128
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 7,
+        "value": [
+          128,
+          199,
+          96,
+          105
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 8,
+        "value": [
+          128,
+          140,
+          80,
+          86
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 9,
+        "value": [
+          128,
+          192,
+          74,
+          147
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 10,
+        "value": [
+          128,
+          100,
+          211,
+          57
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          199,
+          70,
+          187
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 12,
+        "value": [
+          0,
+          195,
+          147,
+          246
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 13,
+        "value": [
+          128,
+          1,
+          27,
+          27
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 14,
+        "value": [
+          0,
+          252,
+          51,
+          190
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 15,
+        "value": [
+          255,
+          96,
+          203,
+          251
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 16,
+        "value": [
+          0,
+          206,
+          114,
+          251
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 17,
+        "value": [
+          128,
+          226,
+          48,
+          217
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 18,
+        "value": [
+          128,
+          44,
+          236,
+          121
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 19,
+        "value": [
+          0,
+          15,
+          50,
+          57
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 20,
+        "value": [
+          0,
+          204,
+          74,
+          112
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 21,
+        "value": [
+          128,
+          147,
+          113,
+          91
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 22,
+        "value": [
+          255,
+          37,
+          166,
+          38
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 23,
+        "value": [
+          0,
+          64,
+          63,
+          168
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 24,
+        "value": [
+          128,
+          75,
+          175,
+          58
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 25,
+        "value": [
+          255,
+          126,
+          61,
+          23
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 26,
+        "value": [
+          0,
+          65,
+          103,
+          65
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 27,
+        "value": [
+          255,
+          28,
+          76,
+          177
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 28,
+        "value": [
+          128,
+          190,
+          103,
+          47
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 29,
+        "value": [
+          128,
+          244,
+          126,
+          108
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 30,
+        "value": [
+          0,
+          170,
+          95,
+          116
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 31,
+        "value": [
+          128,
+          225,
+          108,
+          101
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 32,
+        "value": [
+          0,
+          198,
+          46,
+          104
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 33,
+        "value": [
+          255,
+          68,
+          215,
+          167
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 34,
+        "value": [
+          128,
+          220,
+          128,
+          122
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          128,
+          236,
+          166,
+          150
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 36,
+        "value": [
+          0,
+          38,
+          3,
+          180
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 37,
+        "value": [
+          0,
+          253,
+          127,
+          132
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 38,
+        "value": [
+          255,
+          36,
+          198,
+          81
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 39,
+        "value": [
+          255,
+          200,
+          128,
+          157
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 40,
+        "value": [
+          255,
+          93,
+          83,
+          193
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 41,
+        "value": [
+          255,
+          227,
+          164,
+          75
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 42,
+        "value": [
+          0,
+          85,
+          228,
+          55
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 43,
+        "value": [
+          0,
+          183,
+          191,
+          105
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 44,
+        "value": [
+          255,
+          148,
+          189,
+          28
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 45,
+        "value": [
+          255,
+          68,
+          55,
+          166
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 46,
+        "value": [
+          0,
+          24,
+          103,
+          10
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 47,
+        "value": [
+          0,
+          221,
+          167,
+          37
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 48,
+        "value": [
+          128,
+          166,
+          185,
+          84
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 49,
+        "value": [
+          0,
+          127,
+          168,
+          85
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 50,
+        "value": [
+          255,
+          150,
+          199,
+          239
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 51,
+        "value": [
+          0,
+          114,
+          51,
+          159
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 52,
+        "value": [
+          128,
+          123,
+          157,
+          85
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 53,
+        "value": [
+          255,
+          198,
+          12,
+          59
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 54,
+        "value": [
+          0,
+          244,
+          179,
+          97
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 55,
+        "value": [
+          255,
+          53,
+          60,
+          137
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 56,
+        "value": [
+          128,
+          24,
+          233,
+          120
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 57,
+        "value": [
+          255,
+          194,
+          109,
+          171
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 58,
+        "value": [
+          0,
+          224,
+          203,
+          242
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 59,
+        "value": [
+          0,
+          44,
+          152,
+          93
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 60,
+        "value": [
+          0,
+          205,
+          202,
+          236
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 61,
+        "value": [
+          128,
+          25,
+          125,
+          155
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 62,
+        "value": [
+          128,
+          12,
+          215,
+          64
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 63,
+        "value": [
+          128,
+          42,
+          16,
+          197
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 64,
+        "value": [
+          0,
+          248,
+          60,
+          103
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 65,
+        "value": [
+          128,
+          229,
+          0,
+          9
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 66,
+        "value": [
+          128,
+          4,
+          209,
+          155
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 67,
+        "value": [
+          255,
+          209,
+          180,
+          228
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 68,
+        "value": [
+          0,
+          237,
+          83,
+          129
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 69,
+        "value": [
+          0,
+          200,
+          82,
+          11
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 70,
+        "value": [
+          128,
+          191,
+          237,
+          174
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 71,
+        "value": [
+          0,
+          63,
+          209,
+          184
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 72,
+        "value": [
+          128,
+          195,
+          57,
+          111
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 73,
+        "value": [
+          255,
+          205,
+          15,
+          145
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 74,
+        "value": [
+          255,
+          182,
+          199,
+          192
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 75,
+        "value": [
+          0,
+          216,
+          76,
+          119
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 76,
+        "value": [
+          128,
+          170,
+          66,
+          74
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 77,
+        "value": [
+          128,
+          0,
+          144,
+          165
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 78,
+        "value": [
+          0,
+          10,
+          141,
+          136
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 79,
+        "value": [
+          255,
+          83,
+          143,
+          103
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 80,
+        "value": [
+          255,
+          127,
+          107,
+          215
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 81,
+        "value": [
+          0,
+          120,
+          129,
+          92
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 82,
+        "value": [
+          0,
+          58,
+          23,
+          110
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 83,
+        "value": [
+          128,
+          74,
+          91,
+          34
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 84,
+        "value": [
+          255,
+          158,
+          236,
+          161
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 85,
+        "value": [
+          128,
+          217,
+          12,
+          132
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 86,
+        "value": [
+          255,
+          245,
+          104,
+          197
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 87,
+        "value": [
+          255,
+          180,
+          239,
+          184
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 88,
+        "value": [
+          0,
+          195,
+          162,
+          4
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 89,
+        "value": [
+          255,
+          154,
+          248,
+          69
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 90,
+        "value": [
+          0,
+          189,
+          8,
+          53
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 91,
+        "value": [
+          0,
+          79,
+          162,
+          87
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 92,
+        "value": [
+          0,
+          17,
+          180,
+          103
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 93,
+        "value": [
+          255,
+          205,
+          47,
+          194
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 94,
+        "value": [
+          0,
+          251,
+          156,
+          145
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 95,
+        "value": [
+          128,
+          203,
+          25,
+          42
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 96,
+        "value": [
+          255,
+          97,
+          28,
+          183
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 97,
+        "value": [
+          255,
+          173,
+          72,
+          208
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 98,
+        "value": [
+          128,
+          96,
+          189,
+          242
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 99,
+        "value": [
+          128,
+          97,
+          225,
+          151
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 100,
+        "value": [
+          0,
+          35,
+          82,
+          201
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 101,
+        "value": [
+          0,
+          51,
+          232,
+          14
+        ]
+      }
+    ],
+    "pixel_aspect": [
+      1,
+      1
+    ],
+    "profile": "sdr",
+    "request_rect": [
+      0,
+      0,
+      1,
+      2
+    ],
+    "rowbytes_padding": 16,
+    "seed": 1
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 76,
+  "input_sha256": "59c3717f2ab17d9f0e1822a52b8cb09404754ce05bd53815987f08c61c9399aa",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYBAT8/FZr+fg0Muz3+6cLwAekwTT",
+  "plugin": "colorkeep",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/ColorKeep.aex",
+    "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+    "candidate_sha256": "68328dcfb578e4f89612949fe8e675677296e97a5a05f9182c300901701a6396",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "0b2011534d05ef459a23d85f06a7f0dbf347a331005b01a498300d236c4c925c",
+    "dependencies_sha256": {
+      "mac/ColorKeep/ColorKeep.cpp": "924d7978fb91bd70969c111440375b560916749bad11c2bccf27724583c2593d",
+      "mac/ColorKeep/ColorKeep.h": "db7922d80175d608d662ed954a284a61ad32a126e102300d7388e9ed29f3c7a0",
+      "tools/emulation/test_colorkeep_installed_public_covering_matrix_20260812.py": "be2985791cc90016f7b17db918e70dc20f38ba4eb87eabbf54f4d7fe3529ea2c",
+      "tools/fuzz/harnesses/colorkeep_main.cpp": "e35aff64dfcab10fb3a0109e2febbb8d31d9b821bfc156ab4849aa5b1d7da8d6",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "retained real-SDK public covering host callbacks, linked to worktree production EffectMain",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "palette": "all 100 public colors supplied; counts 1/4/5/99/100 and random 1..100; mixed palette-member pixels",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "raw_sha256": "4357680fe3cae1ed2f5987d107262608cd8855a85d1173da45f92ccd94c6e846",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "raw_sha256": "4357680fe3cae1ed2f5987d107262608cd8855a85d1173da45f92ccd94c6e846",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "raw_sha256": "4357680fe3cae1ed2f5987d107262608cd8855a85d1173da45f92ccd94c6e846",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0 0",
+          "ERROR": "516",
+          "GEOMETRY_INPUT": "6 12 1 8 1 8 1 1 16"
+        },
+        "status": "refusal"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 1 5 5",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 1 2",
+          "GEOMETRY_INPUT": "6 12 1 8 1 8 1 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          1,
+          2
+        ],
+        "raw_sha256": "4357680fe3cae1ed2f5987d107262608cd8855a85d1173da45f92ccd94c6e846",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
