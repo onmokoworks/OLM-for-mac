@@ -1,0 +1,68 @@
+{
+  "anchors": [
+    {
+      "depth": 16,
+      "path": "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF16.json"
+    },
+    {
+      "depth": 8,
+      "path": "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF8.json"
+    },
+    {
+      "depth": 32,
+      "path": "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic/anchor-PF32.json"
+    }
+  ],
+  "counts": {
+    "E": 300
+  },
+  "depth": {
+    "16": {
+      "E": 89
+    },
+    "32": {
+      "E": 112
+    },
+    "8": {
+      "E": 99
+    }
+  },
+  "downsample": {
+    "1/1": {
+      "E": 47
+    },
+    "2/2": {
+      "E": 55
+    },
+    "2/3": {
+      "E": 44
+    },
+    "3/3": {
+      "E": 47
+    },
+    "4/4": {
+      "E": 54
+    },
+    "8/8": {
+      "E": 53
+    }
+  },
+  "height_maximum": 1080,
+  "maximum": 1920,
+  "parity": {
+    "even/even": {
+      "E": 87
+    },
+    "even/odd": {
+      "E": 71
+    },
+    "odd/even": {
+      "E": 69
+    },
+    "odd/odd": {
+      "E": 73
+    }
+  },
+  "route": "smart",
+  "witnesses": []
+}

@@ -220,3 +220,25 @@ is checked before any writes. Updated cases append their previous result and
 provenance to `rebaseline_history` and adopt their replay group's provenance.
 Review every corpus belonging to a plugin before using this option; a forbidden
 transition in one corpus blocks rebaselining that plugin's other corpora too.
+
+### Opt-in full-comp size sampling (T15b)
+
+`--size-sampler odd-even-v1 --max-size W --size-max-height H` samples width and
+height independently, with independent near-50/50 parity draws, tiny/prime
+anchors and several size bands. Omit `--size-max-height` for the same ceiling on
+both axes. Combine with `--geometry realistic` for the existing realistic-v1
+ROI, padding, aspect and downsample contract. This preserves the legacy random
+stream and default generator; neither option changes existing replay inputs.
+The opt-in bound is at most 4096; the retained F52c session itself currently
+accepts at most 1920x1080, and expensive settings can time out much earlier.
+
+Corpus files retain the size sampler and height ceiling for procedural replay.
+Use the corpus `--max-size` on replay (and `--size-sampler odd-even-v1` when that
+bound exceeds the legacy CLI maximum of 256). Embedded inputs remain authoritative.
+`tools/fuzz/sweep_T15b.py --plugin NAME --jobs 1` calibrates the cached F52c worker,
+runs seeds 2026/2027 n150, reduces first failure witnesses without changing their
+symptom class, and saves a separate `T15b-odd-even-realistic` corpus set. Its
+calibration ceiling is measured for its documented workload, not a guarantee
+that every setting completes. Results and provenance go to `T15b-evidence`;
+logs/builds belong in the ticket's scratch directory. It never changes production
+code or acceptance rules. Standard `run.py --replay` remains the replay verifier.

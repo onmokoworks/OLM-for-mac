@@ -51,6 +51,8 @@ class PublicAdapter:
 
     def __init__(self, options):
         self.max_size = options.max_size
+        self.size_max_height = getattr(options, "size_max_height", None)
+        self.size_sampler = getattr(options, "size_sampler", "default")
         self.timeout = options.case_timeout
         self.main = options.main.resolve()
         self.worker = options.worker.resolve()
@@ -97,6 +99,8 @@ class PublicAdapter:
         else:
             limit = min(self.max_size,24 if mode<.8 else 64 if mode<.95 else self.max_size)
             w,h = rng.randint(1,limit),rng.randint(1,limit)
+        from sizes import selected
+        w, h = selected(self, seed, index, (w, h))
         depth = rng.choice([8,16,32])
         params = self.defaults(w,h)
         count = rng.randint(1,min(6,len(params))) if rng.random()<.9 else len(params)

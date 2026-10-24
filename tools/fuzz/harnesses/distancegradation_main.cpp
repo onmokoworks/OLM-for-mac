@@ -2,7 +2,7 @@
 int main(int argc,char **argv) {
     if(argc!=8)return 64;
     W=atoi(argv[1]);H=atoi(argv[2]);int depth=atoi(argv[3]);
-    if(W<1||H<1||W>256||H>256||(depth!=8&&depth!=16&&depth!=32))return 64;
+    if(W<1||H<1||W>4096||H>4096||(depth!=8&&depth!=16&&depth!=32))return 64;
     int ps=depth/8*4,active=W*ps,irb=active+atoi(argv[6]),orb=active+atoi(argv[7]);
     std::vector<unsigned char> input(irb*H,0xa5),output(orb*H,0xee);
     for(int y=0;y<H;++y)if(fread(input.data()+y*irb,1,active,stdin)!=(size_t)active)return 65;

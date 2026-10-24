@@ -288,6 +288,9 @@ def save_corpus(path, adapter, original, case, result, reduction, provenance):
             'reduction': reduction, 'provenance': provenance}
     if 'geometry_sampler' in original:
         data['geometry_sampler'] = original['geometry_sampler']
+    if getattr(adapter, 'size_sampler', 'default') != 'default':
+        data['size_sampler'] = adapter.size_sampler
+        data['size_max_height'] = getattr(adapter, 'size_max_height', None)
     compressed = zlib.compress(case['pixels'], 9)
     # Large unreduced random inputs stay procedural: seed + accepted operations.
     if len(compressed) <= 32768:
@@ -306,7 +309,11 @@ def load_corpus(path, adapter):
         case = dict(data['case'], pixels=zlib.decompress(base64.b64decode(data['pixels_zlib_base64'])))
     else:
         from geometry import sample
-        case = sample(adapter.generate(data['seed'], data['index']),
+        import copy
+        generator = copy.copy(adapter)
+        generator.size_sampler = data.get('size_sampler', 'default')
+        generator.size_max_height = data.get('size_max_height')
+        case = sample(generator.generate(data['seed'], data['index']),
                       data.get('geometry_sampler', 'default'))
         for op in data['operations']:
             case = apply_operation(adapter, case, op)

@@ -1,0 +1,1539 @@
+{
+  "case": {
+    "depth": 32,
+    "downsample": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "extent_hint": [
+      0,
+      0,
+      2,
+      336
+    ],
+    "full_geometry": [
+      5,
+      1006
+    ],
+    "geometry": [
+      2,
+      336
+    ],
+    "geometry_sampler": "realistic-v1",
+    "index": 4,
+    "input_padding": 16,
+    "output_padding": 16,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 0.13957826645787996
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 6,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 8,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 11,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 14,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 18,
+        "value": 0.0
+      },
+      {
+        "kind": "u",
+        "slot": 19,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 20,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 25
+      },
+      {
+        "kind": "b",
+        "slot": 23,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 24,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 26,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 27,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 30,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 31,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 32,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 33,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 34,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 36,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 37,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 38,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 39,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 40,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 41,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 42,
+        "value": [
+          255,
+          109,
+          184,
+          182
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 43,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 44,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 45,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 46,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 47,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 48,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 49,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 50,
+        "value": [
+          255,
+          8,
+          39,
+          212
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 51,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 52,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 53,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 54,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 55,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 56,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 57,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 58,
+        "value": [
+          0,
+          171,
+          205,
+          52
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 59,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 60,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 61,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 62,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 63,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 64,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 65,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 66,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 67,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 68,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 69,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 70,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 71,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 72,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 73,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 74,
+        "value": [
+          0,
+          222,
+          61,
+          182
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 75,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 76,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 77,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 78,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 79,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 80,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 81,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 82,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 83,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 84,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 85,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 86,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 87,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 88,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 89,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 90,
+        "value": [
+          255,
+          220,
+          66,
+          71
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 91,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 92,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 93,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 94,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 95,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 96,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 97,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 98,
+        "value": [
+          255,
+          134,
+          249,
+          221
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 99,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 100,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 101,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 102,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 103,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 104,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 105,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 106,
+        "value": [
+          0,
+          145,
+          0,
+          226
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 107,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 108,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 109,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 110,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 111,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 112,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 113,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 114,
+        "value": [
+          0,
+          209,
+          215,
+          69
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 115,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 116,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 117,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 118,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 119,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 120,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 121,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 122,
+        "value": [
+          128,
+          244,
+          136,
+          11
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 123,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 124,
+        "value": 0.22341021741260148
+      },
+      {
+        "kind": "s",
+        "slot": 125,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 126,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 127,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 128,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 129,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 130,
+        "value": [
+          255,
+          220,
+          92,
+          168
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 131,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 132,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 133,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 134,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 135,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 136,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 137,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 138,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 139,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 140,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 141,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 142,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 143,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 144,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 145,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 146,
+        "value": [
+          0,
+          82,
+          93,
+          149
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 147,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 148,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 149,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 150,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 151,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 152,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 153,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 154,
+        "value": [
+          0,
+          61,
+          71,
+          89
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 155,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 156,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 157,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 158,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 159,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 160,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 161,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 162,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 163,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 164,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 165,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 166,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 167,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 168,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 169,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 170,
+        "value": [
+          128,
+          5,
+          29,
+          76
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 171,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 172,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 173,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 174,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 175,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 176,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 177,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 178,
+        "value": [
+          0,
+          80,
+          88,
+          155
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 179,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 180,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 181,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 182,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 183,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 184,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 185,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 186,
+        "value": [
+          128,
+          133,
+          125,
+          55
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 187,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 188,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 189,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 190,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 191,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 192,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 193,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 194,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 195,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 196,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 197,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 198,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 199,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 200,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 201,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 202,
+        "value": [
+          128,
+          9,
+          108,
+          13
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 203,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 204,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 205,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 206,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 207,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 208,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 209,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 210,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 211,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 212,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 213,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 214,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 215,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 216,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 217,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 218,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 219,
+        "value": [
+          255,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 220,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 221,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 222,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 223,
+        "value": 0.0
+      }
+    ],
+    "pixel_aspect": [
+      2,
+      1
+    ],
+    "profile": "nonfinite",
+    "request_rect": [
+      0,
+      0,
+      2,
+      336
+    ],
+    "rowbytes_padding": 16,
+    "seed": 2026
+  },
+  "generator_version": 1,
+  "geometry_sampler": "realistic-v1",
+  "index": 4,
+  "input_sha256": "bf80089e0afd8da1aee3cf516ae9e2e38d9196f455f45a8bba785e1ab7ec451a",
+  "max_size": 1920,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmcolorkey",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "candidate_sha256": "c2ad72f8fc141e8293661f7196102957c889c8168eaf32c0a24c594bc6e45217",
+    "case_timeout_seconds": 10,
+    "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "dependencies_sha256": {
+      "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+      "mac/OLMColorKey/OLMColorKey.cpp": "b815bcc4450e46583f7c5a144131caef1bc42e55680d38485df4c7dae87e2179",
+      "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
+      "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+      "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+      "tools/fuzz/harnesses/geometry.hpp": "63ed2b71e60674801374c8e0a670579551d84e5b39d80f9b7a4f473da8cccff1",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+    "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "anchor": true,
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "output_rect": [
+        0,
+        0,
+        2,
+        336
+      ],
+      "raw_sha256": "58505239262f4dae81b01b1547f3695da35607c0a5a5be856dca0a225973aab4",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          2,
+          336
+        ],
+        "raw_sha256": "ee0d534dd385f4c26c52ee121654897b783c0754c6512886e53578dce4b24735",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "output_rect": [
+          0,
+          0,
+          2,
+          336
+        ],
+        "raw_sha256": "58505239262f4dae81b01b1547f3695da35607c0a5a5be856dca0a225973aab4",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 10752,
+          "actual_word_hex": "0000803f",
+          "different_bytes": 8517,
+          "different_words": 2475,
+          "expected_bytes": 10752,
+          "expected_word_hex": "00000000",
+          "first_byte": 2,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "GEOMETRY_INPUT": "5 1006 1 3 1 3 2 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          336
+        ],
+        "raw_sha256": "58505239262f4dae81b01b1547f3695da35607c0a5a5be856dca0a225973aab4",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "GEOMETRY": "0 0 2 336",
+          "GEOMETRY_INPUT": "5 1006 1 3 1 3 2 1 16"
+        },
+        "output_rect": [
+          0,
+          0,
+          2,
+          336
+        ],
+        "raw_sha256": "58505239262f4dae81b01b1547f3695da35607c0a5a5be856dca0a225973aab4",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 2026,
+  "size_max_height": 1080,
+  "size_sampler": "odd-even-v1"
+}

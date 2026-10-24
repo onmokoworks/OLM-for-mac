@@ -1,0 +1,174 @@
+{
+  "anchors": [
+    {
+      "depth": 16,
+      "path": "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/anchor-PF16.json"
+    },
+    {
+      "depth": 8,
+      "path": "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/anchor-PF8.json"
+    },
+    {
+      "depth": 32,
+      "path": "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/anchor-PF32.json"
+    }
+  ],
+  "counts": {
+    "E": 297,
+    "R": 1,
+    "U": 2
+  },
+  "depth": {
+    "16": {
+      "E": 83,
+      "U": 1
+    },
+    "32": {
+      "E": 116,
+      "R": 1,
+      "U": 1
+    },
+    "8": {
+      "E": 98
+    }
+  },
+  "downsample": {
+    "1/1": {
+      "E": 45,
+      "U": 2
+    },
+    "2/2": {
+      "E": 55
+    },
+    "2/3": {
+      "E": 44
+    },
+    "3/3": {
+      "E": 47
+    },
+    "4/4": {
+      "E": 54
+    },
+    "8/8": {
+      "E": 52,
+      "R": 1
+    }
+  },
+  "height_maximum": 1080,
+  "maximum": 1080,
+  "parity": {
+    "even/even": {
+      "E": 90,
+      "R": 1,
+      "U": 1
+    },
+    "even/odd": {
+      "E": 66
+    },
+    "odd/even": {
+      "E": 68
+    },
+    "odd/odd": {
+      "E": 73,
+      "U": 1
+    }
+  },
+  "route": "smart",
+  "witnesses": [
+    {
+      "failure_class": "refusal:SmartRender:tuple-or-source@2933",
+      "first_index": 15,
+      "first_seed": 2027,
+      "geometry": [
+        1,
+        1
+      ],
+      "path": "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic/b0e34d548337.json",
+      "reduction": {
+        "accepted": [
+          {
+            "geometry": [
+              1,
+              1
+            ],
+            "kind": "crop"
+          }
+        ],
+        "attempts": 5,
+        "bounded": true,
+        "minimality_claimed": false
+      },
+      "refusals": {
+        "classic": [
+          "Render:tuple-layout-source@2600"
+        ],
+        "smart": [
+          "SmartRender:tuple-or-source@2933"
+        ]
+      },
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "raw_sha256": "4c48518d987b3547bf0303ca407c76db732611bd1150b0631c4e4c5d108646e8",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "oracles": {
+          "classic": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "session_clean": true,
+            "status": "ok"
+          },
+          "smart": {
+            "guards_intact": true,
+            "output_rect": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "raw_sha256": "4c48518d987b3547bf0303ca407c76db732611bd1150b0631c4e4c5d108646e8",
+            "session_clean": true,
+            "status": "ok"
+          }
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0",
+              "ERROR": "516",
+              "GEOMETRY_INPUT": "8 8 1 8 1 8 4 3 7"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "1 1 1 25 25",
+              "ERROR": "516",
+              "GEOMETRY_INPUT": "8 8 1 8 1 8 4 3 7"
+            },
+            "status": "refusal"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      },
+      "unavailable_routes": []
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "anchors": [
+    {
+      "depth": 16,
+      "path": "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF16.json"
+    },
+    {
+      "depth": 32,
+      "path": "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF32.json"
+    },
+    {
+      "depth": 8,
+      "path": "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF8.json"
+    }
+  ],
+  "counts": {
+    "E": 157,
+    "U": 143
+  },
+  "depth": {
+    "16": {
+      "E": 41,
+      "U": 43
+    },
+    "32": {
+      "E": 70,
+      "U": 49
+    },
+    "8": {
+      "E": 46,
+      "U": 51
+    }
+  },
+  "downsample": {
+    "1/1": {
+      "E": 24,
+      "U": 23
+    },
+    "2/2": {
+      "E": 25,
+      "U": 30
+    },
+    "2/3": {
+      "E": 21,
+      "U": 23
+    },
+    "3/3": {
+      "E": 30,
+      "U": 17
+    },
+    "4/4": {
+      "E": 29,
+      "U": 25
+    },
+    "8/8": {
+      "E": 28,
+      "U": 25
+    }
+  },
+  "height_maximum": 623,
+  "maximum": 623,
+  "parity": {
+    "even/even": {
+      "E": 54,
+      "U": 38
+    },
+    "even/odd": {
+      "E": 29,
+      "U": 37
+    },
+    "odd/even": {
+      "E": 38,
+      "U": 31
+    },
+    "odd/odd": {
+      "E": 36,
+      "U": 37
+    }
+  },
+  "route": "smart",
+  "witnesses": []
+}

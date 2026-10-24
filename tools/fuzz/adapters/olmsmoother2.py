@@ -35,7 +35,7 @@ class Adapter(PublicAdapter):
     PF_PreRenderInput pre_input{};''')
         body = replace_once(body,'    int error = pre_error ? pre_error : EffectMain(PF_Cmd_SMART_RENDER, &in, &out, nullptr, nullptr, &smart);',
                             '    error = pre_error ? pre_error : EffectMain(PF_Cmd_SMART_RENDER, &in, &out, nullptr, nullptr, &smart);\n    }')
-        for old,new in [('argc != 5','argc != 7'),('w > 32 || h > 32','w > 256 || h > 256'),
+        for old,new in [('argc != 5','argc != 7'),('w > 32 || h > 32','w > 4096 || h > 4096'),
             ('int w = atoi(argv[1]), h = atoi(argv[2]);',
              'int w = atoi(argv[1]), h = atoi(argv[2]); fuzz_classic=!strcmp(argv[5],"classic"); fuzz_pad=atoi(argv[6]);')]:
             body = replace_once(body,old,new)
