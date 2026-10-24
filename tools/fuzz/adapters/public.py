@@ -11,6 +11,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import struct
 import tempfile
 import time
@@ -150,7 +151,7 @@ class PublicAdapter:
             raise ValueError('Original AEX hash differs from captured PARAMS_SETUP')
         self.env.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch))
         self.binary, dependencies = self.build(scratch,deadline)
-        dependencies = [*dependencies, *sorted((ROOT/'ucrtmath/src').glob('*')), ROOT/'ucrtmath/include/ucrtmath.h', ROOT/'ucrtmath/build.sh']
+        dependencies = [*dependencies, ROOT/'tools/fuzz/harnesses/geometry.hpp', *sorted((ROOT/'ucrtmath/src').glob('*')), ROOT/'ucrtmath/include/ucrtmath.h', ROOT/'ucrtmath/build.sh']
         return {'aex_path':str(self.aex),'aex_sha256':sha(self.aex.read_bytes()),
                 'worker_path':str(self.worker),'worker_sha256':sha(self.worker.read_bytes()),
                 'candidate_sha256':sha(self.binary.read_bytes()),
@@ -183,7 +184,16 @@ class PublicAdapter:
             raise RuntimeError('Public harness build failed: '+repr(status)+' '+err.decode(errors='replace')[-4000:])
         return out
 
+    def geometry_host(self, body):
+        # The macro wraps only host calls; production source is included first.
+        pattern = r'(#include (?:"[^"\n]+/mac/[^"\n]+\.cpp"|KIRA_SOURCE)[^\n]*\n)'
+        body, count = re.subn(pattern, lambda m: m[0]+'#include "'+str(ROOT/'tools/fuzz/harnesses/geometry.hpp')+'"\n', body)
+        if count != 1:
+            raise ValueError('F52 geometry host requires one production source include')
+        return body
+
     def compile_sdk(self, scratch, body, source, deadline, cores=()):
+        body = self.geometry_host(body)
         host = scratch/'host.cpp';host.write_text(body)
         binary = scratch/'mac'
         sdk = self.compile(['xcrun','--show-sdk-path'],deadline).decode().strip()
@@ -214,7 +224,8 @@ class PublicAdapter:
             encoded.append(f"param_{p['slot']}@{p['slot']}:{kind}={value}")
         request = json.dumps({'v':4,'type':'render_frame','frame_index':0,
             'current_time':{'value':0,'scale':24,'step':1,'total':1},'parameters':'v4|'+';'.join(encoded)}).encode()
-        status,out,err = command([self.worker,'session',self.aex,ip,op,*case['geometry'],'24',
+        status,out,err = command([self.worker,'session',self.aex,ip,op,*case.get('full_geometry',case['geometry']),'24',
+            *[v for axis,ratio in zip(('x','y'),case.get('downsample',[])) for v in ('--downsample-'+axis, '/'.join(map(str,ratio)))],
             '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
             *(['--fixture-render-path',selected] if selected else []),
             *getattr(self, 'session_arguments', lambda case, directory: [])(case, directory)],data=struct.pack('<I',len(request))+request,
@@ -251,7 +262,11 @@ class PublicAdapter:
 
     def candidate(self, case, directory, route, deadline, env=None):
         argv,data = self.candidate_command(case,directory,route)
-        status,out,err = command(argv,data=data,timeout=self.timeout,deadline=deadline,env=env or self.env)
+        environment = dict(env or self.env)
+        if 'downsample' in case:
+            values = [*case['full_geometry'], *case['downsample'][0], *case['downsample'][1]]
+            environment['OLM_F52_DOWNSAMPLE'] = ','.join(map(str,values))
+        status,out,err = command(argv,data=data,timeout=self.timeout,deadline=deadline,env=environment)
         if status['status']!='ok':
             return dict(status,diagnostic=err.decode(errors='replace')[-1600:]),b''
         try:

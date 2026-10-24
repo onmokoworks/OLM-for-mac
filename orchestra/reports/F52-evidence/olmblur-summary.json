@@ -1,0 +1,41 @@
+{
+  "n": 100,
+  "seed": 1,
+  "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "dependencies": {
+    "tools/emulation/probe_olmblur_smart_public_admission_20260813.cpp": "1023569bb8ca7e685b2a104d5c22e9b549138bd56d908c2e6bb853f29dd785c5",
+    "tools/fuzz/harnesses/blur_main.cpp": "83f9322ceff73614b887bdd5a5ade499ec807d6200b966316ce11cdd4b6c7f5b",
+    "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c",
+    "mac/OLMBlur/OLMBlur.cpp": "b91706aff22b1aae3c2f4c7bfec719a73c27647b4f65f5739deb0f2f502fc08b",
+    "mac/OLMBlur/OLMBlur.h": "f800c5478f7a9a956c2d4754be20602dfa7fb9ed90ed4239e413a9e2dde64fb2",
+    "core/olmblur_helper.cpp": "a349352a31338afbe6471363c93cebc5c8006dd1583ac6aeb0e32518f0edb685",
+    "core/olmblur_fullworker_helper.cpp": "440ca467f58cf385340a0308295b7f8ec206a03610f13c577766c8a16f608ea5",
+    "core/olmblur_worker16_nonlegacy.cpp": "2a64c0b999acb347e4a9c5d99faee97491a9b1b7db89372e5251f852b5b60c3e",
+    "core/olmblur_worker16_legacy.cpp": "8847abfdfe390bea9d1d2dae041c5ec9c2e4ebca8ff194a657fc1f3f5a9f3a36",
+    "core/olmblur_worker32_nonlegacy.cpp": "993e119bde5c877a8086fda37dd3bd0aa69a88f3ab7ed8ca32baf9fdf17db3e4",
+    "core/olmblur_worker32_legacy.cpp": "bfad34a7b3beb4c865d14079609142262dc4af26ff591ecc3bc6e93869ad1c82",
+    "core/olmblur_worker8_legacy.cpp": "7eba18937c557ed22a25309efca7c41d6d8e0b8da4afc365f0f021811807acea",
+    "core/olmblur_worker_orchestration.cpp": "c36db12f84bfd78ba425f4196dcddaedc5c87bc207ac2d3ca707a9dcb0f29023",
+    "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+    "tools/fuzz/harnesses/geometry.hpp": "c0d23d122ff572f05f81ed3bdf5dba49ef9ebc7ce112c70d9baea5ac13fec5f2",
+    "tools/fuzz/adapters/public.py": "c4af69fd746c347ceecf53c347385c96759243d74c30ce9fab89d65a9458d538"
+  },
+  "worker_sha256": "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b",
+  "candidate_sha256": "bc6f586494eb804d34d1f0cce803f5b5a8fd17170d2a533e8ceac3ff87efe79a",
+  "routes": {
+    "('classic', 'refusal')": 97,
+    "('smart', 'refusal')": 81,
+    "('classic', 'exact')": 3,
+    "('smart', 'exact')": 19
+  },
+  "originals": {
+    "('classic', 'reject')": 18,
+    "('smart', 'ok')": 100,
+    "('classic', 'ok')": 82
+  },
+  "tags": {
+    "('classic', 'Render:classic-nondefault-tuple@1444')": 62,
+    "('smart', 'SmartRender:generic-downsample@2087')": 81,
+    "('classic', 'Render:classic-pf32-unowned@1426')": 35
+  }
+}

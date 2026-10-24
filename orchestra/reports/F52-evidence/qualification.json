@@ -1,0 +1,660 @@
+[
+  {
+    "plugin": "olmblur",
+    "depth": 8,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 8,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 8,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 8,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 16,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 16,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 16,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 16,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 32,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 32,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 32,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "depth": 32,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmblur",
+    "test": "scaled-control",
+    "den": 2,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "20189817024aa74944803df5c4c4cf1c6246702719eca19ef439cc178e07001f"
+  },
+  {
+    "plugin": "olmblur",
+    "test": "scaled-control",
+    "den": 3,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "b79cfe81ee5237332c879de276af0c08c80733d436a68e752dca6206c91d911b"
+  },
+  {
+    "plugin": "olmblur",
+    "test": "scaled-control",
+    "den": 4,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "ce107794b3f3a9c42949e319dc927f1eb8d71e48691db7d1ce298d8d28e412a3"
+  },
+  {
+    "plugin": "olmblur",
+    "test": "scaled-control",
+    "den": 8,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "8b5bf3fbaf855c9c8b43f102fac5816584d6a8a54d445a3480bee78eff382fc3"
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 8,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 8,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 8,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 8,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 16,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 16,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 16,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 16,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 32,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 32,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 32,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmcolorkey",
+    "depth": 32,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 8,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 8,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 8,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 8,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 16,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 16,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 16,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 16,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 32,
+    "route": "classic",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 32,
+    "route": "classic",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 32,
+    "route": "smart",
+    "test": "default-F46",
+    "old": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "new": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "depth": 32,
+    "route": "smart",
+    "test": "odd-stride",
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "test": "scaled-control",
+    "den": 2,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "e32d89bcb7bfc10daa44bb6d0e6615caeb0d2e8085895a5c853f3356ad662042"
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "test": "scaled-control",
+    "den": 3,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "55fbf420700f90a34ca1191db45047f78194e7d4e94fb07282d592b998dfa7fb"
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "test": "scaled-control",
+    "den": 4,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "41eb982b0d34a4d999be1668db30ecbe21712c5ff8574df7bdebda8ede010089"
+  },
+  {
+    "plugin": "olmdirectionalblur",
+    "test": "scaled-control",
+    "den": 8,
+    "left": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "right": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    },
+    "byte_equal": true,
+    "sha256": "c72531d8986e9b5899200577a42ec8b8da2d1cd945e707798c313fdbd05b9c4f"
+  }
+]

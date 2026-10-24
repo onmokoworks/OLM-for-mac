@@ -1,0 +1,125 @@
+--- a/crates/aex-guest-worker/src/geometry.rs
++++ b/crates/aex-guest-worker/src/geometry.rs
+@@ -0,0 +1,66 @@
++//! F52 session-only geometry. Raw files contain packed, already-downsampled pixels.
++use std::sync::OnceLock;
++use aex_abi::x86_64_windows as abi;
++#[derive(Clone, Debug)]
++pub struct Geometry {
++    pub full: [u32; 2], pub scale: [[i32; 2]; 2], pub aspect: [i32; 2],
++    pub pad: u32, pub extent: Option<[i32; 4]>, pub request: Option<[i32; 4]>,
++}
++pub static SESSION: OnceLock<Geometry> = OnceLock::new();
++impl Default for Geometry {
++    fn default() -> Self { Self { full: [0,0], scale: [[1,1];2], aspect: [1,1], pad: 0, extent: None, request: None } }
++}
++pub fn parse(option: &str, value: &str, g: &mut Geometry) -> Result<(), String> {
++    let v = value.split(|c| c == '/' || c == ',').map(str::parse::<i32>)
++        .collect::<Result<Vec<_>,_>>().map_err(|e| e.to_string())?;
++    match option {
++        "--downsample-x" | "--downsample-y" | "--pixel-aspect" => {
++            if v.len()!=2 || v[0]<=0 || v[1]<=0 { return Err("expected positive num/den".into()); }
++            let r=[v[0],v[1]];
++            if option=="--pixel-aspect" { g.aspect=r; }
++            else {
++                if r[0]>r[1] { return Err("downsample must be <=1".into()); }
++                g.scale[usize::from(option=="--downsample-y")]=r;
++            }
++        },
++        "--rowbytes-pad" => {
++            if v.len()!=1 || !(0..=256).contains(&v[0]) { return Err("padding must be 0..256".into()); }
++            g.pad=v[0] as u32;
++        },
++        "--extent-hint" | "--request-rect" => {
++            if v.len()!=4 { return Err("expected left,top,right,bottom".into()); }
++            let r=[v[0],v[1],v[2],v[3]];
++            if option=="--extent-hint" { g.extent=Some(r); } else { g.request=Some(r); }
++        },
++        _ => return Err("unknown geometry option".into()),
++    }
++    Ok(())
++}
++impl Geometry {
++    pub fn world(&self) -> Result<[u32;2],String> {
++        let mut out=[0;2];
++        for i in 0..2 {
++            if self.full[i]==0 || self.full[i]>i32::MAX as u32 { return Err("invalid full dimension".into()); }
++            out[i]=((u64::from(self.full[i])*self.scale[i][0] as u64 + self.scale[i][1] as u64-1)/self.scale[i][1] as u64) as u32;
++        }
++        for r in [self.extent,self.request].into_iter().flatten() {
++            if r[0]<0 || r[1]<0 || r[2]<=r[0] || r[3]<=r[1] || r[2]>out[0] as i32 || r[3]>out[1] as i32 { return Err("rectangle outside sampled world".into()); }
++        }
++        Ok(out)
++    }
++}
++fn put(b: &mut [u8], at: usize, v: i32) { b[at..at+4].copy_from_slice(&v.to_le_bytes()); }
++pub fn input(b: &mut [u8]) {
++    if let Some(g)=SESSION.get() {
++        put(b,abi::IN_WIDTH_OFFSET,g.full[0] as i32); put(b,abi::IN_HEIGHT_OFFSET,g.full[1] as i32);
++        for (at,r) in [(abi::IN_DOWNSAMPLE_X_OFFSET,g.scale[0]),(abi::IN_DOWNSAMPLE_Y_OFFSET,g.scale[1]),(abi::IN_PIXEL_ASPECT_RATIO_OFFSET,g.aspect)] {
++            put(b,at,r[0]); put(b,at+4,r[1]);
++        }
++        if let Some(r)=g.extent { for (i,v) in r.into_iter().enumerate() { put(b,abi::IN_EXTENT_HINT_OFFSET+i*4,v); } }
++    }
++}
++pub fn world(b: &mut [u8]) {
++    if let Some(g)=SESSION.get() {
++        put(b,abi::LAYER_PIX_ASPECT_RATIO_OFFSET,g.aspect[0]); put(b,abi::LAYER_PIX_ASPECT_RATIO_OFFSET+4,g.aspect[1]);
++    }
++}
+--- a/crates/aex-guest-worker/src/lib.rs
++++ b/crates/aex-guest-worker/src/lib.rs
+@@ -17,0 +18 @@
++pub mod geometry;
+--- a/crates/aex-guest-worker/src/main.rs
++++ b/crates/aex-guest-worker/src/main.rs
+@@ -435,0 +436,7 @@
++    let mut geometry = aex_guest_worker::geometry::Geometry::default();
++    for option in ["--downsample-x", "--downsample-y", "--rowbytes-pad", "--extent-hint", "--request-rect", "--pixel-aspect"] {
++        let result = extract_single_string_option(&mut arguments, option).and_then(|v| match v {
++            Some(v) => aex_guest_worker::geometry::parse(option, &v, &mut geometry), None => Ok(())
++        });
++        if let Err(e)=result { eprintln!("aex_guest_error: {option}: {e}"); return ExitCode::from(2); }
++    }
+@@ -499,0 +507,3 @@
++    geometry.full=[width,height];
++    let [width,height]=match geometry.world() { Ok(v)=>v, Err(e)=>{ eprintln!("aex_guest_error: {e}"); return ExitCode::from(2); } };
++    if aex_guest_worker::geometry::SESSION.set(geometry).is_err() { return ExitCode::from(2); }
+--- a/crates/aex-guest-worker/src/classic.rs
++++ b/crates/aex-guest-worker/src/classic.rs
+@@ -269 +268,0 @@
+-        || layout.rowbytes % format.bytes_per_pixel() as u32 != 0
+@@ -746,0 +746 @@
++        crate::geometry::input(&mut input_bytes);
+@@ -814,0 +815 @@
++        crate::geometry::input(&mut input_bytes);
+@@ -1983,0 +1985,10 @@
++        let geometry=crate::geometry::SESSION.get();
++        let output_request=geometry.and_then(|g| g.request).unwrap_or(output_request);
++        let pad=geometry.map_or(0,|g| g.pad);
++        let primary_layout=if let Some(g)=geometry {
++            if primary_layout.is_some() && (g.pad!=0 || g.extent.is_some()) {
++                return Err(ClassicError::Input("geometry cannot override fixture layout".into()));
++            }
++            primary_layout.or(Some(ResidentWorldLayout { rowbytes: input_format.unwrap_or(format).rowbytes(width).map_err(|e| ClassicError::Input(e.to_string()))? + pad,
++                padding_byte: 0xa5, origin_x: 0, origin_y: 0, extent: g.extent.unwrap_or([0,0,width as i32,height as i32]) }))
++        } else { primary_layout };
+@@ -2005,3 +2016,3 @@
+-        let pixel_bytes = format
+-            .byte_count(width, height)
+-            .map_err(|error| ClassicError::Input(error.to_string()))?;
++        let packed_rowbytes=rowbytes as usize;
++        let rowbytes=rowbytes+pad;
++        let pixel_bytes=rowbytes as usize * height as usize;
+@@ -2145,0 +2157 @@
++        crate::geometry::world(&mut input_world);
+@@ -2323,0 +2336 @@
++        crate::geometry::world(&mut world);
+@@ -2333,0 +2347 @@
++        crate::geometry::input(&mut input_data);
+@@ -2500,0 +2515,3 @@
++        if pad!=0 {
++            raw_pixels=raw_pixels.chunks_exact(rowbytes as usize).flat_map(|row| row[..packed_rowbytes].iter().copied()).collect();
++        }
+@@ -4015,0 +4033 @@
++    crate::geometry::input(input);
