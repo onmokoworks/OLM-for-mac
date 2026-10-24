@@ -1,0 +1,1588 @@
+........FEE..FF..FF.....FEEEEEEEEEEEEEEEEEFEEEEEEEEEEEFF....F....F......FEEEEEEEEE....................FEEEEEE.EEEEEEEE.FEE....F.........EEEE..
+======================================================================
+ERROR: test_pinned_live_closure (test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.DGActualAexPowfXmmClosureTest.test_pinned_live_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 38, in test_pinned_live_closure
+    self.assertTrue(self.module.validate(self.report))
+                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 165, in validate
+    if live and report["identities"] != identities():
+                                        ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 51, in identities
+    "actual_aex_sha256": sha(AEX), "aexcompat_callbacks_sha256": sha(CALLBACKS),
+                         ~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 42, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex'
+
+======================================================================
+ERROR: test_recanonicalized_trace_and_claim_tamper_rejected (test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.DGActualAexPowfXmmClosureTest.test_recanonicalized_trace_and_claim_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 63, in test_recanonicalized_trace_and_claim_tamper_rejected
+    self.assertFalse(self.module.validate(candidate))
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 165, in validate
+    if live and report["identities"] != identities():
+                                        ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 51, in identities
+    "actual_aex_sha256": sha(AEX), "aexcompat_callbacks_sha256": sha(CALLBACKS),
+                         ~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 42, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex'
+
+======================================================================
+ERROR: test_admission (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 29, in test_admission
+    def test_admission(c):c.reject(lambda p:p["bounded_admission"].__setitem__("width",18))
+                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_assembly_hash (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_assembly_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 24, in test_assembly_hash
+    def test_assembly_hash(c):c.reject(lambda p:p["compiler_proof"].__setitem__("canonical_assembly_sha256","0"*64))
+                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_boundary (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 30, in test_boundary
+    def test_boundary(c):c.reject(lambda p:p["not_promoted"].pop())
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_build (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_build)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 22, in test_build
+    def test_build(c):c.reject(lambda p:p["field_mechanism"]["builds"]["production_o0"].__setitem__("raw_exact",False))
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_compiler (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_compiler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 23, in test_compiler
+    def test_compiler(c):c.reject(lambda p:p["compiler_proof"].__setitem__("canonical_fused_op_count",1))
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_counter (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_counter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 21, in test_counter
+    def test_counter(c):c.reject(lambda p:p["field_mechanism"]["counterfactuals"]["superseded_lut_early_spatial_fused"].__setitem__("different_words",36))
+                        ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_error (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 19, in test_error
+    def test_error(c):c.reject(lambda p:p["natural_public_trace"].__setitem__("render_error",1))
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_flags (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_flags)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 25, in test_flags
+    def test_flags(c):c.reject(lambda p:p["compiler_proof"]["flags"].pop())
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_guard (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 17, in test_guard
+    def test_guard(c):c.reject(lambda p:p["six_aexcompat_diagnostic_cells"][1].__setitem__("guards_intact",False))
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_marker (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_marker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 28, in test_marker
+    def test_marker(c):c.reject(lambda p:p["public_contract"].__setitem__("marker","bad"))
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_padding (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_padding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 26, in test_padding
+    def test_padding(c):c.reject(lambda p:p["public_contract"].__setitem__("padding_preserved",False))
+                        ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_power_boundary (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_power_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 27, in test_power_boundary
+    def test_power_boundary(c):c.reject(lambda p:p["bounded_admission"].__setitem__("power_requires_native_windows_ucrt_capture",False))
+                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_retained (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 20, in test_retained
+    def test_retained(c):c.reject(lambda p:p["matrix_summary"].__setitem__("exact_admitted",57))
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_six_count (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_six_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 15, in test_six_count
+    def test_six_count(c):c.reject(lambda p:p["six_aexcompat_diagnostic_cells"].pop())
+                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_six_hash (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_six_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 16, in test_six_hash
+    def test_six_hash(c):c.reject(lambda p:p["six_aexcompat_diagnostic_cells"][0].__setitem__("actual_exported_raw_sha256","0"*64))
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_trace (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_trace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 18, in test_trace
+    def test_trace(c):c.reject(lambda p:p["natural_public_trace"]["suite_requests"].pop())
+                      ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 11, in reject
+    with c.assertRaises(AssertionError):c.m.validate(p)
+                                        ~~~~~~~~~~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_validate (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_validate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 12, in test_validate
+    def test_validate(c):c.m.validate(copy.deepcopy(c.report))
+                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_binary_identity_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_binary_identity_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 45, in test_binary_identity_tamper
+    self.rejected(lambda p: p.__setitem__("binary_sha256", "0" * 64))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_bundle_inventory_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_bundle_inventory_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 48, in test_bundle_inventory_tamper
+    self.rejected(lambda p: p["candidate_bundle_inventory"].pop())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_codesign_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_codesign_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 51, in test_codesign_tamper
+    self.rejected(lambda p: p.__setitem__("strict_codesign", False))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_native_ucrt_claim_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_native_ucrt_claim_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 72, in test_native_ucrt_claim_tamper
+    self.rejected(lambda p: p["claims_not_made"].remove("No native Windows UCRT powf result for PF32 Power"))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_report (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 42, in test_report
+    self.m.validate(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_runtime_admitted_count_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_runtime_admitted_count_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 60, in test_runtime_admitted_count_tamper
+    self.rejected(lambda p: p["runtime_production_source_universal_mode5"]["arm64"].__setitem__("raw_exact_cells", 8))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_runtime_power_count_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_runtime_power_count_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 63, in test_runtime_power_count_tamper
+    self.rejected(lambda p: p["runtime_production_source_universal_mode5"]["x86_64"].__setitem__("power_fail_closed_cells", 7))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_runtime_power_output_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_runtime_power_output_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 66, in test_runtime_power_output_tamper
+    self.rejected(lambda p: p["runtime_production_source_universal_mode5"]["arm64"]["power_fail_closed_rows"][0].__setitem__("output_untouched_sha256", "1" * 64))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_runtime_power_promoted_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_runtime_power_promoted_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 69, in test_runtime_power_promoted_tamper
+    self.rejected(lambda p: p["runtime_production_source_universal_mode5"]["x86_64"]["rows"][-1].__setitem__("raw_exact", True))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_slice_fused_operation_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_slice_fused_operation_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 54, in test_slice_fused_operation_tamper
+    self.rejected(lambda p: p["slices"]["arm64"].__setitem__("fused_op_count", 1))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_slice_helper_count_tamper (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_slice_helper_count_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 57, in test_slice_helper_count_tamper
+    self.rejected(lambda p: p["slices"]["x86_64"].__setitem__("product_helper_calls", 2))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 32, in rejected
+    self.m.validate(value)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+======================================================================
+ERROR: test_return_duplicate_vector_is_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_duplicate_vector_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 107, in test_return_duplicate_vector_is_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_extra_member_is_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_extra_member_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 149, in test_return_extra_member_is_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_forged_system32_suffix_is_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_forged_system32_suffix_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 157, in test_return_forged_system32_suffix_is_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_noncanonical_vector_bits_are_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_noncanonical_vector_bits_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 171, in test_return_noncanonical_vector_bits_are_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_request_bytes_are_bound (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_request_bytes_are_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 118, in test_return_request_bytes_are_bound
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_ucrt_identity_is_bound_per_row (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_ucrt_identity_is_bound_per_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 127, in test_return_ucrt_identity_is_bound_per_row
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_unknown_row_key_is_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_unknown_row_key_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 96, in test_return_unknown_row_key_is_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_return_unknown_summary_key_is_rejected (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_return_unknown_summary_key_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 138, in test_return_unknown_summary_key_is_rejected
+    files = self.valid_return_files()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_valid_native_return_is_accepted_without_promotion (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_valid_native_return_is_accepted_without_promotion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 89, in test_valid_native_return_is_accepted_without_promotion
+    path = self.write_return(Path(temporary), self.valid_return_files())
+                                              ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 34, in valid_return_files
+    vectors_bytes = (self.generator.PACKAGE_DIR / "powf_vectors.json").read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813/powf_vectors.json'
+
+======================================================================
+ERROR: test_alpha_bits_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_alpha_bits_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 34, in test_alpha_bits_tamper
+    def test_alpha_bits_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("canonical_alpha_bits",False))
+                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_boundary_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_boundary_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 36, in test_boundary_tamper
+    def test_boundary_tamper(self):self.rejected(lambda r:r["not_promoted"].remove("unlisted PF32 Smart tuple or geometry"))
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_chain_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_chain_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 25, in test_chain_tamper
+    def test_chain_tamper(self):self.rejected(lambda r:r["actual_public_owner"]["chain"].pop())
+                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_color_suite_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_color_suite_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 35, in test_color_suite_tamper
+    def test_color_suite_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("color_suite_error_propagation",False))
+                                      ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_exception_cleanup_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_exception_cleanup_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 33, in test_exception_cleanup_tamper
+    def test_exception_cleanup_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("exception_cleanup",False))
+                                            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_field_word_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_field_word_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 26, in test_field_word_tamper
+    def test_field_word_tamper(self):self.rejected(lambda r:r["natural_public_trace"].__setitem__("post_ipp_field_sha256","1"*64))
+                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_lifecycle_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_lifecycle_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 32, in test_lifecycle_tamper
+    def test_lifecycle_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("parameter_checkins",11))
+                                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_matrix_one_away (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_matrix_one_away)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 28, in test_matrix_one_away
+    def test_matrix_one_away(self):self.rejected(lambda r:r["bounded_matrix"].__setitem__("pf32_exact",31))
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_mode5_public_count_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_mode5_public_count_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 29, in test_mode5_public_count_tamper
+    def test_mode5_public_count_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("pf32_mode5_positive_cases",7))
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_power_fail_closed_count_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_power_fail_closed_count_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 30, in test_power_fail_closed_count_tamper
+    def test_power_fail_closed_count_tamper(self):self.rejected(lambda r:r["production_public_contract"].__setitem__("pf32_power_fail_closed_cases",7))
+                                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_power_oracle_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_power_oracle_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 31, in test_power_oracle_tamper
+    def test_power_oracle_tamper(self):self.rejected(lambda r:r["power_oracle_boundary"].__setitem__("native_windows_ucrt_capture_available",True))
+                                       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_public_selector_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_public_selector_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 27, in test_public_selector_tamper
+    def test_public_selector_tamper(self):self.rejected(lambda r:r["natural_public_trace"]["selectors"].remove("SMART_RENDER"))
+                                          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_report (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 17, in test_report
+    def test_report(self):self.m.validate_report(copy.deepcopy(self.report))
+                          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_selector_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_selector_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 24, in test_selector_tamper
+    def test_selector_tamper(self):self.rejected(lambda r:r["actual_public_owner"].__setitem__("selector","PF_Cmd_RENDER (0x0b)"))
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_build_revision_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_worker_build_revision_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 23, in test_worker_build_revision_tamper
+    def test_worker_build_revision_tamper(self):self.rejected(lambda r:r.__setitem__("worker_build_revision","1"*40))
+                                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_worker_checkout_tamper (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_worker_checkout_tamper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 22, in test_worker_checkout_tamper
+    def test_worker_checkout_tamper(self):self.rejected(lambda r:r.__setitem__("aexcompat_checkout_head","0"*40))
+                                          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 20, in rejected
+    with self.assertRaises(AssertionError):self.m.validate_report(value)
+                                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+======================================================================
+ERROR: test_adversarial_dispatch_mutations_fail (test_olmdistancegradation_static_dispatch_contract_20260730.DistanceGradationStaticDispatchContractTest.test_adversarial_dispatch_mutations_fail) (old='181173e14  CALL 0x181170380', new='181173e14  CALL 0x181170280')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 77, in test_adversarial_dispatch_mutations_fail
+    mutated = list(blocks())
+                   ~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 41, in blocks
+    text = ASM.read_text(encoding="utf-8")
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/disasm/DistanceGradation.aex.asm.txt'
+
+======================================================================
+ERROR: test_adversarial_dispatch_mutations_fail (test_olmdistancegradation_static_dispatch_contract_20260730.DistanceGradationStaticDispatchContractTest.test_adversarial_dispatch_mutations_fail) (old='181170328  LEA RCX,[0x181170480]', new='181170328  LEA RCX,[0x181170870]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 77, in test_adversarial_dispatch_mutations_fail
+    mutated = list(blocks())
+                   ~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 41, in blocks
+    text = ASM.read_text(encoding="utf-8")
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/disasm/DistanceGradation.aex.asm.txt'
+
+======================================================================
+ERROR: test_adversarial_dispatch_mutations_fail (test_olmdistancegradation_static_dispatch_contract_20260730.DistanceGradationStaticDispatchContractTest.test_adversarial_dispatch_mutations_fail) (old='181174dbb  JZ 0x181174dfd', new='181174dbb  JNZ 0x181174dfd')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 77, in test_adversarial_dispatch_mutations_fail
+    mutated = list(blocks())
+                   ~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 41, in blocks
+    text = ASM.read_text(encoding="utf-8")
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/disasm/DistanceGradation.aex.asm.txt'
+
+======================================================================
+ERROR: test_distancegradation_static_dispatch_contract (test_olmdistancegradation_static_dispatch_contract_20260730.DistanceGradationStaticDispatchContractTest.test_distancegradation_static_dispatch_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 67, in test_distancegradation_static_dispatch_contract
+    assert_dispatch_contract(*blocks())
+                              ~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_static_dispatch_contract_20260730.py", line 41, in blocks
+    text = ASM.read_text(encoding="utf-8")
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/disasm/DistanceGradation.aex.asm.txt'
+
+======================================================================
+FAIL: test_default_is_read_only (test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.DGActualAexPowfXmmClosureTest.test_default_is_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 46, in test_default_is_read_only
+    self.assertEqual(run.returncode, 0, run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 240, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 234, in main
+    if not validate(report):
+           ~~~~~~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 165, in validate
+    if live and report["identities"] != identities():
+                                        ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 51, in identities
+    "actual_aex_sha256": sha(AEX), "aexcompat_callbacks_sha256": sha(CALLBACKS),
+                         ~~~^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_actual_aex_powf_xmm_closure_20260814.py", line 42, in sha
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex'
+
+
+======================================================================
+FAIL: test_hashes (test_olmdistancegradation_current_installed_mode5_20260813.DistanceInstalledMode5Test.test_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_current_installed_mode5_20260813.py", line 18, in test_hashes
+    def test_hashes(self):self.assertEqual(sha(GEN),GEN_SHA);self.assertEqual(sha(REPORT),REPORT_SHA);self.assertEqual(sha(MD),MD_SHA)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: 'd5ef4621c1b975255ac93c65e1cef10ec28096927e0eb5cb3aa8ebe16511da28' != 'd810d2fea5bdf59869bd5e3aeb34bff8f66414c2e7280f45ed2e3675f3bfc1b1'
+- d5ef4621c1b975255ac93c65e1cef10ec28096927e0eb5cb3aa8ebe16511da28
++ d810d2fea5bdf59869bd5e3aeb34bff8f66414c2e7280f45ed2e3675f3bfc1b1
+
+
+======================================================================
+FAIL: test_live_read_only (test_olmdistancegradation_current_installed_mode5_20260813.DistanceInstalledMode5Test.test_live_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_current_installed_mode5_20260813.py", line 17, in test_live_read_only
+    before=(REPORT.read_bytes(),MD.read_bytes());p=subprocess.run([sys.executable,str(GEN)],cwd=ROOT,text=True,capture_output=True);self.assertEqual(p.returncode,0,p.stdout+p.stderr);self.assertEqual(before,(REPORT.read_bytes(),MD.read_bytes()))
+                                                                                                                                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py", line 72, in <module>
+    if __name__=="__main__":raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py", line 66, in main
+    p=argparse.ArgumentParser();p.add_argument("--write",action="store_true");a=p.parse_args();fresh=generate();validate(fresh)
+                                                                                                     ~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py", line 52, in generate
+    live=authorities()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py", line 34, in authorities
+    def authorities():return {k:sha(v) for k,v in FILES.items()}
+                                ~~~^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_current_installed_mode5_20260813.py", line 33, in sha
+    def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+
+======================================================================
+FAIL: test_depths_geometry_strides_params_padding_and_overflow (test_olmdistancegradation_generic_production_beta_20260820.DistanceGradationGenericProductionBeta.test_depths_geometry_strides_params_padding_and_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_generic_production_beta_20260820.py", line 264, in test_depths_geometry_strides_params_padding_and_overflow
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 46 != 0 : 
+
+======================================================================
+FAIL: test_oracle_profile_under_address_and_undefined_sanitizers (test_olmdistancegradation_generic_production_beta_20260820.DistanceGradationGenericProductionBeta.test_oracle_profile_under_address_and_undefined_sanitizers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_generic_production_beta_20260820.py", line 285, in test_oracle_profile_under_address_and_undefined_sanitizers
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 75 != 0 : 
+
+======================================================================
+FAIL: test_validate (test_olmdistancegradation_mode5_incremental_install_identity_20260812.IncrementalInstallIdentity.test_validate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_mode5_incremental_install_identity_20260812.py", line 34, in test_validate
+    self.module.validate(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_mode5_incremental_install_20260812.py", line 100, in validate
+    assert sha(SOURCE) == report["production_source_sha256"] == SOURCE_SHA
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+======================================================================
+FAIL: test_validate_only (test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.Closure.test_validate_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 14, in test_validate_only
+    r=subprocess.run([sys.executable,str(GEN),"--validate-only"],cwd=ROOT,text=True,capture_output=True);c.assertEqual(r.returncode,0,r.stderr)
+                                                                                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 77, in <module>
+    if __name__=="__main__":main()
+                            ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 73, in main
+    if q.validate_only:validate(json.loads(REPORT.read_text()))
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 55, in validate
+    require(p.get("schema")=="olmdistancegradation.pf32-mode5-ipp-exact-closure/1"and p.get("status")=="PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED","schema/status");worker=Path(os.environ.get("OLM_AEX_GUEST_WORKER",DEFAULT_WORKER));require(p["aex_sha256"]==AEX_SHA==sha(AEX)and p["worker_sha256"]==WORKER_SHA==sha(worker),"owners");require(p["production_source_sha256"]==sha(SOURCE)and p["probe_sha256"]==sha(PROBE)and p["public_harness_sha256"]==sha(PUBLIC)and p["matrix_sha256"]==sha(MATRIX),"ids")
+                                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.py", line 32, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+
+======================================================================
+FAIL: test_validate_only (test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.DistanceGradationMode5UniversalCodegen.test_validate_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 39, in test_validate_only
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 73, in <module>
+    if __name__=="__main__":main()
+                            ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 69, in main
+    if q.validate_only:validate(json.loads(REPORT.read_text()))
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 50, in validate
+    assert p["schema"]=="olmdistancegradation.pf32-mode5-universal-codegen/1"and p["status"]=="PASS_UNIVERSAL_MODE5_CODEGEN_6_EXACT_2_POWER_FAIL_CLOSED";assert p["binary_sha256"]==sha(BINARY)and p["project_sha256"]==PROJECT_SHA==sha(PROJECT)and p["production_source_sha256"]==sha(SOURCE)and p["runtime_harness_sha256"]==sha(HARNESS)and p["pre_integration_baseline_binary_sha256"]==BASELINE_BINARY_SHA;assert p["candidate_bundle"]==str(BUNDLE.relative_to(ROOT))and p["candidate_bundle_inventory"]==inventory()and p["strict_codesign"]and p["signing_kind"]=="ad-hoc";assert subprocess.run(["codesign","--verify","--deep","--strict",str(BUNDLE)],capture_output=True).returncode==0;assert set(p["architectures"])=={"arm64","x86_64"}and p["global_compiler_setting_changed"]is False
+                                                                                                                                                                                    ~~~^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_pf32_mode5_universal_codegen_20260812.py", line 13, in sha
+    def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                     ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation'
+
+
+======================================================================
+FAIL: test_current_evidence (test_olmdistancegradation_pf32_power_native_ucrt_public_closure_20260815.DistancePF32PowerNativeClosureTests.test_current_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_native_ucrt_public_closure_20260815.py", line 27, in test_current_evidence
+    self.assertTrue(module.validate(self.value))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_current_candidate (test_olmdistancegradation_pf32_power_native_ucrt_universal_candidate_20260815.DistanceNativeUniversalCandidateTests.test_current_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_native_ucrt_universal_candidate_20260815.py", line 27, in test_current_candidate
+    self.assertTrue(module.validate(self.value))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_live_candidate (test_olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815.DistanceNativeMacOS11CandidateTests.test_live_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815.py", line 27, in test_live_candidate
+    self.assertTrue(module.validate(self.value))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_persisted_request_is_live_source_exact (test_olmdistancegradation_pf32_power_ucrt_request_20260813.DistancePowerUcrtRequestTests.test_persisted_request_is_live_source_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 81, in test_persisted_request_is_live_source_exact
+    report = self.generator.generate(False)
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 290, in generate
+    calls, vectors, cell_hashes = run_census()
+                                  ~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 75, in run_census
+    require(sha(SOURCE) == SOURCE_SHA256, "production source identity drift")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_pf32_power_ucrt_request_20260813.py", line 67, in require
+    raise AssertionError(message)
+AssertionError: production source identity drift
+
+======================================================================
+FAIL: test_validate (test_olmdistancegradation_power_failclose_incremental_install_identity_20260812.PowerFailcloseIncrementalInstallIdentity.test_validate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_power_failclose_incremental_install_identity_20260812.py", line 38, in test_validate
+    self.module.validate(copy.deepcopy(self.report))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/audit_olmdistancegradation_power_failclose_incremental_install_20260812.py", line 135, in validate
+    assert sha(SOURCE) == report["production_source_sha256"] == SOURCE_SHA
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+======================================================================
+FAIL: test_validate_only (test_olmdistancegradation_public_smart_owner_contract_20260812.DistanceGradationPublicSmartOwnerContract.test_validate_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 16, in test_validate_only
+    self.assertEqual(r.returncode,0,r.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 147, in <module>
+    if __name__=="__main__":raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 142, in main
+    if args.validate_only:validate_report(json.loads(REPORT.read_text()))
+                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 48, in validate_report
+    require(report.get(key)==sha(path),key)
+                             ~~~^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tools/emulation/test_olmdistancegradation_public_smart_owner_contract_20260812.py", line 38, in sha
+    def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
+                                                  ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker'
+
+
+======================================================================
+FAIL: test_live_report_and_markdown (test_olmdistancegradation_same_table_dual_owner_plumbing_20260814.DistanceSameTableDualOwnerPlumbingTest.test_live_report_and_markdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/tests/test_olmdistancegradation_same_table_dual_owner_plumbing_20260814.py", line 44, in test_live_report_and_markdown
+    self.assertTrue(self.tool.validate(self.value))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 140 tests in 14.332s
+
+FAILED (failures=15, errors=59)
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_3htolyzz/ready.json
+[INFO] status=ready_for_disposable_project_proof_render_no_execution
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_jnjsoear/malformed.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_x95hfc74/multi.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_ar563izs/report.json
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_ar563izs/report.md
+[INFO] status=blocked_refused_missing_disposable_project_flag
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_05482sdi/path-traversal.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_6l1j3jbk/pgrep_timeout.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_6l1j3jbk/pgrep_oserror.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_6l1j3jbk/vmmap_timeout.json
+[INFO] status=blocked_structural_preflight_failure
+[OK] wrote /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03a-distancegradation-pf32-downsample-ulp/orchestra/state/P03a-distancegradation-pf32-downsample-ulp/olmdg_preflight_20260716_6l1j3jbk/vmmap_oserror.json
+[INFO] status=blocked_structural_preflight_failure
