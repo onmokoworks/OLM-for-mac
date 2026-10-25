@@ -1359,6 +1359,7 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
     "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
     "candidate_sha256": "16bda1c4c4114114f172eda7644f16eeed992011b818f060097228dfa95e1059",
+    "case_timeout_seconds": 10,
     "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
     "dependencies_sha256": {
       "core/dblur_field.h": "eb5da4273883d057eb6daaed2471e377168df0ac56a9e84756fef87b5dfc20ec",
@@ -1422,6 +1423,7 @@
     "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
     "oracle_render_path": "smartfx",
     "oracle_routes": {
+      "classic": "classic",
       "smart": "smart"
     },
     "original_routes": {
@@ -1463,7 +1465,39 @@
       "session_clean": true,
       "status": "ok"
     },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "8fe301e23bc89a0df5dc21c66a74f0225723d26ff5a2129517d27ba55940061d",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
     "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 128,
+          "actual_word_hex": "0000003f",
+          "different_bytes": 103,
+          "different_words": 29,
+          "expected_bytes": 128,
+          "expected_word_hex": "00000000",
+          "first_byte": 3,
+          "first_word": 0
+        },
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        },
+        "raw_sha256": "8fe301e23bc89a0df5dc21c66a74f0225723d26ff5a2129517d27ba55940061d",
+        "status": "mismatch"
+      },
       "smart": {
         "error": 0,
         "metadata": {
