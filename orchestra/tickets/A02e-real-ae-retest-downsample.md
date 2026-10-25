@@ -1,4 +1,4 @@
-depends: A03c-ae-scripting-pref-and-live-proof
+depends: A03d-ae-crash-dialog-rule
 # A02e: real AE 2026 retest of the fixed bundles: preview resolutions, odd sizes, 32 bpc, timing (aerender)
 
 ## Why
