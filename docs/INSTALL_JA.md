@@ -9,7 +9,7 @@
 - CPUレンダー（GPUレンダーは対象外です）
 
 > [!NOTE]
-> 今のプラグインは、Appleの開発者署名と公証（notarization）を受けていません。ダウンロードしたプラグインを、macOSのGatekeeperが止めることがあります。その場合は、無理に回避せず、表示された文言とmacOSのバージョンを報告してください。
+> このプラグインは、Appleの開発者署名と公証（notarization）を受けていません（有料のため、予定もありません）。ダウンロードしたプラグインを、macOSのGatekeeperが止めることがあります。対処は下の「[macOSに止められたとき](#macosに止められたとき)」を見てください。
 
 ## インストール
 
@@ -39,6 +39,23 @@ scripts/install_mac_plugins_to_mediacore.sh --package /path/to/OLM_Mac_Plugins.z
 ```sh
 scripts/install_mac_plugins_to_mediacore.sh --audit-only
 ```
+
+## macOSに止められたとき
+
+ダウンロードしたファイルには、macOSが「インターネットから来たもの」という印を付けます。署名のないプラグインにこの印が付いていると、AEの起動時に「開けません」「開発元を検証できません」などと表示され、読み込まれないことがあります。
+
+このプロジェクトを信頼できる場合は、次の手順で印を外せます。
+
+1. After Effectsを終了します。
+2. 「ターミナル」を開き、次を貼り付けて実行します。
+
+   ```sh
+   xattr -dr com.apple.quarantine ~/Library/Application\ Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLM*.plugin ~/Library/Application\ Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin
+   ```
+
+3. After Effectsを起動し直します。
+
+印を外すのは、この10個のプラグインだけにしてください。それでも読み込まれない場合は、表示された文言とmacOSのバージョンを添えて報告してください。
 
 ## 最初に確かめること
 

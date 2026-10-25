@@ -9,7 +9,7 @@
 - CPU rendering (GPU rendering is not supported)
 
 > [!NOTE]
-> The plugins are not yet signed with an Apple Developer ID or notarized, so macOS Gatekeeper may block plugins you downloaded. If that happens, do not force a workaround. Report the message you saw and your macOS version.
+> The plugins are not signed with an Apple Developer ID or notarized (this costs money, so there are no plans to). macOS Gatekeeper may block plugins you downloaded. See [If macOS blocks the plugins](#if-macos-blocks-the-plugins) below.
 
 ## Installing
 
@@ -39,6 +39,23 @@ To check for duplicates only:
 ```sh
 scripts/install_mac_plugins_to_mediacore.sh --audit-only
 ```
+
+## If macOS blocks the plugins
+
+macOS marks downloaded files as "from the internet". When an unsigned plugin carries this mark, AE may show a message such as "cannot be opened" or "the developer cannot be verified" at launch, and the plugin is not loaded.
+
+If you trust this project, you can remove the mark:
+
+1. Quit After Effects.
+2. Open Terminal, paste the following and press Return:
+
+   ```sh
+   xattr -dr com.apple.quarantine ~/Library/Application\ Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLM*.plugin ~/Library/Application\ Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin
+   ```
+
+3. Start After Effects again.
+
+Only remove the mark from these 10 plugins. If they still do not load, report the message you saw and your macOS version.
 
 ## First checks
 

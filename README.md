@@ -49,7 +49,7 @@ After Effectsを終了し、配布ZIPに入っている10個の `.plugin` を次
 同じ名前の古いプラグインが残っていると、AEが重複のエラーを出します。くわしくは[インストールガイド](docs/INSTALL_JA.md)を見てください。
 
 > [!NOTE]
-> 今のプラグインは、Appleの開発者署名と公証（notarization）を受けていません。ダウンロードしたプラグインを、macOSのGatekeeperが止めることがあります。
+> このプラグインは、Appleの開発者署名と公証（notarization）を受けていません（有料のため、予定もありません）。macOSに止められたときの対処は[インストールガイド](docs/INSTALL_JA.md#macosに止められたとき)を見てください。
 
 ## 不具合の報告
 
