@@ -41,3 +41,5 @@ Expected: 4 + 2 + 4 offline tests pass, whitespace check passes. Recreate the ve
 next:
 - Continue waiting for unlock; then priority build/render and exact controls, followed by depth defaults, corpus and original/same-bundle comparisons.
 - Preserve untouched DistanceGradation 32 bpc defaults; no plugin fix is justified before a measured failure.
+
+checkpoint: 2026-10-25T02:45:14.048638+00:00; 7 lock polls recorded; AE not launched. See A02b-evidence/screen-lock.txt.
