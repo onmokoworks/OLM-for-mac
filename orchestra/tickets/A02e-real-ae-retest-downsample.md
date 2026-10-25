@@ -1,4 +1,4 @@
-depends: A03-ae-dialog-watcher
+depends: A03b-ae-crash-flags-and-ocr
 # A02e: real AE 2026 retest of the fixed bundles: preview resolutions, odd sizes, 32 bpc, timing (aerender)
 
 ## Why
@@ -74,3 +74,5 @@ depends: A03-ae-dialog-watcher
 
 ## Resume note 4 (orchestrator, A02e)
 - A03 built `tools/ae_smoke/ae_dialog_watch` (prevention plus AX/OCR auto-dismiss), integrated into `run_ae_smoke.py --stage build`. Use it. Use a fresh run ID.
+
+- A03b added the `prevent` step (clears CrashOccurred/ForceQuitOccured after backup) and a hi-res OCR fallback. Run it before every launch.
