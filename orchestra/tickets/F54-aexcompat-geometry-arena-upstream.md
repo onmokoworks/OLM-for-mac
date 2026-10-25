@@ -36,3 +36,6 @@
 - Use 1-2 processes. Check `memory_pressure` (≥30% free) before Rust builds, and delete build trees afterwards.
 - Make no OLM plugin source changes. Do not touch the release gate or ledger.
 - Commit partial results at least every 30 minutes (in both repos as relevant). The stop rule applies. Upstreaming downsample + cropped checkout with equivalence proof is already a success.
+
+## Resume note (orchestrator)
+- Your previous run was killed by an orchestrator queue restart (not by anything you did). Your worktree, commits and any uncommitted files are intact. Read your own commits, report draft and `orchestra/state/<ticket>/` first, and continue from there instead of starting over.

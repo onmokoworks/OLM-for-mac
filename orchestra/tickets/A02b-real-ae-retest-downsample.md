@@ -49,3 +49,6 @@
 - Use AE 2026 only. Make no plugin source changes. Do not touch the release gate or ledger. Do not change or remove the installed bundles.
 - Keep PNG/EXR evidence small (crop or downscale; at most 400 KB per file).
 - Commit partial results at least every 30 minutes. The stop rule applies. "8 bpc defaults at 4 resolutions for all 10, with no black frames" is already a valuable result.
+
+## Resume note (orchestrator)
+- Your previous run was killed by an orchestrator queue restart (not by anything you did). Your worktree, commits and any uncommitted files are intact. Read your own commits, report draft and `orchestra/state/<ticket>/` first, and continue from there instead of starting over.

@@ -16,3 +16,6 @@
 
 ## Rules
 - Make no plugin source changes. Do not touch the release gate or ledger. The script must not use more than `--jobs` emulator processes.
+
+## Resume note (orchestrator)
+- Your previous run was killed by an orchestrator queue restart (not by anything you did). Your worktree, commits and any uncommitted files are intact. Read your own commits, report draft and `orchestra/state/<ticket>/` first, and continue from there instead of starting over.
