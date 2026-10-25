@@ -10,11 +10,14 @@ def sha(p):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--parent',choices=['F53','F54'],required=True);a=ap.parse_args()
     parent=(CACHE/'src-F53/reference-guest' if a.parent=='F53' else Path('/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-olm-F54/guest'))
-    # QEMU's configure rejects spaces; the alias still stores all scratch in the worktree.
-    alias=CACHE/'S02-scratch'
-    if not alias.exists(): alias.symlink_to(SCRATCH, target_is_directory=True)
-    assert alias.resolve()==SCRATCH
-    source=alias/('source-'+a.parent);build=alias/'rust-build'
+    # Use real space-free paths: QEMU resolves symlinks before configure.
+    SCRATCH.mkdir(parents=True, exist_ok=True)
+    source=Path.home()/'Documents/Projects/Personal/04_Tools'/('AEXCompat-S02-build-'+a.parent)
+    build_root=CACHE/('build-S02-'+a.parent)
+    build=build_root/'target'
+    temporary=build_root/'tmp'
+    assert not source.exists() and not build_root.exists(), 'stale build tree'
+    temporary.mkdir(parents=True)
     out=CACHE/('worker-S02-'+a.parent);out.mkdir(exist_ok=True)
     binary=out/'aex-guest-worker'
     if binary.exists(): raise SystemExit('Refusing to overwrite installed worker')
@@ -39,10 +42,10 @@ def main():
 '''
     path.write_text(text.replace(needle,addition+needle))
     manifest={'capability':'S02-float-colors-v1','parent':a.parent,'parent_source':str(parent),'parent_callback_sha256':sha(parent/path.relative_to(source)), 'callback_sha256':sha(path),'builder_sha256':sha(Path(__file__)), 'source_manifest':{str(p.relative_to(source)):sha(p) for p in sorted(source.rglob('*')) if p.is_file()}}
-    env=dict(os.environ,TMPDIR=str(SCRATCH),TMP=str(SCRATCH),TEMP=str(SCRATCH),CARGO_TARGET_DIR=str(build),CARGO_BUILD_JOBS='1',CMAKE_BUILD_PARALLEL_LEVEL='1',AEXCOMPAT_BUILD_REVISION='S02-'+a.parent)
+    env=dict(os.environ,TMPDIR=str(temporary),TMP=str(temporary),TEMP=str(temporary),CARGO_TARGET_DIR=str(build),CARGO_BUILD_JOBS='1',CMAKE_BUILD_PARALLEL_LEVEL='1',AEXCOMPAT_BUILD_REVISION='S02-'+a.parent)
     cmd=['cargo','build','--manifest-path',str(source/'Cargo.toml'),'--release','--offline','--locked','-j','1','-p','aex-guest-worker','--bin','aex-guest-worker']
     try:
-        with (SCRATCH/('build-'+a.parent+'.log')).open('w') as log: subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+        with (SCRATCH/('build-'+a.parent+'.log')).open('w') as log: subprocess.run(cmd,cwd=source,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         shutil.copy2(build/'release/aex-guest-worker',binary)
         manifest.update(worker_sha256=sha(binary),command=cmd)
         (out/'build.json').write_text(json.dumps(manifest,indent=2)+'\n')
@@ -53,5 +56,5 @@ def main():
             staged=CACHE/'INDEX.S02.json';staged.write_text(json.dumps(data,indent=2)+'\n');staged.replace(index)
         print(a.parent,sha(binary))
     finally:
-        shutil.rmtree(build,ignore_errors=True);shutil.rmtree(source,ignore_errors=True)
+        shutil.rmtree(build_root,ignore_errors=True);shutil.rmtree(source,ignore_errors=True)
 if __name__=='__main__': main()
