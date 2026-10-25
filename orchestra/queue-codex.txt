@@ -136,6 +136,9 @@ P07d-distancegradation-blur-colorkey-threading
 P07e-radialblur-rotation-parallel
 A02-real-ae-retest-downsample
 U01-custom-ui-survey
+U03-aexcompat-ui-oracle
+U02-kirakira-ramp-editor
+U04-dynamic-controls
 V01-universal-x86-arm-equality
 F54-aexcompat-geometry-arena-upstream
 N01-nightly-fuzz-runner
