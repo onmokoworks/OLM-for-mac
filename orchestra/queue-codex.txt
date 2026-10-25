@@ -148,3 +148,4 @@ S01-smoother-4k-two-sample-diff
 C01-colorkey-pf32-nan-passthrough
 U02b-kirakira-ui-vs-original
 F54b-aexcompat-numeric-patches-upstream
+S02-smoother2-float-color-guard
