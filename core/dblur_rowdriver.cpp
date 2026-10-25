@@ -4,6 +4,9 @@
 #include "dblur_noise.h"
 
 #include <cstdint>
+#include <cstdlib>
+#include <cerrno>
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #if defined(__APPLE__)
@@ -12,6 +15,27 @@
 
 namespace {
 
+#ifdef OLM_REFERENCE_BUILD
+// Keep every elementary operation in a separately observed float operation.
+// This matches the scalar SSE instructions in the AEX and prevents the host
+// compiler from contracting or reassociating the arithmetic.
+__attribute__((always_inline)) inline float addf(float a, float b) {
+    volatile float r = olm::x86_float::sse_add(a, b);
+    return r;
+}
+__attribute__((always_inline)) inline float mulf(float a, float b) {
+    volatile float r = olm::x86_float::sse_mul(a, b);
+    return r;
+}
+__attribute__((always_inline)) inline float divf(float a, float b) {
+    volatile float r = olm::x86_float::sse_div(a, b);
+    return r;
+}
+__attribute__((always_inline)) inline float int_scale(int value, float scale) {
+    volatile float r = static_cast<float>(value) * scale;
+    return r;
+}
+#else
 // Each helper performs one binary32 operation. The plugin and harness compile
 // this file with -fno-fast-math -ffp-contract=off, preserving SSE operation order
 // and rounding without forcing each intermediate through a volatile stack slot.
@@ -31,6 +55,7 @@ __attribute__((always_inline)) inline float int_scale(int value, float scale) {
     const float r = static_cast<float>(value) * scale;
     return r;
 }
+#endif
 __attribute__((always_inline)) inline int trunc_i(float value) {
     // AEX scatter/prepass and weight lookup use scalar SSE CVTTSS2SI.
     // Its masked invalid result is INT32_MIN for NaN/infinity/out-of-range.
@@ -47,7 +72,11 @@ float weight_at(const float* table, int index, float scale) {
 }
 
 __attribute__((noinline)) float powf_compat(float value, float exponent) {
+#ifdef OLM_REFERENCE_BUILD
+    volatile float r = ucrt_powf(value, exponent, UCRT_FMA);
+#else
     const float r = ucrt_powf(value, exponent, UCRT_FMA);
+#endif
     return r;
 }
 
@@ -128,7 +157,47 @@ extern "C" void olm_dblur_prepass_f32(int start, int offset,
     valid[pixel] = normalized;
 }
 
-extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
+static void olm_dblur_scatter_f32_reference(int start, int offset, char backward,
+                                       const float* source, float* destination,
+                                       float* denominator, float* alpha_max,
+                                       const float* weights, int count, int end,
+                                       float coefficient) {
+    const int pixel = start + offset;
+    const float red = source[pixel * 4 + 0];
+    const float green = source[pixel * 4 + 1];
+    const float blue = source[pixel * 4 + 2];
+    const float alpha = alpha_max[pixel];
+    int length = trunc_i(static_cast<float>(count) * coefficient);
+    float scale = 1.0f;
+    if (coefficient > 0.0f) {
+        scale = divf(1.0f, coefficient);
+    }
+    if (length <= 0) {
+        return;
+    }
+    const int direction = backward == 0 ? 1 : -1;
+    if (backward == 0 && end <= start + length) {
+        length = end - start;
+    } else if (backward != 0 && start - length < 0) {
+        length = start;
+    }
+    if (length <= 1) {
+        return;
+    }
+    for (int i = 1; i < length; ++i) {
+        const float contribution = mulf(alpha, weight_at(weights, i, scale));
+        const int target = pixel + direction * i;
+        // AEX scatter adds contribution first; MAXSS selects it on unordered.
+        destination[target * 4 + 0] = addf(mulf(contribution, red), destination[target * 4 + 0]);
+        destination[target * 4 + 1] = addf(mulf(contribution, green), destination[target * 4 + 1]);
+        destination[target * 4 + 2] = addf(mulf(contribution, blue), destination[target * 4 + 2]);
+        denominator[target] = addf(contribution, denominator[target]);
+        float& destination_alpha = destination[target * 4 + 3];
+        destination_alpha = olm::x86_float::sse_max(destination_alpha, contribution);
+    }
+}
+
+static void olm_dblur_scatter_f32_fast(int start, int offset, char backward,
                                        const float* source, float* destination,
                                        float* denominator, float* alpha_max,
                                        const float* weights, int count, int end,
@@ -195,9 +264,97 @@ extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
     }
 }
 
+extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
+                                       const float* source, float* destination,
+                                       float* denominator, float* alpha_max,
+                                       const float* weights, int count, int end,
+                                       float coefficient) {
+#ifdef OLM_REFERENCE_BUILD
+    olm_dblur_scatter_f32_reference
+#else
+    olm_dblur_scatter_f32_fast
+#endif
+    (start, offset, backward, source, destination, denominator, alpha_max, weights, count, end, coefficient);
+}
+
 namespace {
 
-void rowdriver_impl(
+#ifdef OLM_REFERENCE_BUILD
+void rowdriver_impl_reference(
+    int row_start, int row_end, const float* source, float* destination,
+    int width, int mode, float opacity, float exponent, float scale,
+    float edge_x, float edge_y, const float* scatter_front,
+    const float* scatter_back, const float* prepass_front,
+    const float* prepass_back, float* denominator, float* alpha_max,
+    const float* comp_map, int scatter_front_count, int scatter_back_count,
+    int prepass_front_count, int prepass_back_count,
+    const float* field, const olm::dblur::NoisePlaneView* noise_plane,
+    bool interpolate_noise) {
+    if ((mode == 2 && field == nullptr) ||
+        (mode == 3 && noise_plane == nullptr)) {
+        return;
+    }
+    for (int row = row_start; row < row_end; ++row) {
+        const int row_base = row * width;
+        for (int x = 0; x < width; ++x) {
+            const int pixel = row_base + x;
+            const float pre_coeff = powf_compat(
+                divf(comp_map[pixel * 4], scale), exponent);
+            olm_dblur_prepass_f32(x, row_base, source, destination,
+                                  denominator, alpha_max, prepass_front,
+                                  prepass_front_count, prepass_back,
+                                  prepass_back_count, width,
+                                  pre_coeff);
+        }
+        for (int x = 0; x < width; ++x) {
+            const int pixel = row_base + x;
+            if (source[pixel * 4 + 3] == 0.0f) {
+                continue;
+            }
+            float coefficient = powf_compat(
+                divf(comp_map[pixel * 4], scale), exponent);
+            if (mode == 3) {
+                const float noise = olm::dblur::sample_noise_plane(
+                    *noise_plane, x, row, interpolate_noise);
+                coefficient = mulf(
+                    coefficient,
+                    addf(mulf(noise, opacity), 1.0f - opacity));
+            } else if (mode == 2) {
+                coefficient = mulf(
+                    coefficient,
+                    addf(mulf(field[pixel], opacity), 1.0f - opacity));
+            }
+            if (coefficient == 0.0f) {
+                continue;
+            }
+            float edge = 1.0f - divf(mulf(abs_distance(static_cast<float>(row),
+                                                        comp_map[pixel * 4 + 2]),
+                                            edge_x),
+                                      comp_map[pixel * 4 + 3]);
+            if (edge < 0.0f) {
+                edge = 0.0f;
+            }
+            olm_dblur_scatter_f32(x, row_base, 1, source, destination,
+                                  denominator, alpha_max, scatter_front,
+                                  scatter_front_count, width,
+                                  mulf(edge, coefficient));
+            edge = 1.0f - divf(mulf(abs_distance(static_cast<float>(row),
+                                                 comp_map[pixel * 4 + 2]),
+                                     edge_y),
+                              comp_map[pixel * 4 + 3]);
+            if (edge < 0.0f) {
+                edge = 0.0f;
+            }
+            olm_dblur_scatter_f32(x, row_base, 0, source, destination,
+                                  denominator, alpha_max, scatter_back,
+                                  scatter_back_count, width,
+                                  mulf(edge, coefficient));
+        }
+    }
+}
+#define rowdriver_impl rowdriver_impl_reference
+#else
+void rowdriver_impl_fast(
     int row_start, int row_end, const float* source, float* destination,
     int width, int mode, float opacity, float exponent, float scale,
     float edge_x, float edge_y, const float* scatter_front,
@@ -211,11 +368,20 @@ void rowdriver_impl(
     if (parallel && row_end - row_start >= 64) {
         // Scatter and prepass are clipped to their own row. Each partition
         // preserves the original x/i order and owns disjoint output cells.
-        constexpr size_t partitions = 8;
+        size_t partitions = 8;
+        if (const char* value = std::getenv("OLM_PARALLEL_MAX")) {
+            char* end = nullptr;
+            const int saved_errno = errno;
+            errno = 0;
+            const unsigned long maximum = std::strtoul(value, &end, 10);
+            if (*value >= '0' && *value <= '9' && end != value && *end == '\0' &&
+                errno == 0 && maximum > 0) partitions = std::min<size_t>(partitions, maximum);
+            errno = saved_errno;
+        }
         auto run = [&](size_t part) {
             const int begin = row_start + (row_end - row_start) * part / partitions;
             const int end = row_start + (row_end - row_start) * (part + 1) / partitions;
-            rowdriver_impl(begin, end, source, destination, width, mode, opacity,
+            rowdriver_impl_fast(begin, end, source, destination, width, mode, opacity,
                 exponent, scale, edge_x, edge_y, scatter_front, scatter_back,
                 prepass_front, prepass_back, denominator, alpha_max, comp_map,
                 scatter_front_count, scatter_back_count, prepass_front_count,
@@ -290,6 +456,9 @@ void rowdriver_impl(
         }
     }
 }
+#define rowdriver_impl rowdriver_impl_fast
+#endif
+
 
 }  // namespace
 

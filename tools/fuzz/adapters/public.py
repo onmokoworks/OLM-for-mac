@@ -50,6 +50,7 @@ class PublicAdapter:
     small_controls = ()
 
     def __init__(self, options):
+        self.reference_build = getattr(options, "reference_build", False)
         self.max_size = options.max_size
         self.size_max_height = getattr(options, "size_max_height", None)
         self.size_sampler = getattr(options, "size_sampler", "default")
@@ -155,8 +156,8 @@ class PublicAdapter:
             raise ValueError('Original AEX hash differs from captured PARAMS_SETUP')
         self.env.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch))
         self.binary, dependencies = self.build(scratch,deadline)
-        dependencies = [*dependencies, ROOT/'tools/fuzz/harnesses/geometry.hpp', *sorted((ROOT/'ucrtmath/src').glob('*')), ROOT/'ucrtmath/include/ucrtmath.h', ROOT/'ucrtmath/build.sh']
-        return {'aex_path':str(self.aex),'aex_sha256':sha(self.aex.read_bytes()),
+        dependencies = [*dependencies, *sorted({header for source in dependencies for header in source.parent.glob('*.h')}), ROOT/'tools/fuzz/harnesses/geometry.hpp', *sorted((ROOT/'ucrtmath/src').glob('*')), ROOT/'ucrtmath/include/ucrtmath.h', ROOT/'ucrtmath/build.sh']
+        return {'reference_build':self.reference_build, 'aex_path':str(self.aex),'aex_sha256':sha(self.aex.read_bytes()),
                 'worker_path':str(self.worker),'worker_sha256':sha(self.worker.read_bytes()),
                 'candidate_sha256':sha(self.binary.read_bytes()),
                 'dependencies_sha256':{str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in dependencies},
@@ -178,6 +179,8 @@ class PublicAdapter:
         return {}
 
     def compile(self, argv, deadline):
+        if str(argv[0]) == "clang++" and self.reference_build:
+            argv = [*argv, "-DOLM_REFERENCE_BUILD=1"]
         # Link the independent C implementation into every public harness.
         if str(argv[0]) == 'clang++' and '-o' in argv and '-c' not in argv:
             out = Path(argv[argv.index('-o') + 1]).parent / 'ucrtmath'

@@ -1,3 +1,7 @@
+#if defined(OLM_REFERENCE_BUILD) && defined(__clang__)
+// P05a used -O0 for this translation unit before optimizing rotation.
+#pragma clang optimize off
+#endif
 #include "dblur_float.h"
 #include "dblur_rotate.h"
 #include "../ucrtmath/include/ucrtmath.h"
@@ -6,6 +10,27 @@
 
 namespace {
 
+#ifdef OLM_REFERENCE_BUILD
+__attribute__((noinline)) float fmul(float a, float b) {
+    volatile float result = olm::x86_float::sse_mul(a, b);
+    return result;
+}
+
+__attribute__((noinline)) float fadd(float a, float b) {
+    volatile float result = olm::x86_float::sse_add(a, b);
+    return result;
+}
+
+__attribute__((noinline)) float fsub(float a, float b) {
+    volatile float result = olm::x86_float::sse_sub(a, b);
+    return result;
+}
+
+__attribute__((noinline)) float fdiv(float a, float b) {
+    volatile float result = olm::x86_float::sse_div(a, b);
+    return result;
+}
+#else
 __attribute__((always_inline)) inline float fmul(float a, float b) {
     volatile float result = olm::dblur_float::mul(a, b);
     return result;
@@ -25,6 +50,7 @@ __attribute__((always_inline)) inline float fdiv(float a, float b) {
     volatile float result = olm::dblur_float::div(a, b);
     return result;
 }
+#endif
 
 }  // namespace
 

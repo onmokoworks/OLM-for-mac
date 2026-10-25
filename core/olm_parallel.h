@@ -17,7 +17,12 @@ namespace olm {
 // Invalid overrides use the default cap (8). Do not mutate the environment
 // while renders are active. Callbacks must not throw across the GCD boundary.
 template<class Function>
-inline void parallel_rows(std::size_t count, std::size_t min_grain,
+inline void parallel_rows_reference(std::size_t count, const Function& fn) {
+    for (std::size_t row = 0; row < count; ++row) fn(row);
+}
+
+template<class Function>
+inline void parallel_rows_fast(std::size_t count, std::size_t min_grain,
                           const Function& fn) {
 #if defined(__APPLE__)
     std::size_t maximum = 8;
@@ -57,6 +62,16 @@ inline void parallel_rows(std::size_t count, std::size_t min_grain,
         }
     }
 #endif
-    for (std::size_t row = 0; row < count; ++row) fn(row);
+    parallel_rows_reference(count, fn);
+}
+// A reference build never reads the environment or enters GCD.
+template<class Function>
+inline void parallel_rows(std::size_t count, std::size_t min_grain,
+                          const Function& fn) {
+#ifdef OLM_REFERENCE_BUILD
+    parallel_rows_reference(count, fn);
+#else
+    parallel_rows_fast(count, min_grain, fn);
+#endif
 }
 } // namespace olm

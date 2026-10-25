@@ -48,6 +48,7 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
+    p.add_argument('--reference-build', action='store_true', help='Build the faithful scalar/sequential implementation')
     p.add_argument('--geometry', choices=('default', 'realistic', 'realistic-v2'), default='default',
                    help='Opt-in sampler; requires a geometry-qualified candidate host')
     p.add_argument('--size-sampler', choices=('default', 'odd-even-v1'), default='default',
@@ -73,6 +74,8 @@ def options():
     p.add_argument('--corpus-max-bytes', type=int, default=2_000_000)
     p.add_argument('--replay', type=Path, help='Replay a corpus JSON or directory; generation and shrinking are disabled')
     args = p.parse_args()
+    if args.reference_build and args.candidate != 'source':
+        p.error('--reference-build compiles source hosts; it cannot change a supplied bundle')
     if args.candidate == 'plugin-bundle' and (not args.plugin_bundle or args.jobs != 1):
         p.error('plugin-bundle requires --plugin-bundle PATH --jobs 1')
     if not args.plugin.isidentifier():

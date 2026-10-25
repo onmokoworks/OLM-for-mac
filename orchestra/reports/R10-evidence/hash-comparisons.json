@@ -1,0 +1,62 @@
+[
+  {
+    "label": "directional-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "directional-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "radial-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "radial-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "blur-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "blur-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "key-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "key-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "smooth-baseline-fast",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "smooth-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  },
+  {
+    "label": "kira-baseline-fast-Smart",
+    "cases": 300,
+    "different_hashes": []
+  },
+  {
+    "label": "kira-reference-fast",
+    "cases": 100,
+    "different_hashes": []
+  }
+]

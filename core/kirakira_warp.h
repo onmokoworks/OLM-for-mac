@@ -45,7 +45,40 @@ inline float warp_sample_bilinear_zero(
 	return value;
 }
 
-inline std::vector<float> warp_get_rotation_matrix_2d(
+// Sequential reconstruction from the parent of P07a (651bc587).
+inline std::vector<float> warp_get_rotation_matrix_2d_reference(
+	const std::vector<float> &input, int src_width, int src_height,
+	int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
+{
+	const double radians = angle_deg * 3.14159265358979323846 / 180.0;
+	const double alpha = ucrt_cos(radians, UCRT_FMA);
+	const double beta = ucrt_sin(radians, UCRT_FMA);
+	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
+	const double m12 = beta * center_x + (1.0 - alpha) * center_y;
+	const double determinant = alpha * alpha + beta * beta;
+	const double i00 = alpha / determinant;
+	const double i01 = -beta / determinant;
+	const double i02 = (beta * m12 - alpha * m02) / determinant;
+	const double i10 = beta / determinant;
+	const double i11 = alpha / determinant;
+	const double i12 = (-beta * m02 - alpha * m12) / determinant;
+	constexpr int kAbScale = 1 << 10;
+	constexpr int kRoundDelta = 1 << 4;
+	std::vector<float> output(static_cast<std::size_t>(dst_width) * dst_height);
+	for (int y = 0; y < dst_height; ++y) {
+		const int base_x = static_cast<int>(std::lrint((i01 * y + i02) * kAbScale)) + kRoundDelta;
+		const int base_y = static_cast<int>(std::lrint((i11 * y + i12) * kAbScale)) + kRoundDelta;
+		for (int x = 0; x < dst_width; ++x) {
+			const int xf = base_x + static_cast<int>(std::lrint(i00 * x * kAbScale));
+			const int yf = base_y + static_cast<int>(std::lrint(i10 * x * kAbScale));
+			output[static_cast<std::size_t>(y) * dst_width + x] =
+				warp_sample_bilinear_zero(input, src_width, src_height, xf, yf);
+		}
+	}
+	return output;
+}
+
+inline std::vector<float> warp_get_rotation_matrix_2d_fast(
 	const std::vector<float> &input, int src_width, int src_height,
 	int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
 {
@@ -79,6 +112,19 @@ inline std::vector<float> warp_get_rotation_matrix_2d(
 		}
 	});
 	return output;
+}
+
+inline std::vector<float> warp_get_rotation_matrix_2d(
+    const std::vector<float> &input, int src_width, int src_height,
+    int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
+{
+#ifdef OLM_REFERENCE_BUILD
+    return warp_get_rotation_matrix_2d_reference(input, src_width, src_height,
+        dst_width, dst_height, center_x, center_y, angle_deg);
+#else
+    return warp_get_rotation_matrix_2d_fast(input, src_width, src_height,
+        dst_width, dst_height, center_x, center_y, angle_deg);
+#endif
 }
 
 } // namespace olm::kirakira

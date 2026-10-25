@@ -25,6 +25,7 @@ KINDS = {1: 'i', 3: 'a', 4: 'b', 6: 'p', 7: 'u', 10: 's'}
 
 class Adapter:
     name = 'radialblur'
+    output_format = 'raw'
     geometry_samplers = ('realistic-v1','realistic-v2')
     generator_version = 1
     routes = ('classic', 'smart')
@@ -32,6 +33,7 @@ class Adapter:
     original_routes = {'classic': 'render', 'smart': 'render'}
 
     def __init__(self, options):
+        self.reference_build = getattr(options, "reference_build", False)
         self.max_size = options.max_size
         self.size_max_height = getattr(options, "size_max_height", None)
         self.size_sampler = getattr(options, "size_sampler", "default")
@@ -138,9 +140,7 @@ class Adapter:
         return b''.join(struct.pack('<'+fmt, top if math.isfinite(value) and value >= cutoff else 0)
                         for (value,) in struct.iter_unpack('<'+fmt, case['pixels']))
 
-    def prepare(self, scratch, deadline):
-        if sha(self.aex.read_bytes()) != public.initial.AEX_SHA:
-            raise ValueError('Original AEX hash differs from the public probe binding')
+    def build(self, scratch, deadline):
         self.env.update(TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
         body = public.initial.HARNESS.read_text()
         replacements = [('argc!=6', 'argc!=8'), ('w>64||h>64', 'w>4096||h>4096'),
@@ -158,6 +158,8 @@ class Adapter:
         bypass = os.environ.get('OLM_RADIAL_CANDIDATE_BYPASS', '').strip()
         sanitize = os.environ.get('OLM_RADIAL_CANDIDATE_SANITIZE', '').strip() not in ('', '0')
         source = public.SOURCE.read_text()
+        if self.reference_build:
+            source = "#define OLM_REFERENCE_BUILD 1\n" + source
         if bypass:
             source = f'#define OLM_RADIAL_EXPERIMENT_BYPASS "{bypass}"\n' + source
         candidate_source = scratch/'candidate_source.cpp'
@@ -176,11 +178,21 @@ class Adapter:
         if status['status'] != 'ok':
             raise RuntimeError('Candidate build failed: '+repr(status)+' '+err.decode(errors='replace')[-2000:])
         self.binary = scratch/'build/mac'
+        self._build_info = source, body, bypass, sanitize
+        return self.binary, [public.SOURCE, public.initial.HARNESS]
+
+    def prepare(self, scratch, deadline):
+        if sha(self.aex.read_bytes()) != public.initial.AEX_SHA:
+            raise ValueError('Original AEX hash differs from the public probe binding')
+        self.build(scratch, deadline)
+        source, body, bypass, sanitize = self._build_info
         provenance = {
+            'reference_build': self.reference_build,
             'aex_path': str(self.aex), 'aex_sha256': sha(self.aex.read_bytes()),
             'worker_path': str(self.worker), 'worker_sha256': sha(self.worker.read_bytes()),
             'candidate_sha256': sha(self.binary.read_bytes()),
             'source_sha256': sha(public.SOURCE.read_bytes()),
+            'scatter_sha256': sha(public.SOURCE.with_name('RadialScatterSIMD.h').read_bytes()),
             'ucrtmath_sha256': {str(p.relative_to(Path(__file__).resolve().parents[3])):sha(p.read_bytes()) for p in sorted((Path(__file__).resolve().parents[3]/'ucrtmath').glob('src/*'))},
             'candidate_source_sha256': sha(source.encode()),
             'candidate_bypass': bypass,
@@ -286,6 +298,12 @@ class Adapter:
         finally:
             ip.unlink(missing_ok=True)
             op.unlink(missing_ok=True)
+
+    def candidate_command(self, case, directory, route):
+        config = directory/'parameters.txt'
+        config.write_text(public.initial.config_text(case))
+        return [self.binary, *case['geometry'], case['depth'], route, config,
+                case['input_padding'], case['output_padding']], case['pixels']
 
     def candidate(self, case, directory, route, deadline):
         config = directory/'parameters.txt'

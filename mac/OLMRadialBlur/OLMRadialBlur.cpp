@@ -4960,7 +4960,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 						const size_t dst = dst_cell * 4;
 						const float contribution = RadialF32Mul(seed_alpha, inner_weights[(size_t)offset]);
 						olm::radial::scatter_accumulate(accum.rgba.data() + dst,
-							polar.rgba.data() + source, contribution);
+							polar.rgba.data() + source, contribution, true);
 						if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
 							max_alpha[dst_cell] = contribution;
 						}
