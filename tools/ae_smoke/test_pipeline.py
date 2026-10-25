@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """Offline checks; these do not establish any AE pixel result."""
+import json
+import os
+from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 import plistlib
 from unittest.mock import patch, MagicMock, mock_open
@@ -61,6 +65,45 @@ class PipelineTests(unittest.TestCase):
         encoded = source * 65535 // 32768
         decoded = (encoded * 32768 + 32767) // 65535
         self.assertTrue(np.array_equal(source, decoded))
+
+    def test_workspace_dispatch_and_unknown_dialog_cleanup(self):
+        scratch = Path(os.environ.get('TMPDIR', str(runner.ROOT / 'orchestra/state/A02e-real-ae-retest-downsample')))
+        scratch.mkdir(parents=True, exist_ok=True)
+        for unknown in (False, True):
+            with self.subTest(unknown=unknown), TemporaryDirectory(dir=scratch) as tmp:
+                state = Path(tmp)
+                wrapper, out = state / 'launch.jsx', state / 'build.json'
+                wrapper.touch()
+                out.write_text(json.dumps({'phase': 'complete'}))
+                watcher = MagicMock()
+                watcher.directory = state
+                (state / 'workspace-ready').touch()
+                if unknown:
+                    watcher.check.side_effect = [None, RuntimeError('unknown dialog')]
+                ae, dispatch = MagicMock(), MagicMock()
+                ae.pid = 42
+                ae.poll.return_value = None
+                with patch.object(runner, 'preflight'), \
+                     patch.object(runner, 'screen_locked', return_value=False), \
+                     patch.object(runner, 'running', side_effect=[['42'], []]), \
+                     patch.object(runner.subprocess, 'Popen', side_effect=[ae, dispatch]) as popen, \
+                     patch.object(runner, 'quit_once') as quit_once:
+                    if unknown:
+                        with self.assertRaisesRegex(RuntimeError, 'unknown dialog'):
+                            runner._build_owned(state, wrapper, out, watcher)
+                        quit_once.assert_called_once_with(state)
+                        watcher.capture_owned.assert_called_once_with(42)
+                        self.assertEqual(popen.call_count, 1)
+                    else:
+                        runner._build_owned(state, wrapper, out, watcher)
+                        quit_once.assert_not_called()
+                        self.assertEqual(popen.call_count, 2)
+                        self.assertEqual(popen.call_args_list[0].args[0],
+                                         [str(runner.APP / 'Contents/MacOS/After Effects')])
+                        self.assertEqual(popen.call_args_list[1].args[0], [
+                            'osascript', '-e', 'tell application ' + json.dumps(str(runner.APP)) +
+                            ' to DoScriptFile POSIX file ' + json.dumps(str(wrapper))])
+                        dispatch.wait.assert_called_once_with(timeout=30)
 
     def test_only_2026_full_path_is_used(self):
         self.assertEqual(str(runner.APP), '/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app')

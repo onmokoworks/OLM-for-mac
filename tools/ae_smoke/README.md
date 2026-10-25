@@ -1,7 +1,7 @@
 # Real AE 2026 smoke — A01c continuation
 
 A01 established load/apply only. A01b rendered no pixels. A01c replaces the unsafe
-launch lifecycle with **one full-path `-r` dispatch**, a 180-second deadline, and
+launch lifecycle with **one full-path DoScriptFile dispatch after workspace detection**, a 180-second JSX deadline, and
 normal quit only. AE 2025 is excluded. No bundle installation/build occurs.
 
 The pipeline currently prepares **30 default effect cells and 3 I/O controls**
@@ -162,3 +162,25 @@ restore the complete original preference file after AE exits. If AE stays alive,
 restoration refuses until it exits. See [preference workflow](ae_dialog_watch/README.md#scripting-preference-a03c).
 The A03c live test is blocked by an exact-label OCR failure on the recovery dialog;
 two unattended launches remain unproven.
+
+## A02e measured build boundary
+
+The production builder now launches without `-r`, waits for the watcher’s
+`workspace-ready`, and sends exactly one full-path DoScriptFile event. Startup
+and JSX each have a 180-second budget; clean exit has 60 seconds. The watcher
+remains running throughout. Unknown dialogs still stop the run with one normal
+quit request and no retry.
+
+AE 26.3 rejects output-module `Color` and `Depth` writes as read-only. The
+opt-in downsample builder now records the applied template’s settings without
+writing those fields. In the measured 8 bpc build, TIFF was Millions of Colors+,
+RGB + Alpha, Premultiplied (Matted). Do not interpret this as calibrated straight
+alpha or as validated 16/32 bpc output. Readback and independent controls remain
+mandatory.
+
+A02e saved all three priority projects (132 queue items), but the watcher
+rejected AE’s script-progress window with its Cancel button as unknown.
+No render was attempted, even though the script subsequently wrote complete.
+See `orchestra/reports/A02e-real-ae-retest-downsample.md`. Resolve that watcher
+boundary before another live run. The aerender stages still need the ticket’s
+per-launch prevention/preference lifecycle before a full campaign.
