@@ -1,4 +1,5 @@
 #include "ColorKeep.h"
+#include "../DynamicControls.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>
@@ -103,24 +104,12 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 static PF_Err
 SetColorsEnabled(PF_InData *in_data, PF_ParamDef *params[])
 {
-	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-	PF_ParamUtilsSuite3 *pu = suites.ParamUtilsSuite3();
-
-	A_long enabledCount = params[COLORKEEP_ENABLED_COLOR_NUM]->u.sd.value;
-	if (enabledCount < 0) enabledCount = 0;
-	if (enabledCount > COLORKEEP_MAX_COLORS) enabledCount = COLORKEEP_MAX_COLORS;
-
-	for (int i = 0; i < COLORKEEP_MAX_COLORS; ++i) {
-		A_long paramIndex = COLORKEEP_COLOR_FIRST + i;
-		PF_ParamDef paramCopy = *params[paramIndex];
-		if (i < enabledCount)
-			paramCopy.ui_flags &= ~PF_PUI_DISABLED;
-		else
-			paramCopy.ui_flags |= PF_PUI_DISABLED;
-		ERR(pu->PF_UpdateParamUI(in_data->effect_ref, paramIndex, &paramCopy));
-	}
-	return err;
+    PF_Err err = PF_Err_NONE;
+    const A_long count = params[COLORKEEP_ENABLED_COLOR_NUM]->u.sd.value;
+    for (int i = 0; i < COLORKEEP_MAX_COLORS; ++i) {
+        ERR(OLMSetHidden(in_data, COLORKEEP_COLOR_FIRST + i, i >= count));
+    }
+    return err;
 }
 
 static PF_Err

@@ -18,3 +18,6 @@
 
 ## Rules
 - Use 1-2 processes. Do not touch the release gate or ledger. The stop rule applies.
+
+## Resume note (orchestrator)
+- The first run's code change is in your worktree. The worker build failed only because of the spaces-in-path QEMU restriction; see the new "Building AEXCompat / Unicorn workers" section in `orchestra/BRIEF.md`. Build in the space-free locations it describes, then finish the float-colour campaigns, the A02h witness, all-corpus replay and `ref_vs_fast`.

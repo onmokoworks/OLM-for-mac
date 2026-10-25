@@ -1,0 +1,100 @@
+{
+  "worker_sha256": "e476ba8ddfbda5fc2ef1cda49c700f15c5d09a232930f6a2074d7026f2c406b0",
+  "sessions": [
+    {
+      "name": "DistanceGradation-update",
+      "events": 363,
+      "request_sha256": [
+        "2fac604c9f75f233f2977879ce56f687b1477ce2a3de7cb700f4af85a338c495",
+        "1d0958f021715b96780d66e23a9e5726d543886676d89f5e43d75e9314bbf5d6"
+      ],
+      "original_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "compressed_sha256": "cb3a46e34498e53594833953eb77ad92346b5ec855037dfbf49d3ca783f92366"
+    },
+    {
+      "name": "KiraKira-update",
+      "events": 35,
+      "request_sha256": [
+        "dc4b81fd6155f2da6d2b321d30f4beaa49162db2caa5da218006e1b6632b6164"
+      ],
+      "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "compressed_sha256": "da8b69ceda602303691188c0d824117055a9de7fd0304deea1b2a10cbfa867c8"
+    },
+    {
+      "name": "Blur-update",
+      "events": 2,
+      "request_sha256": [
+        "fe6096951f7476bf4ecfe2e3a486f02cbbcd3ff891a4ce900bfacda9c9bf0278"
+      ],
+      "original_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "compressed_sha256": "2dd0d9a2f76289415589c70f568d0e1480c9db6b946886276ebb20868bdcbf9e"
+    },
+    {
+      "name": "ColorKeep-update",
+      "events": 4,
+      "request_sha256": [
+        "9c5f099180d43564d3853c8e15ce2a7e10dbcc31243a7e7a406bb18373779931"
+      ],
+      "original_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+      "compressed_sha256": "ba894de972e51332be6374cfc0a128300b2501c79ebd658b2a36469b79876694"
+    },
+    {
+      "name": "DirectionalBlur-update",
+      "events": 3,
+      "request_sha256": [
+        "ee96b4224db9c7fdadf83a78eb339294e1d4d347681972ea65c8742e30d415cd"
+      ],
+      "original_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "compressed_sha256": "70e9369a0194158f9fae43b3f504602e39bf094c0f74b82106ebfad34b86947f"
+    },
+    {
+      "name": "Smoother2-update",
+      "events": 18,
+      "request_sha256": [
+        "97f58109dc70d8a58b7a5e19d8f6c7f20d91646e487cda6701146d7d32413554"
+      ],
+      "original_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "compressed_sha256": "4fe66963a2d15e1b6b4697c26fb17aa350f14c9167ea3ce3949387c5756e429b"
+    },
+    {
+      "name": "RadialBlur-update",
+      "events": 54,
+      "request_sha256": [
+        "9fb5f971e97a0da1c2b90d94128bdb06adf1ff8297110a0f3e6e9392d37bd05c"
+      ],
+      "original_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "compressed_sha256": "ca95db60e5b8ab3d0be8c2b2e33bd5a841789573d66fd500950343d7f1f6a5a4"
+    },
+    {
+      "name": "ColorKey-update",
+      "events": 836,
+      "request_sha256": [
+        "86a2a83d865573371f05b93f4d60dd44174bb89762a2029dddcc6011b6de8cdc",
+        "ce9ad0b0040cd94d584ee5d87068d5a0017962ff8e5371590eeb923abc69c692",
+        "1220e6ebccc8c457caac304d465ca9baed288f00a50cef44692a7d65ff86d2da",
+        "7d8496dd9afcf89d671904313b20eb39cf084d7117f32aad5d7b2508e2bc6e95",
+        "46a69b512e5b2e052898902e584b6a979ac9c95229fe13fede6904931b1c634d"
+      ],
+      "original_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "compressed_sha256": "51734ddc32e0529ee107ee386c511479e7329d5cacbb8d7f425a5a4f96592bb2"
+    },
+    {
+      "name": "Smoother-update",
+      "events": 3,
+      "request_sha256": [
+        "e32754c21055f1aa9eda9319a0c5c36de2ca9cbbc923c4588d20d101bbfd3b02"
+      ],
+      "original_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "compressed_sha256": "5b4efc9de2d477cebaf32c20ab9fee900c3e3811d3e60c8d4bcddbc1c8d8969a"
+    },
+    {
+      "name": "ToonDilate-update",
+      "events": 3,
+      "request_sha256": [
+        "db1ae85e3a332005446db2ec17465605df0f66cb1850bf6e788d3781973e66a4"
+      ],
+      "original_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "compressed_sha256": "e6ae63e0798c622e2279a16bb5eceebef725f9a3da68a2e03e0859b6bf3fbe3e"
+    }
+  ]
+}

@@ -55,3 +55,7 @@ write and commit the report with `status: blocked` before ending. Never end sile
 - Do not keep large outputs in RAM; stream to files. Kill any background process you started before finishing.
 - Delete regenerable build trees in your scratch dir when you are done (keep logs/reports).
 - Durable artifacts that later tickets need (built reference workers, bundles used as oracles) must be installed under `~/.cache/olm-emu/<name>/` and registered in `INDEX.json`, never left only in your worktree scratch: worktrees are deleted after merge.
+
+## Building AEXCompat / Unicorn workers (always)
+- The OLM repo path contains a space (`OLM as`). Unicorn's QEMU `configure` refuses paths with spaces or colons. Never run cargo or cmake for AEXCompat workers with `$PWD`, `CARGO_TARGET_DIR` or `TMPDIR` under the OLM repo.
+- Build from an AEXCompat worktree under `~/Documents/Projects/Personal/04_Tools/` (no spaces), with `CARGO_TARGET_DIR=~/.cache/olm-emu/build-<ticket>/target` and `TMPDIR=~/.cache/olm-emu/build-<ticket>/tmp`. See `tools/emulation/aexcompat_patches/build_F53.py` for a working recipe. Delete the build tree afterwards.

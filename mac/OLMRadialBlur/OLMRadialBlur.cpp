@@ -2,6 +2,7 @@
 #include "RadialRotationRows.h"
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
+#include "../DynamicControls.h"
 #include "../../core/dblur_noise.h"
 #include "../../core/x86_float.h"
 #include "../../core/olm_sha256_rows.h"
@@ -871,6 +872,13 @@ UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
 		err = param_utils->PF_UpdateParamUI(in_data->effect_ref, index, &copy);
 	};
 
+	const bool layer_noise = params[OLMRADIALBLUR_NOISE_TYPE] &&
+		params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value == 3;
+	ERR(OLMSetHidden(in_data, OLMRADIALBLUR_NOISE_LAYER, !layer_noise));
+	ERR(OLMSetHidden(in_data, OLMRADIALBLUR_SEED, layer_noise));
+	ERR(OLMSetHidden(in_data, OLMRADIALBLUR_NOISE_OFFSET, layer_noise));
+	ERR(OLMSetHidden(in_data, OLMRADIALBLUR_THICKNESS, layer_noise));
+
 	const bool rotation = params[OLMRADIALBLUR_BLUR_TYPE] &&
 		params[OLMRADIALBLUR_BLUR_TYPE]->u.pd.value == 2;
 	const bool outer_strength_disabled = rotation &&
@@ -886,12 +894,7 @@ UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
 	set_disabled(OLMRADIALBLUR_INNER_OFFSET, !rotation);
 	set_disabled(OLMRADIALBLUR_INNER_OFFSET_MODE, !rotation);
 
-	const bool layer_noise = params[OLMRADIALBLUR_NOISE_TYPE] &&
-		params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value == 3;
-	set_disabled(OLMRADIALBLUR_NOISE_LAYER, !layer_noise);
-	set_disabled(OLMRADIALBLUR_SEED, layer_noise);
-	set_disabled(OLMRADIALBLUR_NOISE_OFFSET, layer_noise);
-	set_disabled(OLMRADIALBLUR_THICKNESS, layer_noise);
+
 	return err;
 }
 

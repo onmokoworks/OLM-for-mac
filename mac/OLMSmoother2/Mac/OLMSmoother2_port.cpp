@@ -8,6 +8,26 @@
 //            (modulo gamma encode/decode roundtrip when gamma mode is on).
 
 #include "OLMSmoother2.h"
+#ifndef OLMSMOOTHER2_SHIM_H
+#include "../../DynamicControls.h"
+static PF_Err
+UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
+{
+    PF_Err err = PF_Err_NONE;
+    const bool key = params[SM_ENABLE_KEY]->u.bd.value != FALSE;
+    const A_long mode = params[SM_GAMMA_MODE]->u.pd.value;
+    const A_long count = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
+    ERR(OLMSetDisabled(in_data, params, SM_KEY_COLOR, !key));
+    ERR(OLMSetDisabled(in_data, params, SM_INVERT_KEY, !key));
+    ERR(OLMSetDisabled(in_data, params, SM_GAMMA_VALUE, mode == GAMMA_NONE));
+    ERR(OLMSetDisabled(in_data, params, SM_NUM_GAMMA_COLORS, mode != GAMMA_COLORS_ONLY));
+    for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
+        ERR(OLMSetHidden(in_data, SM_GAMMA_COLOR_0 + i,
+            !(mode == GAMMA_COLORS_ONLY && i < count)));
+    }
+    return err;
+}
+#endif
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5487,6 +5507,10 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output);
 			break;
+#ifndef OLMSMOOTHER2_SHIM_H
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data, params); break;
+#endif
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output);
 			break;
