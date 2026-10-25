@@ -1,6 +1,6 @@
-Latest attempt: [A02e](A02e-real-ae-retest-downsample.md), status blocked.
-A03e dispatch ran real JSX; watcher stopped on script-progress window 1825.
-Three priority projects saved; no rendered frames. Historical attempt below.
+Latest attempt: [A02f](A02f-real-ae-retest-downsample.md), checkpoint status partial.
+All 132 priority items rendered; 108 raw-exact effects and 12 ColorKeep I/O differences.
+16/32 bpc and corpus work continues. Historical attempt below.
 
 status: blocked
 summary: AE 2026 launched once but remained at the crash-recovery startup dialog.

@@ -27,6 +27,7 @@ def render(state, data, app, preflight):
             wait_unlocked(state)
             preflight(state)
             prefix = item['outputPrefix']
+            extension = item.get('outputExtension', 'exr' if item['depth'] == 32 else 'tif')
             trace = state / (prefix + '.refusals.log')
             logpath = state / (prefix + '.aerender.log')
             env = dict(os.environ, OLM_REFUSAL_TRACE=str(trace))
@@ -38,7 +39,7 @@ def render(state, data, app, preflight):
                 with logpath.open('w') as log:
                     proc = subprocess.run([str(app.parent / 'aerender'), '-project', project['path'],
                                        '-rqindex', str(item['queueIndex']), '-mfr', 'OFF', '100',
-                                       '-output', str(state / (prefix + '_[#####].' + ('exr' if item['depth'] == 32 else 'tif')))],
+                                       '-output', str(state / (prefix + '_[#####].' + extension))],
                                       env=env, stdout=log, stderr=subprocess.STDOUT)
                 elapsed = time.monotonic() - start
             finally:
@@ -48,11 +49,11 @@ def render(state, data, app, preflight):
             row = dict(item, returncode=proc.returncode, wall_seconds=elapsed,
                        timing_scope='one frame plus aerender startup',
                        refusals=trace.read_text() if trace.exists() else '')
-            paths = list(state.glob(prefix + ('_*.exr' if item['depth'] == 32 else '_*.tif')))
+            paths = list(state.glob(prefix + '_*.' + extension))
             row['output_count'] = len(paths)
             row['status'] = 'error'
             if proc.returncode == 0 and len(paths) == 1:
-                if item['depth'] == 32:
+                if extension == 'exr':
                     import OpenEXR
                     channels = OpenEXR.File(str(paths[0]), separate_channels=True).channels()
                     if any(channels[c].pixels.dtype != np.float32 for c in 'RGBA'):

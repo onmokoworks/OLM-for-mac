@@ -255,9 +255,21 @@ func watch(_ dir: URL) throws {
             let prefix = String(format: "%02d", clicks)
             try save(before, dir.appendingPathComponent("\(prefix)-before.png"))
             func record(_ phase: String, _ rows: [TextBox], _ verified: Bool) throws {
-                try emit(["event": "click", "phase": phase, "time": ISO8601DateFormatter().string(from: Date()),
+                let event: [String: Any] = ["event": "click", "phase": phase, "time": ISO8601DateFormatter().string(from: Date()),
                     "pid": pid, "window": window, "bounds": [rect.minX, rect.minY, rect.width, rect.height],
-                    "ocr": try jsonRows(rows), "rule": layout != nil ? "crash_recovery_layout" : "exact_label", "chosenLabel": chosen.text, "method": method, "verified": verified])
+                    "ocr": try jsonRows(rows), "rule": layout != nil ? "crash_recovery_layout" : "exact_label", "chosenLabel": chosen.text, "method": method, "verified": verified,
+                    "screenshot": dir.appendingPathComponent("\(prefix)-before.png").path]
+                try emit(event)
+                if let audit = ProcessInfo.processInfo.environment["OLM_AE_DIALOG_AUDIT_LOG"] {
+                    let url = URL(fileURLWithPath: audit)
+                    try fm.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+                    if !fm.fileExists(atPath: url.path) { fm.createFile(atPath: url.path, contents: nil) }
+                    let handle = try FileHandle(forWritingTo: url)
+                    defer { try? handle.close() }
+                    try handle.seekToEnd()
+                    try handle.write(contentsOf: JSONSerialization.data(withJSONObject: event) + Data([10]))
+                    try handle.synchronize()
+                }
             }
             try record("before", fresh, false)
             if let target = axTarget {
