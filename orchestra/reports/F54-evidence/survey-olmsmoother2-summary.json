@@ -1,0 +1,9 @@
+{
+  "cases": 100,
+  "equal": 100,
+  "different": 0,
+  "both_ok": 100,
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "worker_sha256": "dbf9766f23de8f247169f63cf8310a0c73e15f053765e2c9373106623c2e9af2",
+  "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+}

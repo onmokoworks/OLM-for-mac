@@ -16,6 +16,7 @@ def main():
     ap.add_argument('--plugin',required=True)
     ap.add_argument('--mode',choices=['corpus','survey','witness','4k','hd32'],default='corpus')
     ap.add_argument('--n',type=int,default=100)
+    ap.add_argument('--jobs',type=int,choices=(1,),default=1)
     args=ap.parse_args()
     scratch=ROOT/'orchestra/state/F54-aexcompat-geometry-arena-upstream'/f'{args.mode}-{args.plugin}'
     scratch.mkdir(parents=True,exist_ok=True)
