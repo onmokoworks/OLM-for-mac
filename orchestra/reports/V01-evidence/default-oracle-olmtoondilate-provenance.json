@@ -1,0 +1,8 @@
+{
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "timeout": 10.0,
+  "host_build": "e1f75e85a9696fdf47fbd0ec6219fb9affe4c3bc43b1a474729ffe6757f6eb28"
+}

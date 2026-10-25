@@ -3,7 +3,7 @@
 import argparse, collections, copy, fcntl, hashlib, importlib, json, os, re, shutil, struct, subprocess, time
 from pathlib import Path
 from types import SimpleNamespace
-from ae_realism_audit import PLUGINS, samples, memory
+from ae_realism_audit import PLUGINS, memory
 from adapters.public import geometry_environment
 from geometry import sample
 ROOT=Path(__file__).resolve().parents[2]
@@ -103,7 +103,7 @@ def first_difference(x,y,skip=0):
    offset+=len(aa)
 def main():
  global STATE
- ap=argparse.ArgumentParser();ap.add_argument('--state',type=Path,default=STATE);ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--state',type=Path,default=STATE);ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--indices',nargs='+',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
  STATE=args.state.resolve()
  if not STATE.is_relative_to(ROOT/'orchestra/state'):ap.error('state must be inside this worktree orchestra/state')
  STATE.mkdir(parents=True,exist_ok=True)
@@ -122,6 +122,7 @@ def main():
     with (STATE/(phase+'-memory.jsonl')).open('a') as f:f.write(json.dumps(dict(plugin=plugin,index=sequence,free_percent=free))+'\n')
     assert free>=30,free
    key=plugin+'/'+identity
+   if args.indices is not None and identity not in set(map(str,args.indices)):continue
    if key in seen:continue
    row=dict(identity=key,plugin=plugin,phase=args.phase,case={k:v for k,v in c.items() if k!='pixels'},input_sha256=hashlib.sha256(c['pixels']).hexdigest(),results=[])
    if args.oracle:

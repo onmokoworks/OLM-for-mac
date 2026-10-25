@@ -1,0 +1,8 @@
+{
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "timeout": 10.0,
+  "host_build": "e1f75e85a9696fdf47fbd0ec6219fb9affe4c3bc43b1a474729ffe6757f6eb28"
+}

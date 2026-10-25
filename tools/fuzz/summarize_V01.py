@@ -21,6 +21,17 @@ def main():
     assert not r.get('thread_cap_difference'),r['identity']
   summary[phase]=dict(cases=len(identities),verdicts=dict(counts),pairs=dict(pairs),plugins={k:dict(v) for k,v in plugins.items()},non_equal=bad)
   print(phase,len(identities),dict(counts),dict(pairs))
+ for phase in ('default-oracle','realistic-v1-oracle'):
+  retry=STATE/'retry-60'/(phase+'.jsonl')
+  if not retry.exists():continue
+  merged={r['identity']:r for r in map(json.loads,(STATE/(phase+'.jsonl')).read_text().splitlines())}
+  retries=list(map(json.loads,retry.read_text().splitlines()))
+  for r in retries:
+   assert merged[r['identity']]['oracle']['status']=='budget'
+   merged[r['identity']]=r
+  counts=collections.Counter(r['verdict'] for r in merged.values())
+  summary[phase+'-after-retry']=dict(cases=len(merged),retried=len(retries),verdicts=dict(counts),oracle_statuses=dict(collections.Counter(r['oracle']['status'] for r in merged.values())))
+  print(phase+'-after-retry',dict(counts))
  (STATE/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
  if a.retain:
   dest=ROOT/'orchestra/reports/V01-evidence';dest.mkdir(exist_ok=True)
@@ -28,4 +39,8 @@ def main():
   for path in STATE.glob('*.jsonl'):
    with path.open('rb') as source,gzip.open(dest/(path.name+'.gz'),'wb') as out:shutil.copyfileobj(source,out)
   for path in STATE.glob('*-provenance.json'):shutil.copy2(path,dest/path.name)
+  retry_dest=dest/'retry-60';retry_dest.mkdir(exist_ok=True)
+  for path in (STATE/'retry-60').glob('*.jsonl'):
+   with path.open('rb') as source,gzip.open(retry_dest/(path.name+'.gz'),'wb') as out:shutil.copyfileobj(source,out)
+  for path in (STATE/'retry-60').glob('*-provenance.json'):shutil.copy2(path,retry_dest/path.name)
 if __name__=='__main__':main()
