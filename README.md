@@ -60,4 +60,4 @@ Windows版と見た目が違うときは、同じ素材・同じ設定で書き�
 ## ライセンス
 
 - 元のOLMプラグインは、OLM DigitalがApache License 2.0で公開しているものです。この移植版も同じ[Apache License 2.0](LICENSE)です。
-- これは非公式の移植で、OLM Digitalとは関係がなく、許可や承認も受けていません。
+- これは非公式の移植で、OLM Digitalとは関係なく、許可や承認も受けていません。
