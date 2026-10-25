@@ -25,11 +25,18 @@ def render(state, data, app, preflight):
             row = dict(item, returncode=proc.returncode, wall_seconds=time.monotonic()-start,
                        timing_scope='one frame plus aerender startup',
                        refusals=trace.read_text() if trace.exists() else '')
-            paths = list(state.glob(prefix + '_*.tif'))
+            paths = list(state.glob(prefix + ('_*.exr' if item['depth'] == 32 else '_*.tif')))
             row['output_count'] = len(paths)
             row['status'] = 'error'
             if proc.returncode == 0 and len(paths) == 1:
-                rgba = tifffile.imread(paths[0])
+                if item['depth'] == 32:
+                    import OpenEXR
+                    channels = OpenEXR.File(str(paths[0]), separate_channels=True).channels()
+                    if any(channels[c].pixels.dtype != np.float32 for c in 'RGBA'):
+                        raise ValueError('32 bpc output requires FLOAT EXR channels')
+                    rgba = np.stack([channels[c].pixels for c in 'RGBA'], axis=-1)
+                else:
+                    rgba = tifffile.imread(paths[0])
                 row.update(shape=list(rgba.shape), dtype=str(rgba.dtype),
                            output_sha256=hashlib.sha256(paths[0].read_bytes()).hexdigest(),
                            all_black=bool(np.all(rgba[:, :, :3] == 0)),

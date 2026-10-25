@@ -9,7 +9,7 @@ import tifffile
 import render_downsample
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRATCH = ROOT / 'orchestra/state/A02-real-ae-retest-downsample'
+SCRATCH = ROOT / 'orchestra/state/A02b-real-ae-retest-downsample'
 
 
 class RenderTests(unittest.TestCase):
@@ -27,7 +27,7 @@ class RenderTests(unittest.TestCase):
             rgba[:, :, 3] = 0
             tifffile.imwrite(state / 'frame_[00000].tif', rgba)
             data = {'projects': [{'path': 'project.aep', 'items': [
-                {'outputPrefix': 'frame', 'queueIndex': 1}]}]}
+                {'outputPrefix': 'frame', 'queueIndex': 1, 'depth': 8}]}]}
             with patch.object(render_downsample.subprocess, 'run') as run:
                 run.return_value.returncode = code
                 render_downsample.render(state, data, Path('/AE/AE.app'), lambda _: None)
