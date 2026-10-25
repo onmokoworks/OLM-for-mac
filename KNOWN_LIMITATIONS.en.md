@@ -4,7 +4,7 @@
 
 ## General
 
-- **Not signed or notarized by Apple.** macOS Gatekeeper may block plugins you downloaded. Getting it requires an Apple developer membership with an annual fee, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md#if-macos-blocks-the-plugins) for what to do.
+- **Not signed or notarized by Apple.** macOS Gatekeeper may block plugins you downloaded. Signing requires an Apple developer membership with an annual fee, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md#if-macos-blocks-the-plugins) for what to do.
 - **Only After Effects 2026 (26.3) has been tested.** Other versions are untested.
 - **GPU rendering is not supported.**
 - **Rendered files may not match Windows.** Even when the plugin computes the same result, AE color management and footage import and export can behave differently on Windows and macOS.
