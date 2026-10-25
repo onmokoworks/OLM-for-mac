@@ -1,76 +1,64 @@
 status: blocked
-summary: One AE 2026 launch produced no JSX marker within 180 seconds.
-  Captured a black screenshot crop and attempted normal quit once; no retry or signals.
-  Added an opt-in priority matrix and per-frame aerender logging, not real-host validated.
-  No frames, numerical comparisons or timing measurements obtained.
-  Higher depths, corpus cases and oracle/native-host comparison remain unimplemented.
+summary: AE 2026 launched once but remained at the crash-recovery startup dialog.
+  Screen unlocked and System Events UI scripting enabled; AE exposed no accessible windows/buttons.
+  No dialog clicked, frame rendered, or original/native comparison performed.
+  Ticket-local numpy/tifffile/OpenEXR environment enabled all 12 offline tests to pass.
 
 facts:
-- Branch `orch/A02-real-ae-retest-downsample`, initial HEAD `b924f09a`, initially clean. MAIN, plugin sources, installed bundles, emulator sources, release gates and ledger unchanged. No builds, push, stash or history rewrite.
-- Checked-in A01c report/README record startup timeout and uncalibrated I/O, contrary to ticket premise of completed exact I/O. No previous calibration was assumed.
-- Initial exact-main process check found no AE/aerender. Initial memory free 63%; launch preflight retained in [memory.txt](A02-evidence/memory.txt).
-- Created ticket-local venv with numpy/tifffile/OpenEXR. Three opaque 8-bit TIFF/ARGB patterns at 1920×1080, 1279×719, 3840×2160 have RGB 32..223 and alpha 255. [Input hashes](A02-evidence/inputs.json). [Ten installed executable hashes](A02-evidence/installed.json) do not establish loaded-module identity.
-- Ran `PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/run_ae_smoke.py --year 2026 --matrix downsample-priority --stage build --run-id priority`, redirected to scratch; exit **1**. [Build log](A02-evidence/build-run.log).
-- One dispatch to `/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects -r <absolute launch.jsx>`; PID **13667**, 2026-10-25 11:05 JST. `OLM_REFUSAL_TRACE` set to scratch. At 180 seconds: no entry/done marker, AEP, frame or refusal file. [Launch wrapper](A02-evidence/launch.jsx), [AE log](A02-evidence/ae.log).
-- Timeout capture is a **17,060-byte black screenshot crop**, not a black plugin frame: [image](A02-evidence/blocked.png). One full-app-path osascript quit timed out at 20 seconds: [quit log](A02-evidence/quit.log). No SIGTERM/SIGKILL, fallback dispatch, dialog interaction or second launch. Subsequent `ps -axo pid=,comm=` check found no executable ending `MacOS/After Effects` or `/aerender`. The quit timeout alone does not prove successful quit.
-- Priority scaffold requests **120 effect frames + 12 controls**: ten untouched defaults × three sizes × Full/Half/Third/Quarter. JSX reads parameter and render-queue settings. It never executed successfully; queue setting acceptance and actual InData/downsample remain unverified.
-- Rendered effects **0/120**, controls **0/12**; original and native-host comparisons **0**. Mismatch counts/first mismatch unavailable, not zero. No I/O/color-management/host-geometry/plugin-bug classification possible.
-- Offline tests: pipeline **3/3**, byte comparator **4/4**, new render-result attribution **2/2** passed. New tests reject green status on nonzero process exit despite an output, and flag zero-alpha/nonzero-RGB output. Python compilation and whitespace checks passed. These are not real-host proof.
-- Automatic approval review rejected a combined report/cleanup/commit command because `rm -rf` was disallowed; that entire command did not execute. Reissued report and commit separately with narrowly scoped cleanup.
+- Initial HEAD `cfe71fb3`; clean worktree and empty A02d scratch. Read AGENT_GUIDE, prior A01c/A02b/A02c reports, smoke README, emulator GOTCHAS, compatibility plan and ledger decision rows. No plugin source, installed bundle, MAIN, emulator, release gate or ledger modification.
+- Before launch: on-console logged-in session with absent lock key (unlocked), `UI elements enabled=true`, no `MacOS/After Effects$` or aerender process, memory 48% free. Runner repeated memory/lock/busy preflight; retained memory and lock logs are in A02d-evidence.
+- Created ticket-local venv with numpy/tifffile/OpenEXR; pip TMPDIR was ticket scratch. Exact build command below. Single full-path AE 2026 dispatch, owned PID 48247. Screenshot shows Japanese crash-recovery options and visible `続行` button. No JSX build marker or project was produced.
+- Read-only System Events first path-filter query failed -1700 (AppleScript specifier error); corrected query and PID-scoped queries verified `/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app`. That process reported zero windows, zero UI elements, empty entire contents and missing AX role. Setting only that verified process frontmost succeeded but did not expose its buttons. No -1712/-1719/-25211 occurred. UI scripting remained true. No claim that additional permissions are definitely required.
+- Dialog clicks: **0**. No dialogs.jsonl click entry is appropriate because nothing was pressed. No global keystroke, coordinate click, destructive recovery option, app-name/bundle-ID dispatch, or retry launch was used.
+- Ten installed executable SHA-256 hashes: [installed.json](A02d-evidence/installed.json). Hashing files does not prove loaded-module identity. Screenshot and process/query logs retained under A02d-evidence.
+- Offline tests: pipeline **6/6**, downsample attribution **2/2**, comparator **4/4**, all pass. This fixes the prior environment dependency gap, not an AE rendering result.
+- Builder exited **1** at its 180-second deadline, captured a 275,317-byte cropped screenshot, and sent one full-path normal quit event. Quit returned **-1708**; subsequent exact-main process check found no AE or aerender. No SIGTERM/SIGKILL or second quit was sent. See [build log](A02d-evidence/build-run.log), [quit log](A02d-evidence/quit.log), [screenshot](A02d-evidence/blocked.png), [final processes](A02d-evidence/final-processes.json).
+- Rendered controls/effects **0/0**; original/native comparisons **0**. Refusal tags, actual InData/downsample geometry, mismatch counts and first mismatch unavailable. No measured black plugin output or plugin bug. No numerical hypotheses refuted; stopped at GUI startup boundary.
 
-NT = not tested due to startup failure. Each planned 8 bpc cell covers all three sizes. Higher-depth generation remains unimplemented. No cell is OK, black, render-error or exact-vs-original.
+NT = not tested, across all requested sizes/defaults/corpus cases. No OK or exact-vs-original claim.
 
-| Plugin | Full 8 | Half 8 | Third 8 | Quarter 8 | All resolutions 16 | All resolutions 32 |
-| --- | --- | --- | --- | --- | --- | --- |
-| OLMBlur | NT | NT | NT | NT | NT | NT |
-| ColorKeep | NT | NT | NT | NT | NT | NT |
-| OLMColorKey | NT | NT | NT | NT | NT | NT |
-| OLMDirectionalBlur | NT | NT | NT | NT | NT | NT |
-| OLMDistanceGradation | NT | NT | NT | NT | NT | NT |
-| OLMKiraKira | NT | NT | NT | NT | NT | NT |
-| OLMSmoother2 | NT | NT | NT | NT | NT | NT |
-| OLMToonDilate | NT | NT | NT | NT | NT | NT |
-| OLMRadialBlur | NT | NT | NT | NT | NT | NT |
-| OLMSmoother | NT | NT | NT | NT | NT | NT |
+| Plugin | Full 8/16/32 | Half 8/16/32 | Third 8/16/32 | Quarter 8/16/32 |
+| --- | --- | --- | --- | --- |
+| OLMBlur | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| ColorKeep | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMColorKey | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMDirectionalBlur | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMDistanceGradation | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMKiraKira | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMSmoother2 | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMToonDilate | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMRadialBlur | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
+| OLMSmoother | NT/NT/NT | NT/NT/NT | NT/NT/NT | NT/NT/NT |
 
 | Timing scope | 1080p seconds/frame | 4K seconds/frame |
 | --- | --- | --- |
-| All ten plugins, all four resolutions, 8 bpc defaults | unavailable (0 frames) | unavailable (0 frames) |
+| All ten plugins, Full/Half/Third/Quarter | unavailable | unavailable |
 
 inference:
-- Failure precedes JSX entry evidence. The black screenshot cannot distinguish startup modal, window visibility, display capture or another startup failure; a crash-recovery dialog is not established.
-- No evidence supports a plugin fix or confirms real-AE downsample behavior. The mandatory startup-timeout stop ended work, not two refuted numerical hypotheses.
+- The visible crash-recovery dialog plausibly blocks script startup. System Events UI scripting enabled does not ensure this early AE dialog exposes accessible controls. The reason for the empty AX tree is unconfirmed; this is not evidence of a plugin rendering defect or permission denial.
+- The checked-in A01c report does not establish the claimed exact I/O calibration. A subsequent successful run must measure controls before classifying effect differences.
 
 changed_files:
-- `tools/ae_smoke/run_ae_smoke.py`: opt-in priority matrix/scratch; refusal environment; five-minute busy polling and aerender guard; reject unimplemented priority compare/all. Legacy remains default.
-- `tools/ae_smoke/downsample_inputs.py`: deterministic opaque/nonblack input generator.
-- `tools/ae_smoke/prepare_downsample.jsx`: separate default matrix, queue settings/property readbacks, normal quit.
-- `tools/ae_smoke/render_downsample.py`: serial one-item aerender, per-frame exit/output/trace, black/transparent flags, dimensions/hash and wall timing including startup.
-- `tools/ae_smoke/test_downsample.py`, `tools/ae_smoke/README.md`.
-- This report and `orchestra/reports/A02-evidence/`.
+- `orchestra/reports/A02d-real-ae-retest-downsample.md`, `orchestra/reports/A02-real-ae-retest-downsample.md`, `orchestra/reports/A02d-evidence/` only. No harness or plugin code changes.
 
 verify:
 ```sh
-# Offline; no AE launch:
-python3 -m venv orchestra/state/A02-real-ae-retest-downsample/venv
-TMPDIR="$PWD/orchestra/state/A02-real-ae-retest-downsample" orchestra/state/A02-real-ae-retest-downsample/venv/bin/pip install numpy tifffile OpenEXR
-PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/test_pipeline.py
-PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/test_downsample.py
+PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02d-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/test_pipeline.py
+PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02d-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/test_downsample.py
 PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/test_compare.py
-PYTHONPYCACHEPREFIX="$PWD/orchestra/state/A02-real-ae-retest-downsample/pycache" python3 -m py_compile tools/ae_smoke/*.py
 git diff --check
 ```
-Expected: 3 + 2 + 4 tests pass, syntax/whitespace checks pass. The build command in facts is the exact attempted invocation, not a promised successful run. Do not blindly retry before startup is independently resolved; a fresh run-id is required. JSX/render stage remain unvalidated in AE.
+Expected: 6 + 2 + 4 tests pass, whitespace check passes. If scratch has been removed, recreate a ticket-local venv with numpy/tifffile/OpenEXR. These commands do not launch AE.
+
+Actual attempted build (do not repeat against this used run ID):
+```sh
+TMPDIR="$PWD/orchestra/state/A02d-real-ae-retest-downsample" PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02d-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/run_ae_smoke.py --year 2026 --matrix downsample-priority --stage build --run-id priority --scratch orchestra/state/A02d-real-ae-retest-downsample > orchestra/state/A02d-real-ae-retest-downsample/build-run.log 2>&1
+```
 
 next:
-- **A02a-startup**: independently diagnose missing JSX marker from exact AE 2026 dispatch, respecting busy/single-launch/no-force-quit rules. Screenshot establishes no dialog cause.
-- **A02b-priority-render**: validate queue settings, render priority frames, calibrate I/O, capture actual downsample/InData and odd-size output geometry, run F53 original and same-installed-bundle fallback comparisons.
-- **A02c-depth-corpus**: add 16/32 bpc and two exact corpus cases per plugin with verified parameter mapping/provenance; retain untouched DistanceGradation 32 bpc defaults.
-- No plugin bug/black-frame fix ticket justified with zero rendered frames. Create those from minimal measured repros only.
+- Follow-up startup ticket: resolve the visible crash-recovery dialog with no accessible AE controls. A fresh run requires a new run ID and all unlocked/busy/memory checks. Do not retry blindly or force-kill AE.
+- Then run priority defaults, calibrate I/O and actual geometry, compare original F53/same-installed-bundle, complete depths and two exact corpus cases per plugin. Preserve untouched DistanceGradation 32 bpc defaults. Corpus/oracle integration remains unimplemented.
+- No black-frame/plugin-fix ticket is justified without rendered evidence.
 
 cleanup:
-- Scratch approximately 142 MiB before removing regenerable local venv/pycache, below 5 GiB. Logs and inputs retained; evidence committed. No emulator/build worker started. Final AE/aerender inventory empty.
-
-A02b continuation (2026-10-25): **blocked before launch**. The resumed wait recorded 88 locked probes, then the console lock-state key disappeared at the next poll; launch was refused. Zero AE frames/comparisons/timings. The original A02 tables above remain NT. See [A02b report](A02b-real-ae-retest-downsample.md) for current scaffold changes, exact evidence, verification and remaining work.
-
-A02c continuation (2026-10-25): lock detection corrected; live console unlocked. System Events UI scripting preflight returned `false`, so stopped before AE launch. Zero frames/comparisons/timings; all tables remain NT. See [A02c report](A02c-real-ae-retest-downsample.md) for evidence and verification.
+- Scratch is approximately 140 MiB, below 5 GiB; no build trees generated. Local venv and deterministic inputs retained for follow-up, with reproducible launch/input metadata and logs committed. No owned background process remains. No push, stash, or history rewrite.
