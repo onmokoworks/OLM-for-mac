@@ -55,6 +55,29 @@ int main() {
     assert(commands[194].kind==DrawKind::frame);
     assert(commands[201].kind==DrawKind::fill && commands[201].w==10 && commands[201].h==10);
     unsigned text_count=0;for(const auto& c:commands) if(c.kind==DrawKind::text) ++text_count;
-    assert(text_count==4);
+    assert(text_count==5);
+    // Header toggles; seven visible previews, inclusive hit boxes, release gating.
+    event(EventType::single,260,15); assert(s.menu_open);
+    auto expanded=draw(r,s,true,theme);
+    unsigned preview_lines=0;
+    for(const auto& c:expanded) if(c.kind==DrawKind::line && c.x>=228) ++preview_lines;
+    assert(preview_lines==7*65);
+    event(EventType::single,240,35);event(EventType::release,240,35);
+    auto first=preset<Ramp>(0);assert(!s.menu_open && !std::memcmp(&r,&first,sizeof(r)));
+    event(EventType::single,260,15);event(EventType::single,240,35);
+    event(EventType::drag,240,1000);assert(s.scroll==33);
+    event(EventType::release,240,35);auto last=preset<Ramp>(33);
+    assert(!s.menu_open && !std::memcmp(&r,&last,sizeof(r)));
+    event(EventType::single,260,15);event(EventType::single,240,35);
+    event(EventType::drag,240,-1000);assert(s.scroll==0);
+    event(EventType::release,240,60);assert(s.menu_open); // different row: no selection
+    event(EventType::single,260,15);assert(!s.menu_open);
+    for(unsigned i=0;i<preset_count;++i) assert(preset<Ramp>(i).count<=16);
+    r={3,{{0.5f,1,1,0,0},{0.5f,1,0,1,0},{0.25f,1,0,0,1}}};
+    sort(r);assert(r.stops[0].blue==1 && r.stops[1].green==1 && r.stops[2].red==1);
+    assert(hit(r,106,65)==2); // last overlapping marker wins
+    auto sampled=sample(r,0.5f);assert(sampled.green==1 && sampled.red==0); // first equal stop samples
+    r={2,{{0,0.25f,1,0,0},{0.00005f,0.75f,0,1,0}}};
+    sampled=sample(r,0.000025f);assert(sampled.red==1 && sampled.alpha==0.25f); // original near-zero span branch
     std::cout << "ramp editor interaction and drawing assertions passed\n";
 }

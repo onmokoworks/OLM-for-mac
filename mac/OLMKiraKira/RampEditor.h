@@ -1,5 +1,6 @@
 #pragma once
 // UI-only translation of 181235bb0 / 1812366b0. No render or saved-data code.
+#include "RampPresets.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -15,7 +16,18 @@ constexpr Rect strip{10,5,202,55};
 constexpr Rect buttons[] = {{225,35,295,55},{225,60,295,80},{5,80,135,100},{140,80,205,100}};
 constexpr const char16_t* captions[] = {u"copy",u"paste",u"randomize",u"flip"};
 struct Color { float red, green, blue, alpha; };
-struct State { int selected = -1, armed = -1, hover_x = 0, hover_y = 0; };
+struct State {
+    int selected = -1, armed = -1, hover_x = 0, hover_y = 0, anchor_y = 0;
+    bool menu_open = false;
+    int preset_row = -1, scroll = 0;
+};
+constexpr Rect preset_header{220,5,300,25};
+inline Rect preset_row_rect(int row) { return {228,30+23*row,292,48+23*row}; }
+inline int preset_hit(int x, int y) {
+    for(unsigned row=0;row<preset_count;++row)
+        if(preset_row_rect(row).contains(x,y)) return row;
+    return -1;
+}
 enum class EventType { hover, single, multiple, drag, release };
 struct Event { EventType type; int x, y; };
 struct Result { int picker = -1; };
@@ -82,20 +94,24 @@ template<class Ramp> Result dispatch(Ramp& ramp, State& state, Clipboard<Ramp>& 
                                     std::uint32_t& rng, Event e) {
     if (ramp.count>16) return {};
     state.hover_x=e.x; state.hover_y=e.y;
+    if(e.type==EventType::hover || e.type==EventType::single || e.type==EventType::multiple) state.anchor_y=e.y;
+    bool ramp_handled=false;
     if (e.type==EventType::hover) return {};
     if (e.type==EventType::single) {
         if (strip.contains(e.x,e.y)) {
+            ramp_handled=true;
             if (ramp.count<16) {
                 float p=static_cast<float>(e.x-10)/192.0f;
                 auto c=sample(ramp,p);
                 auto& s=ramp.stops[ramp.count++]; s.position=p; set_color(s,c);
                 state.selected=-1; sort(ramp);
             }
-        } else state.selected=hit(ramp,e.x,e.y);
+        } else { state.selected=hit(ramp,e.x,e.y); ramp_handled=state.selected>=0; }
     } else if (e.type==EventType::multiple) {
         int i=hit(ramp,e.x,e.y);
         if (i>=0) return {i};
     } else if (state.selected>=0 && static_cast<unsigned>(state.selected)<ramp.count) {
+        ramp_handled=true;
         if (e.type==EventType::drag) {
             auto& s=ramp.stops[state.selected];
             s.position=std::max(0.0f,std::min(1.0f,static_cast<float>(e.x-10)/192.0f));
@@ -107,6 +123,30 @@ template<class Ramp> Result dispatch(Ramp& ramp, State& state, Clipboard<Ramp>& 
             } else sort(ramp);
             state.selected=-1;
         }
+    }
+    if(ramp_handled) return {};
+    // 181235250: scroll accumulates displacement from the stored click/hover anchor.
+    if(state.menu_open) {
+        if(e.type==EventType::single) {
+            const Rect list{220,5,300,25+23*int(preset_count)+5};
+            if(!preset_header.contains(e.x,e.y) && list.contains(e.x,e.y)) {
+                state.preset_row=preset_hit(e.x,e.y); return {};
+            }
+            state.menu_open=false;
+            if(preset_header.contains(e.x,e.y)) return {};
+        } else if(e.type==EventType::drag) {
+            state.scroll=std::max(0,std::min(int(preset_count)-1,state.scroll+(e.y-state.anchor_y)/18));
+        } else if(e.type==EventType::release && state.preset_row>=0) {
+            int row=preset_hit(e.x,e.y), armed=state.preset_row; state.preset_row=-1;
+            if(row==armed) {
+                const int index=row+state.scroll;
+                // The binary's valid table ends at 33. Never interpret adjacent PE bytes as stops.
+                if(index>=0 && index<int(preset_count)) ramp=preset<Ramp>(index);
+                state.menu_open=false; return {};
+            }
+        }
+    } else if(e.type==EventType::single && preset_header.contains(e.x,e.y)) {
+        state.menu_open=true; return {};
     }
     if (e.type==EventType::single || e.type==EventType::multiple) {
         state.armed=-1;
@@ -166,6 +206,20 @@ template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State
         const auto r=buttons[b];
         out.push_back({DrawKind::text,float(r.left+r.right)*0.5f,float(r.top)+2.0f+16.0f*0.8f,
                        float(r.right-r.left),0,scaled(theme.text,text_factor),captions[b],16.0f});
+    }
+    out.push_back({DrawKind::antialias,0,0,0,0,{}});
+    rect(out,DrawKind::fill,preset_header,theme.black);
+    const float header_font=20.0f*(1.0f-0.15f*2.0f);
+    out.push_back({DrawKind::text,260,5+20.0f*0.15f+header_font*0.8f,80,0,theme.text,u"\u25bc  PRESETS",header_font});
+    if(state.menu_open) {
+        rect(out,DrawKind::fill,{220,25,300,25+23*int(preset_count)+5},theme.black);
+        for(int row=0;row<7 && row+state.scroll<int(preset_count);++row) {
+            const auto data=preset<Ramp>(row+state.scroll);
+            const auto r=preset_row_rect(row);
+            for(int x=r.left;x<=r.right;++x)
+                out.push_back({DrawKind::line,float(x),float(r.top),0,18,sample(data,float(x-r.left)/64.0f)});
+            rect(out,DrawKind::frame,r,r.contains(state.hover_x,state.hover_y) ? theme.text : theme.frame);
+        }
     }
     return out;
 }

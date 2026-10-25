@@ -26,3 +26,24 @@ print(json.dumps({'original_sha256': hashlib.sha256(source.read_bytes()).hexdige
                   'constants': constants, 'rng_initial': read(0x181824968,4).hex(),
                   'requested_64_entry_counts': counts,
                   'valid_prefix_table_sha256': hashlib.sha256(read(0x1814d7030,34*0x144)).hexdigest()}, indent=2))
+
+# A generated source table is intentional UI data, not an emulator/binary copy.
+if '--write-header' in __import__('sys').argv:
+    destination=Path(__file__).resolve().parents[1]/'RampPresets.h'
+    raw=read(0x1814d7030,34*0x144)
+    lines=['#pragma once','#include <cstdint>','#include <cstring>',
+           '// Original PE table 1814d7030; 34 entries, stride 0x144.',
+           '// SHA256: '+hashlib.sha256(raw).hexdigest(),
+           'namespace olm::kirakira::editor {',
+           'constexpr unsigned preset_count = 34;',
+           'inline constexpr std::uint32_t preset_words[34][81] = {']
+    for i in range(34):
+        words=struct.unpack('<81I',raw[i*324:(i+1)*324])
+        lines.append('    {')
+        for j in range(0,81,9):lines.append('        '+','.join(f'0x{w:08x}u' for w in words[j:j+9])+',')
+        lines.append('    },')
+    lines += ['};','template<class Ramp> Ramp preset(unsigned index) {',
+              '    static_assert(sizeof(Ramp)==0x144,"ramp payload ABI");',
+              '    Ramp value{}; if(index<preset_count) std::memcpy(&value,preset_words[index],sizeof(value));',
+              '    return value;', '}', '} // namespace olm::kirakira::editor','']
+    destination.write_text('\n'.join(lines))

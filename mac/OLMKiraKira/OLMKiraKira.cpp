@@ -2343,10 +2343,10 @@ static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
             ERR(sup->NewPen(supplier,&rgba,1.0f,&pen));
             ERR(surf->StrokePath(surface,pen,path)); break;
         case ramp_ui::DrawKind::line:
-            ERR(sup->NewPen(supplier,&rgba,1.0f,&pen));
             ERR(sup->NewPath(supplier,&path));
             ERR(path_suite->MoveTo(path,rect.left,rect.top));
             ERR(path_suite->LineTo(path,rect.left+c.w,rect.top+c.h));
+            ERR(sup->NewPen(supplier,&rgba,1.0f,&pen));
             ERR(surf->StrokePath(surface,pen,path)); break;
         case ramp_ui::DrawKind::text: {
             ERR(sup->NewDefaultFont(supplier,c.font,&font));
