@@ -1,0 +1,96 @@
+{
+  "worker_sha256": "e9d99f8af2dc5582e4f2faa71211b5ec2af405d26598f483768e3406034deb10",
+  "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "plugins": {
+    "olmblur": {
+      "cases": 278,
+      "exact_ok": 249,
+      "matching_non_success": 29,
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "colorkeep": {
+      "cases": 842,
+      "exact_ok": 842,
+      "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+    },
+    "olmcolorkey": {
+      "cases": 88,
+      "exact_ok": 88,
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+    },
+    "olmdirectionalblur": {
+      "cases": 606,
+      "exact_ok": 606,
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+    },
+    "olmdistancegradation": {
+      "cases": 908,
+      "exact_ok": 908,
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+    },
+    "olmkirakira": {
+      "cases": 774,
+      "exact_ok": 773,
+      "matching_non_success": 1,
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "olmsmoother2": {
+      "cases": 224,
+      "exact_ok": 224,
+      "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+    },
+    "olmtoondilate": {
+      "cases": 1124,
+      "exact_ok": 1124,
+      "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "radialblur": {
+      "cases": 502,
+      "exact_ok": 501,
+      "matching_non_success": 1,
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "olmsmoother": {
+      "cases": 303,
+      "exact_ok": 227,
+      "matching_non_success": 76,
+      "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+    }
+  },
+  "totals": {
+    "cases": 5649,
+    "exact_ok": 5542,
+    "matching_non_success": 107,
+    "byte_difference": 0,
+    "status_difference": 0
+  },
+  "verification_sources": {
+    "tools/emulation/aexcompat_patches/verify_F54b.py": "6f0b7cf910031c464935bc1fb7cdbf1f44cdc6eace2988dde92d827fd058a17f",
+    "tools/fuzz/core.py": "63251fbb5073f1a69d92ea19652edb3be43e3f0aa435317009f28cc85460f543",
+    "tools/fuzz/geometry.py": "86eb9769b5c5476fda94cc94968f97e061d7bc458a5ea0801da9a6c53523bc2f",
+    "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+    "tools/fuzz/adapters/bundle_geometry.py": "e7125bd700c9e9180bb9d99df44c7ff9ca4bdb85634f10363b9a99936c47e5ad",
+    "tools/fuzz/adapters/color_triage.py": "60ed6f3333280c333d8b04bc9eea3d15a0260cf8b2fcee19826c6b844201abda",
+    "tools/fuzz/adapters/colorkeep.py": "c8c38e8a6c7dfd7c4a52f5968c40ec0c5c5fcad940269df11f02414310992daf",
+    "tools/fuzz/adapters/olmblur.py": "77bf853074d6a4b9e214848554fbd926e5b7dbee362900d017c19eed9d428b94",
+    "tools/fuzz/adapters/olmcolorkey.py": "d4e6b037de2f9613d6da2cf471ec79437ac22a1c0a1adba2d0c98087a886cdcf",
+    "tools/fuzz/adapters/olmdirectionalblur.py": "0d94046e6a1bc648f46fb0f29a5c090037f9a7297abae176c4047282665495f6",
+    "tools/fuzz/adapters/olmdistancegradation.py": "9635732483db73874be713a1aabd904abba447b89b15ff185d332eca28c5a0a1",
+    "tools/fuzz/adapters/olmkirakira.py": "4341ac8c16b61a8ddd172c493f3c4ae1fb2d9bd8ea27246a3c2afff9afd9acdd",
+    "tools/fuzz/adapters/olmsmoother.py": "d623d5ba61967e8d8345c00f50bd08ea5f773df7c34e918c6031f5ce9035f26d",
+    "tools/fuzz/adapters/olmsmoother2.py": "e97cb7191876d59b5918d63bb60454ae34abf97675947a8a8109b0b48074920a",
+    "tools/fuzz/adapters/olmtoondilate.py": "4e68475b01fd9350f086e208b30dc3bd24939116e24f09edc1a620c7f1ad8a45",
+    "tools/fuzz/adapters/plugin_bundle.py": "c2acefc144435b12ec4e61e86f79aeafab45d027f4663aad36ad73ff87000342",
+    "tools/fuzz/adapters/public.py": "fd6b7f35b3f420b751807edea54be10ea75558c0b4f4b9d4b70a7cac088c56a5",
+    "tools/fuzz/adapters/radialblur.py": "e41125902b1029ce1c67817bc04ad91ff7943b7a59796f0be9dc115851c54e8d",
+    "tools/fuzz/declarations/colorkeep.json": "0b2011534d05ef459a23d85f06a7f0dbf347a331005b01a498300d236c4c925c",
+    "tools/fuzz/declarations/olmblur.json": "0e2367b00d507763bf83fde132308f34d64d4e35973b857f23d930fe7b096425",
+    "tools/fuzz/declarations/olmcolorkey.json": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "tools/fuzz/declarations/olmdirectionalblur.json": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "tools/fuzz/declarations/olmdistancegradation.json": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
+    "tools/fuzz/declarations/olmkirakira.json": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+    "tools/fuzz/declarations/olmsmoother.json": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "tools/fuzz/declarations/olmsmoother2.json": "f07c33d4026db5e63ab823f7831f49a0992e889836a2161e6712990bad91587f",
+    "tools/fuzz/declarations/olmtoondilate.json": "73f58454d30bb4de2f96a1cec1e6978ee37ff5285668ec5821f06964efebedcc"
+  }
+}

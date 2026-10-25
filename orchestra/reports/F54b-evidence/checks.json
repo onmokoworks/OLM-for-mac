@@ -1,0 +1,70 @@
+{
+  "source_head": "e96d6ed9b0a8170e1d3d427ac6cf65e07dc3144e",
+  "reviewed_head": "e96d6ed9b0a8170e1d3d427ac6cf65e07dc3144e",
+  "cargo_test_groups": [
+    {
+      "passed": 709,
+      "failed": 0,
+      "ignored": 3,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 10,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    }
+  ],
+  "total_passed": 727,
+  "integer_test": {
+    "boundary": 512,
+    "random": 100000,
+    "exit_code": 0
+  },
+  "installer_tests": [
+    "fresh install",
+    "immutable identical rerun including mtimes",
+    "changed HEAD rejected without writes",
+    "INDEX conflict rejected without writes"
+  ],
+  "build_final_seconds": 51.91,
+  "memory_free_percent_observations": [
+    46,
+    44,
+    49,
+    50,
+    53,
+    51,
+    52,
+    54,
+    50,
+    55,
+    53,
+    53,
+    53
+  ],
+  "native_windows_tested": false
+}

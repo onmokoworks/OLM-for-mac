@@ -1,0 +1,7 @@
+{
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "clang": "Apple clang version 17.0.0 (clang-1700.6.4.2)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "architecture": "arm64",
+  "note": "Build commands ran from the OLM worktree using its selected stable toolchain; AEXCompat rust-toolchain.toml was not changed."
+}

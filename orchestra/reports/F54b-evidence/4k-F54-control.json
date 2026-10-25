@@ -1,0 +1,71 @@
+{
+  "summary": {
+    "cases": 3,
+    "equal": 0,
+    "different": 3,
+    "both_ok": 0,
+    "exact_ok": 0,
+    "matching_non_success": 0,
+    "byte_difference": 0,
+    "status_difference": 0,
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "worker_sha256": "dbf9766f23de8f247169f63cf8310a0c73e15f053765e2c9373106623c2e9af2",
+    "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+  },
+  "rows": [
+    {
+      "case": "8/smart",
+      "input_sha256": "3666b36fa94cd1c9f20bb214f3add5e80b4eafdf88d60edad151f885fcc09d8d",
+      "results": [
+        {
+          "status": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x180001980); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x180001980)\",\"registers\":{\"r10\":3840,\"r11\":4,\"r12\":7776258,\"r13\":4487777312,\"r14\":4388240412,\"r15\":4494045184,\"r8\":7757058,\"r9\":4487592992,\"rax\":0,\"rbp\":3,\"rbx\":4494045208,\"rcx\":4487592984,\"rdi\":4494053376,\"rdx\":46080,\"rflags\":2,\"rip\":6442457472,\"rsi\":3,\"rsp\":1881135984},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"c8ea493f000000000000000000000000\",\"f32_lanes\":[0.7887387,0.0,0.0,0.0],\"f64_lanes\":[5.246032703e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"44f2a43e000000000000000000000000\",\"f32_lanes\":[0.32216084,0.0,0.0,0.0],\"f64_lanes\":[5.192616677e-315,0.0]},{\"register\":\"xmm2\",data_end\":12884901888}\n       20.06 real        20.37 user         4.17 sys\n           350011392  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               21427  page reclaims\n                 220  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   4  voluntary context switches\n             3547947  involuntary context switches\n        177493641898  instructions retired\n         74362640418  cycles elapsed\n           312903424  peak memory footprint\n"
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "seconds": 20.30449175000831,
+          "maximum_rss_bytes": 350011392
+        }
+      ],
+      "equal": false
+    },
+    {
+      "case": "16/smart",
+      "input_sha256": "f41147bbf0c68a9a3ee89e151d81ec8708bf179d5b45e0d52c71b8b800cee3fa",
+      "results": [
+        {
+          "status": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x180001980); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x180001980)\",\"registers\":{\"r10\":3840,\"r11\":4,\"r12\":834522,\"r13\":4404476480,\"r14\":4304939580,\"r15\":4494045184,\"r8\":834522,\"r9\":4494891738,\"rax\":2503566,\"rbp\":3,\"rbx\":2,\"rcx\":4404568640,\"rdi\":4494053376,\"rdx\":46080,\"rflags\":151,\"rip\":6442457472,\"rsi\":3,\"rsp\":1881135984},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"3396aa45000000000000000000000000\",\"f32_lanes\":[5458.775,0.0,0.0,0.0],\"f64_lanes\":[5.7746762e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"f5a11745000000000000000000000000\",\"f32_lanes\":[2426.1223,0.0,0.0,0.0],\"f64_lanes\":[5.727093815e-315,0.0]},{\"register\":\"xmm2\",\"raw_hedata_end\":12884901888}\n       20.04 real        20.39 user         4.20 sys\n           483131392  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               29906  page reclaims\n                   0  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   1  voluntary context switches\n             3625070  involuntary context switches\n        179081616503  instructions retired\n         74936232953  cycles elapsed\n           413173952  peak memory footprint\n"
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "seconds": 20.097488542000065,
+          "maximum_rss_bytes": 483131392
+        }
+      ],
+      "equal": false
+    },
+    {
+      "case": "32/smart",
+      "input_sha256": "a6b2524f3e806e1bc8d617d3ec4621bb674d693c720df1b3c7bfafffd785209a",
+      "results": [
+        {
+          "status": {
+            "status": "reject",
+            "returncode": 1,
+            "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: execution stopped before the guest returned (RIP=0x180001980); crash_snapshot={\"reason\":\"execution stopped before the guest returned (RIP=0x180001980)\",\"registers\":{\"r10\":3840,\"r11\":0,\"r12\":7987324,\"r13\":4490310104,\"r14\":4390773204,\"r15\":4494045184,\"r8\":7971964,\"r9\":4490171864,\"rax\":3,\"rbp\":3,\"rbx\":4494045192,\"rcx\":4490171856,\"rdi\":4494053376,\"rdx\":46080,\"rflags\":2,\"rip\":6442457472,\"rsi\":3,\"rsp\":1881135984},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"55950a3d000000000000000000000000\",\"f32_lanes\":[0.03383382,0.0,0.0,0.0],\"f64_lanes\":[5.05974488e-315,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"55958a3c000000000000000000000000\",\"f32_lanes\":[0.01691691,0.0,0.0,0.0],\"f64_lanes\":[5.01829965e-315,0.0]},{\"register\":\"xmm2\",\"data_end\":12884901888}\n       20.08 real        20.36 user         3.82 sys\n           748961792  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               46007  page reclaims\n                   0  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   1  voluntary context switches\n             3350730  involuntary context switches\n        174008494082  instructions retired\n         73435074566  cycles elapsed\n           612518592  peak memory footprint\n"
+          },
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "seconds": 20.17783087499265,
+          "maximum_rss_bytes": 748961792
+        }
+      ],
+      "equal": false
+    }
+  ]
+}
