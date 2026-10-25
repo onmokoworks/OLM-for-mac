@@ -2,7 +2,7 @@
 
 [English](README.en.md)
 
-Windows版のAfter Effectsプラグイン「OLM Tools」を、macOS（Apple Silicon／Intel）で使えるように移植する非公式プロジェクトです。
+Windows版のAfter Effectsプラグイン「OLM Tools」をMacで使えるようにした、非公式の移植版です。Apple SiliconとIntelのどちらのMacでも動きます。
 
 > [!WARNING]
 > Beta版です。仕事や制作で使う前に、必ずバックアップを取るなどして、データ破損などのリスクに備えてください。
@@ -17,51 +17,45 @@ Windows版のAfter Effectsプラグイン「OLM Tools」を、macOS（Apple Sili
 | OLMDirectionalBlur | 8／16／32 bpc | |
 | OLMDistanceGradation | 8／16／32 bpc | |
 | OLMKiraKira | 8／16／32 bpc | |
-| OLMRadialBlur | 8／16／32 bpc | 回転モードを高品質で使うと、1080pで1フレームに1分以上かかることがあります |
-| OLMSmoother | 8／16 bpc | Windows版も32 bpcには対応していません。32 bpcのコンポでは、AEが色深度を変換して渡します |
+| OLMRadialBlur | 8／16／32 bpc | 回転モードを高品質で使うと重く、1080pで1フレーム1分以上かかることがあります |
+| OLMSmoother | 8／16 bpc | 32 bpcには非対応です（Windows版も同じ）。32 bpcのコンポでは、AEが色深度を変換して渡します |
 | OLMSmoother2 | 8／16／32 bpc | |
 | OLMToonDilate | 8／16／32 bpc | |
 
 ## Windows版との互換性
 
-同じ素材・同じ設定なら**Windows版と1ビットも変わらない出力**になることを目指して、元のプラグインを解析しながら開発しています。
+同じ素材・同じ設定なら**Windows版と1ビットも変わらない出力**になるよう、元のプラグインを解析しながら開発しています。
 
-- 元のWindows版プラグイン（`.aex`）をエミュレーター上で動かし、その出力とMac版の出力をバイト単位で比べています。
-- 素材、設定値、コンポのサイズ（奇数・偶数）、プレビュー解像度（フル〜1/8）、拡大表示などの部分的な描画をランダムに組み合わせ、数千件を試しています。Windows版が描画できる条件では、すべて一致しています。
-- Windows版自身がエラーになる設定では、Mac版も描画しないことがあります。
-
-検証の方法と結果は[対応範囲と検証](docs/BETA_SUPPORT.md)、わかっている制限は[既知の制限](KNOWN_LIMITATIONS.md)にまとめています。
+元のプラグインをエミュレーターで動かした結果とMac版の結果を、ランダムに選んだ素材・設定・サイズ・プレビュー解像度で数千通り比べていて、Windows版が描画できる条件ではすべて一致しています。くわしくは[検証の方法と結果](docs/BETA_SUPPORT.md)を、わかっている制限は[既知の制限](KNOWN_LIMITATIONS.md)を見てください。
 
 ## 動作環境
 
-- macOS 11以降（Apple Silicon／Intel）
-- Adobe After Effects 2026（26.3）で主に確認しています
-- CPUレンダー（GPUレンダーは対象外です）
+- macOS 11以降
+- After Effects 2026（26.3）で確認しています。ほかのバージョンは未確認です
+- CPUレンダーのみ（GPUレンダーには非対応）
 
 ## インストール
 
-After Effectsを終了し、配布ZIPに入っている10個の `.plugin` を次のフォルダーへコピーします。
+After Effectsを終了してから、配布ZIPの中の10個の `.plugin` を次のフォルダーにコピーしてください。
 
 ```text
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 ```
 
-くわしくは[インストールガイド](docs/INSTALL_JA.md)を見てください。
-
 > [!NOTE]
-> このプラグインはAppleの開発者署名と公証（notarization）を受けていません（有料のため、予定はありません）。macOSに止められたときの対処は[インストールガイド](docs/INSTALL_JA.md#macosに止められたとき)を見てください。
+> Appleの署名と公証（notarization）を受けていないので、macOSに止められることがあります（有料のため、予定はありません）。そのときの対処や、くわしい手順は[インストールガイド](docs/INSTALL_JA.md)を見てください。
 
 ## 不具合の報告
 
-[Issues](https://github.com/onmokoworks/OLM-for-mac/issues)から、次の情報をつけて報告してください。
+[Issues](https://github.com/onmokoworks/OLM-for-mac/issues)から報告してください。次の情報があると助かります。
 
-- macOSとAfter Effectsのバージョン、Apple SiliconかIntelか
+- macOSとAfter Effectsのバージョン、MacがApple SiliconかIntelか
 - プラグイン名、色深度、コンポのサイズ、プレビュー解像度
 - エフェクトの設定値
-- 再現する手順と、警告文またはクラッシュログ
-- できれば、共有できる最小のプロジェクトと素材
+- 再現手順と、警告文やクラッシュログ
+- 共有できるなら、最小限のプロジェクトと素材
 
-「Windows版と見た目が違う」という報告では、同じ素材・同じ設定でのWindows版の出力があると、原因を探しやすくなります。
+Windows版と見た目が違うときは、同じ素材・同じ設定で書き出したWindows版の画像も添えてもらえると、原因を探しやすくなります。
 
 ## ライセンスと権利
 
