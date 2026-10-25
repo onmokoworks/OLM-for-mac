@@ -82,6 +82,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('state', type=Path)
     ap.add_argument('--timeout', type=int, default=30)
+    ap.add_argument('--retry-unavailable', action='store_true',
+                    help='Explicitly retry prior unavailable references after a host-boundary fix')
     args = ap.parse_args()
     state = args.state.resolve()
     out = state / 'comparison'
@@ -91,7 +93,8 @@ def main():
     result_path = state/'comparisons.json'
     results = json.loads(result_path.read_text()) if result_path.exists() else []
     prior = {r['outputPrefix']:r for r in results}
-    completed = {r['outputPrefix'] for r in results if r.get('comparison',{}).get('exact') is not None or 'io' in r}
+    completed = {r['outputPrefix'] for r in results if 'io' in r or
+                 ('comparison' in r and (not args.retry_unavailable or r['comparison'].get('exact') is not None))}
     for row in rendered:
         if row['status'] == 'error':
             continue
@@ -99,6 +102,9 @@ def main():
         if prefix in completed:
             continue
         depth = row['depth']
+        observed_divisor = {'Full': 1, 'Half': 2, 'Third': 3, 'Quarter': 4}[row['renderSettings']['Resolution']]
+        if observed_divisor != row['divisor']:
+            raise ValueError('AE Resolution readback differs from requested downsample')
         extension = row.get('outputExtension', 'exr' if depth == 32 else 'tif')
         path = next(state.glob(prefix + '_*.' + extension))
         rgba = load_rgba(path, depth)
@@ -175,7 +181,7 @@ def main():
                 status, raw = {'status':'not-run','reason':'4K uses bundle fallback'},b''
                 result['original'] = status
             if status['status'] != 'ok':
-                if row['divisor']==1 and (w>1920 or h>1080):
+                if row['divisor']==1:
                     status, raw = full_frame_bundle(adapter,case,case_dir,route,args.timeout)
                     result['bundle'] = status
                     if prefix in prior:
@@ -192,12 +198,15 @@ def main():
                 differs = original.view(np.uint32) != actual.view(np.uint32) if depth == 32 else original != actual
                 transparent_rgb = (original[:,:,0] == 0) & (actual[:,:,0] == 0)
                 only_hidden = not np.any(differs[:,:,0]) and not np.any(differs[:,:,1:] & ~transparent_rgb[:,:,None])
-                result['comparison']['classification'] = ('I/O conversion: hidden RGB at zero alpha lost in premultiplied export'
+                result['comparison']['classification'] = ('I/O/compositing suspected: hidden RGB at zero alpha differs'
                     if not result['comparison']['exact'] and only_hidden else
                     None if result['comparison']['exact'] else 'unresolved: host geometry/color management/plugin')
                 reference.unlink()
             else:
-                result['comparison'] = {'exact':None,'reason':'reference unavailable or negotiated output differs'}
+                result['comparison'] = {'exact':None,'reason':'reference unavailable or negotiated output differs',
+                    'classification': ('host depth negotiation: original does not advertise this pixel depth'
+                        if 'did not advertise support' in result.get('original', {}).get('diagnostic', '')
+                        else 'reference host limitation')}
         ae.unlink()
         results = [r for r in results if r['outputPrefix'] != prefix]
         results.append(result)

@@ -232,7 +232,9 @@ renders their original Full resolution only. For footage smaller than AE's
 minimum 4×4 composition, the original layer is placed at the top left and the
 output module crops the padding. The manifest records composition and layer
 sizes separately; this is not a live checkout trace. No source pixels or corpus
-parameters are rewritten. Every witness has an independent control. Non-exact
+parameters are rewritten. Corpus footage is interpreted as premultiplied with
+black because its bytes are already PF-world samples; alpha mode and matte color
+are read back. Every witness has an independent control. Non-exact
 controls block effect promotion; parameter readback differences are recorded.
 
 `--matrix downsample-straight` is an additional ColorKeep/control probe at
@@ -240,3 +242,14 @@ controls block effect promotion; parameter readback differences are recorded.
 template. Build requires `Color=Straight (Unmatted)` readback. Pillow is required
 to decode RGBA PNG without alpha/color conversion. This probes whether a straight
 export preserves hidden RGB; the name alone is not a fidelity claim.
+
+`downsample-remaining` combines the 20 Full corpus witnesses (40 queue items
+including controls) with the eight straight-alpha probe items in one GUI build.
+Render and compare use the same stages as the other opt-in matrices.
+
+Comparison records, including unavailable-reference outcomes, are retained on
+resume. Use `--retry-unavailable` only after repairing a reference-host boundary;
+normal resume does not repeat known unsupported-depth or I/O failures. Full
+frames may use the existing V01 F51/F47d transport if F53 cannot allocate them;
+that fallback still loads the installed bundle, and is never called original
+AEX exactness.

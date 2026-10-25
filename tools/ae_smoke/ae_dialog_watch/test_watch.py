@@ -60,6 +60,7 @@ class PolicyTests(unittest.TestCase):
         check(True, title='KBar', width=3200, height=1743)
         check(False, title='KBar', width=800, height=500, modal=True)
         check(False, title='KBar', width=800, height=500, subrole='AXDialog')
+        check(False, title='KBar', width=800, height=500, role='AXSheet')
         check(False, title='Unknown panel', width=800, height=500)
         check(True, title='Unknown panel', width=800, height=500, role='AXWindow', subrole='AXFloatingWindow')
         check(False, title='Unknown panel', width=800, height=500, role='AXWindow', subrole='AXFloatingWindow', modal=True)

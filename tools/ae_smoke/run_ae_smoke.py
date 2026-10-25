@@ -108,9 +108,17 @@ def build(state, matrix="legacy", prevent_dialogs=True):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
-    if matrix == 'downsample-corpus':
+    if matrix in ('downsample-corpus', 'downsample-remaining'):
         from corpus_inputs import prepare
         prepare(state / 'inputs')
+        if matrix == 'downsample-remaining':
+            from downsample_inputs import prepare as prepare_defaults
+            rows = prepare_defaults(state / 'straight-inputs')
+            probe = next(r for r in rows if r['width'] == 1279)
+            probe.update(plugin='ColorKeep', outputTemplate='_HIDDEN X-Factor 8',
+                         outputExtension='png', requireStraight=True)
+            path = state / 'inputs/inputs.json'
+            path.write_text(json.dumps(json.loads(path.read_text()) + [probe], indent=2) + '\n')
     elif matrix != 'legacy':
         from downsample_inputs import prepare
         prepare(state / 'inputs', high_depth=matrix == 'downsample-depths')
@@ -260,7 +268,7 @@ def main():
     p.add_argument('--no-dialog-prevention', action='store_true',
                    help='Skip crash-flag backup/reset; watcher remains enabled')
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
-    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus', 'downsample-straight'), default='legacy')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus', 'downsample-straight', 'downsample-remaining'), default='legacy')
     a = p.parse_args()
     if a.restore and a.stage != 'prefs':
         p.error('--restore requires --stage prefs')

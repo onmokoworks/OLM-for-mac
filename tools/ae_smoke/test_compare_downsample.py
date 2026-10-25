@@ -8,6 +8,16 @@ import OpenEXR
 from compare_downsample import load_rgba
 
 class CodecTests(unittest.TestCase):
+    def test_png_preserves_hidden_rgb(self):
+        from PIL import Image
+        with tempfile.TemporaryDirectory(dir=os.environ['TMPDIR']) as td:
+            path = Path(td)/'straight.png'
+            rgba = np.array([[[32, 64, 128, 0], [2, 3, 4, 255]]], dtype=np.uint8)
+            Image.fromarray(rgba).save(path)
+            self.assertTrue(np.array_equal(load_rgba(path, 8), rgba))
+            with self.assertRaisesRegex(ValueError, '8 bpc RGBA PNG'):
+                load_rgba(path, 16)
+
     def test_ae16_float_export_inverse_and_fraction_rejection(self):
         with tempfile.TemporaryDirectory(dir=os.environ['TMPDIR']) as td:
             path = Path(td)/'input.exr'

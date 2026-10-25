@@ -29,9 +29,13 @@
             var pr=app.project;
             pr.bitsPerChannel=spec.depth;pr.workingSpace='';pr.linearBlending=false;pr.linearizeWorkingSpace=false;pr.gpuAccelType=GpuAccelType.SOFTWARE;
             if(!footage)footage=pr.importFile(new ImportOptions(new File(spec.path)));
-            footage.mainSource.alphaMode=AlphaMode.STRAIGHT;
+            // Corpus bytes are already raw PF-world samples: avoid multiplying RGB again.
+            if(spec.alphaInterpretation=='premultiplied-black'){
+                footage.mainSource.alphaMode=AlphaMode.PREMULTIPLIED;
+                footage.mainSource.premulColor=[0,0,0];
+            }else{footage.mainSource.alphaMode=AlphaMode.STRAIGHT;}
             var row={depth:pr.bitsPerChannel,workingSpace:pr.workingSpace,linearBlending:pr.linearBlending,linearizeWorkingSpace:pr.linearizeWorkingSpace,gpuAccelType:Number(pr.gpuAccelType),items:[]};
-            row.inputInterpretation={method:usesTemplate?'hash-bound Preserve RGB footage replacement':'import',templateSha256:usesTemplate?A01.inputTemplateSha256:null,alphaMode:Number(footage.mainSource.alphaMode)};
+            row.inputInterpretation={method:usesTemplate?'hash-bound Preserve RGB footage replacement':'import',templateSha256:usesTemplate?A01.inputTemplateSha256:null,alphaMode:Number(footage.mainSource.alphaMode),premulColor:footage.mainSource.premulColor};
             for(var divisor=1;divisor<=(spec.corpus?1:4);divisor++) {
             for(var n=-1;n<A01.plugins.length;n++) {
                 var name=n<0?'control':A01.plugins[n].plugin;

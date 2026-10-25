@@ -18,6 +18,13 @@ def render(state, data, app, preflight):
         raise RuntimeError('Prior render error requires investigation and a fresh run ID')
     completed = {row['outputPrefix'] for row in results}
     for project in data['projects']:
+        source_flags = {}
+        if project.get('input', {}).get('raw'):
+            spec = project['input']
+            pixels = np.memmap(spec['raw'], mode='r', dtype={8: 'u1', 16: '<u2', 32: '<f4'}[spec['depth']]).reshape(-1, 4)
+            source_flags = dict(source_all_black=bool(np.all(pixels[:, 1:] == 0)),
+                                source_all_transparent=bool(np.all(pixels[:, 0] == 0)))
+            del pixels
         for item in project['items']:
             if item['outputPrefix'] in completed:
                 continue
@@ -46,7 +53,7 @@ def render(state, data, app, preflight):
                 scripting_prefs(lifecycle / 'prefs', restore=True)
             if running():
                 raise RuntimeError('AE main executable remains after aerender; stop')
-            row = dict(item, returncode=proc.returncode, wall_seconds=elapsed,
+            row = dict(item, **source_flags, returncode=proc.returncode, wall_seconds=elapsed,
                        timing_scope='one frame plus aerender startup',
                        refusals=trace.read_text() if trace.exists() else '')
             paths = list(state.glob(prefix + '_*.' + extension))

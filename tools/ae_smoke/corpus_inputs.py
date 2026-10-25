@@ -75,6 +75,7 @@ def prepare(out):
                 rgba=rgba.astype(np.float32)/(np.float32(32768) if depth==16 else np.float32(1))
                 OpenEXR.File({}, {c:np.ascontiguousarray(rgba[:,:,i]) for i,c in enumerate('RGBA')}).write(str(image))
             rows.append(dict(depth=depth,width=w,height=h,path=str(image),raw=str(raw_path),plugin=plugin,
+                alphaInterpretation='premultiplied-black',
                 identity=identity,corpus=str(Path(path).relative_to(ROOT)),corpus_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
                 parameters=case['parameters'],source_sha256=data['input_sha256'],file_sha256=hashlib.sha256(image.read_bytes()).hexdigest()))
     (out/'inputs.json').write_text(json.dumps(rows,indent=2)+'\n')
