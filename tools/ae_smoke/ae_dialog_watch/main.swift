@@ -43,27 +43,31 @@ func snapshot(_ id: CGWindowID, pid: pid_t) throws -> CGImage {
         }
         let filter = SCContentFilter(desktopIndependentWindow: window)
         let config = SCStreamConfiguration()
-        config.width = max(1, Int(window.frame.width * 2))
-        config.height = max(1, Int(window.frame.height * 2))
+        config.width = max(1, Int((filter.contentRect.width * CGFloat(filter.pointPixelScale)).rounded()))
+        config.height = max(1, Int((filter.contentRect.height * CGFloat(filter.pointPixelScale)).rounded()))
         config.showsCursor = false
         config.ignoreShadowsSingleWindow = true
         SCScreenshotManager.captureImage(contentFilter: filter, configuration: config) { image, error in
-            if let image = image { captured.set(.success(image)) }
+            if let image = image {
+                try? emit(["event": "capture", "windowID": id,
+                    "pointWidth": filter.contentRect.width, "pointHeight": filter.contentRect.height,
+                    "scale": filter.pointPixelScale, "pixelWidth": image.width, "pixelHeight": image.height])
+                captured.set(.success(image))
+            }
             else { captured.set(.failure(error ?? Failure("Empty capture"))) }
         }
     }
     let deadline = Date().addingTimeInterval(10)
     while captured.get() == nil && Date() < deadline { pause(0.02) }
-    guard let result = captured.get() else { throw Failure("blocked: needs Screen Recording for Terminal (capture timeout)") }
+    guard let result = captured.get() else { throw Failure("ScreenCaptureKit capture timeout; permission loss or window transition not established") }
     do { return try result.get() }
-    catch { throw Failure("blocked: needs Screen Recording for Terminal (\(error))") }
+    catch { throw Failure("ScreenCaptureKit capture failed: \(error)") }
 }
 func recognize(_ image: CGImage) throws -> [TextBox] {
     let request = VNRecognizeTextRequest()
     request.recognitionLevel = .accurate
     request.recognitionLanguages = ["ja-JP", "en-US"]
-    request.usesLanguageCorrection = true
-    request.customWords = Policy.allowed + Policy.forbidden
+    request.usesLanguageCorrection = false
     try VNImageRequestHandler(cgImage: image).perform([request])
     return (request.results ?? []).compactMap { observation in
         guard let text = observation.topCandidates(1).first else { return nil }
@@ -72,24 +76,14 @@ func recognize(_ image: CGImage) throws -> [TextBox] {
     }
 }
 func save(_ image: CGImage, _ path: URL) throws {
-    // Captured window only, encoded to <=400 KB without writing a full desktop.
-    var width = min(1400, image.width)
-    while width > 0 {
-        let height = max(1, image.height * width / image.width)
-        let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: width, pixelsHigh: height,
-            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
-            colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
-        let context = NSGraphicsContext(bitmapImageRep: bitmap)!
-        NSGraphicsContext.saveGraphicsState(); NSGraphicsContext.current = context
-        context.cgContext.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
-        NSGraphicsContext.restoreGraphicsState()
-        if let data = bitmap.representation(using: .png, properties: [:]), data.count <= 400_000 {
-            try data.write(to: path, options: .atomic); return
-        }
-        width = width * 3 / 4
+    // Preserve the native pixels used by Vision so offline OCR is reproducible.
+    let bitmap = NSBitmapImageRep(cgImage: image)
+    guard let data = bitmap.representation(using: .png, properties: [:]) else {
+        throw Failure("Cannot encode evidence")
     }
-    throw Failure("Cannot encode evidence")
+    try data.write(to: path, options: .atomic)
 }
+
 func attr(_ el: AXUIElement, _ name: String) -> CFTypeRef? {
     var value: CFTypeRef?
     guard AXUIElementCopyAttributeValue(el, name as CFString, &value) == .success else { return nil }

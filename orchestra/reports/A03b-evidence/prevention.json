@@ -1,0 +1,20 @@
+{
+  "disabled": false,
+  "changes": [
+    "CrashOccurred",
+    "ForceQuitOccured"
+  ],
+  "domain": "com.Adobe.After Effects.26.3",
+  "backups": {
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A03b-ae-crash-flags-and-ocr/orchestra/state/A03b-ae-crash-flags-and-ocr/e2e/first-clean-launch/dialogs/preferences-1792923982507167000/effective.plist": "27dd406cd2507cddaf9be51bfe5b02ef1de780497a3a3af01205e0edfc6b9a20",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A03b-ae-crash-flags-and-ocr/orchestra/state/A03b-ae-crash-flags-and-ocr/e2e/first-clean-launch/dialogs/preferences-1792923982507167000/on-disk.plist": "205713a9b78e8c7e4d3a3955f4791f9c3d2efc24106e0c8359a15f557b017a2a"
+  },
+  "before": {
+    "CrashOccurred": "1",
+    "ForceQuitOccured": "1"
+  },
+  "after": {
+    "CrashOccurred": "0",
+    "ForceQuitOccured": "0"
+  }
+}

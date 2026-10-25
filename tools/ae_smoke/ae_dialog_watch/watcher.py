@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import plistlib
+import shutil
 import subprocess
 import time
 
@@ -23,42 +24,55 @@ def compile_tool(directory):
     return binary
 
 
-def prepare_launch(directory, *, disabled=False):
-    """Back up effective CFPreferences before inspecting two candidate session flags.
+FLAGS = ('CrashOccurred', 'ForceQuitOccured')
 
-    Projects, auto-saves, PluginCache and all other preferences are untouched.
-    The default backup is durable outside disposable worktrees.
-    """
-    directory = Path(directory)
+
+def read_flags(domain):
+    return {key: subprocess.check_output(['defaults', 'read', domain, key],
+                                        text=True).strip() for key in FLAGS}
+
+
+def prepare_launch(directory, *, disabled=False):
+    """Prevent recovery prompts; preserve both effective and on-disk preferences."""
+    directory = Path(directory).resolve()
+    directory.mkdir(parents=True, exist_ok=True)
     result = {'disabled': disabled, 'changes': []}
+    record = directory / 'prevention.json'
     if disabled:
-        (directory / 'prevention.json').write_text(json.dumps(result, indent=2))
+        record.write_text(json.dumps(result, indent=2))
         return result
+    processes = subprocess.check_output(['ps', '-axo', 'comm='], text=True)
+    if any(line.rstrip().endswith(('/MacOS/After Effects', '/aerender'))
+           for line in processes.splitlines()):
+        raise RuntimeError('AE busy; no preference changes')
     info = plistlib.loads((APP / 'Contents/Info.plist').read_bytes())
     version = str(info['CFBundleShortVersionString']).split('.')
-    if len(version) < 2 or version[0] != '26' or not version[1].isdigit():
-        raise RuntimeError('Unexpected AE version; no preference changes')
-    domain = 'com.Adobe.After Effects.' + '.'.join(version[:2])
+    if version[:2] != ['26', '3']:
+        raise RuntimeError('Only AE 26.3 crash flags are authorized')
+    domain = 'com.Adobe.After Effects.26.3'
     source = Path.home() / 'Library/Preferences' / (domain + '.plist')
-    if not source.exists():
-        result['reason'] = 'No existing version-specific preference domain'
-    else:
-        stamp = time.strftime('%Y%m%d-%H%M%S') + '-' + str(time.time_ns())
-        backup = Path.home() / '.cache/olm-emu/ae-dialog-watch/backups' / stamp
-        backup.mkdir(parents=True, exist_ok=False)
-        exported = backup / (domain + '.plist')
-        # Export includes cfprefsd's effective values. Do not overwrite a live plist.
-        subprocess.run(['defaults', 'export', domain, str(exported)], check=True,
-                       stdout=subprocess.DEVNULL)
-        data = exported.read_bytes()
-        prefs = plistlib.loads(data)
-        result.update(domain=domain, backup=str(exported), sha256=hashlib.sha256(data).hexdigest())
-        result['candidate_flags'] = {key: prefs.get(key) for key in
-                                     ('CrashOccurred', 'ForceQuitOccured')}
-        result['reason'] = ('No validated deterministic recovery switch. '
-                            'Observation only; rely on the dialog watcher.')
-        (backup / 'changes.json').write_text(json.dumps(result, indent=2))
-    (directory / 'prevention.json').write_text(json.dumps(result, indent=2))
+    backup = directory / ('preferences-' + str(time.time_ns()))
+    backup.mkdir(exist_ok=False)
+    exported = backup / 'effective.plist'
+    copied = backup / 'on-disk.plist'
+    subprocess.run(['defaults', 'export', domain, str(exported)], check=True,
+                   stdout=subprocess.DEVNULL)
+    shutil.copy2(source, copied)
+    result.update(domain=domain, backups={str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+                                         for p in (exported, copied)},
+                  before=read_flags(domain))
+    record.write_text(json.dumps(result, indent=2))
+    # Persist progress even if a write/read fails. Never import the whole backup.
+    try:
+        for key in FLAGS:
+            subprocess.run(['defaults', 'write', domain, key, '-bool', 'false'], check=True)
+            result['changes'].append(key)
+            record.write_text(json.dumps(result, indent=2))
+        result['after'] = read_flags(domain)
+        if any(value != '0' for value in result['after'].values()):
+            raise RuntimeError('Crash flags did not read back false')
+    finally:
+        record.write_text(json.dumps(result, indent=2))
     return result
 
 
