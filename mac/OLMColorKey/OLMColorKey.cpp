@@ -1,6 +1,7 @@
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMColorKey.h"
 #include "../../core/x86_float.h"
+#include "../../core/olm_parallel.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>
@@ -1893,7 +1894,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
-	// Key RGB is invariant for this render. Cache the unmutated Lab triple
+#ifdef OLM_REFERENCE_BUILD
+	const size_t parts = 1;
+#else
+	const size_t parts = pixel_count >= 65536 ? 8 : 1;
+#endif
+	// Each task owns its lazy key cache and disjoint matte rows. Keep all
+	// per-pixel key/comparator operations in their original order.
+	olm::parallel_rows(parts, 1, [&](size_t part) {
+	// Key RGB is invariant for this task. Cache the unmutated Lab triple
 	// lazily, retaining the original in-place conversion and comparator order.
 	// Disabled/unvisited keys still perform no conversion.
 #ifndef OLM_REFERENCE_BUILD
@@ -1901,7 +1910,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	bool lab_key_ready[OLMCOLORKEY_MAX_COLORS] = {};
 #endif
 	// Smart workers classify only the output extent into an input-sized matte.
-	for (A_long y = 0; y < h; ++y) {
+	for (A_long y = (A_long)((size_t)h * part / parts);
+	     y < (A_long)((size_t)h * (part + 1) / parts); ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			if ((classify_width >= 0 && x >= classify_width) ||
 			    (classify_height >= 0 && y >= classify_height)) continue;
@@ -2089,6 +2099,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			matched_index[idx] = hit_index;
 		}
 	}
+	});
 	if (info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info))) {
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
 			if (OLMCKPixelTraits<PixelT>::a(ReadPixel<PixelT>(

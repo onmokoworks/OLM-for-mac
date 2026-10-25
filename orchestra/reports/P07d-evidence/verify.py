@@ -17,6 +17,7 @@ for folder in folders:
  if not files:continue
  record=json.loads(files[0].read_text());flags=['--max-size',str(record['max_size'])]
  if record.get('size_sampler')=='odd-even-v1':flags+=['--size-sampler','odd-even-v1']
+ if record.get('size_max_height'):flags+=['--size-max-height',str(record['size_max_height'])]
  if record.get('geometry_sampler'):flags+=['--geometry','realistic']
  commands.append(('replay-'+folder.name,[*flags,'--replay',str(folder)]))
 route='classic' if plugin=='olmsmoother' else 'smart'
