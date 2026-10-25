@@ -2,7 +2,7 @@
 """Offline checks; these do not establish any AE pixel result."""
 import unittest
 import plistlib
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock, mock_open
 import numpy as np
 import run_ae_smoke as runner
 
@@ -17,6 +17,19 @@ class PipelineTests(unittest.TestCase):
         with patch.object(runner.subprocess, 'check_output', return_value=plistlib.dumps({})):
             with self.assertRaises(RuntimeError):
                 runner.screen_locked()
+
+    def test_lock_wait_resume_does_not_restart_twelve_hour_deadline(self):
+        state = MagicMock()
+        log = state.__truediv__.return_value
+        log.exists.return_value = True
+        log.open = mock_open(read_data='100.000 locked=True\n')
+        with patch.object(runner, 'screen_locked', return_value=True), \
+             patch.object(runner.time, 'time', return_value=43301), \
+             patch.object(runner.time, 'monotonic', return_value=10), \
+             patch.object(runner.time, 'sleep') as sleep:
+            with self.assertRaisesRegex(RuntimeError, '12 hours'):
+                runner.wait_unlocked(state)
+            sleep.assert_not_called()
 
     def test_main_executable_check_excludes_helpers_and_includes_versions(self):
         listing = ('1 /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects\n'

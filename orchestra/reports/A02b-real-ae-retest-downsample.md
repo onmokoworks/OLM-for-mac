@@ -69,3 +69,5 @@ checkpoint: 2026-10-25T08:06:40.695077+00:00; 71 lock polls recorded; AE not lau
 checkpoint: 2026-10-25T08:35:53.904947+00:00; 77 lock polls recorded; AE not launched.
 
 checkpoint: 2026-10-25T09:05:03.622929+00:00; 83 lock polls recorded; AE not launched.
+
+Resume checkpoint 2026-10-25T09:34:50.701197+00:00: screen still locked; no main AE process; memory free 42%. Original wait began 02:12:57.363 UTC; deadline remains 14:12:57.363 UTC. The helper now preserves this deadline across restarts (5/5 pipeline tests pass). Two read-only System Events preflight queries returned Apple-event timeout -1712; no Accessibility denial established, no UI click or AE launch. See A02b-evidence/accessibility-*.log and resume-tests.log.

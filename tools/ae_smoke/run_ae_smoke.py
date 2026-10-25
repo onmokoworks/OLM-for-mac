@@ -38,10 +38,18 @@ def screen_locked():
 
 
 def wait_unlocked(state):
-    deadline = time.monotonic() + 12 * 3600
+    log_path = state / 'screen-lock.log'
+    # Preserve the original deadline across worker/orchestrator restarts.
+    started = time.time()
+    if log_path.exists():
+        with log_path.open() as previous:
+            first = previous.readline().split()
+        if first:
+            started = float(first[0])
+    deadline = time.monotonic() + max(0, started + 12 * 3600 - time.time())
     while True:
         locked = screen_locked()
-        with (state / 'screen-lock.log').open('a') as log:
+        with log_path.open('a') as log:
             log.write(f'{time.time():.3f} locked={locked}\n')
         if not locked:
             return
