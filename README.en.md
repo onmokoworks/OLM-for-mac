@@ -57,9 +57,7 @@ Please report problems via [Issues](https://github.com/onmokoworks/OLM-for-mac/i
 
 If the result looks different from the Windows version, please also attach an image rendered by the Windows version with the same footage and settings. It makes the cause much easier to find.
 
-## License and rights
+## License
 
-- This is an **unofficial port**. It has no connection with OLM Digital, who created the original plugins, and is not authorized or endorsed by them.
-- Names and logos such as "OLM", and the rights to the original Windows plugins, belong to OLM Digital and the other original rights holders.
-- The code in this repository is released under the [Apache License 2.0](LICENSE). As long as you follow its terms, you may use, modify and redistribute it.
-- The license covers **only the code in this repository**. It does not give you the right to use the OLM name or logo, or the original Windows plugins.
+- The original OLM plugins are published by OLM Digital under the Apache License 2.0. This port uses the same [Apache License 2.0](LICENSE).
+- This is an unofficial port. It has no connection with OLM Digital and is not authorized or endorsed by them.
