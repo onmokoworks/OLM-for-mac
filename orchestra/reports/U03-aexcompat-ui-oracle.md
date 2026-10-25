@@ -1,128 +1,99 @@
-status: blocked
+status: done
 summary: |
-  Created the requested AEXCompat worktree and branch from current origin/main.
-  Two Release build attempts failed in Unicorn configure/C compilation before guest Rust compilation.
-  Direct scratch and a space-free symlink to that scratch both hit the same whitespace-path rejection.
-  Stopped under the ticket's two-refuted-hypotheses rule; removed the uncompiled implementation draft.
-  No UI oracle, EVENT/UPDATE witnesses, installed worker, or plugin changes are delivered.
+  Implemented explicit original-AEX Unicorn UI sessions with stateful EVENT/UPDATE and recording suites.
+  Committed 17 witness sessions: 123 UPDATE + 51 EVENT = 174 successful dispatches.
+  Release build and 10 focused behavioral tests pass; installed-worker replay has zero semantic mismatches.
+  Preserved original KiraKira inactive serialization-tail differences separately; no Mac parity claim.
+  Installed immutable worker/source archive and registered worker-U03-ui in the shared cache INDEX.
 
 ## facts
 
-- AEXCompat worktree: `/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-olm-U03`.
-- Branch: `olm/U03-ui-session`; starting SHA `8d102ae455ecab5483a243f459c3cc529823b70c`.
-- Final AEXCompat documentation SHA: `f402b7713c81ef235f5899621406841c3e8df1c5` (reviewed documentation-only change).
-- Read shared `AGENT_GUIDE.md`, U01 survey/ABI plan, emulation `GOTCHAS.md`, compatibility analysis plan, relevant decision-matrix plugin rows, and AEXCompat `AGENTS.md` / `CLAUDE.md`.
-- `git fetch origin` exited 0. Requested `git worktree add ... -b olm/U03-ui-session origin/main` exited 0. Main's existing untracked handoff ZIP was left untouched.
-- `gh issue list --state open --limit 100` returned 34 rows; `gh pr list --state open --limit 100` returned no rows. No claim comments, PRs, pushes, or other external messages were posted. The user explicitly overrides the repository's posting requirements.
-- `memory_pressure` before the builds reported **55%** and **56%** system-wide free, above the required 30%.
-- Rust toolchain pin: **1.93.1**. `clang --version`: **Apple clang 17.0.0 (clang-1700.6.4.2)**, target `arm64-apple-darwin24.6.0`.
-- Both builds used **one job**, sequentially. Both exited **101**, in `unicorn-engine-sys v2.1.5`'s custom build command. Neither reached guest Rust compilation or a behavioral self-test.
-- First diagnostic in both configure logs: `ERROR: main directory cannot contain spaces nor colons`. Subsequent C error: `qemu/include/qemu/int128.h:150:16: error: typedef redefinition with different types ('Int128' (aka 'struct Int128') vs '__int128')`.
-- `qemu/configure` checks both `source_path` and `$PWD` for whitespace/colons. The second CMake invocation names the space-free symlink path, yet configure emits the same rejection.
-- Build target size after both attempts: **172 MiB**, measured with `du -sh`. No reference worker was rebuilt in place; `~/.cache/olm-emu/INDEX.json` was read but not changed.
-- Full scratch log SHA256:
-  - `build.log`: `bbe639e64de250a958aaec169b74aad469e3631ad11f735f90b2d11cf9994718`
-  - `build2.log`: `4f30591d41a7bfc5a86a33c0a8984c1503462cd2be832135a485e768034a4147`
-- A draft of an explicit UPDATE session and ParamUtils recorder was written while the dependency build ran. It was **not compiled or executed** and was removed before delivery. No production source changes remain in either repository.
-- Witnesses: **0**. Original EVENT dispatches: **0**. Original UPDATE dispatches: **0**. Pixel/draw mismatch count and first mismatch: **not measured**, not zero.
-
-### Exact build commands run
-
-From the AEXCompat U03 worktree, first:
-
-```sh
-mkdir -p '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/build-tmp'
-TMPDIR='/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/build-tmp' CARGO_TARGET_DIR='/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/target' cargo build --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker -j 1 > '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/build.log' 2>&1
-```
-
-Then:
-
-```sh
-ln -s '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/target' /Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-olm-U03-target
-memory_pressure
-TMPDIR='/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/build-tmp' CARGO_TARGET_DIR=/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-olm-U03-target cargo build --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker -j 1 > '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/U03-aexcompat-ui-oracle/orchestra/state/U03-aexcompat-ui-oracle/build2.log' 2>&1
-```
+- AEXCompat branch: `olm/U03-ui-session`; final HEAD **888e43811264d3a51124f52a9f61e9a841413b68**. Executable source commit: **add877b1da1cc6060979de66ad665067b3e22922**; subsequent commit changes documentation only. Base: `f402b7713c81ef235f5899621406841c3e8df1c5`.
+- OLM checkpoint commit: `ede1824b`. The requested directory initially lacked `.git`; restored the existing ticket branch as a real worktree before edits. No MAIN tracked content, release gates, forbidden-action lists or OLM plugin sources changed.
+- All Cargo commands ran from the space-free AEXCompat U03 worktree with cache target/TMPDIR, resolving the earlier Unicorn configure blocker. Memory checks before builds showed 47–57% free, above the required 30%. One-process final Release build succeeded; focused Release tests: **10 passed, 0 failed**. Whole tracked Rust formatting check and `git diff --check` passed. Build/test logs remain in ticket scratch.
+- Final original capture and installed-worker replay: **17 sessions, 174 dispatches, all process exits 0, semantic mismatches 0**. Seven non-KiraKira sessions also match the raw JSON exactly. Ten KiraKira sessions have raw inactive-tail differences. First raw mismatch in filename-sorted final replay: `KiraKira-context-negative`, `/0/event/after/13/value/flat_bytes/224`, fixture **184**, replay **236**. No active-value mismatch.
+- Negative verification checks: nonzero capture exit, changed request hash, one active-payload bit, and one Drawbot coordinate bit each caused verifier exit **1**. Modified replay files were restored. Fixture-only verification labels itself `fixture_invariants` with `semantic_mismatches: null`.
+- Original KiraKira insertion changes stops **3→4**. Drag release at strip-bottom+20 retains **3**; +21 deletes to **2**. Picker cancel preserves active payload, accept changes it; copy/paste transfers active payload across slots 14/20. RNG at original writable RVA `0x1824968`, seed **123456789**, advances to **2408881247**, then **770683682**; flip leaves RNG unchanged. Default draw records **1495** ordered calls, inserted ramp **1503**, deleted ramp **1487**, open preset menu **4730**. Negative area/ordinary-slot draws record zero calls.
+- UPDATE witnesses capture DISABLED, HIDDEN and name bytes. Names remain unchanged for these rows. ColorKeep retains one acquired stream handle per UPDATE (four outstanding at pre-teardown); this original behavior is reported, not concealed. Session teardown success is not a zero-outstanding-handle assertion.
+- Installed worker: `/Users/onmk/.cache/olm-emu/worker-U03-ui/aex-guest-worker`, SHA-256 **e476ba8ddfbda5fc2ef1cda49c700f15c5d09a232930f6a2074d7026f2c406b0**.
+- Cleanup: removed the 381 MiB regenerable `build-U03` tree after installation and verification; ticket scratch is 59 MiB (below 5 GiB). No worker-started build/emulator process remains. Durable cache is 9.4 MiB.
+- Durable source archive SHA-256: **4711e708579ae3663278bbd4420ba64b7c49ad49ef7278db3e46cac5f5abbf58**. Installation used `tests/ui_oracle/install_worker.py`, refused overwrite, and appended INDEX under a lock; registered workers were not rebuilt in place. Exact metadata is committed as `tests/ui_oracle/build.json`.
+- Required local independent review covered AEX source, ABI, state continuation, invalidation, suite-table isolation, lifetimes, picker handling and verifier integrity. All findings were fixed; no rejected findings remain. Reviewer independently ran fixture checks and the final replay. No claim comments, PRs, pushes or external messages were sent.
 
 ## inference
 
-- Hypothesis 1: the current guest Release build can use the mandated scratch directory directly. **Refuted:** configure rejects whitespace before the guest compile.
-- Hypothesis 2: a space-free symlink to that same scratch avoids the rejection without violating the scratch rule. **Refuted:** identical rejection and downstream compiler error; no new execution boundary.
-- The likely cause is physical path resolution below Cargo/CMake, but the precise subprocess mechanism was **not traced**. The downstream `Int128` error may be caused by missing configure output; this causal interpretation has not been tested independently.
-- Further compiler flags, vendored configure changes, relocation, or cached-build substitution would be a third hypothesis without a new boundary. The explicit ticket stop rule requires reporting the blocker now.
+The observed results establish an original-handler oracle for the covered UI calls and matrix rows. They do not establish native AE scheduling, font rasterization, pixels, undo/save behavior, or Mac bit parity.
+
+**U01 ABI correction:** supplied SDK `Headers/AE_Effect.h:1245–1254` defines PF_Point as x/h first, y/v second. Original KiraKira `181155700` copies extra+20 and subtracts frame.left, then handles extra+24 as y. Thus click x/y offsets are 20/24 (hover 16/20), contrary to U01's y-first note. Correct marshalling reaches the insertion boundary.
+
+KiraKira's original FLATTEN returns 325 bytes: version + count + capacity for sixteen 20-byte records. Inactive capacity changes even on DRAW. Raw evidence is retained unchanged. Semantic replay checks exact version/count/active records and all remaining fields; it explicitly reports inactive-tail differences. This is a schema boundary, not tolerance or a final-byte repair, and raw serialization equivalence remains unproven.
 
 ## changed_files
 
-OLM:
-
-- `orchestra/reports/U03-aexcompat-ui-oracle.md` — this report.
-
-AEXCompat branch `olm/U03-ui-session`:
-
-- `docs/olm/U03-ui-session-build-blocker.md` — portable reproduction, observed diagnostics, and stop boundary.
-
-No `tests/ui_oracle/` traces were created because no UI execution occurred. No OLM plugin, release gate, ledger, main checkout content, registered worker, or cache index was modified.
+- AEXCompat guest: `classic.rs`, `classic_ui.rs`, `main.rs`, `x64.rs`, `x64/types.rs`, `x64/iterate_and_suites.rs`, `x64/ui_session.rs`, `x64/ui_draw.rs`, `x64/tests_register_ui.rs`.
+- AEXCompat docs: `docs/olm/U03-ui-session.md`, `docs/olm/U03-ui-session-build-blocker.md`.
+- OLM: `tests/ui_oracle/{README.md,build.json,capture.py,verify.py,install_worker.py,manifest.json,witnesses/*}` and this report.
+- Durable local cache: new `worker-U03-ui/` and its INDEX entry.
 
 ## verify
 
-Documentation validation, from each respective worktree:
+From the OLM ticket worktree:
 
 ```sh
-git diff --check
-git status --short
+python3 tests/ui_oracle/verify.py
+python3 tests/ui_oracle/capture.py --worker /Users/onmk/.cache/olm-emu/worker-U03-ui/aex-guest-worker --output orchestra/state/U03-aexcompat-ui-oracle/recheck
+python3 tests/ui_oracle/verify.py --replay orchestra/state/U03-aexcompat-ui-oracle/recheck
 ```
 
-Expected after final commits: exit 0 and empty status in both ticket worktrees.
-To reproduce the blocker, use the exact build commands above after `memory_pressure`
-confirms at least 30% free. Expected on the observed host: both exit 101 and the
-recorded configure/C diagnostics. Reproduction is **not a passing oracle test**.
-The AEXCompat document also gives environment-variable-based commands for an
-orchestrator with a different checkout path.
+Expected: fixture checks exit 0; capture has 17 successful sessions / 174 lines; replay exits 0 with `semantic_mismatches: 0`. KiraKira raw-tail differences are separately reported and can vary per execution. Full original and request hashes are in fixtures/manifest; originals remain read-only in MAIN `plugins_2025/`.
 
-## CLI usage and witness list
+To rebuild, first check `memory_pressure` (at least 30% free), create cache `build-U03/tmp`, and run **from AEXCompat U03**, never from OLM's space-containing path:
 
-No new CLI is delivered. `ui-session` was only an unvalidated draft and must not
-be assumed available in the cached workers. All requested KiraKira draw/click/drag,
-picker, copy/paste, randomize, flip, preset traces and all seven UPDATE matrices
-remain unexecuted. Existing setup evidence remains U01's evidence, not a U03 run.
+```sh
+TMPDIR=/Users/onmk/.cache/olm-emu/build-U03/tmp CARGO_TARGET_DIR=/Users/onmk/.cache/olm-emu/build-U03/target CARGO_BUILD_JOBS=1 cargo build --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker -j 1
+TMPDIR=/Users/onmk/.cache/olm-emu/build-U03/tmp CARGO_TARGET_DIR=/Users/onmk/.cache/olm-emu/build-U03/target CARGO_BUILD_JOBS=1 cargo test --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker ui_ -- --test-threads=1
+```
+
+Expected: successful Release build, 10 passing focused tests. Do not overwrite the registered worker. Remove regenerable build trees after verification.
+
+## CLI usage
+
+`aex-guest-worker ui-session <original.aex> <session.json>`
+
+Explicit opt-in mode runs original GlobalSetup/ParamsSetup/SequenceSetup and original arbitrary initialization/copy/flatten callbacks. Session accepts current_time/time_scale and ordered `operations` tagged `update` (parameters) or `event` (slot, CONTROL area, frame, x/y, click count, drag/final, context). Convenience updates/events arrays cannot mix with operations. State and shared copy buffer persist; continuation is scoped to context/slot and survives draws. Optional `initial_state_u32` injects bounded writable original-image RVAs and records before/after state. Each dispatch emits canonical JSONL with arbitrary before/after, parameter/UI/name/hidden mutations and ordered calls; failures are nonzero and unsupported suite calls fail closed.
+
+Recording covers Drawbot Supplier (including default font), Surface (including DrawString/AA), Path, stable IDs and retain/release, injected theme/picker and invalidation. Float bits, strings, rect/path data are retained. PF Interface/Layer/Effect/Stream handle lifetimes and current time are modeled for observed older-suite versions. Detailed protocol and limits: AEXCompat `docs/olm/U03-ui-session.md`. Existing render dispatch is unchanged by the explicit UI-mode interception.
+
+## witness list
+
+| Session | Dispatches / coverage |
+|---|---|
+| DistanceGradation-update | 3 |
+| KiraKira-update | 3, five ramp enable rows |
+| Blur-update | 2 |
+| ColorKeep-update | 4, N=1/2/99/100 |
+| DirectionalBlur-update | 3, noise=1/2/3 |
+| Smoother2-update | 18, key on/off × mode 1/2/3 × count 0/1/5 |
+| RadialBlur-update | 54, noise × type × outer/inner mode |
+| ColorKey-update | 36, P/C/R × N=0/1/24/25 plus first/last use/replace rows |
+| KiraKira-draw-click | 5, default draw/insertion/drag |
+| KiraKira-drag-delete-20 / -21 | 6 each, select/drag/intermediate draw/final boundary |
+| KiraKira-picker-cancel / -accept | 3 each |
+| KiraKira-copy-paste | 9, two ramp slots |
+| KiraKira-randomize-flip | 8, fixed original RNG state |
+| KiraKira-presets | 9, open/draw/scroll/release/select |
+| KiraKira-context-negative | 2, wrong area and ordinary parameter |
 
 ## Draft claim text (not posted)
 
-作業をclaimします: U03 — Unicorn guest に明示的 UI-session oracle を追加します。
-Scope: original GLOBAL_SETUP/PARAMS_SETUP/arbitrary lifecycle, explicit EVENT and
-UPDATE_PARAMS_UI dispatch, exact Win64 ABI, recording suites, and OLM witnesses;
-render mode remains unchanged. Completion: focused behavioral tests, Release
-build/self-test, local adversarial review, and original-AEX traces. Current
-blocker: the required scratch path prevents Unicorn configure from completing;
-resolve this before implementation resumes. No GitHub issue number was assigned
-by this ticket; do not invent a `Closes #N` reference.
+Claim U03: implement an explicit Unicorn UI-session oracle for original EVENT/UPDATE handlers, recording Drawbot/App/CustomUI calls and parameter/arbitrary state. Deliver focused tests, Release build, independent local review and reproducible OLM witnesses. Render mode stays unchanged. No issue number was assigned; no invented Closes reference.
 
-## Draft PR body (not posted; documentation-only blocked handoff)
+## Draft PR body (not posted)
 
-U03's Release preflight fails before guest Rust compilation when the required
-scratch path contains whitespace. A space-free symlink to that path produces the
-same configure rejection and downstream Int128 typedef error. Record both
-attempts and a reproducible blocker handoff; no UI implementation or compatibility
-claim is included.
+Original effects previously could not run stateful EVENT/UPDATE sessions in the Unicorn worker. Add opt-in `ui-session` dispatch with original setup/arbitrary callbacks, correct Win64 event marshalling, persistent drag/copy/RNG state and recording suites. Capture exact active payload bytes, UI flags/names/hidden streams and ordered drawing calls, with injected theme/picker inputs and fail-closed unsupported calls.
 
-Validation: two sequential `cargo build --release --locked ... -j 1` attempts,
-both exit 101. Behavioral self-tests and original-AEX witnesses were not reached.
-Local review boundary and disposition are recorded below. No PR should describe
-this documentation as completion of the UI-session oracle.
+Validation: Release build; 10 focused behavioral tests; independent local review; 17 original-AEX sessions / 174 successful dispatches; installed-worker replay with zero semantic differences; negative verifier tests reject changed inputs, failed processes and active/draw bit changes. Correct PF_Point ordering to SDK x-first. Preserve and report KiraKira's unstable unused serialized capacity separately; do not claim raw serialization or native rendering parity. Reviewed code SHA add877b1; final docs HEAD 888e4381.
 
 ## next
 
-Establish a working Release build recipe within the specified scratch constraint,
-or have the orchestrator explicitly revise that constraint. Resume U03 only after
-that boundary is resolved. Then implement and test the explicit UI-session mode,
-install a new worker at `~/.cache/olm-emu/worker-U03-ui/`, register its measured
-hash, and execute the requested original-AEX witness set. U02/U04/U05 cannot use
-this report as UI oracle evidence.
-
-## cleanup and local review
-
-- A separate review agent inspected the AEXCompat document, both build logs, the toolchain pin, and configure guard. No blocking findings or rejected findings. Memory/size/compiler observations were checked against this session's tool results; they are not claimed to come from the build logs.
-- AEXCompat reviewed boundary: `f402b7713c81ef235f5899621406841c3e8df1c5`. Its worktree is clean.
-- Both build processes exited 101 and were reaped; no background process started by this task remains.
-- Build tree, temporary alias, and unvalidated draft were removed. Remaining scratch logs occupy **32 KiB** (`du -sh`).
-- Cleanup's initial `rm -rf` tool call was rejected before execution: `rm -f style commands are not permitted. Use a safer approach`. After inspecting the exact directory and symlink with `ls -ld`, `rm -r` without force succeeded. No permission was requested; the final status remains blocked.
-- `git diff --check` passed in both worktrees. The separate review agent also reviewed this OLM handoff and found no blocking findings or unsupported success claims. Its sole finalization note (an unfinished review placeholder) is resolved by this sentence.
+U02 can consume KiraKira event/trace witnesses; U04/U05 can consume UPDATE matrices. Follow up native AE host scheduling/undo/save/font/pixel behavior (U06) and establish a serialization policy for original unused ramp capacity before claiming whole-payload byte parity. Extend unsupported suites only when new original call evidence requires them. No further implementation work is required for this ticket's starter oracle.
