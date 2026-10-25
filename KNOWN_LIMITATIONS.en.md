@@ -9,7 +9,7 @@
 - **GPU rendering is not supported.**
 - **Rendered files may not match Windows.** Even when the plugin computes the same result, AE color management and footage import and export can behave differently on Windows and macOS.
 - **Extremely large sizes or very heavy settings can fail.** Memory and workload limits apply. Sizes up to 3840×2160 have been tested.
-- **Some Effect Controls behaviour still differs from the Windows version.** This covers KiraKira's gradient editor (adding and dragging colour stops, presets, copy and paste, and so on) and the way some settings hide or grey out other controls. Both are being matched to the Windows version. Parameter types, names, defaults and ranges already match.
+- **The Effect Controls panel has not yet been fully checked in a real AE.** KiraKira's gradient editor and the way some settings hide or grey out other controls match recordings of the Windows version's behaviour. Their look and feel in a real AE still have to be checked.
 
 ## Settings where the Windows version fails
 
