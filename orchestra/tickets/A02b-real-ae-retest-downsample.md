@@ -52,3 +52,11 @@
 
 ## Resume note (orchestrator)
 - Your previous run was killed by an orchestrator queue restart (not by anything you did). Your worktree, commits and any uncommitted files are intact. Read your own commits, report draft and `orchestra/state/<ticket>/` first, and continue from there instead of starting over.
+
+## Dialog handling update (user request, 2026-10-25; replaces "screenshot and stop" for known AE alerts)
+- You may **dismiss AE alert dialogs automatically** with `osascript` + System Events, scoped to the AE 2026 process only. Address the process by its full app path or bundle path, and never touch other apps' windows.
+- **Allowlisted buttons only:** `OK`, `続行`, `Continue`, `閉じる`, `Close`, `後で`, `Later`, `スキップ`, `Skip`, `今はしない`, `Not Now`. Use them only on startup and alert dialogs: crash recovery, missing or duplicate plugin warnings, preview-control warnings, the home screen, update or what's-new prompts.
+- **Never click** anything destructive or irreversible: `削除` / `Delete`, `保存しない` / `Don't Save`, `置き換え` / `Replace`, `リセット` / `Reset`, `アンインストール`, purchase/sign-out buttons. Do not type credentials.
+- Before each click, take a `screencapture` crop (≤400 KB) and log the dialog title, its text and the button you pressed to `orchestra/reports/A02b-evidence/dialogs.jsonl`. Allow at most 10 clicks per AE launch. For an unknown dialog, or one with none of the allowlisted buttons, take a screenshot and stop, as before.
+- System Events needs macOS Accessibility permission. If osascript reports it is not allowed (error -1719 / -25211), stop and report `blocked: needs Accessibility permission for <process>`. The user will grant it.
+- The still-valid rules: never SIGKILL/SIGTERM AE; the screen must be unlocked before any launch; use one AE instance only.
