@@ -38,7 +38,9 @@ not rerun. A successful JSX also must exit AE before rendering begins.
 
 A02b adds a fail-closed screen-lock check immediately before GUI dispatch.
 While locked the builder waits five minutes between checks, for up to 12 hours,
-and records `screen-lock.log`. Unknown lock state refuses launch. After waiting,
+and records `screen-lock.log`. A02c recognizes an absent lock key as unlocked
+only for a logged-in on-console session. A true lock key means locked; other
+states, including an explicit false key, remain unknown and refuse launch. After waiting,
 the process/memory preflight runs again; the main AE executable must also be
 absent after the JSX process exits. Use `--scratch` to keep all generated files
 inside the current ticket, for example:

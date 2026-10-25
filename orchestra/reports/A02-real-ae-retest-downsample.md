@@ -72,3 +72,5 @@ cleanup:
 - Scratch approximately 142 MiB before removing regenerable local venv/pycache, below 5 GiB. Logs and inputs retained; evidence committed. No emulator/build worker started. Final AE/aerender inventory empty.
 
 A02b continuation (2026-10-25): **blocked before launch**. The resumed wait recorded 88 locked probes, then the console lock-state key disappeared at the next poll; launch was refused. Zero AE frames/comparisons/timings. The original A02 tables above remain NT. See [A02b report](A02b-real-ae-retest-downsample.md) for current scaffold changes, exact evidence, verification and remaining work.
+
+A02c continuation (2026-10-25): lock detection corrected; live console unlocked. System Events UI scripting preflight returned `false`, so stopped before AE launch. Zero frames/comparisons/timings; all tables remain NT. See [A02c report](A02c-real-ae-retest-downsample.md) for evidence and verification.

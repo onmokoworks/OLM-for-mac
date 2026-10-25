@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02c-real-ae-retest-downsample/tools/ae_smoke/test_downsample.py", line 8, in <module>
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'

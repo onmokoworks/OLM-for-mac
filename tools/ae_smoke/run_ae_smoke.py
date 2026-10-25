@@ -32,9 +32,15 @@ def screen_locked():
     data = plistlib.loads(subprocess.check_output(['ioreg', '-n', 'Root', '-d1', '-a']))
     root = data[0] if isinstance(data, list) else data
     users = root.get('IOConsoleUsers', [])
-    if not users or not isinstance(users[0].get('CGSSessionScreenIsLocked'), bool):
-        raise RuntimeError('Cannot establish screen lock state; launch refused')
-    return users[0]['CGSSessionScreenIsLocked']
+    for user in users:
+        if user.get('CGSSessionScreenIsLocked') is True:
+            return True
+    console = [user for user in users
+               if user.get('kCGSSessionOnConsoleKey') is True
+               and user.get('kCGSessionLoginDoneKey') is True]
+    if len(console) == 1 and 'CGSSessionScreenIsLocked' not in console[0]:
+        return False
+    raise RuntimeError('Cannot establish screen lock state; launch refused')
 
 
 def wait_unlocked(state):

@@ -9,7 +9,7 @@ import run_ae_smoke as runner
 
 class PipelineTests(unittest.TestCase):
     def test_lock_state_accepts_ioreg_root_and_rejects_missing_evidence(self):
-        for locked in (True, False):
+        for locked in (True,):
             root = {'IOConsoleUsers': [{'CGSSessionScreenIsLocked': locked}]}
             for document in (root, [root]):
                 with patch.object(runner.subprocess, 'check_output', return_value=plistlib.dumps(document)):
@@ -17,6 +17,23 @@ class PipelineTests(unittest.TestCase):
         with patch.object(runner.subprocess, 'check_output', return_value=plistlib.dumps({})):
             with self.assertRaises(RuntimeError):
                 runner.screen_locked()
+
+    def test_absent_lock_key_requires_logged_in_console(self):
+        console = {'kCGSSessionOnConsoleKey': True, 'kCGSessionLoginDoneKey': True}
+        for users, expected in [([console], False), ([{}, console], False),
+                                ([{}], None), ([], None),
+                                ([dict(console, CGSSessionScreenIsLocked=False)], None),
+                                ([dict(console, CGSSessionScreenIsLocked='true')], None),
+                                ([dict(console, kCGSessionLoginDoneKey=False)], None),
+                                ([console, {'CGSSessionScreenIsLocked': True}], True)]:
+            with self.subTest(users=users), patch.object(
+                    runner.subprocess, 'check_output',
+                    return_value=plistlib.dumps({'IOConsoleUsers': users})):
+                if expected is None:
+                    with self.assertRaises(RuntimeError):
+                        runner.screen_locked()
+                else:
+                    self.assertIs(runner.screen_locked(), expected)
 
     def test_lock_wait_resume_does_not_restart_twelve_hour_deadline(self):
         state = MagicMock()
