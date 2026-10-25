@@ -104,7 +104,7 @@ def screenshot(state):
         edge = max(1, edge * 3 // 4)
 
 
-def build(state, matrix="legacy"):
+def build(state, matrix="legacy", prevent_dialogs=True):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
@@ -132,13 +132,34 @@ def build(state, matrix="legacy"):
     preflight(state)
     if screen_locked():
         raise RuntimeError('Screen locked again after preflight; no AE launch')
+    from ae_dialog_watch import DialogWatcher
+    watcher = DialogWatcher(state, prevention=prevent_dialogs).start()
+    try:
+        _build_owned(state, wrapper, out, watcher)
+    finally:
+        watcher.stop()
+
+
+def _build_owned(state, wrapper, out, watcher):
+    # Compilation/prevention can take time: recheck just before dispatch.
+    preflight(state)
+    if screen_locked():
+        raise RuntimeError('Screen locked before dispatch; no AE launch')
+    watcher.check()
     with (state / 'ae.log').open('w') as log:
         proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects'), '-r', str(wrapper)],
                                 stdout=log, stderr=subprocess.STDOUT)
         (state / 'pid.txt').write_text(str(proc.pid) + '\n')
+        watcher.bind(proc.pid)
         deadline = time.monotonic() + 180
         result = None
         while time.monotonic() < deadline:
+            try:
+                watcher.check()
+            except RuntimeError:
+                if proc.poll() is None:
+                    quit_once(state)
+                raise
             if out.exists():
                 try:
                     result = json.loads(out.read_text())
@@ -151,7 +172,7 @@ def build(state, matrix="legacy"):
             time.sleep(1)
         if not result or result.get('phase') not in ('complete', 'error'):
             try:
-                screenshot(state)
+                watcher.capture_owned(proc.pid)
             finally:
                 if proc.poll() is None:
                     quit_once(state)
@@ -161,6 +182,7 @@ def build(state, matrix="legacy"):
         except subprocess.TimeoutExpired:
             quit_once(state)
             raise RuntimeError('JSX wrote marker but AE did not quit; stop, no retry')
+        watcher.check()
         if running():
             raise RuntimeError('AE main executable still present after wrapper exit; stop')
         if result['phase'] != 'complete':
@@ -195,6 +217,8 @@ def main():
     p.add_argument('--stage', choices=('build', 'render', 'compare', 'all'), default='all')
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
+    p.add_argument('--no-dialog-prevention', action='store_true',
+                   help='Skip preference backup/inspection; watcher remains enabled')
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
     p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths'), default='legacy')
     a = p.parse_args()
@@ -213,7 +237,7 @@ def main():
         if a.stage in (stage, 'all'):
             print(stage, flush=True)
             if stage == 'build':
-                build(state, a.matrix)
+                build(state, a.matrix, prevent_dialogs=not a.no_dialog_prevention)
             else:
                 action(state)
 

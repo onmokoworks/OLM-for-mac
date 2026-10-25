@@ -1,0 +1,7 @@
+app Optional(<NSRunningApplication: 0x6000028a8280 (com.adobe.AfterEffects.application - 54019) LSASN:{hi=0x0;lo=0x1b41b4}>) bundle Optional(file:///Applications/Adobe%20After%20Effects%202026/Adobe%20After%20Effects%202026.app/) executable Optional(file:///Applications/Adobe%20After%20Effects%202026/Adobe%20After%20Effects%202026.app/Contents/MacOS/After%20Effects) terminated Optional(false)
+["kCGWindowMemoryUsage": 2288, "kCGWindowSharingState": 1, "kCGWindowStoreType": 1, "kCGWindowName": Adobe After Effects 2026 - 名称未設定プロジェクト *, "kCGWindowIsOnscreen": 1, "kCGWindowLayer": 0, "kCGWindowNumber": 1522, "kCGWindowOwnerName": After Effects, "kCGWindowBounds": {
+    Height = 1743;
+    Width = 3200;
+    X = 0;
+    Y = 25;
+}, "kCGWindowOwnerPID": 54019, "kCGWindowAlpha": 1]
