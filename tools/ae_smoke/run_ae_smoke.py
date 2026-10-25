@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import plistlib
 from pathlib import Path
 import re
 import subprocess
@@ -25,6 +26,29 @@ def running():
     return [line.strip().split(None, 1)[0]
             for line in capture(['ps', '-axo', 'pid=,comm=']).splitlines()
             if re.search(r'MacOS/After Effects$', line)]
+
+
+def screen_locked():
+    data = plistlib.loads(subprocess.check_output(['ioreg', '-n', 'Root', '-d1', '-a']))
+    root = data[0] if isinstance(data, list) else data
+    users = root.get('IOConsoleUsers', [])
+    if not users or not isinstance(users[0].get('CGSSessionScreenIsLocked'), bool):
+        raise RuntimeError('Cannot establish screen lock state; launch refused')
+    return users[0]['CGSSessionScreenIsLocked']
+
+
+def wait_unlocked(state):
+    deadline = time.monotonic() + 12 * 3600
+    while True:
+        locked = screen_locked()
+        with (state / 'screen-lock.log').open('a') as log:
+            log.write(f'{time.time():.3f} locked={locked}\n')
+        if not locked:
+            return
+        if time.monotonic() >= deadline:
+            raise RuntimeError('Screen remained locked for 12 hours; no AE launch')
+        print('Screen locked; waiting five minutes without launching AE', flush=True)
+        time.sleep(min(300, max(0, deadline - time.monotonic())))
 
 
 def preflight(state):
@@ -70,9 +94,9 @@ def build(state, matrix="legacy"):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
-    if matrix == 'downsample-priority':
+    if matrix != 'legacy':
         from downsample_inputs import prepare
-        prepare(state / 'inputs')
+        prepare(state / 'inputs', high_depth=matrix == 'downsample-depths')
     else:
         with (state / 'inputs.log').open('w') as log:
             subprocess.run([sys.executable, str(Path(__file__).with_name('prepare_inputs.py')),
@@ -87,8 +111,13 @@ def build(state, matrix="legacy"):
     config['matrix'] = matrix
     wrapper = state / 'launch.jsx'
     wrapper.write_text('var A01=' + json.dumps(config) + ';\n$.evalFile(new File(' +
-                       json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix == 'downsample-priority' else 'prepare.jsx'))) + '));\n')
+                       json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix != 'legacy' else 'prepare.jsx'))) + '));\n')
     preflight(state)
+    wait_unlocked(state)
+    # The user may have started AE while the screen was locked.
+    preflight(state)
+    if screen_locked():
+        raise RuntimeError('Screen locked again after preflight; no AE launch')
     with (state / 'ae.log').open('w') as log:
         proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects'), '-r', str(wrapper)],
                                 stdout=log, stderr=subprocess.STDOUT)
@@ -118,6 +147,8 @@ def build(state, matrix="legacy"):
         except subprocess.TimeoutExpired:
             quit_once(state)
             raise RuntimeError('JSX wrote marker but AE did not quit; stop, no retry')
+        if running():
+            raise RuntimeError('AE main executable still present after wrapper exit; stop')
         if result['phase'] != 'complete':
             raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
 
@@ -150,13 +181,16 @@ def main():
     p.add_argument('--stage', choices=('build', 'render', 'compare', 'all'), default='all')
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
-    p.add_argument('--matrix', choices=('legacy', 'downsample-priority'), default='legacy')
+    p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths'), default='legacy')
     a = p.parse_args()
     if a.matrix != 'legacy' and a.stage in ('compare', 'all'):
         p.error('downsample comparison is not implemented; use build or render explicitly')
     if not re.fullmatch(r'[A-Za-z0-9_-]+', a.run_id):
         p.error('invalid run id')
     base = ROOT / 'orchestra/state/A02-real-ae-retest-downsample' if a.matrix != 'legacy' else STATE
+    if a.scratch:
+        base = a.scratch.resolve()
     state = base / a.run_id
     state.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(state), TMP=str(state), TEMP=str(state),

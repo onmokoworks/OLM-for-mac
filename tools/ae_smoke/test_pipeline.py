@@ -1,12 +1,23 @@
 #!/usr/bin/env python3
 """Offline checks; these do not establish any AE pixel result."""
 import unittest
+import plistlib
 from unittest.mock import patch
 import numpy as np
 import run_ae_smoke as runner
 
 
 class PipelineTests(unittest.TestCase):
+    def test_lock_state_accepts_ioreg_root_and_rejects_missing_evidence(self):
+        for locked in (True, False):
+            root = {'IOConsoleUsers': [{'CGSSessionScreenIsLocked': locked}]}
+            for document in (root, [root]):
+                with patch.object(runner.subprocess, 'check_output', return_value=plistlib.dumps(document)):
+                    self.assertEqual(runner.screen_locked(), locked)
+        with patch.object(runner.subprocess, 'check_output', return_value=plistlib.dumps({})):
+            with self.assertRaises(RuntimeError):
+                runner.screen_locked()
+
     def test_main_executable_check_excludes_helpers_and_includes_versions(self):
         listing = ('1 /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects\n'
                    '2 /Applications/Adobe After Effects 2025/Adobe After Effects 2025.app/Contents/MacOS/After Effects\n'

@@ -36,6 +36,17 @@ On a GUI timeout, capture a center crop <=400 KB, request quit once via the full
 helpers. If quit is blocked by a dialog, AE remains open for user recovery; do
 not rerun. A successful JSX also must exit AE before rendering begins.
 
+A02b adds a fail-closed screen-lock check immediately before GUI dispatch.
+While locked the builder waits five minutes between checks, for up to 12 hours,
+and records `screen-lock.log`. Unknown lock state refuses launch. After waiting,
+the process/memory preflight runs again; the main AE executable must also be
+absent after the JSX process exits. Use `--scratch` to keep all generated files
+inside the current ticket, for example:
+
+```sh
+python tools/ae_smoke/run_ae_smoke.py --year 2026 --matrix downsample-priority --stage build --run-id priority --scratch orchestra/state/A02b-real-ae-retest-downsample
+```
+
 The output templates are the previously observed local
 `TIFF シーケンス (アルファ付き)` and `OLM EXR 32 Float`. The script requests straight
 alpha, no working space/linearization, and software GPU mode. Template settings,
@@ -96,3 +107,9 @@ This priority scaffold does not yet implement 16/32 bpc, corpus parameters or
 original/native-host comparisons. `--stage compare` is the legacy control
 comparison and is not applicable to this matrix. Do not use `--stage all` for
 this matrix. Successful frame output alone does not establish exactness.
+
+`--matrix downsample-depths` prepares untouched defaults for 16/32 bpc at
+1920×1080 and 1279×719, each at all four queue resolutions (160 effects and
+16 controls). Run this separately after priority succeeds. FLOAT EXR output
+is required for 32 bpc. This remains an unvalidated real-host scaffold and
+contains no corpus cases; generation/codec checks are not AE calibration.
