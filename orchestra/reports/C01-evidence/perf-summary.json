@@ -1,0 +1,29 @@
+{
+  "counts": {
+    "exact": 675,
+    "refusal": 0,
+    "mismatch": 0
+  },
+  "seconds": 108.90805854099744,
+  "requested": {
+    "plugin": "olmcolorkey",
+    "small": 200,
+    "hd": 20,
+    "uhd": 5,
+    "seed": 1,
+    "jobs": 1,
+    "cycle_depth": true,
+    "max_size": 64,
+    "large_corpus": true,
+    "default_params": false,
+    "corpus_index": null,
+    "max_height": 64,
+    "case_timeout": 180,
+    "parallel": [
+      1,
+      2,
+      8
+    ],
+    "scratch": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C01-colorkey-pf32-nan-passthrough/orchestra/state/C01-colorkey-pf32-nan-passthrough/perf/olmcolorkey"
+  }
+}

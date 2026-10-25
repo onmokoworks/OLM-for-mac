@@ -1,0 +1,195 @@
+{
+  "input_sha256": "97c1b2330a146ec5c56e73779a169d50d1b8016fee28d47ba96315987caad03e",
+  "ae_sha256": "c9742d1378262bab8d398f543687d1702a973a78381bd10a2bb870c960edd109",
+  "runs": {
+    "arm64-default": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "command": [
+        "arch",
+        "-arm64",
+        "/Users/onmk/.cache/olm-emu/worker-V01-universal/full",
+        "/Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+        "3840",
+        "2160",
+        "8",
+        "0",
+        "0",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/schema",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/params"
+      ],
+      "bundle_sha256": "47d02cbb8325bd7885e95e89201615436de05eacb3c34a62fdfcc2dfc2e17b41"
+    },
+    "arm64-1": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "command": [
+        "arch",
+        "-arm64",
+        "/Users/onmk/.cache/olm-emu/worker-V01-universal/full",
+        "/Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+        "3840",
+        "2160",
+        "8",
+        "0",
+        "0",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/schema",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/params"
+      ],
+      "bundle_sha256": "47d02cbb8325bd7885e95e89201615436de05eacb3c34a62fdfcc2dfc2e17b41"
+    },
+    "x86_64-default": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Users/onmk/.cache/olm-emu/worker-V01-universal/full",
+        "/Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+        "3840",
+        "2160",
+        "8",
+        "0",
+        "0",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/schema",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/params"
+      ],
+      "bundle_sha256": "47d02cbb8325bd7885e95e89201615436de05eacb3c34a62fdfcc2dfc2e17b41"
+    },
+    "x86_64-1": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "command": [
+        "arch",
+        "-x86_64",
+        "/Users/onmk/.cache/olm-emu/worker-V01-universal/full",
+        "/Applications/Adobe After Effects 2026/Plug-ins/OLM-smoke/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+        "3840",
+        "2160",
+        "8",
+        "0",
+        "0",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/schema",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/S01-smoother-4k-two-sample-diff/orchestra/state/S01-smoother-4k-two-sample-diff/params"
+      ],
+      "bundle_sha256": "47d02cbb8325bd7885e95e89201615436de05eacb3c34a62fdfcc2dfc2e17b41"
+    },
+    "R10-reference": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "status": {
+        "status": "ok",
+        "error": 0,
+        "metadata": {
+          "ERROR": "0",
+          "COUNTS": "0 0 0 0 0"
+        }
+      }
+    },
+    "F54-original": {
+      "sha256": "14c5a995110525b5c04c2c8a86c20ea8904a580bb92256bbb7fb0608fe7e7531",
+      "differing_samples": 2,
+      "mismatches": [
+        {
+          "x": 1649,
+          "y": 1235,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        },
+        {
+          "x": 1649,
+          "y": 1238,
+          "channel": "B",
+          "ae": 222,
+          "host": 223
+        }
+      ],
+      "status": {
+        "status": "ok",
+        "guards_intact": true,
+        "session_clean": true
+      }
+    }
+  }
+}

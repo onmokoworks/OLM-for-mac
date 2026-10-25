@@ -1,0 +1,203 @@
+{
+  "source_sha256": {
+    "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+    "mac/OLMKiraKira/OLMKiraKira_Strings.h": "66ed41709111e64f0137d35e4b4b0161763b619fbd15c96c094124546c30d41e",
+    "mac/OLMKiraKira/RampEditor.h": "d2f0e3c01cf171d24233ff085236936b83a9b020d6920d11f819affc3be0ce27",
+    "mac/OLMKiraKira/RampPresets.h": "701cdfccc1e1a839065b832d7fbe8754d812032400b116e19478d01740e6ab17",
+    "mac/OLMKiraKira/OLMKiraKira.cpp": "2c77c037a470a398d0fb7c2169e4d92494e3bc550c54fb131d5d511ce5a06b93"
+  },
+  "original": {
+    "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "constants": {
+      "0x1814d9bec": {
+        "bits": "0x3e99999a",
+        "float": 0.30000001192092896
+      },
+      "0x1814d9bf8": {
+        "bits": "0x3f333333",
+        "float": 0.699999988079071
+      },
+      "0x1814d6928": {
+        "bits": "0x37800080",
+        "float": 1.5259021893143654e-05
+      },
+      "0x1814d692c": {
+        "bits": "0x3e800000",
+        "float": 0.25
+      },
+      "0x1814d6930": {
+        "bits": "0x3f4ccccd",
+        "float": 0.800000011920929
+      },
+      "0x1814d9be8": {
+        "bits": "0x3e19999a",
+        "float": 0.15000000596046448
+      },
+      "0x181486c14": {
+        "bits": "0x3dcccccd",
+        "float": 0.10000000149011612
+      },
+      "0x18148dbc4": {
+        "bits": "0x40000000",
+        "float": 2.0
+      },
+      "0x18148dbd0": {
+        "bits": "0x40a00000",
+        "float": 5.0
+      },
+      "0x1814c4210": {
+        "bits": "0x2f800000",
+        "float": 2.3283064365386963e-10
+      },
+      "0x1814d6740": {
+        "bits": "0x38d1b717",
+        "float": 9.999999747378752e-05
+      }
+    },
+    "rng_initial": "cd100800",
+    "requested_64_entry_counts": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      3,
+      3,
+      3,
+      3,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      2172092144,
+      6648937,
+      2172093200,
+      0,
+      1163018591,
+      1,
+      1701338979,
+      1,
+      1111112307,
+      1,
+      2166745680,
+      1699894842,
+      879980410,
+      1752375396,
+      1131696228,
+      1699891258,
+      1769170258,
+      1952675186,
+      1702521203,
+      1631795770,
+      1970435187,
+      1769172597,
+      1042300533,
+      1070596096,
+      2169354728,
+      976909923,
+      2169355328,
+      0,
+      639661153,
+      0
+    ],
+    "valid_prefix_table_sha256": "6c14b37611d1fb94fa67d87c6aeb639a1b2b20dd2c3167e566441b4dec99c13b"
+  },
+  "fuzz": {
+    "status": "complete",
+    "seed": 1,
+    "requested": 300,
+    "completed": 300,
+    "summary": {
+      "aex_classic_ok": 300,
+      "aex_ok": 287,
+      "aex_reject": 13,
+      "aex_smart_ok": 287,
+      "aex_smart_reject": 13,
+      "both_routes_exact": 0,
+      "classic_mismatch": 48,
+      "classic_refusal": 252,
+      "pixel_mismatch_cases": 48,
+      "smart_exact": 287,
+      "smart_refusal": 13
+    },
+    "elapsed_seconds": 651.205
+  },
+  "fuzz_worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+  "first_fuzz_mismatch": {
+    "index": 2,
+    "route": "classic",
+    "result": {
+      "diff": {
+        "actual_bytes": 3040,
+        "actual_word_hex": "0000803f",
+        "different_bytes": 2023,
+        "different_words": 760,
+        "expected_bytes": 3040,
+        "expected_word_hex": "00000000",
+        "first_byte": 2,
+        "first_word": 0
+      },
+      "error": 0,
+      "metadata": {
+        "COUNTS": "0 0 0 0 0",
+        "ERROR": "0"
+      },
+      "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
+      "status": "mismatch"
+    }
+  },
+  "render_unchanged": {
+    "baseline": "31c7f256d7f19099d64136c39c93c93370737246",
+    "cases": 300,
+    "route_checks": 600,
+    "differences": []
+  },
+  "corpora": [
+    {
+      "max_size": 256,
+      "requested": 383,
+      "exit_code": 0,
+      "status": "replay_complete",
+      "completed": 383,
+      "matches_saved": true
+    },
+    {
+      "max_size": 1080,
+      "requested": 4,
+      "exit_code": 0,
+      "status": "replay_complete",
+      "completed": 4,
+      "matches_saved": true
+    }
+  ],
+  "bundle_sha256": "df639c09fe327ac0c978ddcda6f9393e420e96f9356683c72ab06b26d89a70a3",
+  "bundle_architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "persistence": "34 original valid presets: callback flatten/unflatten/copy/flatten byte-identical; zero live handles",
+  "unit_tests": "ramp editor interaction and drawing assertions passed",
+  "oracle_worker_present": false,
+  "oracle_witnesses_present": false
+}

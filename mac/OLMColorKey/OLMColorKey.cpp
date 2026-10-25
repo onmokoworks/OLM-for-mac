@@ -965,9 +965,11 @@ static bool LabPerComponentHit(const float cmp[3], const float key[3], PF_FpLong
 	const float limit_l = (float)tr * 151.30099487304688f + epsilon * 2709.929931640625f;
 	const float limit_a = (float)tg * 264.36700439453125f + epsilon * 578.7139892578125f;
 	const float limit_b = (float)tb * 295.572998046875f + epsilon * 414.6759948730469f;
-	return std::fabs(cmp[0] - key[0]) <= limit_l
-	    && std::fabs(cmp[1] - key[1]) <= limit_a
-	    && std::fabs(cmp[2] - key[2]) <= limit_b;
+	// FUN_1800043a0: COMISS + JA rejects only ordered greater differences.
+	// Unordered Lab components therefore pass, allowing the replacement color.
+	return !(std::fabs(cmp[0] - key[0]) > limit_l)
+	    && !(std::fabs(cmp[1] - key[1]) > limit_a)
+	    && !(std::fabs(cmp[2] - key[2]) > limit_b);
 }
 
 static void Lab76ComparatorMutate(float value[3])
@@ -2032,9 +2034,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						limit_l *= comp_scale[0];
 						limit_a *= comp_scale[1];
 						limit_b *= comp_scale[2];
-						hit = std::fabs(cmp[0] - key[0]) <= limit_l
-						    && std::fabs(cmp[1] - key[1]) <= limit_a
-						    && std::fabs(cmp[2] - key[2]) <= limit_b;
+						// FUN_180004510 +0xb7/+0xd1/+0xe3: COMISS + JA,
+						// like Lab76 above, accepts unordered component differences.
+						hit = !(std::fabs(cmp[0] - key[0]) > limit_l)
+						    && !(std::fabs(cmp[1] - key[1]) > limit_a)
+						    && !(std::fabs(cmp[2] - key[2]) > limit_b);
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 						// FUN_180004510: ADDSS precedes promotion to double for the scale.
@@ -2142,7 +2146,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
         if (w == 1 && IsRecoveredPublicBlur(info) && info.edge_blur_distance_type == 1)
             thin_distance_workspace = std::move(dist);
 	} else if (info.edge_thin_amount > 0.0) {
-		std::vector<float> dist = MatteDistanceTo(distance_mask(), w, h, info.edge_thin_distance_type, dx, dy);
+		const std::vector<u_char> matte_mask = distance_mask();
+		std::vector<float> dist = MatteDistanceTo(matte_mask, w, h, info.edge_thin_distance_type, dx, dy);
         if (w == 1 && IsRecoveredPublicBlur(info) && info.edge_blur_distance_type == 1)
             thin_distance_workspace = MatteDistanceTo(Boundary8(distance_mask(), w, h), w, h,
                 info.edge_thin_distance_type, dx, dy);
@@ -2150,7 +2155,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const float distance_scale = 1.0f;
 		const float limit = (float)info.edge_thin_amount;
 		for (A_long i = 0; i < w * h; ++i) {
-			thin_expanded[i] = (!matched[i] && dist[i] * distance_scale <= limit) ? 1 : 0;
+			// PF32 +0x9b9c UCOMISS + JNE treats unordered matte alpha as zero.
+			// Expansion copies source RGBA, undoing classifier replacement there.
+			thin_expanded[i] = (!matte_mask[i] && dist[i] * distance_scale <= limit) ? 1 : 0;
 			matched[i] = (matched[i] || thin_expanded[i]) ? 1 : 0;
 		}
 	}
