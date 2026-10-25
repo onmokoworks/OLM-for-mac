@@ -1,0 +1,17 @@
+{
+  "colorkeep-corpus.json.gz": "1e0484307e6e013d1fd54142f837d1aa408bd6293d6ffa4c271c39942f1683af",
+  "colorkeep-fuzz.json.gz": "c81dbbed2c4e6182efd10981655b28bfb6bf9dfdb930d04fe7586ce55e25c186",
+  "corpus-summary.json": "b7950ff07ec716a022db548382bc79f4ef420d881b675b5648e72581e5d25a52",
+  "fuzz-summary.json": "c982b0d7d2e8f12fbce4d590959ae3093480f0a7a872cd5c3c7ce61ddec79572",
+  "olmcolorkey-corpus.json.gz": "8cdc9b523a5fa8f8c6a62839d2618be4d1733ccaa1602bbdb34f3d53937f370b",
+  "olmcolorkey-fuzz.json.gz": "4ca00ddc39f96c2929276d1372bedd95c2b176318c436f71940d84da3ea24c71",
+  "olmkirakira-corpus.json.gz": "d68f4c696864e8fc943616474f7a9b2f309983fe1f2ae45817083f329f65a27c",
+  "olmkirakira-fuzz.json.gz": "20c491304819327c94d98dd6c5e37d66263d8552bfbbfe5b70e294373a7fa034",
+  "olmsmoother2-corpus.json.gz": "5f0f1e5687abd9324c49c8c7577de583e374e4a3d4ccd33f408ed7b827210f12",
+  "olmsmoother2-fuzz.json.gz": "6bb0bfbeac48f332f39f144f30131c6abe2b456e505d06682656bb9839a8725b",
+  "radialblur-corpus.json.gz": "35eac31b8dc5c386dd18b7a5b39737df007f86c512d1040808a13ea55fe98e8e",
+  "radialblur-fuzz.json.gz": "8a9e7f73c8c4fa8da211eedff0c066c41f03d4f103a4c0d2e278ef9d70613263",
+  "render-unchanged.json": "3fccaa67b0fd2b507a9400af53be33f52ee789cd1a380f3847b24d530a619f05",
+  "ui-summary.json": "ad40472cd57ac94dd70fe3b43eb110349f02260036a4f9865d1758669a085176",
+  "user-changed-static.json": "622ab8b3779f45ff7e4e2428bdfd6b93e4ddfbdba1fc2a718b24cf570bf652fb"
+}
