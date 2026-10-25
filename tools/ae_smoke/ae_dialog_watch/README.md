@@ -91,3 +91,40 @@ clicks, reads flags after exit, and rejects nonzero exit codes. A03b did not
 achieve clean quit or marker execution; live recovery/OCR clicks remain unproven.
 Do not manufacture a crash by force quitting. A controlled flag-only recovery
 experiment must wait for successful clean lifecycle verification.
+
+## Scripting preference (A03c)
+
+The smoke build and two-launch test now enable file/network scripting after
+crash-flag prevention, while AE/aerender are absent. `prefs.py` copies the original
+26.3 `indep-general.txt`, hashes it, inserts/updates only
+`Main Pref Section v2 / Pref_SCRIPTING_FILE_NETWORK_SECURITY = 01`, and logs
+readback in `prefs/scripting-prefs.json`. CR/LF/CRLF and other bytes are preserved.
+Finally, after AE exits, the **whole original file** is restored and hash-checked;
+AE's incidental preference changes during this test are consequently discarded.
+If AE remains alive, restore refuses and preserves the backup for later recovery.
+Never reuse a prefs directory for enabling; this protects the original backup.
+
+Explicit commands (use the same scratch/run-id for restoration):
+
+```sh
+python3 tools/ae_smoke/run_ae_smoke.py --stage prefs --scratch orchestra/state/A03c-ae-scripting-pref-and-live-proof --run-id manual
+python3 tools/ae_smoke/run_ae_smoke.py --stage prefs --restore --scratch orchestra/state/A03c-ae-scripting-pref-and-live-proof --run-id manual
+```
+
+The marker JSX catches write errors and always invokes `app.quit()` in `finally`.
+The test requires the exact marker including runtime scripting value 1.
+A03c's live attempt was blocked **before marker execution** by a recovery dialog:
+native 1050×746 OCR read `綂行` at confidence 0.30, not the allowed `続行`.
+No click or second launch occurred. Normal quit removed AE and the original
+preference file was restored exactly. This does not establish runtime acceptance
+of the scripting setting or unattended launch success. See
+`orchestra/reports/A03c-ae-scripting-pref-and-live-proof.md` for evidence.
+
+Offline preference checks (no installed preference writes):
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_prefs.py orchestra/state/A03c-ae-scripting-pref-and-live-proof/check
+```
+
+Expected: 3 tests pass, covering newline/value variants, ambiguous sections,
+backup integrity, repeat-enable refusal, busy restore refusal and exact restore.

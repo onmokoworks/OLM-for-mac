@@ -10,6 +10,7 @@ import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from ae_dialog_watch.watcher import APP, DialogWatcher, compile_tool, read_flags
+from ae_dialog_watch.prefs import scripting_prefs
 from run_ae_smoke import preflight, wait_unlocked, screen_locked, running, quit_once
 
 
@@ -22,14 +23,16 @@ def launch(directory, binary):
         raise RuntimeError('Screen locked; no launch')
     marker = directory / 'jsx-marker.txt'
     jsx = directory / 'launch.jsx'
-    jsx.write_text('var f=new File(' + json.dumps(str(marker)) + ');\n'
-                   'if (!f.open("w")) throw new Error("marker open failed");\n'
-                   'f.write("A03b JSX executed"); f.close();\n'
-                   '$.sleep(5000); app.quit();\n')
+    jsx.write_text('try { var f=new File(' + json.dumps(str(marker)) + ');\n'
+                   'if (!f.open("w")) throw new Error("marker open failed: " + f.error);\n'
+                   'f.write("A03c JSX executed; scripting=" + app.preferences.getPrefAsLong("Main Pref Section v2", "Pref_SCRIPTING_FILE_NETWORK_SECURITY")); f.close();\n'
+                   '} catch (e) { $.writeln("A03c marker error: " + e); }\n'
+                   'finally { app.quit(); }\n')
     watcher = DialogWatcher(directory, binary=binary, prevention=True).start()
     proc = None
     quit_requested = False
     try:
+        scripting_prefs(directory / 'prefs')
         preflight(directory)
         if screen_locked():
             raise RuntimeError('Screen locked immediately before launch')
@@ -45,7 +48,7 @@ def launch(directory, binary):
                 time.sleep(.5)
             if proc.poll() is None:
                 raise RuntimeError('AE 180-second deadline exceeded')
-            if proc.returncode != 0 or not marker.exists() or running():
+            if proc.returncode != 0 or not marker.exists() or marker.read_text() != 'A03c JSX executed; scripting=1' or running():
                 raise RuntimeError('Missing marker or AE main process remains')
             watcher.check()
             flags = read_flags('com.Adobe.After Effects.26.3')
@@ -74,8 +77,14 @@ def launch(directory, binary):
                 pass
         raise
     finally:
-        watcher.stop()
-        (directory / 'final-processes.json').write_text(json.dumps(running()))
+        try:
+            watcher.stop()
+        finally:
+            (directory / 'final-processes.json').write_text(json.dumps(running()))
+            (directory / 'lifecycle.json').write_text(json.dumps(dict(
+                exit=proc.poll() if proc else None, quit_requested=quit_requested)))
+            if (directory / 'prefs/scripting-prefs.json').exists():
+                scripting_prefs(directory / 'prefs', restore=True)
 
 
 def main():

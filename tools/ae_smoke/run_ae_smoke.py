@@ -134,10 +134,16 @@ def build(state, matrix="legacy", prevent_dialogs=True):
         raise RuntimeError('Screen locked again after preflight; no AE launch')
     from ae_dialog_watch import DialogWatcher
     watcher = DialogWatcher(state, prevention=prevent_dialogs).start()
+    from ae_dialog_watch.prefs import scripting_prefs
     try:
+        scripting_prefs(state / 'prefs')
         _build_owned(state, wrapper, out, watcher)
     finally:
-        watcher.stop()
+        try:
+            watcher.stop()
+        finally:
+            if (state / 'prefs/scripting-prefs.json').exists():
+                scripting_prefs(state / 'prefs', restore=True)
 
 
 def _build_owned(state, wrapper, out, watcher):
@@ -214,7 +220,8 @@ def compare_controls(state):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--stage', choices=('build', 'render', 'compare', 'all'), default='all')
+    p.add_argument('--stage', choices=('prefs', 'build', 'render', 'compare', 'all'), default='all')
+    p.add_argument('--restore', action='store_true', help='Restore the original scripting prefs (stage prefs only)')
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
     p.add_argument('--no-dialog-prevention', action='store_true',
@@ -222,6 +229,8 @@ def main():
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
     p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths'), default='legacy')
     a = p.parse_args()
+    if a.restore and a.stage != 'prefs':
+        p.error('--restore requires --stage prefs')
     if a.matrix != 'legacy' and a.stage in ('compare', 'all'):
         p.error('downsample comparison is not implemented; use build or render explicitly')
     if not re.fullmatch(r'[A-Za-z0-9_-]+', a.run_id):
@@ -233,6 +242,10 @@ def main():
     state.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(state), TMP=str(state), TEMP=str(state),
                       OLM_REFUSAL_TRACE=str(state / 'refusals.log'))
+    if a.stage == 'prefs':
+        from ae_dialog_watch.prefs import scripting_prefs
+        print(json.dumps(scripting_prefs(state / 'prefs', restore=a.restore), indent=2))
+        return
     for stage, action in [('build', build), ('render', render), ('compare', compare_controls)]:
         if a.stage in (stage, 'all'):
             print(stage, flush=True)

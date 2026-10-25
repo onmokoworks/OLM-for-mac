@@ -155,3 +155,10 @@ but capture subsequently timed out, the JSX marker was absent, and the normal
 quit request timed out. No two-clean-launch or live button-click claim is made.
 See [A03b report](../../orchestra/reports/A03b-ae-crash-flags-and-ocr.md) and
 [watcher details](ae_dialog_watch/README.md). AE subsequently disappeared; investigate the capture/dispatch boundary before retrying.
+
+A03c adds `--stage prefs` and `--stage prefs --restore` with the same
+`--scratch`/`--run-id`. Builds enable scripting after crash-flag prevention and
+restore the complete original preference file after AE exits. If AE stays alive,
+restoration refuses until it exits. See [preference workflow](ae_dialog_watch/README.md#scripting-preference-a03c).
+The A03c live test is blocked by an exact-label OCR failure on the recovery dialog;
+two unattended launches remain unproven.
