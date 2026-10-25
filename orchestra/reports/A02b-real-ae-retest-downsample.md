@@ -43,3 +43,5 @@ next:
 - Preserve untouched DistanceGradation 32 bpc defaults; no plugin fix is justified before a measured failure.
 
 checkpoint: 2026-10-25T02:45:14.048638+00:00; 7 lock polls recorded; AE not launched. See A02b-evidence/screen-lock.txt.
+
+checkpoint: 2026-10-25T03:14:38.764312+00:00; 13 lock polls recorded; AE not launched.
