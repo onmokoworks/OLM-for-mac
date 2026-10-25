@@ -5,7 +5,7 @@
 Windows版のAfter Effectsプラグイン「OLM Tools」を、macOS（Apple Silicon／Intel）で使えるように移植する非公式プロジェクトです。
 
 > [!WARNING]
-> 現在はPublic Betaです。大切なプロジェクトで使う前に、必ず複製を作って出力を確かめてください。
+> Beta版です。仕事や制作で使う前に、必ずバックアップを取るなどして、データ破損などのリスクに備えてください。
 
 ## 対応プラグイン
 
