@@ -44,7 +44,9 @@ def main():
                 for variant,adapter in zip(['before','after'],candidates):
                     folder=scratch/name/('case-'+variant);folder.mkdir(exist_ok=True)
                     observed.append(adapter.candidate(case,folder,route,time.monotonic()+30));shutil.rmtree(folder)
-                assert observed[0]==observed[1],(name,label,route,observed[0][0],observed[1][0])
+                # Refusal attribution includes source line numbers, which UI-only edits shift.
+                # Compare actual status/metadata and output bytes, not that diagnostic.
+                assert observed[0][:2]==observed[1][:2],(name,label,route,observed[0][0],observed[1][0])
                 checks+=1
         for i in range(300):check(candidates[0].generate(1,i),f'seed1:{i}')
         for folder in sorted((ROOT/'tests/fuzz_corpus').glob(name+'*')):

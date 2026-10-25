@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compile production handler bodies with real SDK recording suites; compare U03 rows."""
-import argparse, gzip, json, os, re, struct, subprocess
+import argparse, gzip, hashlib, json, os, re, struct, subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 HERE=Path(__file__).resolve().parent
@@ -19,6 +19,13 @@ def scalar(p):
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--scratch',type=Path,required=True); ap.add_argument('--witnesses',type=Path,default=HERE/'witnesses'); args=ap.parse_args()
     scratch=args.scratch.resolve(); scratch.mkdir(parents=True,exist_ok=True)
+    manifest_path=args.witnesses/'manifest.json'
+    if manifest_path.exists():
+        for entry in json.loads(manifest_path.read_text())['sessions']:
+            name=entry['name']
+            assert hashlib.sha256((args.witnesses/(name+'.jsonl.gz')).read_bytes()).hexdigest()==entry['compressed_sha256']
+            for i,digest in enumerate(entry['request_sha256']):
+                assert hashlib.sha256((args.witnesses/(name+f'.batch{i}.request.json')).read_bytes()).hexdigest()==digest
     env={**os.environ,'TMPDIR':str(scratch)}; summary=[]
     for label,(plugin,handler,params) in PLUGINS.items():
         source=ROOT/'mac'/plugin/(plugin+'.cpp')
@@ -45,6 +52,8 @@ def main():
         with gzip.open(args.witnesses/(label+'-update.jsonl.gz'),'rt') as f: rows=[json.loads(l)['event'] for l in f]
         cases=[]
         for row in rows:
+            assert row['selector_error']==0
+            assert [p['name_bytes'] for p in row['before']]==[p['name_bytes'] for p in row['after']]
             # Existing-state update and reload from values with fresh setup UI state.
             for reload in [False,True]:
                 initial=[dict(p) for p in row['before']]
