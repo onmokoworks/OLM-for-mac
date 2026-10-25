@@ -1,4 +1,5 @@
 #include "RadialScatterSIMD.h"
+#include "RadialRotationRows.h"
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMRadialBlur.h"
 #include "../../core/dblur_noise.h"
@@ -4791,7 +4792,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			return polar.rgba[(size_t)linear_cell * 4 + 3];
 		};
-		for (A_long ri = 0; ri < radius_count; ++ri) {
+		// Polar/source planes are immutable before this joined prepass.
+		olm::radial::rotation_rows(radius_count, (size_t)w * h, [&](A_long begin, A_long end) {
+		for (A_long ri = begin; ri < end; ++ri) {
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t cell = (size_t)ri * angular_count + ai;
 				const size_t dst = cell * 4;
@@ -4864,8 +4867,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				max_alpha[cell] = alpha;
 			}
 		}
+		});
+		// Complete radius-row ownership preserves ai/outer/inner operand order.
+		olm::radial::rotation_rows(radius_count, (size_t)w * h, [&](A_long begin, A_long end) {
 		std::map<A_long, std::vector<float>> weight_cache;
-		for (A_long ri = 0; ri < radius_count; ++ri) {
+		for (A_long ri = begin; ri < end; ++ri) {
 			// FUN_1800024c0 converts the UI offset to its zero-based worker
 			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
 			// selects that dynamic span directly; it does not apply the
@@ -4968,6 +4974,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				}
 			}
 		}
+		});
 		blurred.rgba.assign((size_t)radius_count * angular_count * 4, 0.0f);
 		for (size_t cell = 0; cell < max_alpha.size(); ++cell) {
 			const size_t dst = cell * 4;
