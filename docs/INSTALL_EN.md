@@ -22,7 +22,6 @@
    ```
 
 4. Check that no older plugin or backup with the same name is left in `MediaCore` or any folder inside it.
-   - AE searches the folders inside it too, so a leftover copy causes a duplicate error.
    - Move backups outside `MediaCore`.
 5. Start After Effects and check that the OLM plugins appear in the Effect menu.
 
@@ -59,7 +58,6 @@ Only remove the mark from these 10 plugins. If they still do not load, report th
 
 ## First checks
 
-- Duplicate your project before opening it
 - At the bit depth you actually use (8 / 16 / 32 bpc), render a representative frame and compare it with the Windows version or earlier output
 - Switch the preview resolution and check that the result looks the same
 
@@ -67,13 +65,10 @@ Only remove the mark from these 10 plugins. If they still do not load, report th
 
 - **Duplicate plugin**: look for plugins with the same name in `MediaCore`, including the folders inside it, and keep only one set. Move backups outside `MediaCore`.
 - **Preview control warning**: note the plugin name and the warning text, then quit AE. Check for leftover settings from the Windows version's custom UI, or an older plugin that is still installed.
-- **Bit depth warning**: check the bit depth in AE's Project Settings and include it in your report.
-
-Force-quitting a warning dialog or AE itself can make AE show crash recovery on the next launch. If you can close it normally, do that instead.
 
 ## Uninstalling
 
-Quit After Effects and move the 10 OLM plugins out of `MediaCore`. You do not need to delete them: AE ignores anything outside `MediaCore`.
+Quit After Effects and move the 10 OLM plugins out of `MediaCore`.
 
 ## Reporting problems
 

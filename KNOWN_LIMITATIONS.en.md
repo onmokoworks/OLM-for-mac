@@ -7,8 +7,8 @@ Known limitations of the Public Beta.
 ## General
 
 - **Not signed or notarized.** The plugins are not signed with an Apple Developer ID or notarized (this costs money, so there are no plans to), so macOS Gatekeeper may block plugins you downloaded. See [the installation guide](docs/INSTALL_EN.md#if-macos-blocks-the-plugins).
-- **Mainly tested with After Effects 2026 (26.3).** Other versions may load the plugins, but they have not been tested.
-- **GPU rendering is not supported.** Use CPU rendering.
+- **Mainly tested with After Effects 2026 (26.3).** Other versions have not been tested.
+- **GPU rendering is not supported.**
 - **Final files may not match Windows.** Even when the plugin computes the same result as on Windows, AE color management, footage import and export formats can behave differently on Windows and macOS.
 - **Very large sizes or very heavy settings may fail.** Memory and workload limits apply. Sizes up to 3840×2160 have been tested.
 - **The custom Effect Controls UI is not ported.** The Windows version's custom preview drawing, click interactions and dynamic labels are not available. Parameter types, names, defaults and ranges match the Windows version.

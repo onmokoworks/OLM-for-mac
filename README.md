@@ -46,7 +46,7 @@ After Effectsを終了し、配布ZIPに入っている10個の `.plugin` を次
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 ```
 
-同じ名前の古いプラグインが残っていると、AEが重複のエラーを出します。くわしくは[インストールガイド](docs/INSTALL_JA.md)を見てください。
+くわしくは[インストールガイド](docs/INSTALL_JA.md)を見てください。
 
 > [!NOTE]
 > このプラグインはAppleの開発者署名と公証（notarization）を受けていません（有料のため、予定はありません）。macOSに止められたときの対処は[インストールガイド](docs/INSTALL_JA.md#macosに止められたとき)を見てください。

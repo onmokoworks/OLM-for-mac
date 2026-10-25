@@ -46,7 +46,7 @@ Quit After Effects, then copy the 10 `.plugin` files from the release ZIP into:
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 ```
 
-If an older plugin with the same name is still there, AE reports a duplicate. See the [installation guide](docs/INSTALL_EN.md) for details.
+See the [installation guide](docs/INSTALL_EN.md) for details.
 
 > [!NOTE]
 > The plugins are not signed with an Apple Developer ID or notarized (this costs money, so there are no plans to). If macOS blocks them, see [the installation guide](docs/INSTALL_EN.md#if-macos-blocks-the-plugins).

@@ -7,9 +7,9 @@ This document explains how we check that the Mac version matches the Windows ver
 ## What we compare against
 
 - The reference is **the original Windows plugin (`.aex`) itself**.
-- Windows programs cannot run directly on a Mac, so we run it in an emulator that reproduces it instruction by instruction.
+- The original plugin runs in an emulator that reproduces it instruction by instruction.
 - Both versions get the same input and settings, and we compare the outputs byte by byte. We also compare the output area (which region was drawn).
-- A test passes only if not a single bit differs. No tolerance is allowed.
+- A test passes only if not a single bit differs.
 
 ## What we test
 
