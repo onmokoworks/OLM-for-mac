@@ -46,3 +46,8 @@ Implement U01's plan items 1-5 in the Unicorn guest, as an explicit UI-session m
 - Use 1-2 processes. Check `memory_pressure` (≥30% free) before Rust builds, and delete build trees afterwards.
 - Make no OLM plugin source changes.
 - Commit partial results at least every 30 minutes. The stop rule applies. Getting the KiraKira draw-and-click traces plus the UPDATE capture for 2 plugins working is already a success.
+
+## Resume note (orchestrator)
+- The first run was blocked because the build ran inside `.../OLM as/...` (a path with a space). Unicorn's QEMU `configure` rejects paths with spaces, and the `int128` error follows from that failed configure. This is a known gotcha: earlier F-series tickets build under `~/.cache/olm-emu/build-*`.
+- **Build with space-free paths only:** `CARGO_TARGET_DIR=~/.cache/olm-emu/build-U03/target`, `TMPDIR=~/.cache/olm-emu/build-U03/tmp`, and run cargo from the AEXCompat worktree (`~/Documents/Projects/Personal/04_Tools/AEXCompat-olm-U03`, which has no spaces). Never run cargo or cmake with `$PWD` under the OLM repo. See `tools/emulation/aexcompat_patches/build_F53.py` for a working recipe (same clang). Delete the build tree when done.
+- The AEXCompat worktree and branch `olm/U03-ui-session` already exist; continue on them. Reimplement the UPDATE session/recorder draft that was removed.
