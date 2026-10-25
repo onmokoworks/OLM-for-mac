@@ -1,47 +1,40 @@
-status: blocked
-
+status: partial
 summary:
-- Required R10 native differential driver rejects `olmsmoother2` before building or rendering.
-- Its plugin registry and heavy-preset mapping cover six other plugins, not Smoother2.
-- Extending that driver is outside this ticket's explicit source-change boundary.
-- No production edits or threading changes were made; no performance or exactness improvement is claimed.
+- Parallelized Smoother2's independent per-pixel stage using the shared GCD row helper.
+- Preserved ordered diagnostics and the OLM_REFERENCE_BUILD sequential path.
+- 850 generated AEX cases: 701 Smart exact, 149 matched refusals, zero pixel mismatches or Smart Mac-only refusals.
+- All 15 retained corpus cases replay true; forced-cap and TSan checks pass.
+- Large-frame differential and locked performance/concurrency measurements are still in progress.
 
 facts:
-- Starting commit: `5ed31e8e347b7b9ab128d539244e51d664eae6a1`; branch: `orch/P07b-smoother2-threading`; initial working tree clean.
-- Read `AGENT_GUIDE.md`, the Smoother2 decision-matrix restrictions and palette cap in `notes/CONFORMANCE_LEDGER.md`, emulation GOTCHAS, R10 report, shared parallel helper, and Smoother2 fuzz adapter. Inspected compatibility-plan performance references.
-- `memory_pressure | tail -5`: system-wide memory free percentage was 61%.
-- `rg -n 'OLM_REFERENCE_BUILD|PLUGINS =|HEAVY =' tools/perf/ref_vs_fast.py mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`: driver lines 24/26 contain six plugins, excluding Smoother2; no `OLM_REFERENCE_BUILD` occurrence in this plugin source.
-- `core/olm_parallel.h` exists and provides serial reference and GCD fast implementations. P07a helper availability is not the blocker.
-- Ran the verify command below with stdout/stderr redirected to `orchestra/state/P07b-smoother2-threading/ref-fast-preflight.log`. Python exited 2 with `argument --plugin: invalid choice: 'olmsmoother2'`. Accepted choices: `olmdirectionalblur`, `radialblur`, `olmblur`, `olmcolorkey`, `olmsmoother`, `olmkirakira`.
-- Rendered comparisons: 0. Output hashes and first pixel mismatch: unavailable because argument parsing failed before rendering.
-- No benchmarks, sample profiles, builds, unit tests, oracle fuzz, corpus replay, TSan, or concurrent-render tests ran. No background processes or build trees were created. This was an argument-validation check, not a timing run.
+- `memory_pressure`: initially 61% free; subsequent checks >=58%.
+- Locked P00b baseline: 18/18 rows return successfully. See `P07b-evidence/baseline-matrix.jsonl`.
+- Locked `sample`: exit 0; the sampled 4K PF32 window identifies `win_FUN_18000cce0_orchestrate` as the main hot path. See `before.sample.txt`.
+- `python3 orchestra/reports/P07b-evidence/campaigns.py`: default seed 1 n300; realistic-v1 and v2 seeds 1/20261025 n100 each; odd-even-v1 seed 2026 n150 at 623x623 maximum. All six generation campaigns exit 0.
+- Initial mixed-size replay failed setup (`Replay requires the corpus --max-size`); grouped standard replay (`replay.py`) then passes 12/12 at max-size 256 and 3/3 at max-size 623.
+- `python3 orchestra/reports/P07b-evidence/threads.py`: 50 cases match hashes at caps 1/2/8; all 50 TSan cases match and have no reports. Half the cases are resized to 257x259 to exercise threading.
+- `unit_comparison.py`: 100 tests before and after, both with 17 failures and 7 errors (same named failures/errors and module exit codes). These are existing red tests, not claimed as a passing suite. Full logs are retained.
+- Universal candidate and reference bundles build successfully, installed under `~/.cache/olm-emu/P07b-smoother2{,-before}` and registered in INDEX.json. The initial candidate build failed for absent SDK links; `scripts/setup_ae_sdk_links.sh` resolved that build prerequisite.
 
 inference:
-- The R10 merge is present, but its required differential tooling has not yet been extended to this ticket's plugin. Acceptance cannot be completed through the required command within the allowed file scope.
-- This is a tooling/scope blocker, not evidence of a numerical defect or unsafe parallelism. Profiling and optimization remain unattempted pending that dependency.
+- The completed source/class planes are read-only during the pixel stage. Each task owns complete output rows; polygon traversal and all sums retain their original order.
+- The current-switch diagnostic variable and input-premultiply flag needed thread-local storage: the former was written per pixel and the latter per render even in normal operation.
+- Performance acceptance is not yet claimed.
 
 changed_files:
-- `orchestra/reports/P07b-smoother2-threading.md`
+- `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`
+- `tools/perf/ref_vs_fast.py` (Smoother2 registration, heavy preset and default-parameter mode)
+- `orchestra/reports/P07b-evidence/*`
+- This report.
 
 verify:
-```sh
-mkdir -p orchestra/state/P07b-smoother2-threading
-PYTHONDONTWRITEBYTECODE=1 TMPDIR="$PWD/orchestra/state/P07b-smoother2-threading" \
-  python3 tools/perf/ref_vs_fast.py --plugin olmsmoother2 \
-  --small 1 --hd 0 --uhd 0 --parallel 1 2 8 --jobs 1 \
-  --scratch "$PWD/orchestra/state/P07b-smoother2-threading/ref-fast" \
-  > orchestra/state/P07b-smoother2-threading/ref-fast-preflight.log 2>&1
-echo "$?"
-tail -1 orchestra/state/P07b-smoother2-threading/ref-fast-preflight.log
-```
-Expected: exit 2 and invalid plugin choice, with no builds or comparisons.
-
-Before/after timing table (no measurements made):
-
-| Cases | Before | After |
-| --- | --- | --- |
-| Default and heaviest corpus; 1080p/4K; 8/16/32 bpc | Not run | Not run |
+- `python3 orchestra/reports/P07b-evidence/campaigns.py` — six completed generation campaigns, zero Smart mismatches/Mac-only refusals.
+- `python3 orchestra/reports/P07b-evidence/replay.py` — 15 saved results replay true.
+- `python3 orchestra/reports/P07b-evidence/threads.py` — 50 forced-cap and 50 TSan cases pass.
+- `python3 orchestra/reports/P07b-evidence/unit_comparison.py` — requires no concurrent source builds; preserves candidate source and compares against pinned pre-ticket source. Same 100-test baseline failures expected.
+- `python3 tools/perf/ref_vs_fast.py --plugin olmsmoother2 --small 20 --hd 3 --uhd 3 --parallel 1 2 8 --jobs 1 --scratch orchestra/state/P07b-smoother2-threading/diff`
+- `python3 tools/perf/ref_vs_fast.py --plugin olmsmoother2 --small 0 --hd 3 --uhd 3 --no-large-corpus --default-params --parallel 1 2 8 --jobs 1 --scratch orchestra/state/P07b-smoother2-threading/diff-default`
+- `lockf -k ~/.cache/olm-emu/bench.lock python3 orchestra/reports/P07b-evidence/benchmarks.py` — pending.
 
 next:
-- Extend R10's `tools/perf/ref_vs_fast.py` plugin registry and appropriate Smoother2 heavy-case selection, or explicitly expand this ticket's permitted files to do so. Include default and heavy cases at all depths, at 1080p/4K, with caps 1/2/8.
-- Resume P07b with lock-protected baseline/sample, unit baseline, dominant-stage threading and faithful reference form, threshold measurement, and all requested differential/oracle/replay/TSan/concurrency acceptance runs. Preserve the existing ledger and release gates.
+- Finish large-frame differentials and locked before/after, threshold and four-render concurrency measurements; update this report with final evidence and remove scratch build products.
