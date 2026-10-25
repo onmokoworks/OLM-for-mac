@@ -140,3 +140,4 @@ cleanup:
 - All AE/aerender processes started by this ticket exited normally. No SIGTERM/SIGKILL was sent, and no owned background process remains.
 - All 225 preference lifecycle records restored successfully. Installed plugins are unchanged.
 - Regenerable Swift binaries/module caches and bytecode removed; scratch is 1.8 GiB, below 5 GiB. Retained evidence is JSON/logs, with no new PNG/EXR evidence over 400 KB. Saved scratch AEPs are reproducible through committed builders, not published oracles.
+- Retained refusal display log has trailing whitespace trimmed; original and retained hashes are in `A02h-evidence/log-formatting.json`. The initial staged whitespace check identified only those aerender log spaces; the final full-ticket diff check passes.
