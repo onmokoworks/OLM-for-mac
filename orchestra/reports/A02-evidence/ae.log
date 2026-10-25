@@ -1,0 +1,15 @@
+2026-10-25 11:05:05.191 After Effects[13667:9391999] CoreText registered PingFang for compatibility.
+2026-10-25 11:05:14.891 After Effects[13667:9391999] CoreText note: Client requested name ".AppleSDGothicNeoI-Bold", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-10-25 11:05:14.891 After Effects[13667:9391999] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+[2026-10-25 11:05:15] [info] asio async_connect error: asio.system:61 (Connection refused)
+[2026-10-25 11:05:15] [info] Error getting remote endpoint: asio.system:22 (Invalid argument)
+[2026-10-25 11:05:15] [error] handle_connect error: Connection refused
+[telemetry] init() called
+[telemetry] collector unreachable at http://localhost:4318, skipping OTLP
+2026-10-25T02:05:17.020901Z  INFO nexpression_ui_lib: [Tauri] Connecting to pipe: /tmp/nexpression_bridge_13667.sock
+2026-10-25T02:05:17.020951Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connecting to: /tmp/nexpression_bridge_13667.sock
+2026-10-25T02:05:17.022143Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connected successfully
+2026-10-25T02:05:17.022361Z  INFO nexpression_ui_lib: [Tauri] Connected to pipe: /tmp/nexpression_bridge_13667.sock
+2026-10-25T02:05:17.022898Z  WARN nexpression_ui_lib::mcp_server: [MCP] Port 9224 unavailable: Address already in use (os error 48)
+2026-10-25T02:05:17.022960Z  WARN nexpression_ui_lib::mcp_server: [MCP] Port 9225 unavailable: Address already in use (os error 48)
+2026-10-25T02:05:17.022996Z  INFO nexpression_ui_lib::mcp_server: [MCP] Server listening on http://127.0.0.1:9226/mcp
