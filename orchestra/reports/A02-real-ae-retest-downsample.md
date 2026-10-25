@@ -66,3 +66,12 @@ next:
 
 cleanup:
 - Scratch is approximately 140 MiB, below 5 GiB; no build trees generated. Local venv and deterministic inputs retained for follow-up, with reproducible launch/input metadata and logs committed. No owned background process remains. No push, stash, or history rewrite.
+
+
+## A02g continuation (blocked)
+
+See [A02g report](A02g-real-ae-retest-downsample.md) for calibrated 32 bpc input,
+per-plugin resolution/depth tables and 1080p/4K timing. The retained priority
+count is corrected to 107/120 raw exact; a two-sample Full-4K Smoother mismatch
+was omitted from the A02f narrative. The watcher KBar workspace boundary stopped
+further launches; full depth/corpus completion is not claimed.

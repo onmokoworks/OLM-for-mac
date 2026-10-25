@@ -208,3 +208,14 @@ The watcher treats Japanese/English script-progress titles as wait-only,
 without clicking Cancel. Scripting access is set in indep-general preferences;
 progress-dialog suppression is set in the main preferences text file. Both
 original files are backed up and restored, with SHA-256 checks.
+
+## A02g EXR input calibration
+
+The opt-in builder now hash-checks the existing Preserve RGB footage template
+and uses footage replacement for EXR inputs. Fresh 32 bpc Full no-effect controls
+at 1920×1080 and 1279×719 were raw exact; direct EXR import in the older project
+was not. This is an input interpretation fix, not a decoder gamma adjustment.
+The new build still exited nonzero because the watcher rejected a workspace
+whose title became KBar. Inspect the builder exit code in addition to `phase`
+and AE process absence before rendering. See the A02g report for the mandatory
+stop, retained measurements and incomplete effect/corpus campaign.
