@@ -29,11 +29,12 @@ def running():
 
 def preflight(state):
     deadline = time.monotonic() + 7200
-    while running():
+    while running() or any(re.search(r'/aerender$', line)
+                           for line in capture(['ps', '-axo', 'pid=,comm=']).splitlines()):
         if time.monotonic() >= deadline:
             raise RuntimeError('AE busy for 2 hours; existing process untouched')
         print('AE busy; waiting (no signal sent)', flush=True)
-        time.sleep(30)
+        time.sleep(300)
     pressure = capture(['memory_pressure'])
     (state / 'memory.txt').write_text(pressure)
     free = re.search(r'memory free percentage:\s*(\d+)%', pressure)
@@ -65,13 +66,17 @@ def screenshot(state):
         edge = max(1, edge * 3 // 4)
 
 
-def build(state):
+def build(state, matrix="legacy"):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
-    with (state / 'inputs.log').open('w') as log:
-        subprocess.run([sys.executable, str(Path(__file__).with_name('prepare_inputs.py')),
-                        str(state / 'inputs')], stdout=log, stderr=subprocess.STDOUT, check=True)
+    if matrix == 'downsample-priority':
+        from downsample_inputs import prepare
+        prepare(state / 'inputs')
+    else:
+        with (state / 'inputs.log').open('w') as log:
+            subprocess.run([sys.executable, str(Path(__file__).with_name('prepare_inputs.py')),
+                            str(state / 'inputs')], stdout=log, stderr=subprocess.STDOUT, check=True)
     specs = []
     for name in PLUGINS:
         pipl = (ROOT / f'mac/{name}/{name}PiPL.r').read_text()
@@ -79,9 +84,10 @@ def build(state):
             r'AE_Effect_Match_Name\s*\{\s*"([^"]+)"', pipl)[1]))
     config = dict(output=str(out), directory=str(state), plugins=specs,
                   inputs=json.loads((state / 'inputs/inputs.json').read_text()))
+    config['matrix'] = matrix
     wrapper = state / 'launch.jsx'
     wrapper.write_text('var A01=' + json.dumps(config) + ';\n$.evalFile(new File(' +
-                       json.dumps(str(Path(__file__).with_name('prepare.jsx'))) + '));\n')
+                       json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix == 'downsample-priority' else 'prepare.jsx'))) + '));\n')
     preflight(state)
     with (state / 'ae.log').open('w') as log:
         proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects'), '-r', str(wrapper)],
@@ -120,6 +126,9 @@ def render(state):
     data = json.loads((state / 'build.json').read_text())
     if data['phase'] != 'complete':
         raise RuntimeError('No complete build; rendering refused')
+    if data['projects'] and 'outputPrefix' in data['projects'][0]['items'][0]:
+        from render_downsample import render as render_matrix
+        return render_matrix(state, data, APP, preflight)
     for row in data['projects']:
         preflight(state)
         with (state / f'aerender-{row["depth"]}.log').open('w') as log:
@@ -141,16 +150,24 @@ def main():
     p.add_argument('--stage', choices=('build', 'render', 'compare', 'all'), default='all')
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority'), default='legacy')
     a = p.parse_args()
+    if a.matrix != 'legacy' and a.stage in ('compare', 'all'):
+        p.error('downsample comparison is not implemented; use build or render explicitly')
     if not re.fullmatch(r'[A-Za-z0-9_-]+', a.run_id):
         p.error('invalid run id')
-    state = STATE / a.run_id
+    base = ROOT / 'orchestra/state/A02-real-ae-retest-downsample' if a.matrix != 'legacy' else STATE
+    state = base / a.run_id
     state.mkdir(parents=True, exist_ok=True)
-    os.environ.update(TMPDIR=str(state), TMP=str(state), TEMP=str(state))
+    os.environ.update(TMPDIR=str(state), TMP=str(state), TEMP=str(state),
+                      OLM_REFUSAL_TRACE=str(state / 'refusals.log'))
     for stage, action in [('build', build), ('render', render), ('compare', compare_controls)]:
         if a.stage in (stage, 'all'):
             print(stage, flush=True)
-            action(state)
+            if stage == 'build':
+                build(state, a.matrix)
+            else:
+                action(state)
 
 
 if __name__ == '__main__':

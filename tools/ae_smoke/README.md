@@ -74,3 +74,25 @@ and raw byte comparison (including float payloads). They are not AE renders.
 See `orchestra/reports/A01c-real-ae-render-aerender.md` for measured results and
 remaining work. Historical A01/A01b reports retain their original commands;
 the current runner deliberately no longer accepts their unsafe launch options.
+
+## A02 opt-in priority matrix
+
+`--matrix downsample-priority --stage build --run-id priority` uses scratch under
+`orchestra/state/A02-real-ae-retest-downsample/` and a separate JSX. The legacy
+matrix remains the default. Priority comprises untouched defaults for all ten
+plugins at 1920×1080, 1279×719 and 3840×2160, 8 bpc, with render-queue Resolution
+Full/Half/Third/Quarter: 120 effects plus 12 independent controls. Inputs are
+opaque deterministic RGB patterns with no zero channels. Render settings and
+parameter readbacks are saved in `build.json`. AE output geometry must be read
+from the rendered images; requested Resolution is not an InData trace.
+
+Use the same matrix/run-id with `--stage render` to invoke aerender serially,
+one queue item per process. `render-results.json` records exit status, output
+shape/hash, all-black/transparent flags, refusal text and wall seconds (including
+startup). `OLM_REFUSAL_TRACE` is set for GUI and per render. Absence of a refusal
+tag is not proof of callback execution, particularly for the two Smoothers.
+
+This priority scaffold does not yet implement 16/32 bpc, corpus parameters or
+original/native-host comparisons. `--stage compare` is the legacy control
+comparison and is not applicable to this matrix. Do not use `--stage all` for
+this matrix. Successful frame output alone does not establish exactness.
