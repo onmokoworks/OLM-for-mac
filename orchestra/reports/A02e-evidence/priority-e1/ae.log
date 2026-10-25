@@ -1,0 +1,18 @@
+2026-10-25 19:53:58.353 After Effects[73027:13699528] CoreText registered PingFang for compatibility.
+2026-10-25 19:54:03.844 After Effects[73027:13699528] CoreText note: Client requested name ".AppleSDGothicNeoI-Bold", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-10-25 19:54:03.844 After Effects[73027:13699528] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+[2026-10-25 19:54:04] [info] asio async_connect error: asio.system:61 (Connection refused)
+[2026-10-25 19:54:04] [info] Error getting remote endpoint: asio.system:22 (Invalid argument)
+[2026-10-25 19:54:04] [error] handle_connect error: Connection refused
+[telemetry] init() called
+[telemetry] collector unreachable at http://localhost:4318, skipping OTLP
+2026-10-25 19:54:05.288 After Effects[73027:13699528] .sdef warning for argument 'FileType' of command 'save' in suite 'Standard Suite': 'saveable file format' is not a valid type name.
+2026-10-25T10:54:05.669612Z  INFO nexpression_ui_lib: [Tauri] Connecting to pipe: /tmp/nexpression_bridge_73027.sock
+2026-10-25T10:54:05.669669Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connecting to: /tmp/nexpression_bridge_73027.sock
+2026-10-25T10:54:05.682056Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connected successfully
+2026-10-25T10:54:05.683093Z  INFO nexpression_ui_lib: [Tauri] Connected to pipe: /tmp/nexpression_bridge_73027.sock
+2026-10-25T10:54:05.684683Z  WARN nexpression_ui_lib::mcp_server: [MCP] Port 9224 unavailable: Address already in use (os error 48)
+2026-10-25T10:54:05.684732Z  INFO nexpression_ui_lib::mcp_server: [MCP] Server listening on http://127.0.0.1:9225/mcp
+2026-10-25T10:54:06.652211Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Pipe closed (EOF)
+2026-10-25T10:54:06.652328Z  INFO nexpression_ui_lib: [Tauri] Disconnected from pipe: /tmp/nexpression_bridge_73027.sock
+2026-10-25T10:54:06.652571Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Writer task ended
