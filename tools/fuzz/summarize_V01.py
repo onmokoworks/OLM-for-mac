@@ -28,7 +28,10 @@ def main():
     for pair in r['results']:
      pairs['equal_'+pair['arm64']['status'] if pair['equal'] else 'difference_or_error']+=1
     if r['verdict'] not in ('equal','exact'):bad.append(dict(identity=r['identity'],verdict=r['verdict'],first_byte=r.get('first_byte'),**({k:r[k] for k in ('oracle','x86_64') if k in r})))
-    assert not r.get('thread_cap_difference'),r['identity']
+    # A missing/timed-out output is not a numerical thread-cap difference.
+    for arch in ('arm64','x86_64'):
+     completed=[p[arch] for p in r['results'] if p[arch]['status'] in ('ok','refusal')]
+     assert not completed or all(x==completed[0] for x in completed),r['identity']
   summary[phase]=dict(cases=len(identities),verdicts=dict(counts),pairs=dict(pairs),plugins={k:dict(v) for k,v in plugins.items()},non_equal=bad)
   print(phase,len(identities),dict(counts),dict(pairs))
  for phase in ('default-oracle','realistic-v1-oracle'):

@@ -3,6 +3,7 @@
 import argparse, collections, copy, fcntl, hashlib, importlib, json, os, re, shutil, struct, subprocess, time
 from pathlib import Path
 from types import SimpleNamespace
+from concurrent.futures import ThreadPoolExecutor
 from ae_realism_audit import PLUGINS, memory
 from adapters.public import geometry_environment
 from geometry import sample
@@ -103,7 +104,7 @@ def first_difference(x,y,skip=0):
    offset+=len(aa)
 def main():
  global STATE
- ap=argparse.ArgumentParser();ap.add_argument('--state',type=Path,default=STATE);ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--indices',nargs='+',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--state',type=Path,default=STATE);ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--indices',nargs='+',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--slice-jobs',type=int,choices=(1,2),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
  STATE=args.state.resolve()
  if not STATE.is_relative_to(ROOT/'orchestra/state'):ap.error('state must be inside this worktree orchestra/state')
  STATE.mkdir(parents=True,exist_ok=True)
@@ -139,13 +140,24 @@ def main():
    else:
     row['verdict']='equal';baseline=None
     for cap in ([1,2,8] if plugin in THREADED else [1]):
-     x,xp=render(a,c,'arm64',cap,d/'arm64',args.timeout);y,yp=render(a,c,'x86_64',cap,d/'x86_64',args.timeout)
+     if args.phase=='heavy':
+      free=memory()
+      with (STATE/(phase+'-memory.jsonl')).open('a') as f:f.write(json.dumps(dict(plugin=plugin,identity=identity,cap=cap,free_percent=free))+'\n')
+      assert free>=30,free
+     if args.slice_jobs==2:
+      with ThreadPoolExecutor(max_workers=2) as pool:
+       arm=pool.submit(render,a,c,'arm64',cap,d/'arm64',args.timeout)
+       intel=pool.submit(render,a,c,'x86_64',cap,d/'x86_64',args.timeout)
+       x,xp=arm.result();y,yp=intel.result()
+     else:
+      x,xp=render(a,c,'arm64',cap,d/'arm64',args.timeout);y,yp=render(a,c,'x86_64',cap,d/'x86_64',args.timeout)
      diff=first_difference(xp,yp) if x['status'] in ('ok','refusal') and y['status'] in ('ok','refusal') else None
      equal=x==y and x['status'] in ('ok','refusal') and diff is None
      row['results'].append(dict(cap=cap,arm64=x,x86_64=y,first_byte=None if diff is None else diff-4,equal=equal))
      if not equal:row['verdict']='difference' if x['status'] in ('ok','refusal') and y['status'] in ('ok','refusal') else 'host_error'
-     if baseline is not None and x!=baseline:row['thread_cap_difference']=True
-     baseline=x
+     if x['status'] in ('ok','refusal'):
+      if baseline is not None and x!=baseline:row['thread_cap_difference']=True
+      baseline=x
    if row['verdict']=='difference':
     failure=STATE/'failures'/phase/plugin
     if not failure.exists():
