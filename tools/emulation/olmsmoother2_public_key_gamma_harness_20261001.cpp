@@ -39,9 +39,14 @@ static bool load_parameters(const char *path) {
         seen[slot]=true;
         if (slot==SM_KEY_COLOR || slot>=SM_GAMMA_COLOR_0) {
             unsigned a,r,g,b;
-            if (type!='c' || fscanf(file, "%u %u %u %u", &a,&r,&g,&b)!=4 || (a|r|g|b)>255) {valid=false; break;}
+            if ((type!='c' && type!='C') || fscanf(file, "%u %u %u %u", &a,&r,&g,&b)!=4 || (a|r|g|b)>255) {valid=false; break;}
             definitions[slot].u.cd.value={static_cast<unsigned char>(a),static_cast<unsigned char>(r),
                                          static_cast<unsigned char>(g),static_cast<unsigned char>(b)};
+            if (type=='C') {
+                auto &c=definitions[slot].float_color;
+                if (fscanf(file, "%f %f %f %f", &c.alpha,&c.red,&c.green,&c.blue)!=4) {valid=false; break;}
+                definitions[slot].has_float_color=true;
+            }
         } else {
             double value;
             if (type!='s' || fscanf(file, "%lf", &value)!=1) {valid=false; break;}

@@ -231,13 +231,22 @@ class PublicAdapter:
             encoded.append(f"param_{p['slot']}@{p['slot']}:{kind}={value}")
         request = json.dumps({'v':4,'type':'render_frame','frame_index':0,
             'current_time':{'value':0,'scale':24,'step':1,'total':1},'parameters':'v4|'+';'.join(encoded)}).encode()
+        env = self.env
+        float_colors = {str(p['slot']): p['float_value'] for p in case['parameters'] if 'float_value' in p}
+        if float_colors:
+            if hasattr(self, 'bundle'):
+                raise ValueError('S02 float colour fixtures are not yet supported by the bundle bridge')
+            metadata = self.worker.parent/'build.json'
+            if not metadata.exists() or json.loads(metadata.read_text()).get('capability') != 'S02-float-colors-v1':
+                raise ValueError('Independent float colours require a registered S02 F53/F54 worker')
+            env = dict(env, OLM_FLOAT_COLOR_VALUES=json.dumps(float_colors, allow_nan=False))
         status,out,err = command([self.worker,'session',self.aex,ip,op,*case.get('full_geometry',case['geometry']),'24',
             *[v for axis,ratio in zip(('x','y'),case.get('downsample',[])) for v in ('--downsample-'+axis, '/'.join(map(str,ratio)))],
             *geometry_arguments(case,selected),
             '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[case['depth']],
             *(['--fixture-render-path',selected] if selected else []),
             *getattr(self, 'session_arguments', lambda case, directory: [])(case, directory)],data=struct.pack('<I',len(request))+request,
-            timeout=self.timeout,deadline=deadline,env=self.env)
+            timeout=self.timeout,deadline=deadline,env=env)
         observer = getattr(self, 'session_observed', None)
         if observer is not None:
             observer(out, err)

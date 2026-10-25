@@ -322,14 +322,16 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	// straight RGB; AE premultiplies later when exporting the PNG.
 	p->keep_premul      = false;
 
+	// Original builder 0x180004e10 reads only enabled key / active palette,
+	// via 0x180007540 -> 0x180016660. Suite floats need not equal byte/255.
 	PF_ColorParamSuite1 *cps = nullptr;
 #ifdef OLMSMOOTHER2_SHIM_H
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 	cps = suites.ColorParamSuite1();
 	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return OLM_SM2_REFUSAL("fetch-color-suite");
-	ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+	if (p->enable_key) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 		params[SM_KEY_COLOR], &p->key_color));
-	for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
+	for (int i = 0; p->gamma_mode == 2 && i < p->num_gamma_colors && i < NUM_GAMMA_COLORS; ++i) {
 		ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 			params[SM_GAMMA_COLOR_0 + i], &p->gamma_colors[i]));
 	}
@@ -349,9 +351,9 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	cps = (PF_ColorParamSuite1 *)raw_suite;
 	try {
 		if (!cps->PF_GetFloatingPointColorFromColorDef) err = OLM_SM2_REFUSAL("fetch-function-null");
-		if (!err) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+		if (!err && p->enable_key) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 			params[SM_KEY_COLOR], &p->key_color));
-		for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
+		for (int i = 0; p->gamma_mode == 2 && i < p->num_gamma_colors && i < NUM_GAMMA_COLORS; ++i) {
 			if (!err) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 				params[SM_GAMMA_COLOR_0 + i], &p->gamma_colors[i]));
 		}
@@ -366,28 +368,6 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	if (!err && release_err) err = (PF_Err)release_err;
 #endif
 	return err;
-}
-
-static bool
-DecodedColorMatches(const PF_ParamDef *param, const PF_PixelFloat &actual)
-{
-	if (!param) return false;
-	PF_PixelFloat expected;
-	expected.alpha = param->u.cd.value.alpha / 255.0f;
-	expected.red   = param->u.cd.value.red   / 255.0f;
-	expected.green = param->u.cd.value.green / 255.0f;
-	expected.blue  = param->u.cd.value.blue  / 255.0f;
-	return memcmp(&actual, &expected, sizeof(expected)) == 0;
-}
-
-static bool
-DecodedColorsMatch(const PF_ParamDef *const params[], const SMParams &decoded)
-{
-	if (!params || !DecodedColorMatches(params[SM_KEY_COLOR], decoded.key_color)) return false;
-	for (A_long i = 0; i < NUM_GAMMA_COLORS; ++i) {
-		if (!DecodedColorMatches(params[SM_GAMMA_COLOR_0 + i], decoded.gamma_colors[i])) return false;
-	}
-	return true;
 }
 
 // ============================================================================
@@ -5419,9 +5399,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (!err) {
 				err = FetchParams(in_data, params, &decoded_params);
 				if (err) err = OLM_SM2_ERROR("smartrender-fetch-params", err);
-				if (!err && !DecodedColorsMatch((const PF_ParamDef *const *)params, decoded_params)) {
-					err = OLM_SM2_REFUSAL("smartrender-decoded-colors");
-				}
 				if (!err) decoded_params_ready = true;
 			}
 			if (!err) {

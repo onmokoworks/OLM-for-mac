@@ -48,6 +48,8 @@ def default_worker():
 def options():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--plugin', required=True)
+    p.add_argument('--color-sampler', choices=('default', 'float-v1'), default='default',
+                   help='Smoother2 opt-in independent float colour fixture (S02 worker required)')
     p.add_argument('--reference-build', action='store_true', help='Build the faithful scalar/sequential implementation')
     p.add_argument('--geometry', choices=('default', 'realistic', 'realistic-v2'), default='default',
                    help='Opt-in sampler; requires a geometry-qualified candidate host')
@@ -74,6 +76,8 @@ def options():
     p.add_argument('--corpus-max-bytes', type=int, default=2_000_000)
     p.add_argument('--replay', type=Path, help='Replay a corpus JSON or directory; generation and shrinking are disabled')
     args = p.parse_args()
+    if args.color_sampler != 'default' and args.plugin != 'olmsmoother2':
+        p.error('--color-sampler float-v1 currently requires olmsmoother2')
     if args.reference_build and args.candidate != 'source':
         p.error('--reference-build compiles source hosts; it cannot change a supplied bundle')
     if args.candidate == 'plugin-bundle' and (not args.plugin_bundle or args.jobs != 1):
@@ -274,7 +278,7 @@ def main():
               'started_utc':datetime.now(timezone.utc).isoformat(),
               'seed':args.seed, 'requested':args.n, 'jobs':args.jobs,
               'budget_minutes':args.budget_minutes, 'case_timeout_seconds':args.case_timeout,
-              'max_size':args.max_size, 'size_sampler':args.size_sampler, 'size_max_height':args.size_max_height, 'shrink_attempts':args.shrink_attempts,
+              'max_size':args.max_size, 'color_sampler':args.color_sampler, 'size_sampler':args.size_sampler, 'size_max_height':args.size_max_height, 'shrink_attempts':args.shrink_attempts,
               'shrink_seconds':args.shrink_seconds, 'corpus_max_bytes':args.corpus_max_bytes, 'cases':[],
               'claims_not_made':['Signature clusters are not proven root causes.',
                                  'Finite random coverage is not all-input compatibility.',
