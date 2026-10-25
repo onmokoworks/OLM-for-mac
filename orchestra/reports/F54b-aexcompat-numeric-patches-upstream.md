@@ -1,13 +1,13 @@
 status: partial
 summary:
 - Checkpoint: F29/F30/F32/F44/F45/F46/F49/F50 are ported as separate commits on olm/F54b-numeric.
-- All eight math unit tests pass; integer portability test passes 100512 cases.
-- Full worker test run found one stale DEEP_PIXELS expectation (fixed), then one newly added import test missing its return stub (fixed; rerun pending).
-- Full corpus equivalence, final build registration and 4K measurements are pending.
+- Eight math tests and 100512 integer portability cases pass; 320000 retained probe rows and eight real F49 traces are exact.
+- Full worker test suite is green after correcting legacy expectations, import-stub setup and wildcard-library assertions.
+- Final tests: 727 passed, 3 ignored; registered worker e9d99f8a…deb10; corpus run continues.
 - No claim, push, PR, default-oracle switch, MAIN edit or release-gate edit.
 
 facts:
-- AEXCompat dedicated worktree: sibling AEXCompat-olm-F54b, stacked on 5a9bd8f7; checkpoint HEAD 4cf8426a.
+- AEXCompat dedicated worktree: sibling AEXCompat-olm-F54b, stacked on 5a9bd8f7; reviewed final HEAD e96d6ed9.
 - Read shared AGENT_GUIDE, GOTCHAS, compatibility plan, ledger decision matrix and upstream AGENTS/CLAUDE execution floor.
 - Fetched origin and read current open issues (34) and PRs (0); no matching numeric issue selected or claim posted, per ticket.
 - F29 focused cargo test: 1 passed, 0 failed.
