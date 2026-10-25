@@ -1,4 +1,4 @@
-depends: A03d-ae-crash-dialog-rule
+depends: A03e-ae-watcher-workspace-and-live
 # A02e: real AE 2026 retest of the fixed bundles: preview resolutions, odd sizes, 32 bpc, timing (aerender)
 
 ## Why
