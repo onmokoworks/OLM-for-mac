@@ -57,10 +57,19 @@ class PolicyTests(unittest.TestCase):
         check(False, title='', width=800, height=500, role='AXWindow', subrole='AXDialog')
         check(False, title='Adobe After Effects 2026', width=3200, height=1743, modal=True)
 
+        check(True, title='KBar', width=3200, height=1743)
+        check(False, title='KBar', width=800, height=500, modal=True)
+        check(False, title='KBar', width=800, height=500, subrole='AXDialog')
+        check(False, title='KBar', width=800, height=500, role='AXSheet')
+        check(False, title='Unknown panel', width=800, height=500)
+        check(True, title='Unknown panel', width=800, height=500, role='AXWindow', subrole='AXFloatingWindow')
+        check(False, title='Unknown panel', width=800, height=500, role='AXWindow', subrole='AXFloatingWindow', modal=True)
+
     def test_captured_workspaces_are_not_dialogs(self):
         # A03d retained window metadata + OCR; its PNG was not committed.
         captures = [('A03b-evidence/blocked-capture.jsonl', 1609),
-                    ('A03d-evidence/live2/dialogs.jsonl', 1726)]
+                    ('A03d-evidence/live2/dialogs.jsonl', 1726),
+                    ('A02g-evidence/dialogs.jsonl', 1863)]
         for fixture, window_id in captures:
             events = [json.loads(line) for line in (ROOT / 'orchestra/reports' / fixture).read_text().splitlines()]
             event = next(e for e in events if e.get('window', {}).get('kCGWindowNumber') == window_id and 'ocr' in e)
@@ -69,6 +78,9 @@ class PolicyTests(unittest.TestCase):
                 title=window['kCGWindowName'], width=bounds['Width'], height=bounds['Height'])).encode()))
             self.assertTrue(result['workspace'])
             self.assertFalse(policy(event['ocr'])['knownDialog'])
+        image = ROOT / 'orchestra/reports/A02g-evidence/unknown-1863.png'
+        ocr = json.loads(subprocess.check_output([str(BINARY), 'ocr', str(image)]))
+        self.assertFalse(ocr['knownDialog'])
         image = ROOT / 'orchestra/reports/A03b-evidence/inspect-1609.png'
         ocr = json.loads(subprocess.check_output([str(BINARY), 'ocr', str(image)]))
         self.assertFalse(ocr['knownDialog'])

@@ -53,6 +53,12 @@ def full_frame_bundle(adapter, case, directory, route, timeout):
     return status,b''
 
 
+class CodecBoundaryError(ValueError):
+    def __init__(self, message, details):
+        super().__init__(message)
+        self.details = details
+
+
 def load_rgba(path, depth):
     if path.suffix == '.exr':
         import OpenEXR
@@ -63,9 +69,21 @@ def load_rgba(path, depth):
         if depth == 16:
             scaled = rgba * np.float32(32768)
             if not np.all(np.isfinite(scaled)) or np.any(scaled < 0) or np.any(scaled > 65535) or not np.all(scaled == np.rint(scaled)):
-                raise ValueError('16 bpc FLOAT export is not exact integer/32768')
+                bad = ~np.isfinite(scaled) | (scaled < 0) | (scaled > 65535) | (scaled != np.rint(scaled))
+                y, x, channel = map(int, np.argwhere(bad)[0])
+                raise CodecBoundaryError('16 bpc FLOAT export is not exact integer/32768',
+                    dict(nonintegral_or_out_of_range_samples=int(np.count_nonzero(bad)),
+                         first=dict(x=x, y=y, channel='RGBA'[channel],
+                                    exr_float_hex=rgba[y,x,channel].tobytes().hex(),
+                                    scaled_value=float(scaled[y,x,channel]))))
             rgba = scaled.astype('<u2')
         return rgba
+    if path.suffix == '.png':
+        from PIL import Image
+        with Image.open(path) as image:
+            if depth != 8 or image.mode != 'RGBA':
+                raise ValueError('8 bpc RGBA PNG required')
+            return np.array(image)
     rgba = tifffile.imread(path)
     if depth != 8 or rgba.dtype != np.uint8:
         raise ValueError('Only 8 bpc TIFF accepted; use FLOAT EXR for deeper projects')
@@ -76,6 +94,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('state', type=Path)
     ap.add_argument('--timeout', type=int, default=30)
+    ap.add_argument('--retry-unavailable', action='store_true',
+                    help='Explicitly retry prior unavailable references after a host-boundary fix')
     args = ap.parse_args()
     state = args.state.resolve()
     out = state / 'comparison'
@@ -85,7 +105,8 @@ def main():
     result_path = state/'comparisons.json'
     results = json.loads(result_path.read_text()) if result_path.exists() else []
     prior = {r['outputPrefix']:r for r in results}
-    completed = {r['outputPrefix'] for r in results if r.get('comparison',{}).get('exact') is not None or 'io' in r}
+    completed = {r['outputPrefix'] for r in results if 'io' in r or
+                 ('comparison' in r and (not args.retry_unavailable or r['comparison'].get('exact') is not None))}
     for row in rendered:
         if row['status'] == 'error':
             continue
@@ -93,9 +114,27 @@ def main():
         if prefix in completed:
             continue
         depth = row['depth']
+        observed_divisor = {'Full': 1, 'Half': 2, 'Third': 3, 'Quarter': 4}[row['renderSettings']['Resolution']]
+        if observed_divisor != row['divisor']:
+            raise ValueError('AE Resolution readback differs from requested downsample')
         extension = row.get('outputExtension', 'exr' if depth == 32 else 'tif')
         path = next(state.glob(prefix + '_*.' + extension))
-        rgba = load_rgba(path, depth)
+        try:
+            rgba = load_rgba(path, depth)
+        except ValueError as error:
+            # Preserve the measured codec failure. Never round fractional PF16 samples.
+            result = dict(outputPrefix=prefix, plugin=row['plugin'], depth=depth,
+                          geometry=[row['shape'][1],row['shape'][0]],
+                          full_geometry=[row['width'],row['height']], divisor=row['divisor'],
+                          resolution_readback=row['renderSettings']['Resolution'])
+            boundary = dict(exact=False if row['plugin']=='control' else None,
+                            reason=str(error), classification='I/O conversion',
+                            codec_boundary=getattr(error, 'details', {}))
+            result['io' if row['plugin']=='control' else 'comparison'] = boundary
+            results = [r for r in results if r['outputPrefix'] != prefix] + [result]
+            result_path.write_text(json.dumps(results,indent=2)+'\n')
+            print(prefix, boundary, flush=True)
+            continue
         h, w = rgba.shape[:2]
         case_dir = out / prefix
         case_dir.mkdir(exist_ok=True)
@@ -151,6 +190,16 @@ def main():
                 checkout_rect=[0,0,w,h],request_rect=[0,0,w,h],extent_hint=[0,0,w,h],pixel_aspect=[1,1],
                 rowbytes_padding=0,input_padding=0,output_padding=0,pixels=pixels,parameters=params)
             result.update(input_sha256=sha(pixels),parameters=params)
+            if row.get('corpus'):
+                project = next(p for p in json.loads((state/'build.json').read_text())['projects']
+                               if any(i['outputPrefix'] == prefix for i in p['items']))
+                requested = project['input']['parameters']
+                observed = {p['slot']: p for p in params}
+                differences = [dict(requested=p, observed=observed.get(p['slot']))
+                               for p in requested if observed.get(p['slot']) != p]
+                result['corpus_binding'] = dict(path=row['corpus'], sha256=row['corpus_sha256'],
+                    parameter_differences=differences, parameters_exact=not differences,
+                    input_exact=sha(pixels) == project['input']['source_sha256'])
             route = 'classic' if name=='olmsmoother' else 'smart'
             if w <= 1920 and h <= 1080:
                 status, raw = adapter.oracle(case,case_dir,time.monotonic()+args.timeout,route)
@@ -159,7 +208,7 @@ def main():
                 status, raw = {'status':'not-run','reason':'4K uses bundle fallback'},b''
                 result['original'] = status
             if status['status'] != 'ok':
-                if row['divisor']==1 and (w>1920 or h>1080):
+                if row['divisor']==1:
                     status, raw = full_frame_bundle(adapter,case,case_dir,route,args.timeout)
                     result['bundle'] = status
                     if prefix in prior:
@@ -176,12 +225,15 @@ def main():
                 differs = original.view(np.uint32) != actual.view(np.uint32) if depth == 32 else original != actual
                 transparent_rgb = (original[:,:,0] == 0) & (actual[:,:,0] == 0)
                 only_hidden = not np.any(differs[:,:,0]) and not np.any(differs[:,:,1:] & ~transparent_rgb[:,:,None])
-                result['comparison']['classification'] = ('I/O conversion: hidden RGB at zero alpha lost in premultiplied export'
+                result['comparison']['classification'] = ('I/O/compositing suspected: hidden RGB at zero alpha differs'
                     if not result['comparison']['exact'] and only_hidden else
                     None if result['comparison']['exact'] else 'unresolved: host geometry/color management/plugin')
                 reference.unlink()
             else:
-                result['comparison'] = {'exact':None,'reason':'reference unavailable or negotiated output differs'}
+                result['comparison'] = {'exact':None,'reason':'reference unavailable or negotiated output differs',
+                    'classification': ('host depth negotiation: original does not advertise this pixel depth'
+                        if 'did not advertise support' in result.get('original', {}).get('diagnostic', '')
+                        else 'reference host limitation')}
         ae.unlink()
         results = [r for r in results if r['outputPrefix'] != prefix]
         results.append(result)

@@ -11,7 +11,8 @@ def summarize(priority, depths):
         renders += json.loads((depths / 'render-results.json').read_text())
         comparisons += json.loads((depths / 'comparisons.json').read_text())
     lookup = {r['outputPrefix']: r for r in comparisons}
-    print('E=raw exact; H=hidden-RGB I/O difference; U=uncalibrated/unresolved; '
+    print('O=raw exact vs original AEX; F=raw exact vs same-bundle fallback; '
+          'E=raw exact with unspecified reference; H=hidden-RGB I/O difference; U=uncalibrated/unresolved; '
           'P=rendered, comparison pending; —=not rendered. B suffix=black/transparent. '
           'Each cell lists counts across available sizes. No tolerance is used.\n')
     print('| Plugin | 8 Full/Half/Third/Quarter | 16 Full/Half/Third/Quarter | 32 Full/Half/Third/Quarter |')
@@ -25,8 +26,11 @@ def summarize(priority, depths):
                 counts={}
                 for r in renders:
                     if (r['plugin'],r['depth'],r['divisor']) != (plugin,depth,divisor): continue
-                    c=lookup.get(r['outputPrefix'],{}).get('comparison',{})
-                    code = ('error' if r['status']=='error' else 'E' if c.get('exact') is True
+                    record=lookup.get(r['outputPrefix'],{})
+                    c=record.get('comparison',{})
+                    exact_code = ('O' if record.get('original',{}).get('status')=='ok' else
+                                  'F' if record.get('bundle',{}).get('status')=='ok' else 'E')
+                    code = ('error' if r['status']=='error' else exact_code if c.get('exact') is True
                             else 'H' if 'hidden RGB' in str(c.get('classification'))
                             else 'U' if c else 'P')
                     if r['status']=='black': code+='B'

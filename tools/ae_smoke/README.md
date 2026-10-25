@@ -219,3 +219,54 @@ The new build still exited nonzero because the watcher rejected a workspace
 whose title became KBar. Inspect the builder exit code in addition to `phase`
 and AE process absence before rendering. See the A02g report for the mandatory
 stop, retained measurements and incomplete effect/corpus campaign.
+
+## A02h continuation
+
+The watcher recognizes the captured KBar workspace and named extension panels,
+and AX floating windows. Modal windows and AX dialog subroles always take
+precedence; unknown windows still fail closed. Offline regression replays A02g's
+window metadata and screenshot.
+
+`downsample-corpus` selects two hash-checked existing witnesses per plugin and
+renders their original Full resolution only. For footage smaller than AE's
+minimum 4×4 composition, the original layer is placed at the top left and the
+output module crops the padding. The manifest records composition and layer
+sizes separately; this is not a live checkout trace. No source pixels or corpus
+parameters are rewritten. Corpus footage is interpreted as premultiplied with
+black because its bytes are already PF-world samples; alpha mode and matte color
+are read back. Every witness has an independent control. Non-exact
+controls block effect promotion; parameter readback differences are recorded.
+
+`--matrix downsample-straight` is an additional ColorKeep/control probe at
+1279×719, 8 bpc, four resolutions, using the existing `_HIDDEN X-Factor 8` PNG
+template. Build requires `Color=Straight (Unmatted)` readback. Pillow is required
+to decode RGBA PNG without alpha/color conversion. This probes whether a straight
+export preserves hidden RGB; the name alone is not a fidelity claim.
+
+`downsample-remaining` combines the 20 Full corpus witnesses (40 queue items
+including controls) with the eight straight-alpha probe items in one GUI build.
+Render and compare use the same stages as the other opt-in matrices.
+
+Comparison records, including unavailable-reference outcomes, are retained on
+resume. Use `--retry-unavailable` only after repairing a reference-host boundary;
+normal resume does not repeat known unsupported-depth or I/O failures. Full
+frames may use the existing V01 F51/F47d transport if F53 cannot allocate them;
+that fallback still loads the installed bundle, and is never called original
+AEX exactness.
+
+A02h live result: the combined GUI build succeeds with zero watcher clicks;
+176/176 depth frames and 47/48 remaining frames produce outputs. The missing
+frame is Smoother2 corpus1 (`smartrender-decoded-colors@5403`), retained without
+retry. Fresh manifests contain only the unattempted remainder. Its original and
+same installed bundle are exact through the standalone diagnostic:
+
+```sh
+python tools/ae_smoke/replay_full_corpus.py tests/fuzz_corpus/olmsmoother2/seed1_case000067_65ee3b1d9cdf.json orchestra/state/YOUR_TICKET/fresh-replay
+```
+
+This uses packed Full worlds and exits nonzero unless both references render and
+match; it does not reproduce AE color-suite materialization. Fractional PF16
+FLOAT exports are now recorded as I/O boundaries (including the first raw float
+word), without rounding or aborting unrelated comparisons. The paired ColorKeep
+straight PNG probe is 4/4 raw exact, including hidden RGB. See the A02h report for
+remaining corpus I/O, parameter readback and Smoother v1 PF32 limitations.
