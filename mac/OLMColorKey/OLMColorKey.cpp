@@ -1,5 +1,8 @@
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMColorKey.h"
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+#include "../DynamicControls.h"
+#endif
 #include "../../core/x86_float.h"
 #include "../../core/olm_parallel.h"
 #include "AEFX_SuiteHandlerTemplate.h"
@@ -406,31 +409,29 @@ UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
 		params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value, 0, OLMCOLORKEY_MAX_COLORS);
 
 	set_enabled(OLMCOLORKEY_THRESHOLD, !per_color && !per_component);
-	set_enabled(OLMCOLORKEY_THRESHOLD_R, per_component && !per_color);
-	set_enabled(OLMCOLORKEY_THRESHOLD_G, per_component && !per_color);
-	set_enabled(OLMCOLORKEY_THRESHOLD_B, per_component && !per_color);
-
-	for (int i = 0; i < OLMCOLORKEY_MAX_COLORS; ++i) {
-		const bool active = i < color_count;
-		const A_long first = OLMCOLORKEY_COLOR_FIRST + i * COLOR_PARAM_STRIDE;
-		const bool use_color = params[first + COLOR_OFFSET_USE_COLOR]->u.bd.value != FALSE;
-		const bool use_replace = params[first + COLOR_OFFSET_USE_REPLACE]->u.bd.value != FALSE;
-
-		set_enabled(first + COLOR_OFFSET_USE_COLOR, active);
-		set_enabled(first + COLOR_OFFSET_USE_REPLACE,
-		            active && use_color && replace_enabled);
-		set_enabled(first + COLOR_OFFSET_COLOR, active && use_color);
-		set_enabled(first + COLOR_OFFSET_REPLACE_COLOR,
-		            active && use_color && replace_enabled && use_replace);
-		set_enabled(first + COLOR_OFFSET_THRESHOLD,
-		            active && per_color && !per_component);
-		set_enabled(first + COLOR_OFFSET_THRESHOLD_R,
-		            active && per_color && per_component);
-		set_enabled(first + COLOR_OFFSET_THRESHOLD_G,
-		            active && per_color && per_component);
-		set_enabled(first + COLOR_OFFSET_THRESHOLD_B,
-		            active && per_color && per_component);
-	}
+    auto set_hidden = [&](A_long index, bool hidden) {
+        if (!err) err = OLMSetHidden(in_data, index, hidden);
+    };
+    set_hidden(OLMCOLORKEY_THRESHOLD_R, !(per_component && !per_color));
+    set_hidden(OLMCOLORKEY_THRESHOLD_G, !(per_component && !per_color));
+    set_hidden(OLMCOLORKEY_THRESHOLD_B, !(per_component && !per_color));
+    for (int i = 0; i < OLMCOLORKEY_MAX_COLORS; ++i) {
+        const bool active = i < color_count;
+        const A_long first = OLMCOLORKEY_COLOR_FIRST + i * COLOR_PARAM_STRIDE;
+        const bool use = params[first + COLOR_OFFSET_USE_COLOR]->u.bd.value != FALSE;
+        const bool replace = params[first + COLOR_OFFSET_USE_REPLACE]->u.bd.value != FALSE;
+        set_enabled(first + COLOR_OFFSET_COLOR, use);
+        set_hidden(first + COLOR_OFFSET_COLOR, !active);
+        set_hidden(first + COLOR_OFFSET_USE_COLOR, !active);
+        set_hidden(first + COLOR_OFFSET_USE_REPLACE, !(active && replace_enabled));
+        set_enabled(first + COLOR_OFFSET_USE_REPLACE, use);
+        set_hidden(first + COLOR_OFFSET_REPLACE_COLOR, !(active && replace_enabled && replace));
+        set_enabled(first + COLOR_OFFSET_REPLACE_COLOR, use);
+        set_hidden(first + COLOR_OFFSET_THRESHOLD, !(active && per_color && !per_component));
+        set_hidden(first + COLOR_OFFSET_THRESHOLD_R, !(active && per_color && per_component));
+        set_hidden(first + COLOR_OFFSET_THRESHOLD_G, !(active && per_color && per_component));
+        set_hidden(first + COLOR_OFFSET_THRESHOLD_B, !(active && per_color && per_component));
+    }
 
 	return err;
 }

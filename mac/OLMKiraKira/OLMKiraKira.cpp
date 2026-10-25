@@ -1,5 +1,6 @@
 #include "../../ucrtmath/include/ucrtmath.h"
 #include "OLMKiraKira.h"
+#include "../DynamicControls.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #if defined(__clang__)
 #pragma clang fp contract(off)
@@ -25,6 +26,25 @@
 #include <vector>
 
 namespace {
+
+static PF_Err UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
+{
+    PF_Err err = PF_Err_NONE;
+    const A_long controls[][3] = {
+        {OLMKIRAKIRA_VERTICAL_USE_RAMP, OLMKIRAKIRA_VERTICAL_COLOR, OLMKIRAKIRA_VERTICAL_RAMP},
+        {OLMKIRAKIRA_HORIZONTAL_USE_RAMP, OLMKIRAKIRA_HORIZONTAL_COLOR, OLMKIRAKIRA_HORIZONTAL_RAMP},
+        {OLMKIRAKIRA_DIAGONAL_USE_RAMP, OLMKIRAKIRA_DIAGONAL_COLOR, OLMKIRAKIRA_DIAGONAL_RAMP},
+        {OLMKIRAKIRA_DIAGONAL2_USE_RAMP, OLMKIRAKIRA_DIAGONAL2_COLOR, OLMKIRAKIRA_DIAGONAL2_RAMP},
+        {OLMKIRAKIRA_HIGHLIGHT_USE_RAMP, OLMKIRAKIRA_HIGHLIGHT_COLOR, OLMKIRAKIRA_HIGHLIGHT_RAMP},
+    };
+    for (const auto &control : controls) {
+        const bool use = params[control[0]]->u.bd.value != FALSE;
+        ERR(OLMSetDisabled(in_data, params, control[1], use));
+        ERR(OLMSetDisabled(in_data, params, control[2], !use));
+    }
+    return err;
+}
+
 
 // Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
 // file, each failing admission guard appends "function:tag". The file is only
@@ -2995,6 +3015,8 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = RampEvent(in_data, params, static_cast<PF_EventExtra *>(extra)); break;
 		case PF_Cmd_ARBITRARY_CALLBACK:
 			err = RampArbitraryCallback(in_data, static_cast<PF_ArbParamsExtra *>(extra)); break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data, params); break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
 		case PF_Cmd_SMART_PRE_RENDER:
