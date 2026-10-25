@@ -1,0 +1,72 @@
+180009e10: push rbx
+180009e12: sub rsp, 0x50
+180009e16: movss xmm2, dword ptr [rcx + 4]
+180009e1b: lea rax, [rsp + 0x60]
+180009e20: movss xmm3, dword ptr [rcx + 8]
+180009e25: mov rbx, rdx
+180009e28: movss xmm1, dword ptr [rcx]
+180009e2c: lea rcx, [rsp + 0x68]
+180009e31: movaps xmmword ptr [rsp + 0x40], xmm6
+180009e36: comiss xmm3, xmm2
+180009e39: movaps xmmword ptr [rsp + 0x30], xmm7
+180009e3e: movss dword ptr [rsp + 0x68], xmm2
+180009e44: cmovbe rax, rcx
+180009e48: movss dword ptr [rsp + 0x60], xmm3
+180009e4e: comiss xmm2, xmm3
+180009e51: lea rcx, [rsp + 0x68]
+180009e56: movaps xmmword ptr [rsp + 0x20], xmm8
+180009e5c: xorps xmm8, xmm8
+180009e60: movss xmm6, dword ptr [rax]
+180009e64: lea rax, [rsp + 0x60]
+180009e69: cmovbe rax, rcx
+180009e6d: maxss xmm6, xmm1
+180009e71: movss xmm0, dword ptr [rax]
+180009e75: minss xmm0, xmm1
+180009e79: movaps xmm7, xmm6
+180009e7c: ucomiss xmm6, xmm0
+180009e7f: subss xmm7, xmm0
+180009e83: jne 0x180009e8a
+180009e85: xorps xmm2, xmm2
+180009e88: jmp 0x180009eea
+180009e8a: ucomiss xmm1, xmm6
+180009e8d: jne 0x180009ea1
+180009e8f: subss xmm2, xmm3
+180009e93: mulss xmm2, dword ptr [rip + 0x15861]
+180009e9b: divss xmm2, xmm7
+180009e9f: jmp 0x180009eea
+180009ea1: ucomiss xmm2, xmm6
+180009ea4: movss xmm0, dword ptr [rip + 0x157f8]
+180009eac: divss xmm0, xmm7
+180009eb0: jne 0x180009ecf
+180009eb2: movaps xmm2, xmm3
+180009eb5: subss xmm2, xmm1
+180009eb9: mulss xmm2, dword ptr [rip + 0x1583b]
+180009ec1: mulss xmm2, xmm0
+180009ec5: addss xmm2, dword ptr [rip + 0x1583b]
+180009ecd: jmp 0x180009eea
+180009ecf: subss xmm1, xmm2
+180009ed3: movaps xmm2, xmm1
+180009ed6: mulss xmm2, dword ptr [rip + 0x1581e]
+180009ede: mulss xmm2, xmm0
+180009ee2: addss xmm2, dword ptr [rip + 0x1583a]
+180009eea: movss xmm1, dword ptr [rip + 0x1583e]
+180009ef2: movaps xmm0, xmm2
+180009ef5: call 0x18001d95c
+180009efa: comiss xmm0, xmm8
+180009efe: jae 0x180009f08
+180009f00: addss xmm0, dword ptr [rip + 0x15828]
+180009f08: ucomiss xmm6, xmm8
+180009f0c: mulss xmm0, dword ptr [rip + 0x15720]
+180009f14: movss dword ptr [rbx], xmm0
+180009f18: je 0x180009f25
+180009f1a: divss xmm7, xmm6
+180009f1e: movss dword ptr [rbx + 4], xmm7
+180009f23: jmp 0x180009f2b
+180009f25: movss dword ptr [rbx + 4], xmm8
+180009f2b: movaps xmm7, xmmword ptr [rsp + 0x30]
+180009f30: movaps xmm8, xmmword ptr [rsp + 0x20]
+180009f36: movss dword ptr [rbx + 8], xmm6
+180009f3b: movaps xmm6, xmmword ptr [rsp + 0x40]
+180009f40: add rsp, 0x50
+180009f44: pop rbx
+180009f45: ret
