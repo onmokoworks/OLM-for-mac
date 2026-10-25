@@ -286,6 +286,8 @@ def save_corpus(path, adapter, original, case, result, reduction, provenance):
             'case': {k: v for k, v in case.items() if k != 'pixels'},
             'input_sha256': sha(case['pixels']), 'result': result,
             'reduction': reduction, 'provenance': provenance}
+    if 'color_sampler' in original:
+        data['color_sampler'] = original['color_sampler']
     if 'geometry_sampler' in original:
         data['geometry_sampler'] = original['geometry_sampler']
     if getattr(adapter, 'size_sampler', 'default') != 'default':
@@ -311,6 +313,7 @@ def load_corpus(path, adapter):
         from geometry import sample
         import copy
         generator = copy.copy(adapter)
+        generator.color_sampler = data.get('color_sampler', 'default')
         generator.size_sampler = data.get('size_sampler', 'default')
         generator.size_max_height = data.get('size_max_height')
         case = sample(generator.generate(data['seed'], data['index']),
