@@ -171,7 +171,15 @@ func watch(_ dir: URL) throws {
             }
             guard rect.width >= 200, rect.height >= 100 else { continue }
             guard Date().timeIntervalSince(firstSeen[id] ?? Date()) >= 2 else { continue }
-            let image = try snapshot(id, pid: pid)
+            let image: CGImage
+            do { image = try snapshot(id, pid: pid) }
+            catch {
+                // A destroyed splash is a verified transition, not permission loss.
+                guard CGPreflightScreenCaptureAccess(),
+                      !windows(pid).contains(where: { ($0[kCGWindowNumber as String] as? CGWindowID) == id }) else { throw error }
+                try emit(["event": "window-disappeared", "windowID": id])
+                continue
+            }
             let rows = try recognize(image)
             guard !rows.isEmpty else {
                 try save(image, dir.appendingPathComponent("blank-\(id).png"))
@@ -191,13 +199,25 @@ func watch(_ dir: URL) throws {
                 try emit(["event": "unknown", "pid": pid, "window": window, "ocr": try jsonRows(rows)])
                 throw Failure("Unknown AE dialog; no click")
             }
-            let safe = Policy.candidates(allRows).filter { row in
+            let layout = Policy.crashRecoveryLayout(rows)
+            let recovery = rows.contains { $0.text.contains("クラッシュ修復") ||
+                ["プラグインを管理", "環境設定をリセット", "セーフモードで開始"].contains($0.text) }
+            let safe = (recovery ? [] : Policy.candidates(allRows)).filter { row in
                 row.rect.midY > 0.55 || ax.contains { $0.0.text == row.text && $0.0.rect.intersects(row.rect) }
             }
-            guard let selected = safe.first else {
+            guard let selected = layout ?? safe.first else {
                 try save(image, dir.appendingPathComponent("no-safe-button-\(id).png"))
                 try emit(["event": "no-safe-button", "pid": pid, "window": window, "ocr": try jsonRows(rows)])
                 throw Failure("Known dialog has no safe allowlisted button")
+            }
+            // Optional read-only evidence barrier used by the live crash-state probe.
+            if layout != nil && fm.fileExists(atPath: dir.appendingPathComponent("snapshot-hook").path) {
+                try Data().write(to: dir.appendingPathComponent("snapshot-request"))
+                let until = Date().addingTimeInterval(30)
+                while !fm.fileExists(atPath: dir.appendingPathComponent("snapshot-ready").path) && Date() < until { pause(0.1) }
+                guard fm.fileExists(atPath: dir.appendingPathComponent("snapshot-ready").path) else {
+                    throw Failure("Crash-state snapshot timed out; no click")
+                }
             }
             guard clicks < 10 else { throw Failure("10-click limit reached") }
             guard app.activate(options: []) else { throw Failure("AE activation failed") }
@@ -210,10 +230,10 @@ func watch(_ dir: URL) throws {
             let fresh = try recognize(before)
             let freshAX = axButtons(pid, rect)
             guard Policy.knownDialog(fresh),
-                  let chosen = Policy.candidates(fresh + freshAX.map { $0.0 }).first(where: {
+                  let chosen = (layout != nil ? Policy.crashRecoveryLayout(fresh) : Policy.candidates(fresh + freshAX.map { $0.0 }).first(where: {
                       $0.text == selected.text && $0.rect.intersects(selected.rect)
-                  }) else { throw Failure("Dialog changed before click") }
-            let axTarget = freshAX.first { $0.0.text == chosen.text && $0.0.rect.intersects(chosen.rect) }
+                  })) else { throw Failure("Dialog changed before click") }
+            let axTarget = layout != nil ? nil : freshAX.first { $0.0.text == chosen.text && $0.0.rect.intersects(chosen.rect) }
             let method = axTarget == nil ? "OCR" : "AX"
             clicks += 1
             let prefix = String(format: "%02d", clicks)
@@ -221,7 +241,7 @@ func watch(_ dir: URL) throws {
             func record(_ phase: String, _ rows: [TextBox], _ verified: Bool) throws {
                 try emit(["event": "click", "phase": phase, "time": ISO8601DateFormatter().string(from: Date()),
                     "pid": pid, "window": window, "bounds": [rect.minX, rect.minY, rect.width, rect.height],
-                    "ocr": try jsonRows(rows), "chosenLabel": chosen.text, "method": method, "verified": verified])
+                    "ocr": try jsonRows(rows), "rule": layout != nil ? "crash_recovery_layout" : "exact_label", "chosenLabel": chosen.text, "method": method, "verified": verified])
             }
             try record("before", fresh, false)
             if let target = axTarget {
@@ -289,11 +309,11 @@ do {
         let url = URL(fileURLWithPath: args[2])
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else { throw Failure("Cannot read image") }
         let rows = try recognize(image)
-        try emit(["rows": try jsonRows(rows), "knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows))])
+        try emit(["rows": try jsonRows(rows), "layout": try jsonRows(Policy.crashRecoveryLayout(rows).map { [$0] } ?? []), "knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows))])
     case "policy":
         let rows = try JSONDecoder().decode([TextBox].self, from: FileHandle.standardInput.readDataToEndOfFile())
         guard rows.allSatisfy({ $0.box.count == 4 }) else { throw Failure("Invalid box") }
-        try emit(["knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows)),
+        try emit(["layout": try jsonRows(Policy.crashRecoveryLayout(rows).map { [$0] } ?? []), "knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows)),
                   "centres": Policy.candidates(rows).map { row -> [Double] in
                       let p = Policy.centre(row, window: CGRect(x: -100, y: 50, width: 800, height: 600)); return [p.x,p.y]
                   }])

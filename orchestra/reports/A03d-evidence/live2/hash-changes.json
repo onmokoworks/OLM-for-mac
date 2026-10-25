@@ -1,0 +1,70 @@
+[
+  {
+    "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定-indep-general.txt",
+    "before": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定-indep-general.txt",
+      "exists": true,
+      "mtime_ns": 1792924860628376630,
+      "size": 10261,
+      "sha256": "430246f0c124df2ba0e2128c41c2618ecdeee20db8cc644ecea120215ace4fde"
+    },
+    "after": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定-indep-general.txt",
+      "exists": true,
+      "mtime_ns": 1792924870616244209,
+      "size": 10261,
+      "sha256": "931997ccfb785ee97b5038cc2479afd2044ac708bed16cb536605c18e805f135"
+    }
+  },
+  {
+    "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定.txt",
+    "before": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定.txt",
+      "exists": true,
+      "mtime_ns": 1792924827705919649,
+      "size": 186586,
+      "sha256": "9c495b8e580a23842bff077756d816866adc06d9a0e63c30bdc6cd511717cb5e"
+    },
+    "after": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Adobe After Effects 26.3 環境設定.txt",
+      "exists": true,
+      "mtime_ns": 1792924870615375413,
+      "size": 186586,
+      "sha256": "fdc67b59432d75628c7501cb6c83ae550c5b77cb353156f467c85774f3e233b8"
+    }
+  },
+  {
+    "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/SCRPriorState.json",
+    "before": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/SCRPriorState.json",
+      "exists": true,
+      "mtime_ns": 1792924820737255178,
+      "size": 57,
+      "sha256": "6f1cab81117bcd19e41124cfe5d6184b73bd949de688d568610482e8cc566176"
+    },
+    "after": {
+      "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/SCRPriorState.json",
+      "exists": true,
+      "mtime_ns": 1792924862021275853,
+      "size": 57,
+      "sha256": "c92d4bc5575bade40b195f62ae1d6f793a15b52543f0ec7f759b9b2ad68bd97a"
+    }
+  },
+  {
+    "path": "/Users/onmk/Library/Preferences/com.Adobe.After Effects.26.3.plist",
+    "before": {
+      "path": "/Users/onmk/Library/Preferences/com.Adobe.After Effects.26.3.plist",
+      "exists": true,
+      "mtime_ns": 1792924860551507387,
+      "size": 89443,
+      "sha256": "5da8005b916b1e6737ed433b3b39616e5edacf07fdcfa22bcd064cff3a8ab522"
+    },
+    "after": {
+      "path": "/Users/onmk/Library/Preferences/com.Adobe.After Effects.26.3.plist",
+      "exists": true,
+      "mtime_ns": 1792924867836287377,
+      "size": 89443,
+      "sha256": "f294e124d1b72378b28cd84e68064c6fb1340ffbec59d087d57c4ddc58f90012"
+    }
+  }
+]

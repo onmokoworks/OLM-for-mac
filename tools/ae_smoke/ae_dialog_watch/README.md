@@ -128,3 +128,22 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_prefs.py o
 
 Expected: 3 tests pass, covering newline/value variants, ambiguous sections,
 backup integrity, repeat-enable refusal, busy restore refusal and exact restore.
+
+A03d adds the OCR-only `crash_recovery_layout` rule. It requires one exact
+high-confidence Japanese recovery title and the three exact high-confidence
+non-Continue labels, in their displayed order with a common vertical band.
+There must be exactly four OCR boxes in that band; the remaining box must be
+strictly left of Manage Plugins, non-destructive, and overlap no other box.
+The rule is re-evaluated on a fresh capture before a centre click. Recovery
+surfaces cannot fall back to the generic label policy when this rule fails.
+No low-confidence Japanese spelling is added to the allowlist.
+
+`test_e2e.py` now permits only this rule on the first launch and still requires
+zero clicks on the second. It inventories the requested AE state roots before
+prevention, before launch, during recovery (if observed), and after exit.
+The optional `snapshot-hook`/`snapshot-request`/`snapshot-ready` files let the
+live probe take its read-only inventory before the recovery click; a 30-second
+barrier timeout blocks the click. `crash_snapshot.py DESTINATION` can also run
+independently. Inventories stream SHA-256 reads and record missing roots/errors.
+No additional crash-marker deletion is implemented: A03d's live attempts did
+not reproduce recovery and could not establish a causal marker.

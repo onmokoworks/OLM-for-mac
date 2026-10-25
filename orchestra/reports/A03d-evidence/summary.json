@@ -1,0 +1,16 @@
+{
+  "live": {
+    "entries_before": 434,
+    "entries_after": 434,
+    "hash_changes": 4,
+    "marker_exists": false,
+    "dialog_snapshot_exists": false
+  },
+  "live2": {
+    "entries_before": 434,
+    "entries_after": 434,
+    "hash_changes": 4,
+    "marker_exists": false,
+    "dialog_snapshot_exists": false
+  }
+}
