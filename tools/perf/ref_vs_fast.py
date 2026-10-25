@@ -23,9 +23,9 @@ from geometry import sample, require_host
 
 # Smoother2 P00b corpus03 (all depths) and corpus05 (PF8/4K)
 # contain identical parameter lists; corpus03 represents both heavy presets.
-HEAVY = dict(olmdirectionalblur=9, radialblur=5, olmblur=5, olmcolorkey=5, olmsmoother=0, olmsmoother2=3, olmkirakira=5)
+HEAVY = dict(olmdistancegradation=2, olmdirectionalblur=9, radialblur=5, olmblur=5, olmcolorkey=5, olmsmoother=0, olmsmoother2=3, olmkirakira=5)
 
-PLUGINS = ('olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmoother', 'olmkirakira', 'olmsmoother2')
+PLUGINS = ('olmdistancegradation', 'olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmoother', 'olmkirakira', 'olmsmoother2')
 
 
 def build(kind, options, directory, deadline):
@@ -186,7 +186,7 @@ def main():
     if args.parallel is not None and any(n < 1 for n in args.parallel):
         p.error('thread caps must be positive')
     if args.parallel is None:
-        args.parallel = [1,2,8] if args.plugin in ('olmdirectionalblur','olmblur','olmkirakira','radialblur','olmsmoother2') else [1]
+        args.parallel = [1,2,8] if args.plugin in ('olmdistancegradation','olmdirectionalblur','olmblur','olmcolorkey','olmkirakira','radialblur','olmsmoother2') else [1]
     args.scratch = args.scratch.resolve() / args.plugin
     if not args.scratch.is_relative_to(ROOT/'orchestra/state'):
         p.error('scratch must be inside this worktree/orchestra/state')

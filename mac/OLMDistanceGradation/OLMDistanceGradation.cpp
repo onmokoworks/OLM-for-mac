@@ -3,6 +3,7 @@
 #include <AEFX_SuiteHelper.h>
 #include "../../core/olmdistancegradation_fieldgen.h"
 #include "../../core/olm_world_safety.h"
+#include "../../core/olm_parallel.h"
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -2232,7 +2233,8 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 
 	// Original owner copies a packed prefix of the field to the output world;
 	// Iterate reads the source at local coordinates, without world-origin adjustment.
-	for (long y = 0; y < output->height; ++y) {
+	const auto shade_row = [&](size_t row) {
+		const long y = (long)row;
 		const P *src = (const P *)((char *)input->data  + (size_t)y * input->rowbytes);
 		P *dst       = (P *)      ((char *)output->data + (size_t)y * output->rowbytes);
 		const float *xrow = df.x.data()       + (size_t)y * output->width;
@@ -2241,7 +2243,24 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		                 : (blurred ? df.x.data() : df.d_alpha.data());
 		const float *arow = aux + (size_t)y * output->width;
 		shade_scanline<P>(src, dst, xrow, arow, p, output->width, output->height, y, input);
-	}
+	};
+#ifdef OLM_REFERENCE_BUILD
+	olm::parallel_rows_reference((size_t)output->height, shade_row);
+#else
+	// Debug files retain sequential record order. Smart rows read only the
+	// source/field; overlapping worlds and Classic retain their original walk.
+	const bool threaded = smart_owner &&
+		(size_t)output->width * (size_t)output->height >= 65536 &&
+		!getenv("OLM_DG_SHADE_DEBUG_PATH") &&
+		!getenv("OLM_DG_PF16_BOUNDARY_CAPTURE_PATH") &&
+		olm::world_safety::require_disjoint(
+			{input->data, (size_t)input->width, (size_t)input->height,
+			 (size_t)input->rowbytes, sizeof(P)},
+			{output->data, (size_t)output->width, (size_t)output->height,
+			 (size_t)output->rowbytes, sizeof(P)}) == olm::world_safety::Status::ok;
+	olm::parallel_rows((size_t)output->height,
+		threaded ? 1 : (size_t)output->height, shade_row);
+#endif
 
 	return err;
 }
