@@ -102,7 +102,10 @@ def first_difference(x,y,skip=0):
    if not aa:return None
    offset+=len(aa)
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
+ global STATE
+ ap=argparse.ArgumentParser();ap.add_argument('--state',type=Path,default=STATE);ap.add_argument('--prepare',action='store_true');ap.add_argument('--phase',choices=('default','realistic-v1','realistic-v2','odd-even-v1','heavy'),default='default');ap.add_argument('--plugins',nargs='+',default=list(PLUGINS),choices=PLUGINS);ap.add_argument('--n',type=int);ap.add_argument('--jobs',type=int,choices=(1,),default=1);ap.add_argument('--oracle',action='store_true');ap.add_argument('--timeout',type=float,default=60);args=ap.parse_args()
+ STATE=args.state.resolve()
+ if not STATE.is_relative_to(ROOT/'orchestra/state'):ap.error('state must be inside this worktree orchestra/state')
  STATE.mkdir(parents=True,exist_ok=True)
  if args.prepare:prepare();return
  phase=args.phase+('-oracle' if args.oracle else '');rows=STATE/(phase+'.jsonl');seen={json.loads(l)['identity'] for l in rows.read_text().splitlines()} if rows.exists() else set()
@@ -112,7 +115,12 @@ def main():
   d=STATE/('render-'+phase);d.mkdir(exist_ok=True)
   a=importlib.import_module('adapters.'+plugin).Adapter(SimpleNamespace(main=MAIN,worker=Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker',max_size=256,case_timeout=args.timeout))
   a.env.update(TMPDIR=str(d),TMP=str(d),TEMP=str(d))
-  for identity,c in cases(a,args.phase,args.n):
+  (STATE/(phase+'-'+plugin+'-provenance.json')).write_text(json.dumps(dict(worker_path=str(a.worker),worker_sha256=digest(a.worker),aex_path=str(a.aex),aex_sha256=digest(a.aex),timeout=args.timeout,host_build=digest(CACHE/'build.json')),indent=2)+'\n')
+  for sequence,(identity,c) in enumerate(cases(a,args.phase,args.n)):
+   if sequence%25==0:
+    free=memory()
+    with (STATE/(phase+'-memory.jsonl')).open('a') as f:f.write(json.dumps(dict(plugin=plugin,index=sequence,free_percent=free))+'\n')
+    assert free>=30,free
    key=plugin+'/'+identity
    if key in seen:continue
    row=dict(identity=key,plugin=plugin,phase=args.phase,case={k:v for k,v in c.items() if k!='pixels'},input_sha256=hashlib.sha256(c['pixels']).hexdigest(),results=[])
@@ -121,7 +129,9 @@ def main():
     original,raw=a.oracle(c,d,time.monotonic()+args.timeout,'classic' if plugin=='olmsmoother' else 'smart')
     row.update(x86_64=x,oracle=original)
     if x['status']=='ok' and original['status']=='ok':
-     with xp.open('rb') as f:f.read(4);equal=f.read()==raw
+     with xp.open('rb') as f:f.read(4);candidate_raw=f.read()
+     equal=candidate_raw==raw
+     row['first_byte']=next((i for i,(x,y) in enumerate(zip(candidate_raw,raw)) if x!=y),min(len(candidate_raw),len(raw)) if len(candidate_raw)!=len(raw) else None)
      row['verdict']='exact' if equal and x['rect']==original.get('output_rect',[0,0,*c['geometry']]) else 'difference'
      row['oracle_sha256']=hashlib.sha256(raw).hexdigest()
     else:row['verdict']='non_render'
@@ -135,6 +145,13 @@ def main():
      if not equal:row['verdict']='difference' if x['status'] in ('ok','refusal') and y['status'] in ('ok','refusal') else 'host_error'
      if baseline is not None and x!=baseline:row['thread_cap_difference']=True
      baseline=x
+   if row['verdict']=='difference':
+    failure=STATE/'failures'/phase/plugin
+    if not failure.exists():
+     failure.mkdir(parents=True);(failure/'case.json').write_text(json.dumps(row,indent=2)+'\n');(failure/'input.raw').write_bytes(c['pixels'])
+     shutil.copy2(xp,failure/'first-output.bin')
+     if args.oracle:(failure/'oracle.raw').write_bytes(raw)
+     else:shutil.copy2(yp,failure/'second-output.bin')
    with rows.open('a') as f:f.write(json.dumps(row,sort_keys=True)+'\n')
    if row['verdict']=='difference':print('DIFFERENCE',key,flush=True)
   print(plugin,'complete',flush=True)
