@@ -1,0 +1,67 @@
+[
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmsmoother2",
+      "--jobs",
+      "1",
+      "--max-size",
+      "256",
+      "--replay",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/state/P07b-smoother2-threading/replay-input-256",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/state/P07b-smoother2-threading/replay-256",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/reports/P07b-evidence/replay-256.json",
+      "--geometry",
+      "realistic-v2"
+    ],
+    "exit": 0,
+    "paths": [
+      "tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout/witness-0.json",
+      "tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout/witness-1.json",
+      "tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout/witness-2.json",
+      "tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout/witness-3.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000017_9b13c27c2f2e.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000020_f67ec58a433d.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000067_65ee3b1d9cdf.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000134_b0140ce5f1be.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000223_9b13c27c2f2e.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000245_9b13c27c2f2e.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000262_9b13c27c2f2e.json",
+      "tests/fuzz_corpus/olmsmoother2/seed1_case000299_9b13c27c2f2e.json"
+    ]
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/fuzz/run.py",
+      "--plugin",
+      "olmsmoother2",
+      "--jobs",
+      "1",
+      "--max-size",
+      "623",
+      "--replay",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/state/P07b-smoother2-threading/replay-input-623",
+      "--scratch",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/state/P07b-smoother2-threading/replay-623",
+      "--report",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P07b-smoother2-threading/orchestra/reports/P07b-evidence/replay-623.json",
+      "--geometry",
+      "realistic",
+      "--size-sampler",
+      "odd-even-v1",
+      "--size-max-height",
+      "623"
+    ],
+    "exit": 0,
+    "paths": [
+      "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF16.json",
+      "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF32.json",
+      "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic/anchor-PF8.json"
+    ]
+  }
+]

@@ -21,9 +21,11 @@ sys.path.insert(0, str(ROOT / 'tools/fuzz'))
 from adapters.public import geometry_environment
 from geometry import sample, require_host
 
-HEAVY = dict(olmdirectionalblur=9, radialblur=5, olmblur=5, olmcolorkey=5, olmsmoother=0, olmkirakira=5)
+# Smoother2 P00b corpus03 (all depths) and corpus05 (PF8/4K)
+# contain identical parameter lists; corpus03 represents both heavy presets.
+HEAVY = dict(olmdirectionalblur=9, radialblur=5, olmblur=5, olmcolorkey=5, olmsmoother=0, olmsmoother2=3, olmkirakira=5)
 
-PLUGINS = ('olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmoother', 'olmkirakira')
+PLUGINS = ('olmdirectionalblur', 'radialblur', 'olmblur', 'olmcolorkey', 'olmsmoother', 'olmkirakira', 'olmsmoother2')
 
 
 def build(kind, options, directory, deadline):
@@ -147,6 +149,9 @@ def cases(adapter, args):
             # Only procedural fuzz parameters follow the generated frame resize.
             if not (corpus and args.large_corpus):
                 adapter.resize(case, old)
+        if phase != 'small' and args.default_params:
+            case['parameters'] = adapter.defaults(*case['geometry'])
+            case['parameter_source'] = 'PARAMS_SETUP defaults'
         # Downsample/ROI are independently exercised by the small cases. Fixed
         # large cases must really render their requested full frame dimensions.
         if phase == 'small':
@@ -165,6 +170,7 @@ def main():
     p.add_argument('--cycle-depth', action=argparse.BooleanOptionalAction, default=True, help='Guarantee every depth in each fixed-size phase')
     p.add_argument('--max-size', type=int, default=64)
     p.add_argument('--large-corpus', action=argparse.BooleanOptionalAction, default=True, help='Use P00b corpus parameters for fixed-size frames (default: enabled)')
+    p.add_argument('--default-params', action='store_true', help='Use Smoother2 declared defaults for fixed-size frames (requires --no-large-corpus)')
     p.add_argument('--corpus-index', type=int, choices=range(10), help='Choose one P00b corpus parameter set (requires --large-corpus)')
     p.add_argument('--max-height', type=int, default=64)
     p.add_argument('--case-timeout', type=float, default=180)
@@ -173,12 +179,14 @@ def main():
     args = p.parse_args()
     if min(args.small,args.hd,args.uhd) < 0 or not (1 <= args.max_size <= 4096 and 1 <= args.max_height <= 4096) or args.case_timeout <= 0:
         p.error('counts must be nonnegative, sizes 1..4096, and timeout positive')
+    if args.default_params and (args.plugin != 'olmsmoother2' or args.large_corpus):
+        p.error('--default-params requires --plugin olmsmoother2 --no-large-corpus')
     if args.corpus_index is not None and not args.large_corpus:
         p.error('--corpus-index requires --large-corpus')
     if args.parallel is not None and any(n < 1 for n in args.parallel):
         p.error('thread caps must be positive')
     if args.parallel is None:
-        args.parallel = [1,2,8] if args.plugin in ('olmdirectionalblur','olmblur','olmkirakira','radialblur') else [1]
+        args.parallel = [1,2,8] if args.plugin in ('olmdirectionalblur','olmblur','olmkirakira','radialblur','olmsmoother2') else [1]
     args.scratch = args.scratch.resolve() / args.plugin
     if not args.scratch.is_relative_to(ROOT/'orchestra/state'):
         p.error('scratch must be inside this worktree/orchestra/state')
