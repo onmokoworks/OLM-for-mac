@@ -7,9 +7,10 @@ sys.path.insert(0,str(ROOT/'tools/perf'))
 import ref_vs_fast as rf
 S=ROOT/'orchestra/state/P07e-radialblur-rotation-parallel/threads'
 S.mkdir(parents=True,exist_ok=True)
-o=types.SimpleNamespace(plugin='radialblur',max_size=64,case_timeout=180,main=ROOT.parent.parent,
+o=types.SimpleNamespace(plugin='radialblur',max_size=64,case_timeout=180,main=(ROOT.parent.parent if ROOT.parent.name=='worktrees' else ROOT),
  worker=Path('/unused'),size_sampler='default',size_max_height=64)
 results=[]
+(S/'results.json').unlink(missing_ok=True)
 adapters={}
 for kind in ('reference','fast','tsan'):
  d=S/kind;d.mkdir(exist_ok=True)

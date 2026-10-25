@@ -9,7 +9,7 @@ if not os.environ.get('P07E_BENCH_LOCKED'):
  sys.exit(0)
 sys.path.insert(0,str(root/'tools/emulation'))
 import probe_radialblur_topology_20261001 as p
-p.ROOT=root.parent.parent
+p.ROOT=root.parent.parent if root.parent.name=='worktrees' else root
 p.HARNESS=root/'orchestra/reports/P07e-evidence/concurrent.cpp'
 env=dict(os.environ,TMPDIR=str(s),TMP=str(s),TEMP=str(s))
 os.environ.update(env)
