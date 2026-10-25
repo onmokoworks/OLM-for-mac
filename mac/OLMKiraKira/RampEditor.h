@@ -15,7 +15,7 @@ struct Rect { int left, top, right, bottom;
 constexpr Rect strip{10,5,202,55};
 constexpr Rect buttons[] = {{225,35,295,55},{225,60,295,80},{5,80,135,100},{140,80,205,100}};
 constexpr const char16_t* captions[] = {u"copy",u"paste",u"randomize",u"flip"};
-struct Color { float red, green, blue, alpha; };
+struct Color { float red, green, blue, alpha; int theme_role=0; float factor=1.0f; };
 struct State {
     int selected = -1, armed = -1, hover_x = 0, hover_y = 0, anchor_y = 0;
     bool menu_open = false;
@@ -168,20 +168,23 @@ template<class Ramp> void picker_result(Ramp& ramp, State& state, int index, boo
     else if (index>=0 && static_cast<unsigned>(index)<ramp.count) set_color(ramp.stops[index],c);
 }
 // Commands carry local coordinates. The host adapter owns suite resources.
-enum class DrawKind { antialias, fill, frame, line, text, pen, release_pen, ticks };
+enum class DrawKind { theme_query, antialias, fill, frame, line, text, pen, release_pen, ticks };
 struct DrawCommand { DrawKind kind; float x,y,w,h; Color color; const char16_t* text=nullptr; float font=11.0f; };
 struct Theme { Color frame, fill, text, black; };
-inline Color scaled(Color c, float factor) { c.red*=factor;c.green*=factor;c.blue*=factor;return c; }
+inline Color scaled(Color c, float factor) { c.red*=factor;c.green*=factor;c.blue*=factor;c.factor*=factor;return c; }
 inline void rect(std::vector<DrawCommand>& out, DrawKind kind, Rect r, Color c) {
     out.push_back({kind,float(r.left),float(r.top),float(r.right-r.left),float(r.bottom-r.top),c});
 }
 template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State& state,
                                                   bool can_paste, Theme theme) {
     std::vector<DrawCommand> out;
+    auto query=[&](int role) { out.push_back({DrawKind::theme_query,float(role),0,0,0,{}}); };
+    query(7); query(42); query(2);
     out.push_back({DrawKind::antialias,0,0,0,0,{}});
     if (!ramp.count) rect(out,DrawKind::fill,strip,theme.black);
     else for(int x=10;x<=202;++x)
         out.push_back({DrawKind::line,float(x),5,0,50,sample(ramp,float(x-10)/192.0f)});
+    query(7);
     out.push_back({DrawKind::pen,0,0,0,0,theme.frame});
     rect(out,DrawKind::frame,strip,theme.frame);
     for(int i=1;i<=3;++i)
@@ -205,6 +208,7 @@ template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State
             fill_factor=(state.armed==b || hover) ? 1.0f : 0.7f;
         }
         out.push_back({DrawKind::antialias,0,0,0,0,{}});
+        query(8); query(7); query(2);
         rect(out,DrawKind::fill,buttons[b],scaled(theme.fill,fill_factor));
         rect(out,DrawKind::frame,buttons[b],theme.frame);
         const auto r=buttons[b];
@@ -212,6 +216,7 @@ template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State
                        float(r.right-r.left),0,scaled(theme.text,text_factor),captions[b],16.0f});
     }
     out.push_back({DrawKind::antialias,0,0,0,0,{}});
+    query(42); query(8); query(7); query(2); query(2);
     rect(out,DrawKind::fill,preset_header,theme.black);
     const float header_font=20.0f*(1.0f-0.15f*2.0f);
     out.push_back({DrawKind::text,260,5+20.0f*0.15f+header_font*0.8f,80,0,theme.text,u"\u25bc  PRESETS",header_font});

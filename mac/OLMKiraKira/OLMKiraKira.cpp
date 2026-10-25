@@ -2325,14 +2325,24 @@ static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
     const float ox = event->effect_win.current_frame.left;
     const float oy = event->effect_win.current_frame.top;
     DRAWBOT_PenRef shared_pen = nullptr;
+    AEFX_SuiteScoper<PFAppSuite6> app(in_data,kPFAppSuite,kPFAppSuiteVersion6);
+    std::map<int,ramp_ui::Color> theme_colors;
     for (const auto& c : commands) {
-        DRAWBOT_ColorRGBA rgba{c.color.red,c.color.green,c.color.blue,c.color.alpha};
+        auto color=c.color;
+        if(color.theme_role) color=ramp_ui::scaled(theme_colors.at(color.theme_role),color.factor);
+        DRAWBOT_ColorRGBA rgba{color.red,color.green,color.blue,color.alpha};
         DRAWBOT_RectF32 rect{c.x+ox,c.y+oy,c.w,c.h};
         DRAWBOT_PathRef path = nullptr;
         DRAWBOT_PenRef pen = nullptr;
         DRAWBOT_FontRef font = nullptr;
         DRAWBOT_BrushRef brush = nullptr;
         switch(c.kind) {
+        case ramp_ui::DrawKind::theme_query: {
+            PF_App_Color value{};
+            ERR(app->PF_AppGetColor(static_cast<PF_App_ColorType>(c.x),&value));
+            theme_colors[static_cast<int>(c.x)]={value.red*0x1.0001p-16f,value.green*0x1.0001p-16f,value.blue*0x1.0001p-16f,1.0f};
+            break;
+        }
         case ramp_ui::DrawKind::pen:
             ERR(sup->NewPen(supplier,&rgba,1.0f,&shared_pen)); break;
         case ramp_ui::DrawKind::release_pen:
@@ -2399,14 +2409,12 @@ static PF_Err RampEvent(PF_InData *in_data, PF_ParamDef *params[], PF_EventExtra
     if(err) return err;
     AEFX_SuiteScoper<PFAppSuite6> app(in_data,kPFAppSuite,kPFAppSuiteVersion6);
     if(event->e_type==PF_Event_DRAW) {
-        ramp_ui::Theme theme;
-        ramp_ui::Color* colors[]={&theme.frame,&theme.fill,&theme.text,&theme.black};
-        const PF_App_ColorType roles[]={7,8,2,42};
-        for(int i=0;i<4;++i) {
-            PF_App_Color c{};
-            ERR(app->PF_AppGetColor(roles[i],&c));
-            *colors[i]={c.red*0x1.0001p-16f,c.green*0x1.0001p-16f,c.blue*0x1.0001p-16f,1.0f};
-        }
+        // Original 181155700 subtracts the frame origin on every event,
+        // including DRAW, which retains the previous converted pointer.
+        state.hover_x -= event->effect_win.current_frame.left;
+        state.hover_y -= event->effect_win.current_frame.top;
+        // Resolve theme colors at each original widget query, in draw order.
+        ramp_ui::Theme theme{{0,0,0,1,7},{0,0,0,1,8},{0,0,0,1,2},{0,0,0,1,42}};
         return err ? err : DrawRampCommands(in_data,event,ramp_ui::draw(ramp,state,instance.clipboard.available,theme));
     }
     const auto& frame=event->effect_win.current_frame;
@@ -2436,6 +2444,23 @@ static PF_Err RampEvent(PF_InData *in_data, PF_ParamDef *params[], PF_EventExtra
     }
     param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
     event->evt_out_flags |= PF_EO_HANDLED_EVENT | PF_EO_UPDATE_NOW;
+    return err;
+}
+
+// Original UPDATE: each Use Ramp toggles its solid color and arbitrary editor.
+static PF_Err UpdateRampUI(PF_InData *in_data, PF_ParamDef *params[]) {
+    PF_Err err=PF_Err_NONE;
+    AEFX_SuiteScoper<PF_ParamUtilsSuite3> suite(in_data,kPFParamUtilsSuite,kPFParamUtilsSuiteVersion3);
+    for(int use : {13,19,25,31,37}) {
+        const bool ramp=params[use]->u.bd.value!=0;
+        for(int slot : {use-2,use+1}) {
+            PF_ParamDef def=*params[slot];
+            const bool disabled=slot==use-2 ? ramp : !ramp;
+            if(disabled) def.ui_flags |= PF_PUI_DISABLED;
+            else def.ui_flags &= ~PF_PUI_DISABLED;
+            ERR(suite->PF_UpdateParamUI(in_data->effect_ref,slot,&def));
+        }
+    }
     return err;
 }
 
@@ -3027,6 +3052,8 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
             ramp_ui_instances.clear();
             break;
         }
+		case PF_Cmd_UPDATE_PARAMS_UI:
+            err = UpdateRampUI(in_data, params); break;
 		case PF_Cmd_EVENT:
 			err = RampEvent(in_data, params, static_cast<PF_EventExtra *>(extra)); break;
 		case PF_Cmd_ARBITRARY_CALLBACK:

@@ -60,6 +60,8 @@ int main() {
     assert(hit(r,202,65)==15);
     const Theme theme{{0.1f,0.2f,0.3f,1},{0.2f,0.3f,0.4f,1},{1,1,1,1},{0,0,0,1}};
     auto commands=draw(r,s,true,theme);
+    assert(commands[0].kind==DrawKind::theme_query && commands[0].x==7);
+    commands.erase(std::remove_if(commands.begin(),commands.end(),[](const auto& c){return c.kind==DrawKind::theme_query;}),commands.end());
     assert(commands[0].kind==DrawKind::antialias);
     for(int i=0;i<193;++i) {
         const auto& c=commands[1+i]; assert(c.kind==DrawKind::line && c.x==10+i && c.y==5 && c.w==0 && c.h==50);

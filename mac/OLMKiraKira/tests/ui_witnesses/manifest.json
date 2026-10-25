@@ -1,0 +1,24 @@
+{
+  "worker_sha256": "e476ba8ddfbda5fc2ef1cda49c700f15c5d09a232930f6a2074d7026f2c406b0",
+  "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "sessions": [
+    {
+      "name": "KiraKira-count-boundaries",
+      "dispatches": 63,
+      "request_sha256": "4af12f3595db790df8107d611765a0a166e516f2f30812ab79080613f5be66f2",
+      "compressed_sha256": "a193ad6ae4b21d14bc5f27c1a5c68f41fa5dcfb200d16e331542b73567f5464b"
+    },
+    {
+      "name": "KiraKira-five-slots-hover",
+      "dispatches": 25,
+      "request_sha256": "b76cd5ff7c1e9f18a0014e8a6d1717be02593f488cb838c3de52fc3468a80aeb",
+      "compressed_sha256": "8aab56d247fa848339a835db1e8790159e87838ec3c324fc9220e43004456202"
+    },
+    {
+      "name": "KiraKira-menu-last",
+      "dispatches": 17,
+      "request_sha256": "372b0b410bdeb5509004c820616fa0f7b668064bcbc73570c9b44b11a05da3a6",
+      "compressed_sha256": "6fe30efe4afac2c0b6fca5faee34d0eebad5d8bea402f7d07399a7bc17381651"
+    }
+  ]
+}

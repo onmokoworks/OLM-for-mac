@@ -15,9 +15,10 @@ from adapters import olmkirakira as module
 from geometry import sample
 parser=argparse.ArgumentParser()
 parser.add_argument('--baseline',default='31c7f256d7f19099d64136c39c93c93370737246')
+parser.add_argument('--scratch',type=Path)
 args=parser.parse_args()
 main=Path('/Users/onmk/Documents/Projects/Personal/OLM as')
-scratch=root/'orchestra/state/U02-kirakira-ramp-editor/render-unchanged'
+scratch=args.scratch or root/'orchestra/state/U02-kirakira-ramp-editor/render-unchanged'
 scratch.mkdir(parents=True,exist_ok=True)
 os.environ['TMPDIR']=str(scratch)
 options=SimpleNamespace(max_size=256,case_timeout=10,main=main,
@@ -30,6 +31,9 @@ body=body.replace('"../../','"'+str(root)+'/')
 for filename in ('OLMKiraKira.h','OLMKiraKira_Strings.cpp','OLMKiraKira_Strings.h'):
     link=baseline_dir/filename
     if not link.exists():link.symlink_to(original_source.parent/filename)
+for filename in ('RampEditor.h','RampPresets.h'):
+    content=subprocess.run(['git','show',args.baseline+':mac/OLMKiraKira/'+filename],cwd=root,text=True,capture_output=True)
+    if content.returncode==0:(baseline_dir/filename).write_text(content.stdout)
 adapters=[]
 deadline=time.monotonic()+1800
 for name,source in [('baseline',baseline_dir/'OLMKiraKira.cpp'),('candidate',original_source)]:

@@ -1,11 +1,15 @@
 """Compile the real arbitrary callbacks; feed the 34 valid original PE table records."""
+import argparse
 import os
 from pathlib import Path
 import subprocess
 import pefile
 root=Path(__file__).resolve().parents[3]
 main=Path('/Users/onmk/Documents/Projects/Personal/OLM as')
-scratch=root/'orchestra/state/U02-kirakira-ramp-editor/persistence'
+parser=argparse.ArgumentParser()
+parser.add_argument('--scratch',type=Path)
+args=parser.parse_args()
+scratch=args.scratch or root/'orchestra/state/U02-kirakira-ramp-editor/persistence'
 scratch.mkdir(parents=True,exist_ok=True)
 env=dict(os.environ,TMPDIR=str(scratch))
 plugin=root/'mac/OLMKiraKira'

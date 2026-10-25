@@ -1,4 +1,5 @@
 """Replay every KiraKira corpus using its saved worker and maximum size."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -6,7 +7,10 @@ import subprocess
 import sys
 
 root = Path(__file__).resolve().parents[3]
-scratch = root / 'orchestra/state/U02-kirakira-ramp-editor'
+parser=argparse.ArgumentParser()
+parser.add_argument('--scratch',type=Path)
+args=parser.parse_args()
+scratch = args.scratch or root / 'orchestra/state/U02-kirakira-ramp-editor'
 scratch.mkdir(parents=True, exist_ok=True)
 env = dict(os.environ, TMPDIR=str(scratch), OLM_TEST_JOBS='1')
 groups = {}
