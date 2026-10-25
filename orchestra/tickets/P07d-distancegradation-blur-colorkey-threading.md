@@ -38,3 +38,4 @@ depends: R10-reference-fast-split
 ## Reference path (R10)
 - Keep the faithful sequential form of everything you optimize, selectable with `OLM_REFERENCE_BUILD`, as R10 set up. The fast path stays the default.
 - Main acceptance step: `tools/perf/ref_vs_fast.py` must report byte-identical results for this plugin, including the 1080p/4K and heaviest-param cases, at `OLM_PARALLEL_MAX` 1, 2 and 8. The oracle campaigns above are still required.
+- If `tools/perf/ref_vs_fast.py` does not support this plugin yet, add it: a registry entry, heavy presets from the P00b corpus cases, and build hooks. Editing that driver for your plugin is in scope. For a plugin that has no optimization yet, the reference form is the current code.
