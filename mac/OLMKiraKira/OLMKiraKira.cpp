@@ -12,6 +12,9 @@
 #include "../../core/kirakira_merge2.h"
 #include "../../core/kirakira_sincos.h"
 
+#include "RampEditor.h"
+#include <map>
+#include <mutex>
 #include <algorithm>
 #include <cstdarg>
 #include <cstdint>
@@ -2293,124 +2296,133 @@ static PF_Err AddRampParam(PF_InData *in_data, A_short id, A_long disk_id)
 	return err;
 }
 
+namespace ramp_ui = olm::kirakira::editor;
+struct RampUIInstance {
+    ramp_ui::Clipboard<OLMKiraKiraRampData> clipboard;
+    std::map<A_long, ramp_ui::State> ramps;
+};
+static std::recursive_mutex ramp_ui_mutex;
+static std::map<PF_ProgPtr, RampUIInstance> ramp_ui_instances;
+// Original global at 181824968, initialized to the PE's 0x000810cd.
+static std::uint32_t ramp_ui_rng = 0x000810cd;
+
+static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
+                              const std::vector<ramp_ui::DrawCommand>& commands)
+{
+    PF_Err err = PF_Err_NONE;
+    AEGP_SuiteHandler suites(in_data->pica_basicP);
+    DRAWBOT_DrawRef draw = nullptr;
+    ERR(suites.EffectCustomUISuite2()->PF_GetDrawingReference(event->contextH, &draw));
+    if (err || !draw) return err;
+    DRAWBOT_SupplierRef supplier = nullptr;
+    DRAWBOT_SurfaceRef surface = nullptr;
+    ERR(suites.DrawbotSuiteCurrent()->GetSupplier(draw, &supplier));
+    ERR(suites.DrawbotSuiteCurrent()->GetSurface(draw, &surface));
+    if (err) return err;
+    const auto sup = suites.SupplierSuiteCurrent();
+    const auto surf = suites.SurfaceSuiteCurrent();
+    const auto path_suite = suites.PathSuiteCurrent();
+    const float ox = event->effect_win.current_frame.left;
+    const float oy = event->effect_win.current_frame.top;
+    for (const auto& c : commands) {
+        DRAWBOT_ColorRGBA rgba{c.color.red,c.color.green,c.color.blue,c.color.alpha};
+        DRAWBOT_RectF32 rect{c.x+ox,c.y+oy,c.w,c.h};
+        DRAWBOT_PathRef path = nullptr;
+        DRAWBOT_PenRef pen = nullptr;
+        DRAWBOT_FontRef font = nullptr;
+        DRAWBOT_BrushRef brush = nullptr;
+        switch(c.kind) {
+        case ramp_ui::DrawKind::antialias:
+            ERR(surf->SetAntiAliasPolicy(surface,static_cast<DRAWBOT_AntiAliasPolicy>(0))); break;
+        case ramp_ui::DrawKind::fill:
+            ERR(surf->PaintRect(surface,&rgba,&rect)); break;
+        case ramp_ui::DrawKind::frame:
+            ERR(sup->NewPath(supplier,&path));
+            ERR(path_suite->MoveTo(path,rect.left+ox,rect.top+oy));
+            ERR(path_suite->AddRect(path,&rect));
+            ERR(sup->NewPen(supplier,&rgba,1.0f,&pen));
+            ERR(surf->StrokePath(surface,pen,path)); break;
+        case ramp_ui::DrawKind::line:
+            ERR(sup->NewPen(supplier,&rgba,1.0f,&pen));
+            ERR(sup->NewPath(supplier,&path));
+            ERR(path_suite->MoveTo(path,rect.left,rect.top));
+            ERR(path_suite->LineTo(path,rect.left+c.w,rect.top+c.h));
+            ERR(surf->StrokePath(surface,pen,path)); break;
+        case ramp_ui::DrawKind::text: {
+            ERR(sup->NewDefaultFont(supplier,c.font,&font));
+            ERR(sup->NewBrush(supplier,&rgba,&brush));
+            const DRAWBOT_PointF32 origin{rect.left,rect.top};
+            ERR(surf->DrawString(surface,brush,font,
+                reinterpret_cast<const DRAWBOT_UTF16Char*>(c.text),&origin,
+                static_cast<DRAWBOT_TextAlignment>(1),static_cast<DRAWBOT_TextTruncation>(1),c.w));
+            break;
+        }
+        }
+        // Release all resources even when a suite call fails.
+        for (auto object : {reinterpret_cast<DRAWBOT_ObjectRef>(brush),reinterpret_cast<DRAWBOT_ObjectRef>(font),
+                            reinterpret_cast<DRAWBOT_ObjectRef>(pen),reinterpret_cast<DRAWBOT_ObjectRef>(path)})
+            if(object) { const auto release_err=sup->ReleaseObject(object); if(!err) err=release_err; }
+        if(err) return err;
+    }
+    return err;
+}
+
 static PF_Err RampEvent(PF_InData *in_data, PF_ParamDef *params[], PF_EventExtra *event)
 {
-	if (!in_data || !params || !event || event->effect_win.area != PF_EA_CONTROL)
-		return PF_Err_NONE;
-	const A_long index = event->effect_win.index;
-	PF_ParamDef *param = params[index];
-	if (!param || param->param_type != PF_Param_ARBITRARY_DATA || !param->u.arb_d.value)
-		return PF_Err_NONE;
-	const PF_Rect &frame = event->effect_win.current_frame;
-	const float left = static_cast<float>(frame.left + 10);
-	const float width = static_cast<float>(std::max<A_long>(1, std::min<A_long>(192, frame.right - frame.left - 10)));
-
-	if (event->e_type == PF_Event_DRAW) {
-		OLMKiraKiraRampData ramp = {};
-		PF_Err err = ReadRampHandle(in_data, param->u.arb_d.value, &ramp);
-		if (err) return err;
-		AEGP_SuiteHandler suites(in_data->pica_basicP);
-		DRAWBOT_DrawRef draw_ref = nullptr;
-		ERR(suites.EffectCustomUISuite2()->PF_GetDrawingReference(event->contextH, &draw_ref));
-		if (err || !draw_ref) return err;
-		DRAWBOT_SupplierRef supplier = nullptr;
-		DRAWBOT_SurfaceRef surface = nullptr;
-		ERR(suites.DrawbotSuiteCurrent()->GetSupplier(draw_ref, &supplier));
-		ERR(suites.DrawbotSuiteCurrent()->GetSurface(draw_ref, &surface));
-		if (err) return err;
-		const olm::kirakira::Merge2RampView view = {
-			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp.stops),
-			std::min<size_t>(ramp.count, 16)
-		};
-		const float top = static_cast<float>(frame.top + 5);
-		const float height = static_cast<float>(std::max<A_long>(8, std::min<A_long>(50, frame.bottom - frame.top - 5)));
-		for (A_long x = 0; x < static_cast<A_long>(width); ++x) {
-			const float amount = width > 1.0f ? x / (width - 1.0f) : 0.0f;
-			const auto color = olm::kirakira::sample_merge2_ramp(view, amount);
-			const DRAWBOT_ColorRGBA rgba = {color.red, color.green, color.blue, 1.0f};
-			const DRAWBOT_RectF32 rect = {left + x, top, 1.0f, height};
-			ERR(suites.SurfaceSuiteCurrent()->PaintRect(surface, &rgba, &rect));
-			if (err) return err;
-		}
-		for (A_u_long i = 0; i < ramp.count; ++i) {
-			const float x = left + Clamp01(ramp.stops[i].position) * width;
-			const DRAWBOT_ColorRGBA marker = {1.0f, 1.0f, 1.0f, 1.0f};
-			const DRAWBOT_RectF32 rect = {x - 2.0f, top + height + 5.0f, 5.0f, 10.0f};
-			ERR(suites.SurfaceSuiteCurrent()->PaintRect(surface, &marker, &rect));
-			if (err) return err;
-		}
-		ERR(suites.SurfaceSuiteCurrent()->Flush(surface));
-		event->evt_out_flags |= PF_EO_HANDLED_EVENT;
-		return err;
-	}
-
-	if (event->e_type == PF_Event_DO_CLICK || event->e_type == PF_Event_DRAG) {
-		AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
-		OLMKiraKiraRampData *ramp = static_cast<OLMKiraKiraRampData *>(handles->host_lock_handle(param->u.arb_d.value));
-		if (!ramp || ramp->count == 0 || ramp->count > 16) return PF_Err_BAD_CALLBACK_PARAM;
-		const float normalized = Clamp01((event->u.do_click.screen_point.x - left) / width);
-		A_long selected = static_cast<A_long>(event->u.do_click.continue_refcon[0]) - 1;
-		const bool edit_color = event->e_type == PF_Event_DO_CLICK && event->u.do_click.num_clicks != 1 &&
-			event->u.do_click.screen_point.y >= frame.top + 60 &&
-			event->u.do_click.screen_point.y <= frame.top + 70;
-		const bool add_stop = event->e_type == PF_Event_DO_CLICK && ramp->count < 16 &&
-			event->u.do_click.num_clicks == 1 &&
-			event->u.do_click.screen_point.x >= left &&
-			event->u.do_click.screen_point.x <= left + width &&
-			event->u.do_click.screen_point.y >= frame.top + 5 &&
-			event->u.do_click.screen_point.y <= frame.top + 55;
-		if (edit_color) {
-			const size_t hit = olm::kirakira::hit_merge2_ramp_stop(
-				reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
-				normalized, 5.0f / width);
-			if (hit < ramp->count) {
-				PF_PixelFloat sample = {
-					ramp->stops[hit].alpha, ramp->stops[hit].red,
-					ramp->stops[hit].green, ramp->stops[hit].blue
-				};
-				PF_PixelFloat picked = sample;
-				AEFX_SuiteScoper<PFAppSuite6> app(in_data, kPFAppSuite, kPFAppSuiteVersion6);
-				const PF_Err picker_err = app->PF_AppColorPickerDialog("Color select", &sample, TRUE, &picked);
-				size_t picker_selected = hit;
-				olm::kirakira::apply_merge2_ramp_color_picker_result(
-					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
-					&picker_selected, picker_err, PF_Interrupt_CANCEL,
-					picked.alpha, picked.red, picked.green, picked.blue);
-				event->u.do_click.continue_refcon[0] = picker_selected < ramp->count
-					? static_cast<A_intptr_t>(picker_selected + 1) : 0;
-			}
-		} else if (add_stop) {
-			ramp->count = static_cast<A_u_long>(olm::kirakira::insert_merge2_ramp_stop(
-				reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
-				normalized));
-			event->u.do_click.continue_refcon[0] = 0;
-			param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
-		} else if (event->e_type == PF_Event_DO_CLICK || selected < 0 || selected >= static_cast<A_long>(ramp->count)) {
-			selected = static_cast<A_long>(olm::kirakira::nearest_merge2_ramp_stop(
-				reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count, normalized));
-			event->u.do_click.continue_refcon[0] = selected + 1;
-			event->u.do_click.send_drag = TRUE;
-		} else {
-			if (event->u.do_click.last_time && event->u.do_click.screen_point.y - (frame.top + 55) >= 21) {
-				ramp->count = static_cast<A_u_long>(olm::kirakira::erase_merge2_ramp_stop(
-					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
-					static_cast<size_t>(selected)));
-				event->u.do_click.continue_refcon[0] = 0;
-			} else {
-				olm::kirakira::drag_merge2_ramp_stop(
-					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
-					static_cast<size_t>(selected), normalized);
-			}
-			param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
-		}
-		param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
-		handles->host_unlock_handle(param->u.arb_d.value);
-		event->evt_out_flags |= PF_EO_HANDLED_EVENT | PF_EO_UPDATE_NOW;
-		AEFX_SuiteScoper<PFAppSuite6> app(in_data, kPFAppSuite, kPFAppSuiteVersion6);
-		app->PF_InvalidateRect(event->contextH, &frame);
-		return PF_Err_NONE;
-	}
-	return PF_Err_NONE;
+    if (!in_data || !params || !event || event->effect_win.area != PF_EA_CONTROL)
+        return PF_Err_NONE;
+    const A_long index=event->effect_win.index;
+    if (index!=14 && index!=20 && index!=26 && index!=32 && index!=38) return PF_Err_NONE;
+    PF_ParamDef *param=params[index];
+    if (!param || param->param_type!=PF_Param_ARBITRARY_DATA || !param->u.arb_d.value) return PF_Err_NONE;
+    if(event->e_type!=PF_Event_DRAW && event->e_type!=PF_Event_DO_CLICK &&
+       event->e_type!=PF_Event_DRAG && event->e_type!=PF_Event_ADJUST_CURSOR) return PF_Err_NONE;
+    std::lock_guard<std::recursive_mutex> guard(ramp_ui_mutex);
+    auto& instance=ramp_ui_instances[in_data->effect_ref];
+    auto& state=instance.ramps[index];
+    OLMKiraKiraRampData ramp{};
+    PF_Err err=ReadRampHandle(in_data,param->u.arb_d.value,&ramp);
+    if(err) return err;
+    AEFX_SuiteScoper<PFAppSuite6> app(in_data,kPFAppSuite,kPFAppSuiteVersion6);
+    if(event->e_type==PF_Event_DRAW) {
+        ramp_ui::Theme theme;
+        ramp_ui::Color* colors[]={&theme.frame,&theme.fill,&theme.text,&theme.black};
+        const PF_App_ColorType roles[]={7,8,2,42};
+        for(int i=0;i<4;++i) {
+            PF_App_Color c{};
+            ERR(app->PF_AppGetColor(roles[i],&c));
+            *colors[i]={c.red*0x1.0001p-16f,c.green*0x1.0001p-16f,c.blue*0x1.0001p-16f,1.0f};
+        }
+        return err ? err : DrawRampCommands(in_data,event,ramp_ui::draw(ramp,state,instance.clipboard.available,theme));
+    }
+    const auto& frame=event->effect_win.current_frame;
+    const PF_Point point=event->e_type==PF_Event_ADJUST_CURSOR ? event->u.adjust_cursor.screen_point : event->u.do_click.screen_point;
+    ramp_ui::EventType type=ramp_ui::EventType::hover;
+    if(event->e_type==PF_Event_DO_CLICK) {
+        type=event->u.do_click.num_clicks==1 ? ramp_ui::EventType::single : ramp_ui::EventType::multiple;
+        event->u.do_click.send_drag=TRUE;
+    } else if(event->e_type==PF_Event_DRAG)
+        type=event->u.do_click.last_time ? ramp_ui::EventType::release : ramp_ui::EventType::drag;
+    const auto result=ramp_ui::dispatch(ramp,state,instance.clipboard,ramp_ui_rng,
+        {type,int(point.x-frame.left),int(point.y-frame.top)});
+    if(result.picker>=0) {
+        const auto c=ramp_ui::color(ramp.stops[result.picker]);
+        PF_PixelFloat sample{c.alpha,c.red,c.green,c.blue}, picked=sample;
+        const PF_Err picker_err=app->PF_AppColorPickerDialog("Color select",&sample,TRUE,&picked);
+        ramp_ui::picker_result(ramp,state,result.picker,picker_err==PF_Interrupt_CANCEL,
+                              {picked.red,picked.green,picked.blue,picked.alpha});
+    }
+    if(type!=ramp_ui::EventType::hover) {
+        AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data,kPFHandleSuite,kPFHandleSuiteVersion1);
+        void* locked=handles->host_lock_handle(param->u.arb_d.value);
+        if(!locked) return PF_Err_BAD_CALLBACK_PARAM;
+        std::memcpy(locked,&ramp,sizeof(ramp));
+        handles->host_unlock_handle(param->u.arb_d.value);
+        ERR(app->PF_InvalidateRect(event->contextH,&frame));
+    }
+    param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
+    event->evt_out_flags |= PF_EO_HANDLED_EVENT | PF_EO_UPDATE_NOW;
+    return err;
 }
 
 static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
@@ -2991,6 +3003,16 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = GlobalSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output); break;
+		case PF_Cmd_SEQUENCE_SETDOWN: {
+            std::lock_guard<std::recursive_mutex> guard(ramp_ui_mutex);
+            ramp_ui_instances.erase(in_data->effect_ref);
+            break;
+        }
+        case PF_Cmd_GLOBAL_SETDOWN: {
+            std::lock_guard<std::recursive_mutex> guard(ramp_ui_mutex);
+            ramp_ui_instances.clear();
+            break;
+        }
 		case PF_Cmd_EVENT:
 			err = RampEvent(in_data, params, static_cast<PF_EventExtra *>(extra)); break;
 		case PF_Cmd_ARBITRARY_CALLBACK:
