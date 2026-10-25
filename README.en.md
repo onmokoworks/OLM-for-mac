@@ -24,7 +24,7 @@ An unofficial port of the "OLM Tools" After Effects plugins from Windows to macO
 
 ## Compatibility with the Windows version
 
-The goal is **output that is bit-for-bit identical to the Windows version for the same footage and settings**.
+We develop this port by analyzing the original plugins, aiming for **output that is bit-for-bit identical to the Windows version** for the same footage and settings.
 
 - We run the original Windows plugin (`.aex`) in an emulator and compare its output with the Mac output byte by byte.
 - We test thousands of random combinations of footage, settings, comp size (odd and even), preview resolution (Full to 1/8), and partial rendering such as zoomed-in views. In every case the Windows version can render, the outputs match.
