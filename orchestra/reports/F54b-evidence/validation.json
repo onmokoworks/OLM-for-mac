@@ -1,0 +1,402 @@
+{
+  "probe_sha256": "fe6e87a3922af35b9111f2cec3558ac5aef4353bed4f212dc5706b47767cee45",
+  "reference_probe_sha256": "c777d7a739bae6d59a0ef6f6dc938e79f29f7246919ec7a395f43ae6fba22c0a",
+  "math": [
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "5816e727c6affd98bf7d48acd092fee231f952718907f6aadb2e21341c031df2",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "50d9465aac7c5fb3262999fc8297924779e620f72b98e7ed4fb7a26ffbf76aff",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "d830684c6df5f4cf504db468083a54ebade4f2837f95c709f5899f7286980f89",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "ab1a7a413a401e4e27f33be2e5ae0dca26b990d38eed2aa0d9290cc6be2bb398",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "5816e727c6affd98bf7d48acd092fee231f952718907f6aadb2e21341c031df2",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "50d9465aac7c5fb3262999fc8297924779e620f72b98e7ed4fb7a26ffbf76aff",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "d830684c6df5f4cf504db468083a54ebade4f2837f95c709f5899f7286980f89",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "ab1a7a413a401e4e27f33be2e5ae0dca26b990d38eed2aa0d9290cc6be2bb398",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "f8616eae18b165d533a13a4c7a58f14cd414b90e44dfb737c287217181d42156",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "f4736d0f50b00ec508789d9474057529ca9ffb1f9dd434d75635b96f27fb0bd8",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "df09b293189de7a32ab28afe8efd3020928bb6360660f8a053a8263a35cf00d7",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "17b588d21f30af536ec8851251286a48459a8695adae882539d5fe0d3b6ee869",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "f8616eae18b165d533a13a4c7a58f14cd414b90e44dfb737c287217181d42156",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "f4736d0f50b00ec508789d9474057529ca9ffb1f9dd434d75635b96f27fb0bd8",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "df09b293189de7a32ab28afe8efd3020928bb6360660f8a053a8263a35cf00d7",
+      "exact": true
+    },
+    {
+      "mode": "0",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "17b588d21f30af536ec8851251286a48459a8695adae882539d5fe0d3b6ee869",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "9a94c84b3e2cac33e4193f30445f9cbd3015b4adb2c79e9de7979dce1a4b1d1d",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "1865580b90ac4b2c8c01cc1a52fd3aeb21909b90e9d01f5ae7c10337b9c10671",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "d830684c6df5f4cf504db468083a54ebade4f2837f95c709f5899f7286980f89",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "ucrtbase.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "ab1a7a413a401e4e27f33be2e5ae0dca26b990d38eed2aa0d9290cc6be2bb398",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "9a94c84b3e2cac33e4193f30445f9cbd3015b4adb2c79e9de7979dce1a4b1d1d",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "1865580b90ac4b2c8c01cc1a52fd3aeb21909b90e9d01f5ae7c10337b9c10671",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "d830684c6df5f4cf504db468083a54ebade4f2837f95c709f5899f7286980f89",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "raw",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "ab1a7a413a401e4e27f33be2e5ae0dca26b990d38eed2aa0d9290cc6be2bb398",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "c0e0dfa355e0b1e6fe59370b71e8ee1e395b68108728d7390caa0e68351b7a5c",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "17be4ce60311975657c174c928fa245d5b628260cf9d72c926324eb17fbcdb67",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "dca62a4db051f32a977f97613dd4709d6cf8a1b73f75cb32531dd4cbff2fc013",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "ucrtbase.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "17b588d21f30af536ec8851251286a48459a8695adae882539d5fe0d3b6ee869",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "sin",
+      "rows": 10000,
+      "sha256": "c0e0dfa355e0b1e6fe59370b71e8ee1e395b68108728d7390caa0e68351b7a5c",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "cos",
+      "rows": 10000,
+      "sha256": "17be4ce60311975657c174c928fa245d5b628260cf9d72c926324eb17fbcdb67",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "exp",
+      "rows": 10000,
+      "sha256": "dca62a4db051f32a977f97613dd4709d6cf8a1b73f75cb32531dd4cbff2fc013",
+      "exact": true
+    },
+    {
+      "mode": "1",
+      "domain": "plugin",
+      "library": "api-ms-win-crt-math-l1-1-0.dll",
+      "function": "pow",
+      "rows": 10000,
+      "sha256": "17b588d21f30af536ec8851251286a48459a8695adae882539d5fe0d3b6ee869",
+      "exact": true
+    }
+  ],
+  "trace": [
+    {
+      "seed": 1,
+      "index": 109,
+      "occurrence": "first",
+      "bytes_per_watch": 14880,
+      "counts": {
+        "input": 1,
+        "output": 1
+      },
+      "output_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+      "trace_sha256": "64cf7e41c77fbb885646a41e2e88c28672ca90c190d6c759ad7d61f05d69261a",
+      "exact": true
+    },
+    {
+      "seed": 1,
+      "index": 109,
+      "occurrence": "all",
+      "bytes_per_watch": 14880,
+      "counts": {
+        "input": 2,
+        "output": 2
+      },
+      "output_sha256": "2544973430aa08b5eb0426b8af06bd53891960a0f3d33e2cdf3bb29d1f6e496e",
+      "trace_sha256": "6de007529c712bf5ac9c7fe9e9ce1bf895705f80aaf1b7c6774c8bd98168a663",
+      "exact": true
+    },
+    {
+      "seed": 1,
+      "index": 299,
+      "occurrence": "first",
+      "bytes_per_watch": 7744,
+      "counts": {
+        "input": 1,
+        "output": 1
+      },
+      "output_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+      "trace_sha256": "2835f62728438de162823fb4136bc58bbe8ae10dfbb573d1b39f37da666decae",
+      "exact": true
+    },
+    {
+      "seed": 1,
+      "index": 299,
+      "occurrence": "all",
+      "bytes_per_watch": 7744,
+      "counts": {
+        "input": 2,
+        "output": 2
+      },
+      "output_sha256": "cb532768370236c49e73a18fef7135dfdd10340dec6c8e8461858e4ec6f0d385",
+      "trace_sha256": "d6c377a71f3c43bbc9bf39dcbb821ce974ff4345a34a622e319a22121ef6c2a8",
+      "exact": true
+    },
+    {
+      "seed": 104,
+      "index": 137,
+      "occurrence": "first",
+      "bytes_per_watch": 61504,
+      "counts": {
+        "input": 1,
+        "output": 1
+      },
+      "output_sha256": "f0d5db7bb258b12d1ce0ce0cf0889f7fa62ee67e2268ea6ffd63dd1319a029fc",
+      "trace_sha256": "eef6b306e6095dd98856ea3535458bd2483ff21154a842328c3cff48285c263d",
+      "exact": true
+    },
+    {
+      "seed": 104,
+      "index": 137,
+      "occurrence": "all",
+      "bytes_per_watch": 61504,
+      "counts": {
+        "input": 2,
+        "output": 2
+      },
+      "output_sha256": "f0d5db7bb258b12d1ce0ce0cf0889f7fa62ee67e2268ea6ffd63dd1319a029fc",
+      "trace_sha256": "27bf0eb3e7c2e3726fcd8acd42bd60a494f36978edb313790190f50176baec56",
+      "exact": true
+    },
+    {
+      "seed": 104,
+      "index": 271,
+      "occurrence": "first",
+      "bytes_per_watch": 1296,
+      "counts": {
+        "input": 1,
+        "output": 1
+      },
+      "output_sha256": "184f97260e2768bfc29d1d46162a22b1c49948e5801c3bf7d19a12a76ad4e7dc",
+      "trace_sha256": "1723320e4043b56d521d1e10b2b4cc9a51dd2cf42683b71ee80cf81baffb9d0f",
+      "exact": true
+    },
+    {
+      "seed": 104,
+      "index": 271,
+      "occurrence": "all",
+      "bytes_per_watch": 1296,
+      "counts": {
+        "input": 2,
+        "output": 2
+      },
+      "output_sha256": "184f97260e2768bfc29d1d46162a22b1c49948e5801c3bf7d19a12a76ad4e7dc",
+      "trace_sha256": "3ca281af020b27927f484ec2653684dc28955445bd55eb89f1ba78e924fbbc90",
+      "exact": true
+    }
+  ],
+  "worker_sha256": "e9d99f8af2dc5582e4f2faa71211b5ec2af405d26598f483768e3406034deb10",
+  "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+}
