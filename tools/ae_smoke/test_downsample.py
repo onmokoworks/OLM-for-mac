@@ -9,7 +9,8 @@ import tifffile
 import render_downsample
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRATCH = ROOT / 'orchestra/state/A02b-real-ae-retest-downsample'
+import os
+SCRATCH = Path(os.environ.get('TMPDIR', ROOT / 'orchestra/state/A02f-real-ae-retest-downsample'))
 
 
 class RenderTests(unittest.TestCase):
@@ -28,9 +29,19 @@ class RenderTests(unittest.TestCase):
             tifffile.imwrite(state / 'frame_[00000].tif', rgba)
             data = {'projects': [{'path': 'project.aep', 'items': [
                 {'outputPrefix': 'frame', 'queueIndex': 1, 'depth': 8}]}]}
-            with patch.object(render_downsample.subprocess, 'run') as run:
+            with patch('ae_dialog_watch.watcher.prepare_launch'), \
+                 patch('ae_dialog_watch.prefs.scripting_prefs'), \
+                 patch('run_ae_smoke.wait_unlocked'), \
+                 patch('run_ae_smoke.running', return_value=[]), \
+                 patch.object(render_downsample.subprocess, 'run') as run:
                 run.return_value.returncode = code
-                render_downsample.render(state, data, Path('/AE/AE.app'), lambda _: None)
+                if code:
+                    with self.assertRaisesRegex(RuntimeError, 'Render failed'):
+                        render_downsample.render(state, data, Path('/AE/AE.app'), lambda _: None)
+                else:
+                    render_downsample.render(state, data, Path('/AE/AE.app'), lambda _: None)
+                argv = run.call_args.args[0]
+                self.assertEqual(argv[argv.index('-mfr')+1:argv.index('-mfr')+3], ['OFF','100'])
                 self.assertIn('-rqindex', run.call_args.args[0])
                 self.assertEqual(run.call_args.kwargs['env']['OLM_REFUSAL_TRACE'],
                                  str(state / 'frame.refusals.log'))

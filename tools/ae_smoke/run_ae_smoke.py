@@ -108,7 +108,10 @@ def build(state, matrix="legacy", prevent_dialogs=True):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
-    if matrix != 'legacy':
+    if matrix == 'downsample-corpus':
+        from corpus_inputs import prepare
+        prepare(state / 'inputs')
+    elif matrix != 'legacy':
         from downsample_inputs import prepare
         prepare(state / 'inputs', high_depth=matrix == 'downsample-depths')
     else:
@@ -133,6 +136,7 @@ def build(state, matrix="legacy", prevent_dialogs=True):
     if screen_locked():
         raise RuntimeError('Screen locked again after preflight; no AE launch')
     from ae_dialog_watch import DialogWatcher
+    os.environ['OLM_AE_DIALOG_AUDIT_LOG'] = str(ROOT / 'orchestra/reports/A02b-evidence/dialogs.jsonl')
     watcher = DialogWatcher(state, prevention=prevent_dialogs).start()
     from ae_dialog_watch.prefs import scripting_prefs
     try:
@@ -220,7 +224,7 @@ def render(state):
         preflight(state)
         with (state / f'aerender-{row["depth"]}.log').open('w') as log:
             subprocess.run([str(APP.parent / 'aerender'), '-project', row['path'],
-                            '-mfr', 'OFF'], stdout=log, stderr=subprocess.STDOUT, check=True)
+                            '-mfr', 'OFF', '100'], stdout=log, stderr=subprocess.STDOUT, check=True)
 
 
 def compare_controls(state):
@@ -241,7 +245,7 @@ def main():
     p.add_argument('--no-dialog-prevention', action='store_true',
                    help='Skip crash-flag backup/reset; watcher remains enabled')
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
-    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths'), default='legacy')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus'), default='legacy')
     a = p.parse_args()
     if a.restore and a.stage != 'prefs':
         p.error('--restore requires --stage prefs')

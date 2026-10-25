@@ -25,6 +25,24 @@ class PrefTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 enable_bytes(data)
 
+    def test_two_actual_preference_files_restore(self):
+        with tempfile.TemporaryDirectory(dir=SCRATCH) as tmp:
+            root = Path(tmp)
+            source = root / 'indep-general.txt'
+            progress = root / 'Adobe After Effects 26.3 環境設定.txt'
+            original = b'["Main Pref Section v2"]\r"Pref_SCRIPTING_FILE_NETWORK_SECURITY" = 00\r'
+            main = b'["Main Pref Section v2"]\r"Pref_DISABLE_SCRIPTS_PROGRESS_DIALOG" = 00\r'
+            source.write_bytes(original)
+            progress.write_bytes(main)
+            with patch('ae_dialog_watch.prefs.PREFS', source), patch('ae_dialog_watch.prefs.subprocess.check_output', return_value=''):
+                result = scripting_prefs(root/'backup')
+                self.assertIn(b'DIALOG" = 01', progress.read_bytes())
+                self.assertNotIn(b'PROGRESS', source.read_bytes())
+                self.assertIn('progress', result)
+                self.assertTrue(scripting_prefs(root/'backup', restore=True)['restored'])
+            self.assertEqual(source.read_bytes(), original)
+            self.assertEqual(progress.read_bytes(), main)
+
     def test_round_trip_and_busy_refusal(self):
         with tempfile.TemporaryDirectory(dir=SCRATCH) as tmp:
             root = Path(tmp)
@@ -34,6 +52,7 @@ class PrefTests(unittest.TestCase):
             with patch('ae_dialog_watch.prefs.subprocess.check_output', return_value=''):
                 result = scripting_prefs(root / 'backup', source=source)
                 self.assertEqual(result['before_sha256'], result['backup_sha256'])
+                self.assertIn(b'"Pref_DISABLE_SCRIPTS_PROGRESS_DIALOG" = 01', source.read_bytes())
                 with self.assertRaises(RuntimeError):
                     scripting_prefs(root / 'backup', source=source)
             with patch('ae_dialog_watch.prefs.subprocess.check_output', return_value='/Applications/X/Contents/MacOS/After Effects\n'):

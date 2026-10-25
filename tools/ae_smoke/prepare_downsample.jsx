@@ -20,9 +20,17 @@
             for(var divisor=1;divisor<=4;divisor++) {
             for(var n=-1;n<A01.plugins.length;n++) {
                 var name=n<0?'control':A01.plugins[n].plugin;
+                if(n>=0 && spec.plugin && name!=spec.plugin)continue;
                 var c=pr.items.addComp(name,spec.width,spec.height,1,1/24,24),layer=c.layers.add(footage);
                 var item={plugin:name,width:spec.width,height:spec.height,depth:spec.depth,divisor:divisor};
                 if(n>=0){var effect=layer.property('ADBE Effect Parade').addProperty(A01.plugins[n].matchName);item.enabled=effect.enabled;item.properties=[];
+                    if(spec.parameters)for(var ci=0;ci<spec.parameters.length;ci++){
+                        var cp=spec.parameters[ci],cv=cp.value;
+                        if(cp.kind=='c')cv=[cv[1]/255,cv[2]/255,cv[3]/255,cv[0]/255];
+                        effect.property(cp.slot).setValue(cv);
+                    }
+                    if(spec.corpus){item.corpus=spec.corpus;item.corpus_sha256=spec.corpus_sha256;}
+
                     for(var pi=1;pi<=effect.numProperties;pi++) {
                         var prop=effect.property(pi),pd={index:pi,name:prop.name};
                         try{pd.value=prop.value;if(prop.hasMin)pd.min=prop.minValue;if(prop.hasMax)pd.max=prop.maxValue;}catch(pe){}
@@ -32,15 +40,17 @@
                 q.setSettings({'Resolution':['Full','Half','Third','Quarter'][divisor-1]});
                 item.renderSettings=q.getSettings(GetSettingsFormat.STRING);item.queueIndex=pr.renderQueue.numItems;q.timeSpanStart=0;q.timeSpanDuration=1/24;
                 var om=q.outputModule(1);
-                om.applyTemplate(spec.depth==32?'OLM EXR 32 Float':'TIFF シーケンス (アルファ付き)');
+                om.applyTemplate(spec.depth==8?'TIFF シーケンス (アルファ付き)':'OLM EXR 32 Float');
+                item.outputExtension=spec.depth==8?'tif':'exr';
                 // AE 26.3 exposes Color/Depth as read-only; retain template readback.
                 // Decoding and independent controls determine actual output fidelity.
-                item.outputPrefix=name+'-'+spec.width+'x'+spec.height+'-'+spec.depth+'-d'+divisor;
-                om.file=new File(A01.directory+'/'+item.outputPrefix+'_[#####].'+(spec.depth==32?'exr':'tif'));
+                item.outputPrefix=name+(spec.identity?'-'+spec.identity:'')+'-'+spec.width+'x'+spec.height+'-'+spec.depth+'-d'+divisor;
+                om.file=new File(A01.directory+'/'+item.outputPrefix+'_[#####].'+item.outputExtension);
                 item.outputSettings=om.getSettings(GetSettingsFormat.STRING);row.items.push(item);
             }
             }
-            row.path=A01.directory+'/defaults-'+spec.width+'x'+spec.height+'-'+spec.depth+'.aep';pr.save(new File(row.path));
+            row.input=spec;
+            row.path=A01.directory+'/'+(spec.identity||'defaults')+'-'+spec.width+'x'+spec.height+'-'+spec.depth+'.aep';pr.save(new File(row.path));
             result.projects.push(row);write();
         }
         result.phase='complete';

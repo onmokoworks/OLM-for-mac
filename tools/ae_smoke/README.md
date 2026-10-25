@@ -184,3 +184,27 @@ No render was attempted, even though the script subsequently wrote complete.
 See `orchestra/reports/A02e-real-ae-retest-downsample.md`. Resolve that watcher
 boundary before another live run. The aerender stages still need the ticket’s
 per-launch prevention/preference lifecycle before a full campaign.
+
+## A02f saved-project reuse
+
+Copy only a completed `build.json` into a fresh ticket-local run directory; leave
+its project and footage paths unchanged. The render stage overrides each output
+path with `-output` and uses the required `-mfr OFF 100` arguments. It performs
+unlocked/idle/memory checks, crash prevention and reversible preference changes
+for each invocation. Completed outputs (including black/transparent flags) are
+retained on resume; render errors stop the campaign and require a fresh run ID.
+A `stop` file in the run directory stops cooperatively between frames.
+
+`compare_downsample.py RUN_DIRECTORY --timeout 15` compares available 8 bpc
+frames serially against F53, falling back to the installed bundle over F53's
+host when the original is unavailable (and for 4K). Full-resolution controls
+are compared to the original raw input. Reduced controls supply a resampled
+input proxy. Queue resolution and observed image dimensions are recorded;
+these are **not a live InData/checkout trace**. Raw hidden-RGB differences at
+zero alpha are classified as premultiplied-export I/O loss, not exactness.
+The script resumes existing comparison records and does not launch AE.
+
+The watcher treats Japanese/English script-progress titles as wait-only,
+without clicking Cancel. Scripting access is set in indep-general preferences;
+progress-dialog suppression is set in the main preferences text file. Both
+original files are backed up and restored, with SHA-256 checks.
