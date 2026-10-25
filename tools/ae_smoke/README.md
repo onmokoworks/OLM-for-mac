@@ -115,3 +115,12 @@ this matrix. Successful frame output alone does not establish exactness.
 16 controls). Run this separately after priority succeeds. FLOAT EXR output
 is required for 32 bpc. This remains an unvalidated real-host scaffold and
 contains no corpus cases; generation/codec checks are not AE calibration.
+
+## A03 dialog watcher
+
+Build now starts the PID-scoped Swift/AX/Vision watcher before AE dispatch and
+stops it afterward. Unknown dialogs and capture/permission failures stop the run.
+Preference prevention is observation-only because no deterministic recovery flag
+has been validated. `--no-dialog-prevention` skips that inspection while keeping
+the watcher enabled. Live clicking and the two-launch E2E remain **blocked**;
+read [the watcher documentation](ae_dialog_watch/README.md) before unattended use.
