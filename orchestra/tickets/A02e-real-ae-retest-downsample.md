@@ -77,3 +77,13 @@ depends: A03e-ae-watcher-workspace-and-live
 
 - A03b added the `prevent` step (clears CrashOccurred/ForceQuitOccured after backup) and a hi-res OCR fallback. Run it before every launch.
 - A03c added the `prefs` step: `Pref_SCRIPTING_FILE_NETWORK_SECURITY` on during runs, restored afterwards. Run prevent + prefs before every launch, and restore at the end.
+- **A03e proved unattended launches** (`orchestra/reports/A03e-ae-watcher-workspace-and-live.md`). The working recipe:
+  1. prevent;
+  2. scripting pref on;
+  3. launch AE by full path **without `-r`**;
+  4. wait until the watcher sees the workspace;
+  5. send exactly one `DoScriptFile` Apple event by full app path (`-r` alone never ran the JSX);
+  6. watch for the marker;
+  7. the JSX calls `app.quit()`.
+  Keep the watcher running throughout. If a quit triggers a "save changes" dialog, have the build JSX save the project first, or close it without saving through scripting (`app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES)` on scratch projects only). Never click 保存しない.
+  Restore the scripting pref at the end.
