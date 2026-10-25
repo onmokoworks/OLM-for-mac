@@ -1,0 +1,1480 @@
+{
+  "case": {
+    "depth": 32,
+    "geometry": [
+      7,
+      17
+    ],
+    "index": 2081,
+    "input_padding": 0,
+    "output_padding": 5,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 0.3129253744228473
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 4
+      },
+      {
+        "kind": "u",
+        "slot": 6,
+        "value": 2
+      },
+      {
+        "kind": "b",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 8,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 9,
+        "value": 0.2029149528627373
+      },
+      {
+        "kind": "s",
+        "slot": 10,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 11,
+        "value": 0.48831179591549945
+      },
+      {
+        "kind": "i",
+        "slot": 14,
+        "value": 1612
+      },
+      {
+        "kind": "u",
+        "slot": 15,
+        "value": 3
+      },
+      {
+        "kind": "s",
+        "slot": 18,
+        "value": 30
+      },
+      {
+        "kind": "u",
+        "slot": 19,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 20,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 23,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 24,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 26,
+        "value": [
+          255,
+          241,
+          60,
+          169
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 27,
+        "value": [
+          0,
+          91,
+          119,
+          79
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 28,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 0.06888626682963728
+      },
+      {
+        "kind": "s",
+        "slot": 30,
+        "value": 0.5286676703516984
+      },
+      {
+        "kind": "s",
+        "slot": 31,
+        "value": 0.4949057800565958
+      },
+      {
+        "kind": "b",
+        "slot": 32,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 33,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 34,
+        "value": [
+          128,
+          248,
+          148,
+          244
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          60,
+          78,
+          55
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 36,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 37,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 38,
+        "value": 0.622797965804884
+      },
+      {
+        "kind": "s",
+        "slot": 39,
+        "value": 0.23156043202460297
+      },
+      {
+        "kind": "b",
+        "slot": 40,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 41,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 42,
+        "value": [
+          255,
+          119,
+          66,
+          91
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 43,
+        "value": [
+          0,
+          61,
+          165,
+          117
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 44,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 45,
+        "value": 0.6097343202846996
+      },
+      {
+        "kind": "s",
+        "slot": 46,
+        "value": 0.4392924601001872
+      },
+      {
+        "kind": "s",
+        "slot": 47,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 48,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 49,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 50,
+        "value": [
+          255,
+          229,
+          191,
+          247
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 51,
+        "value": [
+          128,
+          111,
+          191,
+          80
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 52,
+        "value": 0.3785638274673121
+      },
+      {
+        "kind": "s",
+        "slot": 53,
+        "value": 0.22325753956871708
+      },
+      {
+        "kind": "s",
+        "slot": 54,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 55,
+        "value": 0.04924826533657645
+      },
+      {
+        "kind": "b",
+        "slot": 56,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 57,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 58,
+        "value": [
+          0,
+          170,
+          48,
+          4
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 59,
+        "value": [
+          0,
+          105,
+          10,
+          123
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 60,
+        "value": 0.8966298350562454
+      },
+      {
+        "kind": "s",
+        "slot": 61,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 62,
+        "value": 0.8222843770730252
+      },
+      {
+        "kind": "s",
+        "slot": 63,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 64,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 65,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 66,
+        "value": [
+          255,
+          48,
+          11,
+          197
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 67,
+        "value": [
+          255,
+          93,
+          73,
+          183
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 68,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 69,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 70,
+        "value": 0.48676042597385527
+      },
+      {
+        "kind": "s",
+        "slot": 71,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 72,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 73,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 74,
+        "value": [
+          255,
+          208,
+          244,
+          52
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 75,
+        "value": [
+          0,
+          163,
+          194,
+          36
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 76,
+        "value": 0.8819314096352759
+      },
+      {
+        "kind": "s",
+        "slot": 77,
+        "value": 0.6027111050923493
+      },
+      {
+        "kind": "s",
+        "slot": 78,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 79,
+        "value": 0.9974761023554486
+      },
+      {
+        "kind": "b",
+        "slot": 80,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 81,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 82,
+        "value": [
+          128,
+          114,
+          159,
+          244
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 83,
+        "value": [
+          0,
+          14,
+          53,
+          61
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 84,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 85,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 86,
+        "value": 0.9307861097528667
+      },
+      {
+        "kind": "s",
+        "slot": 87,
+        "value": 0.2019019624006405
+      },
+      {
+        "kind": "b",
+        "slot": 88,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 89,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 90,
+        "value": [
+          128,
+          107,
+          254,
+          156
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 91,
+        "value": [
+          0,
+          28,
+          53,
+          65
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 92,
+        "value": 0.10154672578295298
+      },
+      {
+        "kind": "s",
+        "slot": 93,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 94,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 95,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 96,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 97,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 98,
+        "value": [
+          0,
+          211,
+          212,
+          101
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 99,
+        "value": [
+          255,
+          132,
+          208,
+          225
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 100,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 101,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 102,
+        "value": 0.7874108561539352
+      },
+      {
+        "kind": "s",
+        "slot": 103,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 104,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 105,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 106,
+        "value": [
+          255,
+          29,
+          11,
+          113
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 107,
+        "value": [
+          128,
+          11,
+          172,
+          209
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 108,
+        "value": 0.37033787916591643
+      },
+      {
+        "kind": "s",
+        "slot": 109,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 110,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 111,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 112,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 113,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 114,
+        "value": [
+          255,
+          124,
+          16,
+          26
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 115,
+        "value": [
+          0,
+          126,
+          202,
+          124
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 116,
+        "value": 0.8039104046487732
+      },
+      {
+        "kind": "s",
+        "slot": 117,
+        "value": 0.68189225376847
+      },
+      {
+        "kind": "s",
+        "slot": 118,
+        "value": 0.07565706438153985
+      },
+      {
+        "kind": "s",
+        "slot": 119,
+        "value": 0.21706991825400335
+      },
+      {
+        "kind": "b",
+        "slot": 120,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 121,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 122,
+        "value": [
+          0,
+          214,
+          9,
+          171
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 123,
+        "value": [
+          255,
+          211,
+          193,
+          209
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 124,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 125,
+        "value": 0.8458938485248457
+      },
+      {
+        "kind": "s",
+        "slot": 126,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 127,
+        "value": 0.5060633214847814
+      },
+      {
+        "kind": "b",
+        "slot": 128,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 129,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 130,
+        "value": [
+          255,
+          231,
+          121,
+          233
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 131,
+        "value": [
+          0,
+          159,
+          167,
+          105
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 132,
+        "value": 0.5695666187066485
+      },
+      {
+        "kind": "s",
+        "slot": 133,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 134,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 135,
+        "value": 0.14752241005833677
+      },
+      {
+        "kind": "b",
+        "slot": 136,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 137,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 138,
+        "value": [
+          0,
+          33,
+          218,
+          210
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 139,
+        "value": [
+          255,
+          7,
+          250,
+          110
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 140,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 141,
+        "value": 0.854002536688013
+      },
+      {
+        "kind": "s",
+        "slot": 142,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 143,
+        "value": 0.5207813817233359
+      },
+      {
+        "kind": "b",
+        "slot": 144,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 145,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 146,
+        "value": [
+          128,
+          116,
+          52,
+          122
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 147,
+        "value": [
+          255,
+          78,
+          142,
+          202
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 148,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 149,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 150,
+        "value": 0.10308236980647711
+      },
+      {
+        "kind": "s",
+        "slot": 151,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 152,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 153,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 154,
+        "value": [
+          0,
+          232,
+          175,
+          122
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 155,
+        "value": [
+          0,
+          104,
+          103,
+          178
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 156,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 157,
+        "value": 0.6330276764696532
+      },
+      {
+        "kind": "s",
+        "slot": 158,
+        "value": 0.4121880949341744
+      },
+      {
+        "kind": "s",
+        "slot": 159,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 160,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 161,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 162,
+        "value": [
+          0,
+          62,
+          228,
+          205
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 163,
+        "value": [
+          128,
+          109,
+          26,
+          58
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 164,
+        "value": 0.267873838712119
+      },
+      {
+        "kind": "s",
+        "slot": 165,
+        "value": 0.39373686814942277
+      },
+      {
+        "kind": "s",
+        "slot": 166,
+        "value": 0.8423331095074167
+      },
+      {
+        "kind": "s",
+        "slot": 167,
+        "value": 0.0
+      },
+      {
+        "kind": "b",
+        "slot": 168,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 169,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 170,
+        "value": [
+          255,
+          118,
+          146,
+          162
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 171,
+        "value": [
+          128,
+          194,
+          35,
+          12
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 172,
+        "value": 0.22292755186801771
+      },
+      {
+        "kind": "s",
+        "slot": 173,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 174,
+        "value": 0.24346629581802526
+      },
+      {
+        "kind": "s",
+        "slot": 175,
+        "value": 0.05800435081472877
+      },
+      {
+        "kind": "b",
+        "slot": 176,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 177,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 178,
+        "value": [
+          255,
+          129,
+          17,
+          47
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 179,
+        "value": [
+          128,
+          127,
+          4,
+          103
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 180,
+        "value": 0.9777895612275593
+      },
+      {
+        "kind": "s",
+        "slot": 181,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 182,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 183,
+        "value": 0.992220657363459
+      },
+      {
+        "kind": "b",
+        "slot": 184,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 185,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 186,
+        "value": [
+          255,
+          215,
+          22,
+          218
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 187,
+        "value": [
+          0,
+          185,
+          116,
+          204
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 188,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 189,
+        "value": 0.9478148030050013
+      },
+      {
+        "kind": "s",
+        "slot": 190,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 191,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 192,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 193,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 194,
+        "value": [
+          0,
+          188,
+          7,
+          141
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 195,
+        "value": [
+          0,
+          71,
+          217,
+          248
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 196,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 197,
+        "value": 0.9446752373279392
+      },
+      {
+        "kind": "s",
+        "slot": 198,
+        "value": 0.44042206277914975
+      },
+      {
+        "kind": "s",
+        "slot": 199,
+        "value": 0.14981282201538215
+      },
+      {
+        "kind": "b",
+        "slot": 200,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 201,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 202,
+        "value": [
+          0,
+          99,
+          23,
+          246
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 203,
+        "value": [
+          128,
+          44,
+          87,
+          69
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 204,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 205,
+        "value": 0.9454817988831434
+      },
+      {
+        "kind": "s",
+        "slot": 206,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 207,
+        "value": 0.36442277397180356
+      },
+      {
+        "kind": "b",
+        "slot": 208,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 209,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 210,
+        "value": [
+          128,
+          88,
+          126,
+          53
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 211,
+        "value": [
+          255,
+          182,
+          249,
+          252
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 212,
+        "value": 0.716132542428189
+      },
+      {
+        "kind": "s",
+        "slot": 213,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 214,
+        "value": 0.6359695495693292
+      },
+      {
+        "kind": "s",
+        "slot": 215,
+        "value": 1.0
+      },
+      {
+        "kind": "b",
+        "slot": 216,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 217,
+        "value": 1
+      },
+      {
+        "kind": "c",
+        "slot": 218,
+        "value": [
+          0,
+          75,
+          5,
+          209
+        ]
+      },
+      {
+        "kind": "c",
+        "slot": 219,
+        "value": [
+          255,
+          190,
+          125,
+          177
+        ]
+      },
+      {
+        "kind": "s",
+        "slot": 220,
+        "value": 1.0
+      },
+      {
+        "kind": "s",
+        "slot": 221,
+        "value": 0.3335497736690336
+      },
+      {
+        "kind": "s",
+        "slot": 222,
+        "value": 0.0
+      },
+      {
+        "kind": "s",
+        "slot": 223,
+        "value": 0.15907696163573204
+      }
+    ],
+    "profile": "nonfinite",
+    "seed": 812324792801853187
+  },
+  "generator_version": 1,
+  "index": 2081,
+  "input_sha256": "53c7d421260da370bb544306ab997acfe4ebf2a7ef9806dfb08af872a6add10f",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNqdVQtMU2cUvjK0SnkUmMpjFKGTMJQqrGN19p4TN1pIFp1ocRkClYGFDZz4AGEVWxYiSNAtARIZoFJZHEwGS2dwEyow2BguOMAxdIgziGvAFzSMiczO/6csS3p1CUlvmnPP4//OOd/3X4bR4cT4Hhx/kA61NS8hwzC66Y8zsLHsRZnB/wVgbPw6bfm2XfTfz6fpiZ9hGgvd8GG9GAeFH5B8xqnxICuczKK1nvwsfe0v4/Hti9c/btLSePK+N/UKKES5FmJ0yfzQ4NoCV2MZ5Djvf2xGN9ZsBrmoVfuH3V4OvAyO3v0QDOabECJSUdzkWW+KQXX2cRp/uN8IyxbmgqIimiV2/80FOJCThLXFnlznMXW9l2ETLiA+C/EvjAmHdCMPU06pWOKPnZqU6deFYI5qM8uFP6zGAb7PjsRj4i+48JKWtKQfXk8BZz/Lf8piN/gI4NGwKxc+1EZG4AnmDTx94C8ybzSEt0HJrhQkNYntK3HHQ6Pe+Fulx3zmzThlfsVmyNPwOZct1F+t3oi3/4xAtZffvOoFveaMXVIJWhzvU7wE5+hWHlr5QW1TXxTWVQ3SeVrnrm2eFqLV1v7nsanPc7zFNhw4D5cuCjjPj/aMQ/3IO8i7IOfEWxu6l01xyWMJDoLpZP7b6Ga+BesSHGh+if8KtBcGoX20Kz6/KQP1w/sodv7oFtrPUI8Kj2W/igVvTtB99rnkgcNEjOx+RzCtT+qK/E3s+VgJ7UUZd5TEaZeeOGjVCOmL0UUJNJx8Gbj7N/tJ0UpsvOpF9XDG3g2XjO2AX+I/o+eTeV3mKf/l67P2sWhKjXaPs2nsl9s20PykgCaAO50QGqHB9s1Sivd353Twzdxok0983e86Q2JHL8zyTaeN+oHqzkJ6mRE64Z6OSlB6N4Nk5FcufVjS1kyC1CEVu3pmZHP7P9tcCqbO2funYtwbWsLLwbVNguXGMJQnjUC3WQyqqkN0HiRenWqCGCcJPkVfFIsVn41+hvhZeKXpBjj8nIkGqRlmZlahbt9uutNBr06yA8vqyAZYMe1J9zMwIMZggR8+hX+o0/TAya0STG6x1RvJv36vhl2tF+Oi0kQb/zdtH0E1/2t45dPbrJULz9zfmrM+mLQ0BIf5lRA0Ng6B0xqsOpWMU4b3weuII8W4k+8ExYUKTGxOo/PIL0rBtPhCaKg7J1u7PAavhbyHZ47mQe/1tZz3y5D+Blxw98PgsZ1473Q9THYuo3UDq1+fj/5nMaX7YrsylHImz3wHRAEV0B+wCuNKZZig8EDV/mB2cWIEzc9pEVJOFC0R2ujBubsVNAIldO8QoXtCEq2fv/tHqqeLdtfo7g4nF1i5Sb9P+CAe0N3NE8Sfn6NxPcLvCO91xcZAep5iPIedu5O5+nnLbjtKVxphTl+5Dz3wW34ryEv2k+8Blj26BEZLApTVh8E/SRbjxA==",
+  "plugin": "olmcolorkey",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "candidate_sha256": "16bda1c4c4114114f172eda7644f16eeed992011b818f060097228dfa95e1059",
+    "declarations_sha256": "0644759b492704d354e85db68101d1b039c65bdc5c92380f8b16be2186d88e3b",
+    "dependencies_sha256": {
+      "core/dblur_field.h": "eb5da4273883d057eb6daaed2471e377168df0ac56a9e84756fef87b5dfc20ec",
+      "core/dblur_float.h": "156bd96773f4d3860abf6e0c0e1e942774ea828f211c3f443be7a34e04796dd6",
+      "core/dblur_frontonly.h": "55281fd1240fa0cae51f6f047e651fefec1ff6fda892d5494f04accb441d6f57",
+      "core/dblur_gaussian.h": "232f032ba9a3085de0e000742c6696f99446ac21301741c18a012ecf8a377092",
+      "core/dblur_generic_budget.h": "0c7fb6a260be78c8d1fb7185c68262dda5826f3945dd1e7c2f6350722f9b67a7",
+      "core/dblur_noise.h": "f3038b21b78a3f523e35cefcc202d4f35eadce5f70ba3fd23b3128a34242bdaa",
+      "core/dblur_rotate.h": "67c255dc7d9f7a23125c355b64eac3aae43dcebb06dc96a318212764f6a9b57f",
+      "core/dblur_rowdriver.h": "2bbe5c880fc4372aad19d497c38cd745852160b6c8096428a96b9739eb11df15",
+      "core/kirakira_gaussian.h": "1baa7f739ea19618358072f77785542360ab3f42a7b0af498308387594d338b5",
+      "core/kirakira_highlight.h": "aa5bb0314f1d97c2d28278994db0370be938ab46ba49a6da0d895a26b76f6297",
+      "core/kirakira_highlight_gaussian.h": "6a7ecdefc638c46a609da98b56b632f45ccace25990a6a5ed7ccc0a566ef6ffb",
+      "core/kirakira_merge2.h": "5aa9d28fd15be9e31be51eb42b9a960b654df9f24cdb4b26a5b79a7aaf6dca52",
+      "core/kirakira_mode4.h": "03348ad80416d94529ec84cdba84a4851c511e4bda021bee0b89f606c3cf705e",
+      "core/kirakira_sincos.h": "91b6d89cb75a8fcdb1bc7a72561ae026381b9fa7cb8b104a5ac277fd21ee2753",
+      "core/kirakira_sincos_tables.h": "33eaa7a31ccde031d242059010b6c201e2f350b01384575eb2386f8b6e201f3c",
+      "core/kirakira_warp.h": "dc45087ce6114dd111dc9adc1fa5d0c540796948bb777b86997d837ac047b565",
+      "core/olm_checked_allocation.h": "ba5e81255cf2f85068b34cc0680ab1b951eb34bc3ffcceac921e6dba8fb6df45",
+      "core/olm_checked_rect.h": "37f1361db3e5dac289bc6b8cb6b2f86486e16f17c3045441b9e51631fe17b874",
+      "core/olm_parallel.h": "9a3c03d3fc5c9edccb90e5aca0149b7a2b802ba6e21b23acc5991580df0e8cdc",
+      "core/olm_roi_contract.h": "105787ecbff536d11b256994b10a8053f728be1fb8ee0352d3e175c3064dc85e",
+      "core/olm_sha256_rows.h": "bfdcc9a2f4575aabab692b7b4ca1cf9ddb8188c7fbb1efdae30d197bf0f2d9e5",
+      "core/olm_world_safety.h": "72020933191989deb07189ab4ee41cea20640af2a90317a2483f3cfafa8a412d",
+      "core/olmblur_fullworker_helper.h": "039fa758d7b825795a00f88cfe147392a67879c01a7983fea8f305d6b67e7aa9",
+      "core/olmblur_helper.h": "2d1a2c963cce3ec277c8d801e1027abf684d6736ce28888de46e202b5d36f08d",
+      "core/olmblur_parallel_parts.h": "d321c49200f21b9356426782961bdb0915d02030616edf67e9ec942a3f9ce915",
+      "core/olmblur_worker16_legacy.h": "72ab553b0869d363937b6767aeb8c95c60fba05c8e7fffeaa730ff4178b8a44d",
+      "core/olmblur_worker16_nonlegacy.h": "e0403ddd0b2992c1e6ec96fdaff136b686b63e8e6e3f566bbbfd844f6fefcc3f",
+      "core/olmblur_worker32_legacy.h": "d7d91805fa0338a5a94640a0c49aaf5ef03a6b52a0030e45c0a29436f1cd9b2a",
+      "core/olmblur_worker32_nonlegacy.h": "ffd160fafeb41f4dba87137a3e011660c35dcd9ba836225a3e1818f781b616ae",
+      "core/olmblur_worker8_legacy.h": "eaa101dced402b7ec76c4e2887f9b8ab34ab67400f63367581506551cb3284d1",
+      "core/olmblur_worker_orchestration.h": "500cf692663982d5bbc6ecf8cc9ed33351d3d7fc92a8c38e3f9932a80b0f11cd",
+      "core/olmdistancegradation_fieldgen.h": "7f9c1a6e0805bfbda84d957dbf72c9b8047728edbdd51f26fc594a2138b5af10",
+      "core/radialblur_scatter_caller.h": "fe2a5a3d99b33b1c5f301f4b238887b4f02ccdb3de2cb4f0c9c04534e9de1837",
+      "core/radialblur_scatter_tail.h": "a9a32e04ad9f75cc482e8460a4db7af649105d414e791107eb126226c65c6069",
+      "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
+      "mac/OLMColorKey/OLMColorKey.cpp": "6e8bfc33449fdbcb493602f347d53456efeb658f8eeb7c1245d3e57c45c7821f",
+      "mac/OLMColorKey/OLMColorKey.h": "5ff532b2c7a713204465c65d2fa56aafc004cb645a94f039e2b0978c57bad8ad",
+      "mac/OLMColorKey/OLMColorKey_Strings.h": "c05a77450f53c7a28d8245bc665127fbf749dc28c765881d6e377cf199eaa9cd",
+      "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+      "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+      "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+      "tools/emulation/olmblur_installed_effectmain_shim_20260813.h": "155b9dca2ef49e013574814feb158fe452741eac36fed2e5f7343b2a52e18a38",
+      "tools/emulation/olmcolorkey_installed_effectmain_shim_20260813.h": "9aef5fdb5103d215a957da668f163305e697fe8eb891a6532b8a537713100e7e",
+      "tools/emulation/olmkirakira_installed_effectmain_shim_20260813.h": "eccf768d497919c1b875ea10e3c73ec53e35a16af9c4a561303497d25ae8097a",
+      "tools/emulation/olmradialblur_installed_effectmain_shim_20260813.h": "7506106dd5b9bac9e0ecd77cff0b13ab8f4e66823a2fe341759039035f28fb49",
+      "tools/emulation/smoother2_fullchain_port_adapter.h": "6d061f4139fee463eeb8a5556f983282cabd9e7143f3f660faf656884a4752ef",
+      "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_stride": "shared randomly padded input/output stride from existing ColorKey helper",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "palette": "all 25 declarations supplied; counts include 0/1/2/4/5/24/25; mixed matching pixels",
+    "reference_build": false,
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "bypass": false,
+      "host_flags_control": false,
+      "sanitizers": false,
+      "trace": true
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0,
+    "bounded": true,
+    "minimality_claimed": false
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "fc5ae372be8955ba3bb57a866fbb23d7b37b0ad2c339d46ba8379cd60862348d",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "ERROR": "0"
+        },
+        "raw_sha256": "fc5ae372be8955ba3bb57a866fbb23d7b37b0ad2c339d46ba8379cd60862348d",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 812324792801853187
+}
