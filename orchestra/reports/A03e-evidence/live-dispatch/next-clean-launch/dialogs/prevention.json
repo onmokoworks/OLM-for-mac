@@ -1,0 +1,20 @@
+{
+  "disabled": false,
+  "changes": [
+    "CrashOccurred",
+    "ForceQuitOccured"
+  ],
+  "domain": "com.Adobe.After Effects.26.3",
+  "backups": {
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A03e-ae-watcher-workspace-and-live/orchestra/state/A03e-ae-watcher-workspace-and-live/live-dispatch/next-clean-launch/dialogs/preferences-1792925396414347000/effective.plist": "094778761b73b916619a4cae8575948cee94ba329ea8d2fbcb568a149ac7240f",
+    "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A03e-ae-watcher-workspace-and-live/orchestra/state/A03e-ae-watcher-workspace-and-live/live-dispatch/next-clean-launch/dialogs/preferences-1792925396414347000/on-disk.plist": "f294e124d1b72378b28cd84e68064c6fb1340ffbec59d087d57c4ddc58f90012"
+  },
+  "before": {
+    "CrashOccurred": "0",
+    "ForceQuitOccured": "0"
+  },
+  "after": {
+    "CrashOccurred": "0",
+    "ForceQuitOccured": "0"
+  }
+}

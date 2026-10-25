@@ -9,6 +9,18 @@ struct TextBox: Codable {
 }
 
 struct Policy {
+    // Window metadata takes precedence over incidental panel text (including OK).
+    static func workspace(title: String, rect: CGRect, role: String? = nil,
+                          subrole: String? = nil, modal: Bool = false) -> Bool {
+        guard !modal else { return false }
+        return (title.hasPrefix("Adobe After Effects 2026") && rect.width >= 1000 && rect.height >= 600) ||
+            (role == "AXWindow" && subrole == "AXStandardWindow")
+    }
+    static func splash(_ rows: [TextBox]) -> Bool {
+        let text = rows.map(\.text).joined(separator: " ")
+        return text.contains("Adobe After Effects") &&
+            (text.contains("Copyright") || text.contains("©")) && candidates(rows).isEmpty
+    }
     static let allowed = ["OK", "続行", "Continue", "閉じる", "Close", "後で", "Later",
                           "スキップ", "Skip", "今はしない", "Not Now"]
     static let forbidden = ["削除", "Delete", "保存しない", "Don't Save", "Don’t Save",

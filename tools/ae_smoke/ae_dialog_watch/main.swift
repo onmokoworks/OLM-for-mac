@@ -97,6 +97,16 @@ func axRect(_ el: AXUIElement) -> CGRect? {
           AXValueGetValue(s as! AXValue, .cgSize, &size) else { return nil }
     return CGRect(origin: point, size: size)
 }
+func isWorkspace(_ pid: pid_t, _ window: [String: Any]) -> Bool {
+    let rect = bounds(window)
+    let application = AXUIElementCreateApplication(pid)
+    AXUIElementSetMessagingTimeout(application, 1)
+    let ax = (attr(application, kAXWindowsAttribute) as? [AXUIElement] ?? []).first { axRect($0) == rect }
+    return Policy.workspace(title: window[kCGWindowName as String] as? String ?? "", rect: rect,
+        role: ax.flatMap { attr($0, kAXRoleAttribute) as? String },
+        subrole: ax.flatMap { attr($0, kAXSubroleAttribute) as? String },
+        modal: ax.flatMap { attr($0, kAXModalAttribute) as? Bool } ?? false)
+}
 func axButtons(_ pid: pid_t, _ rect: CGRect) -> [(TextBox, AXUIElement)] {
     var found: [(TextBox, AXUIElement)] = []
     var visited = 0
@@ -169,6 +179,14 @@ func watch(_ dir: URL) throws {
                 try emit(["event": "window", "pid": pid, "window": window]); seenGeometry[id] = rect
                 firstSeen[id] = Date()
             }
+            if isWorkspace(pid, window) {
+                let ready = dir.appendingPathComponent("workspace-ready")
+                if !fm.fileExists(atPath: ready.path) {
+                    try Data().write(to: ready, options: .atomic)
+                    try emit(["event": "workspace", "pid": pid, "window": window])
+                }
+                continue
+            }
             guard rect.width >= 200, rect.height >= 100 else { continue }
             guard Date().timeIntervalSince(firstSeen[id] ?? Date()) >= 2 else { continue }
             let image: CGImage
@@ -188,17 +206,12 @@ func watch(_ dir: URL) throws {
             let ax = axButtons(pid, rect)
             let allRows = rows + ax.map { $0.0 }
             if !Policy.knownDialog(rows) {
-                let text = rows.map(\.text).joined(separator: " ")
-                // Known non-dialog AE surfaces; everything else fails closed.
-                let splash = text.contains("Adobe After Effects") && (text.contains("Copyright") || text.contains("©")) && Policy.candidates(allRows).isEmpty
-                let workspace = rect.width > 900 && rect.height > 600 &&
-                    (text.contains("タイムライン") || text.contains("Timeline")) &&
-                    (text.contains("コンポジション") || text.contains("Composition"))
-                if splash || workspace { continue }
+                if Policy.splash(rows) { continue }
                 try save(image, dir.appendingPathComponent("unknown-\(id).png"))
                 try emit(["event": "unknown", "pid": pid, "window": window, "ocr": try jsonRows(rows)])
                 throw Failure("Unknown AE dialog; no click")
             }
+            try emit(["event": "dialog", "pid": pid, "window": window])
             let layout = Policy.crashRecoveryLayout(rows)
             let recovery = rows.contains { $0.text.contains("クラッシュ修復") ||
                 ["プラグインを管理", "環境設定をリセット", "セーフモードで開始"].contains($0.text) }
@@ -310,6 +323,12 @@ do {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else { throw Failure("Cannot read image") }
         let rows = try recognize(image)
         try emit(["rows": try jsonRows(rows), "layout": try jsonRows(Policy.crashRecoveryLayout(rows).map { [$0] } ?? []), "knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows))])
+    case "workspace":
+        let data = try JSONSerialization.jsonObject(with: FileHandle.standardInput.readDataToEndOfFile()) as! [String: Any]
+        let rect = CGRect(x: 0, y: 0, width: data["width"] as! Double, height: data["height"] as! Double)
+        try emit(["workspace": Policy.workspace(title: data["title"] as? String ?? "", rect: rect,
+            role: data["role"] as? String, subrole: data["subrole"] as? String,
+            modal: data["modal"] as? Bool ?? false)])
     case "policy":
         let rows = try JSONDecoder().decode([TextBox].self, from: FileHandle.standardInput.readDataToEndOfFile())
         guard rows.allSatisfy({ $0.box.count == 4 }) else { throw Failure("Invalid box") }
