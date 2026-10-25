@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "../../../core/olm_sha256_rows.h"
+#include "../../../core/olm_parallel.h"
 #ifndef OLMSMOOTHER2_SHIM_H
 #include "AEFX_SuiteHandlerTemplate.h"
 #endif
@@ -144,12 +145,12 @@ static int g_olmsmoother2_leaf_diag_mode = 0;
 static bool g_olmsmoother2_index_hist_enabled = false;
 static uint64_t g_olmsmoother2_index_hist[256] = {};
 static bool g_olmsmoother2_idx18_key_hist_enabled = false;
-static int g_olmsmoother2_current_switch_idx = -1;
+static thread_local int g_olmsmoother2_current_switch_idx = -1;
 static uint64_t g_olmsmoother2_idx18_cardinal3_key_hist[128] = {};
 static uint64_t g_olmsmoother2_idx18_cardinal12_key_hist[128] = {};
 static int g_olmsmoother2_trace_x = -1;
 static int g_olmsmoother2_trace_y = -1;
-static bool g_olmsmoother2_force_input_premultiply = false;
+static thread_local bool g_olmsmoother2_force_input_premultiply = false;
 
 static void OLMSmoother2ResetIndexHistogram(bool enabled)
 {
@@ -4663,12 +4664,27 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	}
 	p.class_plane = class_plane.data();
 
-	for (int32_t y = 0; y < h; ++y) {
+	// The input/class planes are complete and immutable here. Each row owns
+	// disjoint output pixels; all polygon traversal and floating-point sums
+	// stay inside one pixel with their original operand order.
+	const auto render_row = [&](size_t row) {
+		const int32_t y = static_cast<int32_t>(row);
 		for (int32_t x = 0; x < w; ++x) {
 			FPix out_px;
 			win_FUN_18000cce0_orchestrate(out_px, plane_in, plane_out, x, y, p);
 			plane_out.base[(size_t)y * w + x] = out_px;
 		}
+	};
+	// Histogram/probe hooks are intentionally ordered diagnostics. Keep their
+	// existing calling-thread execution; normal renders only read these flags.
+	const bool ordered_diagnostics = g_olmsmoother2_index_hist_enabled ||
+	    g_olmsmoother2_idx18_key_hist_enabled ||
+	    g_olmsmoother2_writer_frame_probe.json_path ||
+	    g_olmsmoother2_trace_x >= 0 || g_olmsmoother2_trace_y >= 0;
+	if (ordered_diagnostics || size_t(w) * size_t(h) < 65536) {
+		olm::parallel_rows_reference(size_t(h), render_row);
+	} else {
+		olm::parallel_rows(size_t(h), 8, render_row);
 	}
 
 	// Inverse-gamma output path (FUN_1800036e0 inside FUN_180003d90):
