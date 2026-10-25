@@ -168,7 +168,7 @@ template<class Ramp> void picker_result(Ramp& ramp, State& state, int index, boo
     else if (index>=0 && static_cast<unsigned>(index)<ramp.count) set_color(ramp.stops[index],c);
 }
 // Commands carry local coordinates. The host adapter owns suite resources.
-enum class DrawKind { antialias, fill, frame, line, text };
+enum class DrawKind { antialias, fill, frame, line, text, pen, release_pen, ticks };
 struct DrawCommand { DrawKind kind; float x,y,w,h; Color color; const char16_t* text=nullptr; float font=11.0f; };
 struct Theme { Color frame, fill, text, black; };
 inline Color scaled(Color c, float factor) { c.red*=factor;c.green*=factor;c.blue*=factor;return c; }
@@ -182,15 +182,19 @@ template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State
     if (!ramp.count) rect(out,DrawKind::fill,strip,theme.black);
     else for(int x=10;x<=202;++x)
         out.push_back({DrawKind::line,float(x),5,0,50,sample(ramp,float(x-10)/192.0f)});
+    out.push_back({DrawKind::pen,0,0,0,0,theme.frame});
     rect(out,DrawKind::frame,strip,theme.frame);
-    for(int i=1;i<=3;++i) {
-        out.push_back({DrawKind::line,float(10+48*i),5,0,5,theme.frame});
-        out.push_back({DrawKind::line,float(10+48*i),55,0,-5,theme.frame});
-    }
+    for(int i=1;i<=3;++i)
+        out.push_back({DrawKind::ticks,float(10+48*i),5,0,50,theme.frame});
+    out.push_back({DrawKind::release_pen,0,0,0,0,{}});
+    // 181235950 creates a further pen around the marker loop even though
+    // 181233860 creates its own pen for each marker frame.
+    out.push_back({DrawKind::pen,0,0,0,0,theme.frame});
     for(unsigned i=0;i<ramp.count;++i) {
         rect(out,DrawKind::fill,marker(ramp,i),color(ramp.stops[i]));
         rect(out,DrawKind::frame,marker(ramp,i),theme.frame);
     }
+    out.push_back({DrawKind::release_pen,0,0,0,0,{}});
     // Container draw order: randomize, flip, copy, paste, presets.
     for(int b : {2,3,0,1}) {
         const bool enabled=b!=1 || can_paste;

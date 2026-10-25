@@ -8,6 +8,18 @@ struct Ramp { std::uint32_t count; Stop stops[16]; };
 static_assert(sizeof(Ramp)==0x144);
 int main() {
     Ramp r{3,{{0,1,1,0,0},{0.5f,0.25f,0,1,0},{1,0.75f,0,0,1}}};
+    // Static 1812366b0 hash/xorshift sequence, seeded by original PE data.
+    const std::uint32_t random_bits[2][9]={{0x3f33fd40,0x3ec8d228,0x3f04710c,0x3c882e60,0x3ed38c73,0x3ee1ebef,0x3d69ec18,0x3c56bc50,0x3f72dad0},
+        {0x3f49cb0d,0x3f2320ce,0x3f68a7a9,0x3f2acb42,0x3f1d68b9,0x3f456f0a,0x3f203bd6,0x3f0b4166,0x3eb1f5a1}};
+    Ramp random_ramp=r;std::uint32_t random_seed=0x810cd;
+    for(int run=0;run<2;++run) {
+        randomize(random_ramp,random_seed);
+        for(unsigned i=0;i<3;++i) {
+            std::uint32_t actual[3];std::memcpy(actual,&random_ramp.stops[i].red,sizeof(actual));
+            assert(!std::memcmp(actual,random_bits[run]+i*3,sizeof(actual)));
+        }
+    }
+    assert(random_seed==0x58fad095);
     State s; Clipboard<Ramp> clip; std::uint32_t rng=0x810cd;
     auto event=[&](EventType t,int x,int y) { return dispatch(r,s,clip,rng,{t,x,y}); };
     assert(hit(r,5,60)==0 && hit(r,15,70)==0 && hit(r,4,65)==-1);
@@ -52,7 +64,8 @@ int main() {
     for(int i=0;i<193;++i) {
         const auto& c=commands[1+i]; assert(c.kind==DrawKind::line && c.x==10+i && c.y==5 && c.w==0 && c.h==50);
     }
-    assert(commands[194].kind==DrawKind::frame);
+    assert(commands[194].kind==DrawKind::pen && commands[195].kind==DrawKind::frame);
+    assert(commands[196].kind==DrawKind::ticks && commands[199].kind==DrawKind::release_pen);
     assert(commands[201].kind==DrawKind::fill && commands[201].w==10 && commands[201].h==10);
     unsigned text_count=0;for(const auto& c:commands) if(c.kind==DrawKind::text) ++text_count;
     assert(text_count==5);

@@ -2324,6 +2324,7 @@ static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
     const auto path_suite = suites.PathSuiteCurrent();
     const float ox = event->effect_win.current_frame.left;
     const float oy = event->effect_win.current_frame.top;
+    DRAWBOT_PenRef shared_pen = nullptr;
     for (const auto& c : commands) {
         DRAWBOT_ColorRGBA rgba{c.color.red,c.color.green,c.color.blue,c.color.alpha};
         DRAWBOT_RectF32 rect{c.x+ox,c.y+oy,c.w,c.h};
@@ -2332,6 +2333,18 @@ static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
         DRAWBOT_FontRef font = nullptr;
         DRAWBOT_BrushRef brush = nullptr;
         switch(c.kind) {
+        case ramp_ui::DrawKind::pen:
+            ERR(sup->NewPen(supplier,&rgba,1.0f,&shared_pen)); break;
+        case ramp_ui::DrawKind::release_pen:
+            if(shared_pen) { ERR(sup->ReleaseObject(reinterpret_cast<DRAWBOT_ObjectRef>(shared_pen))); shared_pen=nullptr; }
+            break;
+        case ramp_ui::DrawKind::ticks:
+            ERR(sup->NewPath(supplier,&path));
+            ERR(path_suite->MoveTo(path,rect.left,rect.top));
+            ERR(path_suite->LineTo(path,rect.left,rect.top+5.0f));
+            ERR(path_suite->MoveTo(path,rect.left,rect.top+c.h));
+            ERR(path_suite->LineTo(path,rect.left,rect.top+c.h-5.0f));
+            ERR(surf->StrokePath(surface,shared_pen,path)); break;
         case ramp_ui::DrawKind::antialias:
             ERR(surf->SetAntiAliasPolicy(surface,static_cast<DRAWBOT_AntiAliasPolicy>(0))); break;
         case ramp_ui::DrawKind::fill:
@@ -2362,8 +2375,9 @@ static PF_Err DrawRampCommands(PF_InData *in_data, PF_EventExtra *event,
         for (auto object : {reinterpret_cast<DRAWBOT_ObjectRef>(brush),reinterpret_cast<DRAWBOT_ObjectRef>(font),
                             reinterpret_cast<DRAWBOT_ObjectRef>(pen),reinterpret_cast<DRAWBOT_ObjectRef>(path)})
             if(object) { const auto release_err=sup->ReleaseObject(object); if(!err) err=release_err; }
-        if(err) return err;
+        if(err) break;
     }
+    if(shared_pen) { const auto release_err=sup->ReleaseObject(reinterpret_cast<DRAWBOT_ObjectRef>(shared_pen)); if(!err) err=release_err; }
     return err;
 }
 
