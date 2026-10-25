@@ -1,0 +1,37 @@
+[
+  {
+    "plugin": "colorkeep",
+    "random_cases": 300,
+    "corpus_cases": 218,
+    "route_checks": 1036,
+    "changed_results": 0
+  },
+  {
+    "plugin": "olmcolorkey",
+    "random_cases": 300,
+    "corpus_cases": 9,
+    "route_checks": 618,
+    "changed_results": 0
+  },
+  {
+    "plugin": "olmsmoother2",
+    "random_cases": 300,
+    "corpus_cases": 105,
+    "route_checks": 810,
+    "changed_results": 0
+  },
+  {
+    "plugin": "olmkirakira",
+    "random_cases": 300,
+    "corpus_cases": 342,
+    "route_checks": 1284,
+    "changed_results": 0
+  },
+  {
+    "plugin": "radialblur",
+    "random_cases": 300,
+    "corpus_cases": 241,
+    "route_checks": 1082,
+    "changed_results": 0
+  }
+]

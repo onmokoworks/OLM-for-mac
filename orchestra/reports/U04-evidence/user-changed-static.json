@@ -1,0 +1,95 @@
+{
+  "mode": "static_not_execution",
+  "plugins": [
+    {
+      "plugin": "ColorKeep",
+      "original_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+      "static_dispatch": "same function as UPDATE_PARAMS_UI",
+      "entry": "1800025c0",
+      "leaf": null,
+      "decomp_excerpt_sha256": "25324903cface0ca6b308e5b6ad11c42b94fe8d85c0e29f35cc94f94fd510c0f",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMBlur",
+      "original_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "static_dispatch": "no selector13 case",
+      "entry": "18000a970",
+      "leaf": null,
+      "decomp_excerpt_sha256": "194f3c8caf64507306c55ffa7b82ee747fcfc79ad6e1fd8d50915650eb07f308",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "original_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "static_dispatch": "no selector13 case",
+      "entry": "1800083f0",
+      "leaf": null,
+      "decomp_excerpt_sha256": "267962c274f975b453767a892b85f800f58d5c90ea5da20c0675c3a01c3f56c4",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "DistanceGradation",
+      "original_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "static_dispatch": "no selector13 case",
+      "entry": "181174bd0",
+      "leaf": null,
+      "decomp_excerpt_sha256": "ca72e0200b30bb0d320879dcaeb7ce7ef3e1401c7d84a99752bfc6cb33e8e6fc",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMSmoother",
+      "original_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "static_dispatch": "no selector13 case",
+      "entry": "18000a2c0",
+      "leaf": null,
+      "decomp_excerpt_sha256": "cb4ee5c59111a2d83c8c9f2ff4efd93100ed419d7fa1d656ead13452e5dd6959",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMColorKey",
+      "original_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "static_dispatch": "empty virtual USER_CHANGED method",
+      "entry": "entry_point",
+      "leaf": "18000b660",
+      "decomp_excerpt_sha256": "268592b9f708d114791101174a0a6a18858bfe74ac2c458fd7ce1f2784b9dd32",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "static_dispatch": "empty virtual USER_CHANGED method",
+      "entry": "entry_point",
+      "leaf": "1811517e0",
+      "decomp_excerpt_sha256": "a12212d3836c71fe7a31b5b215c1b8a295030d4df97e55991b3b3f4462d47993",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "original_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "static_dispatch": "empty virtual USER_CHANGED method",
+      "entry": "entry_point",
+      "leaf": "18000bc00",
+      "decomp_excerpt_sha256": "298acb4d8eb4b0a3102d10106e75d4217ca3c8773c66d9547c9f760ee6dbdced",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "original_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "static_dispatch": "empty virtual USER_CHANGED method",
+      "entry": "entry_point",
+      "leaf": "1800056f0",
+      "decomp_excerpt_sha256": "407e84f222ae8517ef53d4a9e41ad60da2c2d17ca355a302e3abab7a45bdb493",
+      "mac_dispatch_agrees": true
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "original_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "static_dispatch": "empty virtual USER_CHANGED method",
+      "entry": "entry_point",
+      "leaf": "1801a7300",
+      "decomp_excerpt_sha256": "e63b8dd57a4a911e90dd63e8b6617e24d917ab244d8f9fa05d02cb71aac8dec1",
+      "mac_dispatch_agrees": true
+    }
+  ]
+}
