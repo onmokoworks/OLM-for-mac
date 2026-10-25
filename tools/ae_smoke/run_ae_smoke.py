@@ -220,7 +220,7 @@ def render(state):
         preflight(state)
         with (state / f'aerender-{row["depth"]}.log').open('w') as log:
             subprocess.run([str(APP.parent / 'aerender'), '-project', row['path'],
-                            '-mfr', 'OFF'], stdout=log, stderr=subprocess.STDOUT, check=True)
+                            '-mfr', 'OFF', '100'], stdout=log, stderr=subprocess.STDOUT, check=True)
 
 
 def compare_controls(state):

@@ -16,6 +16,11 @@ struct Policy {
         return (title.hasPrefix("Adobe After Effects 2026") && rect.width >= 1000 && rect.height >= 600) ||
             (role == "AXWindow" && subrole == "AXStandardWindow")
     }
+    static func scriptProgress(_ title: String) -> Bool {
+        let title = normalized(title)
+        return (title.hasPrefix("スクリプト") && title.contains("を実行中")) ||
+            title.hasPrefix("Running script")
+    }
     static func splash(_ rows: [TextBox]) -> Bool {
         let text = rows.map(\.text).joined(separator: " ")
         return text.contains("Adobe After Effects") &&

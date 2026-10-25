@@ -29,6 +29,20 @@ def policy(rows):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_script_progress_fixture(self):
+        fixture = ROOT / 'orchestra/reports/A02e-evidence/priority-e2/dialogs'
+        events = [json.loads(line) for line in (fixture / 'dialogs.jsonl').read_text().splitlines()]
+        event = next(e for e in events if e.get('event') == 'unknown' and
+                     e.get('window', {}).get('kCGWindowNumber') == 1825)
+        title = event['window']['kCGWindowName']
+        for text, expected in [(title, True), ('Running script launch.jsx...', True),
+                               ('スクリプトエラー', False), ('Unknown dialog', False)]:
+            result = json.loads(subprocess.check_output([str(BINARY), 'script-progress'], input=text.encode()))
+            self.assertEqual(result['scriptProgress'], expected)
+        ocr = json.loads(subprocess.check_output([str(BINARY), 'ocr', str(fixture / 'unknown-1825.png')]))
+        self.assertEqual(ocr['candidates'], [])
+        self.assertFalse(ocr['knownDialog'])
+
     def test_workspace_metadata_boundaries(self):
         def check(expected, **data):
             result = json.loads(subprocess.check_output([str(BINARY), 'workspace'],

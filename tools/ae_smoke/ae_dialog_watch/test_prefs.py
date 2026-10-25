@@ -34,6 +34,7 @@ class PrefTests(unittest.TestCase):
             with patch('ae_dialog_watch.prefs.subprocess.check_output', return_value=''):
                 result = scripting_prefs(root / 'backup', source=source)
                 self.assertEqual(result['before_sha256'], result['backup_sha256'])
+                self.assertIn(b'"Pref_DISABLE_SCRIPTS_PROGRESS_DIALOG" = 01', source.read_bytes())
                 with self.assertRaises(RuntimeError):
                     scripting_prefs(root / 'backup', source=source)
             with patch('ae_dialog_watch.prefs.subprocess.check_output', return_value='/Applications/X/Contents/MacOS/After Effects\n'):

@@ -179,6 +179,9 @@ func watch(_ dir: URL) throws {
                 try emit(["event": "window", "pid": pid, "window": window]); seenGeometry[id] = rect
                 firstSeen[id] = Date()
             }
+            if Policy.scriptProgress(window[kCGWindowName as String] as? String ?? "") {
+                continue // Benign script execution: never click Cancel.
+            }
             if isWorkspace(pid, window) {
                 let ready = dir.appendingPathComponent("workspace-ready")
                 if !fm.fileExists(atPath: ready.path) {
@@ -323,6 +326,9 @@ do {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil), let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else { throw Failure("Cannot read image") }
         let rows = try recognize(image)
         try emit(["rows": try jsonRows(rows), "layout": try jsonRows(Policy.crashRecoveryLayout(rows).map { [$0] } ?? []), "knownDialog": Policy.knownDialog(rows), "candidates": try jsonRows(Policy.candidates(rows))])
+    case "script-progress":
+        let title = String(data: FileHandle.standardInput.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        try emit(["scriptProgress": Policy.scriptProgress(title)])
     case "workspace":
         let data = try JSONSerialization.jsonObject(with: FileHandle.standardInput.readDataToEndOfFile()) as! [String: Any]
         let rect = CGRect(x: 0, y: 0, width: data["width"] as! Double, height: data["height"] as! Double)
