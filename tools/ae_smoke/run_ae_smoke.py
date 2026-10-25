@@ -218,7 +218,7 @@ def main():
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
     p.add_argument('--no-dialog-prevention', action='store_true',
-                   help='Skip preference backup/inspection; watcher remains enabled')
+                   help='Skip crash-flag backup/reset; watcher remains enabled')
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
     p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths'), default='legacy')
     a = p.parse_args()

@@ -116,11 +116,42 @@ this matrix. Successful frame output alone does not establish exactness.
 is required for 32 bpc. This remains an unvalidated real-host scaffold and
 contains no corpus cases; generation/codec checks are not AE calibration.
 
-## A03 dialog watcher
+## Unattended AE 2026 launch (A03b)
 
-Build now starts the PID-scoped Swift/AX/Vision watcher before AE dispatch and
-stops it afterward. Unknown dialogs and capture/permission failures stop the run.
-Preference prevention is observation-only because no deterministic recovery flag
-has been validated. `--no-dialog-prevention` skips that inspection while keeping
-the watcher enabled. Live clicking and the two-launch E2E remain **blocked**;
-read [the watcher documentation](ae_dialog_watch/README.md) before unattended use.
+Build starts the PID-scoped Swift/AX/Vision watcher before dispatch. With AE and
+`aerender` absent, it exports `com.Adobe.After Effects.26.3`, copies the on-disk
+plist into the run's `dialogs/preferences-*` directory, records both SHA-256
+hashes and `defaults read` values in `dialogs/prevention.json`, then writes only
+`CrashOccurred=false` and `ForceQuitOccured=false` (Adobe's spelling).
+Readback must be `0` for both. Other preferences, projects and auto-saves are
+untouched. Preserve the backup directory before deleting a worktree; never import
+an entire stale plist to restore these flags. `--no-dialog-prevention` skips
+backup/reset while retaining the watcher.
+
+Before dispatch, the runner checks for other AE/aerender processes, an unlocked
+console session and at least 30% free memory. Launch uses the full AE 2026 path.
+Do not start a second instance or signal AE on failure. The failure handler
+captures the owned window and requests normal quit once; if AE remains, stop
+and report its PID. Never treat a missing marker or watcher failure as success.
+
+To check prevention with two trivial JSX marker + `app.quit()` launches, use a
+fresh scratch directory (the second launch runs only after the first succeeds):
+
+```sh
+mkdir -p orchestra/state/A03b-ae-crash-flags-and-ocr
+PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_e2e.py \
+  --scratch orchestra/state/A03b-ae-crash-flags-and-ocr/fresh-e2e \
+  > orchestra/state/A03b-ae-crash-flags-and-ocr/fresh-e2e.log 2>&1
+```
+
+Each successful result requires a marker, exit code 0, no remaining AE, no
+watcher click, and both flags still false. Native ScreenCaptureKit capture uses
+points × backing scale; Vision uses `.accurate`, language correction off. Only
+exact allowlisted labels with confidence ≥0.8 can trigger OCR clicks. Evidence
+PNGs retain the pixels passed to Vision; capture events record dimensions/scale.
+
+**Live proof remains blocked:** A03b set/read both flags false and captured 2x,
+but capture subsequently timed out, the JSX marker was absent, and the normal
+quit request timed out. No two-clean-launch or live button-click claim is made.
+See [A03b report](../../orchestra/reports/A03b-ae-crash-flags-and-ocr.md) and
+[watcher details](ae_dialog_watch/README.md). AE subsequently disappeared; investigate the capture/dispatch boundary before retrying.

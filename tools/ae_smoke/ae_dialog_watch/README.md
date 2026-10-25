@@ -7,31 +7,22 @@ Popen PID**. The watcher never discovers/adopts an existing AE instance.
 It stops cooperatively after the build lifecycle; it sends no process signals.
 The runner retains busy/lock/memory checks and the 180-second JSX deadline.
 
-**Not yet validated for unattended production use.** The first real run produced
-no JSX marker. The initial watcher exited prematurely during app registration;
-its executable-path liveness check and Python fail-closed check were subsequently
-fixed and tested offline, not re-tested against AE. No live AX/OCR click or clean
-second launch was established. See `orchestra/reports/A03-ae-dialog-watcher.md`.
+**Not yet validated for unattended production use.** A03b obtained native 2x
+captures but then encountered a capture timeout, missing JSX marker and normal
+quit timeout. No live AX/OCR click or clean second launch was established.
+See `orchestra/reports/A03b-ae-crash-flags-and-ocr.md`.
 
-## Prevention investigation
+## Prevention
 
-Before inspection, A03 backed up the `26.*` preference directories, adjacent
-versioned plists and AE 2026 logs. The on-disk 26.3 plist had Boolean
-`CrashOccurred=true` and `ForceQuitOccured=true`; no deterministic causal switch
-was established. A read-only probe during the launch saw AE's main project
-window, despite these pre-launch disk values. This does not prove there was no
-earlier recovery dialog. The 26.3 text preferences did not reveal a confirmed
-home-screen suppression setting. Auto-saves and projects were not changed.
-
-Consequently `prepare_launch` is intentionally **observation-only**: it exports
-and backs up the effective versioned CFPreferences domain before reading the two
-candidate flags, and records `changes: []`. It does not edit preferences, move
-projects, reset settings, or clear recovery/autosave folders. The safe deterministic
-prevention switch remains unknown; the fallback is dialog detection.
-Backups made by this function persist under
-`~/.cache/olm-emu/ae-dialog-watch/backups/<timestamp>/` with a SHA-256 and manifest.
-`--no-dialog-prevention` skips even this inspection/backup for the pending-recovery
-test. No unvalidated preference toggle is silently enabled.
+With no AE/aerender running, `prepare_launch` exports effective CFPreferences and
+copies the on-disk 26.3 plist into the run's `dialogs/preferences-*` directory.
+It logs hashes and before values, writes only `CrashOccurred` and
+`ForceQuitOccured` false, then logs `defaults read` results (both must be `0`).
+The explicitly authorized domain is `com.Adobe.After Effects.26.3`; unexpected
+versions fail closed. Projects, auto-saves and all other keys are untouched.
+Preserve these backups before deleting scratch. `--no-dialog-prevention` skips
+this step. A03b measured both flags changing from `1` to `0`; prevention of the
+recovery dialog and clean startup remain unproven.
 
 ## Native helper
 
@@ -41,7 +32,9 @@ test. No unvalidated preference toggle is silently enabled.
   geometry changes are logged. AXObserver subscribes to creation/focus events,
   records notifications and pumps its run loop while polling CG windows.
 - ScreenCaptureKit filters by the exact AE window ID and owner PID; captures
-  exclude shadow and cursor. Vision recognizes Japanese and English.
+  exclude shadow and cursor and use content points × native backing scale.
+  Vision recognizes Japanese and English with `.accurate`, language correction
+  off. Evidence PNGs preserve native pixels. Capture dimensions/scale are logged.
 - Known dialog context is required in addition to an exact allowlisted label.
   Unknown non-splash/non-workspace windows stop the watcher. Ambiguity stops;
   there is no fuzzy substitution for Japanese OCR errors.
@@ -52,7 +45,7 @@ test. No unvalidated preference toggle is silently enabled.
 - Prefer AXPress for enabled buttons in the matching AX window. Otherwise verify
   foreground PID, fresh window bounds and fresh OCR, check occlusion, and post
   CGEvent mouse down/up **to the owned PID**, never global keyboard events.
-- At most ten clicks. Each successful attempt saves window-only <=400,000-byte
+- At most ten clicks. Each successful attempt saves window-only native-resolution
   PNGs and before/after JSONL records (time, PID, bounds, OCR, label, method).
   The next capture must show the old dialog gone; failure stops without repeating
   the click. If no AE window remains for the after screenshot, this is recorded
@@ -78,7 +71,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_watch.py \
 PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/test_pipeline.py
 ```
 
-Expected: 10 watcher tests and 6 existing pipeline tests pass; the latter needs
+Expected: 12 watcher tests and 6 existing pipeline tests pass; the latter needs
 numpy. Compilation output is redirected to `swift-build.log` in scratch. This
 checks policy, OCR on A02d's saved image, centres with a negative monitor origin,
 overlap rejection, and lifecycle failures. It does not prove live clicks.
@@ -90,17 +83,11 @@ orchestra/state/A03-ae-dialog-watcher/recheck/ae-dialog-watch permissions
 orchestra/state/A03-ae-dialog-watcher/recheck/ae-dialog-watch ocr orchestra/reports/A02d-evidence/blocked.png
 ```
 
-## Real test (follow-up; fresh scratch required)
+## Real test
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_e2e.py \
-  --scratch orchestra/state/A03-ae-dialog-watcher/fresh-e2e \
-  > orchestra/state/A03-ae-dialog-watcher/fresh-e2e.log 2>&1
-```
-
-Both launches disable prevention. The script checks the A02b preconditions,
-launches once, writes a marker via JSX and requests `app.quit()`. Only after a
-successful first run does it attempt the next launch and require zero dialog
-clicks. An absent pending recovery dialog is **not** proof of the live OCR path;
-inspect the first run's before/after events. Do not fabricate a crash, restore old
-flags, force-quit AE, or repeat a failed launch without investigating its boundary.
+Follow the [unattended procedure](../README.md#unattended-ae-2026-launch-a03b).
+The test now enables crash-flag prevention for both launches, requires zero
+clicks, reads flags after exit, and rejects nonzero exit codes. A03b did not
+achieve clean quit or marker execution; live recovery/OCR clicks remain unproven.
+Do not manufacture a crash by force quitting. A controlled flag-only recovery
+experiment must wait for successful clean lifecycle verification.

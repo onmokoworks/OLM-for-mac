@@ -2,6 +2,7 @@
 """Offline policy + Vision fixture tests; never launches AE."""
 import argparse
 import json
+import plistlib
 from pathlib import Path
 import subprocess
 import sys
@@ -70,6 +71,49 @@ class LifecycleTests(unittest.TestCase):
             with patch('ae_dialog_watch.watcher.subprocess.run') as run:
                 result = prepare_launch(Path(tmp), disabled=True)
                 self.assertEqual(result['changes'], [])
+                run.assert_not_called()
+
+    def test_prevention_backs_up_before_writing_only_two_flags(self):
+        with tempfile.TemporaryDirectory(dir=SCRATCH) as tmp:
+            root = Path(tmp)
+            app = root / 'AE.app'
+            (app / 'Contents').mkdir(parents=True)
+            (app / 'Contents/Info.plist').write_bytes(plistlib.dumps({'CFBundleShortVersionString': '26.3'}))
+            prefs = {'CrashOccurred': True, 'ForceQuitOccured': True, 'untouched': 'keep'}
+            source = root / 'Library/Preferences/com.Adobe.After Effects.26.3.plist'
+            source.parent.mkdir(parents=True)
+            original = plistlib.dumps(prefs)
+            source.write_bytes(original)
+            writes = []
+            def run(cmd, **kwargs):
+                if cmd[1] == 'export':
+                    Path(cmd[3]).write_bytes(plistlib.dumps(prefs))
+                else:
+                    self.assertEqual(cmd[:3], ['defaults', 'write', 'com.Adobe.After Effects.26.3'])
+                    self.assertEqual(cmd[4:], ['-bool', 'false'])
+                    copies = list((root/'state').glob('preferences-*/on-disk.plist'))
+                    self.assertEqual(copies[0].read_bytes(), original)
+                    writes.append(cmd[3])
+                    prefs[cmd[3]] = False
+            def output(cmd, **kwargs):
+                return '' if cmd[0] == 'ps' else str(int(prefs[cmd[-1]])) + '\n'
+            with patch('ae_dialog_watch.watcher.APP', app), patch('pathlib.Path.home', return_value=root), \
+                 patch('ae_dialog_watch.watcher.subprocess.run', side_effect=run), \
+                 patch('ae_dialog_watch.watcher.subprocess.check_output', side_effect=output):
+                result = prepare_launch(root/'state')
+            self.assertEqual(writes, ['CrashOccurred', 'ForceQuitOccured'])
+            self.assertEqual(result['before'], dict.fromkeys(writes, '1'))
+            self.assertEqual(result['after'], dict.fromkeys(writes, '0'))
+            self.assertEqual(prefs['untouched'], 'keep')
+            self.assertEqual(len(result['backups']), 2)
+
+    def test_busy_prevention_refuses_before_backup_or_write(self):
+        with tempfile.TemporaryDirectory(dir=SCRATCH) as tmp:
+            with patch('ae_dialog_watch.watcher.subprocess.check_output',
+                       return_value='/Applications/AE.app/Contents/MacOS/After Effects\n'), \
+                 patch('ae_dialog_watch.watcher.subprocess.run') as run:
+                with self.assertRaisesRegex(RuntimeError, 'AE busy'):
+                    prepare_launch(tmp)
                 run.assert_not_called()
 
     def test_premature_success_exit_is_failure_when_ae_alive(self):
