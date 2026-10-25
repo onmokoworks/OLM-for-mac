@@ -1,0 +1,18 @@
+{
+  "scratch_bytes_before_cleanup": 558203184,
+  "regenerable_world_bytes_removed": 530977840,
+  "scratch_bytes_after_cleanup": 27225344,
+  "memory_stop": {
+    "free_percent": 29,
+    "reason": "user requires >=30% memory_pressure free",
+    "runner_pid": 38362,
+    "stopped_children": [
+      "51718"
+    ],
+    "unfinished": "radialblur/4k/8",
+    "completed_heavy_cases": 51
+  },
+  "final_memory_pressure": "System-wide memory free percentage: 57%",
+  "final_heavy_runner_exit": 0,
+  "remaining_build_trees": []
+}

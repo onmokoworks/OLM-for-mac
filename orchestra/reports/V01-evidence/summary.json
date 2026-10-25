@@ -172,12 +172,12 @@
     "non_equal": []
   },
   "heavy": {
-    "cases": 59,
+    "cases": 60,
     "verdicts": {
-      "equal": 59
+      "equal": 60
     },
     "pairs": {
-      "equal_ok": 139,
+      "equal_ok": 142,
       "equal_refusal": 2
     },
     "plugins": {
@@ -206,7 +206,7 @@
         "equal": 6
       },
       "radialblur": {
-        "equal": 5
+        "equal": 6
       },
       "olmsmoother": {
         "equal": 6

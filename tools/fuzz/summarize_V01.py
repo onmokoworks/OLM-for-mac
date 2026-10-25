@@ -2,7 +2,7 @@
 """Summarize V01 observations without treating refusals/errors as exact renders."""
 import argparse,collections,gzip,json,shutil
 from pathlib import Path
-from verify_V01 import STATE,ROOT
+from verify_V01 import STATE,ROOT,PLUGINS,THREADED
 
 def rows(path):
  if path.exists():
@@ -47,6 +47,25 @@ def main():
   print(phase+'-after-retry',dict(counts))
  if a.evidence:
   assert summary==json.loads((base/'summary.json').read_text()),'retained summary differs'
+  for phase,n in (('default',100),('realistic-v1',100),('realistic-v2',100),('odd-even-v1',50),('heavy',6)):
+   data=rows(base/(phase+'.jsonl'))
+   cells=[f'{size}/{depth}' for size in ('full','4k') for depth in (8,16,32)] if phase=='heavy' else list(map(str,range(n)))
+   assert {r['identity'] for r in data}=={plugin+'/'+cell for plugin in PLUGINS for cell in cells},phase
+   for r in data:
+    assert r['verdict']=='equal',r['identity']
+    assert [p['cap'] for p in r['results']]==([1,2,8] if r['plugin'] in THREADED else [1]),r['identity']
+    assert all(p['equal'] and p['first_byte'] is None and p['arm64']==p['x86_64'] for p in r['results']),r['identity']
+  print('complete requested slice coverage: 3560 cases, 8544 pairs')
+  bindings=0
+  for phase in ('default','realistic-v1'):
+   native={r['identity']:r for r in rows(base/(phase+'.jsonl'))}
+   for original in rows(base/(phase+'-oracle.jsonl')):
+    r=native[original['identity']]
+    assert (r['case'],r['input_sha256'])==(original['case'],original['input_sha256']),r['identity']
+    assert r['results'][0]['x86_64']==original['x86_64'],r['identity']
+    bindings+=1
+  print('same inputs, parameters and Intel cap-1 outputs:',bindings)
+  assert bindings==2000
  else:(STATE/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
  if a.retain:
   dest=ROOT/'orchestra/reports/V01-evidence';dest.mkdir(exist_ok=True)
