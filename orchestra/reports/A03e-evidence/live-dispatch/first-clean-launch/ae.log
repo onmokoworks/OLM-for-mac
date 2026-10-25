@@ -1,0 +1,7 @@
+2026-10-25 19:49:49.053 After Effects[70811:13686091] CoreText registered PingFang for compatibility.
+2026-10-25 19:49:53.932 After Effects[70811:13686091] CoreText note: Client requested name ".AppleSDGothicNeoI-Bold", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-10-25 19:49:53.933 After Effects[70811:13686091] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+[2026-10-25 19:49:54] [info] asio async_connect error: asio.system:61 (Connection refused)
+[2026-10-25 19:49:54] [info] Error getting remote endpoint: asio.system:22 (Invalid argument)
+[2026-10-25 19:49:54] [error] handle_connect error: Connection refused
+2026-10-25 19:49:54.987 After Effects[70811:13686091] .sdef warning for argument 'FileType' of command 'save' in suite 'Standard Suite': 'saveable file format' is not a valid type name.
