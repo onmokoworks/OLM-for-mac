@@ -152,47 +152,61 @@ def _build_owned(state, wrapper, out, watcher):
     if screen_locked():
         raise RuntimeError('Screen locked before dispatch; no AE launch')
     watcher.check()
-    with (state / 'ae.log').open('w') as log:
-        proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects'), '-r', str(wrapper)],
-                                stdout=log, stderr=subprocess.STDOUT)
-        (state / 'pid.txt').write_text(str(proc.pid) + '\n')
-        watcher.bind(proc.pid)
-        deadline = time.monotonic() + 180
-        result = None
-        while time.monotonic() < deadline:
-            try:
+    dispatch = None
+    dispatch_log = None
+    proc = None
+    try:
+        with (state / 'ae.log').open('w') as log:
+            proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects')],
+                                    stdout=log, stderr=subprocess.STDOUT)
+            (state / 'pid.txt').write_text(str(proc.pid) + '\n')
+            watcher.bind(proc.pid)
+            deadline = time.monotonic() + 180
+            result = None
+            while time.monotonic() < deadline:
                 watcher.check()
-            except RuntimeError:
-                if proc.poll() is None:
-                    quit_once(state)
-                raise
-            if out.exists():
-                try:
-                    result = json.loads(out.read_text())
-                    if result.get('phase') in ('complete', 'error'):
-                        break
-                except json.JSONDecodeError:
-                    pass
-            if proc.poll() is not None:
-                break
-            time.sleep(1)
-        if not result or result.get('phase') not in ('complete', 'error'):
+                if (watcher.directory / 'workspace-ready').exists() and dispatch is None:
+                    if running() != [str(proc.pid)]:
+                        raise RuntimeError('Owned AE is not the sole running instance')
+                    dispatch_log = (state / 'dispatch.log').open('w')
+                    script = 'tell application ' + json.dumps(str(APP)) + ' to DoScriptFile POSIX file ' + json.dumps(str(wrapper))
+                    dispatch = subprocess.Popen(['osascript', '-e', script],
+                                                stdout=dispatch_log, stderr=subprocess.STDOUT)
+                    deadline = time.monotonic() + 180
+                if out.exists():
+                    try:
+                        result = json.loads(out.read_text())
+                        if result.get('phase') in ('complete', 'error'):
+                            break
+                    except json.JSONDecodeError:
+                        pass
+                if proc.poll() is not None:
+                    break
+                time.sleep(1)
+            if not result or result.get('phase') not in ('complete', 'error'):
+                raise RuntimeError(f'JSX did not finish within deadline; exit={proc.poll()}; stop, no retry')
+            proc.wait(timeout=60)
+            watcher.check()
+            if running():
+                raise RuntimeError('AE main executable still present after wrapper exit; stop')
+            if result['phase'] != 'complete':
+                raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
+    except BaseException:
+        if proc is not None and proc.poll() is None:
             try:
                 watcher.capture_owned(proc.pid)
             finally:
-                if proc.poll() is None:
-                    quit_once(state)
-            raise RuntimeError(f'JSX did not finish within 180 seconds; exit={proc.poll()}; stop, no retry')
-        try:
-            proc.wait(timeout=30)
-        except subprocess.TimeoutExpired:
-            quit_once(state)
-            raise RuntimeError('JSX wrote marker but AE did not quit; stop, no retry')
-        watcher.check()
-        if running():
-            raise RuntimeError('AE main executable still present after wrapper exit; stop')
-        if result['phase'] != 'complete':
-            raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
+                quit_once(state)
+            try:
+                proc.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                pass
+        raise
+    finally:
+        if dispatch is not None:
+            dispatch.wait(timeout=30)
+        if dispatch_log is not None:
+            dispatch_log.close()
 
 
 def render(state):

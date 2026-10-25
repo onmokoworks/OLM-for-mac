@@ -1,3 +1,7 @@
+Latest attempt: [A02e](A02e-real-ae-retest-downsample.md), status blocked.
+A03e dispatch ran real JSX; watcher stopped on script-progress window 1825.
+Three priority projects saved; no rendered frames. Historical attempt below.
+
 status: blocked
 summary: AE 2026 launched once but remained at the crash-recovery startup dialog.
   Screen unlocked and System Events UI scripting enabled; AE exposed no accessible windows/buttons.

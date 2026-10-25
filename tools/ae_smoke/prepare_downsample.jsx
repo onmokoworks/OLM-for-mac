@@ -33,7 +33,8 @@
                 item.renderSettings=q.getSettings(GetSettingsFormat.STRING);item.queueIndex=pr.renderQueue.numItems;q.timeSpanStart=0;q.timeSpanDuration=1/24;
                 var om=q.outputModule(1);
                 om.applyTemplate(spec.depth==32?'OLM EXR 32 Float':'TIFF シーケンス (アルファ付き)');
-                om.setSettings({'Color':'Straight (Unmatted)','Depth':spec.depth==32?'Floating Point+':spec.depth==16?'Trillions of Colors+':'Millions of Colors+'});
+                // AE 26.3 exposes Color/Depth as read-only; retain template readback.
+                // Decoding and independent controls determine actual output fidelity.
                 item.outputPrefix=name+'-'+spec.width+'x'+spec.height+'-'+spec.depth+'-d'+divisor;
                 om.file=new File(A01.directory+'/'+item.outputPrefix+'_[#####].'+(spec.depth==32?'exr':'tif'));
                 item.outputSettings=om.getSettings(GetSettingsFormat.STRING);row.items.push(item);
