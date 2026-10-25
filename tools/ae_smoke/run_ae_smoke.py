@@ -126,6 +126,14 @@ def build(state, matrix="legacy", prevent_dialogs=True):
     config = dict(output=str(out), directory=str(state), plugins=specs,
                   inputs=json.loads((state / 'inputs/inputs.json').read_text()))
     config['matrix'] = matrix
+    if matrix != 'legacy':
+        import hashlib
+        template = ROOT / 'refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep'
+        expected = '51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679'
+        if hashlib.sha256(template.read_bytes()).hexdigest() != expected:
+            raise RuntimeError('Preserve RGB input template hash mismatch')
+        config['inputTemplate'] = str(template)
+        config['inputTemplateSha256'] = expected
     wrapper = state / 'launch.jsx'
     wrapper.write_text('var A01=' + json.dumps(config) + ';\n$.evalFile(new File(' +
                        json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix != 'legacy' else 'prepare.jsx'))) + '));\n')

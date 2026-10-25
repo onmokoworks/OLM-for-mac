@@ -12,11 +12,26 @@
     try {
         for(var d=0;d<A01.inputs.length;d++) {
             if(app.project)app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
-            app.newProject();var pr=app.project, spec=A01.inputs[d];
+            var spec=A01.inputs[d], footage=null, usesTemplate=/\.exr$/i.test(spec.path);
+            if(usesTemplate){
+                app.open(new File(A01.inputTemplate));
+                for(var ti=1;ti<=app.project.numItems;ti++){
+                    var candidate=app.project.item(ti);
+                    if(candidate.name==='OLM_COLOR_PROBE_INPUT'){
+                        if(footage)throw Error('Duplicate template footage');
+                        footage=candidate;
+                    }
+                }
+                if(!footage)throw Error('Missing Preserve RGB template footage');
+                while(app.project.renderQueue.numItems)app.project.renderQueue.item(app.project.renderQueue.numItems).remove();
+                footage.replace(new File(spec.path));
+            }else{app.newProject();}
+            var pr=app.project;
             pr.bitsPerChannel=spec.depth;pr.workingSpace='';pr.linearBlending=false;pr.linearizeWorkingSpace=false;pr.gpuAccelType=GpuAccelType.SOFTWARE;
-            var footage=pr.importFile(new ImportOptions(new File(spec.path)));
+            if(!footage)footage=pr.importFile(new ImportOptions(new File(spec.path)));
             footage.mainSource.alphaMode=AlphaMode.STRAIGHT;
             var row={depth:pr.bitsPerChannel,workingSpace:pr.workingSpace,linearBlending:pr.linearBlending,linearizeWorkingSpace:pr.linearizeWorkingSpace,gpuAccelType:Number(pr.gpuAccelType),items:[]};
+            row.inputInterpretation={method:usesTemplate?'hash-bound Preserve RGB footage replacement':'import',templateSha256:usesTemplate?A01.inputTemplateSha256:null,alphaMode:Number(footage.mainSource.alphaMode)};
             for(var divisor=1;divisor<=4;divisor++) {
             for(var n=-1;n<A01.plugins.length;n++) {
                 var name=n<0?'control':A01.plugins[n].plugin;
