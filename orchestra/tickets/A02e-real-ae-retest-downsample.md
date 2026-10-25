@@ -1,4 +1,4 @@
-depends: A03b-ae-crash-flags-and-ocr
+depends: A03c-ae-scripting-pref-and-live-proof
 # A02e: real AE 2026 retest of the fixed bundles: preview resolutions, odd sizes, 32 bpc, timing (aerender)
 
 ## Why
@@ -76,3 +76,4 @@ depends: A03b-ae-crash-flags-and-ocr
 - A03 built `tools/ae_smoke/ae_dialog_watch` (prevention plus AX/OCR auto-dismiss), integrated into `run_ae_smoke.py --stage build`. Use it. Use a fresh run ID.
 
 - A03b added the `prevent` step (clears CrashOccurred/ForceQuitOccured after backup) and a hi-res OCR fallback. Run it before every launch.
+- A03c added the `prefs` step: `Pref_SCRIPTING_FILE_NETWORK_SECURITY` on during runs, restored afterwards. Run prevent + prefs before every launch, and restore at the end.
