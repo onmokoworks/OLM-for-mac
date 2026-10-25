@@ -11,6 +11,7 @@ import tempfile
 from unittest.mock import patch, Mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from ae_dialog_watch.test_e2e import LaunchWait
 from ae_dialog_watch.watcher import compile_tool, DialogWatcher, prepare_launch
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -28,6 +29,37 @@ def policy(rows):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_workspace_metadata_boundaries(self):
+        def check(expected, **data):
+            result = json.loads(subprocess.check_output([str(BINARY), 'workspace'],
+                input=json.dumps(data).encode()))
+            self.assertEqual(result['workspace'], expected, data)
+        check(True, title='Adobe After Effects 2026 - Untitled *', width=1000, height=600)
+        check(False, title='Adobe After Effects 2026', width=999, height=600)
+        check(False, title='Adobe After Effects 2026', width=1000, height=599)
+        check(False, title='Crash recovery', width=700, height=400)
+        check(False, title='', width=3200, height=1743)
+        check(True, title='', width=800, height=500, role='AXWindow', subrole='AXStandardWindow')
+        check(False, title='', width=800, height=500, role='AXWindow', subrole='AXDialog')
+        check(False, title='Adobe After Effects 2026', width=3200, height=1743, modal=True)
+
+    def test_captured_workspaces_are_not_dialogs(self):
+        # A03d retained window metadata + OCR; its PNG was not committed.
+        captures = [('A03b-evidence/blocked-capture.jsonl', 1609),
+                    ('A03d-evidence/live2/dialogs.jsonl', 1726)]
+        for fixture, window_id in captures:
+            events = [json.loads(line) for line in (ROOT / 'orchestra/reports' / fixture).read_text().splitlines()]
+            event = next(e for e in events if e.get('window', {}).get('kCGWindowNumber') == window_id and 'ocr' in e)
+            window = event['window']; bounds = window['kCGWindowBounds']
+            result = json.loads(subprocess.check_output([str(BINARY), 'workspace'], input=json.dumps(dict(
+                title=window['kCGWindowName'], width=bounds['Width'], height=bounds['Height'])).encode()))
+            self.assertTrue(result['workspace'])
+            self.assertFalse(policy(event['ocr'])['knownDialog'])
+        image = ROOT / 'orchestra/reports/A03b-evidence/inspect-1609.png'
+        ocr = json.loads(subprocess.check_output([str(BINARY), 'ocr', str(image)]))
+        self.assertFalse(ocr['knownDialog'])
+        self.assertEqual(ocr['layout'], [])
+
     def test_exact_allowlist(self):
         labels = ['OK', '続行', 'Continue', '閉じる', 'Close', '後で', 'Later',
                   'スキップ', 'Skip', '今はしない', 'Not Now']
@@ -80,6 +112,25 @@ class PolicyTests(unittest.TestCase):
 
 
 class LifecycleTests(unittest.TestCase):
+    def test_marker_deadline_starts_at_workspace(self):
+        wait = LaunchWait(0)
+        wait.observe(170, True, False)
+        self.assertEqual(wait.deadline, 350)
+        self.assertEqual(wait.phase, 'JSX marker')
+        wait.observe(300, True, False)
+        self.assertEqual(wait.deadline, 350)
+        wait.observe(340, True, True)
+        self.assertEqual(wait.deadline, 400)
+        self.assertEqual(wait.phase, 'quit')
+        wait.observe(399, True, True)
+        self.assertEqual(wait.deadline, 400)
+
+    def test_late_workspace_does_not_extend_quit(self):
+        wait = LaunchWait(0)
+        wait.observe(10, False, True)
+        wait.observe(20, True, True)
+        self.assertEqual(wait.deadline, 70)
+
     def test_disabled_prevention_never_accesses_preferences(self):
         with tempfile.TemporaryDirectory(dir=SCRATCH) as tmp:
             with patch('ae_dialog_watch.watcher.subprocess.run') as run:

@@ -71,7 +71,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/ae_dialog_watch/test_watch.py \
 PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/test_pipeline.py
 ```
 
-Expected: 12 watcher tests and 6 existing pipeline tests pass; the latter needs
+Expected: 16 watcher tests and 6 existing pipeline tests pass; the latter needs
 numpy. Compilation output is redirected to `swift-build.log` in scratch. This
 checks policy, OCR on A02d's saved image, centres with a negative monitor origin,
 overlap rejection, and lifecycle failures. It does not prove live clicks.
@@ -138,8 +138,7 @@ The rule is re-evaluated on a fresh capture before a centre click. Recovery
 surfaces cannot fall back to the generic label policy when this rule fails.
 No low-confidence Japanese spelling is added to the allowlist.
 
-`test_e2e.py` now permits only this rule on the first launch and still requires
-zero clicks on the second. It inventories the requested AE state roots before
+`test_e2e.py` requires zero clicks on both launches. It inventories the requested AE state roots before
 prevention, before launch, during recovery (if observed), and after exit.
 The optional `snapshot-hook`/`snapshot-request`/`snapshot-ready` files let the
 live probe take its read-only inventory before the recovery click; a 30-second
@@ -147,3 +146,28 @@ barrier timeout blocks the click. `crash_snapshot.py DESTINATION` can also run
 independently. Inventories stream SHA-256 reads and record missing roots/errors.
 No additional crash-marker deletion is implemented: A03d's live attempts did
 not reproduce recovery and could not establish a causal marker.
+
+## Workspace classification and marker wait (A03e)
+
+Before capture or button discovery, ignore a non-modal window whose title starts
+with `Adobe After Effects 2026` and is at least 1000×600 points, or whose AX role
+and subrole are `AXWindow` / `AXStandardWindow`. Explicit AX modal windows remain
+candidates for the existing fail-closed dialog rules. Splash OCR remains ignored.
+Workspace panel labels are no longer a dependency. The watcher emits `workspace`
+and writes `workspace-ready` on the first recognized workspace.
+
+The e2e probe allows 180 seconds for startup, then a fresh 180 seconds for the
+exact JSX marker after the workspace appears, then 60 seconds for normal quit.
+The watcher remains active throughout. An exit without the marker still fails.
+Offline negatives cover A03b's native screenshot and A03d's retained window/OCR
+capture (A03d did not commit its workspace PNG), plus size and AX boundaries.
+
+A03e live proof: two consecutive prevented launches wrote the exact marker with
+runtime scripting=1 and exited 0 through JSX `app.quit()`, with zero dialog clicks.
+The e2e probe launches the full-path executable without `-r`, then submits exactly
+one `DoScriptFile` Apple event to the full application path after workspace
+recognition and a sole-owned-PID check. A preceding `-r`-only attempt timed out
+with no marker despite a recognized workspace. This change is confined to the
+e2e probe; the production smoke runner's dispatch remains unchanged. See
+`orchestra/reports/A03e-ae-watcher-workspace-and-live.md` for the evidence and
+remaining live dialog-click limitation.
