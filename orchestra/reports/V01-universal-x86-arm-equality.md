@@ -1,7 +1,7 @@
 status: partial
 summary:
 - Fresh Universal bundles for all ten plugins: four requested samplers completed, 3,500 cases / 8,400 slice pairs, zero byte or rectangle differences.
-- Heavy P00b campaign: 58/60 cases completed and equal; RadialBlur 4K remains in progress.
+- Heavy P00b campaign: 59/60 cases completed and equal; RadialBlur 4K remains in progress.
 - Direct Intel/F53 comparison: 1,854 exact renders / 2,000 cases after four retries; 146 original-oracle non-renders are not equality evidence.
 - No production arithmetic, release gate, ledger, MAIN, or AEXCompat source changes; full acceptance is not claimed.
 - Hosts/bundles are durable in ~/.cache/olm-emu/worker-V01-universal/ and registered in INDEX.json.
@@ -21,7 +21,7 @@ facts:
 | realistic-v1 | 1000 | 2215 | 185 | 0 |
 | realistic-v2 | 1000 | 2362 | 38 | 0 |
 | odd-even-v1 | 500 | 1096 | 104 | 0 |
-| heavy | 58 | 136 | 2 | 0 |
+| heavy | 59 | 139 | 2 | 0 |
 
 - Heavy selection uses each size/depth's slowest measured non-default P00b corpus tuple, prioritizing P00b timeouts; original absolute point coordinates are retained. All 60 selected cells are listed in `V01-evidence/heavy-selection.json`. Inputs use the same deterministic opaque P00b spatial pattern, normalized for 8/16/32 bpc. P00b corpus hashes are validated before use.
 - Heavy commands run on resume: `python3 tools/fuzz/verify_V01.py --phase heavy --timeout 600 --jobs 1`, then `python3 tools/fuzz/verify_V01.py --phase heavy --timeout 600 --jobs 1 --slice-jobs 2`. The first runner was explicitly stopped with its child before switching execution strategy; only an unfinished RadialBlur case was restarted, with no partial result counted. At most two render/oracle processes were run by this worker.
@@ -62,5 +62,5 @@ verify:
 - Bounded oracle repro: same direct command with `--plugins olmdirectionalblur --indices 47` (default), `--plugins olmdistancegradation --indices 79` (both phases), or `--plugins radialblur --indices 86` (both phases); original diagnostics are in the retained rows.
 
 next:
-- Finish the remaining two heavy cells; retain final counts and resource observations.
+- Finish the remaining heavy cell (RadialBlur 4K/32); retain final counts and resource observations.
 - Follow-up oracle ticket: investigate the 76 non-PF32 non-renders separately from the 70 unsupported Smoother PF32 cells. Do not promote unrendered cells or modify plugin pixels to match an oracle failure.
