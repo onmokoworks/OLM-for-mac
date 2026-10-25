@@ -1,0 +1,6 @@
+reduced-2081 {'expected_bytes': 128, 'actual_bytes': 128, 'different_bytes': 12, 'different_words': 3, 'first_byte': 100, 'first_word': 25, 'expected_word_hex': 'b7b6b63e', 'actual_word_hex': '4523c17f'} exact
+2081 {'expected_bytes': 1904, 'actual_bytes': 1904, 'different_bytes': 184, 'different_words': 48, 'first_byte': 484, 'first_word': 121, 'expected_word_hex': 'b7b6b63e', 'actual_word_hex': 'b344c23e'} mismatch
+3790 {'expected_bytes': 26624, 'actual_bytes': 26624, 'different_bytes': 217, 'different_words': 73, 'first_byte': 307, 'first_word': 76, 'expected_word_hex': '00000080', 'actual_word_hex': '00000000'} exact
+5995 {'expected_bytes': 2048, 'actual_bytes': 2048, 'different_bytes': 3, 'different_words': 3, 'first_byte': 3, 'first_word': 0, 'expected_word_hex': '00000000', 'actual_word_hex': '00000080'} exact
+scan {'mismatch': 4, 'exact': 46}
+scan {'mismatch': 4, 'exact': 96}
