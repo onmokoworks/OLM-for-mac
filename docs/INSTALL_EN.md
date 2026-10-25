@@ -37,7 +37,7 @@ scripts/install_mac_plugins_to_mediacore.sh --audit-only
 
 ## If macOS blocks the plugins
 
-These plugins are not signed or notarized by Apple (Apple's check of who made the software and what is inside). Signing requires a paid Apple developer membership, so there are no plans for it at the moment. As a result, macOS may block plugins you downloaded: AE shows a message such as "cannot be opened" or "the developer cannot be verified" at launch, and the plugin is not loaded.
+These plugins are not signed or notarized by Apple. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. As a result, macOS may block plugins you downloaded: AE shows a message such as "cannot be opened" or "the developer cannot be verified" at launch, and the plugin is not loaded.
 
 If you trust this project, you can unblock them:
 

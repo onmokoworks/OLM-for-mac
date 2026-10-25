@@ -43,7 +43,7 @@ Quit After Effects, then copy the 10 `.plugin` files from the release ZIP into:
 ```
 
 > [!NOTE]
-> The plugins are not signed or notarized by Apple (Apple's check of who made an app and what is inside), so macOS may block them. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
+> The plugins are not signed or notarized by Apple, so macOS may block them. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
 
 ## Reporting problems
 
