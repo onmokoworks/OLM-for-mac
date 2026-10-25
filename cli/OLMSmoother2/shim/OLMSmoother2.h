@@ -126,6 +126,8 @@ struct PF_FloatSliderData { double value; };
 struct PF_ColorData   { PF_Pixel value; };
 
 struct PF_ParamDef {
+	bool has_float_color = false;
+	PF_PixelFloat float_color{};
 	union {
 		PF_BooleanData bd;
 		PF_SliderData  sd;
@@ -210,6 +212,7 @@ struct PF_ANSICallbacksSuite1 {
 };
 
 static PF_Err cli_get_float_color(PF_ProgPtr, PF_ParamDef *def, PF_PixelFloat *out) {
+	if (def->has_float_color) { *out = def->float_color; return PF_Err_NONE; }
 	out->alpha = def->u.cd.value.alpha / 255.0f;
 	out->red   = def->u.cd.value.red   / 255.0f;
 	out->green = def->u.cd.value.green / 255.0f;

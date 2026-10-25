@@ -1,5 +1,8 @@
 """Smoother2: extend the retained public key/gamma replay host to Classic."""
 import copy
+import random
+import struct
+from core import case_seed
 
 from .public import PublicAdapter, ROOT, replace_once, geometry_shim
 
@@ -15,6 +18,23 @@ class Adapter(PublicAdapter):
     geometry_samplers = ('realistic-v1','realistic-v2')
     aex_name = 'OLMSmoother2'
     output_format = 'hex'
+
+    def __init__(self, options):
+        super().__init__(options)
+        self.color_sampler = getattr(options, 'color_sampler', 'default')
+
+    def generate(self, seed, index):
+        case = super().generate(seed, index)
+        if self.color_sampler == 'float-v1':
+            # A separate stream preserves all existing parameters/pixels/geometry.
+            rng = random.Random(case_seed(seed, index) ^ 0x533032)
+            for p in case['parameters']:
+                if p['kind'] == 'c':
+                    p['float_value'] = [struct.unpack('<f', struct.pack('<f',
+                        (v + rng.uniform(.125, .375) * (1 if v < 255 else -1))/255))[0]
+                        for v in p['value']]
+            case['color_sampler'] = 'float-v1'
+        return case
 
     def build(self, scratch, deadline):
         (scratch/'production_under_test.cpp').write_text(SOURCE.read_text())
@@ -51,7 +71,7 @@ class Adapter(PublicAdapter):
 
     def candidate_command(self, case, directory, route):
         config = directory/'params.txt'
-        config.write_text(''.join(f"{p['slot']} c "+' '.join(map(str,p['value']))+'\n' if p['kind']=='c'
+        config.write_text(''.join(f"{p['slot']} {'C' if 'float_value' in p else 'c'} "+' '.join(map(str,p['value']+p.get('float_value',[])))+'\n' if p['kind']=='c'
                                   else f"{p['slot']} s {p['value']}\n" for p in case['parameters']))
         return [self.binary,*case['geometry'],f"PF{case['depth']}",config,route,case['input_padding']],case['pixels']
 
