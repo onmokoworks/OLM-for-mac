@@ -22,7 +22,7 @@ def sessions():
     yield 'DirectionalBlur-update', 'OLMDirectionalBlur', dict(updates=[[f'p@16={v}'] for v in [1,2,3]])
     yield 'Smoother2-update', 'OLMSmoother2', dict(updates=[[f'p@1={key}',f'p@8={mode}',f'p@10={n}'] for key in [0,1] for mode in [1,2,3] for n in [0,1,5]])
     yield 'RadialBlur-update', 'OLMRadialBlur', dict(updates=[[f'p@25={noise}',f'p@1={kind}',f'p@5={outer}',f'p@11={inner}'] for noise in [1,2,3] for kind in [1,2] for outer in [1,2,3] for inner in [1,2,3]])
-    yield 'ColorKey-update', 'OLMColorKey', dict(updates=[[f'p@7={p}',f'p@8={c}',f'p@23={r}',f'p@22={n}'] for p in [0,1] for c in [0,1] for r in [0,1] for n in [0,1,24,25]])
+    yield 'ColorKey-update', 'OLMColorKey', dict(updates=[[f'p@7={p}',f'p@8={c}',f'p@23={r}',f'p@22={n}'] for p in [0,1] for c in [0,1] for r in [0,1] for n in [0,1,24,25]] + [[f'p@24={use}',f'p@25={replace}',f'p@216={use}',f'p@217={replace}','p@22=25','p@23=1'] for use in [0,1] for replace in [0,1]])
     yield 'KiraKira-draw-click', 'OLMKiraKira', dict(events=[event(4),event(2,100,30),event(4),event(3,130,30,last=True),event(4)])
     for y in [75,76]:
         yield f'KiraKira-drag-delete-{y-55}', 'OLMKiraKira', dict(events=[event(4),event(2,10,65),event(3,50,y),event(4),event(3,50,y,last=True),event(4)])
@@ -32,7 +32,7 @@ def sessions():
         return [event(2,x,y,slot=slot),event(3,x,y,slot=slot,last=True)]
     yield 'KiraKira-copy-paste', 'OLMKiraKira', dict(events=[event(4),event(2,100,30),event(3,100,30,last=True)]+button(250,45)+[event(4,slot=20)]+button(250,70,20)+[event(4,slot=20)])
     yield 'KiraKira-randomize-flip', 'OLMKiraKira', dict(initial_state_u32={str(0x1824968):123456789},events=[event(4)]+button(70,90)+button(70,90)+button(170,90)+[event(4)])
-    yield 'KiraKira-presets', 'OLMKiraKira', dict(events=[event(4),event(2,260,15),event(4),event(3,260,150),event(4),event(3,260,50,last=True),event(4)])
+    yield 'KiraKira-presets', 'OLMKiraKira', dict(events=[event(4),event(2,260,15),event(4),event(3,260,150),event(4),event(3,260,150,last=True),event(2,260,38),event(3,260,38,last=True),event(4)])
     yield 'KiraKira-context-negative', 'OLMKiraKira', dict(events=[event(4,area=1),event(4,slot=13)])
 
 
@@ -42,6 +42,8 @@ def main():
     ap.add_argument('--output',type=Path,required=True)
     ap.add_argument('--only',action='append')
     args=ap.parse_args(); args.output.mkdir(parents=True,exist_ok=True)
+    worker_hash=hashlib.sha256(args.worker.read_bytes()).hexdigest()
+    (args.output/'capture.json').write_text(json.dumps({'worker_sha256':worker_hash},sort_keys=True)+'\n')
     rows=[]
     for name,plugin,request in sessions():
         if args.only and name not in args.only: continue
