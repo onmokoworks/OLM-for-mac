@@ -1,0 +1,57 @@
+rqindex 2num 2
+PROGRESS:  2026/10/25 21:03:29 JST : コンポジションﾞOLMSmoother2ﾞの開始
+
+PROGRESS:  レンダリング設定 : 最良設定
+PROGRESS:  画質 : 最高
+PROGRESS:  解像度 : フル画質
+PROGRESS:  サイズ : 11 x 8
+PROGRESS:  プロキシ : プロキシ使用しない
+PROGRESS:  エフェクト : 現在の設定
+PROGRESS:  ディスクキャッシュ : 読み取り専用
+PROGRESS:  色深度 : 現在の設定
+PROGRESS:  フレームブレンド : チェックしたレイヤーをオン
+PROGRESS:  フィールドレンダリング : オフ
+PROGRESS:  プルダウン : オフ
+PROGRESS:  モーションブラー : チェックしたレイヤーをオン
+PROGRESS:   
+PROGRESS:  ソロ : 現在の設定
+PROGRESS:   
+PROGRESS:  時間範囲 : カスタム
+PROGRESS:  開始 : 0:00:00:00
+PROGRESS:  終了 : 0:00:00:00
+PROGRESS:  デュレーション : 0:00:00:01
+PROGRESS:  フレームレート : 24.00 (コンポ)
+PROGRESS:  ガイドレイヤー : すべてオフ
+PROGRESS:  既存ファイルをスキップ : オフ
+PROGRESS:  
+PROGRESS:  出力モジュール : TIFF シーケンス (アルファ付き)
+PROGRESS:  出力先 : /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02h-real-ae-retest-downsample/orchestra/state/A02h-real-ae-retest-downsample/remaining-h1/OLMSmoother2-OLMSmoother2-corpus1-11x8-8-d1_[#####].tif
+PROGRESS:  形式 : Photoshopシーケンス
+PROGRESS:  出力情報 : -
+PROGRESS:  開始フレーム : 0
+PROGRESS:  オーディオ出力 : -
+PROGRESS:  チャンネル : RGB+アルファ
+PROGRESS:  深度 : 数百万色＋
+PROGRESS:  カラー : 合成チャンネル
+PROGRESS:  サイズ変更 : -
+PROGRESS:  クロップ : -
+PROGRESS:  最終サイズ : 11 x 8
+PROGRESS:  プロファイル : -
+PROGRESS:  プロファイルの埋め込み : 
+PROGRESS:   
+PROGRESS:  レンダリング後の処理 : なし
+PROGRESS:   
+PROGRESS:   
+PROGRESS:   
+PROGRESS:  
+PROGRESS:  コンポジションの書き出し中に予期しないエラーが発生しました。
+
+エラーコード : \1
+
+After Effects を再起動して、書き出しを再試行してください。
+PROGRESS:  2026/10/25 21:03:29 JST : コンポジションﾞOLMSmoother2ﾞの終了
+
+
+PROGRESS:  合計経過時間 : 0 秒
+aerender version 26.3x87
+PROGRESS: Launching After Effects...

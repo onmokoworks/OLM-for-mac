@@ -253,3 +253,20 @@ normal resume does not repeat known unsupported-depth or I/O failures. Full
 frames may use the existing V01 F51/F47d transport if F53 cannot allocate them;
 that fallback still loads the installed bundle, and is never called original
 AEX exactness.
+
+A02h live result: the combined GUI build succeeds with zero watcher clicks;
+176/176 depth frames and 47/48 remaining frames produce outputs. The missing
+frame is Smoother2 corpus1 (`smartrender-decoded-colors@5403`), retained without
+retry. Fresh manifests contain only the unattempted remainder. Its original and
+same installed bundle are exact through the standalone diagnostic:
+
+```sh
+python tools/ae_smoke/replay_full_corpus.py tests/fuzz_corpus/olmsmoother2/seed1_case000067_65ee3b1d9cdf.json orchestra/state/YOUR_TICKET/fresh-replay
+```
+
+This uses packed Full worlds and exits nonzero unless both references render and
+match; it does not reproduce AE color-suite materialization. Fractional PF16
+FLOAT exports are now recorded as I/O boundaries (including the first raw float
+word), without rounding or aborting unrelated comparisons. The paired ColorKeep
+straight PNG probe is 4/4 raw exact, including hidden RGB. See the A02h report for
+remaining corpus I/O, parameter readback and Smoother v1 PF32 limitations.

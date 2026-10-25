@@ -53,6 +53,12 @@ def full_frame_bundle(adapter, case, directory, route, timeout):
     return status,b''
 
 
+class CodecBoundaryError(ValueError):
+    def __init__(self, message, details):
+        super().__init__(message)
+        self.details = details
+
+
 def load_rgba(path, depth):
     if path.suffix == '.exr':
         import OpenEXR
@@ -63,7 +69,13 @@ def load_rgba(path, depth):
         if depth == 16:
             scaled = rgba * np.float32(32768)
             if not np.all(np.isfinite(scaled)) or np.any(scaled < 0) or np.any(scaled > 65535) or not np.all(scaled == np.rint(scaled)):
-                raise ValueError('16 bpc FLOAT export is not exact integer/32768')
+                bad = ~np.isfinite(scaled) | (scaled < 0) | (scaled > 65535) | (scaled != np.rint(scaled))
+                y, x, channel = map(int, np.argwhere(bad)[0])
+                raise CodecBoundaryError('16 bpc FLOAT export is not exact integer/32768',
+                    dict(nonintegral_or_out_of_range_samples=int(np.count_nonzero(bad)),
+                         first=dict(x=x, y=y, channel='RGBA'[channel],
+                                    exr_float_hex=rgba[y,x,channel].tobytes().hex(),
+                                    scaled_value=float(scaled[y,x,channel]))))
             rgba = scaled.astype('<u2')
         return rgba
     if path.suffix == '.png':
@@ -107,7 +119,22 @@ def main():
             raise ValueError('AE Resolution readback differs from requested downsample')
         extension = row.get('outputExtension', 'exr' if depth == 32 else 'tif')
         path = next(state.glob(prefix + '_*.' + extension))
-        rgba = load_rgba(path, depth)
+        try:
+            rgba = load_rgba(path, depth)
+        except ValueError as error:
+            # Preserve the measured codec failure. Never round fractional PF16 samples.
+            result = dict(outputPrefix=prefix, plugin=row['plugin'], depth=depth,
+                          geometry=[row['shape'][1],row['shape'][0]],
+                          full_geometry=[row['width'],row['height']], divisor=row['divisor'],
+                          resolution_readback=row['renderSettings']['Resolution'])
+            boundary = dict(exact=False if row['plugin']=='control' else None,
+                            reason=str(error), classification='I/O conversion',
+                            codec_boundary=getattr(error, 'details', {}))
+            result['io' if row['plugin']=='control' else 'comparison'] = boundary
+            results = [r for r in results if r['outputPrefix'] != prefix] + [result]
+            result_path.write_text(json.dumps(results,indent=2)+'\n')
+            print(prefix, boundary, flush=True)
+            continue
         h, w = rgba.shape[:2]
         case_dir = out / prefix
         case_dir.mkdir(exist_ok=True)
