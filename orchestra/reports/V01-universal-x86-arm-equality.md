@@ -4,7 +4,7 @@ summary:
 - Rebuilt only standalone F51/F53-derived hosts, preserving current suite fixes; retained hosts/bundles in worker-V01-universal cache and registered INDEX.json.
 - Initial default seed909 index0 smoke: 10/10 equal slice comparisons (threaded plugins at caps 1/2/8).
 - Four requested samplers completed: 3,500 cases, 8,029 equal rendered pairs and 371 equal refusal pairs; no differences.
-- Direct F53 comparisons after 60-second retries: 1,854 exact renders / 2,000 cases; 146 non-renders remain. Heavy campaign in progress.
+- Direct F53 comparisons after 60-second retries: 1,854 exact renders / 2,000 cases; 146 non-renders remain. Heavy campaign: first 48/60 cases equal; RadialBlur/Smoother pending.
 
 facts:
 - `python3 tools/fuzz/build_F47_bundles.py --scratch orchestra/state/V01-universal-x86-arm-equality/bundles`: exit 0, all ten `x86_64 arm64`, Xcode jobs=1.

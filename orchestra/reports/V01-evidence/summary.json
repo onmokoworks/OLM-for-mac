@@ -172,12 +172,12 @@
     "non_equal": []
   },
   "heavy": {
-    "cases": 15,
+    "cases": 48,
     "verdicts": {
-      "equal": 15
+      "equal": 48
     },
     "pairs": {
-      "equal_ok": 33
+      "equal_ok": 120
     },
     "plugins": {
       "olmblur": {
@@ -187,7 +187,22 @@
         "equal": 6
       },
       "olmcolorkey": {
-        "equal": 3
+        "equal": 6
+      },
+      "olmdirectionalblur": {
+        "equal": 6
+      },
+      "olmdistancegradation": {
+        "equal": 6
+      },
+      "olmkirakira": {
+        "equal": 6
+      },
+      "olmsmoother2": {
+        "equal": 6
+      },
+      "olmtoondilate": {
+        "equal": 6
       }
     },
     "non_equal": []
