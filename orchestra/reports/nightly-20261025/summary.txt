@@ -1,0 +1,90 @@
+# Nightly fuzz summary
+
+E = exact; M = mismatch; R = Mac refusal with successful AEX; U = uncompared/unavailable.
+Zero rows mean no completed observations, not a pass. Counts exclude shrinking.
+
+| Plugin | Sampler | E | M | R | U |
+|---|---|---:|---:|---:|---:|
+| olmcolorkey | default | 40876 | 1 | 0 | 7 |
+| olmcolorkey | realistic | 20548 | 1 | 0 | 1845 |
+| olmcolorkey | realistic-v2 | 18991 | 0 | 1 | 1 |
+| olmcolorkey | odd-even-v1 | 3589 | 0 | 0 | 314 |
+| olmdirectionalblur | default | 13491 | 0 | 0 | 44 |
+| olmdirectionalblur | realistic | 16856 | 5 | 0 | 10 |
+| olmdirectionalblur | realistic-v2 | 17864 | 3 | 0 | 3 |
+| olmdirectionalblur | odd-even-v1 | 1328 | 1 | 0 | 20 |
+| colorkeep | default | 25180 | 0 | 0 | 1 |
+| colorkeep | realistic | 26693 | 0 | 0 | 1 |
+| colorkeep | realistic-v2 | 23047 | 0 | 0 | 1 |
+| colorkeep | odd-even-v1 | 4047 | 0 | 0 | 1 |
+| olmblur | default | 21098 | 0 | 0 | 1 |
+| olmblur | realistic | 23497 | 0 | 0 | 0 |
+| olmblur | realistic-v2 | 20172 | 0 | 0 | 1 |
+| olmblur | odd-even-v1 | 3377 | 0 | 0 | 1 |
+| olmtoondilate | default | 10468 | 0 | 0 | 1 |
+| olmtoondilate | realistic | 10581 | 0 | 0 | 1 |
+| olmtoondilate | realistic-v2 | 10505 | 0 | 0 | 1 |
+| olmtoondilate | odd-even-v1 | 3563 | 0 | 0 | 1 |
+| olmsmoother2 | default | 16342 | 0 | 0 | 0 |
+| olmsmoother2 | realistic | 11848 | 0 | 0 | 9362 |
+| olmsmoother2 | realistic-v2 | 17838 | 0 | 0 | 1 |
+| olmsmoother2 | odd-even-v1 | 4992 | 0 | 0 | 4325 |
+| olmsmoother | default | 18031 | 0 | 0 | 8959 |
+| olmsmoother | realistic | 20266 | 0 | 0 | 10052 |
+| olmsmoother | realistic-v2 | 20636 | 0 | 0 | 10135 |
+| olmsmoother | odd-even-v1 | 2457 | 0 | 0 | 1314 |
+| olmdistancegradation | default | 1603 | 0 | 9 | 68 |
+| olmdistancegradation | realistic | 1834 | 0 | 9 | 44 |
+| olmdistancegradation | realistic-v2 | 1813 | 1 | 8 | 47 |
+| olmdistancegradation | odd-even-v1 | 1243 | 0 | 7 | 43 |
+| olmkirakira | default | 2072 | 0 | 0 | 79 |
+| olmkirakira | realistic | 2159 | 0 | 1 | 16 |
+| olmkirakira | realistic-v2 | 2142 | 0 | 3 | 20 |
+| olmkirakira | odd-even-v1 | 1519 | 0 | 4 | 12 |
+| radialblur | default | 1454 | 0 | 0 | 124 |
+| radialblur | realistic | 2392 | 0 | 0 | 170 |
+| radialblur | realistic-v2 | 2457 | 2 | 0 | 173 |
+| radialblur | odd-even-v1 | 511 | 0 | 0 | 57 |
+
+## New witnesses
+
+New means first retained failure signature in this date directory; not necessarily new to the repository.
+
+- `witnesses/c2d799e6b17314d055e78508.json`: pixels:PF32:nonfinite; first difference/status: `{"diff": {"actual_bytes": 288, "actual_word_hex": "8d8c8c3e", "different_bytes": 23, "different_words": 6, "expected_bytes": 288, "expected_word_hex": "4523c17f", "first_byte": 212, "first_word": 53}, "error": 0, "metadata": {"ERROR": "0"}, "raw_sha256": "15858a92bf26b3d5d03251cff8846bc236a1de83fd48d3b527ac3c03ea55e73f", "status": "mismatch"}`
+
+- `witnesses/e9fe643ce8c979d80946d970.json`: refusal:RenderBits:pf32-smart-bounded-sdr@2170; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1"}, "status": "refusal"}`
+
+- `witnesses/770c65ddec6545a6e10777aa.json`: pixels:PF32:nonfinite; first difference/status: `{"diff": {"actual_bytes": 48, "actual_word_hex": "00000000", "different_bytes": 1, "different_words": 1, "expected_bytes": 48, "expected_word_hex": "0000003f", "first_byte": 35, "first_word": 8}, "error": 0, "metadata": {"ERROR": "0", "GEOMETRY": "0 0 3 1", "GEOMETRY_INPUT": "9 3 1 3 1 3 4 3 32"}, "output_rect": [0, 0, 3, 1], "raw_sha256": "3636965f5b9764770ac12f87399c94ad2c6dd3f5ab2e828733e2b703fd69172c", "status": "mismatch"}`
+
+- `witnesses/fdd4da1dfc62f6a1e40cd84a.json`: pixels:PF32:signed; first difference/status: `{"diff": {"actual_bytes": 16, "actual_word_hex": "56fb63c0", "different_bytes": 8, "different_words": 2, "expected_bytes": 16, "expected_word_hex": "1f50eabf", "first_byte": 0, "first_word": 0}, "error": 0, "metadata": {"COUNTS": "21 21 1 1 1", "ERROR": "0", "GEOMETRY": "0 0 1 1", "GEOMETRY_INPUT": "1 1 1 3 1 3 1 1 16"}, "output_rect": [0, 0, 1, 1], "raw_sha256": "fab8f54d029181bd7b5e7871ee65cb7874bea51a0fdf6f6242a7e397e06d04a6", "status": "mismatch"}`
+
+- `witnesses/ac576b49023491458f8af8ae.json`: refusal:RenderBits:pf32-smart-bounded-sdr@2170; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1", "GEOMETRY_INPUT": "1 1 1 1 1 1 4 3 32"}, "status": "refusal"}`
+
+- `witnesses/e3f919696d05b1dee9a48046.json`: refusal:RenderBits:pf32-smart-profile@2208; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1", "GEOMETRY_INPUT": "6 17 1 1 1 1 1 1 32"}, "status": "refusal"}`
+
+- `witnesses/894b9e527a8549c453de514b.json`: refusal:SmartRender:tuple-or-source@2987; first difference/status: `{"error": 516, "metadata": {"COUNTS": "1 1 1 25 25", "ERROR": "516", "GEOMETRY_INPUT": "2 6 1 2 1 3 10 11 3"}, "status": "refusal"}`
+
+- `witnesses/14824cffc4b7b148b8992684.json`: refusal:PrepareSmartRenderWorld:smart-public-admission@2710; first difference/status: `{"error": 516, "metadata": {"ERROR": "516", "GEOMETRY_CHECKOUT": "2 0 12 1", "GEOMETRY_INPUT": "101 1 1 8 1 8 2 1 0", "GEOMETRY_PRERENDER": "2 0 12 1"}, "status": "refusal"}`
+
+- `witnesses/33736bb7ba8bbc31e737404a.json`: pixels:PF32:signed; first difference/status: `{"diff": {"actual_bytes": 16, "actual_word_hex": "acf426bf", "different_bytes": 13, "different_words": 4, "expected_bytes": 16, "expected_word_hex": "9dd8cfbe", "first_byte": 0, "first_word": 0}, "error": 0, "metadata": {"COUNTS": "21 21 1 1 1", "ERROR": "0", "GEOMETRY": "0 0 1 1", "GEOMETRY_CHECKOUT": "0 0 1 1", "GEOMETRY_INPUT": "4 4 1 4 1 4 4 3 3", "GEOMETRY_PRERENDER": "0 0 1 1"}, "output_rect": [0, 0, 1, 1], "raw_sha256": "d843f1d7da7c82878e875f095fc9081d1f0f34a27610be281dcff12b835fcebc", "status": "mismatch"}`
+
+- `witnesses/1aeb5797c9bd84907bc4bd89.json`: refusal:RenderBits:pf32-smart-profile@2208; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1", "GEOMETRY_CHECKOUT": "0 0 1 1", "GEOMETRY_INPUT": "4 4 1 4 1 4 4 3 0", "GEOMETRY_PRERENDER": "0 0 1 1"}, "status": "refusal"}`
+
+- `witnesses/5ba5b90de3e1af9bdc3a90a1.json`: refusal:RenderBits:pf32-smart-bounded-sdr@2170; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1", "GEOMETRY_CHECKOUT": "0 0 1 1", "GEOMETRY_INPUT": "2 3 1 2 1 3 4 3 1", "GEOMETRY_PRERENDER": "0 0 1 1"}, "status": "refusal"}`
+
+- `witnesses/cce92f24df854677df17cf7c.json`: pixels:PF32:sdr; first difference/status: `{"diff": {"actual_bytes": 192, "actual_word_hex": "bc61a43e", "different_bytes": 5, "different_words": 5, "expected_bytes": 192, "expected_word_hex": "bd61a43e", "first_byte": 48, "first_word": 12}, "error": 0, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "0", "GEOMETRY": "0 0 4 3", "GEOMETRY_CHECKOUT": "0 0 4 3", "GEOMETRY_INPUT": "8 9 1 2 1 3 10 11 3", "GEOMETRY_PRERENDER": "0 0 4 3"}, "output_rect": [0, 0, 4, 3], "raw_sha256": "fff859dff78433789d3821ec42b6fd775536ecf2ca558a0b3bdd6b22904d11d8", "status": "mismatch"}`
+
+- `witnesses/f005762cfd5e3a7d4520b293.json`: refusal:SmartRender:tuple-or-source@2987; first difference/status: `{"error": 516, "metadata": {"COUNTS": "1 1 1 25 25", "ERROR": "516", "GEOMETRY_CHECKOUT": "0 0 1 1", "GEOMETRY_INPUT": "1 1 1 1 1 1 2 1 1", "GEOMETRY_PRERENDER": "0 0 1 1"}, "status": "refusal"}`
+
+- `witnesses/403be984da1ad8593fa159b4.json`: pixels:PF32:sdr; first difference/status: `{"diff": {"actual_bytes": 256, "actual_word_hex": "ca93803f", "different_bytes": 168, "different_words": 64, "expected_bytes": 256, "expected_word_hex": "00000000", "first_byte": 0, "first_word": 0}, "error": 0, "metadata": {"COUNTS": "1 32 32 1 1 1 1", "ERROR": "0", "GEOMETRY": "0 0 1 16", "GEOMETRY_CHECKOUT": "0 0 1 16", "GEOMETRY_INPUT": "1 48 1 2 1 3 10 11 1", "GEOMETRY_PRERENDER": "0 0 1 16", "INFO": "580.08038330078125 0 52 11"}, "output_rect": [0, 0, 1, 16], "raw_sha256": "0b1a0fb57f978ba0ea2a2ec66a4dae56eb0c2f51f9303fe7a1fb49c35cb440d3", "status": "mismatch"}`
+
+- `witnesses/ab18858afb75411545de86c7.json`: pixels:PF16:sdr; first difference/status: `{"diff": {"actual_bytes": 80, "actual_word_hex": "f912", "different_bytes": 54, "different_words": 40, "expected_bytes": 80, "expected_word_hex": "0000", "first_byte": 0, "first_word": 0}, "error": 0, "metadata": {"COUNTS": "2 32 32 2 2 1 1", "ERROR": "0", "GEOMETRY": "0 6 1 16", "GEOMETRY_CHECKOUT": "0 6 1 16", "GEOMETRY_INPUT": "1 18 1 1 1 1 1 1 16", "GEOMETRY_PRERENDER": "0 6 1 16", "INFO": "-403.58282470703125 0 41 -4"}, "output_rect": [0, 6, 1, 16], "raw_sha256": "ee831fd1a52ccbb49bf9d57820878689bff8b227b0db19043638866a3558ad02", "status": "mismatch"}`
+
+- `witnesses/7f02accac670dc615c92f894.json`: pixels:PF32:signed; first difference/status: `{"diff": {"actual_bytes": 16, "actual_word_hex": "c043c0bf", "different_bytes": 9, "different_words": 3, "expected_bytes": 16, "expected_word_hex": "9c5841bf", "first_byte": 0, "first_word": 0}, "error": 0, "metadata": {"COUNTS": "21 21 1 1 1", "ERROR": "0", "GEOMETRY": "0 0 1 1", "GEOMETRY_INPUT": "2 3 1 2 1 3 10 11 16"}, "output_rect": [0, 0, 1, 1], "raw_sha256": "68d500c2feb84d49b8ef29afb0e8eac213fb66444ff05c92e6894f6c594febfa", "status": "mismatch"}`
+
+- `witnesses/d8611b589a0047c031b71aee.json`: refusal:RenderBits:pf32-smart-bounded-sdr@2170; first difference/status: `{"error": -1, "metadata": {"COUNTS": "1 1 1 1 12 12", "ERROR": "-1", "GEOMETRY_INPUT": "4 4 1 4 1 4 10 11 16"}, "status": "refusal"}`
+
+- `witnesses/275f210ea901a7ec7270f420.json`: refusal:SmartRender:tuple-or-source@2987; first difference/status: `{"error": 516, "metadata": {"COUNTS": "1 1 1 25 25", "ERROR": "516", "GEOMETRY_INPUT": "2 3 1 2 1 3 1 1 32"}, "status": "refusal"}`
+
+Session: `{"actual_jobs": 1, "elapsed_seconds": 25200.005, "hours": 7.0, "jobs_limit": 2, "retained_bytes": 569879, "start": "20261025T213208319112", "status": "deadline"}`
+
