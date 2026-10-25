@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import plistlib
 from pathlib import Path
 import re
 import subprocess
@@ -25,6 +26,43 @@ def running():
     return [line.strip().split(None, 1)[0]
             for line in capture(['ps', '-axo', 'pid=,comm=']).splitlines()
             if re.search(r'MacOS/After Effects$', line)]
+
+
+def screen_locked():
+    data = plistlib.loads(subprocess.check_output(['ioreg', '-n', 'Root', '-d1', '-a']))
+    root = data[0] if isinstance(data, list) else data
+    users = root.get('IOConsoleUsers', [])
+    for user in users:
+        if user.get('CGSSessionScreenIsLocked') is True:
+            return True
+    console = [user for user in users
+               if user.get('kCGSSessionOnConsoleKey') is True
+               and user.get('kCGSessionLoginDoneKey') is True]
+    if len(console) == 1 and 'CGSSessionScreenIsLocked' not in console[0]:
+        return False
+    raise RuntimeError('Cannot establish screen lock state; launch refused')
+
+
+def wait_unlocked(state):
+    log_path = state / 'screen-lock.log'
+    # Preserve the original deadline across worker/orchestrator restarts.
+    started = time.time()
+    if log_path.exists():
+        with log_path.open() as previous:
+            first = previous.readline().split()
+        if first:
+            started = float(first[0])
+    deadline = time.monotonic() + max(0, started + 12 * 3600 - time.time())
+    while True:
+        locked = screen_locked()
+        with log_path.open('a') as log:
+            log.write(f'{time.time():.3f} locked={locked}\n')
+        if not locked:
+            return
+        if time.monotonic() >= deadline:
+            raise RuntimeError('Screen remained locked for 12 hours; no AE launch')
+        print('Screen locked; waiting five minutes without launching AE', flush=True)
+        time.sleep(min(300, max(0, deadline - time.monotonic())))
 
 
 def preflight(state):
@@ -66,13 +104,16 @@ def screenshot(state):
         edge = max(1, edge * 3 // 4)
 
 
-def build(state, matrix="legacy"):
+def build(state, matrix="legacy", prevent_dialogs=True):
     out = state / 'build.json'
     if out.exists() or (state / 'launch.jsx').exists():
         raise RuntimeError('Build requires a fresh --run-id (no repeated dispatch)')
-    if matrix == 'downsample-priority':
-        from downsample_inputs import prepare
+    if matrix == 'downsample-corpus':
+        from corpus_inputs import prepare
         prepare(state / 'inputs')
+    elif matrix != 'legacy':
+        from downsample_inputs import prepare
+        prepare(state / 'inputs', high_depth=matrix == 'downsample-depths')
     else:
         with (state / 'inputs.log').open('w') as log:
             subprocess.run([sys.executable, str(Path(__file__).with_name('prepare_inputs.py')),
@@ -85,41 +126,99 @@ def build(state, matrix="legacy"):
     config = dict(output=str(out), directory=str(state), plugins=specs,
                   inputs=json.loads((state / 'inputs/inputs.json').read_text()))
     config['matrix'] = matrix
+    if matrix != 'legacy':
+        import hashlib
+        template = ROOT / 'refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep'
+        expected = '51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679'
+        if hashlib.sha256(template.read_bytes()).hexdigest() != expected:
+            raise RuntimeError('Preserve RGB input template hash mismatch')
+        config['inputTemplate'] = str(template)
+        config['inputTemplateSha256'] = expected
     wrapper = state / 'launch.jsx'
     wrapper.write_text('var A01=' + json.dumps(config) + ';\n$.evalFile(new File(' +
-                       json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix == 'downsample-priority' else 'prepare.jsx'))) + '));\n')
+                       json.dumps(str(Path(__file__).with_name('prepare_downsample.jsx' if matrix != 'legacy' else 'prepare.jsx'))) + '));\n')
     preflight(state)
-    with (state / 'ae.log').open('w') as log:
-        proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects'), '-r', str(wrapper)],
-                                stdout=log, stderr=subprocess.STDOUT)
-        (state / 'pid.txt').write_text(str(proc.pid) + '\n')
-        deadline = time.monotonic() + 180
-        result = None
-        while time.monotonic() < deadline:
-            if out.exists():
-                try:
-                    result = json.loads(out.read_text())
-                    if result.get('phase') in ('complete', 'error'):
-                        break
-                except json.JSONDecodeError:
-                    pass
-            if proc.poll() is not None:
-                break
-            time.sleep(1)
-        if not result or result.get('phase') not in ('complete', 'error'):
-            try:
-                screenshot(state)
-            finally:
-                if proc.poll() is None:
-                    quit_once(state)
-            raise RuntimeError(f'JSX did not finish within 180 seconds; exit={proc.poll()}; stop, no retry')
+    wait_unlocked(state)
+    # The user may have started AE while the screen was locked.
+    preflight(state)
+    if screen_locked():
+        raise RuntimeError('Screen locked again after preflight; no AE launch')
+    from ae_dialog_watch import DialogWatcher
+    os.environ['OLM_AE_DIALOG_AUDIT_LOG'] = str(ROOT / 'orchestra/reports/A02b-evidence/dialogs.jsonl')
+    watcher = DialogWatcher(state, prevention=prevent_dialogs).start()
+    from ae_dialog_watch.prefs import scripting_prefs
+    try:
+        scripting_prefs(state / 'prefs')
+        _build_owned(state, wrapper, out, watcher)
+    finally:
         try:
-            proc.wait(timeout=30)
-        except subprocess.TimeoutExpired:
-            quit_once(state)
-            raise RuntimeError('JSX wrote marker but AE did not quit; stop, no retry')
-        if result['phase'] != 'complete':
-            raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
+            watcher.stop()
+        finally:
+            if (state / 'prefs/scripting-prefs.json').exists():
+                scripting_prefs(state / 'prefs', restore=True)
+
+
+def _build_owned(state, wrapper, out, watcher):
+    # Compilation/prevention can take time: recheck just before dispatch.
+    preflight(state)
+    if screen_locked():
+        raise RuntimeError('Screen locked before dispatch; no AE launch')
+    watcher.check()
+    dispatch = None
+    dispatch_log = None
+    proc = None
+    try:
+        with (state / 'ae.log').open('w') as log:
+            proc = subprocess.Popen([str(APP / 'Contents/MacOS/After Effects')],
+                                    stdout=log, stderr=subprocess.STDOUT)
+            (state / 'pid.txt').write_text(str(proc.pid) + '\n')
+            watcher.bind(proc.pid)
+            deadline = time.monotonic() + 180
+            result = None
+            while time.monotonic() < deadline:
+                watcher.check()
+                if (watcher.directory / 'workspace-ready').exists() and dispatch is None:
+                    if running() != [str(proc.pid)]:
+                        raise RuntimeError('Owned AE is not the sole running instance')
+                    dispatch_log = (state / 'dispatch.log').open('w')
+                    script = 'tell application ' + json.dumps(str(APP)) + ' to DoScriptFile POSIX file ' + json.dumps(str(wrapper))
+                    dispatch = subprocess.Popen(['osascript', '-e', script],
+                                                stdout=dispatch_log, stderr=subprocess.STDOUT)
+                    deadline = time.monotonic() + 180
+                if out.exists():
+                    try:
+                        result = json.loads(out.read_text())
+                        if result.get('phase') in ('complete', 'error'):
+                            break
+                    except json.JSONDecodeError:
+                        pass
+                if proc.poll() is not None:
+                    break
+                time.sleep(1)
+            if not result or result.get('phase') not in ('complete', 'error'):
+                raise RuntimeError(f'JSX did not finish within deadline; exit={proc.poll()}; stop, no retry')
+            proc.wait(timeout=60)
+            watcher.check()
+            if running():
+                raise RuntimeError('AE main executable still present after wrapper exit; stop')
+            if result['phase'] != 'complete':
+                raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
+    except BaseException:
+        if proc is not None and proc.poll() is None:
+            try:
+                watcher.capture_owned(proc.pid)
+            finally:
+                quit_once(state)
+            try:
+                proc.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                pass
+        raise
+    finally:
+        if dispatch is not None:
+            dispatch.wait(timeout=30)
+        if dispatch_log is not None:
+            dispatch_log.close()
 
 
 def render(state):
@@ -133,7 +232,7 @@ def render(state):
         preflight(state)
         with (state / f'aerender-{row["depth"]}.log').open('w') as log:
             subprocess.run([str(APP.parent / 'aerender'), '-project', row['path'],
-                            '-mfr', 'OFF'], stdout=log, stderr=subprocess.STDOUT, check=True)
+                            '-mfr', 'OFF', '100'], stdout=log, stderr=subprocess.STDOUT, check=True)
 
 
 def compare_controls(state):
@@ -147,25 +246,37 @@ def compare_controls(state):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--stage', choices=('build', 'render', 'compare', 'all'), default='all')
+    p.add_argument('--stage', choices=('prefs', 'build', 'render', 'compare', 'all'), default='all')
+    p.add_argument('--restore', action='store_true', help='Restore the original scripting prefs (stage prefs only)')
     p.add_argument('--year', type=int, choices=(2026,), default=2026)
     p.add_argument('--run-id', default='run1')
-    p.add_argument('--matrix', choices=('legacy', 'downsample-priority'), default='legacy')
+    p.add_argument('--no-dialog-prevention', action='store_true',
+                   help='Skip crash-flag backup/reset; watcher remains enabled')
+    p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus'), default='legacy')
     a = p.parse_args()
+    if a.restore and a.stage != 'prefs':
+        p.error('--restore requires --stage prefs')
     if a.matrix != 'legacy' and a.stage in ('compare', 'all'):
         p.error('downsample comparison is not implemented; use build or render explicitly')
     if not re.fullmatch(r'[A-Za-z0-9_-]+', a.run_id):
         p.error('invalid run id')
     base = ROOT / 'orchestra/state/A02-real-ae-retest-downsample' if a.matrix != 'legacy' else STATE
+    if a.scratch:
+        base = a.scratch.resolve()
     state = base / a.run_id
     state.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(state), TMP=str(state), TEMP=str(state),
                       OLM_REFUSAL_TRACE=str(state / 'refusals.log'))
+    if a.stage == 'prefs':
+        from ae_dialog_watch.prefs import scripting_prefs
+        print(json.dumps(scripting_prefs(state / 'prefs', restore=a.restore), indent=2))
+        return
     for stage, action in [('build', build), ('render', render), ('compare', compare_controls)]:
         if a.stage in (stage, 'all'):
             print(stage, flush=True)
             if stage == 'build':
-                build(state, a.matrix)
+                build(state, a.matrix, prevent_dialogs=not a.no_dialog_prevention)
             else:
                 action(state)
 

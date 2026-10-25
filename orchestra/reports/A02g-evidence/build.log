@@ -1,0 +1,20 @@
+build
+Traceback (most recent call last):
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02g-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 285, in <module>
+    main()
+    ~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02g-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 279, in main
+    build(state, a.matrix, prevent_dialogs=not a.no_dialog_prevention)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02g-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 152, in build
+    _build_owned(state, wrapper, out, watcher)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02g-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 179, in _build_owned
+    watcher.check()
+    ~~~~~~~~~~~~~^^
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02g-real-ae-retest-downsample/tools/ae_smoke/ae_dialog_watch/watcher.py", line 121, in check
+    raise RuntimeError('Dialog watcher stopped; ' +
+                       (self.directory / 'dialogs.jsonl').read_text()[-2000:])
+RuntimeError: Dialog watcher stopped; {"box":[0.56831395452515188,0.98400000014460454,0.030523254757835794,0.013333332777457518],"confidence":0.5,"text":"合計経過時間："},{"box":[0.90261627993252891,0.013205828611523751,0.01744185932098874,0.013661202185792254],"confidence":0.29999999999999999,"text":"Flow="},{"box":[0.92151162808152032,0.015938069150808087,0.021802325097341368,0.005464480874316946],"confidence":0.29999999999999999,"text":"ブロバティ"},{"box":[0.90261627949181655,0.34927140267300172,0.026162788981483054,0.013395263849060424],"confidence":0.29999999999999999,"text":"AlignlLayers ="},{"box":[0.90116279414872014,0.3652094717690102,0.069767437283954958,0.013661202185792365],"confidence":0.29999999999999999,"text":"Align To O Selection O Compostion"},{"box":[0.90550327417698784,0.37583600399237915,0.058179499611021979,0.024327991221554712],"confidence":0.29999999999999999,"text":"階キ日市＃立"},{"box":[0.90843023479905016,0.40528233154137061,0.023255811797248005,0.005464480874316946],"confidence":0.29999999999999999,"text":"istribute Center"},{"box":[0.9055232566171536,0.41066666672238239,0.015988370728871271,0.013333332777457629],"confidence":0.29999999999999999,"text":"二ニ"},{"box":[0.90261628127334037,0.44262295075539893,0.024709300389365585,0.005464480874316946],"confidence":0.29999999999999999,"text":"Preset Save ="},{"box":[0.91569767444527284,0.71200000077390324,0.078488372621082103,0.016142075613331031],"confidence":0.29999999999999999,"text":"③レンダリング（O AMEでキュー"},{"box":[0.92296511766632972,0.98400000023349332,0.072674418252611894,0.013333332777457629],"confidence":0.29999999999999999,"text":"ロ キューが完了したときに通知するよを"}],"pid":94723,"window":{"kCGWindowAlpha":1,"kCGWindowBounds":{"Height":1743,"Width":3200,"X":0,"Y":25},"kCGWindowIsOnscreen":true,"kCGWindowLayer":0,"kCGWindowMemoryUsage":2288,"kCGWindowName":"KBar","kCGWindowNumber":1863,"kCGWindowOwnerName":"After Effects","kCGWindowOwnerPID":94723,"kCGWindowSharingState":1,"kCGWindowStoreType":1}}
+{"event":"blocked","reason":"Unknown AE dialog; no click"}
+

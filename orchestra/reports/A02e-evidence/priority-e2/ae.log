@@ -1,0 +1,18 @@
+2026-10-25 19:54:37.706 After Effects[73338:13702623] CoreText registered PingFang for compatibility.
+2026-10-25 19:54:42.833 After Effects[73338:13702623] CoreText note: Client requested name ".AppleSDGothicNeoI-Bold", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-10-25 19:54:42.833 After Effects[73338:13702623] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+[2026-10-25 19:54:43] [info] asio async_connect error: asio.system:61 (Connection refused)
+[2026-10-25 19:54:43] [info] Error getting remote endpoint: asio.system:22 (Invalid argument)
+[2026-10-25 19:54:43] [error] handle_connect error: Connection refused
+[telemetry] init() called
+[telemetry] collector unreachable at http://localhost:4318, skipping OTLP
+2026-10-25 19:54:44.525 After Effects[73338:13702623] .sdef warning for argument 'FileType' of command 'save' in suite 'Standard Suite': 'saveable file format' is not a valid type name.
+2026-10-25T10:54:44.665442Z  INFO nexpression_ui_lib: [Tauri] Connecting to pipe: /tmp/nexpression_bridge_73338.sock
+2026-10-25T10:54:44.667579Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connecting to: /tmp/nexpression_bridge_73338.sock
+2026-10-25T10:54:44.675030Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Connected successfully
+2026-10-25T10:54:44.675332Z  WARN nexpression_ui_lib::mcp_server: [MCP] Port 9224 unavailable: Address already in use (os error 48)
+2026-10-25T10:54:44.675408Z  INFO nexpression_ui_lib: [Tauri] Connected to pipe: /tmp/nexpression_bridge_73338.sock
+2026-10-25T10:54:44.675422Z  INFO nexpression_ui_lib::mcp_server: [MCP] Server listening on http://127.0.0.1:9225/mcp
+2026-10-25T10:54:59.063368Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Pipe closed (EOF)
+2026-10-25T10:54:59.063798Z  INFO nexpression_ui_lib::bridge: [BridgeClient] Writer task ended
+2026-10-25T10:54:59.063819Z  INFO nexpression_ui_lib: [Tauri] Disconnected from pipe: /tmp/nexpression_bridge_73338.sock

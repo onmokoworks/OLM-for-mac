@@ -1,0 +1,15 @@
+core/dblur_float.h:3:#if defined(__aarch64__)
+core/dblur_float.h:4:#include <arm_neon.h>
+core/dblur_float.h:22:#if defined(__aarch64__)
+core/dblur_rowdriver.cpp:227:#if defined(__aarch64__)
+core/dblur_rowdriver.cpp:236:#if defined(__aarch64__)
+tools/fuzz/test_F38.cpp:11:#if defined(__aarch64__)
+
+Scope: git-tracked *.h, *.hpp, *.cpp, *.mm, *.c, *.cc, *.cxx, *.m, *.inl; production and test code.
+core/dblur_float.h:3-4: conditionally includes the NEON declarations.
+core/dblur_float.h:22: olm::dblur_float::{result4,mul4,add4}; ARM four-channel arithmetic and SSE NaN correction.
+core/dblur_rowdriver.cpp:227: olm_dblur_scatter_f32_fast, initializes RGB vector and bounded_rgb.
+core/dblur_rowdriver.cpp:236: olm_dblur_scatter_f32_fast, NEON independent-channel contribution accumulation; other architectures use scalar fallback.
+tools/fuzz/test_F38.cpp:11: main, ARM-only FPCR default-NaN probe with saved/restored FPCR.
+No matches for __x86_64__, __SSE, or immintrin in this source scope.
+mac/OLMRadialBlur/RadialScatterSIMD.h uses vector_size(16) with no architecture conditional.

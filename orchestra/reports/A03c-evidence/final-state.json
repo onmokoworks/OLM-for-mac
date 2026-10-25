@@ -1,0 +1,10 @@
+{
+  "running": [],
+  "locked": false,
+  "flags": {
+    "CrashOccurred": "0",
+    "ForceQuitOccured": "0"
+  },
+  "marker_exists": false,
+  "second_launch_exists": false
+}

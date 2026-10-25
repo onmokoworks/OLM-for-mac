@@ -1,0 +1,13 @@
+{
+  "build_command": "TMPDIR=$HOME/.cache/olm-emu/build-U03/tmp CARGO_TARGET_DIR=$HOME/.cache/olm-emu/build-U03/target CARGO_BUILD_JOBS=1 cargo build --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker -j 1",
+  "build_cwd": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-olm-U03",
+  "focused_tests_passed": 10,
+  "rust_toolchain": "1.93.1",
+  "source_archive_sha256": "4711e708579ae3663278bbd4420ba64b7c49ad49ef7278db3e46cac5f5abbf58",
+  "source_branch": "olm/U03-ui-session",
+  "source_revision": "add877b1da1cc6060979de66ad665067b3e22922",
+  "test_command": "cargo test --release --locked --manifest-path guest/Cargo.toml -p aex-guest-worker ui_ -- --test-threads=1",
+  "witness_dispatches": 174,
+  "witness_sessions": 17,
+  "worker_sha256": "e476ba8ddfbda5fc2ef1cda49c700f15c5d09a232930f6a2074d7026f2c406b0"
+}
