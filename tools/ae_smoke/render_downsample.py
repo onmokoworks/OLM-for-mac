@@ -59,6 +59,12 @@ def render(state, data, app, preflight):
                     if any(channels[c].pixels.dtype != np.float32 for c in 'RGBA'):
                         raise ValueError('32 bpc output requires FLOAT EXR channels')
                     rgba = np.stack([channels[c].pixels for c in 'RGBA'], axis=-1)
+                elif extension == 'png':
+                    from PIL import Image
+                    with Image.open(paths[0]) as image:
+                        if image.mode != 'RGBA':
+                            raise ValueError('RGBA PNG required')
+                        rgba = np.array(image)
                 else:
                     rgba = tifffile.imread(paths[0])
                 row.update(shape=list(rgba.shape), dtype=str(rgba.dtype),

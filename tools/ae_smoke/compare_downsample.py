@@ -66,6 +66,12 @@ def load_rgba(path, depth):
                 raise ValueError('16 bpc FLOAT export is not exact integer/32768')
             rgba = scaled.astype('<u2')
         return rgba
+    if path.suffix == '.png':
+        from PIL import Image
+        with Image.open(path) as image:
+            if depth != 8 or image.mode != 'RGBA':
+                raise ValueError('8 bpc RGBA PNG required')
+            return np.array(image)
     rgba = tifffile.imread(path)
     if depth != 8 or rgba.dtype != np.uint8:
         raise ValueError('Only 8 bpc TIFF accepted; use FLOAT EXR for deeper projects')
@@ -151,6 +157,16 @@ def main():
                 checkout_rect=[0,0,w,h],request_rect=[0,0,w,h],extent_hint=[0,0,w,h],pixel_aspect=[1,1],
                 rowbytes_padding=0,input_padding=0,output_padding=0,pixels=pixels,parameters=params)
             result.update(input_sha256=sha(pixels),parameters=params)
+            if row.get('corpus'):
+                project = next(p for p in json.loads((state/'build.json').read_text())['projects']
+                               if any(i['outputPrefix'] == prefix for i in p['items']))
+                requested = project['input']['parameters']
+                observed = {p['slot']: p for p in params}
+                differences = [dict(requested=p, observed=observed.get(p['slot']))
+                               for p in requested if observed.get(p['slot']) != p]
+                result['corpus_binding'] = dict(path=row['corpus'], sha256=row['corpus_sha256'],
+                    parameter_differences=differences, parameters_exact=not differences,
+                    input_exact=sha(pixels) == project['input']['source_sha256'])
             route = 'classic' if name=='olmsmoother' else 'smart'
             if w <= 1920 and h <= 1080:
                 status, raw = adapter.oracle(case,case_dir,time.monotonic()+args.timeout,route)

@@ -12,9 +12,10 @@ struct Policy {
     // Window metadata takes precedence over incidental panel text (including OK).
     static func workspace(title: String, rect: CGRect, role: String? = nil,
                           subrole: String? = nil, modal: Bool = false) -> Bool {
-        guard !modal else { return false }
+        guard !modal, subrole != "AXDialog", subrole != "AXSystemDialog" else { return false }
         return (title.hasPrefix("Adobe After Effects 2026") && rect.width >= 1000 && rect.height >= 600) ||
-            (role == "AXWindow" && subrole == "AXStandardWindow")
+            ["KBar", "Preset Viewer", "Flow", "AlignLayers", "Preset Save"].contains(normalized(title)) ||
+            (role == "AXWindow" && ["AXStandardWindow", "AXFloatingWindow"].contains(subrole ?? ""))
     }
     static func scriptProgress(_ title: String) -> Bool {
         let title = normalized(title)

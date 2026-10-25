@@ -219,3 +219,24 @@ The new build still exited nonzero because the watcher rejected a workspace
 whose title became KBar. Inspect the builder exit code in addition to `phase`
 and AE process absence before rendering. See the A02g report for the mandatory
 stop, retained measurements and incomplete effect/corpus campaign.
+
+## A02h continuation
+
+The watcher recognizes the captured KBar workspace and named extension panels,
+and AX floating windows. Modal windows and AX dialog subroles always take
+precedence; unknown windows still fail closed. Offline regression replays A02g's
+window metadata and screenshot.
+
+`downsample-corpus` selects two hash-checked existing witnesses per plugin and
+renders their original Full resolution only. For footage smaller than AE's
+minimum 4×4 composition, the original layer is placed at the top left and the
+output module crops the padding. The manifest records composition and layer
+sizes separately; this is not a live checkout trace. No source pixels or corpus
+parameters are rewritten. Every witness has an independent control. Non-exact
+controls block effect promotion; parameter readback differences are recorded.
+
+`--matrix downsample-straight` is an additional ColorKeep/control probe at
+1279×719, 8 bpc, four resolutions, using the existing `_HIDDEN X-Factor 8` PNG
+template. Build requires `Color=Straight (Unmatted)` readback. Pillow is required
+to decode RGBA PNG without alpha/color conversion. This probes whether a straight
+export preserves hidden RGB; the name alone is not a fidelity claim.

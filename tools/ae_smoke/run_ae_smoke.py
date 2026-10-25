@@ -114,6 +114,13 @@ def build(state, matrix="legacy", prevent_dialogs=True):
     elif matrix != 'legacy':
         from downsample_inputs import prepare
         prepare(state / 'inputs', high_depth=matrix == 'downsample-depths')
+        if matrix == 'downsample-straight':
+            path = state / 'inputs/inputs.json'
+            inputs = [r for r in json.loads(path.read_text()) if r['width'] == 1279]
+            for row in inputs:
+                row.update(plugin='ColorKeep', outputTemplate='_HIDDEN X-Factor 8',
+                           outputExtension='png', requireStraight=True)
+            path.write_text(json.dumps(inputs, indent=2) + '\n')
     else:
         with (state / 'inputs.log').open('w') as log:
             subprocess.run([sys.executable, str(Path(__file__).with_name('prepare_inputs.py')),
@@ -253,7 +260,7 @@ def main():
     p.add_argument('--no-dialog-prevention', action='store_true',
                    help='Skip crash-flag backup/reset; watcher remains enabled')
     p.add_argument('--scratch', type=Path, help='Ticket-local scratch base')
-    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus'), default='legacy')
+    p.add_argument('--matrix', choices=('legacy', 'downsample-priority', 'downsample-depths', 'downsample-corpus', 'downsample-straight'), default='legacy')
     a = p.parse_args()
     if a.restore and a.stage != 'prefs':
         p.error('--restore requires --stage prefs')
