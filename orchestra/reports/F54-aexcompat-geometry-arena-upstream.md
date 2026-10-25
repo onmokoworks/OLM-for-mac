@@ -1,5 +1,5 @@
 status: blocked
-summary: Work in progress checkpoint. Geometry port and dynamic frame arena implemented in isolated AEXCompat branch; verification ongoing. A cleanup command was rejected by automatic approval review, so this report retains blocked status as required by the worker brief.
+summary: Resumed verification checkpoint. Release worker installed and registered; nine UHD cases and three PF32 full-HD cases are being measured. Geometry port and dynamic frame arena implemented in isolated AEXCompat branch; verification ongoing. A cleanup command was rejected by automatic approval review, so this report retains blocked status as required by the worker brief.
 
 facts:
 - Created AEXCompat-olm-F54, branch `olm/F54-geometry-arena`, from fetched origin/main `8d102ae4` (230 commits after bd878da6).
@@ -46,3 +46,12 @@ Draft claim comment (not posted):
 
 Draft PR body (not posted):
 > Add opt-in geometry to guest resident sessions and map bounded overflow frame storage only when required. Existing small allocations retain their addresses. OLM geometry option names remain compatible. Validation and reviewed HEAD pending; this draft is not ready for publication. No Closes clause because no issue was created or claimed.
+
+
+Resumed checkpoint (2026-10-25):
+- Reviewed AEXCompat HEAD `5a9bd8f7f7dd128f2d5c6c037ce3a71a14b7504c`, branch `olm/F54-geometry-arena`. Local independent review is clean after fixing source-depth identity for auto-crops, descriptor ownership, and negotiated-buffer reuse. Test integer annotation and documentation were re-reviewed.
+- Release tests: 702 library + 10 CLI tests passed, 3 ignored, 0 failures. Whole-tree rustfmt: 229 Rust files, exit 0. Final Release build 55.43s, success.
+- Installed and registered `worker-F54/aex-guest-worker`, SHA256 `dbf9766f23de8f247169f63cf8310a0c73e15f053765e2c9373106623c2e9af2`; OLM default worker unchanged.
+- Full recursive ColorKey corpus 44/44 byte-exact against F53. Blur 57/60 byte-exact (all 60 successful); first mismatch `T15b-odd-even-realistic/anchor-PF32.json`, byte 108. All eight fixed F53 crop witnesses byte-exact.
+- UHD PF8/16/32 Smart succeeded for Blur, ColorKey and DirectionalBlur (nine cases), guards intact and clean sessions. Defaults and constant finite input only; not an all-parameter claim.
+- Full ten-plugin seed-1/n100 F53 survey replay in progress. No attempt to hide arithmetic differences or change OLM plugin code.

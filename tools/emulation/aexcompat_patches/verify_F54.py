@@ -14,7 +14,7 @@ def main():
     ap.add_argument('--worker',type=Path,required=True)
     ap.add_argument('--baseline',type=Path,default=Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker')
     ap.add_argument('--plugin',required=True)
-    ap.add_argument('--mode',choices=['corpus','survey','witness','4k'],default='corpus')
+    ap.add_argument('--mode',choices=['corpus','survey','witness','4k','hd32'],default='corpus')
     ap.add_argument('--n',type=int,default=100)
     args=ap.parse_args()
     scratch=ROOT/'orchestra/state/F54-aexcompat-geometry-arena-upstream'/f'{args.mode}-{args.plugin}'
@@ -22,25 +22,26 @@ def main():
     os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),PYTHONDONTWRITEBYTECODE='1')
     cls=importlib.import_module('adapters.'+args.plugin).Adapter
     adapters=[cls(SimpleNamespace(main=MAIN,worker=w,max_size=256,case_timeout=180)) for w in [args.baseline,args.worker]]
-    if args.mode=='4k':
+    if args.mode in ('4k','hd32'):
         wrapper=scratch/'timed-worker'
         wrapper.write_text('#!/bin/sh\nexec /usr/bin/time -l '+shlex.quote(str(args.worker.resolve()))+' "$@"\n')
         wrapper.chmod(0o755)
         adapters[1].worker=wrapper
     def cases():
         if args.mode=='corpus':
-            for path in sorted((ROOT/'tests/fuzz_corpus'/args.plugin).glob('*.json')):
+            for path in sorted((ROOT/'tests/fuzz_corpus'/args.plugin).rglob('*.json')):
                 for a in adapters:a.max_size=json.loads(path.read_text())['max_size']
-                yield path.name,load_corpus(path,adapters[0])[0]
+                yield str(path.relative_to(ROOT/'tests/fuzz_corpus'/args.plugin)),load_corpus(path,adapters[0])[0]
         elif args.mode=='survey':
             for i in range(args.n):yield str(i),sample(adapters[0].generate(1,i),'realistic-v2')
-        elif args.mode=='4k':
-            for depth in [8,16,32]:
+        elif args.mode in ('4k','hd32'):
+            for depth in ([32] if args.mode=='hd32' else [8,16,32]):
                 # Deterministic constant finite ARGB, ordinary declared defaults.
                 import struct
                 pixel={8:bytes([255,71,29,103]),16:struct.pack('<4H',32768,9000,4000,12000),32:struct.pack('<4f',1.,.25,.125,.375)}[depth]
                 c=adapters[0].generate(1,0)
-                c.update(geometry=[3840,2160],depth=depth,pixels=pixel*(3840*2160),parameters=adapters[0].defaults(3840,2160))
+                w,h=(1920,1080) if args.mode=='hd32' else (3840,2160)
+                c.update(geometry=[w,h],depth=depth,pixels=pixel*(w*h),parameters=adapters[0].defaults(w,h))
                 yield str(depth),c
         else:
             for i in range(4):
@@ -57,7 +58,7 @@ def main():
     with (scratch/'results.jsonl').open('w') as log:
         for name,c in cases():
             result=[];raws=[]
-            for a in (adapters[1:] if args.mode=='4k' else adapters):
+            for a in (adapters[1:] if args.mode in ('4k','hd32') else adapters):
                 observed=[]
                 a.session_observed=lambda out,err:observed.append(err.decode(errors='replace'))
                 start=time.monotonic()
@@ -68,11 +69,13 @@ def main():
                     if match:result[-1]['maximum_rss_bytes']=int(match[1])
                 raws.append(raw)
             equal=len(result)==2 and result[0]['status']['status']==result[1]['status']['status'] and raws[0]==raws[1] and result[0]['status'].get('output_rect')==result[1]['status'].get('output_rect')
-            row=dict(case=name,results=result,equal=equal)
-            if len(raws)==2 and raws[0]!=raws[1]:row['first_mismatch']=next((i for i,(x,y) in enumerate(zip(*raws)) if x!=y),min(map(len,raws)))
+            row=dict(case=name,input_sha256=digest(c['pixels']),results=result,equal=equal)
+            if len(raws)==2 and raws[0]!=raws[1]:
+                offset=next((i for i,(x,y) in enumerate(zip(*raws)) if x!=y),min(map(len,raws)))
+                row.update(first_mismatch=offset,expected_hex=raws[0][offset:offset+8].hex(),actual_hex=raws[1][offset:offset+8].hex())
             counts['cases']+=1;counts['equal' if equal else 'different']+=1;counts['both_ok']+=all(r['status']['status']=='ok' for r in result)
             log.write(json.dumps(row)+'\n');log.flush()
             print(name,[r['status']['status'] for r in result],equal,flush=True)
-    summary=dict(counts,worker_sha256=digest(args.worker.read_bytes()),baseline_sha256=digest(args.baseline.read_bytes()))
+    summary=dict(counts,aex_sha256=digest(adapters[0].aex.read_bytes()),worker_sha256=digest(args.worker.read_bytes()),baseline_sha256=digest(args.baseline.read_bytes()))
     (scratch/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(summary)
 if __name__=='__main__':main()
