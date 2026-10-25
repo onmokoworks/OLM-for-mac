@@ -1,0 +1,10 @@
+{
+  "free_percent": 29,
+  "reason": "user requires >=30% memory_pressure free",
+  "runner_pid": 38362,
+  "stopped_children": [
+    "51718"
+  ],
+  "unfinished": "radialblur/4k/8",
+  "completed_heavy_cases": 51
+}
