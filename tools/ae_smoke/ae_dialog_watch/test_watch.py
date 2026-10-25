@@ -53,16 +53,30 @@ class PolicyTests(unittest.TestCase):
         self.assertFalse(policy([row('OK'),row('Delete project?')])['knownDialog'])
         self.assertTrue(policy([row('クラッシュ修復オプション')])['knownDialog'])
 
-    def test_saved_a02d_screenshot(self):
-        path = ROOT / 'orchestra/reports/A02d-evidence/blocked.png'
-        result = json.loads(subprocess.check_output([str(BINARY), 'ocr', str(path)]))
-        self.assertTrue(result['knownDialog'])
-        # The retained reduced screenshot can misrecognize 続行. Never fuzzy-map it.
-        self.assertTrue(any('リセット' in r['text'] for r in result['rows']))
-        self.assertTrue(all(r['text'] == '続行' for r in result['candidates']))
-        for r in result['candidates']:
-            self.assertLess(r['box'][0], .25)
-            self.assertGreater(r['box'][1], .75)
+    def test_recovery_screenshots_and_negative_variants(self):
+        import copy
+        for fixture in ['A02d-evidence/blocked.png', 'A03c-evidence/no-safe-button-1670.png']:
+            result = json.loads(subprocess.check_output([str(BINARY), 'ocr',
+                str(ROOT / 'orchestra/reports' / fixture)]))
+            rows = result['rows']
+            self.assertEqual(len(result['layout']), 1, fixture)
+            target = result['layout'][0]
+            self.assertLess(target['box'][0], next(r['box'][0] for r in rows if r['text'] == 'プラグインを管理'))
+            variants = []
+            variants.append([r for r in rows if r['text'] != '環境設定をリセット'])
+            variants.append(rows + [row('extra', [.01, target['box'][1], .02, target['box'][3]])])
+            swapped = copy.deepcopy(rows)
+            a, b = [next(r for r in swapped if r['text'] == label) for label in ['プラグインを管理', '環境設定をリセット']]
+            a['box'], b['box'] = b['box'], a['box']
+            variants.append(swapped)
+            for title, confidence in [('別のタイトル', 1), ('クラッシュ修復オプション', .3)]:
+                changed = copy.deepcopy(rows)
+                heading = next(r for r in changed if r['text'] == 'クラッシュ修復オプション')
+                heading.update(text=title, confidence=confidence)
+                variants.append(changed)
+            variants.append(rows + [row('overlap', target['box'])])
+            for variant in variants:
+                self.assertEqual(policy(variant)['layout'], [])
 
 
 class LifecycleTests(unittest.TestCase):

@@ -30,6 +30,34 @@ struct Policy {
                 "what’s new", "what's new", "新機能", "アップデート", "update available",
                 "after effects へようこそ", "welcome to after effects"].contains { text.contains($0) }
     }
+    static func crashRecoveryLayout(_ rows: [TextBox]) -> TextBox? {
+        // OCR only: AX duplicates must not alter the four-box row invariant.
+        guard rows.allSatisfy({ $0.box.count == 4 && $0.box.allSatisfy(\.isFinite) &&
+            $0.rect.width > 0 && $0.rect.height > 0 &&
+            CGRect(x: 0, y: 0, width: 1, height: 1).contains($0.rect) }) else { return nil }
+        let titles = rows.filter { $0.text == "クラッシュ修復オプション" && $0.confidence >= 0.8 }
+        guard titles.count == 1 else { return nil }
+        let labels = ["プラグインを管理", "環境設定をリセット", "セーフモードで開始"]
+        var anchors: [TextBox] = []
+        for label in labels {
+            let matches = rows.filter { $0.text == label && $0.confidence >= 0.8 }
+            guard matches.count == 1 else { return nil }
+            anchors.append(matches[0])
+        }
+        // A common vertical band defines the row, independent of screenshot size.
+        let top = anchors.map { $0.rect.minY }.max()!
+        let bottom = anchors.map { $0.rect.maxY }.min()!
+        guard top < bottom, titles[0].rect.maxY < top,
+              anchors[0].rect.maxX < anchors[1].rect.minX,
+              anchors[1].rect.maxX < anchors[2].rect.minX else { return nil }
+        let row = rows.filter { $0.rect.minY < bottom && $0.rect.maxY > top }
+        guard row.count == 4 else { return nil }
+        let left = row.filter { $0.rect.maxX < anchors[0].rect.minX }
+        guard left.count == 1, !dangerous(left[0].text) else { return nil }
+        let target = left[0]
+        guard rows.filter({ $0.rect.intersects(target.rect) }).count == 1 else { return nil }
+        return target
+    }
     static func candidates(_ rows: [TextBox]) -> [TextBox] {
         rows.filter { candidate in
             allowed.contains(normalized(candidate.text)) && candidate.confidence >= 0.8 &&
