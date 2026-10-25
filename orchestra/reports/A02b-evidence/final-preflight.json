@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-25T09:53:43.341654+00:00",
+  "IOConsoleUsers_present": true,
+  "IOConsoleUsers_type": "list",
+  "users": [
+    {
+      "keys": [
+        "CGSSessionUniqueSessionUUID",
+        "kCGSSessionAuditIDKey",
+        "kCGSSessionGroupIDKey",
+        "kCGSSessionIDKey",
+        "kCGSSessionLoginwindowSafeLogin",
+        "kCGSSessionOnConsoleKey",
+        "kCGSSessionSystemSafeBoot",
+        "kCGSSessionUserIDKey",
+        "kCGSSessionUserNameKey",
+        "kCGSessionLoginDoneKey",
+        "kCGSessionLongUserNameKey",
+        "kSCSecuritySessionID"
+      ],
+      "screen_lock_value": null
+    }
+  ]
+}

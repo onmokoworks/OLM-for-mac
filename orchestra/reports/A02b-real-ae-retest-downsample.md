@@ -1,33 +1,52 @@
-status: partial
-summary: Screen locked at preflight; no AE launch or render attempted.
-  Waiting at five-minute intervals, up to the specified 12 hours.
-  Added fail-closed GUI lock guard and ticket-local scratch override.
-  Added optional 16/32 bpc untouched-default matrix; not validated in AE.
-  Corpus and oracle comparison remain outstanding.
+status: blocked
+summary: No AE launch: screen stayed locked, then macOS stopped exposing its lock state.
+  Resumed the original wait; stopped safely on unknown state before the 12-hour deadline.
+  Added restart-safe lock deadline and optional 16/32 bpc untouched-default scaffold.
+  Offline tests pass; no AE render, timing, refusal or exactness result exists.
+  Corpus mapping and original/same-bundle comparison remain outstanding.
 
 facts:
-- Initial `ioreg -n Root -d1 -a | plutil -extract IOConsoleUsers.0.CGSSessionScreenIsLocked raw - 2>/dev/null`: true. No main AE process; memory free 60%.
-- Branch `orch/A02b-real-ae-retest-downsample`, initially clean. No installed bundle/plugin source/release gate/ledger/MAIN changes; no build or push.
-- Ten installed executable hashes retained in `A02b-evidence/installed.json` (not loaded-module proof).
-- `run_ae_smoke.wait_unlocked` is polling without launching AE. First Python probe exposed dictionary-shaped ioreg plist; parser corrected to accept dictionary or array roots and reject unknown lock evidence.
-- Pipeline tests 4/4, comparison tests 4/4, render-result tests 2/2 passed. After adding depth support, render test fixtures needed explicit depth; 2/2 pass again. Initial existing render tests used their historical A02 scratch directory and removed temporary files; subsequent tests use this ticket's scratch.
-- Input generation plus `decode.decode` hash check: 7/7 file roundtrips exact (three 8-bit sizes, two sizes each at 16/32 bpc); hashes in `A02b-evidence/input-validation.log`. This is NOT AE I/O calibration.
-- AE launches 0; rendered frames 0; AE/original/native-host comparisons 0. First mismatch and timing unavailable.
+- Branch `orch/A02b-real-ae-retest-downsample`. Resumed existing work/checkpoints rather than restarting the ticket. No installed bundle, plugin source, MAIN, emulator source, release gate or ledger changes; no build, push, stash or history rewrite.
+- Lock evidence: **88** successful probes, all `locked=True`, from **2026-10-25 02:12:57.363 UTC** through **09:48:14.979 UTC**. There was an orchestrator-restart gap; this is not a claim of continuous observation. [Log](A02b-evidence/screen-lock.txt).
+- Resumed `run_ae_smoke.wait_unlocked(Path('orchestra/state/A02b-real-ae-retest-downsample'))` with `PYTHONDONTWRITEBYTECODE=1 python3 -u`; exit **1** at the next scheduled poll: `RuntimeError: Cannot establish screen lock state; launch refused`. [Log](A02b-evidence/resumed-lock-wait.log). Original deadline was **14:12:57.363 UTC**, not reached. The helper now preserves that deadline across restarts.
+- At **09:53:19 UTC**, the prescribed `ioreg -n Root -d1 -a | plutil -extract IOConsoleUsers.0.CGSSessionScreenIsLocked raw - 2>/dev/null` could not extract the key. Follow-up plist inspection at **09:53:43 UTC** found one IOConsoleUsers entry with no `CGSSessionScreenIsLocked` key. [Sanitized preflight](A02b-evidence/final-preflight.json). Unknown is not treated as unlocked.
+- `pgrep -fl 'MacOS/After Effects$'`: no matches at resumed and final preflight. Resumed `memory_pressure`: **42%** free (initial pre-restart record: 60%). No AE/aerender or emulator process was started; both read-only osascript probes and the lock waiter exited.
+- Read-only System Events queries for application-process paths and `UI elements enabled` both returned Apple-event timeout **-1712**. [Inventory query error](A02b-evidence/accessibility-preflight.log), [UI-access query error](A02b-evidence/accessibility-enabled.log). No -1719/-25211 denial was observed, so Accessibility permission status is unverified. No dialogs inspected/clicked, no screenshot, no `dialogs.jsonl` click entries, no quit or force-shutdown action.
+- Ten installed executable hashes retained in [installed.json](A02b-evidence/installed.json); these are not loaded-module proof. Seven generated input file roundtrips exact (three 8-bit sizes, two sizes each at 16/32 bpc): [hash evidence](A02b-evidence/input-validation.log). These are not AE I/O calibration.
+- Final offline tests: pipeline **5/5**, render attribution **2/2**, comparator **4/4** pass; `git diff --check` passes. Logs: [pipeline](A02b-evidence/final-pipeline-tests.log), [render](A02b-evidence/final-downsample-tests.log), [compare](A02b-evidence/final-compare-tests.log).
+- AE launches **0**, effect/control frames **0**, original/native-host comparisons **0**. First mismatch, refusal tags, actual AE downsample/InData values and timings are unavailable. No black plugin frame or plugin bug was established.
+- Priority scaffold: 120 effect frames + 12 controls (10 defaults × 3 sizes × 4 resolutions), 8 bpc. Optional depth scaffold: 160 effects + 16 controls (10 defaults × 2 sizes × 4 resolutions × 16/32 bpc), including untouched DistanceGradation 32 bpc. Both remain unvalidated in AE; corpus cases are not implemented.
+
+NT = not tested. The 8 bpc columns cover 1920×1080, 1279×719 and 3840×2160; 16/32 bpc cover the first two sizes. No cell is OK/black/render-error/exact-vs-original.
+
+| Plugin | Full 8 | Half 8 | Third 8 | Quarter 8 | All resolutions 16 | All resolutions 32 |
+| --- | --- | --- | --- | --- | --- | --- |
+| OLMBlur | NT | NT | NT | NT | NT | NT |
+| ColorKeep | NT | NT | NT | NT | NT | NT |
+| OLMColorKey | NT | NT | NT | NT | NT | NT |
+| OLMDirectionalBlur | NT | NT | NT | NT | NT | NT |
+| OLMDistanceGradation | NT | NT | NT | NT | NT | NT |
+| OLMKiraKira | NT | NT | NT | NT | NT | NT |
+| OLMSmoother2 | NT | NT | NT | NT | NT | NT |
+| OLMToonDilate | NT | NT | NT | NT | NT | NT |
+| OLMRadialBlur | NT | NT | NT | NT | NT | NT |
+| OLMSmoother | NT | NT | NT | NT | NT | NT |
+
+| Timing scope | 1080p seconds/frame | 4K seconds/frame |
+| --- | --- | --- |
+| All ten plugins, Full/Half/Third/Quarter, 8 bpc defaults | unavailable (0 frames) | unavailable (0 frames) |
 
 inference:
-- The locked desktop blocks the required GUI JSX build. No plugin behavior can be inferred from it.
-- Checked-in A01c report records no completed I/O calibration; the ticket premise of calibration is not used as measured evidence.
+- The desktop/session precondition blocks the GUI build. The missing key may reflect a console-session transition, but its cause is not established; neither unlock nor logout is asserted.
+- System Events timeouts do not prove an Accessibility denial or identify a particular dialog. No permission claim or dialog dismissal is inferred.
+- The checked-in A01c report records no completed AE I/O calibration, contrary to the ticket premise. Calibration must be measured before interpreting effect differences.
+- No I/O/color-management/host-geometry/plugin-bug classification is possible with zero frames. No plugin fix ticket is justified.
 
 changed_files:
-- tools/ae_smoke/run_ae_smoke.py
-- tools/ae_smoke/downsample_inputs.py
-- tools/ae_smoke/prepare_downsample.jsx
-- tools/ae_smoke/render_downsample.py
-- tools/ae_smoke/test_pipeline.py
-- tools/ae_smoke/test_downsample.py
-- tools/ae_smoke/README.md
-- orchestra/reports/A02b-real-ae-retest-downsample.md
-- orchestra/reports/A02b-evidence/
+- tools/ae_smoke/run_ae_smoke.py: fail-closed lock guard, scratch override, optional depth matrix, restart-safe 12-hour deadline.
+- tools/ae_smoke/downsample_inputs.py, prepare_downsample.jsx, render_downsample.py: optional 16/32 bpc default inputs/projects/output decoding.
+- tools/ae_smoke/test_pipeline.py, test_downsample.py, README.md.
+- orchestra/reports/A02b-real-ae-retest-downsample.md, A02-real-ae-retest-downsample.md, A02b-evidence/.
 
 verify:
 ```sh
@@ -35,39 +54,16 @@ PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02b-real-ae-retest-downsample/venv/bi
 PYTHONDONTWRITEBYTECODE=1 orchestra/state/A02b-real-ae-retest-downsample/venv/bin/python tools/ae_smoke/test_downsample.py
 PYTHONDONTWRITEBYTECODE=1 python3 tools/ae_smoke/test_compare.py
 git diff --check
+# Read-only console/process checks; do not launch on missing/true lock state:
+ioreg -n Root -d1 -a | plutil -extract IOConsoleUsers.0.CGSSessionScreenIsLocked raw - 2>/dev/null
+pgrep -fl 'MacOS/After Effects$'
 ```
-Expected: 4 + 2 + 4 offline tests pass, whitespace check passes. Recreate the venv with numpy/tifffile/OpenEXR in ticket scratch if absent. No AE outcome is promised.
+Expected offline: **5 + 2 + 4** tests pass and whitespace check passes. Recreate the venv with numpy/tifffile/OpenEXR in ticket scratch if absent. The live lock/process state may change; the recorded final result was missing key/no main-process match. No successful AE outcome is promised.
 
 next:
-- Continue waiting for unlock; then priority build/render and exact controls, followed by depth defaults, corpus and original/same-bundle comparisons.
-- Preserve untouched DistanceGradation 32 bpc defaults; no plugin fix is justified before a measured failure.
+- Restore a verifiably unlocked console session and verify System Events access. Resume priority build/render with a fresh preflight and the existing unused priority run directory; retain full-path single dispatch, 180-second timeout, no force quit and authorized dialog limits.
+- Validate AE I/O controls and actual queue/downsample/InData geometry, then F53 original and same-installed-bundle comparisons. Preserve untouched DistanceGradation 32 bpc defaults.
+- Implement two corpus parameter cases per plugin only with verified AE property mapping/readback. Complete the requested matrix and report timings. Create black-frame/plugin-fix tickets only from measured minimal repros.
 
-checkpoint: 2026-10-25T02:45:14.048638+00:00; 7 lock polls recorded; AE not launched. See A02b-evidence/screen-lock.txt.
-
-checkpoint: 2026-10-25T03:14:38.764312+00:00; 13 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T03:43:57.244525+00:00; 19 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T04:13:06.467494+00:00; 25 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T04:42:15.843300+00:00; 30 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T05:11:26.167308+00:00; 36 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T05:40:39.565633+00:00; 42 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T06:09:46.288569+00:00; 48 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T06:38:54.286140+00:00; 54 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T07:08:08.817273+00:00; 60 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T07:37:16.719824+00:00; 65 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T08:06:40.695077+00:00; 71 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T08:35:53.904947+00:00; 77 lock polls recorded; AE not launched.
-
-checkpoint: 2026-10-25T09:05:03.622929+00:00; 83 lock polls recorded; AE not launched.
-
-Resume checkpoint 2026-10-25T09:34:50.701197+00:00: screen still locked; no main AE process; memory free 42%. Original wait began 02:12:57.363 UTC; deadline remains 14:12:57.363 UTC. The helper now preserves this deadline across restarts (5/5 pipeline tests pass). Two read-only System Events preflight queries returned Apple-event timeout -1712; no Accessibility denial established, no UI click or AE launch. See A02b-evidence/accessibility-*.log and resume-tests.log.
+cleanup:
+- Scratch **279 MiB**, below 5 GiB. No generated build trees or background process started in this resume remains. Logs and small evidence are committed; generated inputs/local venv retained for a later authorized resume. Installed bundles unchanged.

@@ -1,0 +1,11 @@
+Screen locked; waiting five minutes without launching AE
+Screen locked; waiting five minutes without launching AE
+Screen locked; waiting five minutes without launching AE
+Screen locked; waiting five minutes without launching AE
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02b-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 51, in wait_unlocked
+    locked = screen_locked()
+  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02b-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 36, in screen_locked
+    raise RuntimeError('Cannot establish screen lock state; launch refused')
+RuntimeError: Cannot establish screen lock state; launch refused
