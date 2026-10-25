@@ -145,3 +145,6 @@ N01-nightly-fuzz-runner
 A02b-real-ae-retest-downsample
 A02e-real-ae-retest-downsample
 S01-smoother-4k-two-sample-diff
+C01-colorkey-pf32-nan-passthrough
+U02b-kirakira-ui-vs-original
+F54b-aexcompat-numeric-patches-upstream
