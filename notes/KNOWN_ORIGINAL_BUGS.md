@@ -169,3 +169,9 @@ an invalid read. This is a buffer-initialization boundary, not a pixel-value fix
 The P06a small-fade sanitizer grid is rerun in N02. Out-of-generated-range cases
 can remain mismatches and are not promoted to exact; the new nightly cases are
 ordinary exact comparisons, not original-bug exclusions.
+
+## RadialBlur cropped-checkout mismatches: uninitialized Layer write over the input world (N03b, orchestrator decision)
+
+FACT (N03b, `orchestra/reports/N03b-radialblur-v2-mismatch.md`, traced with worker-F54c resident watches): the two realistic-v2 (cropped checkout) Smart mismatches from the 2026-10-25 nightly come from the original writing a Layer descriptor through an uninitialized destination pointer (0x1000000001, as in C57). In these geometries that pointer lands one byte into the primary input world descriptor (0x1000000000). The original thereby erases the input's dimensions and data pointer before its typed owner runs. Both original output hashes reproduce under tracing.
+
+DECISION: this is allocator- and stack-dependent memory corruption in the original, not a deterministic contract. The Mac port does not reproduce it. Both witnesses stay in the labelled unresolved RadialBlur set as recorded mismatches and are not counted as port defects.
