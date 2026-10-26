@@ -158,3 +158,5 @@ N03-distancegradation-bilateral-refusals
 N03-radialblur-v2-mismatch
 F54c-aexcompat-resident-watches
 N03b-radialblur-v2-mismatch
+X01-aexcompat-platform-parity
+X02-aexcompat-gui-guide-ja
