@@ -20,16 +20,18 @@
 7. Generated files (`*.generated.inc`, for example Smoother v1's instruction-level translation) are out of scope. Do not edit them. You may document how they are generated.
 8. Keep the `OLM_REFERENCE_BUILD` reference/fast split and the `OLM_PARALLEL_MAX` behaviour exactly as they are.
 
-## Gates (all must pass; report real numbers)
-- G1 native differential against the pre-refactor base: `tools/refactor/native_diff.py` (built in Q00).
-  - Build the plugin at `--base <base sha>` and at HEAD, in both reference and fast builds, for arm64 and x86_64 (Rosetta).
-  - Compare raw output bytes on at least 3,000 random cases per plugin. Use every sampler `native_diff.py` supports for that plugin: default, realistic, realistic-v2, odd-even, all depths, downsample, and some 4K cases. The independent float-colour sampler exists only for Smoother2. For the other plugins, the 32 bpc depth inputs (over-range and NaN values) are the float coverage. Do not extend the samplers in these tickets.
-  - Required result: 0 differences, 0 new refusals, the same refusal tags.
-- G2: replay every corpus of the plugin in `tests/fuzz_corpus/` with its recorded flags. The results must equal the base results, including the known-failing ones; do not "fix" them here.
-- G3: fresh fuzz seed 909, `--geometry realistic`, 100 cases against the default oracle. The result must equal the base.
-- G4: `tools/perf/ref_vs_fast.py` for the plugin. Expected result: 0 mismatches.
-- G5: build every entry point. That means the Xcode project, `scripts/package_mac_plugins.sh` (Universal) and `scripts/run_olm_release_gate_v2.py` (all stages it runs locally). The UI oracle compare (`tests/ui_oracle/compare_mac.py`) must pass where it applies.
-- G6: compiler warnings must not increase.
+## Gates (revised after Q01; all must pass; report real numbers)
+- G1 is the decisive gate: `tools/refactor/native_diff.py` against the pre-refactor base.
+  - Run it at HEAD vs base, both archs, both builds, with at least 3,000 cases per plugin.
+  - Required: 0 differences, 0 new refusals, 0 execution errors.
+  - Because G1 compares reference-base with reference-head and fast-base with fast-head, a separate `ref_vs_fast.py` run is not needed.
+- G2 corpus replay: replay every corpus of the plugin with its recorded flags, on base and head. Compare only the Mac side: the native output hashes, refusal tags, and pass/fail per witness.
+  - Oracle-side diagnostics, crash snapshots and wall-time budget outcomes can vary between runs and are not part of the comparison. The oracle is not changed by these tickets.
+  - Report any Mac-side difference.
+- G3: none. The fresh-seed oracle campaign is replaced by G1. The orchestrator runs its own seed after merge.
+- G4 build: the plugin's Xcode project builds for both archs. The text-reading and UI tests for the plugin pass, including `tests/ui_oracle/compare_mac.py` where it applies.
+  - The release gate v2 and packaging run once at the end of the Q series, by the orchestrator, not per ticket.
+- G5: compiler warnings must not increase.
 
 ## Rules
 - Some tests read the main `.cpp` by text. Examples: `tests/ui_oracle/compare_mac.py` extracts `UpdateParameterUI` and its dispatch, and some `tests/test_*parameter_ui*` files assert literal expressions. Keep the code these tests read in the main `.cpp`. If that is impossible, change the test only so that it reads the new file. Never weaken what a test asserts. Run those tests (part of G5).
