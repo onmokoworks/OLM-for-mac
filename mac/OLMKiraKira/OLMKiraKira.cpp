@@ -225,11 +225,8 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 	const ClassicClosureSourceFamily source_family =
 		ClassicClosureSourceFamilyForTuple(info);
 	const bool classic_closure = IsClassicClosureLayout(input, output, format);
-	const bool mode3_32x18_closure =
-		IsMode3Closure32x18Tuple(info) &&
-		IsMode3Closure32x18Layout(input, output, format);
 	const bool exact_closure =
-		(classic_closure || mode3_32x18_closure) &&
+		classic_closure &&
 		source_family != ClassicClosureSource_None &&
 		ClassicClosureSourceMatches(input, format, source_family);
 	// Exact bytes retain exact precedence. A different source, legal stride, or
@@ -261,8 +258,6 @@ typedef struct {
 
 constexpr A_long kSmartClosureWidth = 5;
 constexpr A_long kSmartClosureHeight = 3;
-constexpr A_long kMode3SmartClosureWidth = 32;
-constexpr A_long kMode3SmartClosureHeight = 18;
 
 static bool WorldStorageRangesDoNotOverlap(
 	const PF_EffectWorld *input,
@@ -440,16 +435,13 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		const bool pre_is_classic = pre &&
 			pre->comp_width == kSmartClosureWidth &&
 			pre->comp_height == kSmartClosureHeight;
-		const bool pre_is_mode3_32x18 = pre &&
-			pre->comp_width == kMode3SmartClosureWidth &&
-			pre->comp_height == kMode3SmartClosureHeight;
 		const bool pre_is_generic_beta = pre &&
 			pre->generic_full_frame_request &&
 			IsSmartOwnerFullFrameDimensions(
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
 		const bool exact_world_layout =
-			(pre_is_classic || pre_is_mode3_32x18) &&
+			pre_is_classic &&
 			SmartClosureWorldPairIsSafeForDimensions(
 				input_world, output_world, format,
 				static_cast<A_long>(pre->comp_width),
@@ -457,8 +449,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		const bool generic_world_layout = pre &&
 			SmartWorldPairHasBoundedOutput(input_world, output_world, PixelSizeForFormat(format));
 		KiraDiagnosticLog(
-			"smart layout pre_classic=%d pre_mode3_32=%d pre_generic=%d exact=%d generic=%d pre=%gx%g",
-			(int)pre_is_classic, (int)pre_is_mode3_32x18,
+			"smart layout pre_classic=%d pre_generic=%d exact=%d generic=%d pre=%gx%g",
+			(int)pre_is_classic,
 			(int)pre_is_generic_beta, (int)exact_world_layout,
 			(int)generic_world_layout,
 			pre ? (double)pre->comp_width : -1.0,
@@ -480,8 +472,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			const ClassicClosureSourceFamily source_family =
 				ClassicClosureSourceFamilyForTuple(info);
 			const bool exact_tuple_is_admitted =
-				(pre_is_classic && IsClassicClosureTuple(info)) ||
-				(pre_is_mode3_32x18 && IsMode3Closure32x18Tuple(info));
+				pre_is_classic && IsClassicClosureTuple(info);
 			// The exact fixture remains isolated by source, tuple, and full-frame
 			// geometry; byte stride and base alignment do not alter its pixels.
 			// Other sources still require the generic SDR and budget checks.

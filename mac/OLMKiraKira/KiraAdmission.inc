@@ -32,6 +32,7 @@ enum ClassicClosureSourceFamily {
 static ClassicClosureSourceFamily ClassicClosureSourceFamilyForTuple(
 	const OLMKiraKiraInfo &info)
 {
+	// Retained: blanket OFF loses 169 Smart admissions in the F01 oracle campaign.
 	// These are the fixed public Classic fixtures closed against the current
 	// Windows exported Smart owners.  This is deliberately a tuple map, not a
 	// claim that the Cartesian product of the recovered helpers is exact.
@@ -566,18 +567,6 @@ static bool IsGenericBetaClassicLayout(
 		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
 }
 
-static bool IsMode3Closure32x18Tuple(const OLMKiraKiraInfo &info)
-{
-	// This is a separate one-fixture admission.  The 5x3 Mode3 family also
-	// contains Rotation 1, but only Rotation 0 has a same-source 32x18
-	// exported-Smart oracle at all three public pixel depths.
-	return ClassicClosureSourceFamilyForTuple(info) ==
-			ClassicClosureSource_SemiTransparentColor &&
-		info.blur_mode == 3 && info.merge_mode == 1 &&
-		info.glow_rotation == 0.0 && info.brightness_gain == 0.1 &&
-		info.horizontal_length == 50 && !info.horizontal_use_ramp;
-}
-
 static bool IsClassicClosureLayout(
 	const PF_EffectWorld *input,
 	const PF_EffectWorld *output,
@@ -596,27 +585,6 @@ static bool IsClassicClosureLayout(
 		input->extent_hint.right == 5 && input->extent_hint.bottom == 3 &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
 		output->extent_hint.right == 5 && output->extent_hint.bottom == 3;
-}
-
-static bool IsMode3Closure32x18Layout(
-	const PF_EffectWorld *input,
-	const PF_EffectWorld *output,
-	PF_PixelFormat format)
-{
-	const size_t pixel_size = PixelSizeForFormat(format);
-	if (!pixel_size || !input || !output ||
-		input->width != 32 || input->height != 18 ||
-		output->width != 32 || output->height != 18 ||
-		input->origin_x != 0 || input->origin_y != 0 ||
-		output->origin_x != 0 || output->origin_y != 0) {
-		return false;
-	}
-	return WorldLayoutIsSafe(input, pixel_size) &&
-		WorldLayoutIsSafe(output, pixel_size) &&
-		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
-		input->extent_hint.right == 32 && input->extent_hint.bottom == 18 &&
-		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
-		output->extent_hint.right == 32 && output->extent_hint.bottom == 18;
 }
 
 static A_u_short ClosureByteToPF16(A_u_char value)

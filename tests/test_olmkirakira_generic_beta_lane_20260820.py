@@ -48,8 +48,6 @@ class KiraKiraGenericBetaLaneTests(unittest.TestCase):
         self.assertIn("owner_tuple.horizontal_length = 50", generic)
         exact = self.function_body("ClassicClosureSourceFamilyForTuple")
         self.assertIn("info.horizontal_length == 50", exact)
-        closure32 = self.function_body("IsMode3Closure32x18Tuple")
-        self.assertIn("info.horizontal_length == 50", closure32)
 
     def test_mode3_generic_has_checked_memory_and_work_budget(self) -> None:
         budget = self.function_body("IsGenericBetaMode3BudgetAdmitted")
