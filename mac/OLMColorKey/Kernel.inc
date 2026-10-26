@@ -369,13 +369,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const bool parameter_owner_lane = info.edge_blur_direction >= kPublicBlurDirectionBias;
 		const A_long edge_blur_direction = parameter_owner_lane
 		    ? info.edge_blur_direction - kPublicBlurDirectionBias : info.edge_blur_direction;
-		const bool public_owner_lane = parameter_owner_lane &&
-		    ((edge_blur_direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
-		     (edge_blur_direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
-		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
-		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
-		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
-		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0));
+		// Retain direction 0/4 captures: disabling them changed a Smart oracle result (F01).
 		const bool public_owner_geometry_transfer_lane = parameter_owner_lane &&
 		    ((edge_blur_direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
@@ -383,46 +377,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0));
 		const bool public_owner_zero_four_lane = public_owner_geometry_transfer_lane;
 		const bool bounded_public_owner_lane =
-		    public_owner_lane || public_owner_geometry_transfer_lane;
-		const bool use_pf32_positive_thin_outside_caller =
-            !IsRecoveredPublicBlur(info) && OLMCKPixelTraits<PixelT>::is_32bpc() &&
-		    info.edge_thin_amount > 0 &&
-		    edge_blur_direction == 3;
-		if (use_pf32_positive_thin_outside_caller) {
-			std::vector<float> dist =
-			    EdgeBlurDistanceTo(matched, w, h, info.edge_blur_distance_type, dx, dy);
-			for (A_long y = 0; y < h; ++y) {
-				for (A_long x = 0; x < w; ++x) {
-					size_t idx = (size_t)y * (size_t)w + (size_t)x;
-					bool keep = keep_mask[idx] != 0;
-					float weight = 0.0f;
-					if (keep &&
-					    !EdgeBlurPf32Case9CapturedWeight(
-					        dist[idx], (float)info.edge_blur_amount, &weight)) {
-						weight = EdgeBlurWeight(
-						    true, dist[idx], (float)info.edge_blur_amount, 1);
-					}
-					PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
-					OLMCKPixelTraits<PixelT>::scale_alpha_only(output_pixel, weight);
-					WritePixel(output, x, y, output_pixel);
-				}
-			}
-			return PF_Err_NONE;
-		}
+		    public_owner_geometry_transfer_lane;
+
 		// The Windows worker builds the boundary on the matched side before
 		// FUN_1800066F0 propagates distance.  Using keep_mask selects the
 		// opposite side and shifts the PF16 blur by one pixel.
 		std::vector<u_char> boundary = Boundary8(distance_mask(), w, h);
-		const bool use_pf32_amount2_native_plane =
-            !IsRecoveredPublicBlur(info) && OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
-		    edge_blur_direction >= 1 && edge_blur_direction <= 3;
 		const bool use_pf32_internal_amount4_native_plane =
 		    !bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc() &&
 		    info.edge_blur_amount == 4.0 &&
 		    (edge_blur_direction == 0 || edge_blur_direction == 4) &&
 		    info.edge_blur_distance_type >= 1 && info.edge_blur_distance_type <= 3;
 		std::vector<float> dist =
-		    (use_pf32_amount2_native_plane || use_pf32_internal_amount4_native_plane) &&
+		    use_pf32_internal_amount4_native_plane &&
 		            info.edge_blur_distance_type == 3
 		        ? EuclideanSquaredDistanceTo(boundary, w, h, dx, dy)
             : (w == 1 && IsRecoveredPublicBlur(info) && info.edge_blur_distance_type == 1 &&
@@ -440,16 +407,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				bool keep = keep_mask[idx] != 0;
 				const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
 				PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
-				if (use_pf32_amount2_native_plane) {
-					float plane = 0.0f;
-					if (EdgeBlurPf32Amount2Plane(
-					        keep, dist[idx], edge_blur_direction,
-					        info.edge_blur_distance_type, &plane)) {
-						output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
-						WritePixel(output, x, y, output_pixel);
-						continue;
-					}
-				}
+
 				if (use_pf32_internal_amount4_native_plane) {
 					float plane = 0.0f;
 					if (EdgeBlurPf32InternalAmount4Plane(
@@ -502,137 +460,78 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					WritePixel(output, x, y, output_pixel);
 					continue;
 				}
-				if (bounded_public_owner_lane && edge_blur_direction == 1) {
-					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
-					if (keep) weight = 1.0f;
-					else if (native_dist >= (float)info.edge_blur_amount) weight = 0.0f;
-					else weight = (std::sin((kPi * 0.5f) -
-					                       native_dist * (kPi / (float)info.edge_blur_amount)) +
-					               1.0f) * 0.5f;
-				} else if (bounded_public_owner_lane && edge_blur_direction == 2) {
-					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
-					if (native_dist == 0.0f) weight = 0.5f;
-					else if (native_dist >= (float)info.edge_blur_amount)
-						weight = keep ? 1.0f : 0.0f;
-					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
-						weight = keep ? kPublicAroundWeight[0] : kPublicAroundWeight[1];
-					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
-						weight = keep ? kPublicAroundWeight[2] : kPublicAroundWeight[3];
-					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
-						weight = keep ? kPublicAroundWeight[4] : kPublicAroundWeight[5];
-					else {
-						float phase = native_dist *
-						    ((kPi * 0.5f) / (float)info.edge_blur_amount);
-						if (!keep) phase = -phase;
-						weight = (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
-					}
-				} else if (bounded_public_owner_lane && edge_blur_direction == 3) {
-					if (!keep) weight = 0.0f;
-					else if (native_dist >= (float)info.edge_blur_amount) weight = 1.0f;
-					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
-						weight = kPublicAroundWeight[3];
-					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
-						weight = kPublicInsideHalf[0];
-					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
-						weight = kPublicAroundWeight[2];
-				} else if (public_owner_zero_four_lane &&
-				           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
-					float curve_dist = native_dist;
-					if (!keep) weight = 0.0f;
-					else if (curve_dist >= (float)info.edge_blur_amount) weight = 1.0f;
-					else if (info.edge_blur_amount == 4.0 && curve_dist == 1.0f)
-						weight = kPublicAroundWeight[3];
-					else if (info.edge_blur_amount == 4.0 && curve_dist == 2.0f)
-						weight = kPublicInsideHalf[0];
-					else if (info.edge_blur_amount == 4.0 && curve_dist == 3.0f)
-						weight = kPublicAroundWeight[2];
-					else {
-						// FUN_1800053a0 multiplies distance by a FLOAT32 pi/amount
-						// ratio, promotes that product to double for sin(), casts the
-						// post-add result back to float, then performs the final 0.5f
-						// multiply.  Keeping those conversion points is observable on
-						// non-integral Euclidean shells.
-						const float ratio = kNativePi /
-						    (float)info.edge_blur_amount;
-						const double phase = (double)(curve_dist * ratio) -
-						    kNativeHalfPiDouble;
-						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
-					}
-				}
-				// The native PF32 temporary direction plane stores the predecessor of
-				// 0.5, but its final alpha callback rounds this shell to exact 0.5.
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 3 &&
-				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
-					weight = 0.5f;
-				}
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 4 &&
-				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
-					weight = 0.5f;
-				}
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 0 &&
-				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
-					weight = 0.5f;
-				}
-				if (!keep && weight != 0.0f &&
-				    edge_blur_direction != 3 &&
-				    !(edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
-				    !(edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
-					OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
-				}
-				if (bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
-					// The exported float owner stores a direction plane and applies it
-					// as source - source * plane; preserving this order avoids the
-					// cross-architecture one-ULP seam from source * weight.
-					float plane = 1.0f - weight;
-					if (edge_blur_direction == 2 && info.edge_blur_amount == 4.0) {
-						if (native_dist == 0.0f) plane = 0.5f;
-						else if (native_dist >= 4.0f) plane = keep ? 0.0f : 1.0f;
-						else if (keep && native_dist == 1.0f) plane = kPublicAroundWeight[1];
-						else if (keep && native_dist == 2.0f) plane = kPublicAroundWeight[3];
-						else if (keep && native_dist == 3.0f) plane = kPublicAroundPlane[0];
-						else if (!keep && native_dist == 1.0f) plane = kPublicAroundPlane[1];
-						else if (!keep && native_dist == 2.0f) plane = kPublicAroundPlane[2];
-						else if (!keep && native_dist == 3.0f) plane = kPublicAroundPlane[3];
-					} else if (edge_blur_direction == 3 &&
-					           info.edge_blur_amount == 4.0) {
-						if (!keep) plane = 1.0f;
-						else if (native_dist >= 4.0f) plane = 0.0f;
-						else if (native_dist == 1.0f) plane = kPublicOutsidePlane[0];
-						else if (native_dist == 2.0f) plane = kCapturedHalfWeight[0];
-						else if (native_dist == 3.0f) plane = kPublicOutsidePlane[1];
-					} else if (public_owner_zero_four_lane &&
+				if (edge_blur_direction == 0 || edge_blur_direction == 4) {
+					if (public_owner_zero_four_lane &&
 					           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
-						if (!keep) {
-							plane = 1.0f;
-						} else if (native_dist >= (float)info.edge_blur_amount) {
-							plane = 0.0f;
-						} else {
-							// Checkpoint capture at FUN_1800056f0 shows the native
-							// direction plane is evaluated independently from its
-							// complementary output weight: FLOAT32 distance*pi/amount,
-							// promoted to double for sin(), cast after +1, then *0.5f.
+						float curve_dist = native_dist;
+						if (!keep) weight = 0.0f;
+						else if (curve_dist >= (float)info.edge_blur_amount) weight = 1.0f;
+						else if (info.edge_blur_amount == 4.0 && curve_dist == 1.0f)
+							weight = kPublicAroundWeight[3];
+						else if (info.edge_blur_amount == 4.0 && curve_dist == 2.0f)
+							weight = kPublicInsideHalf[0];
+						else if (info.edge_blur_amount == 4.0 && curve_dist == 3.0f)
+							weight = kPublicAroundWeight[2];
+						else {
+							// FUN_1800053a0 multiplies distance by a FLOAT32 pi/amount
+							// ratio, promotes that product to double for sin(), casts the
+							// post-add result back to float, then performs the final 0.5f
+							// multiply.  Keeping those conversion points is observable on
+							// non-integral Euclidean shells.
 							const float ratio = kNativePi /
 							    (float)info.edge_blur_amount;
-							const double phase = kNativeHalfPiDouble -
-							    (double)(native_dist * ratio);
-							plane = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
+							const double phase = (double)(curve_dist * ratio) -
+							    kNativeHalfPiDouble;
+							weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
 					}
-					output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
+					if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 4 &&
+					    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
+						weight = 0.5f;
+					}
+					if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 0 &&
+					    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
+						weight = 0.5f;
+					}
+					if (!keep && weight != 0.0f &&
+					    edge_blur_direction != 3 &&
+					    !(edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
+					    !(edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
+						OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
+					}
+					if (bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
+						// The exported float owner stores a direction plane and applies it
+						// as source - source * plane; preserving this order avoids the
+						// cross-architecture one-ULP seam from source * weight.
+						float plane = 1.0f - weight;
+						if (public_owner_zero_four_lane &&
+						           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
+							if (!keep) {
+								plane = 1.0f;
+							} else if (native_dist >= (float)info.edge_blur_amount) {
+								plane = 0.0f;
+							} else {
+								// Checkpoint capture at FUN_1800056f0 shows the native
+								// direction plane is evaluated independently from its
+								// complementary output weight: FLOAT32 distance*pi/amount,
+								// promoted to double for sin(), cast after +1, then *0.5f.
+								const float ratio = kNativePi /
+								    (float)info.edge_blur_amount;
+								const double phase = kNativeHalfPiDouble -
+								    (double)(native_dist * ratio);
+								plane = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
+							}
+						}
+						output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
 
-					WritePixel(output, x, y, output_pixel);
-					continue;
-				}
-				if (edge_blur_direction == 1 &&
-				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0 ||
-				     info.edge_blur_amount == 4.0) &&
-				    dist[idx] == 0.0f) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
-				} else if (info.color_keep && edge_blur_direction == 2 &&
-				           info.edge_blur_amount == 4.0) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
-				} else if (bounded_public_owner_lane) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_public(output_pixel, weight);
+						WritePixel(output, x, y, output_pixel);
+						continue;
+					}
+					if (bounded_public_owner_lane) {
+						OLMCKPixelTraits<PixelT>::scale_alpha_public(output_pixel, weight);
+					} else {
+						OLMCKPixelTraits<PixelT>::scale_alpha_only(output_pixel, weight);
+					}
 				} else {
 					OLMCKPixelTraits<PixelT>::scale_alpha_only(output_pixel, weight);
 				}
