@@ -5,6 +5,7 @@
 #endif
 #include "../../core/x86_float.h"
 #include "../../core/olm_parallel.h"
+#include "../../core/olm_world_safety.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>

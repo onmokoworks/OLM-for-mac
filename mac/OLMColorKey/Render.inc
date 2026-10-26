@@ -18,31 +18,25 @@ static bool CheckedPayloadBytes(const PF_EffectWorld *world, size_t *bytes, size
 {
 	if (!world || !bytes || !pixel_bytes || world->width <= 0 ||
         world->rowbytes <= 0 || world->height <= 0) return false;
-    const size_t rowbytes = (size_t)world->rowbytes;
-    const size_t height = (size_t)world->height;
-    if ((size_t)world->width > std::numeric_limits<size_t>::max() / pixel_bytes)
-        return false;
-    const size_t active = (size_t)world->width * pixel_bytes;
-    if (active > rowbytes || height - 1 >
-        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
-    // Cropped worlds retain their parent's stride, but not its final row tail.
-    *bytes = (height - 1) * rowbytes + active;
+    olm::world_safety::Layout layout = {};
+    // This helper checks only the span; payload presence is checked by admission.
+    if (olm::world_safety::validate_layout(olm::world_safety::ConstWorld{world, (size_t)world->width,
+            (size_t)world->height, (size_t)world->rowbytes, pixel_bytes}, &layout) !=
+        olm::world_safety::Status::ok) return false;
+    *bytes = layout.addressable_bytes;
     return true;
 }
 
 static bool DisjointPayloads(const PF_EffectWorld *input, const PF_EffectWorld *output, size_t pixel_bytes)
 {
-	size_t input_bytes = 0, output_bytes = 0;
-	if (!input || !output || !input->data || !output->data ||
-	    !CheckedPayloadBytes(input, &input_bytes, pixel_bytes) ||
-	    !CheckedPayloadBytes(output, &output_bytes, pixel_bytes)) return false;
-	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
-	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
-	if (input_begin > std::numeric_limits<uintptr_t>::max() - input_bytes ||
-	    output_begin > std::numeric_limits<uintptr_t>::max() - output_bytes) return false;
-	const uintptr_t input_end = input_begin + input_bytes;
-	const uintptr_t output_end = output_begin + output_bytes;
-	return input_end <= output_begin || output_end <= input_begin;
+    if (!input || !output || input->width <= 0 || input->height <= 0 ||
+        output->width <= 0 || output->height <= 0 ||
+        input->rowbytes <= 0 || output->rowbytes <= 0) return false;
+    return olm::world_safety::require_disjoint(
+        {input->data, (size_t)input->width, (size_t)input->height,
+         (size_t)input->rowbytes, pixel_bytes},
+        {output->data, (size_t)output->width, (size_t)output->height,
+         (size_t)output->rowbytes, pixel_bytes}) == olm::world_safety::Status::ok;
 }
 
 template <typename PixelT>
@@ -56,8 +50,6 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	if (!input || !output || !input->data || !output->data ||
 	    input->width <= 0 || input->height <= 0 ||
 	    output->width <= 0 || output->height <= 0 ||
-	    (size_t)input->width > std::numeric_limits<size_t>::max() / pixel_bytes ||
-	    (size_t)output->width > std::numeric_limits<size_t>::max() / pixel_bytes ||
 	    (size_t)input->height > std::numeric_limits<size_t>::max() /
 	        (size_t)input->width ||
 	    (size_t)input->width * (size_t)input->height >
@@ -66,9 +58,6 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	        (size_t)output->width ||
 	    (size_t)output->width * (size_t)output->height >
 	        std::numeric_limits<size_t>::max() / sizeof(int) ||
-	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
-	    (size_t)input->rowbytes < (size_t)input->width * pixel_bytes ||
-	    (size_t)output->rowbytes < (size_t)output->width * pixel_bytes ||
 	    !DisjointPayloads(input, output, pixel_bytes)) return false;
 	if (pixel_local) {
 		const int64_t input_left = WorldOriginX(input);

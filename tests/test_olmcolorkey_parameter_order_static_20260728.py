@@ -69,7 +69,7 @@ def enum_constants(header: str) -> dict[str, int]:
 
 def params_setup_body(source: str) -> str:
     match = re.search(
-        r"ParamsSetup\(.*?\)\s*\{(?P<body>.*?)\n\}\n\nstatic A_long ColorParamIndex",
+        r"ParamsSetup\(.*?\)\s*\{(?P<body>.*?)\n\}",
         source,
         re.DOTALL,
     )
