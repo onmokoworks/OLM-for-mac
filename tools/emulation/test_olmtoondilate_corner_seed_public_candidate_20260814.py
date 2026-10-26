@@ -53,7 +53,8 @@ def replace_once(text: str, old: str, new: str) -> str:
 
 
 def candidate_source(text: str) -> str:
-    if "ToonPublicFamily_Corner" in text:
+    # The later public-beta owner already accepts the corner fixture.
+    if "ToonPublicFamily_Corner" in text or "ValidateToonBetaAdmission" in text:
         return text
     text = replace_once(text, "\tToonPublicFamily_High\n};", "\tToonPublicFamily_High,\n\tToonPublicFamily_Corner\n};")
     marker = "static bool ToonDoubleBitsEqual(PF_FpLong value, PF_FpLong expected)"
