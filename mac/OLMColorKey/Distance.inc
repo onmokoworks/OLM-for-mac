@@ -1,14 +1,17 @@
+// AEX city-block/chessboard scan cap and first nonseed (0x5c90 / 0x66f0).
+static constexpr float kDistanceCap = 4000.0f, kFirstNonseed = 3999.0f;
+// Port EDT sentinels; finite stand-ins for absent sites and parabola boundaries.
+static constexpr float kSquaredDistanceInfinity = 1.0e9f, kEnvelopeInfinity = 1.0e20f;
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 static std::vector<float> L1DistanceTo(const std::vector<u_char> &mask, A_long w, A_long h, float dx = 1.0f, float dy = 1.0f)
 {
 	// Native city-block/chessboard scans cap the plane at 4000 and
 	// initialize the first nonseed to cap - 1, even when there are no seeds.
-	const float inf = 4000.0f;
-	std::vector<float> d((size_t)w * (size_t)h, inf);
+	std::vector<float> d((size_t)w * (size_t)h, kDistanceCap);
 	for (A_long i = 0; i < w * h; ++i) {
 		if (mask[i]) d[i] = 0.0f;
 	}
-	if (!mask[0]) d[0] = 3999.0f;
+	if (!mask[0]) d[0] = kFirstNonseed;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const A_long i = y * w + x;
@@ -24,11 +27,11 @@ static std::vector<float> L1DistanceTo(const std::vector<u_char> &mask, A_long w
 	// when MINSS reads it. XMM6 carries the candidate, not the stored minimum.
 	for (A_long y = h - 2; y >= 0; --y) {
 		A_long i = y * w + w - 1;
-		float right = std::min(inf, d[i + w] + dy);
+		float right = std::min(kDistanceCap, d[i + w] + dy);
 		d[i] = std::min(d[i], right);
 		for (A_long x = w - 2; x >= 0; --x) {
 			i = y * w + x;
-			right = std::min(inf, std::min(std::min(d[i + w], d[i + 1]) + dy, right + dx));
+			right = std::min(kDistanceCap, std::min(std::min(d[i + w], d[i + 1]) + dy, right + dx));
 			d[i] = std::min(d[i], right);
 		}
 	}
@@ -44,12 +47,12 @@ static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, 
 		// plane; the ordinary eight-neighbor transform gives different results.
 		std::vector<float> d = initial && initial->size() == (size_t)h
             ? *initial : std::vector<float>((size_t)h, 0.0f);
-		d[0] = mask[0] ? 0.0f : 3999.0f;
+		d[0] = mask[0] ? 0.0f : kFirstNonseed;
 		auto read = [&](A_long y) { return y >= 0 && y < h ? d[(size_t)y] : 0.0f; };
 		for (A_long y = 1; y < h; ++y) {
-			float left = mask[(size_t)y] ? 0.0f : std::min(4000.0f, std::min(read(y - 1), read(y)) + dy);
+			float left = mask[(size_t)y] ? 0.0f : std::min(kDistanceCap, std::min(read(y - 1), read(y)) + dy);
 			d[(size_t)y] = mask[(size_t)y] ? 0.0f :
-			    std::min(4000.0f, std::min(left + dx, std::min(read(y - 1), read(y - 2)) + dy));
+			    std::min(kDistanceCap, std::min(left + dx, std::min(read(y - 1), read(y - 2)) + dy));
 		}
 		for (A_long y = h - 2; y >= 0; --y) {
 			float right = std::min(read(y + 1), read(y)) + dy;
@@ -62,12 +65,11 @@ static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, 
 
 	// Native city-block/chessboard scans cap the plane at 4000 and
 	// initialize the first nonseed to cap - 1, even when there are no seeds.
-	const float inf = 4000.0f;
-	std::vector<float> d((size_t)w * (size_t)h, inf);
+	std::vector<float> d((size_t)w * (size_t)h, kDistanceCap);
 	for (A_long i = 0; i < w * h; ++i) {
 		if (mask[i]) d[i] = 0.0f;
 	}
-	if (!mask[0]) d[0] = 3999.0f;
+	if (!mask[0]) d[0] = kFirstNonseed;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			A_long i = y * w + x;
@@ -86,13 +88,13 @@ static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, 
 	// Carrying the stored minimum changes asymmetric steps.
 	for (A_long y = h - 2; y >= 0; --y) {
 		A_long i = y * w + w - 1;
-		float right = std::min(inf, std::min(d[i + w], d[i + w - 1]) + dy);
+		float right = std::min(kDistanceCap, std::min(d[i + w], d[i + w - 1]) + dy);
 		d[i] = std::min(d[i], right);
 		for (A_long x = w - 2; x >= 0; --x) {
 			i = y * w + x;
 			float below = std::min(d[i + w], d[i + w + 1]);
 			if (x > 0) below = std::min(below, d[i + w - 1]);
-			right = std::min(inf, std::min(std::min(below, d[i + 1]) + dy, right + dx));
+			right = std::min(kDistanceCap, std::min(std::min(below, d[i + 1]) + dy, right + dx));
 			d[i] = std::min(d[i], right);
 		}
 	}
@@ -106,58 +108,56 @@ static inline float EdtSquare(float x)
 
 static std::vector<float> Edt1D(const std::vector<float> &f, A_long n, float step = 1.0f)
 {
-	const float inf = 1.0e9f;
 	std::vector<A_long> sites;
 	sites.reserve((size_t)n);
 	for (A_long i = 0; i < n; ++i) {
-		if (f[(size_t)i] < inf * 0.5f) sites.push_back(i);
+		if (f[(size_t)i] < kSquaredDistanceInfinity * 0.5f) sites.push_back(i);
 	}
-	std::vector<float> d((size_t)n, inf);
+	std::vector<float> d((size_t)n, kSquaredDistanceInfinity);
 	if (sites.empty()) return d;
 
-	std::vector<A_long> v(sites.size());
-	std::vector<float> z(sites.size() + 1);
-	A_long k = 0;
-	v[0] = sites[0];
-	z[0] = -1.0e20f;
-	z[1] = 1.0e20f;
+	std::vector<A_long> envelope_sites(sites.size());
+	std::vector<float> breakpoints(sites.size() + 1);
+	A_long envelope_index = 0;
+	envelope_sites[0] = sites[0];
+	breakpoints[0] = -kEnvelopeInfinity;
+	breakpoints[1] = kEnvelopeInfinity;
 	for (size_t site_index = 1; site_index < sites.size(); ++site_index) {
-		A_long q = sites[site_index];
-		float s = 0.0f;
+		A_long query = sites[site_index];
+		float intersection = 0.0f;
 		while (true) {
-			A_long vk = v[(size_t)k];
-			s = ((f[(size_t)q] + (EdtSquare((float)q) * step * step)) -
+			A_long vk = envelope_sites[(size_t)envelope_index];
+			intersection = ((f[(size_t)query] + (EdtSquare((float)query) * step * step)) -
 			     (f[(size_t)vk] + (EdtSquare((float)vk) * step * step))) /
-			    (2.0f * (float)(q - vk) * step) * (1.0f / step);
-			if (s > z[(size_t)k]) break;
-			if (k == 0) break;
-			--k;
+			    (2.0f * (float)(query - vk) * step) * (1.0f / step);
+			if (intersection > breakpoints[(size_t)envelope_index]) break;
+			if (envelope_index == 0) break;
+			--envelope_index;
 		}
-		if (s <= z[(size_t)k]) {
-			k = 0;
+		if (intersection <= breakpoints[(size_t)envelope_index]) {
+			envelope_index = 0;
 		} else {
-			++k;
+			++envelope_index;
 		}
-		v[(size_t)k] = q;
-		z[(size_t)k] = s;
-		z[(size_t)k + 1] = 1.0e20f;
+		envelope_sites[(size_t)envelope_index] = query;
+		breakpoints[(size_t)envelope_index] = intersection;
+		breakpoints[(size_t)envelope_index + 1] = kEnvelopeInfinity;
 	}
-	k = 0;
-	for (A_long q = 0; q < n; ++q) {
-		while (z[(size_t)k + 1] < (float)q) ++k;
-		A_long vk = v[(size_t)k];
-		d[(size_t)q] = (EdtSquare((float)(q - vk)) * step * step) + f[(size_t)vk];
+	envelope_index = 0;
+	for (A_long query = 0; query < n; ++query) {
+		while (breakpoints[(size_t)envelope_index + 1] < (float)query) ++envelope_index;
+		A_long vk = envelope_sites[(size_t)envelope_index];
+		d[(size_t)query] = (EdtSquare((float)(query - vk)) * step * step) + f[(size_t)vk];
 	}
 	return d;
 }
 
 static std::vector<float> EuclideanSquaredDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h, float dx = 1.0f, float dy = 1.0f)
 {
-	const float inf = 1.0e9f;
 	std::vector<float> tmp((size_t)w * (size_t)h);
 	std::vector<float> f((size_t)std::max(w, h));
 	for (A_long x = 0; x < w; ++x) {
-		for (A_long y = 0; y < h; ++y) f[(size_t)y] = mask[(size_t)y * (size_t)w + (size_t)x] ? 0.0f : inf;
+		for (A_long y = 0; y < h; ++y) f[(size_t)y] = mask[(size_t)y * (size_t)w + (size_t)x] ? 0.0f : kSquaredDistanceInfinity;
 		std::vector<float> col = Edt1D(f, h, dy);
 		for (A_long y = 0; y < h; ++y) tmp[(size_t)y * (size_t)w + (size_t)x] = col[(size_t)y];
 	}

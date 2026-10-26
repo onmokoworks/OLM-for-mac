@@ -25,8 +25,6 @@ static PF_Err ColorKeyRefusal(const char *function, const char *tag, int line)
 
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
 #include <cstring>
 #include <cstdint>
 #include <exception>
@@ -35,15 +33,8 @@ static PF_Err ColorKeyRefusal(const char *function, const char *tag, int line)
 #include <vector>
 
 #if !defined(AE_OS_WIN)
-#include <cerrno>
-#include <cstdint>
 #include <dlfcn.h>
-#include <fcntl.h>
 #include <limits.h>
-#include <unistd.h>
-#endif
-
-#if !defined(AE_OS_WIN)
 static PF_Err
 CapturePixelFloatEntryIfRequested(const PF_EffectWorld *input_world, short bitdepth)
 {

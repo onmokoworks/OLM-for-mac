@@ -1,3 +1,9 @@
+static constexpr size_t kParallelPixelThreshold = 65536, kParallelParts = 8; // Retained port scheduling policy.
+static constexpr double kYuvChromaToUnit = 1.146788990825688; // U normalization; AEX 0x4850.
+static constexpr double kLab94DistanceScale = 352.978; // Lab94 scalar limit; AEX 0x4510.
+static constexpr float kNativePi = 3.1415927410125732f; // FLOAT32 pi; AEX 0x53a0/0x56f0 phase ratio.
+static constexpr float kNativeHalfPi = 1.5707963705062866f; // FLOAT32 pi/2; AEX 0x5550 phase ratio.
+static constexpr double kNativeHalfPiDouble = 1.57079632679485; // DOUBLE pi/2; AEX 0x53a0/0x56f0 phase offset.
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info,
@@ -53,7 +59,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 #ifdef OLM_REFERENCE_BUILD
 	const size_t parts = 1;
 #else
-	const size_t parts = pixel_count >= 65536 ? 8 : 1;
+	const size_t parts = pixel_count >= kParallelPixelThreshold ? kParallelParts : 1;
 #endif
 	// Each task owns its lazy key cache and disjoint matte rows. Keep all
 	// per-pixel key/comparator operations in their original order.
@@ -126,9 +132,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 #else
                     LabKeyFast(key, lab_keys[i], lab_key_ready[i]);
 #endif
-					comp_scale[0] = 151.30099487304688f;
-					comp_scale[1] = 264.36700439453125f;
-					comp_scale[2] = 295.572998046875f;
+					comp_scale[0] = kLabThresholdScale[0];
+					comp_scale[1] = kLabThresholdScale[1];
+					comp_scale[2] = kLabThresholdScale[2];
 				} else if (info.color_space == 2) {
 					RGBToPluginHSV(key, key);
 				} else if (info.color_space == 5) {
@@ -151,7 +157,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						t2 = info.per_component ? info.thresholds_b[i] : info.thresholds[i];
 					}
 					auto un = [](float u) {
-						return (float)((double)u * 1.146788990825688 + 0.5);
+						return (float)((double)u * kYuvChromaToUnit + 0.5);
 					};
 					// Native 0x4850/0x4910 materialize FLOAT32 limits; COMISS + JA accepts unordered.
 					const float limit0 = (float)t0 + key_epsilon;
@@ -196,7 +202,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 						// FUN_180004510: ADDSS precedes promotion to double for the scale.
 						float limit = key_epsilon + (float)threshold;
-						limit = (float)((double)limit * 352.978);
+						limit = (float)((double)limit * kLab94DistanceScale);
 						hit = Lab94Distance(key, cmp) <= limit;
 					}
 				} else if (info.color_space == 2) {
@@ -360,9 +366,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		}
 	}
 	if (info.edge_blur_amount != 0.0) {
-		const bool parameter_owner_lane = info.edge_blur_direction >= 100;
+		const bool parameter_owner_lane = info.edge_blur_direction >= kPublicBlurDirectionBias;
 		const A_long edge_blur_direction = parameter_owner_lane
-		    ? info.edge_blur_direction - 100 : info.edge_blur_direction;
+		    ? info.edge_blur_direction - kPublicBlurDirectionBias : info.edge_blur_direction;
 		const bool public_owner_lane = parameter_owner_lane &&
 		    ((edge_blur_direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
@@ -470,13 +476,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					weight = keep ? 1.0f : 0.0f;
 					if (edge_blur_direction == 1) {
 						if (keep && native_dist < amount) {
-							const float ratio = 3.1415927410125732f / amount;
-							const double phase = (double)NativeBlurPhaseProduct(native_dist, ratio) - 1.57079632679485;
+							const float ratio = kNativePi / amount;
+							const double phase = (double)NativeBlurPhaseProduct(native_dist, ratio) - kNativeHalfPiDouble;
 							weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
 					} else if (!keep && native_dist < amount) {
-						const float ratio = 3.1415927410125732f / amount;
-						const double phase = 1.57079632679485 - (double)NativeBlurPhaseProduct(native_dist, ratio);
+						const float ratio = kNativePi / amount;
+						const double phase = kNativeHalfPiDouble - (double)NativeBlurPhaseProduct(native_dist, ratio);
 						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
@@ -490,7 +496,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (native_dist == 0.0f) weight = 0.5f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = keep ? 1.0f : 0.0f;
 					else {
-						float phase = native_dist * (1.5707963705062866f / (float)info.edge_blur_amount);
+						float phase = native_dist * (kNativeHalfPi / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
 						float sine = ucrt_sinf(phase, UCRT_FMA);
 						weight = (sine + 1.0f) * 0.5f;
@@ -501,26 +507,26 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					continue;
 				}
 				if (bounded_public_owner_lane && edge_blur_direction == 1) {
-					const float pi = 3.14159265358979323846f;
+					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
 					if (keep) weight = 1.0f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = 0.0f;
-					else weight = (std::sin((pi * 0.5f) -
-					                       native_dist * (pi / (float)info.edge_blur_amount)) +
+					else weight = (std::sin((kPi * 0.5f) -
+					                       native_dist * (kPi / (float)info.edge_blur_amount)) +
 					               1.0f) * 0.5f;
 				} else if (bounded_public_owner_lane && edge_blur_direction == 2) {
-					const float pi = 3.14159265358979323846f;
+					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
 					if (native_dist == 0.0f) weight = 0.5f;
 					else if (native_dist >= (float)info.edge_blur_amount)
 						weight = keep ? 1.0f : 0.0f;
 					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
-						weight = keep ? 0.6913416981697083f : 0.30865827202796936f;
+						weight = keep ? kPublicAroundWeight[0] : kPublicAroundWeight[1];
 					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
-						weight = keep ? 0.8535534143447876f : 0.1464466154575348f;
+						weight = keep ? kPublicAroundWeight[2] : kPublicAroundWeight[3];
 					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
-						weight = keep ? 0.9619397521018982f : 0.03806023299694061f;
+						weight = keep ? kPublicAroundWeight[4] : kPublicAroundWeight[5];
 					else {
 						float phase = native_dist *
-						    ((pi * 0.5f) / (float)info.edge_blur_amount);
+						    ((kPi * 0.5f) / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
 						weight = (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
 					}
@@ -528,32 +534,32 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (!keep) weight = 0.0f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = 1.0f;
 					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
-						weight = 0.1464466154575348f;
+						weight = kPublicAroundWeight[3];
 					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
-						weight = 0.5000000596046448f;
+						weight = kPublicInsideHalf[0];
 					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
-						weight = 0.8535534143447876f;
+						weight = kPublicAroundWeight[2];
 				} else if (public_owner_zero_four_lane &&
 				           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
 					float curve_dist = native_dist;
 					if (!keep) weight = 0.0f;
 					else if (curve_dist >= (float)info.edge_blur_amount) weight = 1.0f;
 					else if (info.edge_blur_amount == 4.0 && curve_dist == 1.0f)
-						weight = 0.1464466154575348f;
+						weight = kPublicAroundWeight[3];
 					else if (info.edge_blur_amount == 4.0 && curve_dist == 2.0f)
-						weight = 0.5000000596046448f;
+						weight = kPublicInsideHalf[0];
 					else if (info.edge_blur_amount == 4.0 && curve_dist == 3.0f)
-						weight = 0.8535534143447876f;
+						weight = kPublicAroundWeight[2];
 					else {
 						// FUN_1800053a0 multiplies distance by a FLOAT32 pi/amount
 						// ratio, promotes that product to double for sin(), casts the
 						// post-add result back to float, then performs the final 0.5f
 						// multiply.  Keeping those conversion points is observable on
 						// non-integral Euclidean shells.
-						const float ratio = 3.1415927410125732f /
+						const float ratio = kNativePi /
 						    (float)info.edge_blur_amount;
 						const double phase = (double)(curve_dist * ratio) -
-						    1.57079632679485;
+						    kNativeHalfPiDouble;
 						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 				}
@@ -585,19 +591,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (edge_blur_direction == 2 && info.edge_blur_amount == 4.0) {
 						if (native_dist == 0.0f) plane = 0.5f;
 						else if (native_dist >= 4.0f) plane = keep ? 0.0f : 1.0f;
-						else if (keep && native_dist == 1.0f) plane = 0.30865827202796936f;
-						else if (keep && native_dist == 2.0f) plane = 0.1464466154575348f;
-						else if (keep && native_dist == 3.0f) plane = 0.03806024789810181f;
-						else if (!keep && native_dist == 1.0f) plane = 0.691341757774353f;
-						else if (!keep && native_dist == 2.0f) plane = 0.8535532355308533f;
-						else if (!keep && native_dist == 3.0f) plane = 0.9619395732879639f;
+						else if (keep && native_dist == 1.0f) plane = kPublicAroundWeight[1];
+						else if (keep && native_dist == 2.0f) plane = kPublicAroundWeight[3];
+						else if (keep && native_dist == 3.0f) plane = kPublicAroundPlane[0];
+						else if (!keep && native_dist == 1.0f) plane = kPublicAroundPlane[1];
+						else if (!keep && native_dist == 2.0f) plane = kPublicAroundPlane[2];
+						else if (!keep && native_dist == 3.0f) plane = kPublicAroundPlane[3];
 					} else if (edge_blur_direction == 3 &&
 					           info.edge_blur_amount == 4.0) {
 						if (!keep) plane = 1.0f;
 						else if (native_dist >= 4.0f) plane = 0.0f;
-						else if (native_dist == 1.0f) plane = 0.8535533547401428f;
-						else if (native_dist == 2.0f) plane = 0.4999999701976776f;
-						else if (native_dist == 3.0f) plane = 0.1464466005563736f;
+						else if (native_dist == 1.0f) plane = kPublicOutsidePlane[0];
+						else if (native_dist == 2.0f) plane = kCapturedHalfWeight[0];
+						else if (native_dist == 3.0f) plane = kPublicOutsidePlane[1];
 					} else if (public_owner_zero_four_lane &&
 					           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
 						if (!keep) {
@@ -609,9 +615,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 							// direction plane is evaluated independently from its
 							// complementary output weight: FLOAT32 distance*pi/amount,
 							// promoted to double for sin(), cast after +1, then *0.5f.
-							const float ratio = 3.1415927410125732f /
+							const float ratio = kNativePi /
 							    (float)info.edge_blur_amount;
-							const double phase = 1.57079632679485 -
+							const double phase = kNativeHalfPiDouble -
 							    (double)(native_dist * ratio);
 							plane = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}

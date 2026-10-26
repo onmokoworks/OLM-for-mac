@@ -1,3 +1,4 @@
+static constexpr A_long kPublicBlurDirectionBias = 100; // Port tag distinguishing parameter-owned blur directions from internal worker values.
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 static A_long ColorParamIndex(int i, int offset)
 {
@@ -85,7 +86,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	// Values materialized by the public AE parameter surface use the native
 	// owner lane.  Keep that provenance distinct from declared-record worker
 	// fixtures, whose captured integer distance planes use different units.
-	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + 100;
+	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + kPublicBlurDirectionBias;
 	info->number_of_colors = params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value;
 	info->enable_replace = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value;
 	if (info->number_of_colors < 0 || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
@@ -190,7 +191,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 		get(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_thin_distance_type = p.u.pd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_BLUR_AMOUNT, [&](const PF_ParamDef &p){ info->edge_blur_amount = static_cast<float>(p.u.fs_d.value); return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_blur_distance_type = p.u.pd.value; return PF_Err_NONE; });
-		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + 100; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + kPublicBlurDirectionBias; return PF_Err_NONE; });
 		get(OLMCOLORKEY_NUMBER_OF_COLORS, [&](const PF_ParamDef &p){ info->number_of_colors = p.u.sd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_ENABLE_REPLACE, [&](const PF_ParamDef &p){ info->enable_replace = p.u.bd.value; return PF_Err_NONE; });
 		if (!err && (info->number_of_colors < 0 ||
