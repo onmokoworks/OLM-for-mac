@@ -144,7 +144,11 @@ def test_exported_effectmain_nonzero_origin_classic_and_smart() -> None:
     ).replace("for(int y=0;y<3;y++)for(int x=0;x<4;x++)",
               "for(int y=0;y<i->height&&y<o->height;y++)for(int x=0;x<i->width&&x<o->width;x++)")
     source = source.replace("co!=101||ci", "co!=gcount+1||ci")
-    source = source.replace("if(co!=101||cc!=100)phase_bad=1;", "")
+    source = source.replace(
+        "if(co!=101||cc!=100)phase_bad=1;",
+        "if(co!=(fmt_mut?1:fail_checkout?51:gcount+1)||"
+        "cc!=(fmt_mut||fail_checkout?0:fail_color?51:gcount))phase_bad=1;",
+    )
     # Validate padding against the negotiated world, including changed strides.
     begin = source.index("bool pads=true;")
     end = source.index("bool unchanged=", begin)
