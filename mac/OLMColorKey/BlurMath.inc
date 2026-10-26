@@ -1,3 +1,6 @@
+#ifndef OLM_COLORKEY_FIXTURE_PATHS
+#define OLM_COLORKEY_FIXTURE_PATHS 0
+#endif
 static constexpr float kCapturedInsideOutsideAtZero[] = {-0.2853981554508209f, 1.2853981256484985f}; // Captured inside/outside zero-distance weights; retained direction-1 worker witnesses.
 static constexpr float kCapturedAmount4Shells[] = {0.10730093717575073f, 0.8926990628242493f, 0.9564253687858582f}; // Captured amount-4 shells 1/3/sqrt(10); retained direction-3 worker witnesses.
 static constexpr float kCapturedAroundAmount2[] = {0.892699122428894f, 0.10730090737342834f}; // Captured inside/outside shell 1; retained direction-2 amount-2 worker witness.
@@ -18,6 +21,7 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 {
 	constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
 	if (amount <= 0.0f) return inside ? 1.0f : 0.0f;
+	if (OLM_COLORKEY_FIXTURE_PATHS || direction == 0 || direction == 4) {
 	// Independently captured direction-0 amount-2 boundary.  Keep this branch
 	// distinct from directions 3 and 4 even though this bounded witness matches.
 	if (direction == 0 && amount == 2.0f) {
@@ -128,6 +132,7 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		if (dist >= amount) return inside ? 1.0f : 0.0f;
 		const float delta = dist * (kPi / 16.0f);
 		return inside ? 0.5f + delta : 0.5f - delta;
+	}
 	}
 	if (direction == 1) {
 		if (!inside) return 0.0f;
