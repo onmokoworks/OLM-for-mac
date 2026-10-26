@@ -13,6 +13,7 @@ public:
 
 	void reset()
 	{
+		// SHA-256 initial hash words, in algorithm order.
 		state_[0] = 0x6a09e667u; state_[1] = 0xbb67ae85u;
 		state_[2] = 0x3c6ef372u; state_[3] = 0xa54ff53au;
 		state_[4] = 0x510e527fu; state_[5] = 0x9b05688cu;
@@ -68,6 +69,7 @@ private:
 
 	void transform(const uint8_t block[64])
 	{
+		// SHA-256 round constants; indices follow the message schedule.
 		static const uint32_t constants[64] = {
 			0x428a2f98u,0x71374491u,0xb5c0fbcfu,0xe9b5dba5u,0x3956c25bu,0x59f111f1u,0x923f82a4u,0xab1c5ed5u,
 			0xd807aa98u,0x12835b01u,0x243185beu,0x550c7dc3u,0x72be5d74u,0x80deb1feu,0x9bdc06a7u,0xc19bf174u,
