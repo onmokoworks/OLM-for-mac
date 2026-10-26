@@ -89,9 +89,9 @@ def main():
             for src,out in [(STATE/'abi.cpp',STATE/'abi.o'),(HERE/'F47d-native-bridge.cpp',STATE/'bridge.o')]:
                 subprocess.run([_UCRT_CXX,'-arch', 'x86_64' if args.target.startswith('x86') else 'arm64','-std=c++17','-Wno-pragma-pack','-I'+str(ROOT/'Headers'),'-I'+str(ROOT/'Headers/SP'),'-c',str(src),'-o',str(out)],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
             subprocess.run(['ar','rcs',str(STATE/'libf47c.a'),str(STATE/'bridge.o')],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
-        build=crate/'build.rs'
-        body=build.read_text().replace('fn main() {','fn main() {\n    println!("cargo:rustc-link-search=native='+str(STATE)+'");\n    println!("cargo:rustc-link-lib=static=f47c");\n    println!("cargo:rustc-link-lib=c++");',1)
-        build.write_text(body)
+        build_script=crate/'build.rs'
+        body=build_script.read_text().replace('fn main() {','fn main() {\n    println!("cargo:rustc-link-search=native='+str(STATE)+'");\n    println!("cargo:rustc-link-lib=static=f47c");\n    println!("cargo:rustc-link-lib=c++");',1)
+        build_script.write_text(body)
         pressure=subprocess.check_output(['memory_pressure'],text=True)
         (STATE/'memory-pressure.log').write_text(pressure)
         free=int(re.search(r'System-wide memory free percentage: (\d+)%',pressure)[1])
