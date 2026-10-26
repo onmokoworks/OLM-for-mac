@@ -36,6 +36,7 @@ class DistanceGradationPublicSmartOwnerContract(unittest.TestCase):
     def test_boundary_tamper(self):self.rejected(lambda r:r["not_promoted"].remove("unlisted PF32 Smart tuple or geometry"))
     def test_source_has_exact_guards(self):
         s=(ROOT/"mac/OLMDistanceGradation/OLMDistanceGradation.cpp").read_text()
+        s += (ROOT/"mac/OLMDistanceGradation/Admission.inc").read_text()
         self.assertIn("is_admitted_pf32_smart_exported_matrix",s)
         self.assertIn("p.interp_mode == INTERP_POWER",s)
         self.assertIn("input_format != expected_format || output_format != expected_format",s)

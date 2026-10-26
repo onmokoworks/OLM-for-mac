@@ -23,6 +23,8 @@ def load_runner():
 
 def test_pf16_instrumentation_is_env_gated_and_logging_only():
     source = SOURCE.read_text(encoding="utf-8")
+    for include in ("DistanceField.inc", "PixelCompose.inc"):
+        source = source.replace('#include "' + include + '"', SOURCE.with_name(include).read_text(encoding="utf-8"))
     assert 'getenv("OLM_DG_PF16_BOUNDARY_CAPTURE_PATH")' in source
     assert 'getenv("OLM_DG_PF16_BOUNDARY_CAPTURE_CASE_ID")' in source
     assert "memcpy(&word, &value, sizeof(word));" in source

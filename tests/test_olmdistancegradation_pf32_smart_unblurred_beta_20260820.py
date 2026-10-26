@@ -10,6 +10,8 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.source = SOURCE.read_text()
+        for include in ("DistanceFilters.inc", "BilateralFilters.inc", "DistanceField.inc", "PixelCompose.inc", "Admission.inc"):
+            cls.source = cls.source.replace('#include "' + include + '"', SOURCE.with_name(include).read_text())
 
     def test_beta_lane_is_limited_to_unblurred_constant_linear_or_sphere(self):
         body = self.source.split(
