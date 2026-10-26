@@ -28,10 +28,18 @@ def test_finite_support_examples_and_ui_bound() -> None:
 def test_bias_and_smoothness_do_not_change_structural_support() -> None:
     # Both bias choices execute one horizontal and one vertical pass per
     # iteration. Smoothness changes weights, not the sampled coordinate span.
-    source = (ROOT / "mac/OLMBlur/OLMBlur.cpp").read_text()
-    assert "bp->bias_dir == BIAS_DIR_VERTICAL" in source
-    assert "bp->bias_dir == BIAS_DIR_HORIZONTAL" in source
-    assert "sigma_base" in source
+    # The old main-file fallback was unreachable; inspect all shipped workers.
+    for name in ("worker8_legacy", "worker16_legacy", "worker32_legacy",
+                 "worker_orchestration", "worker16_nonlegacy", "worker32_nonlegacy"):
+        source = (ROOT / "core" / ("olmblur_" + name + ".cpp")).read_text()
+        assert "params.bias_direction == 1" in source
+        assert "horizontal" in source and "vertical" in source
+        if name.endswith("_legacy"):
+            assert "params.bias_direction > 2" in source
+            assert "sigma_base" in source
+        else:
+            assert "params.bias_direction == 2" in source
+            assert "materialized_radius" in source
     assert support_radius(17.5, 4, False) == support_radius(17.5, 4, False)
 
 

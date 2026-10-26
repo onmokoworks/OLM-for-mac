@@ -1,6 +1,7 @@
 #pragma once
 
 #include "olm_parallel.h"
+#include "olmblur_constants.h"
 
 namespace olm::blur {
 // Each part owns disjoint destination rows/columns; dispatch_apply_f joins
@@ -8,15 +9,15 @@ namespace olm::blur {
 // Before ec6cc82c the workers visited these six parts sequentially.
 template<class Function>
 void for_parts_reference(const Function& function) {
-    for (std::size_t part = 0; part < 6; ++part) function(part);
+    for (std::size_t part = 0; part < kPassParts; ++part) function(part);
 }
 
 template<class Function>
 void for_parts_fast(std::size_t width, std::size_t height, const Function& function) {
-    if (width >= 256 && height >= 256) {
+    if (width >= kParallelMinDimension && height >= kParallelMinDimension) {
         // Preserve the six existing pass boundaries and each helper's tap order.
         // The shared driver caps concurrency and joins before the next pass.
-        olm::parallel_rows(6, 1, function);
+        olm::parallel_rows(kPassParts, 1, function);
         return;
     }
     for_parts_reference(function);

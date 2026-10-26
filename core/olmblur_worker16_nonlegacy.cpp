@@ -1,3 +1,5 @@
+// AEX 0x180002280. PF16 keeps little-endian word staging, low-word stores, and observation hooks.
+#include "olmblur_constants.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker16_nonlegacy.h"
 
@@ -15,8 +17,8 @@ namespace olm::blur::worker16 {
 namespace {
 
 std::size_t chunk6(std::size_t value, std::size_t part) {
-    const std::size_t base = value / 6;
-    return part == 5 ? value - base * 5 : base;
+    const std::size_t base = value / kPassParts;
+    return part == kLastPassPart ? value - base * kLastPassPart : base;
 }
 
 void horizontal_pass(const std::uint8_t* flags, const float* src, float* dst,
@@ -24,7 +26,7 @@ void horizontal_pass(const std::uint8_t* flags, const float* src, float* dst,
                      std::size_t height, std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(height, part), (height / 6) * part, radius};
+            width, height, chunk6(height, part), (height / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::horizontal(flags, src, dst, weights, pass);
         }
@@ -36,7 +38,7 @@ void vertical_pass(const std::uint8_t* flags, const float* src, float* dst,
                    std::size_t height, std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(width, part), (width / 6) * part, radius};
+            width, height, chunk6(width, part), (width / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::vertical(flags, src, dst, weights, pass);
         }
@@ -49,12 +51,12 @@ std::uint16_t read_word(const std::uint8_t* bytes) {
 }
 
 std::uint16_t store_word(float value) {
-    const float rounded = std::floor(value + 0.5f);
+    const float rounded = std::floor(value + kRoundingHalf);
     // The retained Windows writer executes CVTTSS2SI and stores AX without
     // nominal-range saturation.  Preserve that low-word rule, including the
     // architectural indefinite result for non-representable int32 values.
     const std::int32_t converted =
-        (rounded >= -2147483648.0f && rounded < 2147483648.0f)
+        (rounded >= kInt32LowerBound && rounded < kInt32UpperBound)
             ? static_cast<std::int32_t>(rounded)
             : INT32_MIN;
     return static_cast<std::uint16_t>(static_cast<std::uint32_t>(converted));
@@ -89,10 +91,10 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
 
     float decay = 1.0f;
     if (params.repeat > 1) {
-        decay = ucrt_powf(3.0f / params.blur_amount,
+        decay = ucrt_powf(kSigmaDivisor / params.blur_amount,
                          1.0f / static_cast<float>(params.repeat - 1), UCRT_FMA);
     }
-    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + 2;
+    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + kRadiusPadding;
     std::vector<float> weights(max_radius + 1);
     for (std::size_t iteration = 0; iteration < params.repeat; ++iteration) {
         const double radius_value = static_cast<double>(params.blur_amount) *
@@ -105,7 +107,8 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
         if (radius == 0) {
             break;
         }
-        const float sigma = materialized_radius / 3.0f;
+        const float sigma = materialized_radius / kSigmaDivisor;
+        // Preserve binary32 doubling before multiplication; do not reassociate.
         const float denominator = (sigma + sigma) * sigma;
         for (std::size_t k = 0; k <= radius; ++k) {
             const float exponent =

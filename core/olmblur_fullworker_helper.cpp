@@ -1,3 +1,4 @@
+#include "olmblur_constants.h"
 #include "olmblur_fullworker_helper.h"
 #include "x86_float.h"
 
@@ -11,11 +12,12 @@ struct Accum {
     volatile float blue = 0.0f;
 };
 
-inline void add(Accum& a, const float* pixel, float weight) {
-    a.sum = x86_float::add(a.sum, weight);
-    a.red = x86_float::add(a.red, x86_float::mul(pixel[0], weight));
-    a.green = x86_float::add(a.green, x86_float::mul(pixel[1], weight));
-    a.blue = x86_float::add(a.blue, x86_float::mul(pixel[2], weight));
+// AEX 0x1800014f0/0x180001ea0: preserve tap, operand, and NaN order.
+inline void add(Accum& accumulator, const float* pixel, float weight) {
+    accumulator.sum = x86_float::add(accumulator.sum, weight);
+    accumulator.red = x86_float::add(accumulator.red, x86_float::mul(pixel[0], weight));
+    accumulator.green = x86_float::add(accumulator.green, x86_float::mul(pixel[1], weight));
+    accumulator.blue = x86_float::add(accumulator.blue, x86_float::mul(pixel[2], weight));
 }
 
 inline void copy_rgb(const float* src, float* dst) {
@@ -24,17 +26,17 @@ inline void copy_rgb(const float* src, float* dst) {
     dst[2] = src[2];
 }
 
-inline void finish(Accum& a, bool unchanged, const float* center, float* dst) {
+inline void finish(Accum& accumulator, bool unchanged, const float* center, float* dst) {
     volatile float scale = 1.0f;
-    if (a.sum != 0.0f) {
-        scale = x86_float::div(1.0f, a.sum);
+    if (accumulator.sum != 0.0f) {
+        scale = x86_float::div(1.0f, accumulator.sum);
     }
     if (unchanged) {
         copy_rgb(center, dst);
     } else {
-        dst[0] = x86_float::mul(scale, a.red);
-        dst[1] = x86_float::mul(scale, a.green);
-        dst[2] = x86_float::mul(scale, a.blue);
+        dst[0] = x86_float::mul(scale, accumulator.red);
+        dst[1] = x86_float::mul(scale, accumulator.green);
+        dst[2] = x86_float::mul(scale, accumulator.blue);
     }
 }
 
@@ -42,9 +44,9 @@ inline void finish(Accum& a, bool unchanged, const float* center, float* dst) {
 
 void horizontal(const unsigned char* flags, const float* src, float* dst,
                 const float* weights, const Params& p) {
-    volatile float carry_red = -1.0f;
-    volatile float carry_green = -1.0f;
-    volatile float carry_blue = -1.0f;
+    volatile float carry_red = kLegacyCarrySentinel;
+    volatile float carry_green = kLegacyCarrySentinel;
+    volatile float carry_blue = kLegacyCarrySentinel;
     for (std::size_t row = 0; row < p.rows; ++row) {
         const std::size_t row_base = (p.offset + row) * p.width;
         for (std::size_t x = 0; x < p.columns; ++x) {
@@ -55,7 +57,7 @@ void horizontal(const unsigned char* flags, const float* src, float* dst,
                 copy_rgb(center, out);
                 continue;
             }
-            Accum a;
+            Accum accumulator;
             bool unchanged = true;
             for (std::size_t d = 0; d <= p.radius; ++d) {
                 if (x < d || x - d == 0) {
@@ -67,7 +69,7 @@ void horizontal(const unsigned char* flags, const float* src, float* dst,
                 }
                 const float* pixel = src + sample * 3;
                 const float weight = weights[p.radius - d];
-                add(a, pixel, weight);
+                add(accumulator, pixel, weight);
                 if (pixel[0] != carry_red || pixel[1] != carry_green ||
                     pixel[2] != carry_blue) {
                     unchanged = false;
@@ -86,7 +88,7 @@ void horizontal(const unsigned char* flags, const float* src, float* dst,
                 }
                 const float* pixel = src + sample * 3;
                 const float weight = weights[p.radius + d];
-                add(a, pixel, weight);
+                add(accumulator, pixel, weight);
                 if (pixel[0] != carry_red || pixel[1] != carry_green ||
                     pixel[2] != carry_blue) {
                     unchanged = false;
@@ -95,16 +97,16 @@ void horizontal(const unsigned char* flags, const float* src, float* dst,
                 carry_green = pixel[1];
                 carry_blue = pixel[2];
             }
-            finish(a, unchanged, center, out);
+            finish(accumulator, unchanged, center, out);
         }
     }
 }
 
 void vertical(const unsigned char* flags, const float* src, float* dst,
               const float* weights, const Params& p) {
-    volatile float carry_red = -1.0f;
-    volatile float carry_green = -1.0f;
-    volatile float carry_blue = -1.0f;
+    volatile float carry_red = kLegacyCarrySentinel;
+    volatile float carry_green = kLegacyCarrySentinel;
+    volatile float carry_blue = kLegacyCarrySentinel;
     for (std::size_t row = 0; row < p.rows; ++row) {
         for (std::size_t col = 0; col < p.columns; ++col) {
             const std::size_t x = p.offset + col;
@@ -114,7 +116,7 @@ void vertical(const unsigned char* flags, const float* src, float* dst,
             if (flags[index] == 0) {
                 continue;
             }
-            Accum a;
+            Accum accumulator;
             bool unchanged = true;
             for (std::size_t d = 0; d <= p.radius; ++d) {
                 if (row < d || row - d == 0) {
@@ -126,7 +128,7 @@ void vertical(const unsigned char* flags, const float* src, float* dst,
                 }
                 const float* pixel = src + sample * 3;
                 const float weight = weights[p.radius - d];
-                add(a, pixel, weight);
+                add(accumulator, pixel, weight);
                 if (pixel[0] != carry_red || pixel[1] != carry_green ||
                     pixel[2] != carry_blue) {
                     unchanged = false;
@@ -145,7 +147,7 @@ void vertical(const unsigned char* flags, const float* src, float* dst,
                 }
                 const float* pixel = src + sample * 3;
                 const float weight = weights[p.radius + d];
-                add(a, pixel, weight);
+                add(accumulator, pixel, weight);
                 if (pixel[0] != carry_red || pixel[1] != carry_green ||
                     pixel[2] != carry_blue) {
                     unchanged = false;
@@ -154,7 +156,7 @@ void vertical(const unsigned char* flags, const float* src, float* dst,
                 carry_green = pixel[1];
                 carry_blue = pixel[2];
             }
-            finish(a, unchanged, center, out);
+            finish(accumulator, unchanged, center, out);
         }
     }
 }

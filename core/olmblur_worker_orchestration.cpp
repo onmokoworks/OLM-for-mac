@@ -1,3 +1,5 @@
+// AEX 0x180003710. PF8 writes rounded bytes; PF16 writes low words and PF32 keeps floats.
+#include "olmblur_constants.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker_orchestration.h"
 
@@ -13,8 +15,8 @@ namespace olm::blur::worker {
 namespace {
 
 std::size_t chunk6(std::size_t value, std::size_t part) {
-    const std::size_t base = value / 6;
-    return part == 5 ? value - base * 5 : base;
+    const std::size_t base = value / kPassParts;
+    return part == kLastPassPart ? value - base * kLastPassPart : base;
 }
 
 void horizontal_pass(const std::uint8_t* flags,
@@ -26,7 +28,7 @@ void horizontal_pass(const std::uint8_t* flags,
                      std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(height, part), (height / 6) * part, radius};
+            width, height, chunk6(height, part), (height / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::horizontal(flags, src, dst, weights, pass);
         }
@@ -42,7 +44,7 @@ void vertical_pass(const std::uint8_t* flags,
                    std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(width, part), (width / 6) * part, radius};
+            width, height, chunk6(width, part), (width / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::vertical(flags, src, dst, weights, pass);
         }
@@ -72,10 +74,10 @@ void render_8bpc_nonlegacy(const std::uint8_t* source_argb,
 
     float decay = 1.0f;
     if (params.repeat > 1) {
-        decay = ucrt_powf(3.0f / params.blur_amount,
+        decay = ucrt_powf(kSigmaDivisor / params.blur_amount,
                          1.0f / static_cast<float>(params.repeat - 1), UCRT_FMA);
     }
-    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + 2;
+    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + kRadiusPadding;
     std::vector<float> weights(max_radius + 1);
     for (std::size_t iteration = 0; iteration < params.repeat; ++iteration) {
         const double radius_value = static_cast<double>(params.blur_amount) *
@@ -88,7 +90,8 @@ void render_8bpc_nonlegacy(const std::uint8_t* source_argb,
         if (radius == 0) {
             break;
         }
-        const float sigma = materialized_radius / 3.0f;
+        const float sigma = materialized_radius / kSigmaDivisor;
+        // Preserve binary32 doubling before multiplication; do not reassociate.
         const float denominator = (sigma + sigma) * sigma;
         for (std::size_t k = 0; k <= radius; ++k) {
             weights[k] = ucrt_expf(-(static_cast<float>(k * k)) / denominator, UCRT_FMA);
@@ -105,9 +108,9 @@ void render_8bpc_nonlegacy(const std::uint8_t* source_argb,
     for (std::size_t pixel = 0; pixel < pixels; ++pixel) {
         const float* rgb = plane_a.data() + pixel * 3;
         std::uint8_t* destination = destination_argb + pixel * 4;
-        destination[1] = static_cast<std::uint8_t>(std::floor(rgb[0] + 0.5f));
-        destination[2] = static_cast<std::uint8_t>(std::floor(rgb[1] + 0.5f));
-        destination[3] = static_cast<std::uint8_t>(std::floor(rgb[2] + 0.5f));
+        destination[1] = static_cast<std::uint8_t>(std::floor(rgb[0] + kRoundingHalf));
+        destination[2] = static_cast<std::uint8_t>(std::floor(rgb[1] + kRoundingHalf));
+        destination[3] = static_cast<std::uint8_t>(std::floor(rgb[2] + kRoundingHalf));
     }
 }
 
