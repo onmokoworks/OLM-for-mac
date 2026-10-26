@@ -605,12 +605,6 @@ static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
 		*effective_front_strength <= 4000 && *effective_back_strength <= 4000;
 }
 
-static bool IsGenericNeutral8Parameters(const OLMDirectionalBlurInfo &info)
-{
-	int ignored_front = 0, ignored_back = 0;
-	return GenericEffectiveStrengths(info, false, &ignored_front, &ignored_back);
-}
-
 static bool IsGenericNeutralDeepParameters(const OLMDirectionalBlurInfo &info)
 {
 	int ignored_front = 0, ignored_back = 0;
@@ -674,13 +668,6 @@ static auto DirectionalWorldHasZeroOrigin(const WorldT *world, int)
 	-> decltype(world->origin_x, world->origin_y, bool())
 {
 	return world->origin_x == 0 && world->origin_y == 0;
-}
-
-// Compatibility for the oldest reduced-header source-included harness. Real
-// SDK worlds always select the origin_x/origin_y overload above.
-static bool DirectionalWorldHasZeroOrigin(const void *, long)
-{
-	return true;
 }
 
 static OLMDirectionalBlurInfo DirectionalDeepLayerInfo(

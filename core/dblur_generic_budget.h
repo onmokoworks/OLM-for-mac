@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <limits>
 
-namespace olm::dblur::generic {
+namespace olm { namespace dblur { namespace generic {
 
 constexpr int kMaximumStrength = 4000; // AEX parameter declaration: inclusive Strength UI limit.
 
@@ -341,4 +341,4 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 		smart_staging_bytes, result);
 }
 
-}  // namespace olm::dblur::generic
+}}}  // namespace olm::dblur::generic

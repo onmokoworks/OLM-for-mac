@@ -6,7 +6,7 @@
 #include <random>
 #include <vector>
 
-namespace olm::dblur {
+namespace olm { namespace dblur {
 
 constexpr float kNoiseGridPadding = 3.0f; // AEX 0x1800034e0: extra noise lattice cells.
 constexpr float kSmoothstepCubic = 3.0f; // AEX 0x180003370: coefficient in t*t*(3-2*t).
@@ -211,4 +211,4 @@ inline bool generate_radial_noise_plane(int source_width, int source_height,
     return true;
 }
 
-}  // namespace olm::dblur
+}}  // namespace olm::dblur

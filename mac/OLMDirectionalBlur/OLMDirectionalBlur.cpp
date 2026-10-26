@@ -294,6 +294,10 @@ static void CopyWorld(PF_EffectWorld *input, PF_EffectWorld *output)
 	}
 }
 
+#if defined(OLM_DBLUR_TEST_SEAM)
+#include "tests/HostCompatibility.inc"
+#endif
+
 #include "OLMDirectionalBlur_admission.inc"
 
 #include "OLMDirectionalBlur_kernels.inc"
