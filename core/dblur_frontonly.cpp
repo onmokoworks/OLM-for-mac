@@ -21,6 +21,13 @@ namespace {
 // (0x18000b360, little-endian f1d4c853fb210940), before rounding to float.
 constexpr double kPi = 3.14159265;
 
+constexpr float kChannel8Maximum = 255.0f; // AEX PF8 unpack/writeback: full-scale channel.
+constexpr float kChannel16Unit = 32768.0f; // AEX PF16 unpack/writeback: AE unit channel.
+constexpr double kAngleQuarterTurn = 90.0; // AEX RVA 0xb370: rotate into the rowdriver axis.
+constexpr double kAngleHalfTurn = 180.0; // AEX RVA 0xb378: degrees per half turn.
+constexpr float kPercentUnit = 100.0f; // AEX RVA 0xb384: UI percentage normalization.
+constexpr int kOriginalRowPartitions = 32; // AEX typed workers: truncate rows to this partition count.
+
 inline std::size_t rgba_index(int width, int x, int y) {
     return (static_cast<std::size_t>(y) * static_cast<std::size_t>(width) +
             static_cast<std::size_t>(x)) * 4;
@@ -52,23 +59,23 @@ bool generate_demanded_noise(const std::vector<float>& source, int width, int he
                                            noise, nw, nh, true);
 }
 
-std::vector<float> gaussian_weights(int count, bool expfloat = false) {
+// Both historical expfloat selections use the same UCRT_FMA function.
+std::vector<float> gaussian_weights(int count, bool = false) {
     std::vector<float> weights(static_cast<std::size_t>(count), 1.0f);
     for (int index = 0; index < count; ++index) {
         weights[static_cast<std::size_t>(index)] =
-            expfloat ? olm::dblur::gaussian_weight_expfloat(count, index)
-                     : olm::dblur::gaussian_weight(count, index);
+            olm::dblur::gaussian_weight(count, index);
     }
     return weights;
 }
 
 int quantize_raw_rgb(float value, float gain) {
-    const float scaled = std::min(1.0f, value * gain) * 255.0f;
+    const float scaled = std::min(1.0f, value * gain) * kChannel8Maximum;
     return static_cast<int>(scaled);
 }
 
 int quantize_raw_alpha(float value) {
-    return static_cast<int>(value * 255.0f);
+    return static_cast<int>(value * kChannel8Maximum);
 }
 
 float build_component_map(const std::vector<float>& image, int width, int height,
@@ -198,15 +205,15 @@ static int render_rgba8(
                 const std::size_t source = rgba_index(width, x, y);
                 const std::size_t destination = rgba_index(
                     work_width, x + offset_x, y + offset_y);
-                buffer_a[destination + 0] = static_cast<float>(input_rgba[source + 0]) / 255.0f;
-                buffer_a[destination + 1] = static_cast<float>(input_rgba[source + 1]) / 255.0f;
-                buffer_a[destination + 2] = static_cast<float>(input_rgba[source + 2]) / 255.0f;
-                buffer_a[destination + 3] = static_cast<float>(input_rgba[source + 3]) / 255.0f;
+                buffer_a[destination + 0] = static_cast<float>(input_rgba[source + 0]) / kChannel8Maximum;
+                buffer_a[destination + 1] = static_cast<float>(input_rgba[source + 1]) / kChannel8Maximum;
+                buffer_a[destination + 2] = static_cast<float>(input_rgba[source + 2]) / kChannel8Maximum;
+                buffer_a[destination + 3] = static_cast<float>(input_rgba[source + 3]) / kChannel8Maximum;
             }
         }
 
         const float angle = static_cast<float>(
-            ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
+            ((static_cast<double>(angle_degrees) + kAngleQuarterTurn) / kAngleHalfTurn) * kPi);
         olm_dblur_rotate_rgba_f32(
             buffer_a.data(), buffer_b.data(), work_width, work_height, angle);
         buffer_a = buffer_b;
@@ -263,7 +270,7 @@ static int render_rgba8(
         // The portable row driver is invoked synchronously here, not once per
         // worker.  Truncating to an even worker partition left the final 1..31
         // rows untouched for most real-world frame geometries.
-        const int workers = std::min(work_height, 32);
+        const int workers = std::min(work_height, kOriginalRowPartitions);
         const int processed_rows = process_full_height ? work_height :
             (work_height / workers) * workers;
         if (use_noise && !layer_mode && !generate_demanded_noise(
@@ -281,10 +288,10 @@ static int render_rgba8(
         if (layer_mode) {
             olm_dblur_rowdriver_field_f32(
                 0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
-                noise_variation_percent / 100.0f,
-                size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+                noise_variation_percent / kPercentUnit,
+                size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 scatter_front, scatter_back, prepass_front, prepass_back,
                 denominator.data(), alpha_max.data(), component_map.data(),
                 scaled_front_strength, scaled_back_strength,
@@ -293,10 +300,10 @@ static int render_rgba8(
         } else if (use_noise) {
             olm_dblur_rowdriver_noise_f32(
                 0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
-                noise_variation_percent / 100.0f,
-                size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+                noise_variation_percent / kPercentUnit,
+                size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 scatter_front, scatter_back, prepass_front, prepass_back,
                 denominator.data(), alpha_max.data(), component_map.data(),
                 scaled_front_strength, scaled_back_strength,
@@ -306,9 +313,9 @@ static int render_rgba8(
         } else {
             olm_dblur_rowdriver_f32(
                 0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
-                1, 1.0f, size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+                1, 1.0f, size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 scatter_front, scatter_back, prepass_front, prepass_back,
                 denominator.data(), alpha_max.data(), component_map.data(),
                 scaled_front_strength, scaled_back_strength,
@@ -420,6 +427,7 @@ extern "C" int olm_dblur_frontonly_rgba8(const std::uint8_t* input_rgba,
         front_strength, front_alpha_fade, 0.0f, 0.0f, 1.0f);
 }
 
+// Per-depth paths retain different unpack/writeback and alpha rules from the AEX.
 static int render_minimal_argb16(const std::uint16_t* input_argb,
                                          std::uint16_t* output_argb,
                                          int width, int height,
@@ -461,33 +469,33 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
         const int work_width = width + (half_span - width / 2) * 2;
         const int work_height = height + (half_span - height / 2) * 2;
         const std::size_t work_pixels = static_cast<std::size_t>(work_width) * work_height;
-        std::vector<float> a(work_pixels * 4, 0.0f), b(work_pixels * 4, 0.0f);
+        std::vector<float> buffer_a(work_pixels * 4, 0.0f), buffer_b(work_pixels * 4, 0.0f);
         std::vector<float> denominator(work_pixels, 0.0f), alpha_max(work_pixels, 0.0f);
         std::vector<float> component_map(work_pixels * 4, 0.0f);
         const int offset_x = work_width / 2 - width / 2;
         const int offset_y = work_height / 2 - height / 2;
-        constexpr float scale16 = 1.0f / 32768.0f;
+        constexpr float scale16 = 1.0f / kChannel16Unit;
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-            const std::size_t si = rgba_index(width, x, y);
-            const std::size_t di = rgba_index(work_width, x + offset_x, y + offset_y);
-            a[di + 0] = static_cast<float>(input_argb[si + 1]) * scale16;
-            a[di + 1] = static_cast<float>(input_argb[si + 2]) * scale16;
-            a[di + 2] = static_cast<float>(input_argb[si + 3]) * scale16;
-            a[di + 3] = static_cast<float>(input_argb[si + 0]) * scale16;
+            const std::size_t source_index = rgba_index(width, x, y);
+            const std::size_t destination_index = rgba_index(work_width, x + offset_x, y + offset_y);
+            buffer_a[destination_index + 0] = static_cast<float>(input_argb[source_index + 1]) * scale16;
+            buffer_a[destination_index + 1] = static_cast<float>(input_argb[source_index + 2]) * scale16;
+            buffer_a[destination_index + 2] = static_cast<float>(input_argb[source_index + 3]) * scale16;
+            buffer_a[destination_index + 3] = static_cast<float>(input_argb[source_index + 0]) * scale16;
         }
         const float angle = static_cast<float>(
-            ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
-        olm_dblur_rotate_rgba_f32(a.data(), b.data(), work_width, work_height, angle);
-        a = b;
-        const int workers = std::min(work_height, 32);
+            ((static_cast<double>(angle_degrees) + kAngleQuarterTurn) / kAngleHalfTurn) * kPi);
+        olm_dblur_rotate_rgba_f32(buffer_a.data(), buffer_b.data(), work_width, work_height, angle);
+        buffer_a = buffer_b;
+        const int workers = std::min(work_height, kOriginalRowPartitions);
         const int processed_rows = process_full_height ? work_height :
             (work_height / workers) * workers;
-        std::fill(b.begin(), b.begin() +
+        std::fill(buffer_b.begin(), buffer_b.begin() +
             static_cast<std::size_t>(processed_rows) * work_width * 4, 0.0f);
         float component_divisor = 1.0f;
         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
             back_sharp_tail_percent != 0.0f) {
-            component_divisor = build_component_map(a, work_width, work_height, &component_map);
+            component_divisor = build_component_map(buffer_a, work_width, work_height, &component_map);
             if (component_divisor <= 0.0f) component_divisor = 1.0f;
         } else for (std::size_t pixel = 0; pixel < work_pixels; ++pixel) {
             component_map[pixel * 4 + 0] = 1.0f;
@@ -513,9 +521,9 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
             olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(),
                                         work_width, work_height, angle);
             olm_dblur_rowdriver_field_f32(
-                0, processed_rows, a.data(), b.data(), work_width,
-                noise_variation_percent / 100.0f, size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
+                0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
+                noise_variation_percent / kPercentUnit, size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit, back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty,
                 prepass_front, prepass_back, denominator.data(), alpha_max.data(),
@@ -524,12 +532,12 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                 field_rotated.data());
         } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
-            if (!generate_demanded_noise(a, work_width, work_height, processed_rows, thickness_ui,
+            if (!generate_demanded_noise(buffer_a, work_width, work_height, processed_rows, thickness_ui,
                     static_cast<float>(noise_offset_ui) / 36.0f, seed, noise_type == 1,
                     &noise, &nw, &nh)) return -1;
-            olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), work_width,
-                noise_variation_percent / 100.0f, size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
+            olm_dblur_rowdriver_noise_f32(0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
+                noise_variation_percent / kPercentUnit, size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit, back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty,
                 prepass_front, prepass_back, denominator.data(), alpha_max.data(),
@@ -538,9 +546,9 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
             olm_dblur_rowdriver_f32(
-                0, processed_rows, a.data(), b.data(), work_width, 1, 1.0f,
-                size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
+                0, processed_rows, buffer_a.data(), buffer_b.data(), work_width, 1, 1.0f,
+                size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit, back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty,
                 prepass_front, prepass_back,
@@ -549,20 +557,20 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
         }
         for (std::size_t pixel = 0; pixel < work_pixels; ++pixel) {
             if (denominator[pixel] > 0.0f) {
-                b[pixel * 4 + 0] /= denominator[pixel];
-                b[pixel * 4 + 1] /= denominator[pixel];
-                b[pixel * 4 + 2] /= denominator[pixel];
+                buffer_b[pixel * 4 + 0] /= denominator[pixel];
+                buffer_b[pixel * 4 + 1] /= denominator[pixel];
+                buffer_b[pixel * 4 + 2] /= denominator[pixel];
             }
         }
-        std::fill(a.begin(), a.end(), 0.0f);
-        olm_dblur_rotate_rgba_f32(b.data(), a.data(), work_width, work_height, -angle);
+        std::fill(buffer_a.begin(), buffer_a.end(), 0.0f);
+        olm_dblur_rotate_rgba_f32(buffer_b.data(), buffer_a.data(), work_width, work_height, -angle);
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-            const std::size_t si = rgba_index(work_width, x + offset_x, y + offset_y);
-            const std::size_t di = rgba_index(width, x, y);
-            output_argb[di + 0] = static_cast<std::uint16_t>(static_cast<int>(a[si + 3] * 32768.0f));
+            const std::size_t source_index = rgba_index(work_width, x + offset_x, y + offset_y);
+            const std::size_t destination_index = rgba_index(width, x, y);
+            output_argb[destination_index + 0] = static_cast<std::uint16_t>(static_cast<int>(buffer_a[source_index + 3] * kChannel16Unit));
             for (int c = 0; c < 3; ++c) {
-                output_argb[di + 1 + c] = static_cast<std::uint16_t>(
-                    static_cast<int>(std::min(a[si + c] * brightness_gain, 1.0f) * 32768.0f));
+                output_argb[destination_index + 1 + c] = static_cast<std::uint16_t>(
+                    static_cast<int>(std::min(buffer_a[source_index + c] * brightness_gain, 1.0f) * kChannel16Unit));
             }
         }
         return 0;
@@ -652,27 +660,27 @@ static int render_minimal_argb32(const float* input_argb,
         if (diagonal_squared > std::numeric_limits<int>::max()) return -2;
         const float diagonal = std::sqrt(static_cast<float>(diagonal_squared));
         const int half_span = 2 - static_cast<int>(diagonal * -0.5f);
-        const int ww = width + (half_span - width / 2) * 2;
-        const int wh = height + (half_span - height / 2) * 2;
-        const std::size_t wp = static_cast<std::size_t>(ww) * wh;
-        std::vector<float> a(wp * 4, 0.0f), b(wp * 4, 0.0f), den(wp, 0.0f), alpha(wp, 0.0f), map(wp * 4, 0.0f);
-        const int ox = ww / 2 - width / 2, oy = wh / 2 - height / 2;
+        const int work_width = width + (half_span - width / 2) * 2;
+        const int work_height = height + (half_span - height / 2) * 2;
+        const std::size_t work_pixels = static_cast<std::size_t>(work_width) * work_height;
+        std::vector<float> buffer_a(work_pixels * 4, 0.0f), buffer_b(work_pixels * 4, 0.0f), denominator(work_pixels, 0.0f), valid_alpha(work_pixels, 0.0f), component_map(work_pixels * 4, 0.0f);
+        const int origin_x = work_width / 2 - width / 2, origin_y = work_height / 2 - height / 2;
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-            const std::size_t si = rgba_index(width, x, y), di = rgba_index(ww, x + ox, y + oy);
-            a[di + 0] = input_argb[si + 1]; a[di + 1] = input_argb[si + 2];
-            a[di + 2] = input_argb[si + 3]; a[di + 3] = input_argb[si + 0];
+            const std::size_t source_index = rgba_index(width, x, y), destination_index = rgba_index(work_width, x + origin_x, y + origin_y);
+            buffer_a[destination_index + 0] = input_argb[source_index + 1]; buffer_a[destination_index + 1] = input_argb[source_index + 2];
+            buffer_a[destination_index + 2] = input_argb[source_index + 3]; buffer_a[destination_index + 3] = input_argb[source_index + 0];
         }
         const float angle = static_cast<float>(
-            ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
-        olm_dblur_rotate_rgba_f32(a.data(), b.data(), ww, wh, angle);
-		const int workers = std::min(wh, 32);
-		const int processed_rows = process_full_height ? wh : (wh / workers) * workers;
-		a = b;
-		std::fill(b.begin(), b.begin() + static_cast<std::size_t>(processed_rows) * ww * 4, 0.0f);
+            ((static_cast<double>(angle_degrees) + kAngleQuarterTurn) / kAngleHalfTurn) * kPi);
+        olm_dblur_rotate_rgba_f32(buffer_a.data(), buffer_b.data(), work_width, work_height, angle);
+		const int workers = std::min(work_height, kOriginalRowPartitions);
+		const int processed_rows = process_full_height ? work_height : (work_height / workers) * workers;
+		buffer_a = buffer_b;
+		std::fill(buffer_b.begin(), buffer_b.begin() + static_cast<std::size_t>(processed_rows) * work_width * 4, 0.0f);
         float component_divisor = 1.0f;
         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
             back_sharp_tail_percent != 0.0f) {
-            component_divisor = build_component_map(a, ww, wh, &map);
+            component_divisor = build_component_map(buffer_a, work_width, work_height, &component_map);
             // AEX 0x61f6 preserves zero. With an empty positive-alpha mask,
             // 0/0 reaches the prepass as NaN; its wrapping clip visits weights
             // [1,x). Reproduce that path only when every visited weight was
@@ -680,8 +688,8 @@ static int render_minimal_argb32(const float* input_argb,
             // of undefined backing storage, without reading beyond our vector.
             if (component_divisor == 0.0f) {
                 for (int y = 0; y < processed_rows; ++y) {
-                    for (int x = 2; x < ww; ++x) {
-                        if (a[rgba_index(ww, x, y) + 3] != 0.0f &&
+                    for (int x = 2; x < work_width; ++x) {
+                        if (buffer_a[rgba_index(work_width, x, y) + 3] != 0.0f &&
                             x > back_alpha_fade) {
                             component_divisor = 1.0f;
                             break;
@@ -691,7 +699,7 @@ static int render_minimal_argb32(const float* input_argb,
                 }
             }
         } else {
-            for (std::size_t p = 0; p < wp; ++p) { map[p * 4] = 1.0f; map[p * 4 + 3] = 1.0f; }
+            for (std::size_t p = 0; p < work_pixels; ++p) { component_map[p * 4] = 1.0f; component_map[p * 4 + 3] = 1.0f; }
         }
         const std::vector<float> front_weights = gaussian_weights(front_strength, expfloat);
         const std::vector<float> back_weights = gaussian_weights(back_strength, expfloat);
@@ -705,55 +713,55 @@ static int render_minimal_argb32(const float* input_argb,
         const float* prepass_back =
             back_alpha_fade > 0 ? prepass_back_weights.data() : &empty;
         if (noise_variation_percent > 0.0f && noise_type == 3) {
-            std::vector<float> field_source(wp, 0.0f), field_rotated(wp, 0.0f);
+            std::vector<float> field_source(work_pixels, 0.0f), field_rotated(work_pixels, 0.0f);
             olm_dblur_layer_field_argb32(layer_argb, width, height, layer_rowbytes,
-                0, 0, field_source.data(), ww, wh, ox, oy, width, height, 0, 0);
-            olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(), ww, wh, angle);
-            olm_dblur_rowdriver_field_f32(0, processed_rows, a.data(), b.data(), ww,
-                noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
-                component_divisor, front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+                0, 0, field_source.data(), work_width, work_height, origin_x, origin_y, width, height, 0, 0);
+            olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(), work_width, work_height, angle);
+            olm_dblur_rowdriver_field_f32(0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
+                noise_variation_percent / kPercentUnit, size_variation_percent / kPercentUnit,
+                component_divisor, front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
-                den.data(), alpha.data(), map.data(), front_strength, back_strength,
+                denominator.data(), valid_alpha.data(), component_map.data(), front_strength, back_strength,
                 front_alpha_fade, back_alpha_fade,
                 field_rotated.data());
         } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
-            if (!generate_demanded_noise(a, ww, wh, processed_rows, thickness_ui,
+            if (!generate_demanded_noise(buffer_a, work_width, work_height, processed_rows, thickness_ui,
                     static_cast<float>(noise_offset_ui) / 36.0f, seed, noise_type == 1,
                     &noise, &nw, &nh)) return -1;
-            olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), ww,
-                noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
-                component_divisor, front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+            olm_dblur_rowdriver_noise_f32(0, processed_rows, buffer_a.data(), buffer_b.data(), work_width,
+                noise_variation_percent / kPercentUnit, size_variation_percent / kPercentUnit,
+                component_divisor, front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
-                den.data(), alpha.data(), map.data(), front_strength, back_strength,
+                denominator.data(), valid_alpha.data(), component_map.data(), front_strength, back_strength,
                 front_alpha_fade, back_alpha_fade,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
-            olm_dblur_rowdriver_f32(0, processed_rows, a.data(), b.data(), ww, 1, 1.0f,
-                size_variation_percent / 100.0f, component_divisor,
-                front_sharp_tail_percent / 100.0f,
-                back_sharp_tail_percent / 100.0f,
+            olm_dblur_rowdriver_f32(0, processed_rows, buffer_a.data(), buffer_b.data(), work_width, 1, 1.0f,
+                size_variation_percent / kPercentUnit, component_divisor,
+                front_sharp_tail_percent / kPercentUnit,
+                back_sharp_tail_percent / kPercentUnit,
                 front_strength > 0 ? front_weights.data() : &empty,
                 back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
-                den.data(), alpha.data(), map.data(), front_strength, back_strength,
+                denominator.data(), valid_alpha.data(), component_map.data(), front_strength, back_strength,
                 front_alpha_fade, back_alpha_fade);
         }
-        for (std::size_t p = 0; p < wp; ++p) if (den[p] > 0.0f) {
-            b[p * 4] /= den[p]; b[p * 4 + 1] /= den[p]; b[p * 4 + 2] /= den[p];
+        for (std::size_t p = 0; p < work_pixels; ++p) if (denominator[p] > 0.0f) {
+            buffer_b[p * 4] /= denominator[p]; buffer_b[p * 4 + 1] /= denominator[p]; buffer_b[p * 4 + 2] /= denominator[p];
         }
-        std::fill(a.begin(), a.end(), 0.0f);
-        olm_dblur_rotate_rgba_f32(b.data(), a.data(), ww, wh, -angle);
+        std::fill(buffer_a.begin(), buffer_a.end(), 0.0f);
+        olm_dblur_rotate_rgba_f32(buffer_b.data(), buffer_a.data(), work_width, work_height, -angle);
         for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-            const std::size_t si = rgba_index(ww, x + ox, y + oy), di = rgba_index(width, x, y);
-            output_argb[di] = a[si + 3];
+            const std::size_t source_index = rgba_index(work_width, x + origin_x, y + origin_y), destination_index = rgba_index(width, x, y);
+            output_argb[destination_index] = buffer_a[source_index + 3];
             // AEX 0x6c0d..0x6c34: gain first, then MINSS(value, 1).
-            output_argb[di + 1] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si]), 1.0f);
-            output_argb[di + 2] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si + 1]), 1.0f);
-            output_argb[di + 3] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, a[si + 2]), 1.0f);
+            output_argb[destination_index + 1] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, buffer_a[source_index]), 1.0f);
+            output_argb[destination_index + 2] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, buffer_a[source_index + 1]), 1.0f);
+            output_argb[destination_index + 3] = olm::x86_float::sse_min(olm::x86_float::sse_mul(brightness_gain, buffer_a[source_index + 2]), 1.0f);
         }
         return 0;
     } catch (const std::bad_alloc&) { return -5; }

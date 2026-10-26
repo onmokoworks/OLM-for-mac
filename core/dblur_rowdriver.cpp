@@ -15,6 +15,10 @@
 
 namespace {
 
+constexpr float kInt32Limit = 2147483648.0f; // SSE CVTTSS2SI: exclusive positive int32 bound.
+constexpr std::uint32_t kMagnitudeMask = 0x7fffffffU; // AEX distance absolute value: clear IEEE sign bit.
+constexpr std::uint32_t kSignMask = 0x80000000u; // AEX RVA 0x1237: wrapping subtraction sign.
+
 #ifdef OLM_REFERENCE_BUILD
 // Keep every elementary operation in a separately observed float operation.
 // This matches the scalar SSE instructions in the AEX and prevents the host
@@ -61,7 +65,7 @@ __attribute__((always_inline)) inline int trunc_i(float value) {
     // Its masked invalid result is INT32_MIN for NaN/infinity/out-of-range.
     // A C++ float-to-int cast is undefined there, and ARM64 can produce a
     // positive saturated span that subsequently overflows the row boundary.
-    if (!(value >= -2147483648.0f && value < 2147483648.0f)) {
+    if (!(value >= -kInt32Limit && value < kInt32Limit)) {
         return std::numeric_limits<std::int32_t>::min();
     }
     return static_cast<int>(value);
@@ -84,7 +88,7 @@ __attribute__((noinline)) float abs_distance(float row, float map_row) {
     std::uint32_t bits;
     float difference = row - map_row;
     __builtin_memcpy(&bits, &difference, sizeof(bits));
-    bits &= 0x7fffffffU;
+    bits &= kMagnitudeMask;
     __builtin_memcpy(&difference, &bits, sizeof(difference));
     return difference;
 }
@@ -143,7 +147,7 @@ extern "C" void olm_dblur_prepass_f32(int start, int offset,
     // AEX 0x1234 CMP / 0x1237 CMOVS tests the wrapping subtraction's sign.
     // CVTTSS2SI maps a NaN count to INT32_MIN; signed subtraction is UB here.
     if (((static_cast<std::uint32_t>(start) -
-          static_cast<std::uint32_t>(backward)) & 0x80000000u) != 0) {
+          static_cast<std::uint32_t>(backward)) & kSignMask) != 0) {
         backward = start;
     }
     if (backward > 1) {

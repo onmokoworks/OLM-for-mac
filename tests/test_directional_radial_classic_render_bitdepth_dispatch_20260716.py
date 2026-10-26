@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Source-level proof for directional/radial classic render dispatch."""
 
+import re
 import unittest
 from pathlib import Path
 
@@ -22,6 +23,8 @@ class ClassicRenderBitdepthDispatchTests(unittest.TestCase):
     def test_classic_render_dispatch(self):
         for path in OWNED_SOURCES:
             source = path.read_text()
+            source = re.sub(r'#include "(OLMDirectionalBlur_\w+\.inc)"',
+                            lambda m: path.with_name(m[1]).read_text(), source)
             body = render_body(source)
             assert "AEFX_SuiteScoper<PF_WorldSuite2>" in body, path
             assert "world_suite->PF_GetPixelFormat(input, &format)" in body, path

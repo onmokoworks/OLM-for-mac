@@ -5,6 +5,11 @@
 
 namespace {
 
+constexpr double kGreenLuma = 0.587; // AEX RVA 0xb358: green Layer luminance weight.
+constexpr double kRedLuma = 0.299; // AEX RVA 0xb350: red Layer luminance weight.
+constexpr double kBlueLuma = 0.114; // AEX RVA 0xb348: blue Layer luminance weight.
+constexpr float kChannel8Maximum = 255.0f; // AEX PF8 Layer unpack: full-scale channel.
+
 __attribute__((noinline)) float fdiv_field(float a, float b) {
     volatile float value = a / b;
     return value;
@@ -69,18 +74,19 @@ extern "C" float olm_dblur_layer_field_argb8(
                 const std::uint8_t* pixel = layer_argb +
                     static_cast<std::size_t>(source_y) * layer_rowbytes +
                     static_cast<std::size_t>(source_x) * 4;
-                const float alpha = fdiv_field(static_cast<float>(pixel[0]), 255.0f);
+                const float alpha = fdiv_field(static_cast<float>(pixel[0]), kChannel8Maximum);
                 const float blue = fmul_field(
-                    fdiv_field(static_cast<float>(pixel[3]), 255.0f), alpha);
+                    fdiv_field(static_cast<float>(pixel[3]), kChannel8Maximum), alpha);
                 const float green = fmul_field(
-                    fdiv_field(static_cast<float>(pixel[2]), 255.0f), alpha);
+                    fdiv_field(static_cast<float>(pixel[2]), kChannel8Maximum), alpha);
                 const float red = fmul_field(
-                    fdiv_field(static_cast<float>(pixel[1]), 255.0f), alpha);
-                double weighted = dmul_field(static_cast<double>(green), 0.587);
+                    fdiv_field(static_cast<float>(pixel[1]), kChannel8Maximum), alpha);
+                // AEX Layer builder: green, red, blue in double; narrow only the sum.
+                double weighted = dmul_field(static_cast<double>(green), kGreenLuma);
                 weighted = dadd_field(
-                    weighted, dmul_field(static_cast<double>(red), 0.299));
+                    weighted, dmul_field(static_cast<double>(red), kRedLuma));
                 weighted = dadd_field(
-                    weighted, dmul_field(static_cast<double>(blue), 0.114));
+                    weighted, dmul_field(static_cast<double>(blue), kBlueLuma));
                 luminance = static_cast<float>(weighted);
             }
             maximum = std::max(maximum, luminance);
@@ -111,9 +117,9 @@ extern "C" float olm_dblur_layer_field_argb32(
             const float red = fmul_field(p[1], p[0]);
             const float green = fmul_field(p[2], p[0]);
             const float blue = fmul_field(p[3], p[0]);
-            double weighted = dmul_field(static_cast<double>(green), 0.587);
-            weighted = dadd_field(weighted, dmul_field(static_cast<double>(red), 0.299));
-            weighted = dadd_field(weighted, dmul_field(static_cast<double>(blue), 0.114));
+            double weighted = dmul_field(static_cast<double>(green), kGreenLuma);
+            weighted = dadd_field(weighted, dmul_field(static_cast<double>(red), kRedLuma));
+            weighted = dadd_field(weighted, dmul_field(static_cast<double>(blue), kBlueLuma));
             luminance = static_cast<float>(weighted);
         }
         maximum = std::max(maximum, luminance);
@@ -131,7 +137,7 @@ extern "C" float olm_dblur_layer_field_argb16(
     if (!layer_argb || !destination || layer_width <= 0 || layer_height <= 0 ||
         layer_rowbytes < layer_width * 8) return 0.0f;
     float maximum = 0.0f;
-    constexpr float scale16 = 1.0f / 32768.0f;
+    constexpr float scale16 = 1.0f / 32768.0f; // AEX RVA 0xb33c: PF16 unit reciprocal.
     for (int y = 0; y < render_height; ++y) for (int x = 0; x < render_width; ++x) {
         const int sx = x + render_origin_x - layer_origin_x;
         const int sy = y + render_origin_y - layer_origin_y;
@@ -146,9 +152,9 @@ extern "C" float olm_dblur_layer_field_argb16(
             const float red = fmul_field(fmul_field(static_cast<float>(p[1]), scale16), alpha);
             const float green = fmul_field(fmul_field(static_cast<float>(p[2]), scale16), alpha);
             const float blue = fmul_field(fmul_field(static_cast<float>(p[3]), scale16), alpha);
-            double weighted = dmul_field(static_cast<double>(green), 0.587);
-            weighted = dadd_field(weighted, dmul_field(static_cast<double>(red), 0.299));
-            weighted = dadd_field(weighted, dmul_field(static_cast<double>(blue), 0.114));
+            double weighted = dmul_field(static_cast<double>(green), kGreenLuma);
+            weighted = dadd_field(weighted, dmul_field(static_cast<double>(red), kRedLuma));
+            weighted = dadd_field(weighted, dmul_field(static_cast<double>(blue), kBlueLuma));
             luminance = static_cast<float>(weighted);
         }
         maximum = std::max(maximum, luminance);
