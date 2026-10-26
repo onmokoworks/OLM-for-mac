@@ -1,0 +1,19 @@
+{
+  "host_sha256": "fa3d73a9fd08a017c7df1ba70546275021540a223885bd3e80edd9c7b50da4b8",
+  "bundles": {
+    "colorkeep": "c0c2e49e35bb7c03b62e9999606d61f16bf6cbd416eaa1ec53dd4c924c6348f3"
+  },
+  "n": 10,
+  "seed": 1,
+  "max_size": 256,
+  "timeout": 30,
+  "host_contract": "F47d shared suites, declarations from retained AEX PARAMS_SETUP; full frame, packed output, rounded input padding; Kira default ramps",
+  "totals": {
+    "equal_render": 10
+  },
+  "plugins": {
+    "colorkeep": {
+      "equal_render": 10
+    }
+  }
+}
