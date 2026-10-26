@@ -68,5 +68,3 @@ def test_guard_pixel_removes_local_zero_from_requested_output_support() -> None:
 def test_current_production_lane_is_explicitly_full_frame() -> None:
     source = (ROOT / "mac/OLMBlur/OLMBlur.cpp").read_text()
     assert "world->origin_x != 0 || world->origin_y != 0" in source
-    assert "world->extent_hint.right != width" in source
-    assert "world->extent_hint.bottom != height" in source
