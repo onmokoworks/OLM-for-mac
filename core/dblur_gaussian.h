@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace olm::dblur {
+namespace olm { namespace dblur {
 
 constexpr float kGaussianSigmaDivisor = 3.0f; // AEX RVA 0xb1ec: length-to-sigma divisor.
 constexpr double kGaussianEpsilon = 1.0e-5; // AEX RVA 0xb1e0: denominator epsilon.
@@ -28,4 +28,4 @@ inline float gaussian_weight(int count, int index)
     return ucrt_expf(gaussian_argument(count, index), UCRT_FMA);
 }
 
-}  // namespace olm::dblur
+}}  // namespace olm::dblur

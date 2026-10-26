@@ -117,24 +117,6 @@ static void DeletePreRenderData(void *data)
 	delete reinterpret_cast<PreRenderData *>(data);
 }
 
-static bool DirectionalNormalizeFullFrameRequest(const PF_RenderRequest &requested,
-	                                              A_long width, A_long height,
-	                                              PF_RenderRequest *normalized)
-{
-#if defined(OLM_DBLUR_TEST_SEAM) && !defined(OLM_DBLUR_TEST_FULL_RENDER_REQUEST)
-	(void)requested; (void)width; (void)height; (void)normalized;
-	return false;
-#else
-	if (!normalized || width <= 0 || height <= 0) return false;
-	const bool contains = requested.rect.left <= 0 && requested.rect.top <= 0 &&
-		requested.rect.right >= width && requested.rect.bottom >= height;
-	*normalized = requested;
-	if (contains) normalized->rect = PF_LRect{0, 0, width, height};
-	normalized->preserve_rgb_of_zero_alpha = TRUE;
-	return contains;
-#endif
-}
-
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
@@ -204,49 +186,6 @@ static PF_Err CheckinDirectionalParam(PF_InData *in_data, PF_ParamDef *param)
 	return PF_CHECKIN_PARAM(in_data, param);
 }
 
-static bool DirectionalGenericWorldIsFullFrame(const PF_EffectWorld *world,
-	                                            A_long width, A_long height)
-{
-	return world && width > 0 && height > 0 && world->width == width &&
-		world->height == height && DirectionalWorldHasZeroOrigin(world, 0);
-}
-
-#if defined(OLM_DBLUR_TEST_SEAM)
-extern "C" int OLMDirectionalBlurTestNormalizeFullFrameRequest(
-	const PF_RenderRequest *requested, A_long width, A_long height,
-	PF_RenderRequest *normalized)
-{
-	return requested && DirectionalNormalizeFullFrameRequest(
-		*requested, width, height, normalized) ? 1 : 0;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericWorldIsFullFrame(
-	const PF_EffectWorld *world, A_long width, A_long height)
-{
-	return DirectionalGenericWorldIsFullFrame(world, width, height) ? 1 : 0;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
-	const PF_RenderRequest *request, const PF_EffectWorld *input,
-	const PF_EffectWorld *output, const OLMDirectionalBlurInfo *info,
-	short bitdepth, A_long width, A_long height)
-{
-	if (!request || !info) return 0;
-	PF_RenderRequest normalized = {};
-	const bool retained_exact = IsRetainedNeutralExact(input, output, *info, bitdepth);
-	const bool generic = !retained_exact &&
-		(bitdepth == 8 ? (IsGenericNeutral8Parameters(*info) ||
-            (!CanUseExact8(input, output, nullptr, *info) &&
-                CanUsePF8FeatureFallback(input, output, *info)))
-			: ((bitdepth == 16 || bitdepth == 32) &&
-               (IsGenericNeutralDeepParameters(*info) || IsGenericDeepFeatureShape(*info))));
-	return generic && DirectionalNormalizeFullFrameRequest(
-		*request, width, height, &normalized) &&
-		DirectionalGenericWorldIsFullFrame(input, width, height) &&
-		DirectionalGenericWorldIsFullFrame(output, width, height) ? 1 : 0;
-}
-#endif
-
 static bool DirectionalActiveRowBytes(short bitdepth, A_long width, std::size_t *bytes)
 {
 	if (!bytes || width <= 0) return false;
@@ -262,22 +201,6 @@ static bool DirectionalActiveRowBytes(short bitdepth, A_long width, std::size_t 
 	*bytes = w * pixel_bytes;
 	return true;
 }
-
-#if defined(OLM_DBLUR_TEST_SEAM)
-template <typename World>
-static auto DirectionalTestPixelFormat(const World *world, int)
-	-> decltype(world->bitdepth, PF_PixelFormat())
-{
-	return world->bitdepth == 8 ? PF_PixelFormat_ARGB32 :
-		(world->bitdepth == 16 ? PF_PixelFormat_ARGB64 :
-		 (world->bitdepth == 32 ? PF_PixelFormat_ARGB128 : PF_PixelFormat_INVALID));
-}
-
-static PF_PixelFormat DirectionalTestPixelFormat(const void *, long)
-{
-	return PF_PixelFormat_INVALID;
-}
-#endif
 
 static PF_Err
 GetDirectionalPixelFormats(PF_InData *in_data,

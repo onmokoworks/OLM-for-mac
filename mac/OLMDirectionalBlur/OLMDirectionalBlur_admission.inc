@@ -176,21 +176,14 @@ static bool PayloadSpan(const PF_EffectWorld *world,
 		world->height <= 0 || world->width <= 0 || !pixel_bytes) {
 		return false;
 	}
-	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
-	const std::size_t height = static_cast<std::size_t>(world->height);
-    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
-        return false;
-    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
-    if (active > rowbytes || height - 1 >
-        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
-    // A checkout can end at the last pixel, before the stride's trailing pad.
-    const size_t bytes = (height - 1) * rowbytes + active;
-	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
-	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) {
-		return false;
-	}
-	*begin = first;
-	*end = first + bytes;
+    olm::world_safety::AddressRange range = {};
+    if (olm::world_safety::address_range(olm::world_safety::ConstWorld{
+            world->data, static_cast<std::size_t>(world->width),
+            static_cast<std::size_t>(world->height),
+            static_cast<std::size_t>(world->rowbytes), pixel_bytes}, &range) !=
+        olm::world_safety::Status::ok) return false;
+    *begin = range.begin;
+    *end = range.end;
 	return true;
 }
 
@@ -612,12 +605,6 @@ static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
 		*effective_front_strength <= 4000 && *effective_back_strength <= 4000;
 }
 
-static bool IsGenericNeutral8Parameters(const OLMDirectionalBlurInfo &info)
-{
-	int ignored_front = 0, ignored_back = 0;
-	return GenericEffectiveStrengths(info, false, &ignored_front, &ignored_back);
-}
-
 static bool IsGenericNeutralDeepParameters(const OLMDirectionalBlurInfo &info)
 {
 	int ignored_front = 0, ignored_back = 0;
@@ -681,13 +668,6 @@ static auto DirectionalWorldHasZeroOrigin(const WorldT *world, int)
 	-> decltype(world->origin_x, world->origin_y, bool())
 {
 	return world->origin_x == 0 && world->origin_y == 0;
-}
-
-// Compatibility for the oldest reduced-header source-included harness. Real
-// SDK worlds always select the origin_x/origin_y overload above.
-static bool DirectionalWorldHasZeroOrigin(const void *, long)
-{
-	return true;
 }
 
 static OLMDirectionalBlurInfo DirectionalDeepLayerInfo(
