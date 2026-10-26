@@ -9,7 +9,7 @@ from run import ROOT
 
 class SizeTests(unittest.TestCase):
     def test_default_3000_unchanged(self):
-        expected=json.loads((ROOT/'orchestra/reports/T15b-evidence/default-generation-before.json').read_text())
+        expected=json.loads((ROOT/'tools/fuzz/data/T15b/default-generation-before.json').read_text())
         for name in PLUGINS:
             a=adapter(name);rows=[]
             for seed in (2026,2027):
