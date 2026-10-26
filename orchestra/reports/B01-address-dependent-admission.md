@@ -6,6 +6,8 @@ summary:
 - Resumed on integration base `1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd`; validation is in progress.
 
 facts:
+- Resume validation: ColorKey native differential completed 12,012/12,012 exact comparisons (3,000 small + 3 full-4K cases × two architectures × two builds); zero differences, refusals or execution errors.
+- Shared corpus replay with `MallocScribble=1`: 746/746 cases matched saved results: ColorKey 51, DirectionalBlur 106, ColorKeep 203, KiraKira 12, RadialBlur 71, ToonDilate 303. Initial large-frame groups required correcting the runner max-size argument; all remaining cases then replayed with recorded sizes. No corpus changed.
 - Resume: merged `refs/keep/B01a`, resolving source-split conflicts by moving each original diff hunk into its matching include file. `git merge codex/public-beta-roi` returned Already up to date. No other worktree was edited.
 - Baseline: `56672f7819352ef35c83574101ea8a7c6c301789`, branch `orch/B01-address-dependent-admission`; initial worktree clean.
 - Read AGENT_GUIDE, emulator GOTCHAS, Q02 report, compatibility plan and current decision-matrix forbidden-action rows. No release-gate/ledger/kernel arithmetic changes.
@@ -80,9 +82,34 @@ python3 tools/refactor/reproduce_B01.py --scratch "$S/natural-head"
 for plugin in olmcolorkey olmdirectionalblur colorkeep olmkirakira radialblur olmtoondilate; do
   python3 tools/refactor/native_diff.py --plugin "$plugin" --base "$B" --head WORKTREE --cases 3000 --seed 909 --arch both --build both --jobs 1 --scratch "$S/native" > "$S/diff-$plugin.log" 2>&1
   python3 tools/refactor/reproduce_B01.py --plugin "$plugin" --differences "$S/native/$plugin" --scratch "$S/oracle-$plugin" > "$S/oracle-$plugin.log" 2>&1
-  MallocScribble=1 python3 tools/fuzz/run.py --plugin "$plugin" --replay "tests/fuzz_corpus/$plugin" --jobs 1 --budget-minutes 30 --scratch "$S/replay-$plugin" --report "$S/replay-$plugin.json" > "$S/replay-$plugin.log" 2>&1
 done
-git diff --check
+git diff --check "$B" HEAD
+```
+Corpus replay (group all nested cases by recorded max-size; symlink inputs, no oracle copies):
+```sh
+python3 - <<'PY'
+from pathlib import Path
+import collections, json, os, subprocess
+root = Path.cwd()
+s = root/"orchestra/state/B01-address-dependent-admission/recheck-corpus"
+s.mkdir(parents=True)
+for plugin in ["olmcolorkey", "olmdirectionalblur", "colorkeep", "olmkirakira", "radialblur", "olmtoondilate"]:
+    groups = collections.defaultdict(list)
+    for path in (root/"tests/fuzz_corpus"/plugin).rglob("*.json"):
+        groups[json.loads(path.read_text())["max_size"]].append(path)
+    for size, paths in sorted(groups.items()):
+        name = f"{plugin}-{size}"
+        inputs = s/(name+"-inputs"); inputs.mkdir()
+        for i, path in enumerate(sorted(paths)):
+            (inputs/f"{i:04d}.json").symlink_to(path)
+        with (s/(name+".log")).open("w") as log:
+            subprocess.run(["python3", "tools/fuzz/run.py", "--plugin", plugin,
+                "--replay", str(inputs), "--max-size", str(size), "--size-sampler", "odd-even-v1",
+                "--jobs", "1", "--budget-minutes", "30", "--scratch", str(s/name),
+                "--report", str(s/(name+".json"))],
+                env=dict(os.environ, MallocScribble="1", TMPDIR=str(s)),
+                stdout=log, stderr=subprocess.STDOUT, check=True)
+PY
 ```
 Measured again after resume: helper base adjacent refusals 9,000/9,000 per plugin, head 0/9,000; missed real overlaps 0 for both. Forced base 1,000/1,000 error 516, head 0/1,000; natural head 0/1,000 and oracle exact. Differential and corpus expectations await completed runs.
 
