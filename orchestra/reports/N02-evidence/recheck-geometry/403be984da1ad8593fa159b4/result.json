@@ -1,0 +1,20 @@
+{
+  "mode": "geometry",
+  "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "input_sha256": "faba7126148a248d0b909654a03908591fd9905b2b9a1f5a033a403a3bdf850d",
+  "result": {
+    "status": "ok",
+    "guards_intact": true,
+    "session_clean": true,
+    "output_rect": [
+      0,
+      0,
+      1,
+      16
+    ]
+  },
+  "sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+  "bound": true,
+  "trace_exists": false
+}

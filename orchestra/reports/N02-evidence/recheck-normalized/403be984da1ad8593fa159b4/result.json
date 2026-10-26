@@ -1,0 +1,14 @@
+{
+  "mode": "normalized",
+  "worker_sha256": "df51edc461ee13ae826c94e62b29c17b813181ef1c2719388e4d9faf180099a2",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "input_sha256": "faba7126148a248d0b909654a03908591fd9905b2b9a1f5a033a403a3bdf850d",
+  "result": {
+    "status": "reject",
+    "returncode": 1,
+    "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: guest execution failed: emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED); crash_snapshot={\"reason\":\"emulation error: Invalid memory write (UC_ERR_WRITE_UNMAPPED)\",\"registers\":{\"r10\":1611137184,\"r11\":1881144400,\"r12\":0,\"r13\":0,\"r14\":32,\"r15\":0,\"r8\":0,\"r9\":1,\"rax\":0,\"rbp\":68719476737,\"rbx\":4294971400,\"rcx\":1881144400,\"rdi\":21,\"rdx\":68719476737,\"rflags\":6,\"rip\":6442506853,\"rsi\":1073741912,\"rsp\":1881144352},\"xmm_registers\":[{\"register\":\"xmm0\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm1\",\"raw_hex\":\"00000000000000000000000000000000\",\"f32_lanes\":[0.0,0.0,0.0,0.0],\"f64_lanes\":[0.0,0.0]},{\"register\":\"xmm2\",\"raw_hex\":\"00000000000020400000000000000000\",\"f32_lane ... ,0,0,0,0,0,0,0,0,110903500801994,6442504240,1881144752,1073741912,4294971392,6442485966,4294971392,6442505285,4294971392,115,1881144800,0,1073750112,6442467788,4294971392,1073742320,1073741912,0,4294971392,0,1073743400,1073743768,0,0,0,0,1,4602678819172646912,4620693217682128896,1087614519,5339556068,0,4294967299,4294967296,0,0,4294967348,2849737654927360,1028593962,1,24,1881144960,0,68719476737,0,0,0,0,0,68719476737,0,6442548698,4294967297,4294967296,16,6442548841,0,0,1073742320,1073743520,0,6442518936,1073741912,1073743768,1073741912,1073743400,1073743616,0],\"handle_allocations\":[504],\"handle_allocation_failures\":[],\"live_handle_count\":1,\"crt_heap_live_bytes\":0,\"crt_heap_allocation_count\":0,\"crt_heap_tail_allocations\":[],\"next_pf_handle_data\":4294975488,\"pf_handle_data_end\":12884901888}\n"
+  },
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bound": false,
+  "trace_exists": false
+}
