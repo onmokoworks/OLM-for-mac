@@ -26,9 +26,18 @@ static bool BoundedLab76Key(const PF_PixelFloat &key,
 
 static bool ExactColor(const PF_Pixel8 &color,
 	                   A_u_char alpha, A_u_char red,
-	                   A_u_char green, A_u_char blue);
+	                   A_u_char green, A_u_char blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
+}
+
 static bool ExactColor(const PF_PixelFloat &color,
-	                   float alpha, float red, float green, float blue);
+	                   float alpha, float red, float green, float blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
+}
 
 template <typename PixelT>
 static bool IsBoundedLab76NativeTuple(const PF_EffectWorld *input,
@@ -72,21 +81,6 @@ static bool IsBoundedLab76NativeTuple(const PF_EffectWorld *input,
 	    BoundedLab76Key(info.colors[0], 26.0f / 255.0f, 191.0f / 255.0f, 204.0f / 255.0f) &&
 	    BoundedLab76Key(info.colors[1], 204.0f / 255.0f, 38.0f / 255.0f, 26.0f / 255.0f);
 	return declared || reversed;
-}
-
-static bool ExactColor(const PF_Pixel8 &color,
-	                   A_u_char alpha, A_u_char red,
-	                   A_u_char green, A_u_char blue)
-{
-	return color.alpha == alpha && color.red == red &&
-	       color.green == green && color.blue == blue;
-}
-
-static bool ExactColor(const PF_PixelFloat &color,
-	                   float alpha, float red, float green, float blue)
-{
-	return color.alpha == alpha && color.red == red &&
-	       color.green == green && color.blue == blue;
 }
 
 static bool IsBoundedEdgeInfo(const OLMColorKeyInfo &info,
@@ -136,35 +130,6 @@ static bool IsBoundedEdgeInfo(const OLMColorKeyInfo &info,
 	return false;
 }
 
-static bool IsBoundedToggleInfo(const OLMColorKeyInfo &info)
-{
-	if (info.threshold != 0.0 || info.color_space != 1 ||
-	    info.force_lower_precision != 1 || info.per_color ||
-	    info.per_component || info.threshold_r != 0.0 ||
-	    info.threshold_g != 0.0 || info.threshold_b != 0.0 ||
-	    info.edge_thin_amount != 0.0 || info.edge_thin_distance_type != 1 ||
-	    info.edge_blur_amount != 0.0 || info.edge_blur_distance_type != 1 ||
-	    info.edge_blur_direction != 102 || info.number_of_colors != 2 ||
-	    !info.use_color[0] || !info.use_color[1] ||
-	    info.use_replace_color[0] != info.enable_replace ||
-	    info.use_replace_color[1] != info.enable_replace ||
-	    info.thresholds[0] != 0.0 || info.thresholds[1] != 0.0 ||
-	    info.thresholds_r[0] != 0.0 || info.thresholds_r[1] != 0.0 ||
-	    info.thresholds_g[0] != 0.0 || info.thresholds_g[1] != 0.0 ||
-	    info.thresholds_b[0] != 0.0 || info.thresholds_b[1] != 0.0 ||
-	    !ExactColor(info.colors8[0], 255, 0, 0, 0) ||
-	    !ExactColor(info.colors8[1], 255, 0, 255, 0) ||
-	    !ExactColor(info.colors[0], 1.0f, 0.0f, 0.0f, 0.0f) ||
-	    !ExactColor(info.colors[1], 1.0f, 0.0f, 1.0f, 0.0f) ||
-	    !ExactColor(info.replace_colors[0], 1.0f, 230.0f / 255.0f,
-	                38.0f / 255.0f, 26.0f / 255.0f) ||
-	    !ExactColor(info.replace_colors[1], 1.0f, 26.0f / 255.0f,
-	                89.0f / 255.0f, 242.0f / 255.0f)) {
-		return false;
-	}
-	return true;
-}
-
 static void ToggleFixtureRGBA(A_long x, A_long y, int *red, int *green,
 	                          int *blue, int *alpha)
 {
@@ -204,24 +169,6 @@ PF_PixelFloat ToggleFixturePixel<PF_PixelFloat>(A_long x, A_long y)
 {
 	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
 	return PF_PixelFloat{a / 255.0f, r / 255.0f, g / 255.0f, b / 255.0f};
-}
-
-template <typename PixelT>
-static bool IsBoundedToggleSource(const PF_EffectWorld *input)
-{
-	if (!input || !input->data || input->width != 11 || input->height != 7)
-		return false;
-	for (A_long y = 0; y < input->height; ++y) {
-		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
-		                          (size_t)y * (size_t)input->rowbytes;
-		for (A_long x = 0; x < input->width; ++x) {
-			PixelT actual;
-			std::memcpy(&actual, row + (size_t)x * sizeof(PixelT), sizeof(actual));
-			const PixelT expected = ToggleFixturePixel<PixelT>(x, y);
-			if (std::memcmp(&actual, &expected, sizeof(actual)) != 0) return false;
-		}
-	}
-	return true;
 }
 
 static int EdgeFixtureKind(A_long x, A_long y, A_long width, A_long height)

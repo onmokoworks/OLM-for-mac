@@ -109,10 +109,7 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	if (IsGenericEdgeCompositionTuple(info)) return true;
 	if ((size_t)input->rowbytes != (size_t)input->width * pixel_bytes + 8 ||
 	    (size_t)output->rowbytes != (size_t)output->width * pixel_bytes + 8) return false;
-	if (IsBoundedLab76NativeTuple<PixelT>(input, output, info)) return true;
-	if (input->width == 11 && input->height == 7 &&
-	    IsBoundedToggleInfo(info) && IsBoundedToggleSource<PixelT>(input))
-		return true;
+	// Zero-Thin/Blur Lab and toggle fixtures already returned through pixel_local.
 	return IsBoundedEdgeInfo(info, input->width, input->height) &&
 	       IsBoundedEdgeSource<PixelT>(input);
 }

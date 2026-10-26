@@ -1,7 +1,7 @@
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
 {
-	const float pi = 3.14159265358979323846f;
+	constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
 	if (amount <= 0.0f) return inside ? 1.0f : 0.0f;
 	// Independently captured direction-0 amount-2 boundary.  Keep this branch
 	// distinct from directions 3 and 4 even though this bounded witness matches.
@@ -36,7 +36,7 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		// The native float callback rounds the Euclidean sqrt(10) shell one
 		// ULP below the algebraically equivalent expression used below.
 		if (dist == std::sqrt(10.0f)) return 0.9564253687858582f;
-		return 0.5f + (dist - 2.0f) * (pi / 8.0f);
+		return 0.5f + (dist - 2.0f) * (kPi / 8.0f);
 	}
 	// Independently captured direction-4 amount-2 boundary.  Although the
 	// current witness equals direction 3, keep the branch separate so evidence
@@ -111,25 +111,25 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 	// this bounded worker path is linear and intentionally overshoots past one.
 	if (direction == 2 && amount == 4.0f) {
 		if (dist >= amount) return inside ? 1.0f : 0.0f;
-		const float delta = dist * (pi / 16.0f);
+		const float delta = dist * (kPi / 16.0f);
 		return inside ? 0.5f + delta : 0.5f - delta;
 	}
 	if (direction == 1) {
 		if (!inside) return 0.0f;
 		if (dist >= amount) return 1.0f;
-		return (std::sin((dist * (pi / amount)) - (pi * 0.5f)) + 1.0f) * 0.5f;
+		return (std::sin((dist * (kPi / amount)) - (kPi * 0.5f)) + 1.0f) * 0.5f;
 	}
 	if (direction == 2) {
 		if (dist == 0.0f) return 0.5f;
 		if (dist >= amount) return inside ? 1.0f : 0.0f;
-		float phase = dist * ((pi * 0.5f) / amount);
+		float phase = dist * ((kPi * 0.5f) / amount);
 		if (!inside) phase = -phase;
 		return (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
 	}
 	if (direction == 3) {
 		if (inside) return 1.0f;
 		if (dist >= amount) return 0.0f;
-		return (std::sin((pi * 0.5f) - (dist * (pi / amount))) + 1.0f) * 0.5f;
+		return (std::sin((kPi * 0.5f) - (dist * (kPi / amount))) + 1.0f) * 0.5f;
 	}
 	return inside ? 1.0f : 0.0f;
 }
