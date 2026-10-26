@@ -171,3 +171,4 @@ Q04-refactor-olmdirectionalblur
 Q05-refactor-olmdistancegradation
 Q06-refactor-olmblur
 Q07-refactor-olmsmall
+Q08-cleanup-one-off-tools

@@ -36,3 +36,10 @@
 - Commit in small steps. Run G1 at least after each structural step, so that a difference can be bisected to one commit.
 - If G1 shows any difference you cannot explain and fix by undoing your change, revert that step. This is a refactor; differences are never accepted.
 - Report: before/after line counts per file, the list of named constants (sample), the removed dead code (what and why it was dead), and the gate results.
+
+## Size limits (the user is wary of workers writing very long code)
+- A refactor must shrink the code, not grow it. In the plugin files in scope, the non-comment, non-blank line count after the change must be at most the count before. Report both numbers.
+- No source file over about 1,000 lines after the split. Aim for files of 200-800 lines with a single responsibility.
+- Do not add new abstraction layers, frameworks, templates or wrapper classes. Do not add "helper" files that only one place uses. Moving code is fine; inventing structure is not.
+- New tools (Q00) stay small: one file, about 400 lines at most, reusing the existing fuzz adapters and `ref_vs_fast.py` code by import, not by copy.
+- Evidence goes into the report as numbers. Do not commit new one-off verify, probe or summarize scripts for these tickets; the gates use the shared tools.
