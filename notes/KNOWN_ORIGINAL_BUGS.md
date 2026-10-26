@@ -147,3 +147,25 @@ so the Mac port keeps its current behaviour for negative-alpha PF32 input with n
 mismatch is classified as an original bug, not a port defect. Negative alpha does not occur in ordinary AE footage.
 The retained witnesses stay in `tests/fuzz_corpus/olmdirectionalblur/P05a-performance/` and P06a's labelled set
 as replayed mismatches.
+
+### N02 boundary correction: generated weights versus undefined storage
+
+FACT (N02, 2026-10-26): negative alpha and Back Alpha Fade alone do **not** prove
+an undefined read. The three nightly-20261025 DirectionalBlur witnesses all have
+zero component divisor, but an instrumented original reads only Back Alpha Fade
+index 1, from generated tables of 3, 20 and 9 floats respectively. The instrumented
+fixture's final bytes match each retained F52c/F53 worker. See
+`orchestra/reports/N02-evidence/stages.json` and `trace.py`.
+
+The P06a decision above is therefore narrowed to actual out-of-generated-range
+accesses. On the zero-divisor/NaN path, the original backward clip selects the
+pixel's rotated x coordinate and reads indices `[1,x)`. If every processed
+nonzero-alpha pixel has `x <= back_alpha_fade` (or `x <= 1`, requiring no read),
+all those accesses are initialized: the port preserves the original zero divisor
+and wrapping-sign clip. Otherwise it keeps the prior safe divisor fallback for
+the original-bug domain; it neither synthesizes trailing weights nor performs
+an invalid read. This is a buffer-initialization boundary, not a pixel-value fix.
+
+The P06a small-fade sanitizer grid is rerun in N02. Out-of-generated-range cases
+can remain mismatches and are not promoted to exact; the new nightly cases are
+ordinary exact comparisons, not original-bug exclusions.
