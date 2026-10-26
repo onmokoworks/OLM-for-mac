@@ -58,3 +58,18 @@ the conflict. The shared bridge preserves the arena flags. Consequently ColorKee
 PF32 is retained as a rejected plugin/input-contract boundary, not silently
 fixed through a per-plugin world-header rewrite. Resolving that production guard
 or changing the shared contract is outside this ticket's no-plugin-source rule.
+
+## R13 refreshed host
+
+R13 builds the current bridge into new cache entries `worker-R13-bundle` and
+`worker-R13-universal`; F47d/F51 pinned binaries remain unchanged. Ordinary
+iterate clips the optional area to both worlds, uses independent byte strides,
+and propagates the callback error. This matches the existing P00 SDK host
+clipping contract and full-frame source-host iteration. Color/parameter/world
+callbacks already cover ColorKeep's other observed suite calls.
+
+The build recipe now stages Rust/Unicorn under a no-space `--build-root` and
+uses a cache build directory for Cargo and temporary files. `--cache-name`
+installs and registers the result without replacing previous workers. R13's
+release report records the actual comparison counts; historical PF32 refusal
+observations above do not describe the current production admission.

@@ -17,11 +17,15 @@ STATE = ROOT/'orchestra/state/F51-x86_64-slice-equivalence'
 CACHE = Path.home()/'.cache/olm-emu'
 
 def main():
+    global STATE
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundles',type=Path,help='Also retain completed F47 Universal builds in the durable cache')
+    parser.add_argument('--state', type=Path, default=STATE)
+    parser.add_argument('--cache-name', default='worker-F51-x86host')
     args=parser.parse_args()
+    STATE=args.state.resolve()
     STATE.mkdir(parents=True, exist_ok=True)
-    dest = CACHE/'worker-F51-x86host'
+    dest = CACHE/args.cache_name
     dest.mkdir(exist_ok=True)
     worker = dest/'plugin-host'
     env = dict(os.environ, TMPDIR=str(STATE), TMP=str(STATE), TEMP=str(STATE))

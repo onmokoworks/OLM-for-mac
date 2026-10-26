@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
-export TMPDIR="$PWD/orchestra/state/R12-release-gate-final/package"
+export TMPDIR="${OLM_PACKAGE_STATE:-$PWD/orchestra/state/R12-release-gate-final/package}"
+release_cache="${OLM_RELEASE_CACHE:-$HOME/.cache/olm-emu/release-R12}"
 mkdir -p "$TMPDIR"
 export OLM_TEST_JOBS=1
 export OLM_REFERENCE_ROOT="$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
@@ -14,7 +15,7 @@ for plugin in ColorKeep OLMBlur OLMColorKey OLMDirectionalBlur OLMRadialBlur OLM
     ln -s "$TMPDIR/products/$plugin" "$product"
   fi
 done
-mkdir -p "$HOME/.cache/olm-emu/release-R12"
+mkdir -p "$release_cache"
 # Limit the existing serial bundle builder without changing shared build policy.
 xcodebuild() {
   if [[ "${1:-}" == -project ]]; then
@@ -24,4 +25,4 @@ xcodebuild() {
   fi
 }
 export -f xcodebuild
-scripts/package_mac_plugins.sh --configuration Release --output "$HOME/.cache/olm-emu/release-R12/OLM_Mac_Plugins_Release_20261026.zip"
+scripts/package_mac_plugins.sh --configuration Release --output "$release_cache/OLM_Mac_Plugins_Release_20261026.zip"

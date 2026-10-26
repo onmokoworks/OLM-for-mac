@@ -27,7 +27,8 @@ PLUGINS = dict(olmblur='OLMBlur', colorkeep='ColorKeep', olmcolorkey='OLMColorKe
     radialblur='OLMRadialBlur', olmsmoother='OLMSmoother')
 CACHE = Path.home()/'.cache/olm-emu'
 WORKER = CACHE/'worker-F46-pow/aex-guest-worker'
-BUNDLE_WORKER = CACHE/'worker-F47d/aex-guest-worker'
+BUNDLE_WORKER = CACHE/'worker-R13-bundle/aex-guest-worker'
+BUNDLE_HOST = CACHE/'worker-R13-universal/plugin-host'
 
 # Explicit snapshot of the 53-entry generic gate, selected from R05's measured
 # 45 PASS entries. Exclusions are open findings, not passes or deleted tests.
@@ -237,11 +238,28 @@ class Gate:
             plugin = saved['plugin']
             if plugin not in PLUGINS:
                 raise ValueError('unknown corpus plugin: '+plugin)
-            groups[plugin, path.parent].append(path)
+            configuration = tuple(saved.get(key, default) for key, default in
+                (('max_size', 256), ('size_sampler', 'default'), ('size_max_height', None),
+                 ('geometry_sampler', 'default'), ('color_sampler', 'default')))
+            groups[plugin, path.parent, configuration].append(path)
             inventory[plugin] += 1
         rows = []; counts = Counter(PASS=0, FAIL=0, **{'ORACLE-STOP':0})
-        for i, ((plugin, directory), paths) in enumerate(sorted(groups.items())):
-            _, report = self.fuzz(f'replay-{i:02d}-{plugin}',plugin,['--replay',directory])
+        for i, ((plugin, directory, configuration), paths) in enumerate(groups.items()):
+            replay_dir = self.state/f'replay-input-{i:02d}'
+            replay_dir.mkdir()
+            originals = {}
+            for path in paths:
+                link = replay_dir/path.name
+                link.symlink_to(path)
+                originals[str(link)] = str(path)
+            flags = []
+            for key, value in zip(('max-size', 'size-sampler', 'size-max-height',
+                                   'geometry', 'color-sampler'), configuration):
+                if value is not None:
+                    flags.extend(['--'+key, 'realistic' if key == 'geometry' and value == 'realistic-v1' else str(value)])
+            _, report = self.fuzz(f'replay-{i:02d}-{plugin}',plugin,['--replay',replay_dir,*flags])
+            for row in report.get('replays', []):
+                row['path'] = originals.get(row['path'], row['path'])
             observed = {r['path']:r for r in report.get('replays', [])}
             for path in paths:
                 row = observed.get(str(path), {})
@@ -250,7 +268,7 @@ class Gate:
                 retry = None
                 if not row.get('matches_saved') and has_stop(result):
                     retry = f'retry-{len(rows):04d}-{plugin}'
-                    _, retried = self.fuzz(retry,plugin,['--replay',path,'--case-timeout','120'])
+                    _, retried = self.fuzz(retry,plugin,['--replay',path,'--case-timeout','120',*flags])
                     rr = retried.get('replays', [])
                     verdict = 'FAIL'
                     if len(rr)==1 and retried.get('status')=='replay_complete':
@@ -292,7 +310,7 @@ class Gate:
             totals.update(counts); passed &= good
             rows.append(dict(plugin=plugin, counts=counts, status='PASS' if good else 'FAIL'))
         code=self.run('f51',[self.python,'-B','tools/fuzz/verify_F51.py','--state',self.state/'f51',
-            '--bundles',self.state/'bundles','--n','100','--jobs','1'], timeout=15000)
+            '--bundles',self.state/'bundles','--host',BUNDLE_HOST,'--n','100','--jobs','1'], timeout=15000)
         report=read_json(self.state/'f51/summary.json')
         expected=1000+sum(1 for _ in (ROOT/'tests/fuzz_corpus').rglob('*.json'))
         f51=report.get('totals',{})

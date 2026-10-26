@@ -33,6 +33,7 @@ void operator delete[](void *memory, std::size_t) noexcept { std::free(memory); 
 static int g_generic_width = 0;
 static int g_generic_height = 0;
 static bool g_generic_partial_content_bounds = false;
+static PF_RenderRequest g_generic_expected_request{};
 
 static PF_Err generic_pre_checkout(
     PF_ProgPtr effect_ref, PF_ParamIndex index, A_long checkout_id,
@@ -46,14 +47,14 @@ static PF_Err generic_pre_checkout(
                           request->rect.bottom == g_generic_height;
     state->checkout_id = checkout_id;
     if (index != OLMKIRAKIRA_INPUT || checkout_id != OLMKIRAKIRA_INPUT ||
-        !state->full_request || !result) return PF_Err_BAD_CALLBACK_PARAM;
+        !request || std::memcmp(request, &g_generic_expected_request, sizeof(*request)) || !result) return PF_Err_BAD_CALLBACK_PARAM;
     std::memset(result, 0, sizeof(*result));
     result->result_rect = g_generic_partial_content_bounds
         ? PF_LRect{2, 1, g_generic_width - 2, g_generic_height - 1}
-        : request->rect;
+        : PF_LRect{0, 0, g_generic_width, g_generic_height};
     result->max_result_rect = g_generic_partial_content_bounds
         ? PF_LRect{1, 0, g_generic_width - 1, g_generic_height}
-        : request->rect;
+        : PF_LRect{0, 0, g_generic_width, g_generic_height};
     result->ref_width = g_generic_width;
     result->ref_height = g_generic_height;
     return PF_Err_NONE;
@@ -234,10 +235,13 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
 
     PF_PreRenderInput pre_in{};
     pre_in.bitdepth = (short)depth;
+    // Exercise both values: original forwards this flag without forcing it.
+    pre_in.output_request.preserve_rgb_of_zero_alpha = tuple.rotation != 0;
     pre_in.output_request.rect = overscan
         ? PF_LRect{-width / 10, -height / 10,
                    width + width / 10, height + height / 10}
         : PF_LRect{0, 0, width, height};
+    g_generic_expected_request = pre_in.output_request;
     PF_PreRenderOutput pre_out{};
     PF_PreRenderCallbacks pre_cb{}; pre_cb.checkout_layer = generic_pre_checkout;
     PF_PreRenderExtra pre_extra{&pre_in, &pre_out, &pre_cb};
@@ -298,7 +302,9 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
     const bool render_ok = pre_err == PF_Err_NONE && smart_err == PF_Err_NONE &&
         classic_err == PF_Err_NONE && repeat_err == PF_Err_NONE &&
         state.pre == 1 && state.pixels == 1 && state.output_checkout == 1 &&
-        state.layer_checkin == 0 && state.preserve && state.full_request &&
+        state.layer_checkin == 0 &&
+        state.preserve == bool(pre_in.output_request.preserve_rgb_of_zero_alpha) &&
+        state.full_request == !overscan &&
         state.checkout_id == OLMKIRAKIRA_INPUT &&
         pre_rects_are_full &&
         (pre_out.flags & PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS) != 0 &&
@@ -484,6 +490,7 @@ static int run_mode3_ui_reject(PF_PixelFormat format, int depth, int length) {
     PF_PreRenderInput pre_in{};
     pre_in.bitdepth = (short)depth;
     pre_in.output_request.rect = {0, 0, width, height};
+    g_generic_expected_request = pre_in.output_request;
     PF_PreRenderOutput pre_out{};
     PF_PreRenderCallbacks pre_cb{}; pre_cb.checkout_layer = generic_pre_checkout;
     PF_PreRenderExtra pre_extra{&pre_in, &pre_out, &pre_cb};
@@ -572,6 +579,7 @@ static int run_mode3_ui_failure_case(PF_PixelFormat format, int depth,
     PF_PreRenderInput pre_in{};
     pre_in.bitdepth = (short)depth;
     pre_in.output_request.rect = {0, 0, width, height};
+    g_generic_expected_request = pre_in.output_request;
     PF_PreRenderOutput pre_out{};
     PF_PreRenderCallbacks pre_cb{}; pre_cb.checkout_layer = generic_pre_checkout;
     PF_PreRenderExtra pre_extra{&pre_in, &pre_out, &pre_cb};
@@ -709,6 +717,7 @@ static int run_mode3_ui_allocation_route(PF_PixelFormat format, int depth,
     g_pixel_scenario = g_output_scenario = g_pre_scenario = g_suite_scenario = 0;
 
     PF_PreRenderInput pre_in{};
+    g_generic_expected_request = pre_in.output_request;
     PF_PreRenderOutput pre_out{};
     PF_PreRenderCallbacks pre_cb{};
     PF_PreRenderExtra pre_extra{&pre_in, &pre_out, &pre_cb};
@@ -895,6 +904,7 @@ static int run_request_guard(bool non_unity_downsample) {
     pre_in.output_request.rect = non_unity_downsample
         ? PF_LRect{0, 0, width, height}
         : PF_LRect{0, 0, width - 1, height};
+    g_generic_expected_request = pre_in.output_request;
     PF_PreRenderOutput pre_out{};
     PF_PreRenderCallbacks pre_cb{};
     pre_cb.checkout_layer = generic_pre_checkout;
@@ -903,8 +913,16 @@ static int run_request_guard(bool non_unity_downsample) {
     g_generic_height = height;
     const PF_Err err = EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out,
                                   nullptr, nullptr, &pre_extra);
-    const bool ok = err == PF_Err_BAD_CALLBACK_PARAM && state.pre == 0 &&
-                    pre_out.pre_render_data == nullptr;
+    // P02c / original 181151710 forwards both partial and downsample requests.
+    const bool ok = err == PF_Err_NONE && state.pre == 1 &&
+        pre_out.pre_render_data && pre_out.delete_pre_render_data_func &&
+        pre_out.result_rect.left == 0 && pre_out.result_rect.top == 0 &&
+        pre_out.result_rect.right == width && pre_out.result_rect.bottom == height &&
+        pre_out.max_result_rect.left == 0 && pre_out.max_result_rect.top == 0 &&
+        pre_out.max_result_rect.right == width && pre_out.max_result_rect.bottom == height &&
+        !state.preserve && state.full_request == non_unity_downsample;
+    if (pre_out.pre_render_data && pre_out.delete_pre_render_data_func)
+        pre_out.delete_pre_render_data_func(pre_out.pre_render_data);
     std::printf("REQUEST_GUARD partial=%d non_unity_downsample=%d ok=%d callbacks=%d\n",
                 !non_unity_downsample, non_unity_downsample, ok, state.pre);
     return ok ? 0 : 1;
@@ -953,7 +971,8 @@ static int run_mode3_ui_roi_provenance_guard(PF_PixelFormat format, int depth) {
         PF_PreRenderInput pre_in{};
         pre_in.bitdepth = (short)depth;
         pre_in.output_request.rect = {0, 0, width, height};
-        PF_PreRenderOutput pre_out{};
+        g_generic_expected_request = pre_in.output_request;
+    PF_PreRenderOutput pre_out{};
         PF_PreRenderExtra pre_extra{&pre_in, &pre_out, &pre_cb};
         const PF_Err error = EffectMain(PF_Cmd_SMART_PRE_RENDER, &in, &out,
                                         nullptr, nullptr, &pre_extra);

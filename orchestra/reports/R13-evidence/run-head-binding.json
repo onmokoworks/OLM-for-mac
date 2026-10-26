@@ -1,0 +1,10 @@
+{
+  "gate_start_commit": "1750eac1ac1a47564fa98a20cc38e4f9f72b2a07",
+  "package_source_commit": "cb801c68895e4259a1b908b4ddbeee83b1dea689",
+  "current_head": "6a8f7ca24b74dad76d575bf3dd6f077ff55085f8",
+  "gate_script_matches": true,
+  "production_changes_since_gate": [],
+  "production_changes_since_package": [],
+  "selected_test_hashes_match": true,
+  "selected_files": 45
+}

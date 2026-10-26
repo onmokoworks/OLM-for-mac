@@ -1,0 +1,32 @@
+{
+  "worker_sha256": "1695ef9fab31b607bb240079e41dd3a9c28bccf90f5e9a879a7e85ed8000bc3e",
+  "abi_constants": 8,
+  "memory_free_percent": 63,
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-build-R13/Cargo.toml",
+    "--release",
+    "--target",
+    "aarch64-apple-darwin",
+    "--offline",
+    "--locked",
+    "-j",
+    "1",
+    "-p",
+    "aex-guest-worker",
+    "--bin",
+    "aex-guest-worker"
+  ],
+  "sources": {
+    "F47d-native-host.md": "8ac1a6408d865303a1912d52a481b2ff91e8abf002b51d63eee0208004f5d612",
+    "F47d-native-ffi.rs": "d7f5cea4b20fb2c66316aada414030057f1d6e504e202ff4fdb4e740c0b78495",
+    "F47d-native-render.rs": "0cb9687f1f3d8647766d366dd216fa83f8614024307793e43cd31eff0aa3b898",
+    "F47d-native-bridge.cpp": "aed16e799f3fdab48d516616eaa7b633b70a9436cb6cefa7c27abf4c294773d6"
+  },
+  "name": "worker-R13-bundle",
+  "worker_path": "/Users/onmk/.cache/olm-emu/worker-R13-bundle/aex-guest-worker",
+  "recipe": "tools/emulation/aexcompat_patches/build_F47d.py",
+  "build_json": "/Users/onmk/.cache/olm-emu/worker-R13-bundle/build.json"
+}

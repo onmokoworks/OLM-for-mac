@@ -1,0 +1,142 @@
+{
+  "package": "/Users/onmk/.cache/olm-emu/release-R13/OLM_Mac_Plugins_Release_20261026.zip",
+  "sha256": "a568e7640e84a6c4d26f788f4bc4e865f411437a70ca0868515d89f2665d5852",
+  "git_commit": "cb801c68895e4259a1b908b4ddbeee83b1dea689",
+  "git_dirty": false,
+  "zip_entries": 132,
+  "text_files_checked": 76,
+  "nested_zips_checked": 6,
+  "local_path_hits": [],
+  "plugins": [
+    {
+      "name": "ColorKeep",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "1fcf09dc926dcb86eb6aeb0ba0f7b905def9062eb544a44c41c7eec9ec39ca8b"
+    },
+    {
+      "name": "OLMBlur",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "518606728bc906878563ae4d86933bb0bd15dfac056b2221d76a18a12f33d56b"
+    },
+    {
+      "name": "OLMColorKey",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "448d4023ca2049ec88cf3f0a35ea5f85625a8ad1656708cc0b397173023aff2c"
+    },
+    {
+      "name": "OLMDirectionalBlur",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "a28f08bd2f1b5aba9e2aba1e13745c6f629a419d53015155a7612f1e0de211dc"
+    },
+    {
+      "name": "OLMRadialBlur",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "438455cba872f019d8caa7032047eb6cfd06a60cb4dc07b2331baab88d9b614c"
+    },
+    {
+      "name": "OLMKiraKira",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "ff31b6a3dfcf6f704f326d8a4ba01c2c415cbd57b97281c7ec4f7a3a68cc237f"
+    },
+    {
+      "name": "OLMToonDilate",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "bf7fd6ab662d88002f829052f087a4e60cd55cf4e57d45abef7beeba6d46d3d3"
+    },
+    {
+      "name": "OLMDistanceGradation",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "86f8d4cc39c46b8ce0c35f0a7b084213b1341ff066ceedaf97ce3bd5a6ad52c6"
+    },
+    {
+      "name": "OLMSmoother",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "5f0879b7d39c76adc5059779ac47c5a7102a430f1699b1c9a8c7a0d3fde5c555"
+    },
+    {
+      "name": "OLMSmoother2",
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "minos": {
+        "x86_64": "11.0",
+        "arm64": "11.0"
+      },
+      "signature": "adhoc",
+      "binary_sha256": "d68f545bb6ba5eac1ec5a2702f44393905ff9bc0c776b6cf5684c1bfb667314b"
+    }
+  ]
+}

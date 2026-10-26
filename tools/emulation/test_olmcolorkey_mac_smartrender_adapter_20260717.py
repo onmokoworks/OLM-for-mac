@@ -27,6 +27,11 @@ def compile_probe(directory: Path) -> Path:
     probe = directory / "olmcolorkey_mac_smartrender_adapter_probe.cpp"
     executable = directory / "olmcolorkey_mac_smartrender_adapter_probe"
     (directory / "AEFX_SuiteHandlerTemplate.h").write_text("#ifndef _H_AEFX_SUITE_HELPER_TEMPLATE\n#define _H_AEFX_SUITE_HELPER_TEMPLATE\n#endif\n", encoding="utf-8")
+    header = SOURCE.with_suffix('.h').read_text()
+    info = re.search(r'typedef struct \{[^{}]*\} OLMColorKeyInfo;', header)
+    if info is None:
+        raise RuntimeError('production OLMColorKeyInfo declaration not found')
+    production_info = info.group().replace('OLMCOLORKEY_MAX_COLORS', '25')
     probe.write_text(
         f'''#include <algorithm>
 #include <cstdint>
@@ -101,7 +106,8 @@ static const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_eff
 enum {{ StrID_NONE, StrID_Name, StrID_Description, StrID_ColorKeep_Param_Name, StrID_Threshold_Param_Name, StrID_Premultiplied_Param_Name, StrID_ColorSpace_Param_Name, StrID_ColorSpace_Choices, StrID_ForceLowerPrecision_Param_Name, StrID_ForceLowerPrecision_Choices, StrID_PerColor_Param_Name, StrID_PerComponent_Param_Name, StrID_ThresholdGroup_Param_Name, StrID_ThresholdR_Param_Name, StrID_ThresholdG_Param_Name, StrID_ThresholdB_Param_Name, StrID_EdgeThinGroup_Param_Name, StrID_Amount_Param_Name, StrID_DistanceType_Param_Name, StrID_DistanceType_Choices, StrID_EdgeBlurGroup_Param_Name, StrID_EdgeBlurDirection_Param_Name, StrID_EdgeBlurDirection_Choices, StrID_NumberOfColors_Param_Name, StrID_EnableReplace_Param_Name, StrID_Color_Param_Name, StrID_ThresholdIndexed_Param_Name, StrID_UseColor_Param_Name, StrID_UseReplaceColor_Param_Name, StrID_ReplaceColor_Param_Name }};
 enum {{ OLMCOLORKEY_INPUT=0, OLMCOLORKEY_COLOR_KEEP=1, OLMCOLORKEY_THRESHOLD=2, OLMCOLORKEY_PREMULTIPLIED=3, OLMCOLORKEY_COLOR_SPACE=4, OLMCOLORKEY_FORCE_LOWER_PRECISION=5, OLMCOLORKEY_PER_COLOR=6, OLMCOLORKEY_PER_COMPONENT=7, OLMCOLORKEY_THRESHOLD_GROUP_START=8, OLMCOLORKEY_THRESHOLD_R=9, OLMCOLORKEY_THRESHOLD_G=10, OLMCOLORKEY_THRESHOLD_B=11, OLMCOLORKEY_THRESHOLD_GROUP_END=12, OLMCOLORKEY_EDGE_THIN_GROUP_START=13, OLMCOLORKEY_EDGE_THIN_AMOUNT=14, OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE=15, OLMCOLORKEY_EDGE_THIN_GROUP_END=16, OLMCOLORKEY_EDGE_BLUR_GROUP_START=17, OLMCOLORKEY_EDGE_BLUR_AMOUNT=18, OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE=19, OLMCOLORKEY_EDGE_BLUR_DIRECTION=20, OLMCOLORKEY_EDGE_BLUR_GROUP_END=21, OLMCOLORKEY_NUMBER_OF_COLORS=22, OLMCOLORKEY_ENABLE_REPLACE=23, OLMCOLORKEY_COLOR_FIRST=24, OLMCOLORKEY_NUM_PARAMS=224 }};
 enum {{ COLOR_PARAM_STRIDE=8, COLOR_OFFSET_USE_COLOR=0, COLOR_OFFSET_USE_REPLACE=1, COLOR_OFFSET_COLOR=2, COLOR_OFFSET_REPLACE_COLOR=3, COLOR_OFFSET_THRESHOLD=4, COLOR_OFFSET_THRESHOLD_R=5, COLOR_OFFSET_THRESHOLD_G=6, COLOR_OFFSET_THRESHOLD_B=7 }};
-struct OLMColorKeyInfo {{ bool color_keep; PF_FpLong threshold; bool premultiplied; A_long color_space, force_lower_precision; bool per_color, per_component; PF_FpLong threshold_r, threshold_g, threshold_b, edge_thin_amount; A_long edge_thin_distance_type; PF_FpLong edge_blur_amount; A_long edge_blur_distance_type, edge_blur_direction, number_of_colors; bool enable_replace; PF_Pixel8 colors8[25]; PF_PixelFloat colors[25], replace_colors[25]; PF_FpLong thresholds[25], thresholds_r[25], thresholds_g[25], thresholds_b[25]; bool use_color[25], use_replace_color[25]; }};
+using PF_Boolean = bool;
+{production_info}
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 3
 #define BUG_VERSION 1
