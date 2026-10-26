@@ -209,6 +209,18 @@ static void StoreWorldPixel(PF_EffectWorld *world, A_long x, A_long y, const Pix
 		sizeof(pixel));
 }
 
+// The integer writers differ only in channel width and scale; keep CVTTSS2SI.
+template <typename PixelT>
+static PixelT WriteIntegerPixel(const FloatRGBA &p, float scale)
+{
+    PixelT out;
+    out.alpha = static_cast<decltype(out.alpha)>(olm::kirakira::truncate_merge2_channel(p.a, scale));
+    out.red = static_cast<decltype(out.red)>(olm::kirakira::truncate_merge2_channel(p.r, scale));
+    out.green = static_cast<decltype(out.green)>(olm::kirakira::truncate_merge2_channel(p.g, scale));
+    out.blue = static_cast<decltype(out.blue)>(olm::kirakira::truncate_merge2_channel(p.b, scale));
+    return out;
+}
+
 template <typename PixelT>
 struct PixelTraits;
 
@@ -227,12 +239,7 @@ struct PixelTraits<PF_Pixel8> {
 		};
 	}
 	static PF_Pixel8 WriteAexTruncate(const FloatRGBA &p) {
-		PF_Pixel8 out;
-		out.alpha = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.a, 255.0f));
-		out.red   = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.r, 255.0f));
-		out.green = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.g, 255.0f));
-		out.blue  = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.b, 255.0f));
-		return out;
+		return WriteIntegerPixel<PF_Pixel8>(p, 255.0f);
 	}
 };
 
@@ -247,12 +254,7 @@ struct PixelTraits<PF_Pixel16> {
 		};
 	}
 	static PF_Pixel16 WriteAexTruncate(const FloatRGBA &p) {
-		PF_Pixel16 out;
-		out.alpha = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.a, 32768.0f));
-		out.red   = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.r, 32768.0f));
-		out.green = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.g, 32768.0f));
-		out.blue  = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.b, 32768.0f));
-		return out;
+		return WriteIntegerPixel<PF_Pixel16>(p, 32768.0f);
 	}
 };
 
@@ -348,26 +350,20 @@ static PF_Err GetKiraPixelFormats(
 	return err;
 }
 
+static olm::world_safety::ConstWorld KiraWorldView(
+    const PF_EffectWorld *world, size_t pixel_size)
+{
+    return {world->data, static_cast<size_t>(world->width),
+        static_cast<size_t>(world->height), static_cast<size_t>(world->rowbytes), pixel_size};
+}
+
 static bool WorldLayoutIsSafe(const PF_EffectWorld *world, size_t pixel_size)
 {
-	if (!world || !world->data || pixel_size == 0 ||
-		world->width <= 0 || world->height <= 0 || world->rowbytes <= 0) {
-		return false;
-	}
-	const int64_t active_rowbytes =
-		static_cast<int64_t>(world->width) * static_cast<int64_t>(pixel_size);
-	if (active_rowbytes <= 0 ||
-		active_rowbytes > static_cast<int64_t>(world->rowbytes)) {
-		return false;
-	}
-	// Byte copies admit unaligned bases and arbitrary positive byte strides.
-	const uint64_t last_row_offset =
-		static_cast<uint64_t>(world->height - 1) *
-		static_cast<uint64_t>(world->rowbytes);
-	const uintptr_t begin = reinterpret_cast<uintptr_t>(world->data);
-	const uint64_t available = static_cast<uint64_t>(UINTPTR_MAX - begin);
-	return last_row_offset <= available &&
-		static_cast<uint64_t>(active_rowbytes) <= available - last_row_offset;
+    if (!world || world->width <= 0 || world->height <= 0 || world->rowbytes <= 0)
+        return false;
+    olm::world_safety::AddressRange range = {};
+    return olm::world_safety::address_range(KiraWorldView(world, pixel_size), &range) ==
+        olm::world_safety::Status::ok;
 }
 
 static PF_Err ValidateWorldPair(

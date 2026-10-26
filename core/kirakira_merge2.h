@@ -5,7 +5,7 @@
 #include <cstring>
 #include <vector>
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 
 struct Merge2Color {
     float red;
@@ -336,4 +336,4 @@ inline void add_colored_merge2(
     }
 }
 
-}  // namespace olm::kirakira
+}}  // namespace olm::kirakira

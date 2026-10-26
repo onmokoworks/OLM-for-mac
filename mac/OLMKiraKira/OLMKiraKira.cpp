@@ -1,4 +1,5 @@
 #include "../../core/olm_exact_math.h"
+#include "../../core/olm_world_safety.h"
 #include "OLMKiraKira.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #if defined(__clang__)
@@ -269,19 +270,9 @@ static bool WorldStorageRangesDoNotOverlap(
 {
     if (!WorldLayoutIsSafe(input, pixel_size) || !WorldLayoutIsSafe(output, pixel_size))
         return false;
-    const uint64_t input_span = static_cast<uint64_t>(input->rowbytes) *
-        static_cast<uint64_t>(input->height - 1) + static_cast<uint64_t>(input->width) * pixel_size;
-    const uint64_t output_span = static_cast<uint64_t>(output->rowbytes) *
-        static_cast<uint64_t>(output->height - 1) + static_cast<uint64_t>(output->width) * pixel_size;
-	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
-	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
-	if (input_span > static_cast<uint64_t>(UINTPTR_MAX - input_begin) ||
-		output_span > static_cast<uint64_t>(UINTPTR_MAX - output_begin)) {
-		return false;
-	}
-	const uintptr_t input_end = input_begin + static_cast<uintptr_t>(input_span);
-	const uintptr_t output_end = output_begin + static_cast<uintptr_t>(output_span);
-	return input_end <= output_begin || output_end <= input_begin;
+    return olm::world_safety::require_disjoint(
+        KiraWorldView(input, pixel_size), KiraWorldView(output, pixel_size)) ==
+        olm::world_safety::Status::ok;
 }
 
 static bool SmartClosureWorldPairIsSafeForDimensions(
@@ -303,7 +294,6 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 		input->extent_hint.right == width && input->extent_hint.bottom == height &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
 		output->extent_hint.right == width && output->extent_hint.bottom == height &&
-		WorldLayoutIsSafe(input, pixel_size) && WorldLayoutIsSafe(output, pixel_size) &&
 		input->world_flags == expected_world_flags &&
 		output->world_flags == expected_world_flags &&
 		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
