@@ -251,7 +251,10 @@ def main() -> int:
             failures += run(cmd, repo) != 0
             checks += 1
 
-        for request_id, request_zip in pixel_request_entries(mac_root):
+        requests = pixel_request_entries(mac_root)
+        if args.require_all_pixel_requests and not requests:
+            return fail("this release contains no pixel requests; supply a separate AE validation request package")
+        for request_id, request_zip in requests:
             candidate = find_pixel_result(result_root, request_id, request_zip)
             if candidate is None:
                 message = f"{request_id}: no matching pixel return found"

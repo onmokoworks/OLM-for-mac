@@ -279,6 +279,8 @@ def render_runtime_summary_markdown(summary: dict[str, Any]) -> str:
 
 
 def package_kind(path: Path) -> str | None:
+    if path.is_dir() and path.name == "OLM_for_Mac" and (path / "README.md").is_file():
+        return "olm_mac_plugin_package"
     if path.is_dir():
         data = load_json(path / "manifest.json")
         if data:
@@ -291,6 +293,8 @@ def package_kind(path: Path) -> str | None:
         return None
     try:
         with zipfile.ZipFile(path) as archive:
+            if {"OLM_for_Mac/README.md", "OLM_for_Mac/README.en.md", "OLM_for_Mac/LICENSE"}.issubset(archive.namelist()):
+                return "olm_mac_plugin_package"
             manifests = [
                 name
                 for name in archive.namelist()

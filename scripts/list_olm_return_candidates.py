@@ -385,6 +385,8 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             or (data and isinstance(data.get("results"), list))
         ):
             return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
+    if {"OLM_for_Mac/README.md", "OLM_for_Mac/README.en.md", "OLM_for_Mac/LICENSE"}.issubset(names) and any(".plugin/Contents/MacOS/" in name for name in names):
+        return ("mac-plugin-package", ["slim OLM_for_Mac release; build manifest is a sidecar"])
     if any(name.endswith("AE_PIXEL_VALIDATION/request_manifest.json") for name in names):
         return ("mac-plugin-package", ["contains AE_PIXEL_VALIDATION requests"])
     if any(name.endswith("reference_manifest.json") for name in names):
