@@ -1,8 +1,12 @@
+#ifndef OLM_DIRECTIONAL_FIXTURE_PATHS
+#define OLM_DIRECTIONAL_FIXTURE_PATHS 0
+#endif
 // Included in OLMDirectionalBlur.cpp; preserve translation-unit order.
 static bool NoiseCoefficientHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 	                                          A_long width,
 	                                          A_long height)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	if (width != 16 || height != 16 || info.angle_deg != 45.0 ||
 		info.brightness_gain != 1.0 || info.seed != 1 ||
 		info.noise_offset != 0 || info.thickness != 3.0) {
@@ -347,7 +351,7 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		(info.front_alpha_fade != 0 || info.front_sharp_tail != 0.0);
 	const bool size_back_combo = info.size_variation != 0.0 &&
 		(info.back_alpha_fade != 0 || info.back_sharp_tail != 0.0);
-	const bool size_front_combo_exact = input && output &&
+	const bool size_front_combo_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && ( input && output &&
 		input->width == 16 && input->height == 16 &&
 		output->width == 16 && output->height == 16 &&
 		info.front_strength == 8 && info.back_strength == 0 &&
@@ -359,8 +363,8 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		  (info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
 		  info.front_sharp_tail == 0.0) ||
 		 (info.size_variation == 50.0 && info.front_alpha_fade == 0 &&
-		  (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)));
-	const bool size_back_combo_exact = input && output &&
+		  (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0))));
+	const bool size_back_combo_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && ( input && output &&
 		input->width == 16 && input->height == 16 &&
 		output->width == 16 && output->height == 16 &&
 		info.front_strength == 0 && info.back_strength == 8 &&
@@ -372,7 +376,7 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		  (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
 		  info.back_sharp_tail == 0.0) ||
 		 (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
-		  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)));
+		  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0))));
 	const bool legacy_size_sharp_exact = input && output &&
 		input->width == 960 && input->height == 540 &&
 		output->width == 960 && output->height == 540 &&
@@ -450,6 +454,7 @@ static bool IsRetainedNeutralBackExact8(const PF_EffectWorld *input,
 		                                  const PF_EffectWorld *output,
 		                                  const OLMDirectionalBlurInfo &info)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	if (info.front_strength != 0 || info.brightness_gain != 1.0 ||
 		info.front_alpha_fade != 0 || info.front_sharp_tail != 0.0 ||
 		info.back_alpha_fade != 0 ||
@@ -473,6 +478,7 @@ static bool IsRetainedNeutralBackExact16(const PF_EffectWorld *input,
 		                                   const PF_EffectWorld *output,
 		                                   const OLMDirectionalBlurInfo &info)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	return RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel16)) &&
 		info.front_strength == 0 &&
 		(info.back_strength == 1 || info.back_strength == 2 ||
@@ -488,6 +494,7 @@ static bool IsRetainedNeutralBackExact32(const PF_EffectWorld *input,
 		                                  const PF_EffectWorld *output,
 		                                  const OLMDirectionalBlurInfo &info)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	const bool back_one = info.back_strength == 1 &&
 		(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
 		(info.brightness_gain == 0.5 || info.brightness_gain == 1.0);
@@ -506,6 +513,7 @@ static bool IsRetainedNeutralDualExact16(const PF_EffectWorld *input,
 	                                      const PF_EffectWorld *output,
 	                                      const OLMDirectionalBlurInfo &info)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	return RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel16)) &&
 		(info.front_strength == 1 || info.front_strength == 2 ||
 		 info.front_strength == 8) && info.back_strength == 1 &&
@@ -521,6 +529,7 @@ static bool IsRetainedNeutralBackExact(const PF_EffectWorld *input,
 		                                const OLMDirectionalBlurInfo &info,
 		                                short bitdepth)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	switch (bitdepth) {
 	case 8: return IsRetainedNeutralBackExact8(input, output, info);
 	case 16: return IsRetainedNeutralBackExact16(input, output, info);
@@ -534,6 +543,7 @@ static bool IsRetainedNeutralExact(const PF_EffectWorld *input,
 	                                const OLMDirectionalBlurInfo &info,
 	                                short bitdepth)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	return IsRetainedNeutralBackExact(input, output, info, bitdepth) ||
 		(bitdepth == 16 && IsRetainedNeutralDualExact16(input, output, info));
 }
@@ -823,6 +833,7 @@ static bool NoisePublicPairwiseTuple(const OLMDirectionalBlurInfo &info,
 	                                  A_long width,
 	                                  A_long height)
 {
+	if (!OLM_DIRECTIONAL_FIXTURE_PATHS) return false;
 	const bool fade50 = info.front_alpha_fade == 50 &&
 		info.front_sharp_tail == 0.0 && info.size_variation == 0.0;
 	const bool sharp50 = info.front_alpha_fade == 0 &&
