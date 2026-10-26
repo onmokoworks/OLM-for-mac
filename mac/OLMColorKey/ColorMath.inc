@@ -1,11 +1,17 @@
+static constexpr float kLabLinearBreakpoint = 0.008856000378727913f; // Lab piecewise breakpoint; AEX 0x9f50, data RVA 0x1f638.
+static constexpr float kLabLinearSlope = 7.7870001792907715f; // Lab linear slope; AEX 0x9f50, data RVA 0x1f6f0.
+static constexpr float kLabLinearOffset = 0.13793103396892548f; // Lab linear offset; AEX 0x9f50, data RVA 0x1f658.
+static constexpr float kLabPower = 0.3333300054073334f; // Lab nonlinear exponent; AEX 0x9f50, data RVA 0x1f678.
+static constexpr float kLab76DistanceScale = 424.4352722167969f; // Lab76 threshold and epsilon scale; AEX 0x43a0.
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 static float LabF(float t)
 {
-	return t <= 0.008856000378727913f
-		? t * 7.7870001792907715f + 0.13793103396892548f
-		: ucrt_powf(t, 0.3333300054073334f, UCRT_FMA);
+	return t <= kLabLinearBreakpoint
+		? t * kLabLinearSlope + kLabLinearOffset
+		: ucrt_powf(t, kLabPower, UCRT_FMA);
 }
 
+// FLOAT32 sum order matches AEX 0x9f50; do not reassociate.
 static void RGBToPluginLab76(const float rgb[3], float out[3])
 {
 	float r = rgb[0];
@@ -13,9 +19,9 @@ static void RGBToPluginLab76(const float rgb[3], float out[3])
 	float b = rgb[2];
 	float x = g * 2.1455016136169434f + r * 0.6380193829536438f + b * 0.2165091633796692f;
 	float fx = LabF(x);
-	out[0] = x <= 0.008856000378727913f
+	out[0] = x <= kLabLinearBreakpoint
 		? g * 1938.031494140625f + r * 576.3229370117188f + b * 195.57272338867188f
-		: ucrt_powf(x, 0.3333300054073334f, UCRT_FMA) * 116.0f - 16.0f;
+		: ucrt_powf(x, kLabPower, UCRT_FMA) * 116.0f - 16.0f;
 	float a_source = r * 1.2373713254928589f + g * 1.0727508068084717f + b * 0.5412744283676147f;
 	float b_source = g * 0.35758259892463684f + r * 0.05800257995724678f + b * 2.8507096767425537f;
 	out[1] = (LabF(a_source) - fx) * 500.0f;
@@ -121,8 +127,8 @@ static bool Lab76ScalarHit(const float cmp[3], const float key[3],
 	distance_squared += d1 * d1;
 	distance_squared += d2 * d2;
 	const float distance = std::sqrt(distance_squared);
-	float limit = (float)threshold * 424.4352722167969f;
-	const float epsilon_limit = epsilon * 424.4352722167969f;
+	float limit = (float)threshold * kLab76DistanceScale;
+	const float epsilon_limit = epsilon * kLab76DistanceScale;
 	limit = epsilon_limit + limit;
 	return distance <= limit;
 }
