@@ -7,3 +7,6 @@ Report:
 - the Smart and Classic counts of the ON/OFF oracle campaigns;
 - the G1 numbers;
 - the code lines before and after.
+
+## Resume note
+- First attempt: `git show 1de66c96177d4a72d328b000a8fca5cb380e3b49:orchestra/reports/F01-fixtures-olmkirakira.md`. Blanket OFF changes admission, so keep those conditions. The narrow 32x18 / three-Gaussian-leaf removal passed the focused oracle campaign. FIXTURE_REMOVAL.md now allows deleting source-text assertions that pin removed fixture code, so finish that narrow removal and run the gates.
