@@ -1,5 +1,7 @@
 # B01: refusals that depend on memory addresses (nondeterministic black frames)
 
+depends: Q04-refactor-olmdirectionalblur
+
 ## Finding (Q02, 2026-10-26)
 - In `native_diff`, the same base binary (sha `a60d18f6…`, arm64 reference) gave two different results for the same ColorKey case in two runs. One run refused with error 516, tag `PrepareSmartRenderWorld:smart-public-admission`. The other run rendered.
   - Case: seed 909, generator index 4935, PF8, input 3×1, full 9×4, downsample 1/4, request [1,0,3,1], padding 1 byte. Details are in `orchestra/reports/Q02-refactor-olmcolorkey.md` (G1).
