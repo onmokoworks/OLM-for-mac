@@ -1,4 +1,8 @@
 // Scalar AEX arithmetic and polar sampling; included by OLMRadialBlur.cpp.
+static constexpr A_long kRadialMaxSpan = 3000; // Worker span cap; AEX 0x180001c90.
+static constexpr float kI32UpperExclusive = 2147483648.0f; // signed conversion boundary; x86 CVTTSS2SI in AEX 0x180017400.
+static constexpr uint32_t kFloatSignMask = 0x80000000U; // FLOAT32 sign mask; complement of AEX RVA 0x31400.
+static constexpr uint32_t kFloatMagnitudeMask = 0x7fffffffU; // FLOAT32 absolute-value mask; AEX RVA 0x25670.
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
 // Fixed-angle conversion coefficient from AEX a2b0 (DOUBLE to FLOAT32).
@@ -104,7 +108,7 @@ static int32_t RadialCVTTSS2SI(float value)
 	// CVTTSS2SI returns the integer-indefinite value for NaN and values that
 	// cannot be represented as int32.  Spell this out rather than relying on
 	// undefined C++ float-to-integer conversion outside the representable range.
-	if (!std::isfinite(value) || value >= 2147483648.0f || value < -2147483648.0f) {
+	if (!std::isfinite(value) || value >= kI32UpperExclusive || value < -kI32UpperExclusive) {
 		return INT32_MIN;
 	}
 	return (int32_t)value;
@@ -138,20 +142,30 @@ struct RadialPairedTrig {
 
 static float RadialAEXSinHot(float x)
 {
-	// Preserve scalar FLOAT32 reduction and polynomial order; do not reassociate.
-	const float inv_pi = RadialF32FromBits(0x3ea2f983U);
-	const float shift = RadialF32FromBits(0x4b400000U);
-	const float pi0 = RadialF32FromBits(0x40490000U);
-	const float pi1 = RadialF32FromBits(0x3a7da000U);
-	const float pi2 = RadialF32FromBits(0x34222000U);
-	const float pi3 = RadialF32FromBits(0x2cb4611aU);
-	const float c3 = RadialF32FromBits(0xbe2aaaa6U);
-	const float c5 = RadialF32FromBits(0x3c088766U);
-	const float c7 = RadialF32FromBits(0xb94fb7ffU);
-	const float c9 = RadialF32FromBits(0x362edef8U);
+	// Order matches AEX 0x18001d040 hot path; preserve FLOAT32 and do not reassociate.
+	constexpr uint32_t kTrigInvPiBits = 0x3ea2f983U; // 1/pi; AEX RVA 0x31880.
+	const float inv_pi = RadialF32FromBits(kTrigInvPiBits);
+	constexpr uint32_t kTrigRoundShiftBits = 0x4b400000U; // FLOAT32 integer rounding shift; AEX RVA 0x318c0.
+	const float shift = RadialF32FromBits(kTrigRoundShiftBits);
+	constexpr uint32_t kTrigPi0Bits = 0x40490000U; // pi reduction part 0; AEX RVA 0x315c0.
+	const float pi0 = RadialF32FromBits(kTrigPi0Bits);
+	constexpr uint32_t kTrigPi1Bits = 0x3a7da000U; // pi reduction part 1; AEX RVA 0x31600.
+	const float pi1 = RadialF32FromBits(kTrigPi1Bits);
+	constexpr uint32_t kTrigPi2Bits = 0x34222000U; // pi reduction part 2; AEX RVA 0x31640.
+	const float pi2 = RadialF32FromBits(kTrigPi2Bits);
+	constexpr uint32_t kTrigPi3Bits = 0x2cb4611aU; // pi reduction part 3; AEX RVA 0x31680.
+	const float pi3 = RadialF32FromBits(kTrigPi3Bits);
+	constexpr uint32_t kTrigSinC3Bits = 0xbe2aaaa6U; // sine polynomial c3; AEX RVA 0x31780.
+	const float c3 = RadialF32FromBits(kTrigSinC3Bits);
+	constexpr uint32_t kTrigSinC5Bits = 0x3c088766U; // sine polynomial c5; AEX RVA 0x317c0.
+	const float c5 = RadialF32FromBits(kTrigSinC5Bits);
+	constexpr uint32_t kTrigSinC7Bits = 0xb94fb7ffU; // sine polynomial c7; AEX RVA 0x31800.
+	const float c7 = RadialF32FromBits(kTrigSinC7Bits);
+	constexpr uint32_t kTrigSinC9Bits = 0x362edef8U; // sine polynomial c9; AEX RVA 0x31840.
+	const float c9 = RadialF32FromBits(kTrigSinC9Bits);
 
 	const uint32_t x_bits = RadialF32Bits(x);
-	const float absolute = RadialF32FromBits(x_bits & 0x7fffffffU);
+	const float absolute = RadialF32FromBits(x_bits & kFloatMagnitudeMask);
 	float quadrant = RadialF32Add(RadialF32Mul(absolute, inv_pi), shift);
 	const uint32_t quadrant_bits = RadialF32Bits(quadrant);
 	const float n = RadialF32Sub(quadrant, shift);
@@ -171,17 +185,21 @@ static float RadialAEXSinHot(float x)
 	polynomial = RadialF32Mul(polynomial, squared);
 	polynomial = RadialF32Mul(polynomial, signed_reduced);
 	polynomial = RadialF32Add(signed_reduced, polynomial);
-	return RadialF32FromBits(RadialF32Bits(polynomial) ^ (x_bits & 0x80000000U));
+	return RadialF32FromBits(RadialF32Bits(polynomial) ^ (x_bits & kFloatSignMask));
 }
 
 static RadialPairedTrig RadialAEXPairedSinCos(float theta)
 {
-	const float tiny = RadialF32FromBits(0x39000000U);
-	const float half = RadialF32FromBits(0x3f000000U);
-	const float one = RadialF32FromBits(0x3f800000U);
-	const float pi_over_two = RadialF32FromBits(0x3fc90fdbU);
+	constexpr uint32_t kTrigTinyBits = 0x39000000U; // paired-trig tiny-angle threshold; AEX RVA 0x256a0.
+	const float tiny = RadialF32FromBits(kTrigTinyBits);
+	constexpr uint32_t kTrigHalfBits = 0x3f000000U; // paired-trig cosine quadratic coefficient; AEX RVA 0x25690.
+	const float half = RadialF32FromBits(kTrigHalfBits);
+	constexpr uint32_t kTrigOneBits = 0x3f800000U; // paired-trig cosine constant; AEX RVA 0x25680.
+	const float one = RadialF32FromBits(kTrigOneBits);
+	constexpr uint32_t kTrigHalfPiBits = 0x3fc90fdbU; // paired-trig cosine phase shift; AEX RVA 0x256b0.
+	const float pi_over_two = RadialF32FromBits(kTrigHalfPiBits);
 	const uint32_t theta_bits = RadialF32Bits(theta);
-	const float absolute = RadialF32FromBits(theta_bits & 0x7fffffffU);
+	const float absolute = RadialF32FromBits(theta_bits & kFloatMagnitudeMask);
 	if (absolute < tiny) {
 		float cosine = RadialF32Mul(absolute, absolute);
 		cosine = RadialF32Mul(cosine, half);
