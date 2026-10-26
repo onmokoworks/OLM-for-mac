@@ -1,0 +1,4207 @@
+{
+  "schema": "olm-release-gate/2",
+  "started_utc": "2026-10-26T06:32:32.144405+00:00",
+  "git_head": "6a66b4368f60dd55536e6e2723b727e92b88e6f7",
+  "script_sha256": "83b0f79fb3daf0db317fdbed38b156843aa1876870092353a79ac3ee6acbe570",
+  "seeds": [
+    2026,
+    2027
+  ],
+  "n_per_seed": 300,
+  "fuzz_jobs": 1,
+  "OLM_TEST_JOBS": 1,
+  "stages": [
+    {
+      "name": "framework",
+      "status": "PASS",
+      "tests": 50,
+      "skipped": 3
+    },
+    {
+      "name": "build",
+      "status": "PASS",
+      "bundles": 10,
+      "executables": [
+        {
+          "plugin": "OLMBlur",
+          "sha256": "4fe6539ceebcb6fba3f5637e562db9f1525d0defb69c2493ce613f4ee1b7893b",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "ColorKeep",
+          "sha256": "5beaacf57451bcf03845a59ad7662205cbfe049e739ea76f468cbc74f6408bb4",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMColorKey",
+          "sha256": "5c744a9d526e7a76ab0d82e65c3c932581c3abe2617f8000db30471ad33182a9",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMDirectionalBlur",
+          "sha256": "16bc3c77c33db3d0f6790dc05db09619eedc2f72fdede45c3cb817de82d38742",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMDistanceGradation",
+          "sha256": "d533bd750ffffdfc45b4902cee916b7c2d01c5b8fd458014f835d27e469ee3ab",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMKiraKira",
+          "sha256": "fdb177e1f7099d6a4bc367321fa7a13d629d9c8d66e3b8736829d75682612aec",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMSmoother2",
+          "sha256": "12959e768891f0656f42c66f7f55de8f7fc8ad4773d7e8c5a5f53bd47f281ea3",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMToonDilate",
+          "sha256": "4885d11cf1451b999b939870ed456631eb0eb757a6a78942ab064404c454ecbd",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMRadialBlur",
+          "sha256": "bbbe0cb3862092ec826ab8d47b97199477c774d8a195a345ddf011fee378cde3",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        },
+        {
+          "plugin": "OLMSmoother",
+          "sha256": "7245e6a583282b76c38ef8a12dd5b969525378d16da38b96840c0f36dc36b116",
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "corpus",
+      "status": "FAIL",
+      "counts": {
+        "PASS": 2864,
+        "FAIL": 134,
+        "ORACLE-STOP": 0
+      },
+      "corpus_by_plugin": {
+        "olmblur": 139,
+        "colorkeep": 421,
+        "olmcolorkey": 51,
+        "olmdirectionalblur": 306,
+        "olmdistancegradation": 461,
+        "olmkirakira": 390,
+        "olmsmoother2": 112,
+        "olmtoondilate": 562,
+        "radialblur": 253,
+        "olmsmoother": 303
+      },
+      "total": 2998,
+      "empty_corpora": [],
+      "verdicts": "orchestra/state/R12-release-gate-final/complete/replay-verdicts.json"
+    },
+    {
+      "name": "fresh-seeds",
+      "status": "PASS",
+      "counts": {
+        "E": 5695,
+        "M": 0,
+        "R": 250,
+        "U": 55,
+        "errors": 0
+      },
+      "campaigns": [
+        {
+          "plugin": "olmblur",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmblur",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "colorkeep",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "colorkeep",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmcolorkey",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmcolorkey",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmdirectionalblur",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 299,
+            "M": 0,
+            "R": 0,
+            "U": 1,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmdirectionalblur",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 298,
+            "M": 0,
+            "R": 0,
+            "U": 2,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmdistancegradation",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 291,
+            "M": 0,
+            "R": 4,
+            "U": 5,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmdistancegradation",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 290,
+            "M": 0,
+            "R": 2,
+            "U": 8,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmkirakira",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 282,
+            "M": 0,
+            "R": 18,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmkirakira",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 293,
+            "M": 0,
+            "R": 7,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmsmoother2",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmsmoother2",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmtoondilate",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmtoondilate",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 300,
+            "M": 0,
+            "R": 0,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "radialblur",
+          "seed": 2026,
+          "route": "smart",
+          "counts": {
+            "E": 282,
+            "M": 0,
+            "R": 0,
+            "U": 18,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "radialblur",
+          "seed": 2027,
+          "route": "smart",
+          "counts": {
+            "E": 279,
+            "M": 0,
+            "R": 0,
+            "U": 21,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmsmoother",
+          "seed": 2026,
+          "route": "classic",
+          "counts": {
+            "E": 190,
+            "M": 0,
+            "R": 110,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        },
+        {
+          "plugin": "olmsmoother",
+          "seed": 2027,
+          "route": "classic",
+          "counts": {
+            "E": 191,
+            "M": 0,
+            "R": 109,
+            "U": 0,
+            "errors": 0
+          },
+          "status": "PASS",
+          "report_status": "complete"
+        }
+      ]
+    },
+    {
+      "name": "bundle-checks",
+      "status": "FAIL",
+      "F47d": {
+        "counts": {
+          "E": 841,
+          "M": 0,
+          "R": 146,
+          "U": 13,
+          "errors": 0
+        },
+        "plugins": [
+          {
+            "plugin": "olmblur",
+            "counts": {
+              "E": 100,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "colorkeep",
+            "counts": {
+              "E": 0,
+              "M": 0,
+              "R": 100,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmcolorkey",
+            "counts": {
+              "E": 100,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmdirectionalblur",
+            "counts": {
+              "E": 100,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmdistancegradation",
+            "counts": {
+              "E": 95,
+              "M": 0,
+              "R": 1,
+              "U": 4,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmkirakira",
+            "counts": {
+              "E": 97,
+              "M": 0,
+              "R": 3,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmsmoother2",
+            "counts": {
+              "E": 100,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmtoondilate",
+            "counts": {
+              "E": 100,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "radialblur",
+            "counts": {
+              "E": 84,
+              "M": 0,
+              "R": 7,
+              "U": 9,
+              "errors": 0
+            },
+            "status": "PASS"
+          },
+          {
+            "plugin": "olmsmoother",
+            "counts": {
+              "E": 65,
+              "M": 0,
+              "R": 35,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS"
+          }
+        ]
+      },
+      "F51": {
+        "counts": {
+          "equal_render": 3349,
+          "difference": 521,
+          "equal_refuse": 128
+        },
+        "expected": 3998
+      }
+    },
+    {
+      "name": "plugin-tests",
+      "status": "FAIL",
+      "selected": [
+        {
+          "test": "tests/test_colorkeep_generic_beta_20260820.py",
+          "sha256": "bc3be581a5d0e0da39110bf9124fc25f7213b6091a8698bac76f33108072073f",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_colorkeep_roi_tile_beta_20260820.py",
+          "sha256": "f69edcdf0d6e954bd3597cdbee80e077909b30ac478da4fa9c71e583d0d5f518",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmblur_generic_beta_lane_20260820.py",
+          "sha256": "f10a918f268706691fb82684b8e84948bf8474e523d5ff2a6a42191b1f833dcf",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmblur_generic_beta_sanitizers_20260820.py",
+          "sha256": "347796b913d20fda6896b3bbc468ed9f200b8f302574b50538e0d48cb6088375",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmblur_generic_classic_beta_20260822.py",
+          "sha256": "dac37838626d1ff6d9f7b692218404640dc5b7b0cd69bcb2303d1d96d1349eee",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmblur_roi_halo_contract_20260820.py",
+          "sha256": "6a2b687922ce5491f25b6a92d84654093123d326b52c0ad9a954cfe9b8a4f906",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+          "sha256": "5f12ebccdc64ee47bb3536e6f38ae4f8befef00fa34ec6f8681cf68339f2ad4f",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+          "sha256": "1805662b1ade79322e6888f0d962a9de1a61a76592c8a8c598f446fd68f6b0be",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmcolorkey_generic_roi_tile.py",
+          "sha256": "10752f47e0badbb06b41dddc77d7a2125d307739435be3d374dfa6b259ed6da1",
+          "exit": 1,
+          "status": "FAIL"
+        },
+        {
+          "test": "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py",
+          "sha256": "c8bf0aee5ab51a02881ce4c70cce97333e84cc60afb597ade32bf8742939c5a9",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
+          "sha256": "eda73a3c2bc556e1b55a4ef9f8e04c3f208c7d13d5773ec9c4f01287f289fcc3",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+          "sha256": "6a8f4c5b881398428457a33324e4b2bbf67e3e1c30f47bfe0b6f6a3cc5de1260",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tools/emulation/test_dblur_generic_admission_budget_20260821.py",
+          "sha256": "c9a06d09f26d588931216a2ada1d5636fcee88e3cdc7d7656278bb08a410b4d3",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tools/emulation/test_dblur_generic_roi_policy_20260820.py",
+          "sha256": "4b14ebe01062072b328d9c47ee9f96ae45539d8954cff707f3fa0a99dcfce4c9",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py",
+          "sha256": "dda0a00e350ec2bec48b50206f23971e1cb8c7c3e237c7824620319668cef46a",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmdistancegradation_smart_transactional_20260822.py",
+          "sha256": "d1ee084b1d1667e84a776a3330577dc7b9370d42a370fe4f630445fb6a53d16f",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmkirakira_generic_beta_lane_20260820.py",
+          "sha256": "6fe8679f49d4edccf87f268afaf311c3f062dba3635a286fdf6b1af742c9f793",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py",
+          "sha256": "37a8bb62623d5af26b23f33892db347a0c1c9f62f2883f3002b94511eb837197",
+          "exit": 1,
+          "status": "FAIL"
+        },
+        {
+          "test": "tests/test_olmkirakira_native_smoke_tuple_20260820.py",
+          "sha256": "c169fbb582faf02f50959c53c5b9a947783b9c884e0e7dbf277820977a32972c",
+          "exit": 1,
+          "status": "FAIL"
+        },
+        {
+          "test": "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py",
+          "sha256": "bec58af800cd772354d86c20a1104d0f4b6fcc1215ff83fe7551f0e335386787",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py",
+          "sha256": "f3f495aff651fa0b2db82e1590092c975b045df9c4641540fab4965050bd07da",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmradialblur_generic_budget_20260821.py",
+          "sha256": "b877bf85ca1b3facc1dfc91bc0057249388c75e80b67d948d17adff13662caf9",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmradialblur_size_noise_effectmain_20260821.py",
+          "sha256": "d0bc890b0bda4b5aa229c1b34f2d37f35a142564fc7f57d3c28c2ecc20ce16b3",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmradialblur_global_polar_smart_contract_20260820.py",
+          "sha256": "7084d1a6003fa1bbeb63c1259280bb27fc7967e2d61541d85306ad14bf110f91",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py",
+          "sha256": "31c4612f3b5a541ba338962c8caf2c542d0d9b0ca02550efed6eea34e08e3747",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmsmoother_v1_smart_beta_20260822.py",
+          "sha256": "75d13a6202128ebf0ee7f9d9c35af40fb1e8cd411d28582f99b8cfeb90b6885a",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmsmoother2_default_beta_lane_20260820.py",
+          "sha256": "cd1aef68a417f11a8e2d1417d1a1fdbf91dc69645ef6146c482f1a0b88a34e13",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmsmoother2_gamma_colors_beta_20260820.py",
+          "sha256": "535171a42bc73ea0c548706c8a59f569eb547ec1a2a4a1233e9b77e815be794c",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py",
+          "sha256": "9179a6450b34545c97c14567d9b14fa7294783c97d8b86f4b004b07c3f8dba9d",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmtoondilate_generic_beta.py",
+          "sha256": "05859d000c433c03c9c3ce7c5b342f79968e9740c2b1a8328325a70c0884c401",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olmtoondilate_roi_safety.py",
+          "sha256": "8ec8b25bc6c7f3c594d086872b5805167614bdae71b9198eed7143ee011364e4",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_world_safety.py",
+          "sha256": "bb353c0000660b2fe310f1602ad9cf47fabd1570fb467513509e04ebdcd0062c",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_checked_allocation.py",
+          "sha256": "470bfb79f1ac789560005ed40baf1eca50cc186145e2a4843355d4ac699238ab",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_checked_rect.py",
+          "sha256": "064af474afe5bb353331f7ff238c8b2f2fb57470806526c133083c8658db15aa",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_roi_contract.py",
+          "sha256": "2f87e2e45cf5679a2b0be0119aeb29ff5b3dc8bf6bbb7cfb48409c7afdadf695",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_property_cases.py",
+          "sha256": "03dfb582559d15558b41ef99144199622719129d37d66b44e2452351e9440aea",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_olm_roi_tile_property.py",
+          "sha256": "39269384bf38fe27eea1da0bc6c7def0e9b3161b17d94f4354506e1bf8161b0f",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_generate_aexcompat_oracle_campaign.py",
+          "sha256": "1a1f3e3b0271e951c846ba8a688b215594e3a519c8c2d39bd0a78b1dcc6ab5bf",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_run_aexcompat_reference_20260725.py",
+          "sha256": "d04123d98430f2c8ae1ff2feb482a9f66c2c6053367603283495733c198a42ae",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_generic_beta_windows_oracle_handoff.py",
+          "sha256": "1dbe311366a603b05390040b1bbb433aba873baf98cb0c566de46ba597824b59",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_ae_generalization_smoke.py",
+          "sha256": "4544ac6ec611d2383fc38d57452c24f103fbf7fbc6cbe75237021fdbf06c8958",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_ae_png_completion.py",
+          "sha256": "33f4416543cf48773e62f35dd6b3ccfdeb4434554e1e4e49147d8035183f87e2",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_ae_batch_png_integrity.py",
+          "sha256": "36d8577e56845d0bb0bb1f870d11be514da7168ea03328627226cf75600ab24a",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_run_olm_generic_beta_gate.py",
+          "sha256": "acb58665a6aa18956e9c09d8df546d3c041e520ec366d198de4abfb18553c3b9",
+          "exit": 0,
+          "status": "PASS"
+        },
+        {
+          "test": "tests/test_verify_mac_plugin_package_hash.py",
+          "sha256": "f0311e2725c49e46c59325be8f8666bb7ef7c84ad01e3b73e096b3b505274105",
+          "exit": 0,
+          "status": "PASS"
+        }
+      ],
+      "counts": {
+        "PASS": 42,
+        "FAIL": 3
+      }
+    },
+    {
+      "name": "static",
+      "status": "PASS",
+      "plugins": [
+        {
+          "plugin": "OLMBlur",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              100663360,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              100663360,
+              134222848
+            ]
+          ],
+          "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        {
+          "plugin": "ColorKeep",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33554496,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              33554496,
+              134222848
+            ]
+          ],
+          "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+        },
+        {
+          "plugin": "OLMColorKey",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33555520,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              33555520,
+              134222848
+            ]
+          ],
+          "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+        },
+        {
+          "plugin": "OLMDirectionalBlur",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              100663360,
+              134222856
+            ]
+          ],
+          "mac_flags": [
+            [
+              100663360,
+              134222856
+            ]
+          ],
+          "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        {
+          "plugin": "OLMDistanceGradation",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              100663360,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              100663360,
+              134222848
+            ]
+          ],
+          "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        {
+          "plugin": "OLMKiraKira",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33587264,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              33587264,
+              134222848
+            ]
+          ],
+          "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+        },
+        {
+          "plugin": "OLMSmoother2",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33555520,
+              134222848
+            ]
+          ],
+          "mac_flags": [
+            [
+              33555520,
+              134222848
+            ]
+          ],
+          "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+        },
+        {
+          "plugin": "OLMToonDilate",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33554500,
+              134353920
+            ]
+          ],
+          "mac_flags": [
+            [
+              33554500,
+              134353920
+            ]
+          ],
+          "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+        },
+        {
+          "plugin": "OLMRadialBlur",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              100696128,
+              134222856
+            ]
+          ],
+          "mac_flags": [
+            [
+              100696128,
+              134222856
+            ]
+          ],
+          "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        {
+          "plugin": "OLMSmoother",
+          "release_config": true,
+          "pipl_equal": true,
+          "original_flags": [
+            [
+              33554496,
+              134217728
+            ]
+          ],
+          "mac_flags": [
+            [
+              33554496,
+              134217728
+            ]
+          ],
+          "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        }
+      ],
+      "count": 10,
+      "known_original_bugs_sha256": "244d10d01a0778c7ba07b2ee8dc4e80c9ce5a682fd5c8cac83fd8c8c66c8478a"
+    }
+  ],
+  "commands": [
+    {
+      "name": "framework",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/fuzz",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 13.08,
+      "log": "orchestra/state/R12-release-gate-final/complete/framework.log"
+    },
+    {
+      "name": "memory-pressure",
+      "command": [
+        "memory_pressure"
+      ],
+      "exit": 0,
+      "seconds": 0.01,
+      "log": "orchestra/state/R12-release-gate-final/complete/memory-pressure.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/build_F47_bundles.py",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/bundles"
+      ],
+      "exit": 0,
+      "seconds": 122.88,
+      "log": "orchestra/state/R12-release-gate-final/complete/build.log"
+    },
+    {
+      "name": "replay-00-colorkeep",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-00-colorkeep",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-00-colorkeep.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/colorkeep/P04d-cropped-checkout"
+      ],
+      "exit": 0,
+      "seconds": 9.73,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-00-colorkeep.log"
+    },
+    {
+      "name": "replay-01-colorkeep",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-01-colorkeep",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-01-colorkeep.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 2.22,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-01-colorkeep.log"
+    },
+    {
+      "name": "replay-02-colorkeep",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-02-colorkeep",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-02-colorkeep.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/colorkeep_realistic_P02a"
+      ],
+      "exit": 0,
+      "seconds": 9.1,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-02-colorkeep.log"
+    },
+    {
+      "name": "replay-03-olmblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-03-olmblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-03-olmblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmblur"
+      ],
+      "exit": 0,
+      "seconds": 18.87,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-03-olmblur.log"
+    },
+    {
+      "name": "replay-04-olmblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-04-olmblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-04-olmblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmblur/P05c-parallel-boundary"
+      ],
+      "exit": 2,
+      "seconds": 4.34,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-04-olmblur.log"
+    },
+    {
+      "name": "replay-05-olmblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-05-olmblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-05-olmblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmblur/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 4.21,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-05-olmblur.log"
+    },
+    {
+      "name": "replay-06-olmblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-06-olmblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-06-olmblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmblur_downsample_P01a"
+      ],
+      "exit": 0,
+      "seconds": 5.9,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-06-olmblur.log"
+    },
+    {
+      "name": "replay-07-olmblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-07-olmblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-07-olmblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmblur_realistic_P02h"
+      ],
+      "exit": 0,
+      "seconds": 5.78,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-07-olmblur.log"
+    },
+    {
+      "name": "replay-08-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-08-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-08-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey"
+      ],
+      "exit": 0,
+      "seconds": 6.42,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-08-olmcolorkey.log"
+    },
+    {
+      "name": "replay-09-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-09-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-09-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey/C01-pf32-nan"
+      ],
+      "exit": 0,
+      "seconds": 3.2,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-09-olmcolorkey.log"
+    },
+    {
+      "name": "replay-10-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-10-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-10-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey/N02-nightly-20261025"
+      ],
+      "exit": 0,
+      "seconds": 8.87,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-10-olmcolorkey.log"
+    },
+    {
+      "name": "replay-11-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-11-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-11-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey/P02i-realistic"
+      ],
+      "exit": 0,
+      "seconds": 3.34,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-11-olmcolorkey.log"
+    },
+    {
+      "name": "replay-12-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-12-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-12-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey/P05c-lab-key-cache"
+      ],
+      "exit": 0,
+      "seconds": 4.07,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-12-olmcolorkey.log"
+    },
+    {
+      "name": "replay-13-olmcolorkey",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-13-olmcolorkey",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-13-olmcolorkey.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmcolorkey/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 2.88,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-13-olmcolorkey.log"
+    },
+    {
+      "name": "replay-14-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-14-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-14-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur"
+      ],
+      "exit": 0,
+      "seconds": 14.94,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-14-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-15-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-15-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-15-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur/N02-nightly-20261025"
+      ],
+      "exit": 2,
+      "seconds": 7.44,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-15-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-16-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-16-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-16-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur/P04b2-cropped-checkout"
+      ],
+      "exit": 0,
+      "seconds": 3.94,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-16-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-17-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-17-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-17-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur/P05a-performance"
+      ],
+      "exit": 0,
+      "seconds": 7.74,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-17-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-18-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-18-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-18-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur/P06a-investigation"
+      ],
+      "exit": 0,
+      "seconds": 4.01,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-18-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-19-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-19-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-19-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 3.63,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-19-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-20-olmdirectionalblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-20-olmdirectionalblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-20-olmdirectionalblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdirectionalblur_realistic_P02j"
+      ],
+      "exit": 0,
+      "seconds": 11.02,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-20-olmdirectionalblur.log"
+    },
+    {
+      "name": "replay-21-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-21-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-21-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation"
+      ],
+      "exit": 0,
+      "seconds": 90.44,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-21-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-22-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-22-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-22-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 1.97,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-22-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-23-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-23-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-23-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_N02/default"
+      ],
+      "exit": 0,
+      "seconds": 4.73,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-23-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-24-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-24-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-24-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_N02/odd-even-v1"
+      ],
+      "exit": 2,
+      "seconds": 1.98,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-24-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-25-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-25-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-25-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_N02/realistic-v1"
+      ],
+      "exit": 0,
+      "seconds": 3.09,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-25-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-26-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-26-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-26-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_N02/realistic-v2"
+      ],
+      "exit": 0,
+      "seconds": 3.86,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-26-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-27-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-27-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-27-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_P04a"
+      ],
+      "exit": 2,
+      "seconds": 1.97,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-27-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-28-olmdistancegradation",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-28-olmdistancegradation",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-28-olmdistancegradation.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmdistancegradation_realistic_P02b"
+      ],
+      "exit": 0,
+      "seconds": 125.53,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-28-olmdistancegradation.log"
+    },
+    {
+      "name": "replay-29-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-29-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-29-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira"
+      ],
+      "exit": 0,
+      "seconds": 7.7,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-29-olmkirakira.log"
+    },
+    {
+      "name": "replay-30-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-30-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-30-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 3.22,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-30-olmkirakira.log"
+    },
+    {
+      "name": "replay-31-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-31-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-31-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira_N02_nightly"
+      ],
+      "exit": 2,
+      "seconds": 3.18,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-31-olmkirakira.log"
+    },
+    {
+      "name": "replay-32-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-32-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-32-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira_gate_off_T06"
+      ],
+      "exit": 0,
+      "seconds": 39.15,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-32-olmkirakira.log"
+    },
+    {
+      "name": "replay-33-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-33-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-33-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira_gate_off_T06/other_reductions"
+      ],
+      "exit": 0,
+      "seconds": 25.13,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-33-olmkirakira.log"
+    },
+    {
+      "name": "replay-34-olmkirakira",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-34-olmkirakira",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-34-olmkirakira.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmkirakira_realistic_P02c"
+      ],
+      "exit": 0,
+      "seconds": 144.91,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-34-olmkirakira.log"
+    },
+    {
+      "name": "replay-35-olmsmoother",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-35-olmsmoother",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-35-olmsmoother.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother"
+      ],
+      "exit": 0,
+      "seconds": 2.77,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-35-olmsmoother.log"
+    },
+    {
+      "name": "replay-36-olmsmoother",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-36-olmsmoother",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-36-olmsmoother.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother/P05c-stack-frames"
+      ],
+      "exit": 0,
+      "seconds": 3.04,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-36-olmsmoother.log"
+    },
+    {
+      "name": "replay-37-olmsmoother",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-37-olmsmoother",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-37-olmsmoother.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 1.98,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-37-olmsmoother.log"
+    },
+    {
+      "name": "replay-38-olmsmoother",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-38-olmsmoother",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-38-olmsmoother.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother_P02g_realistic"
+      ],
+      "exit": 0,
+      "seconds": 5.73,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-38-olmsmoother.log"
+    },
+    {
+      "name": "replay-39-olmsmoother2",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-39-olmsmoother2",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-39-olmsmoother2.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother2"
+      ],
+      "exit": 0,
+      "seconds": 2.25,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-39-olmsmoother2.log"
+    },
+    {
+      "name": "replay-40-olmsmoother2",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-40-olmsmoother2",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-40-olmsmoother2.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout"
+      ],
+      "exit": 0,
+      "seconds": 1.91,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-40-olmsmoother2.log"
+    },
+    {
+      "name": "replay-41-olmsmoother2",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-41-olmsmoother2",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-41-olmsmoother2.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 1.66,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-41-olmsmoother2.log"
+    },
+    {
+      "name": "replay-42-olmsmoother2",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-42-olmsmoother2",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-42-olmsmoother2.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmsmoother2_realistic_P02f"
+      ],
+      "exit": 0,
+      "seconds": 5.86,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-42-olmsmoother2.log"
+    },
+    {
+      "name": "replay-43-olmtoondilate",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-43-olmtoondilate",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-43-olmtoondilate.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmtoondilate"
+      ],
+      "exit": 0,
+      "seconds": 32.25,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-43-olmtoondilate.log"
+    },
+    {
+      "name": "replay-44-olmtoondilate",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-44-olmtoondilate",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-44-olmtoondilate.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmtoondilate/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 2.16,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-44-olmtoondilate.log"
+    },
+    {
+      "name": "replay-45-olmtoondilate",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-45-olmtoondilate",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-45-olmtoondilate.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmtoondilate_P02e_realistic"
+      ],
+      "exit": 0,
+      "seconds": 26.25,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-45-olmtoondilate.log"
+    },
+    {
+      "name": "replay-46-olmtoondilate",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-46-olmtoondilate",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-46-olmtoondilate.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/olmtoondilate_T13"
+      ],
+      "exit": 0,
+      "seconds": 4.61,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-46-olmtoondilate.log"
+    },
+    {
+      "name": "replay-47-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-47-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-47-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur"
+      ],
+      "exit": 1,
+      "seconds": 134.65,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-47-radialblur.log"
+    },
+    {
+      "name": "retry-2767-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/retry-2767-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/retry-2767-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur/C49_seed1_case000117.json",
+        "--case-timeout",
+        "120"
+      ],
+      "exit": 0,
+      "seconds": 24.82,
+      "log": "orchestra/state/R12-release-gate-final/complete/retry-2767-radialblur.log"
+    },
+    {
+      "name": "replay-48-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-48-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-48-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur/P05b-rotation-performance"
+      ],
+      "exit": 0,
+      "seconds": 7.47,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-48-radialblur.log"
+    },
+    {
+      "name": "replay-49-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-49-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-49-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur/T15b-odd-even-realistic"
+      ],
+      "exit": 2,
+      "seconds": 5.83,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-49-radialblur.log"
+    },
+    {
+      "name": "replay-50-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-50-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-50-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur_N02-nightly-20261025"
+      ],
+      "exit": 0,
+      "seconds": 6.24,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-50-radialblur.log"
+    },
+    {
+      "name": "replay-51-radialblur",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/replay-51-radialblur",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/replay-51-radialblur.json",
+        "--replay",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/fuzz_corpus/radialblur_realistic_P02d"
+      ],
+      "exit": 0,
+      "seconds": 28.42,
+      "log": "orchestra/state/R12-release-gate-final/complete/replay-51-radialblur.log"
+    },
+    {
+      "name": "fresh-olmblur-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmblur-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmblur-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 16.65,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmblur-2026.log"
+    },
+    {
+      "name": "fresh-olmblur-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmblur-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmblur-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 17.24,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmblur-2027.log"
+    },
+    {
+      "name": "fresh-colorkeep-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-colorkeep-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-colorkeep-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 13.2,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-colorkeep-2026.log"
+    },
+    {
+      "name": "fresh-colorkeep-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "colorkeep",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-colorkeep-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-colorkeep-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 13.2,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-colorkeep-2027.log"
+    },
+    {
+      "name": "fresh-olmcolorkey-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmcolorkey-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmcolorkey-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 17.96,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmcolorkey-2026.log"
+    },
+    {
+      "name": "fresh-olmcolorkey-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmcolorkey",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmcolorkey-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmcolorkey-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 17.63,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmcolorkey-2027.log"
+    },
+    {
+      "name": "fresh-olmdirectionalblur-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmdirectionalblur-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmdirectionalblur-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 30.76,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmdirectionalblur-2026.log"
+    },
+    {
+      "name": "fresh-olmdirectionalblur-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdirectionalblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmdirectionalblur-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmdirectionalblur-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 53.96,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmdirectionalblur-2027.log"
+    },
+    {
+      "name": "fresh-olmdistancegradation-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmdistancegradation-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmdistancegradation-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 160.68,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmdistancegradation-2026.log"
+    },
+    {
+      "name": "fresh-olmdistancegradation-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmdistancegradation",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmdistancegradation-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmdistancegradation-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 199.42,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmdistancegradation-2027.log"
+    },
+    {
+      "name": "fresh-olmkirakira-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmkirakira-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmkirakira-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 162.1,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmkirakira-2026.log"
+    },
+    {
+      "name": "fresh-olmkirakira-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmkirakira",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmkirakira-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmkirakira-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 162.89,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmkirakira-2027.log"
+    },
+    {
+      "name": "fresh-olmsmoother2-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmsmoother2-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother2-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 17.07,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother2-2026.log"
+    },
+    {
+      "name": "fresh-olmsmoother2-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother2",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmsmoother2-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother2-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 17.5,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother2-2027.log"
+    },
+    {
+      "name": "fresh-olmtoondilate-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmtoondilate-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmtoondilate-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 33.07,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmtoondilate-2026.log"
+    },
+    {
+      "name": "fresh-olmtoondilate-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmtoondilate",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmtoondilate-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmtoondilate-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 32.91,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmtoondilate-2027.log"
+    },
+    {
+      "name": "fresh-radialblur-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-radialblur-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-radialblur-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 145.66,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-radialblur-2026.log"
+    },
+    {
+      "name": "fresh-radialblur-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "radialblur",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-radialblur-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-radialblur-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 125.92,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-radialblur-2027.log"
+    },
+    {
+      "name": "fresh-olmsmoother-2026",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmsmoother-2026",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother-2026.json",
+        "--seed",
+        "2026",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 8.16,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother-2026.log"
+    },
+    {
+      "name": "fresh-olmsmoother-2027",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/run.py",
+        "--plugin",
+        "olmsmoother",
+        "--jobs",
+        "1",
+        "--budget-minutes",
+        "90",
+        "--shrink-attempts",
+        "0",
+        "--shrink-seconds",
+        "0",
+        "--scratch",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fuzz-scratch",
+        "--corpus",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/witnesses/fresh-olmsmoother-2027",
+        "--corpus-max-bytes",
+        "100000000",
+        "--report",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother-2027.json",
+        "--seed",
+        "2027",
+        "--n",
+        "300",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker"
+      ],
+      "exit": 0,
+      "seconds": 8.59,
+      "log": "orchestra/state/R12-release-gate-final/complete/fresh-olmsmoother-2027.log"
+    },
+    {
+      "name": "f47d",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/verify_F47d.py",
+        "--state",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/f47d",
+        "--worker",
+        "/Users/onmk/.cache/olm-emu/worker-F47d/aex-guest-worker",
+        "--candidates",
+        "plugin-bundle",
+        "--n",
+        "100"
+      ],
+      "exit": 0,
+      "seconds": 197.8,
+      "log": "orchestra/state/R12-release-gate-final/complete/f47d.log"
+    },
+    {
+      "name": "f51",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/fuzz/verify_F51.py",
+        "--state",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/f51",
+        "--bundles",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/orchestra/state/R12-release-gate-final/complete/bundles",
+        "--n",
+        "100",
+        "--jobs",
+        "1"
+      ],
+      "exit": 1,
+      "seconds": 188.1,
+      "log": "orchestra/state/R12-release-gate-final/complete/f51.log"
+    },
+    {
+      "name": "unit-00",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_colorkeep_generic_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 15.49,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-00.log"
+    },
+    {
+      "name": "unit-01",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_colorkeep_roi_tile_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 10.35,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-01.log"
+    },
+    {
+      "name": "unit-02",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmblur_generic_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.08,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-02.log"
+    },
+    {
+      "name": "unit-03",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmblur_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 5.75,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-03.log"
+    },
+    {
+      "name": "unit-04",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmblur_generic_classic_beta_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-04.log"
+    },
+    {
+      "name": "unit-05",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmblur_roi_halo_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-05.log"
+    },
+    {
+      "name": "unit-06",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmcolorkey_generic_pixel_local_beta.py"
+      ],
+      "exit": 0,
+      "seconds": 3.02,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-06.log"
+    },
+    {
+      "name": "unit-07",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmcolorkey_generic_pixel_local_pairwise.py"
+      ],
+      "exit": 0,
+      "seconds": 12.48,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-07.log"
+    },
+    {
+      "name": "unit-08",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmcolorkey_generic_roi_tile.py"
+      ],
+      "exit": 1,
+      "seconds": 0.83,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-08.log"
+    },
+    {
+      "name": "unit-09",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 10.49,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-09.log"
+    },
+    {
+      "name": "unit-10",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 13.53,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-10.log"
+    },
+    {
+      "name": "unit-11",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_backonly_beta_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 3.79,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-11.log"
+    },
+    {
+      "name": "unit-12",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_admission_budget_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.18,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-12.log"
+    },
+    {
+      "name": "unit-13",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_roi_policy_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 2.74,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-13.log"
+    },
+    {
+      "name": "unit-14",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-14.log"
+    },
+    {
+      "name": "unit-15",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmdistancegradation_smart_transactional_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 3.45,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-15.log"
+    },
+    {
+      "name": "unit-16",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmkirakira_generic_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.13,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-16.log"
+    },
+    {
+      "name": "unit-17",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmkirakira_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 42.7,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-17.log"
+    },
+    {
+      "name": "unit-18",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmkirakira_native_smoke_tuple_20260820.py"
+      ],
+      "exit": 1,
+      "seconds": 4.23,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-18.log"
+    },
+    {
+      "name": "unit-19",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 40.25,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-19.log"
+    },
+    {
+      "name": "unit-20",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 16.87,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-20.log"
+    },
+    {
+      "name": "unit-21",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.4,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-21.log"
+    },
+    {
+      "name": "unit-22",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 5.42,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-22.log"
+    },
+    {
+      "name": "unit-23",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 4.43,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-23.log"
+    },
+    {
+      "name": "unit-24",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmsmoother_v1_generic_classic_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 12.79,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-24.log"
+    },
+    {
+      "name": "unit-25",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmsmoother_v1_smart_beta_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 16.11,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-25.log"
+    },
+    {
+      "name": "unit-26",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmsmoother2_default_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.02,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-26.log"
+    },
+    {
+      "name": "unit-27",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 5.92,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-27.log"
+    },
+    {
+      "name": "unit-28",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmsmoother2_roi_fullframe_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.02,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-28.log"
+    },
+    {
+      "name": "unit-29",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmtoondilate_generic_beta.py"
+      ],
+      "exit": 0,
+      "seconds": 6.13,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-29.log"
+    },
+    {
+      "name": "unit-30",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olmtoondilate_roi_safety.py"
+      ],
+      "exit": 0,
+      "seconds": 1.13,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-30.log"
+    },
+    {
+      "name": "unit-31",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_world_safety.py"
+      ],
+      "exit": 0,
+      "seconds": 0.55,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-31.log"
+    },
+    {
+      "name": "unit-32",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_checked_allocation.py"
+      ],
+      "exit": 0,
+      "seconds": 0.39,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-32.log"
+    },
+    {
+      "name": "unit-33",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_checked_rect.py"
+      ],
+      "exit": 0,
+      "seconds": 0.39,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-33.log"
+    },
+    {
+      "name": "unit-34",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_roi_contract.py"
+      ],
+      "exit": 0,
+      "seconds": 0.36,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-34.log"
+    },
+    {
+      "name": "unit-35",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_property_cases.py"
+      ],
+      "exit": 0,
+      "seconds": 0.16,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-35.log"
+    },
+    {
+      "name": "unit-36",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_olm_roi_tile_property.py"
+      ],
+      "exit": 0,
+      "seconds": 0.69,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-36.log"
+    },
+    {
+      "name": "unit-37",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_generate_aexcompat_oracle_campaign.py"
+      ],
+      "exit": 0,
+      "seconds": 0.2,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-37.log"
+    },
+    {
+      "name": "unit-38",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_run_aexcompat_reference_20260725.py"
+      ],
+      "exit": 0,
+      "seconds": 1.85,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-38.log"
+    },
+    {
+      "name": "unit-39",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_generic_beta_windows_oracle_handoff.py"
+      ],
+      "exit": 0,
+      "seconds": 2.19,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-39.log"
+    },
+    {
+      "name": "unit-40",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_ae_generalization_smoke.py"
+      ],
+      "exit": 0,
+      "seconds": 0.33,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-40.log"
+    },
+    {
+      "name": "unit-41",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_ae_png_completion.py"
+      ],
+      "exit": 0,
+      "seconds": 2.25,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-41.log"
+    },
+    {
+      "name": "unit-42",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_ae_batch_png_integrity.py"
+      ],
+      "exit": 0,
+      "seconds": 1.81,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-42.log"
+    },
+    {
+      "name": "unit-43",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_run_olm_generic_beta_gate.py"
+      ],
+      "exit": 0,
+      "seconds": 2.05,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-43.log"
+    },
+    {
+      "name": "unit-44",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/tests/test_verify_mac_plugin_package_hash.py"
+      ],
+      "exit": 0,
+      "seconds": 0.15,
+      "log": "orchestra/state/R12-release-gate-final/complete/unit-44.log"
+    },
+    {
+      "name": "settings-OLMBlur",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMBlur/Mac/OLMBlur.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 1.07,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMBlur.log"
+    },
+    {
+      "name": "settings-ColorKeep",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/ColorKeep/Mac/ColorKeep.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 1.03,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-ColorKeep.log"
+    },
+    {
+      "name": "settings-OLMColorKey",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMColorKey/Mac/OLMColorKey.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 1.02,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMColorKey.log"
+    },
+    {
+      "name": "settings-OLMDirectionalBlur",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMDirectionalBlur/Mac/OLMDirectionalBlur.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.97,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMDirectionalBlur.log"
+    },
+    {
+      "name": "settings-OLMDistanceGradation",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.99,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMDistanceGradation.log"
+    },
+    {
+      "name": "settings-OLMKiraKira",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.96,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMKiraKira.log"
+    },
+    {
+      "name": "settings-OLMSmoother2",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMSmoother2/Mac/OLMSmoother2.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.97,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMSmoother2.log"
+    },
+    {
+      "name": "settings-OLMToonDilate",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.93,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMToonDilate.log"
+    },
+    {
+      "name": "settings-OLMRadialBlur",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.98,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMRadialBlur.log"
+    },
+    {
+      "name": "settings-OLMSmoother",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R12-release-gate-final/mac/OLMSmoother/Mac/OLMSmoother.xcodeproj",
+        "-configuration",
+        "Release",
+        "-showBuildSettings",
+        "-json"
+      ],
+      "exit": 0,
+      "seconds": 0.98,
+      "log": "orchestra/state/R12-release-gate-final/complete/settings-OLMSmoother.log"
+    }
+  ],
+  "real_host": [
+    {
+      "item": "installed identity",
+      "status": "REQUIRES-REAL-HOST"
+    },
+    {
+      "item": "native host smoke",
+      "status": "REQUIRES-REAL-HOST"
+    },
+    {
+      "item": "Windows owner evidence",
+      "status": "REQUIRES-REAL-HOST"
+    }
+  ],
+  "excluded_legacy_tests": {
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": "operation-budget rejection contract (R07)",
+    "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py": "pre-allocation cleanup contract (R07)",
+    "tests/test_olmdistancegradation_generic_production_beta_20260820.py": "PF32 blurred-budget rejection contract (R07)",
+    "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": "zero-length rejection contract (R07)",
+    "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py": "native Windows owner evidence (R05/R07)",
+    "tests/test_olmradialblur_generic_baseline_20260820.py": "PF32 center-domain admission contract (R07)",
+    "tests/test_beta_support_documentation.py": "stale support documentation binding (R05/R07)",
+    "tests/test_generic_beta_perf_smoke_runner.py": "stale performance runner binding (R05/R07)"
+  },
+  "exclusion_evidence": [
+    "orchestra/reports/R05-regenerate-stale-bindings.md",
+    "orchestra/reports/R07-gate-contracts-and-bindings.md"
+  ],
+  "local_gate_pass": false,
+  "release_authorized": false,
+  "finished_utc": "2026-10-26T07:21:45.883077+00:00"
+}
