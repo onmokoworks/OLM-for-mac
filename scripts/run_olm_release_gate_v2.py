@@ -27,7 +27,8 @@ PLUGINS = dict(olmblur='OLMBlur', colorkeep='ColorKeep', olmcolorkey='OLMColorKe
     radialblur='OLMRadialBlur', olmsmoother='OLMSmoother')
 CACHE = Path.home()/'.cache/olm-emu'
 WORKER = CACHE/'worker-F46-pow/aex-guest-worker'
-BUNDLE_WORKER = CACHE/'worker-F47d/aex-guest-worker'
+BUNDLE_WORKER = CACHE/'worker-R13-bundle/aex-guest-worker'
+BUNDLE_HOST = CACHE/'worker-R13-universal/plugin-host'
 
 # Explicit snapshot of the 53-entry generic gate, selected from R05's measured
 # 45 PASS entries. Exclusions are open findings, not passes or deleted tests.
@@ -239,7 +240,7 @@ class Gate:
                 raise ValueError('unknown corpus plugin: '+plugin)
             configuration = tuple(saved.get(key, default) for key, default in
                 (('max_size', 256), ('size_sampler', 'default'), ('size_max_height', None),
-                 ('geometry', 'default'), ('color_sampler', 'default')))
+                 ('geometry_sampler', 'default'), ('color_sampler', 'default')))
             groups[plugin, path.parent, configuration].append(path)
             inventory[plugin] += 1
         rows = []; counts = Counter(PASS=0, FAIL=0, **{'ORACLE-STOP':0})
@@ -255,7 +256,7 @@ class Gate:
             for key, value in zip(('max-size', 'size-sampler', 'size-max-height',
                                    'geometry', 'color-sampler'), configuration):
                 if value is not None:
-                    flags.extend(['--'+key, str(value)])
+                    flags.extend(['--'+key, 'realistic' if key == 'geometry' and value == 'realistic-v1' else str(value)])
             _, report = self.fuzz(f'replay-{i:02d}-{plugin}',plugin,['--replay',replay_dir,*flags])
             for row in report.get('replays', []):
                 row['path'] = originals.get(row['path'], row['path'])
@@ -309,7 +310,7 @@ class Gate:
             totals.update(counts); passed &= good
             rows.append(dict(plugin=plugin, counts=counts, status='PASS' if good else 'FAIL'))
         code=self.run('f51',[self.python,'-B','tools/fuzz/verify_F51.py','--state',self.state/'f51',
-            '--bundles',self.state/'bundles','--n','100','--jobs','1'], timeout=15000)
+            '--bundles',self.state/'bundles','--host',BUNDLE_HOST,'--n','100','--jobs','1'], timeout=15000)
         report=read_json(self.state/'f51/summary.json')
         expected=1000+sum(1 for _ in (ROOT/'tests/fuzz_corpus').rglob('*.json'))
         f51=report.get('totals',{})

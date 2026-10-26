@@ -111,7 +111,7 @@ class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
                 self.assertIn(f"depth={depth}", run.stdout)
                 self.assertIn("ok=1", run.stdout)
             log = diagnostic.read_text(encoding="utf-8")
-            self.assertIn("pre success dimensions=1920x1080", log)
+            self.assertIn("pre checkout_result ref=1920x1080 result=0,0,1920,1080 max=0,0,1920,1080", log)
             self.assertIn("smart validate_world error=0", log)
             self.assertIn("smart admission", log)
             self.assertIn("generic=1", log)
@@ -130,7 +130,7 @@ class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
             )
             self.assertEqual(partial.returncode, 0, partial.stdout + partial.stderr)
             self.assertIn(
-                "REQUEST_GUARD partial=1 non_unity_downsample=0 ok=1 callbacks=0",
+                "REQUEST_GUARD partial=1 non_unity_downsample=0 ok=1 callbacks=1",
                 partial.stdout,
             )
 
@@ -142,7 +142,7 @@ class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
                 downsample.returncode, 0, downsample.stdout + downsample.stderr
             )
             self.assertIn(
-                "REQUEST_GUARD partial=0 non_unity_downsample=1 ok=1 callbacks=0",
+                "REQUEST_GUARD partial=0 non_unity_downsample=1 ok=1 callbacks=1",
                 downsample.stdout,
             )
 

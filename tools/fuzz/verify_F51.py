@@ -24,10 +24,11 @@ def main():
     parser.add_argument('--jobs', type=int, choices=[1], default=1)
     parser.add_argument('--skip-corpus', action='store_true')
     parser.add_argument('--case-timeout', type=float, default=30)
+    parser.add_argument('--host', type=Path, default=Path.home()/'.cache/olm-emu/worker-F51-x86host/plugin-host')
     args=parser.parse_args()
     state=args.state.resolve(); state.mkdir(parents=True, exist_ok=True)
     bundles=(args.bundles or STATE/'bundles').resolve()
-    worker=Path.home()/'.cache/olm-emu/worker-F51-x86host/plugin-host'
+    worker=args.host.resolve()
     main=ROOT.parent.parent if ROOT.parent.name=='worktrees' else ROOT
     options=SimpleNamespace(main=main, worker=worker, max_size=256, case_timeout=args.case_timeout)
     env={k:v for k,v in os.environ.items() if not k.startswith(('OLM','DBLUR','COLORKEEP'))}

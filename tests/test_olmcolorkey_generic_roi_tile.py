@@ -21,6 +21,8 @@ def _load_adapter():
     return module
 
 
+# Smart reads the local top-left prefix (original workers 0x9000/0x94b0/0x9960);
+# Classic retains layer-origin mapping. Compare every active byte for each route.
 CUSTOM_MAIN = r'''
 template<class P> P roi_pixel(int x,int y);
 template<> PF_Pixel8 roi_pixel<PF_Pixel8>(int x,int y){if((x+y*3)%11==0)return{211,0,0,0};return{(A_u_char)(80+(x+y)%170),(A_u_char)(1+x),(A_u_char)(2+y),(A_u_char)(3+x+y)};}
@@ -41,7 +43,7 @@ template<class P> bool roi_depth(int depth){
  if(EffectMain(PF_Cmd_SMART_RENDER,&sid,&od,nullptr,nullptr,&se))return false;
  PF_ParamDef defs[OLMCOLORKEY_NUM_PARAMS]{};PF_ParamDef* params[OLMCOLORKEY_NUM_PARAMS];for(int i=0;i<OLMCOLORKEY_NUM_PARAMS;i++)params[i]=&defs[i];defs[OLMCOLORKEY_INPUT].u.ld=in;defs[OLMCOLORKEY_COLOR_SPACE].u.pd.value=1;defs[OLMCOLORKEY_FORCE_LOWER_PRECISION].u.pd.value=1;defs[OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE].u.pd.value=1;defs[OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE].u.pd.value=1;defs[OLMCOLORKEY_EDGE_BLUR_DIRECTION].u.pd.value=2;defs[OLMCOLORKEY_NUMBER_OF_COLORS].u.sd.value=1;defs[OLMCOLORKEY_COLOR_FIRST+COLOR_OFFSET_USE_COLOR].u.bd.value=true;defs[OLMCOLORKEY_COLOR_FIRST+COLOR_OFFSET_COLOR].u.cd.value={255,0,0,0};
  PF_InData cid{nullptr,7,1,24,nullptr};if(Render(&cid,&od,params,&cw))return false;
- for(int y=0;y<TH;y++){const auto* expected=full.data()+(y+TY)*frb+TX*ps;if(std::memcmp(expected,smart.data()+y*trb,TW*ps)||std::memcmp(expected,classic.data()+y*trb,TW*ps))return false;for(int i=TW*ps;i<trb;i++)if(smart[y*trb+i]!=0xCC||classic[y*trb+i]!=0xDD)return false;}
+ for(int y=0;y<TH;y++){const auto* expected=full.data()+(y+TY)*frb+TX*ps;const auto* smart_expected=full.data()+y*frb;if(std::memcmp(smart_expected,smart.data()+y*trb,TW*ps)||std::memcmp(expected,classic.data()+y*trb,TW*ps))return false;for(int i=TW*ps;i<trb;i++)if(smart[y*trb+i]!=0xCC||classic[y*trb+i]!=0xDD)return false;}
  OLMColorKeyInfo edge=info;edge.edge_thin_amount=1;if(IsPublicAdmission<P>(&in,&sw,edge))return false;edge=info;edge.edge_blur_amount=1;edge.edge_blur_distance_type=1;edge.edge_blur_direction=101;if(IsPublicAdmission<P>(&in,&sw,edge))return false;
  return true;
 }
@@ -49,7 +51,7 @@ int main(){g_color_suite=g_color_suite_instance;g_ansi_suite=g_ansi_suite_instan
 '''
 
 
-def test_nonzero_origin_roi_tile_classic_smart_parity() -> None:
+def test_nonzero_origin_roi_tile_route_contracts() -> None:
     adapter = _load_adapter()
     with tempfile.TemporaryDirectory(prefix="olmck-roi-tile.") as raw:
         directory = Path(raw)

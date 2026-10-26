@@ -1,6 +1,10 @@
 // SDK-host transport regression: rectangle clipping and untouched destination.
 #define main p00_host_main
+#ifdef TEST_F47D_HOST
+#include "../emulation/aexcompat_patches/F51-plugin-host.cpp"
+#else
 #include "../emulation/aexcompat_patches/P00-host-realism.cpp"
+#endif
 #undef main
 #include <cassert>
 static PF_Err copy_pixel(void*, A_long, A_long, PF_Pixel* in, PF_Pixel* out) {

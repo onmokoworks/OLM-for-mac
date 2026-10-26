@@ -26,20 +26,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--state', type=Path, default=STATE)
     parser.add_argument('--target', choices=('aarch64-apple-darwin', 'x86_64-apple-darwin'), default='aarch64-apple-darwin')
+    parser.add_argument('--cache-name', default=None, help='Install and register a new durable worker')
+    parser.add_argument('--build-root', type=Path, default=Path.home()/'Documents/Projects/Personal/04_Tools/AEXCompat-build-F47d')
     args = parser.parse_args()
     STATE = args.state.resolve()
     if args.target == 'x86_64-apple-darwin':
         STATE = STATE/'x86_64'
     STATE.mkdir(parents=True,exist_ok=True)
-    alias=Path.home()/('.cache/olm-emu/F47d-'+args.target+'-scratch-link')
-    if alias.is_symlink():
-        assert alias.resolve()==STATE
-    else:
-        assert not alias.exists()
-        alias.symlink_to(STATE,target_is_directory=True)
-    env=dict(os.environ,TMPDIR=str(STATE),TMP=str(STATE),TEMP=str(STATE),CARGO_BUILD_JOBS='1',
-        CMAKE_BUILD_PARALLEL_LEVEL='1',CARGO_TARGET_DIR=str(alias/'target'),AEXCOMPAT_BUILD_REVISION='F47d-native-all')
-    source=STATE/'source'
+    cache = Path.home()/'.cache/olm-emu'
+    build = cache/('build-'+(args.cache_name or 'F47d'))
+    tmp = build/'tmp'; tmp.mkdir(parents=True, exist_ok=True)
+    source = args.build_root.resolve()
+    if source.exists():
+        raise RuntimeError(f'build source already exists: {source}')
+    if any(c in str(source) for c in ' :'):
+        raise ValueError('Unicorn source path must not contain spaces or colons')
+    env=dict(os.environ,TMPDIR=str(tmp),TMP=str(tmp),TEMP=str(tmp),CARGO_BUILD_JOBS='1',
+        CMAKE_BUILD_PARALLEL_LEVEL='1',CARGO_TARGET_DIR=str(build/'target'),AEXCOMPAT_BUILD_REVISION=args.cache_name or 'F47d-native-all')
     try:
         if source.exists(): shutil.rmtree(source)
         shutil.copytree(PARENT,source)
@@ -93,17 +96,32 @@ def main():
         (STATE/'memory-pressure.log').write_text(pressure)
         free=int(re.search(r'System-wide memory free percentage: (\d+)%',pressure)[1])
         if free<30: raise RuntimeError(f'memory pressure: {free}% free')
-        command=['cargo','build','--manifest-path',str(alias/'source/Cargo.toml'),'--release','--target',args.target,'--offline','--locked','-j','1','-p','aex-guest-worker','--bin','aex-guest-worker']
+        command=['cargo','build','--manifest-path',str(source/'Cargo.toml'),'--release','--target',args.target,'--offline','--locked','-j','1','-p','aex-guest-worker','--bin','aex-guest-worker']
         with (STATE/'rust-build.log').open('w') as log:
-            subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+            subprocess.run(command,cwd=source,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         worker=STATE/'aex-guest-worker'
-        shutil.copy2(STATE/'target'/args.target/'release/aex-guest-worker',worker)
+        shutil.copy2(build/'target'/args.target/'release/aex-guest-worker',worker)
         result=dict(worker_sha256=sha(worker),abi_constants=len(names),memory_free_percent=free,command=command,
             sources={p.name:sha(p) for p in HERE.glob('F47d-*')})
         (STATE/'build.json').write_text(json.dumps(result,indent=2)+'\n')
+        if args.cache_name:
+            import fcntl
+            dest=cache/args.cache_name
+            dest.mkdir(exist_ok=False)
+            shutil.copy2(worker,dest/'aex-guest-worker')
+            result.update(name=args.cache_name, worker_path=str(dest/'aex-guest-worker'),
+                          recipe='tools/emulation/aexcompat_patches/build_F47d.py',
+                          build_json=str(dest/'build.json'))
+            (dest/'build.json').write_text(json.dumps(result,indent=2)+'\n')
+            with (cache/'.index.lock').open('a') as lock:
+                fcntl.flock(lock,fcntl.LOCK_EX)
+                index_path=cache/'INDEX.json'; index=json.loads(index_path.read_text())
+                assert not any(r['name']==args.cache_name for r in index['links'])
+                index['links'].append(result)
+                index_path.write_text(json.dumps(index,indent=2)+'\n')
         print(json.dumps(result))
     finally:
-        shutil.rmtree(STATE/'target',ignore_errors=True)
+        shutil.rmtree(build,ignore_errors=True)
         shutil.rmtree(source,ignore_errors=True)
-        alias.unlink()
+
 if __name__=='__main__': main()
