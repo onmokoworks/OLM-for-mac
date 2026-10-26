@@ -1,0 +1,17 @@
+{
+  "name": "release-R13",
+  "kind": "release-package",
+  "package_path": "/Users/onmk/.cache/olm-emu/release-R13/OLM_Mac_Plugins_Release_20261026.zip",
+  "package_sha256": "a568e7640e84a6c4d26f788f4bc4e865f411437a70ca0868515d89f2665d5852",
+  "source_commit": "cb801c68895e4259a1b908b4ddbeee83b1dea689",
+  "recipe": "orchestra/reports/R12-evidence/build.sh",
+  "recipe_environment": {
+    "OLM_PACKAGE_STATE": "$PWD/orchestra/state/R13-release-gate-green/package",
+    "OLM_RELEASE_CACHE": "$HOME/.cache/olm-emu/release-R13"
+  },
+  "published": false,
+  "local_gate_pass": true,
+  "release_authorized": false,
+  "gate_report": "orchestra/reports/R13-release-gate-green.md",
+  "package_binary_comparison": "orchestra/reports/R13-evidence/package-comparisons/gate-results.json"
+}

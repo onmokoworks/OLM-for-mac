@@ -1,10 +1,10 @@
-status: partial
+status: done
 summary:
-- Both KiraKira tests bisect to b49bb48d (P02c); repaired stale request/preserve-RGB expectations without production changes.
-- Corpus replay groups by all five saved configuration fields, including mixed directories and retry invocations.
-- Refreshed the SDK native iterate bridge into new R13 cache entries; old workers remain unchanged.
-- ColorKey probe derives its struct from the production header and checks the distinct Classic/Smart coordinate contracts.
-- Complete gate and R12-recipe package audit are running; no release authorization or publication.
+- Complete release gate: 7/7 PASS, local_gate_pass=true; 2,998/2,998 corpus replays and 45/45 selected test files pass.
+- Both KiraKira failures bisect to P02c; fixed AEX-grounded stale host contracts and ColorKey's stale struct/ROI expectations, with no production changes.
+- Refreshed native iterate hosts: ColorKeep 100/100 original comparisons exact and 521/521 architecture pairs render equally.
+- Fresh seeds: 6,000 complete, 5,694 exact / 0 mismatch / 250 refusal / 56 uncompared / 0 errors under unchanged predicates.
+- R13 ZIP rebuilt, audited, separately bundle-compared and registered in the cache; nothing published.
 
 facts:
 
@@ -41,8 +41,8 @@ checkout-bound output rectangles and release the returned pre-render data.
 The native diagnostic assertion uses the current explicit checkout-result log.
 
 Measured standalone results: ColorKey ROI entrypoint exit 0; KiraKira sanitizer
-54 matrix rows exit 0 (before adding both preserve flag values, which the complete
-gate will recheck); native-smoke six tests PASS; release decision tests six PASS.
+54 matrix rows exit 0; the complete gate also passed after adding both
+preserve flag values; native-smoke six tests PASS; release decision tests six PASS.
 The sixth decision test exercises a mixed-configuration directory and both
 120-second retry invocations, checking preserved witness identities and flags.
 
@@ -84,7 +84,81 @@ no-space source/Cargo build directories. No original emulator checkout was edite
 The F47d predicate permits a complete campaign containing only refusals. R12's
 100 ColorKeep refusals therefore passed that predicate: **this is a weakness**,
 not evidence of exact bundle rendering. No refusal-tolerant predicate was loosened.
-R13's actual ColorKeep comparison counts will be reported independently below.
+R13 independently measured 100/100 ColorKeep exact cases in F47d and
+521/521 equal renders in F51 (zero refusals, uncompared cases or host errors).
+
+
+## Complete release gate
+
+Exit **0**:
+
+```sh
+python3 -B scripts/run_olm_release_gate_v2.py \
+  --state orchestra/state/R13-release-gate-green/complete --jobs 1 \
+  > orchestra/state/R13-release-gate-green/complete.log 2>&1
+```
+
+`local_gate_pass=true`, **7/7 PASS**, `release_authorized=false`.
+
+| Stage | Result | Actual result |
+| --- | --- | --- |
+| Framework | PASS | 50 tests run, 3 skipped |
+| Universal build | PASS | 10 bundles, arm64 + x86_64 |
+| Corpus | PASS | 2,998 PASS / 0 FAIL / 0 ORACLE-STOP |
+| Fresh seeds | PASS | 6,000 complete; E=5,694 / M=0 / R=250 / U=56 / errors=0 |
+| Bundle checks | PASS | F47d E=941 / M=0 / R=46 / U=13 / errors=0; F51 3,870 equal renders + 128 equal refusals, 0 differences |
+| Selected plugin tests | PASS | 45/45 files, including all three repaired failures |
+| Static | PASS | All 10 Release settings and PiPL predicates pass |
+
+The 134 missing-configuration failures are resolved without changing any corpus
+record or saved-result predicate. All 521 ColorKeep architecture comparisons now
+render equally instead of returning host errors. F47d ColorKeep is 100 exact /
+0 refusal / 0 uncompared. There is no first differing byte in these comparisons.
+Non-owner Classic diagnostics remain in the fresh reports and are not promoted.
+56 uncompared cases remain uncompared; the gate's existing owner and refusal /
+oracle-unavailability policies are unchanged. Timing-sensitive counts can vary.
+
+The run began at `1750eac1`; later commits changed the worker build recipe and
+reports only. All 45 selected test hashes and the gate script hash match the
+completed run (`run-head-binding.json`). Production files are unchanged.
+`R13-evidence/gate-evidence.tar.gz` preserves **244 reports/logs**, including every
+F51 row; the archive manifest records its hash and contents.
+
+## Unpublished package and its actual binaries
+
+R12 recipe (exit 0), then audit (exit 0):
+
+```sh
+OLM_PACKAGE_STATE="$PWD/orchestra/state/R13-release-gate-green/package" \
+OLM_RELEASE_CACHE="$HOME/.cache/olm-emu/release-R13" \
+bash orchestra/reports/R12-evidence/build.sh > orchestra/state/R13-release-gate-green/package-build.log 2>&1
+python3 orchestra/reports/R12-evidence/verify.py "$HOME/.cache/olm-emu/release-R13/OLM_Mac_Plugins_Release_20261026.zip" orchestra/state/R13-release-gate-green/package-audit
+```
+
+ZIP SHA-256: **`a568e7640e84a6c4d26f788f4bc4e865f411437a70ca0868515d89f2665d5852`**.
+Source commit `cb801c68895e4259a1b908b4ddbeee83b1dea689`, `git_dirty=false`.
+Audit: 132 entries, ten Universal/ad-hoc bundles, both slices minimum macOS 11.0,
+76 text files and six nested ZIPs checked, no local paths, required docs and
+relative links present, executable hashes equal the package manifest.
+
+The retained R12 packaging recipe uses the Debug Xcode configuration with O3
+and writes Release products; the main gate builds the actual Release/O2
+configuration. All ten executable hashes differ. To avoid equating those builds,
+the **actual package products** also ran the unchanged Gate.bundles method in
+`orchestra/state/R13-release-gate-green/package-comparisons`. Its bundle tree
+links to `package/products/<plugin>/<plugin>.plugin`, the files audited in the
+ZIP. This extra stage passed:
+
+- F47d: 941 exact / 0 mismatch / 46 refusal / 13 uncompared / 0 errors, 1,000 cases.
+- ColorKeep: 100/100 exact, no refusal or uncompared case.
+- F51: 3,870 equal renders + 128 equal refusals, zero differences, 3,998 pairs.
+- Per-case results, hashes and commands: `R13-evidence/package-comparisons/`.
+
+`run-head-binding.json` records that production files are unchanged from both
+the main gate's starting commit and the package source commit. The gate script
+hash still matches the running gate. This is an explicit binding across later
+recipe/report-only commits, not a replacement of the recorded starting commit.
+
 
 inference:
 - The bisected KiraKira failures are stale synthetic-host expectations after an
@@ -119,7 +193,64 @@ python3 -B tests/test_release_gate_v2.py
 python3 -B scripts/run_olm_release_gate_v2.py --state orchestra/state/R13-release-gate-green/recheck --jobs 1 > "$TMPDIR/gate.log" 2>&1
 ```
 
-Expected decision tests: six PASS. Full gate result pending.
+Expected: six decision tests PASS; full gate exits 0 with seven PASS stages,
+`local_gate_pass=true`. Use a fresh state directory. Counts of unavailable oracle
+runs can vary with shared-machine load; they never count as exact.
+
+Audit the durable ZIP (expected exit 0 and the SHA-256 above):
+
+```sh
+python3 orchestra/reports/R12-evidence/verify.py "$HOME/.cache/olm-emu/release-R13/OLM_Mac_Plugins_Release_20261026.zip" "$TMPDIR/package-audit"
+git diff --exit-code 44fd470b -- mac core ucrtmath
+git diff --check
+```
+
+The exact host build commands used were:
+
+```sh
+python3 -B tools/emulation/aexcompat_patches/build_F51.py --state orchestra/state/R13-release-gate-green/host --cache-name worker-R13-universal
+python3 -B tools/emulation/aexcompat_patches/build_F47d.py --state orchestra/state/R13-release-gate-green/worker --cache-name worker-R13-bundle --build-root "$HOME/Documents/Projects/Personal/04_Tools/AEXCompat-build-R13"
+clang++ -std=c++17 -O2 -Wno-pragma-pack -DTEST_F47D_HOST -IHeaders -IHeaders/SP tools/fuzz/test_P00b_iterate.cpp -o "$TMPDIR/test-iterate"
+"$TMPDIR/test-iterate"
+```
+
+Expected compile/regression exits: 0. The registered workers are already present;
+use a **new** cache name and empty no-space source directory for an independent
+rebuild rather than overwriting the retained identities. The gate uses the R13
+registered paths; both build manifests are retained. The first build's copy-path
+failure and the successful retry are disclosed above.
+
+For package comparison reproduction, rebuild with the package command above,
+then use a fresh state (same existing gate method used for the measured run):
+
+```sh
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3' -B - <<'CHECK'
+import importlib.util
+from pathlib import Path
+spec = importlib.util.spec_from_file_location('gate', 'scripts/run_olm_release_gate_v2.py')
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+s = m.ROOT/'orchestra/state/R13-release-gate-green/package-recheck'
+s.mkdir()
+for name in m.PLUGINS.values():
+    p = s/'bundles/xcode'/name/'products'; p.mkdir(parents=True)
+    (p/(name+'.plugin')).symlink_to(m.ROOT/'orchestra/state/R13-release-gate-green/package/products'/name/(name+'.plugin'), target_is_directory=True)
+g = m.Gate(s, m.MAIN/'tools/emulation/.venv/bin/python3', 1)
+g.stage('bundle-checks', g.bundles)
+raise SystemExit(g.summary['stages'][0]['status'] != 'PASS')
+CHECK
+```
+
+Exact launched F47d/F51 commands and all outputs are also retained in
+`package-comparisons/gate-results.json` and its archive. Expected: exit 0,
+zero differences; ColorKeep 100 exact and 521 equal renders. The regular full
+gate command alone does not test the O3 package executables.
 
 next:
-- Finish the full gate, archive exact outcomes and audit/register the unpublished R13 ZIP.
+- Ticket-local work is complete. Native AE / Windows-host / installed-identity
+  obligations remain outside this local gate; no release authorization is inferred.
+- Registered `release-R13` in `~/.cache/olm-emu/INDEX.json` with `published=false`,
+  `local_gate_pass=true`, `release_authorized=false`; retained registration is
+  `R13-evidence/cache-registration.json`.
+- Regenerable build trees and scratch executables were removed after evidence
+  retention. No started background process remains. Nothing was pushed, installed,
+  published, or written into MAIN.
