@@ -5,6 +5,7 @@
 #endif
 #include "../../core/x86_float.h"
 #include "../../core/olm_parallel.h"
+#include "../../core/olm_world_safety.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>
@@ -273,7 +274,6 @@ UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
 #include "Parameters.inc"
 #include "Distance.inc"
 #include "ColorMath.inc"
-#include "AdmissionFixtures.inc"
 #include "BlurMath.inc"
 #include "Pixels.inc"
 #include "Kernel.inc"

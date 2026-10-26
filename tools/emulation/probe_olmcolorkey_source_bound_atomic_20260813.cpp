@@ -8,6 +8,7 @@
 #include "SPBasic.h"
 
 #include "../../mac/OLMColorKey/OLMColorKey.cpp"
+#include "../../tests/olmcolorkey_admission_fixtures.inc"
 
 struct EdgeTuple { A_long direction; A_long distance; double amount; A_long width; A_long height; };
 

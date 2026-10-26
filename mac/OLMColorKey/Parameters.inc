@@ -233,3 +233,46 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 	return err;
 }
 
+
+static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
+{
+	if (info.edge_thin_amount != 0.0 || info.edge_blur_amount <= 0.0 ||
+	    info.edge_blur_direction < 100) return false;
+	const A_long direction = info.edge_blur_direction - 100;
+	return
+	    (direction == 2 && info.edge_blur_distance_type == 2 &&
+	     (info.edge_blur_amount == 0.5 || info.edge_blur_amount == 1.5 ||
+	      info.edge_blur_amount == 2.0 || info.edge_blur_amount == 2.5 ||
+	      info.edge_blur_amount == 3.0 || info.edge_blur_amount == 3.5 ||
+	      info.edge_blur_amount == 4.0)) ||
+	    ((direction == 0 || direction == 1 || direction == 3 || direction == 4) &&
+	     info.edge_blur_distance_type == 2 && info.edge_blur_amount == 2.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 2 &&
+	     info.edge_blur_amount == 1.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+	    (direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
+	    (direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
+	    (direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+	    (direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0) ||
+	    (direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+	    (direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+	    (direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+	    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
+}
+
+static bool IsRecoveredPublicBlur(const OLMColorKeyInfo &info)
+{
+	return info.edge_blur_direction >= 101 && info.edge_blur_direction <= 103 &&
+           info.edge_blur_distance_type >= 1 &&
+           info.edge_blur_distance_type <= 3 && std::isfinite(info.edge_blur_amount) &&
+           info.edge_blur_amount > 0.0 && info.edge_blur_amount <= 4000.0;
+}
+
+static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
+{
+	return IsRecoveredPublicBlur(info) &&
+		   info.edge_thin_amount >= -4000.0 && info.edge_thin_amount <= 4000.0 &&
+		   info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3;
+}
+

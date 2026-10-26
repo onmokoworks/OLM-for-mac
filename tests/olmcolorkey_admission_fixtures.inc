@@ -1,4 +1,4 @@
-// Included by OLMColorKey.cpp; preserves the single translation unit.
+// Historical fixture predicates; included explicitly by ColorKey harnesses.
 static inline bool BoundedLab76Input(const PF_Pixel8 &pixel)
 {
 	return pixel.alpha == 255 && pixel.red == 26 &&
@@ -312,45 +312,27 @@ static bool IsBoundedEdgeSource(const PF_EffectWorld *input)
 	return true;
 }
 
-static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
+static bool ClassicWorldsMatch(const PF_EffectWorld *input,
+	                           const PF_EffectWorld *output,
+	                           PF_PixelFormat input_format,
+	                           PF_PixelFormat output_format)
 {
-	if (info.edge_thin_amount != 0.0 || info.edge_blur_amount <= 0.0 ||
-	    info.edge_blur_direction < 100) return false;
-	const A_long direction = info.edge_blur_direction - 100;
-	return
-	    (direction == 2 && info.edge_blur_distance_type == 2 &&
-	     (info.edge_blur_amount == 0.5 || info.edge_blur_amount == 1.5 ||
-	      info.edge_blur_amount == 2.0 || info.edge_blur_amount == 2.5 ||
-	      info.edge_blur_amount == 3.0 || info.edge_blur_amount == 3.5 ||
-	      info.edge_blur_amount == 4.0)) ||
-	    ((direction == 0 || direction == 1 || direction == 3 || direction == 4) &&
-	     info.edge_blur_distance_type == 2 && info.edge_blur_amount == 2.0) ||
-	    (direction == 1 && info.edge_blur_distance_type == 2 &&
-	     info.edge_blur_amount == 1.0) ||
-	    (direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
-	    (direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
-	    (direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
-	    (direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
-	    (direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
-	    (direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0) ||
-	    (direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
-	    (direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
-	    (direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
-	    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
-}
-
-static bool IsRecoveredPublicBlur(const OLMColorKeyInfo &info)
-{
-	return info.edge_blur_direction >= 101 && info.edge_blur_direction <= 103 &&
-           info.edge_blur_distance_type >= 1 &&
-           info.edge_blur_distance_type <= 3 && std::isfinite(info.edge_blur_amount) &&
-           info.edge_blur_amount > 0.0 && info.edge_blur_amount <= 4000.0;
-}
-
-static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
-{
-	return IsRecoveredPublicBlur(info) &&
-		   info.edge_thin_amount >= -4000.0 && info.edge_thin_amount <= 4000.0 &&
-		   info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3;
+	if (!input || !output || !input->data || !output->data ||
+	    input_format != output_format ||
+	    input->width <= 0 || input->height <= 0 ||
+	    input->width != output->width || input->height != output->height ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0) {
+		return false;
+	}
+	A_long pixel_bytes = 0;
+	switch (input_format) {
+	case PF_PixelFormat_ARGB32: pixel_bytes = (A_long)sizeof(PF_Pixel8); break;
+	case PF_PixelFormat_ARGB64: pixel_bytes = (A_long)sizeof(PF_Pixel16); break;
+	case PF_PixelFormat_ARGB128: pixel_bytes = (A_long)sizeof(PF_PixelFloat); break;
+	default: return false;
+	}
+	return input->rowbytes == input->width * pixel_bytes + 8 &&
+	       output->rowbytes == output->width * pixel_bytes + 8 &&
+	       DisjointPayloads(input, output, pixel_bytes);
 }
 
