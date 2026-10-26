@@ -1,0 +1,29 @@
+{
+  "counts": {
+    "exact": 675,
+    "refusal": 0,
+    "mismatch": 0
+  },
+  "seconds": 100.98427883398836,
+  "requested": {
+    "plugin": "olmcolorkey",
+    "small": 200,
+    "hd": 20,
+    "uhd": 5,
+    "seed": 1,
+    "jobs": 1,
+    "cycle_depth": true,
+    "max_size": 64,
+    "large_corpus": true,
+    "default_params": false,
+    "corpus_index": null,
+    "max_height": 64,
+    "case_timeout": 180,
+    "parallel": [
+      1,
+      2,
+      8
+    ],
+    "scratch": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/N02-olmcolorkey-nightly-20261025/orchestra/state/N02-olmcolorkey-nightly-20261025/perf/olmcolorkey"
+  }
+}

@@ -908,18 +908,24 @@ static void RGBToPluginLab76(const float rgb[3], float out[3])
 static void RGBToPluginHSV(const float rgb[3], float out[3])
 {
 	const float r = rgb[0], g = rgb[1], b = rgb[2];
-	const float mx = std::max(r, std::max(g, b));
-	const float mn = std::min(r, std::min(g, b));
-	const float delta = mx - mn;
+	// FUN_180009e10: COMISS/CMOVBE selects green on unordered,
+	// then MAXSS/MINSS selects red on unordered or equal operands.
+	const float mx = olm::x86_float::sse_max(!(b > g) ? g : b, r);
+	const float mn = olm::x86_float::sse_min(!(g > b) ? g : b, r);
+	// UCOMISS followed by JE/JNE treats unordered as equal (ZF=1).
+	auto equal_or_unordered = [](float a, float b) {
+		return !(a < b) && !(a > b);
+	};
+	const float delta = olm::x86_float::sse_sub(mx, mn);
 	float h;
-	if (delta == 0.0f) h = 0.0f;
-	else if (mx == r) h = (g - b) * 60.0f / delta;
-	else if (mx == g) h = (b - r) * 60.0f * (1.0f / delta) + 120.0f;
+	if (equal_or_unordered(mx, mn)) h = 0.0f;
+	else if (equal_or_unordered(r, mx)) h = (g - b) * 60.0f / delta;
+	else if (equal_or_unordered(g, mx)) h = (b - r) * 60.0f * (1.0f / delta) + 120.0f;
 	else h = (r - g) * 60.0f * (1.0f / delta) + 240.0f;
 	h = std::fmod(h, 360.0f);
-	if (h < 0.0f) h += 360.0f;
+	if (!(h >= 0.0f)) h += 360.0f;
 	out[0] = h * 0.0027777778450399637f;
-	out[1] = mx == 0.0f ? 0.0f : delta / mx;
+	out[1] = equal_or_unordered(mx, 0.0f) ? 0.0f : delta / mx;
 	out[2] = mx;
 }
 

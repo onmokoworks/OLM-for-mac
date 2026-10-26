@@ -1,0 +1,416 @@
+{
+  "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "fields": [
+    "max",
+    "delta",
+    "hue_before_fmod"
+  ],
+  "comparison": "Exact FLOAT32 words",
+  "rows": [
+    {
+      "label": "770c65ddec6545a6e10777aa:0",
+      "input": "b9a18a3eb1b77f3f9d5f363c",
+      "aex": [
+        "3f7fb7b1",
+        "3f7cde33",
+        "42d07542"
+      ],
+      "mac": [
+        "3f7fb7b1",
+        "3f7cde33",
+        "42d07542"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "770c65ddec6545a6e10777aa:1",
+      "input": "a470063ca9bce23e358ff23e",
+      "aex": [
+        "3ef28f35",
+        "3eee5bb0",
+        "4337fb9c"
+      ],
+      "mac": [
+        "3ef28f35",
+        "3eee5bb0",
+        "4337fb9c"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "770c65ddec6545a6e10777aa:2",
+      "input": "4523c17f0000807f000080ff",
+      "aex": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "mac": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:0",
+      "input": "cd7e033f54dcc13e0000807f",
+      "aex": [
+        "7f800000",
+        "7f800000",
+        "43700000"
+      ],
+      "mac": [
+        "7f800000",
+        "7f800000",
+        "43700000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:1",
+      "input": "d261843ee0dd023f5189073f",
+      "aex": [
+        "3f078951",
+        "3e8ab0d0",
+        "43380a56"
+      ],
+      "mac": [
+        "3f078951",
+        "3e8ab0d0",
+        "43380a56"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:2",
+      "input": "f5f4f43eeceb6b3fcfcece3e",
+      "aex": [
+        "3f6bebec",
+        "3f048484",
+        "42deba2f"
+      ],
+      "mac": [
+        "3f6bebec",
+        "3f048484",
+        "42deba2f"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:3",
+      "input": "8180003eb5b4343fd9d8583e",
+      "aex": [
+        "3f34b4b5",
+        "3f149495",
+        "4300eb3e"
+      ],
+      "mac": [
+        "3f34b4b5",
+        "3f149495",
+        "4300eb3e"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:4",
+      "input": "116b5c3f193cd53e8360693f",
+      "aex": [
+        "3f696083",
+        "3efd84ed",
+        "4392eede"
+      ],
+      "mac": [
+        "3f696083",
+        "3efd84ed",
+        "4392eede"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:5",
+      "input": "d6a10c3f1b3e0a3f93d16d3e",
+      "aex": [
+        "3f0ca1d6",
+        "3ea25ae2",
+        "4268ef6d"
+      ],
+      "mac": [
+        "3f0ca1d6",
+        "3ea25ae2",
+        "4268ef6d"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:6",
+      "input": "3b91703fe0141f3e2ff61a3e",
+      "aex": [
+        "3f70913b",
+        "3f49d3af",
+        "3e9cc58d"
+      ],
+      "mac": [
+        "3f70913b",
+        "3f49d3af",
+        "3e9cc58d"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:7",
+      "input": "525cf93e0000807fa958913d",
+      "aex": [
+        "7f800000",
+        "7f800000",
+        "42f00000"
+      ],
+      "mac": [
+        "7f800000",
+        "7f800000",
+        "42f00000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:8",
+      "input": "9897173fefeeee3eebeaea3e",
+      "aex": [
+        "3f179798",
+        "3e08888a",
+        "4061e1df"
+      ],
+      "mac": [
+        "3f179798",
+        "3e08888a",
+        "4061e1df"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:9",
+      "input": "dedd5d3fdddcdc3e9695153f",
+      "aex": [
+        "3f5dddde",
+        "3edededf",
+        "c1a8a60f"
+      ],
+      "mac": [
+        "3f5dddde",
+        "3edededf",
+        "c1a8a60f"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:10",
+      "input": "000080ff4523c17f00000080",
+      "aex": [
+        "ff800000",
+        "ffc00000",
+        "00000000"
+      ],
+      "mac": [
+        "ff800000",
+        "ffc00000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:11",
+      "input": "c854a03e3b89263fa6683b3f",
+      "aex": [
+        "3f3b68a6",
+        "3ed67c84",
+        "433fad84"
+      ],
+      "mac": [
+        "3f3b68a6",
+        "3ed67c84",
+        "433fad84"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:12",
+      "input": "dfdede3ee5e4643efefd7d3f",
+      "aex": [
+        "3f7dfdfe",
+        "3f44c4c5",
+        "438043eb"
+      ],
+      "mac": [
+        "3f7dfdfe",
+        "3f44c4c5",
+        "438043eb"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:13",
+      "input": "4523c17f0000008000000080",
+      "aex": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "mac": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:14",
+      "input": "b0af2f3fd9d8583ff1f0703f",
+      "aex": [
+        "3f70f0f1",
+        "3e828282",
+        "434a2762"
+      ],
+      "mac": [
+        "3f70f0f1",
+        "3e828282",
+        "434a2762"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:15",
+      "input": "a1a0203fb3b2b23efbfafa3e",
+      "aex": [
+        "3f20a0a1",
+        "3e8e8e8f",
+        "c1f36158"
+      ],
+      "mac": [
+        "3f20a0a1",
+        "3e8e8e8f",
+        "c1f36158"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:16",
+      "input": "4523c17fa265763e0000807f",
+      "aex": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "mac": [
+        "7fc12345",
+        "7fc12345",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "c2d799e6b17314d055e78508:17",
+      "input": "9d9c1c3eafae2e3fb8b7373f",
+      "aex": [
+        "3f37b7b8",
+        "3f109091",
+        "4337c000"
+      ],
+      "mac": [
+        "3f37b7b8",
+        "3f109091",
+        "4337c000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "000000000000000000000000",
+      "aex": [
+        "00000000",
+        "00000000",
+        "00000000"
+      ],
+      "mac": [
+        "00000000",
+        "00000000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "0000803f0000803f0000803f",
+      "aex": [
+        "3f800000",
+        "00000000",
+        "00000000"
+      ],
+      "mac": [
+        "3f800000",
+        "00000000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "0000807f0000807f0000807f",
+      "aex": [
+        "7f800000",
+        "ffc00000",
+        "00000000"
+      ],
+      "mac": [
+        "7f800000",
+        "ffc00000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "0000c07f0000803f00000040",
+      "aex": [
+        "7fc00000",
+        "7fc00000",
+        "00000000"
+      ],
+      "mac": [
+        "7fc00000",
+        "7fc00000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "0000803f0000c07f00000040",
+      "aex": [
+        "3f800000",
+        "00000000",
+        "00000000"
+      ],
+      "mac": [
+        "3f800000",
+        "00000000",
+        "00000000"
+      ],
+      "same_classification_values": true
+    },
+    {
+      "label": "boundary",
+      "input": "0000803f000000400000c07f",
+      "aex": [
+        "40000000",
+        "3f800000",
+        "7fc00000"
+      ],
+      "mac": [
+        "40000000",
+        "3f800000",
+        "7fc00000"
+      ],
+      "same_classification_values": true
+    }
+  ]
+}
