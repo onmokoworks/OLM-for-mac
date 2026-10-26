@@ -186,3 +186,8 @@ C02-cleanup-olmdistancegradation
 C02-cleanup-olmblur
 C02-cleanup-olmsmall
 R14-slim-release-zip
+F01-fixtures-olmdirectionalblur
+F01-fixtures-olmsmoother2
+F01-fixtures-olmcolorkey
+F01-fixtures-olmkirakira
+F01-fixtures-olmblur
