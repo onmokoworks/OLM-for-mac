@@ -99,7 +99,7 @@ V2_SOURCE_ORDER.insert(0, "c8d5ded0f9da071eb9e14e7bf20300916a3b8b292f081099d25df
 V2_SOURCE_ORDER.insert(0, "1c15f67a9d0818a0a0266971720e855acac70a89e2690ccbedf5e142fc1c64f3")
 
 def admission_hash_order(path: Path, function: str, next_function: str) -> list[str]:
-    text=path.read_text();body=text.split(function,1)[1].split(next_function,1)[0]
+    text=re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (path.parent / match[1]).read_text(), path.read_text());body=text.split(function,1)[1].split(next_function,1)[0]
     return re.findall(r'"([0-9a-f]{64})"',body)
 
 
@@ -128,7 +128,7 @@ class SourceContract(unittest.TestCase):
         self.assertEqual(self.rows["sha256_multiblock"], hashlib.sha256(payload).hexdigest())
 
     def test_v1_every_fixed_source_is_pinned(self) -> None:
-        text = V1.read_text()
+        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (V1.parent / match[1]).read_text(), V1.read_text())
         self.assertTrue(all(value in text for value in V1_HASHES))
         self.assertIn("V1SourceIs", text)
 
@@ -173,7 +173,7 @@ class SourceContract(unittest.TestCase):
         self.assertEqual(probe_hashes, V2_BY_FIXTURE)
 
     def test_v2_every_fixed_source_is_pinned(self) -> None:
-        text = V2.read_text()
+        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (V2.parent / match[1]).read_text(), V2.read_text())
         self.assertTrue(all(value in text for value in V2_HASHES))
         self.assertIn("V2SourceIs", text)
 
@@ -181,7 +181,7 @@ class SourceContract(unittest.TestCase):
         self.assertEqual(admission_hash_order(V2,"V2SmartAdmission(","ValidatePublicWorlds("),V2_SOURCE_ORDER)
 
     def test_wrong_pf16_17x11_hashes_are_absent(self) -> None:
-        text = V2.read_text()
+        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (V2.parent / match[1]).read_text(), V2.read_text())
         self.assertNotIn("d149fda08b3cf73939e38a47532a35dce872aa86699fd5eb0b57158140f3e970", text)
         self.assertNotIn("c763aa96ccce97f4d1b6df85d2357ef6cdc36ac2b0a3b592aa5c1c7feca3e444", text)
 

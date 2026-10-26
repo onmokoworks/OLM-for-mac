@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from pathlib import Path as _HarnessPath
 _UCRT_CXX = str(_HarnessPath(__file__).resolve().parents[1] / "tools/ucrt_cxx.py")
 
@@ -17,7 +19,7 @@ HARNESS = ROOT / "tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp
 
 class OLMSmoother2RoiContract(unittest.TestCase):
     def test_smart_world_authority_uses_origin_not_content_extent(self) -> None:
-        text = PORT.read_text(encoding="utf-8")
+        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (PORT.parent / match[1]).read_text(), PORT.read_text(encoding="utf-8"))
         validate = text.split("ValidatePublicWorlds(", 1)[1].split("// Classic Render", 1)[0]
         self.assertNotIn("extent_hint", validate)
         for token in (
@@ -27,7 +29,7 @@ class OLMSmoother2RoiContract(unittest.TestCase):
             self.assertIn(token, validate)
 
     def test_classifier_has_unbounded_frame_edge_walkers(self) -> None:
-        text = PORT.read_text(encoding="utf-8")
+        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (PORT.parent / match[1]).read_text(), PORT.read_text(encoding="utf-8"))
         # These are opposite-direction cardinal walkers used by the classifier.
         # Their bounds are the image edges, not a constant support radius.
         for token in (
