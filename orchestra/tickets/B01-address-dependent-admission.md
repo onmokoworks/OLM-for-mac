@@ -21,3 +21,10 @@
 
 ## Rules
 - Coordinate with the running Q tickets: touch only the admission and span helpers. If a Q ticket for the same plugin is running, keep your diff minimal so the merge stays simple.
+
+## Resume note (orchestrator)
+- The first run made the source fixes and the reproduction tools. It stopped during validation because the model session ended. Its work is the WIP commit at `refs/keep/B01a` (`git merge refs/keep/B01a` first to get it back); its report is in that commit.
+- Since then, readability refactors of RadialBlur (Q01b) and OLMBlur (Q06) have merged. Q04 (DirectionalBlur) will merge too. First merge `codex/public-beta-roi` into this branch and re-apply your span fixes to the split files. Keep the change minimal.
+- Then finish the validation: Do steps 4-5, using `tools/refactor/native_diff.py` per touched plugin against the merge base.
+- Size rule: keep the reproduction tooling to one small script plus its test. Delete `replay_mac_B01.py` if the shared tools cover it.
+- Write the report in plain engineering terms (span arithmetic, false refusal), describing only what was measured.
