@@ -11,6 +11,7 @@ ROOT=Path(__file__).resolve().parents[3]
 MAIN=Path('/Users/onmk/Documents/Projects/Personal/OLM as')
 HERE=Path(__file__).resolve().parent
 COMPILED=[HERE/'ui_host.mm',*[HERE.parent/name for name in ('OLMKiraKira.cpp','OLMKiraKira.h','OLMKiraKira_Strings.cpp','OLMKiraKira_Strings.h','RampEditor.h','RampPresets.h')],ROOT/'tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp']
+COMPILED += sorted(HERE.parent.glob('Kira*.inc'))
 def source_hashes():return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in COMPILED}
 
 
@@ -63,8 +64,8 @@ def build(scratch):
     (scratch/'ui-build.json').write_text(json.dumps(dict(sources=source_hashes(),binary_sha256=hashlib.sha256((scratch/'ui_host').read_bytes()).hexdigest()),indent=2)+'\n')
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--no-build',action='store_true');ap.add_argument('--only');args=ap.parse_args()
-    scratch=ROOT/'orchestra/state/U02b-kirakira-ui-vs-original';scratch.mkdir(parents=True,exist_ok=True)
+    ap=argparse.ArgumentParser();ap.add_argument('--no-build',action='store_true');ap.add_argument('--only');ap.add_argument('--scratch',type=Path);args=ap.parse_args()
+    scratch=args.scratch or ROOT/'orchestra/state/U02b-kirakira-ui-vs-original';scratch.mkdir(parents=True,exist_ok=True)
     for directory in [ROOT/'tests/ui_oracle',HERE/'ui_witnesses']:
         manifest=json.loads((directory/'manifest.json').read_text())
         witnesses=directory/'witnesses' if (directory/'witnesses').exists() else directory

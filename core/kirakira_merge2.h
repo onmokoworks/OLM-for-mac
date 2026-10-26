@@ -312,6 +312,7 @@ inline std::size_t insert_merge2_ramp_stop(Merge2RampStop* stops, std::size_t co
 
 // The optional ramp is a bounded test seam until the Mac AE parameter surface
 // can supply the Windows custom payload. Normal host rendering passes nullptr.
+constexpr float kMerge2RayEpsilon = 0.001f; // Ray cutoff; AEX 18114ffd0.
 template <typename Pixel>
 inline void add_colored_merge2(
     Pixel* glow,
@@ -325,7 +326,7 @@ inline void add_colored_merge2(
         return;
     for (std::size_t i = 0; i < pixels; ++i) {
         const float scaled_amount = amount[i] * scale;
-        if (scaled_amount <= 0.001f)
+        if (scaled_amount <= kMerge2RayEpsilon)
             continue;
         const Merge2Color color = ramp ? sample_merge2_ramp(*ramp, scaled_amount) : fixed_color;
         glow[i].r += color.red;

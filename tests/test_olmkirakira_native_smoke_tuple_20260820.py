@@ -27,6 +27,7 @@ def load_campaign():
 class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
     def test_ui_defaults_are_not_a_declared_generic_tuple(self) -> None:
         source = SOURCE.read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         setup = source[source.index("static PF_Err ParamsSetup"):
                        source.index("static PF_Err Render(")]
         self.assertIn("StrID_BlurMode_Param_Name), 3, 2", setup)
@@ -59,6 +60,7 @@ class KiraKiraNativeSmokeTupleTests(unittest.TestCase):
 
     def test_production_admission_retains_the_same_tuple(self) -> None:
         source = SOURCE.read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         start = source.index("const bool mode2_highlight")
         end = source.index("const bool mode3_horizontal", start)
         body = source[start:end]

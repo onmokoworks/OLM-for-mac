@@ -7,6 +7,11 @@
 #include "olm_parallel.h"
 
 namespace olm::kirakira {
+constexpr double kWarpPi = 3.14159265358979323846; // Pi; OpenCV getRotationMatrix2D.
+constexpr double kHalfTurnDegrees = 180.0; // Degree conversion; OpenCV getRotationMatrix2D.
+constexpr int kWarpParallelThreshold = 65536; // P07a Mac row scheduling threshold.
+constexpr int kWarpGrainPixels = 32768; // P07a Mac target pixels per row batch.
+
 
 inline int warp_floor_shift_right(int value, int shift)
 {
@@ -21,7 +26,7 @@ inline float warp_sample_bilinear_zero(
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
-	constexpr int kInterBits = 5;
+	constexpr int kInterBits = 5; // OpenCV INTER_BITS, bilinear table fraction bits.
 	constexpr int kInterTabSize = 1 << kInterBits;
 	const int x_fraction = warp_floor_shift_right(x_fixed, kInterBits);
 	const int y_fraction = warp_floor_shift_right(y_fixed, kInterBits);
@@ -50,7 +55,7 @@ inline std::vector<float> warp_get_rotation_matrix_2d_reference(
 	const std::vector<float> &input, int src_width, int src_height,
 	int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
 {
-	const double radians = angle_deg * 3.14159265358979323846 / 180.0;
+	const double radians = angle_deg * kWarpPi / kHalfTurnDegrees;
 	const double alpha = ucrt_cos(radians, UCRT_FMA);
 	const double beta = ucrt_sin(radians, UCRT_FMA);
 	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
@@ -62,8 +67,8 @@ inline std::vector<float> warp_get_rotation_matrix_2d_reference(
 	const double i10 = beta / determinant;
 	const double i11 = alpha / determinant;
 	const double i12 = (-beta * m02 - alpha * m12) / determinant;
-	constexpr int kAbScale = 1 << 10;
-	constexpr int kRoundDelta = 1 << 4;
+	constexpr int kAbScale = 1 << 10; // OpenCV warpAffine AB_BITS fixed-point scale.
+	constexpr int kRoundDelta = 1 << 4; // OpenCV warpAffine bilinear rounding bias.
 	std::vector<float> output(static_cast<std::size_t>(dst_width) * dst_height);
 	for (int y = 0; y < dst_height; ++y) {
 		const int base_x = static_cast<int>(std::lrint((i01 * y + i02) * kAbScale)) + kRoundDelta;
@@ -78,11 +83,12 @@ inline std::vector<float> warp_get_rotation_matrix_2d_reference(
 	return output;
 }
 
+// The fast variant changes row scheduling only; retain the reference arithmetic order.
 inline std::vector<float> warp_get_rotation_matrix_2d_fast(
 	const std::vector<float> &input, int src_width, int src_height,
 	int dst_width, int dst_height, double center_x, double center_y, double angle_deg)
 {
-	const double radians = angle_deg * 3.14159265358979323846 / 180.0;
+	const double radians = angle_deg * kWarpPi / kHalfTurnDegrees;
 	const double alpha = ucrt_cos(radians, UCRT_FMA);
 	const double beta = ucrt_sin(radians, UCRT_FMA);
 	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
@@ -94,12 +100,12 @@ inline std::vector<float> warp_get_rotation_matrix_2d_fast(
 	const double i10 = beta / determinant;
 	const double i11 = alpha / determinant;
 	const double i12 = (-beta * m02 - alpha * m12) / determinant;
-	constexpr int kAbScale = 1 << 10;
-	constexpr int kRoundDelta = 1 << 4;
+	constexpr int kAbScale = 1 << 10; // OpenCV warpAffine AB_BITS fixed-point scale.
+	constexpr int kRoundDelta = 1 << 4; // OpenCV warpAffine bilinear rounding bias.
 	std::vector<float> output(static_cast<std::size_t>(dst_width) * dst_height);
 	// Keep all interpolation operands and their order inside one row.
-	const auto grain = output.size() < 65536 ? static_cast<std::size_t>(dst_height) :
-		std::max<std::size_t>(1, 32768 / std::max(1, dst_width));
+	const auto grain = output.size() < kWarpParallelThreshold ? static_cast<std::size_t>(dst_height) :
+		std::max<std::size_t>(1, kWarpGrainPixels / std::max(1, dst_width));
 	olm::parallel_rows(static_cast<std::size_t>(dst_height), grain, [&](std::size_t row) {
 		const int y = static_cast<int>(row);
 		const int base_x = static_cast<int>(std::lrint((i01 * y + i02) * kAbScale)) + kRoundDelta;

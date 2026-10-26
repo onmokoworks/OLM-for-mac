@@ -69,6 +69,7 @@ class OLMKiraKiraSurfaceContractTests(unittest.TestCase):
 
     def test_custom_ramp_ui_is_declared_to_the_host(self) -> None:
         source = (ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp").read_text()
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         pipl = (ROOT / "mac/OLMKiraKira/OLMKiraKiraPiPL.r").read_text()
         self.assertIn("def.ui_flags = PF_PUI_CONTROL", source)
         self.assertIn("out_data->out_flags  = 0x02008040;", source)
