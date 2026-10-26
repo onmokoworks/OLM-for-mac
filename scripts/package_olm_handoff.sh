@@ -5,11 +5,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIGURATION="Debug"
 OUTPUT=""
 BUILD_MAC=0
-PIXEL_REFERENCE_PROFILE="legacy"
 
 usage() {
   cat <<'EOF'
-Usage: scripts/package_olm_handoff.sh [--output /tmp/olm_port_handoff.zip] [--configuration Debug] [--build-mac] [--pixel-reference-profile legacy|normalized-20260618]
+Usage: scripts/package_olm_handoff.sh [--output /tmp/olm_port_handoff.zip] [--configuration Debug] [--build-mac]
 
 Create one clean handoff zip containing:
 - Windows reference-render request zip (pending when available, otherwise a snapshot)
@@ -34,10 +33,6 @@ while [[ $# -gt 0 ]]; do
     --build-mac)
       BUILD_MAC=1
       shift
-      ;;
-    --pixel-reference-profile)
-      PIXEL_REFERENCE_PROFILE="$2"
-      shift 2
       ;;
     -h|--help)
       usage
@@ -214,12 +209,10 @@ manually, move old OLM backup folders out of MediaCore first because After
 Effects scans nested backup plug-ins and can report duplicate/version-mismatch
 effects.
 
-Then restart After Effects and use the included checklist/template. For pixel
-validation, use the request zips under \`AE_PIXEL_VALIDATION/\` inside the Mac
-plug-in package and return the rendered PNGs grouped by request/preset name,
-for example \`olmblur/\`, \`olmcolorkey/\`, \`olmtoondilate/\`,
-\`olmdistancegradation/\`, \`olmdistancegradation_extended/\`, and
-\`olmdistancegradation_blur/\`.
+Then restart After Effects and follow the package README. The Mac release ZIP
+contains only the ten bundles, two READMEs and LICENSE; its build manifest is
+adjacent to the ZIP. AE pixel requests are separate developer artifacts, created
+with scripts/package_ae_pixel_validation_request.py when needed.
 
 Mac-side pixel verification examples:
 
@@ -257,7 +250,6 @@ cat >"$stage/manifest.json" <<EOF
   "runtime_trace_requests_zip": "$([[ -f "$runtime_trace_zip" ]] && basename "$runtime_trace_zip" || echo "")",
   "runtime_trace_requests_mode": "$runtime_trace_mode",
   "mac_plugins_zip": "olm_mac_plugins_${CONFIGURATION}_clean.zip",
-  "pixel_reference_profile": "$PIXEL_REFERENCE_PROFILE",
   "next_reference_actions_json": "next_reference_actions.json",
   "mac_build_rebuilt": $([[ "$BUILD_MAC" -eq 1 ]] && echo true || echo false)
 }

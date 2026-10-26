@@ -143,7 +143,7 @@ O_NOFOLLOW/SHA/identity で再検査して成功した場合だけ generation �
 
 - `install_mac_plugins_to_mediacore.sh`
 - `build_all_mac_plugins.sh`
-- `package_mac_plugins.sh`
+- `package_mac_plugins.sh` — `OLM_for_Mac/` 内に10 bundles・README 2冊・LICENSEのみ。ビルド情報は `<zip>.manifest.json` に保存し、検証時はZIPとsidecarを同じディレクトリに置く。
 - `zip_clean.py`
 - `ghidra_status.py`
 - `ghidra_export_one.sh`
