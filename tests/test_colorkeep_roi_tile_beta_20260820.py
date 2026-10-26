@@ -133,35 +133,80 @@ def test_exported_effectmain_nonzero_origin_classic_and_smart() -> None:
         "std::fprintf(stderr,\"fail smart=%d depth=%d rc=%d life=%d phase=%d pads=%d unchanged=%d req=%d ih=%d co=%d cc=%d ci=%d li=%d\\n\","
         "smart,depth,rc,life,phase_bad,pads,unchanged,request_unchanged,ih,co,cc,ci,li);return false;}",
     )
-    # R02 merge 8857fbc3077b355f036b0ea2dadc846a9cf507bd: bitdepth,
-    # not DEEP, selects Smart pixels. Classic also admits this flag mutation.
-    # Keep mutation 26 in the matrix, requiring exact active bytes and canaries
-    # rather than counting it as a refusal. These inputs select palette entries
-    # except every sixth pixel, whose alpha the AEX color-key worker clears.
+    # P02a delegates Smart geometry to the host. The historical closure probe
+    # used a fixed 4x3 iterator and counted only refusals, silently accepting
+    # unexamined successful mutations. Check every scenario explicitly instead.
+    source = source.replace("const PF_Rect*,void*r,F f", "const PF_Rect*area,void*r,F f")
+    source = source.replace(
+        "if(a!=0||b!=3)phase_bad=1;",
+        "if(gsmart?(a!=0||b!=o->extent_hint.bottom-o->extent_hint.top||!area||"
+        "std::memcmp(area,&o->extent_hint,sizeof(*area))):(a!=0||b!=o->height||area))phase_bad=1;",
+    ).replace("for(int y=0;y<3;y++)for(int x=0;x<4;x++)",
+              "for(int y=0;y<i->height&&y<o->height;y++)for(int x=0;x<i->width&&x<o->width;x++)")
+    source = source.replace("co!=101||ci", "co!=gcount+1||ci")
+    source = source.replace("if(co!=101||cc!=100)phase_bad=1;", "")
+    # Validate padding against the negotiated world, including changed strides.
+    begin = source.index("bool pads=true;")
+    end = source.index("bool unchanged=", begin)
+    source = source[:begin] + (
+        "bool pads=true;for(int n=0;n<osz+32;n++){bool active=false;"
+        "for(int y=0;y<ow.height;y++)active|=n>=y*ow.rowbytes&&n<y*ow.rowbytes+ow.width*(int)sizeof(P);"
+        "if(!active)pads&=dst[n]==0xee;}"
+    ) + source[end:]
     source = source.replace(
         'array("raw32", inputs["PF32"])',
         'array("raw32", inputs["PF32"]) + array("expected8", expected_active["PF8"])'
         ' + array("expected16", expected_active["PF16"]) + array("expected32", expected_active["PF32"])',
     )
-    source = source.replace(
-        "if(mutation){bool noout=true;",
-        "if(mutation==26){bool exact=true;for(int y=0;y<H;y++)for(int x=0;x<W;x++){"
-        "const unsigned char* expected=depth==8?expected8:depth==16?expected16:expected32;"
-        "exact&=std::memcmp(dst+y*orb+x*sizeof(P),expected+(y*W+x)*sizeof(P),sizeof(P))==0;}"
-        "bool life=smart?(co==101&&cc==100&&ci==101&&li==1&&ph==1&&lh==1&&oh==1):"
-        "(co==0&&cc==100&&ci==0&&li==0&&lh==0&&oh==0);"
-        "return rc==PF_Err_NONE&&exact&&life&&pads&&unchanged&&request_unchanged&&!phase_bad&&ih==1;}"
-        "if(mutation){bool noout=true;",
-    )
+    begin = source.index("if(mutation){bool noout=true;")
+    end = source.index("bool life=smart?", begin)
+    source = source[:begin] + r'''if(mutation){
+        const bool overlap=mutation==27||mutation==28;
+        const bool format=mutation==35||mutation==36;
+        const bool classic_bad=!smart&&(mutation==19||mutation==20||mutation==25||mutation==37);
+        const bool callback_bad=(smart&&mutation>=29&&mutation<=31)||mutation==32;
+        const bool refused=overlap||format||classic_bad||callback_bad;
+        int expected_co=0,expected_cc=0,expected_ci=0;
+        if(smart&&!overlap){expected_co=format?1:mutation==29?51:gcount+1;
+            expected_cc=format||mutation==29?0:mutation==30?51:gcount;
+            expected_ci=expected_co-(mutation==29?1:0);}
+        if(!smart&&(!refused||mutation==32))expected_cc=gcount;
+        bool life=co==expected_co&&cc==expected_cc&&ci==expected_ci&&
+            li==(smart?1:0)&&lh==(smart?1:0)&&oh==(smart?1:0)&&ph==(smart?1:0);
+        bool noout=true;for(int n=0;n<osz+32;n++)noout&=dst[n]==0xee;
+        int expected_rc=!refused?0:callback_bad?mutation==29?77:mutation==30?79:mutation==31?78:81:PF_Err_BAD_CALLBACK_PARAM;
+        bool good=rc==expected_rc&&life&&pads&&unchanged&&request_unchanged&&!phase_bad&&
+            ih==((!refused||mutation==32)&&(smart||mutation!=21)?1:0)&&(!refused||noout);
+        if(!refused&&!(mutation>=3&&mutation<=5)&&mutation!=22&&mutation!=23){
+            const unsigned char* expected=depth==8?expected8:depth==16?expected16:expected32;
+            for(int y=0;y<iw.height&&y<ow.height;y++)for(int x=0;x<iw.width&&x<ow.width;x++){
+                unsigned char pixel[sizeof(P)];std::memcpy(pixel,expected+(y*W+x)*sizeof(P),sizeof(P));
+                if(mutation==1&&(y*W+x)%6==4)std::memset(pixel,0,sizeof(P)/4);
+                good&=std::memcmp(dst+y*ow.rowbytes+x*sizeof(P),pixel,sizeof(P))==0;
+            }
+        }
+        if(!good)std::fprintf(stderr,"mutation=%d smart=%d depth=%d rc=%d expected=%d life=%d pads=%d phase=%d ih=%d co=%d cc=%d ci=%d li=%d\n",mutation,smart,depth,rc,expected_rc,life,pads,phase_bad,ih,co,cc,ci,li);
+        return good;
+    }''' + source[end:]
+    source = source.replace("return ok==49?0:3;", "return ok==141?0:3;")
+    # Smart now calls iterate once; Classic retains the direct mapped loop.
+    source = source.replace("||ih!=0)", "||ih!=(smart?1:0))")
     namespace = dict(harness.__dict__, expected_active=expected_active)
     exec(source, namespace)
     observed, _ = namespace["roi_probe"](binary, inputs)
-    # Classic PF8/PF16 and Smart PF8/PF16/PF32 must agree at active pixels.
-    pf8_classic = observed[0:48]
-    pf16_classic = observed[48:144]
-    pf8_smart = observed[144:192]
-    pf16_smart = observed[192:288]
-    pf32_smart = observed[288:480]
-    assert len(pf32_smart) == 192
-    assert pf8_classic == pf8_smart
-    assert pf16_classic == pf16_smart
+    # This host mock iterates the overlapping local world dimensions. Classic
+    # maps the source origin itself. Assert each route against retained AEX
+    # typed pixel bytes, rather than assuming these different requests coincide.
+    offset = 0
+    for smart, depth in ((False, "PF8"), (False, "PF16"), (True, "PF8"),
+                         (True, "PF16"), (True, "PF32")):
+        size = {"PF8": 4, "PF16": 8, "PF32": 16}[depth]
+        expected = bytearray(b"\xee" * (12 * size))
+        for y in range(2):
+            for x in range(3):
+                src = ((y if smart else y + 1) * 4 + (x if smart else x + 1)) * size
+                dst = (y * 4 + x) * size
+                expected[dst:dst + size] = expected_active[depth][src:src + size]
+        assert observed[offset:offset + len(expected)] == expected, (smart, depth)
+        offset += len(expected)
+    assert offset == len(observed)
