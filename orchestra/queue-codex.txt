@@ -163,3 +163,11 @@ X02-aexcompat-gui-guide-ja
 X01b-aexcompat-platform-parity
 R11-release-package-and-notes
 X03-aexcompat-pr-to-main
+Q00-refactor-native-diff-tool
+Q01-refactor-olmradialblur
+Q02-refactor-olmcolorkey
+Q03-refactor-olmkirakira
+Q04-refactor-olmdirectionalblur
+Q05-refactor-olmdistancegradation
+Q06-refactor-olmblur
+Q07-refactor-olmsmall
