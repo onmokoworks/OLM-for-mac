@@ -13,13 +13,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			const PixelT p_value = LoadPixel<PixelT>(input, x, y);
 			const PixelT *p = &p_value;
 			const size_t idx = ((size_t)y * w + x) * 4;
-			if (use_aex_case0010) {
-				const float inv_255 = (float)(1.0 / 255.0);
-				src.rgba[idx + 0] = RadialF32Mul((float)p->red, inv_255);
-				src.rgba[idx + 1] = RadialF32Mul((float)p->green, inv_255);
-				src.rgba[idx + 2] = RadialF32Mul((float)p->blue, inv_255);
-				src.rgba[idx + 3] = RadialF32Mul((float)p->alpha, inv_255);
-			} else {
+			{
 				for (int c = 0; c < 4; ++c) src.rgba[idx + c] = RadialZoomPixelTraits<PixelT>::Read(*p, c);
 			}
 		}
@@ -71,34 +65,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation);
 	std::vector<float> rotation_fade_source_with_guard;
 	rotation_scalar_source_with_guard.back() = 0.0f;
-	if (((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
-		 use_aex_typed_rotation_size_variation_32x18 ||
-		 use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
-		 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0) ||
-		 use_aex_typed_rotation_size_offset_components_32x18 ||
-		 use_aex_typed_rotation_size_edge_components_32x18 ||
-		 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
-		 use_aex_typed_rotation_size_noise_components_32x18) &&
-		(source_components_1_4_9 || (use_generic_baseline && source_general_topology) ||
-		 use_generic_size_noise)) {
+	if ((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise) {
 		rotation_scalar_source_with_guard = component_size_factor;
-		if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
+		if (use_generic_size_fade) {
 			rotation_fade_source_with_guard = component_size_factor;
 		}
 	}
-	if ((use_generic_baseline && info.noise_variation != 0.0) || use_generic_size_noise ||
-		use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
-		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
-		use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
-		(use_aex_typed_rotation_dual_strength_32x18 && info.noise_variation != 0.0) ||
-		use_aex_typed_rotation_offset_noise_components_32x18 ||
-		use_aex_typed_rotation_edge_noise_32x18 ||
-		use_aex_pf32_offset_mode3_noise_type1_small ||
-		use_aex_pf32_opaque_size_noise_type1_small ||
-		(use_aex_typed_rotation_transform_worker_32x18 && rotation_quality_repeat_noise_tuple) ||
-		use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
-		use_aex_typed_rotation_size_noise_components_32x18 ||
-		(use_aex_pf32_edge_fade_intersection_small && info.noise_variation != 0.0)) {
+	if (use_generic_baseline && info.noise_variation != 0.0 || use_generic_size_noise) {
 		std::vector<float> noise_plane;
 		int noise_width = 0;
 		int noise_height = 0;
@@ -110,40 +83,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		const olm::dblur::NoisePlaneView noise_view{
 			noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample)};
 		const float nv = (float)info.noise_variation * 0.01f;
-		const bool use_aex_rotation_type1_inverse_cell_32x18 =
-			info.noise_type == 1 &&
-			((use_aex_typed_noise_type1_pairwise && w == 32 && h == 18) ||
-			 (use_aex_typed_rotation_dual_strength_32x18 && info.noise_variation != 0.0) ||
-			 use_aex_typed_rotation_edge_noise_32x18 ||
-			 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
-			 use_aex_typed_rotation_size_noise_components_32x18);
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				const float noise = (((use_generic_baseline || use_generic_size_noise) && info.noise_type == 1) ||
-					use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
-					use_aex_typed_rotation_offset_noise_components_32x18 ||
-					(use_aex_typed_rotation_dual_size_noise_offset_components_32x18 && info.noise_type == 1) ||
-					use_aex_rotation_type1_inverse_cell_32x18)
+				const float noise = ((use_generic_baseline || use_generic_size_noise) && info.noise_type == 1)
 					? olm::dblur::sample_radial_noise_plane(noise_view, x, y, info.noise_type == 1)
-					: (((use_generic_baseline || use_generic_size_noise) && info.noise_type == 2) || use_aex_typed_noise_type2_small ||
-					(use_aex_typed_rotation_dual_size_noise_offset_components_32x18 && info.noise_type == 2) ||
-					(use_aex_typed_rotation_dual_strength_32x18 && info.noise_type == 2) ||
-					(use_aex_typed_rotation_edge_noise_32x18 && info.noise_type == 2) ||
-					(use_aex_typed_rotation_edge_offset_noise_components_32x18 && info.noise_type == 2) ||
-					(use_aex_typed_rotation_transform_worker_32x18 && rotation_quality_repeat_noise_tuple) ||
-					(use_aex_typed_rotation_any_size_edge_noise_components_32x18 && info.noise_type == 2) ||
-					(use_aex_typed_rotation_size_noise_components_32x18 && info.noise_type == 2))
+					: ((use_generic_baseline || use_generic_size_noise) && info.noise_type == 2)
 					? SampleRadialBlockNoisePlaneAEX(noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample), x, y)
 					: SampleRadialNoisePlaneAEX(noise_plane.data(), noise_width, RadialF32Mul((float)info.thickness, info.smart_downsample), x, y);
 				const size_t source_cell = (size_t)y * w + x;
 				const float mixed =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 				rotation_scalar_source_with_guard[source_cell] =
-					((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise || use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
-					 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0 &&
-					  info.noise_variation != 0.0) ||
-					 use_aex_typed_rotation_size_noise_components_32x18 ||
-					 use_aex_typed_rotation_any_size_edge_noise_components_32x18)
+					(use_generic_baseline && info.size_variation != 0.0 || use_generic_size_noise)
 					? RadialF32Mul(mixed, rotation_scalar_source_with_guard[source_cell]) : mixed;
 			}
 		}
@@ -154,7 +105,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
-	const float step_rad_f = (use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
+	const float step_rad_f = (rotation_quality_repeat_noise_tuple) && info.quality == 3.0
 		? RadialF32Div(1.0f, RadialF32Div(
 			RadialF32Mul((float)quality, 180.0f), (float)kPi))
 		: (float)step_rad;
@@ -166,7 +117,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	// The angle depends only on ai, not radius. Retain the exact FLOAT32
 	// multiplication and paired AEX polynomial, including signed-zero bits.
 	std::vector<RadialPairedTrig> rotation_angles;
-	if (use_aex_exact || use_generic_two_stage) {
+	if (use_generic_two_stage) {
 		rotation_angles.resize((size_t)angular_count);
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			rotation_angles[(size_t)ai] = RadialAEXPairedSinCos(
@@ -177,7 +128,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			float sx = 0.0f;
 			float sy = 0.0f;
-			if (use_aex_exact || use_generic_two_stage) {
+			if (use_generic_two_stage) {
 				const float r = (float)(min_r + ri);
 				const RadialPairedTrig angle_trig = rotation_angles[(size_t)ai];
 				const float sx0 = RadialF32Mul(r, angle_trig.cosine);
@@ -201,17 +152,14 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled.rgba[c];
 			const size_t cell = (size_t)ri * angular_count + ai;
 			polar_valid[cell] = sampled.eligible;
-			if (use_aex_exact || use_generic_two_stage) {
+			if (use_generic_two_stage) {
 				rotation_source_scalar[cell] =
 					use_generic_two_stage && info.repeat_border == FALSE
 						? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
-						: use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
-						!rotation_quality_repeat_noise_tuple
-						? (sampled.eligible ? 1.0f : 0.0f)
 						: (rotation_quality_repeat_noise_tuple
 							? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy));
-				if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
+				if (use_generic_size_fade) {
 					rotation_fade_factor[cell] = info.repeat_border == FALSE
 						? SampleScalarAEXNoRepeat(rotation_fade_source_with_guard, w, h, sx, sy)
 						: SampleScalarAEXRepeat(rotation_fade_source_with_guard, w, h, sx, sy);
@@ -221,7 +169,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 
 	FloatImage blurred;
-	const bool use_aex_two_stage = use_aex_exact || use_generic_two_stage;
+	const bool use_aex_two_stage = use_generic_two_stage;
 	if (use_aex_two_stage) {
 		blurred.width = angular_count;
 		blurred.height = radius_count;
@@ -272,7 +220,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				// +0x10 (noise-composed scatter span).  The admitted opaque/SV0
 				// intersection fixtures have an exact size factor of one.
 				const float fade_factor = RadialSizeVariationEnabled(info.size_variation)
-					? ((use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18)
+					? ((use_generic_size_fade)
 						? rotation_fade_factor[cell] : rotation_source_scalar[cell]) : 1.0f;
 				const float inverse_fade_factor = RadialF32Div(1.0f, fade_factor);
 				const A_long effective_outer_fade_span = (A_long)RadialF32Mul(
@@ -338,14 +286,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
 			// selects that dynamic span directly; it does not apply the
 			// fixed-strength path's additional UI-to-worker decrement.
-				const bool use_mode2_dynamic = (use_generic_two_stage ||
-					use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
-				use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
-				use_aex_typed_rotation_size_offset_components_32x18 ||
-				use_aex_typed_rotation_offset_noise_components_32x18 ||
-				use_aex_typed_rotation_offset_mode3 ||
-				use_aex_typed_rotation_edge_offset_32x18) &&
-				info.outer_offset_mode == 2;
+				const bool use_mode2_dynamic = use_generic_two_stage && info.outer_offset_mode == 2;
 			const A_long outer_span = use_native_quality_setup
 				? RotationResolvedSpanForRadius(native_quality_control(info.outer_strength), native_quality_control(info.outer_offset), info.outer_offset_mode, radius_count, ri)
 				: info.outer_offset_mode == 3
@@ -354,19 +295,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					? std::max<A_long>(RotationEffectiveLength(
 						info.outer_strength, 1, 0), DynamicOffsetForRadius(radius_count,
 						std::max<A_long>(0, info.outer_offset - 1), ri))
-				: ((use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple)
+				: ((rotation_quality_repeat_noise_tuple)
 					? (A_long)std::ceil((double)RotationEffectiveLength(
 						info.outer_strength, info.outer_offset_mode, 0) * (info.quality / 5.0))
 					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
 			// Inner offset uses the same owner-to-worker conversion as the outer
 			// offset: the UI value is zero-based once, then scaled by radius.
-				const bool use_dynamic_inner_offset = use_generic_two_stage ||
-					use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
-				use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
-				use_aex_typed_rotation_size_offset_components_32x18 ||
-				use_aex_typed_rotation_offset_noise_components_32x18 ||
-				use_aex_typed_rotation_inner_offset_pairwise ||
-				use_aex_typed_rotation_edge_offset_32x18;
+				const bool use_dynamic_inner_offset = use_generic_two_stage;
 			const A_long inner_span = use_native_quality_setup
 				? RotationResolvedSpanForRadius(native_quality_control(info.inner_strength), native_quality_control(info.inner_offset), info.inner_offset_mode, radius_count, ri)
 				: use_dynamic_inner_offset &&
@@ -418,9 +353,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					const std::vector<float> &inner_weights = inner_weights_it->second;
 					for (A_long offset = 1; offset < effective_inner_span; ++offset) {
 						const bool pf32_inner_edge_noise_forward =
-							(use_aex_typed_rotation_edge_noise_32x18 ||
-							 use_aex_typed_rotation_inner_size_edge_noise_components_32x18) &&
-							std::is_same<PixelT, PF_PixelFloat>::value;
+false;
 						const A_long dst_ai = pf32_inner_edge_noise_forward
 							? (ai + offset) % angular_count
 							: ((ai - offset) % angular_count + angular_count) % angular_count;
@@ -587,7 +520,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			float angle_index = 0.0f;
 			float radius_index = 0.0f;
 			float angle_raw_debug = 0.0f;
-			if ((use_aex_exact || use_generic_two_stage)) {
+			if (use_generic_two_stage) {
 				// FUN_180001b10 keeps the Cartesian path in scalar float32,
 				// rounds atan2 once to float, performs the negative-angle add in
 				// double, then multiplies by the stored float32 angle scale.
@@ -606,7 +539,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				angle_raw_debug = angle;
 				const float angle_scale = use_generic_two_stage
 					? RadialF32Div(1.0f, (float)((double)(float)(1.0 / quality) * kAngleDegreesToRadians))
-					: ((use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
+					: ((rotation_quality_repeat_noise_tuple) && info.quality == 3.0
 					   ? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
 					   : (float)(quality * 180.0 / kPi));
 				angle_index = RadialF32Mul(angle, angle_scale);
@@ -624,10 +557,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			const A_long xi = (A_long)std::floor(angle_index);
 			const A_long yi_raw = (A_long)std::floor(radius_index);
-			const float fx = (use_aex_exact || use_generic_two_stage)
+			const float fx = (use_generic_two_stage)
 				? RadialF32Sub(angle_index, (float)xi)
 				: angle_index - (float)xi;
-			const float fy = (use_aex_exact || use_generic_two_stage)
+			const float fy = (use_generic_two_stage)
 				? RadialF32Sub(radius_index, (float)yi_raw)
 				: radius_index - (float)yi_raw;
 			const A_long x0 = ((xi % angular_count) + angular_count) % angular_count;
@@ -643,7 +576,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
 				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
 				use_aex_two_stage,
-				(use_aex_exact || use_generic_two_stage));
+				(use_generic_two_stage));
 			PixelT output_pixel{};
 			PixelT *out = &output_pixel;
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
@@ -660,7 +593,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				g_rotation_test_capture->final_coordinates[dst + 1] = radius_index;
 			}
 #endif
-			if ((use_aex_exact || use_generic_two_stage)) {
+			if (use_generic_two_stage) {
 				// The PF8 owner applies gain and MINSS(..., 1.0) to RGB only.
 				// FUN_180017400 then CVTTSS2SI(channel * 255) and stores the
 				// low byte in ARGB order; negative RGB is intentionally not
