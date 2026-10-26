@@ -35,9 +35,9 @@ scripts/install_mac_plugins_to_mediacore.sh --package /path/to/OLM_Mac_Plugins.z
 scripts/install_mac_plugins_to_mediacore.sh --audit-only
 ```
 
-## macOSに止められたとき
+## macOSにブロックされたとき
 
-このプラグインは、Appleの署名と公証を受けていません。受けるには有料のAppleの開発者登録が必要なため、今のところ予定はありません。そのため、ダウンロードしたものはmacOSに止められることがあります。AEの起動時に「開けません」「開発元を検証できません」などと出て、読み込まれません。
+このプラグインは、Appleの署名と公証を受けていません。署名と公証には有料のAppleの開発者登録が必要なため、今のところ予定はありません。そのため、ダウンロードしたプラグインは、AEの起動時にmacOSのGatekeeperから警告のダイアログが表示され、読み込みがブロックされることがあります。
 
 このプロジェクトを信頼できるなら、次の手順で解除できます。
 

@@ -43,7 +43,7 @@ Quit After Effects, then copy the 10 `.plugin` files from the release ZIP into:
 ```
 
 > [!NOTE]
-> The plugins are not signed or notarized by Apple, so macOS may block them. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
+> The plugins are not signed or notarized by Apple, so macOS Gatekeeper may show a warning dialog and block them from loading. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
 
 ## Reporting problems
 
@@ -59,5 +59,5 @@ If the result looks different from the Windows version, please also attach an im
 
 ## License
 
-- The original OLM plugins are published by OLM Digital under the Apache License 2.0. This port uses the same [Apache License 2.0](LICENSE).
+- This port inherits the original OLM plugins' license (Apache License 2.0, by OLM Digital). The license text is in [LICENSE](LICENSE).
 - This is an unofficial port. It has no connection with OLM Digital and is not authorized or endorsed by them.
