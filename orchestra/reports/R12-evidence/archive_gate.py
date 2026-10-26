@@ -12,7 +12,8 @@ evidence = Path(__file__).resolve().parent
 paths = sorted(set(
     list(state.glob('*.json')) + list(state.glob('*.log')) +
     list((state/'f47d').glob('*.json')) + list((state/'f47d').glob('*.log')) +
-    list((state/'f51').glob('*.json'))))
+    list((state/'f51').glob('*.json')) + list((state/'f51').glob('*.jsonl')) +
+    list((state/'f51').glob('*.log'))))
 archive = evidence/'gate-evidence.tar.gz'
 with tarfile.open(archive, 'w:gz') as output:
     for path in paths:
