@@ -23,3 +23,5 @@
 ## Rules
 - Only fixture-style code. Do not touch general arithmetic.
 - If a fixture path really changes Smart output (the oracle check fails with OFF), keep that one and say why in one comment line.
+- Source-contract tests (tests that read the plugin source as text and assert that a fixture predicate or literal is present) protect exactly the code being removed. When the oracle check proves a fixture path is redundant, you may delete those assertions or the whole test file. Do it in the same ticket, and list each one in the report. Tests that check behaviour (render output, refusal tags, UI state) must still pass unchanged.
+- The focused campaign must cover every fixture family you delete. Generate cases per family (each predicate's literal conditions), at least 20 cases per family, and report the per-family counts.
