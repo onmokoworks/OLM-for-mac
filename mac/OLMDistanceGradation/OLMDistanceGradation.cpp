@@ -323,7 +323,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	long h = input->height;
 	size_t pixel_count = 0;
 	if (!checked_pixel_count(w, h, &pixel_count)) return OLM_DG_REFUSAL("pixel-count");
-	p.w = w; p.h = h;
+	p.w = (A_long)w; p.h = (A_long)h;
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
 	if (smart_owner) {
@@ -343,7 +343,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		const long bx = (uint32_t)((uint64_t)p.blur_size * in_data->downsample_x.num) / (uint32_t)in_data->downsample_x.den;
 		const long by = (uint32_t)((uint64_t)p.blur_size * in_data->downsample_y.num) / (uint32_t)in_data->downsample_y.den;
 		p.blur_size_y = by;
-		p.blur_size = bx;
+		p.blur_size = (A_long)bx;
 		p.ds_x = p.ds_y = 1.0f;
 	}
 
