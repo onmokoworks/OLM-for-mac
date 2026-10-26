@@ -195,8 +195,7 @@ extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
 {
 	if (!request || !info) return 0;
 	PF_RenderRequest normalized = {};
-	const bool retained_exact = IsRetainedNeutralExact(input, output, *info, bitdepth);
-	const bool generic = !retained_exact &&
+	const bool generic =
 		(bitdepth == 8 ? (IsGenericNeutral8Parameters(*info) ||
             (!CanUseExact8(input, output, nullptr, *info) &&
                 CanUsePF8FeatureFallback(input, output, *info)))

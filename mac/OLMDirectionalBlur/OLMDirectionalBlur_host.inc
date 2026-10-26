@@ -406,16 +406,14 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				render_row_bytes > static_cast<std::size_t>(render_world->rowbytes)) {
 				err = OLM_DIRECTIONAL_REFUSAL("smart-output-span");
 			}
-			const bool retained_exact = IsRetainedNeutralExact(
-				input_world, render_world, info, extra->input->bitdepth);
+
 			const bool pf8_feature_fallback = extra->input->bitdepth == 8 &&
                 IsGenericDeepFeatureShape(info) &&
                 !CanUseExact8(input_world, render_world, noise_world, info);
 			const bool generic_features = pf8_feature_fallback ||
 				((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
 				IsGenericDeepFeatureShape(info));
-			const bool generic_shape = !retained_exact &&
-				(IsGenericNeutralShape(info) || generic_features);
+			const bool generic_shape = (IsGenericNeutralShape(info) || generic_features);
 			int effective_front_strength = 0, effective_back_strength = 0;
 			if (!err && generic_shape) {
 				const auto strength_info = generic_features ? NeutralStrengthView(info) : info;

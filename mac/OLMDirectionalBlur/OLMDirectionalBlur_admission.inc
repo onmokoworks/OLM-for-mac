@@ -1,31 +1,6 @@
 // Included in OLMDirectionalBlur.cpp; preserve translation-unit order.
-static bool NoiseCoefficientHigherOrderTuple(const OLMDirectionalBlurInfo &info,
-	                                          A_long width,
-	                                          A_long height)
-{
-	if (width != 16 || height != 16 || info.angle_deg != 45.0 ||
-		info.brightness_gain != 1.0 || info.seed != 1 ||
-		info.noise_offset != 0 || info.thickness != 3.0) {
-		return false;
-	}
-	const bool front = info.front_strength == 8 && info.back_strength == 0 &&
-		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0;
-	const bool back = info.front_strength == 0 && info.back_strength == 8 &&
-		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0;
-	if (!front && !back) return false;
-	const int fade = front ? info.front_alpha_fade : info.back_alpha_fade;
-	const double sharp = front ? info.front_sharp_tail : info.back_sharp_tail;
-	return
-		(fade == 50 && sharp == 50.0 && info.noise_variation == 25.0 &&
-		 info.noise_type == 1 && info.size_variation == 0.0) ||
-		(fade == 50 && sharp == 100.0 && info.noise_variation == 100.0 &&
-		 info.noise_type == 2 && info.size_variation == 50.0) ||
-		(fade == 100 && sharp == 50.0 && info.noise_variation == 100.0 &&
-		 info.noise_type == 2 && info.size_variation == 0.0) ||
-		(fade == 100 && sharp == 100.0 && info.noise_variation == 25.0 &&
-		 info.noise_type == 1 && info.size_variation == 50.0);
-}
 
+// Retained: disabling this source-bound family changes Smart admission (F01 oracle).
 static bool DualSideHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 	                                 A_long width,
 	                                 A_long height)
@@ -57,6 +32,7 @@ static bool DualSideHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 		 info.noise_type == 1);
 }
 
+// Retained: disabling the natural64 source guard changes Smart admission (F01 oracle).
 static bool NoiseType2Natural64Tuple(const OLMDirectionalBlurInfo &info,
 	                                 A_long width,
 	                                 A_long height)
@@ -132,6 +108,7 @@ static bool Natural64SourceExact(const PF_EffectWorld *input,
 	return false;
 }
 
+// Retained: the PF8 Layer tuple has source-bound Smart admission (F01 oracle).
 static bool PublicType3Layer16Tuple(const OLMDirectionalBlurInfo &info)
 {
 	return info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
@@ -337,9 +314,6 @@ static bool CanUseExact8(const PF_EffectWorld *input,
                          const PF_EffectWorld *noise_layer,
                          const OLMDirectionalBlurInfo &info)
 {
-	const bool noise_coefficient_higher_order_exact = input && output &&
-		NoiseCoefficientHigherOrderTuple(info, input->width, input->height) &&
-		output->width == input->width && output->height == input->height;
 	const bool dual_side_higher_order_exact = input && output &&
 		DualSideHigherOrderTuple(info, input->width, input->height) &&
 		output->width == input->width && output->height == input->height;
@@ -347,32 +321,8 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		(info.front_alpha_fade != 0 || info.front_sharp_tail != 0.0);
 	const bool size_back_combo = info.size_variation != 0.0 &&
 		(info.back_alpha_fade != 0 || info.back_sharp_tail != 0.0);
-	const bool size_front_combo_exact = input && output &&
-		input->width == 16 && input->height == 16 &&
-		output->width == 16 && output->height == 16 &&
-		info.front_strength == 8 && info.back_strength == 0 &&
-		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-		info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
-		info.brightness_gain == 1.0 &&
-		(((info.size_variation == 25.0 || info.size_variation == 50.0 ||
-		   info.size_variation == 100.0) &&
-		  (info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
-		  info.front_sharp_tail == 0.0) ||
-		 (info.size_variation == 50.0 && info.front_alpha_fade == 0 &&
-		  (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)));
-	const bool size_back_combo_exact = input && output &&
-		input->width == 16 && input->height == 16 &&
-		output->width == 16 && output->height == 16 &&
-		info.front_strength == 0 && info.back_strength == 8 &&
-		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-		info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
-		info.brightness_gain == 1.0 &&
-		(((info.size_variation == 25.0 || info.size_variation == 50.0 ||
-		   info.size_variation == 100.0) &&
-		  (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
-		  info.back_sharp_tail == 0.0) ||
-		 (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
-		  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)));
+
+	// Retained: the non-unit-scale legacy tuple lacks a completed F01 oracle comparison.
 	const bool legacy_size_sharp_exact = input && output &&
 		input->width == 960 && input->height == 540 &&
 		output->width == 960 && output->height == 540 &&
@@ -381,6 +331,7 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		info.front_alpha_fade == 0 && info.front_sharp_tail == 45.0 &&
 		info.back_strength == 0 && info.noise_variation == 0.0 &&
 		info.render_scale_x == 0.5 && info.render_scale_y == 0.5;
+	// Retained: Layer admission has no equivalent general PF8 fallback.
 	const bool legacy_mode2_adapter_exact = input && output && noise_layer &&
 		input->width == 16 && input->height == 16 &&
 		output->width == 16 && output->height == 16 &&
@@ -398,12 +349,10 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 	       info.front_strength >= 0 && info.front_alpha_fade >= 0 &&
 	       info.back_strength >= 0 && info.back_alpha_fade >= 0 &&
 	       info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
-	       (!size_front_combo || size_front_combo_exact ||
-	        noise_coefficient_higher_order_exact || dual_side_higher_order_exact ||
+	       (!size_front_combo || dual_side_higher_order_exact ||
 	        legacy_size_sharp_exact ||
 	        legacy_mode2_adapter_exact) &&
-	       (!size_back_combo || size_back_combo_exact ||
-	        noise_coefficient_higher_order_exact || dual_side_higher_order_exact ||
+	       (!size_back_combo || dual_side_higher_order_exact ||
 	        legacy_mode2_adapter_exact) &&
 	       info.noise_variation >= 0.0 &&
 	       (info.noise_variation == 0.0 ||
@@ -425,117 +374,6 @@ static bool IsGenericNeutralShape(const OLMDirectionalBlurInfo &info)
 		info.front_sharp_tail == 0.0 &&
 		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0;
-}
-
-static bool RetainedNeutralBackWorlds(const PF_EffectWorld *input,
-	                                  const PF_EffectWorld *output,
-	                                  A_long width,
-	                                  A_long height,
-	                                  std::size_t pixel_size)
-{
-	if (width <= 0 || height <= 0 || pixel_size == 0 ||
-		static_cast<std::size_t>(width) >
-			std::numeric_limits<std::size_t>::max() / pixel_size) {
-		return false;
-	}
-	const std::size_t active = static_cast<std::size_t>(width) * pixel_size;
-	return input && output && input->data && output->data &&
-		input->width == width && input->height == height && output->width == width &&
-		output->height == height && input->rowbytes >= 0 && output->rowbytes >= 0 &&
-		static_cast<std::size_t>(input->rowbytes) >= active &&
-		static_cast<std::size_t>(output->rowbytes) >= active;
-}
-
-static bool IsRetainedNeutralBackExact8(const PF_EffectWorld *input,
-		                                  const PF_EffectWorld *output,
-		                                  const OLMDirectionalBlurInfo &info)
-{
-	if (info.front_strength != 0 || info.brightness_gain != 1.0 ||
-		info.front_alpha_fade != 0 || info.front_sharp_tail != 0.0 ||
-		info.back_alpha_fade != 0 ||
-		info.back_sharp_tail != 0.0 || info.size_variation != 0.0 ||
-		info.noise_variation != 0.0) {
-		return false;
-	}
-	const bool retained_16 =
-		RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel8)) &&
-		info.back_strength == 8 &&
-		(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
-		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
-	const bool retained_portable_960 =
-		RetainedNeutralBackWorlds(input, output, 960, 540, sizeof(PF_Pixel8)) &&
-		info.back_strength == 240 && info.angle_deg == 0.0 &&
-		info.render_scale_x == 0.5 && info.render_scale_y == 0.5;
-	return retained_16 || retained_portable_960;
-}
-
-static bool IsRetainedNeutralBackExact16(const PF_EffectWorld *input,
-		                                   const PF_EffectWorld *output,
-		                                   const OLMDirectionalBlurInfo &info)
-{
-	return RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel16)) &&
-		info.front_strength == 0 &&
-		(info.back_strength == 1 || info.back_strength == 2 ||
-		 info.back_strength == 8) && info.angle_deg == 45.0 &&
-		info.brightness_gain == 1.0 && info.front_alpha_fade == 0 &&
-		info.front_sharp_tail == 0.0 && info.back_alpha_fade == 0 &&
-		info.back_sharp_tail == 0.0 && info.size_variation == 0.0 &&
-		info.noise_variation == 0.0 && info.render_scale_x == 1.0 &&
-		info.render_scale_y == 1.0;
-}
-
-static bool IsRetainedNeutralBackExact32(const PF_EffectWorld *input,
-		                                  const PF_EffectWorld *output,
-		                                  const OLMDirectionalBlurInfo &info)
-{
-	const bool back_one = info.back_strength == 1 &&
-		(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
-		(info.brightness_gain == 0.5 || info.brightness_gain == 1.0);
-	if (!RetainedNeutralBackWorlds(
-			input, output, 16, 16, sizeof(PF_PixelFloat))) return false;
-	const bool back_eight = info.back_strength == 8 && info.angle_deg == 45.0 &&
-		info.brightness_gain == 1.0;
-	return info.front_strength == 0 && (back_one || back_eight) &&
-		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
-}
-
-static bool IsRetainedNeutralDualExact16(const PF_EffectWorld *input,
-	                                      const PF_EffectWorld *output,
-	                                      const OLMDirectionalBlurInfo &info)
-{
-	return RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel16)) &&
-		(info.front_strength == 1 || info.front_strength == 2 ||
-		 info.front_strength == 8) && info.back_strength == 1 &&
-		info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
-}
-
-static bool IsRetainedNeutralBackExact(const PF_EffectWorld *input,
-		                                const PF_EffectWorld *output,
-		                                const OLMDirectionalBlurInfo &info,
-		                                short bitdepth)
-{
-	switch (bitdepth) {
-	case 8: return IsRetainedNeutralBackExact8(input, output, info);
-	case 16: return IsRetainedNeutralBackExact16(input, output, info);
-	case 32: return IsRetainedNeutralBackExact32(input, output, info);
-	default: return false;
-	}
-}
-
-static bool IsRetainedNeutralExact(const PF_EffectWorld *input,
-	                                const PF_EffectWorld *output,
-	                                const OLMDirectionalBlurInfo &info,
-	                                short bitdepth)
-{
-	return IsRetainedNeutralBackExact(input, output, info, bitdepth) ||
-		(bitdepth == 16 && IsRetainedNeutralDualExact16(input, output, info));
 }
 
 static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
@@ -817,49 +655,4 @@ static bool GenericPF32LayerCoefficientBound(const PF_EffectWorld *layer,
     const OLMDirectionalBlurInfo &info, double *bound)
 {
     return GenericDeepLayerCoefficientBound<PF_PixelFloat>(layer, info, bound);
-}
-
-static bool NoisePublicPairwiseTuple(const OLMDirectionalBlurInfo &info,
-	                                  A_long width,
-	                                  A_long height)
-{
-	const bool fade50 = info.front_alpha_fade == 50 &&
-		info.front_sharp_tail == 0.0 && info.size_variation == 0.0;
-	const bool sharp50 = info.front_alpha_fade == 0 &&
-		info.front_sharp_tail == 50.0 && info.size_variation == 0.0;
-	const bool size50 = info.front_alpha_fade == 0 &&
-		info.front_sharp_tail == 0.0 && info.size_variation == 50.0;
-	const int coefficient = fade50 ? 1 : sharp50 ? 2 : size50 ? 3 : 0;
-	const int geometry = width == 16 && height == 16 ? 1 :
-		width == 32 && height == 18 ? 2 : 0;
-	return info.front_strength == 8 && info.back_strength == 0 &&
-		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-		info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-		((info.noise_type == 1 && info.seed == 1 && info.noise_offset == 0 &&
-		  info.thickness == 3.0 && info.noise_variation == 25.0 &&
-		  ((coefficient == 1 && geometry == 1) || (coefficient == 3 && geometry == 1))) ||
-		 (info.noise_type == 1 && info.seed == 2 && info.noise_offset == 1 &&
-		  info.thickness == 10.0 && info.noise_variation == 100.0 &&
-		  coefficient == 2 && geometry == 2) ||
-		 (info.noise_type == 2 && info.seed == 1 && info.noise_offset == 0 &&
-		  info.thickness == 3.0 && info.noise_variation == 100.0 &&
-		  coefficient == 3 && geometry == 2) ||
-		 (info.noise_type == 3 && info.seed == 2 && info.noise_offset == 1 &&
-		  info.thickness == 10.0 && info.noise_variation == 25.0 &&
-		  coefficient == 3 && geometry == 1) ||
-		 (info.noise_type == 2 && info.seed == 1 && info.noise_offset == 0 &&
-		  info.thickness == 10.0 && info.noise_variation == 25.0 &&
-		  coefficient == 2 && geometry == 1) ||
-		 (info.noise_type == 3 && info.seed == 1 && info.noise_offset == 1 &&
-		  info.thickness == 3.0 && info.noise_variation == 100.0 &&
-		  coefficient == 1 && geometry == 2) ||
-		 (info.noise_type == 2 && info.seed == 2 && info.noise_offset == 0 &&
-		  info.thickness == 3.0 && info.noise_variation == 25.0 &&
-		  coefficient == 1 && geometry == 2) ||
-		 (info.noise_type == 3 && info.seed == 1 && info.noise_offset == 0 &&
-		  info.thickness == 3.0 && info.noise_variation == 100.0 &&
-		  coefficient == 2 && geometry == 1) ||
-		 (info.noise_type == 2 && info.seed == 1 && info.noise_offset == 1 &&
-		  info.thickness == 10.0 && info.noise_variation == 25.0 &&
-		  coefficient == 1 && geometry == 1));
 }
