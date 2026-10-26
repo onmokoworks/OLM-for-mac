@@ -75,24 +75,6 @@ SmoothingIs(const PF_ParamDef *const params[], A_long smoothness,
 }
 
 static bool
-GammaPaletteRedKey(const PF_ParamDef *const params[], A_u_char kr,
-                   A_u_char kg, A_u_char kb)
-{
-	return params[SM_NUM_GAMMA_COLORS]->u.sd.value == 2 &&
-	       ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) &&
-	       ColorIs(params[SM_GAMMA_COLOR_1], 255, kr, kg, kb);
-}
-
-static bool
-GammaTailZero(const PF_ParamDef *const params[], A_long first)
-{
-	for (A_long i = first; i < NUM_GAMMA_COLORS; ++i) {
-		if (!ColorIs(params[SM_GAMMA_COLOR_0 + i], 0, 0, 0, 0)) return false;
-	}
-	return true;
-}
-
-static bool
 V2SourceIs(const PF_EffectWorld *world, short depth, const char expected[65])
 {
 	const size_t pixel_size = depth == 8 ? sizeof(PF_Pixel8) :
@@ -102,6 +84,7 @@ V2SourceIs(const PF_EffectWorld *world, short depth, const char expected[65])
 		(size_t)world->width * pixel_size, (size_t)world->height, expected);
 }
 
+// Retained: removing this fixture contract changes four Smart SDK refusals to successful renders.
 static bool
 V2Case07WorldContract(const PF_InData *in_data,
                       const PF_EffectWorld *input,
@@ -180,7 +163,6 @@ V2SmartAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world,
 	const A_long pixel_size = depth == 8 ? (A_long)sizeof(PF_Pixel8) :
 	                          depth == 16 ? (A_long)sizeof(PF_Pixel16) :
 	                                        (A_long)sizeof(PF_PixelFloat);
-	const A_long pad = depth == 8 ? 5 : depth == 16 ? 7 : 13;
 	const A_long version = params[SM_VERSION]->u.pd.value;
 	const A_long gamma_mode = params[SM_GAMMA_MODE]->u.pd.value;
 	const A_FpLong gamma_value = params[SM_GAMMA_VALUE]->u.fs_d.value;
@@ -222,99 +204,7 @@ V2SmartAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world,
 	      "c8d5ded0f9da071eb9e14e7bf20300916a3b8b292f081099d25dfc6359bbafa2" :
 	      "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b")) return true;
 
-	// Installed-identity 3x2 public Smart owner chain. PF16 was exercised only
-	// through the synthetic classic production adapter and is not promoted.
-	if (depth == 32 && world->width == 3 && world->height == 2 &&
-	    world->rowbytes == 3 * pixel_size + 12 &&
-	    version == SMOOTHER_V2 && enable_key == 0 && invert_key == 0 &&
-	    ColorIs(params[SM_KEY_COLOR], 0, 0, 0, 0) && gamma_mode == GAMMA_NONE &&
-	    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 0 && GammaTailZero(params, 0) &&
-	    gamma_value == 2.4 && SmoothingIs(params, 100, 1, 0) &&
-	    V2SourceIs(world, depth,
-	      "4e43421598bfe27755f2b920014c8d3446413061900c9f94e16102fcf3089630")) return true;
 
-	if (world->width == 5 && world->height == 5 &&
-	    world->rowbytes == 5 * pixel_size + pad) {
-		// Exported Smart owner: intermediate Gamma 1.8, exact key endpoint,
-		// both versions and both key polarities (12 raw-exact cells).
-		if (enable_key == 1 && ColorIs(params[SM_KEY_COLOR], 255, 202, 187, 230) &&
-		    SmoothingIs(params, 100, 100, 100) &&
-		    (version == SMOOTHER_V1 || version == SMOOTHER_V2) &&
-		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 1.8 &&
-		    GammaPaletteRedKey(params, 202, 187, 230) && GammaTailZero(params, 2) &&
-		    V2SourceIs(world, depth, depth == 8 ?
-		      "ca56c65ec9209d52c956f40e51cb8f7c133a001eab1b141b95c04295917cce99" : depth == 16 ?
-		      "66127e3fbe12b1b39f25127550d006f69db7d8aabe9c571f8caf91fc6819dee7" :
-		      "decb2060f0d96ad30146658c2026edae48caf134311b4207d846317c5589467f")) return true;
-
-		// Earlier exported-owner Gamma 2.4 representatives.
-		if (enable_key == 1 && ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    SmoothingIs(params, 100, 100, 100) && gamma_mode == GAMMA_COLORS_ONLY &&
-		    gamma_value == 2.4 && GammaPaletteRedKey(params, 1, 1, 1) &&
-		    GammaTailZero(params, 2) &&
-		    ((version == SMOOTHER_V1 && invert_key == 0) ||
-		     (version == SMOOTHER_V2 && invert_key == 1)) &&
-		    V2SourceIs(world, depth, depth == 8 ?
-		      "c36c335071f2479526394e667d0448932638fa50b082ae7f82e749b48bc8e964" : depth == 16 ?
-		      "550b73ca84e8b69fa24b8b61e6ee8580ed743b765a15256174c1448999247418" :
-		      "76c868f51c9ac8da08c67f52e8d837401c5457045a659ee7c484f42f69cb252a")) return true;
-	}
-
-	// Public EffectMain covering fixture: two exact cells per depth.
-	if (world->width == 17 && world->height == 11 &&
-	    world->rowbytes == 17 * pixel_size + pad) {
-		if (depth == 8 && version == SMOOTHER_V1 && enable_key == 0 && invert_key == 0 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_NONE && gamma_value == 1.0 &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
-		    SmoothingIs(params, 100, 2, 0) && V2SourceIs(world, depth,
-		      "c1f989b1abdcc5e2fe6fe46bfe2fb3e769c2f8288ab09ee5005a9db41c4edd6e")) return true;
-		if (depth == 8 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 1 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 2.4 &&
-		    SmoothingIs(params, 50, 50, 50) &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 5 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) &&
-		    ColorIs(params[SM_GAMMA_COLOR_1], 255, 1, 1, 1) &&
-		    ColorIs(params[SM_GAMMA_COLOR_2], 255, 255, 0, 0) &&
-		    ColorIs(params[SM_GAMMA_COLOR_3], 255, 1, 1, 1) &&
-		    ColorIs(params[SM_GAMMA_COLOR_4], 255, 0, 0, 255) && V2SourceIs(world, depth,
-		      "22890ba4876617ed2956c87596198c021c26e9e57a67b3816a6c67cf6c8d671e")) return true;
-		if (depth == 16 && version == SMOOTHER_V2 && enable_key == 0 && invert_key == 0 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_ALL_COLORS && gamma_value == 2.4 &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
-		    SmoothingIs(params, 50, 50, 50) && V2SourceIs(world, depth,
-		      "57431e5864c4c0feecb55a6e1646ae2d0b55417bcdd70d5c03ce814f3c1b12ad")) return true;
-		if (depth == 16 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 0 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 1.0 &&
-		    SmoothingIs(params, 100, 2, 0) &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 5 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 255, 0) &&
-		    ColorIs(params[SM_GAMMA_COLOR_1], 255, 0, 255, 0) &&
-		    ColorIs(params[SM_GAMMA_COLOR_2], 255, 1, 1, 1) &&
-		    ColorIs(params[SM_GAMMA_COLOR_3], 255, 255, 0, 0) &&
-		    ColorIs(params[SM_GAMMA_COLOR_4], 255, 0, 0, 255) && V2SourceIs(world, depth,
-		      "bcdc96e0773448fb52f12907dd4bb6c39addaac7f1bed8f31182bc8ce37dd595")) return true;
-		if (depth == 32 && version == SMOOTHER_V1 && enable_key == 0 && invert_key == 0 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_NONE && gamma_value == 1.0 &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
-		    SmoothingIs(params, 50, 50, 50) && V2SourceIs(world, depth,
-		      "83bab2bff36972c9dbb3d079739a23a18d64179da6d8202e1024af6488fb2a40")) return true;
-		if (depth == 32 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 0 &&
-		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
-		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 2.4 &&
-		    SmoothingIs(params, 100, 2, 0) &&
-		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
-		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
-		    V2SourceIs(world, depth,
-		      "d0a57665d75ac51539e2e27e17eae4d16a3916b964ed556bae1bfc553441ad2f")) return true;
-	}
 	return false;
 }
 

@@ -36,25 +36,6 @@ V1_HASHES = {
     "18df1e2648e8a4f25f633f90143c61c5b58fd7e00bfd3bd02013c65947122749",
 }
 
-V2_HASHES = {
-    "1c15f67a9d0818a0a0266971720e855acac70a89e2690ccbedf5e142fc1c64f3",
-    "c8d5ded0f9da071eb9e14e7bf20300916a3b8b292f081099d25dfc6359bbafa2",
-    "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b",
-    "4e43421598bfe27755f2b920014c8d3446413061900c9f94e16102fcf3089630",
-    "ca56c65ec9209d52c956f40e51cb8f7c133a001eab1b141b95c04295917cce99",
-    "66127e3fbe12b1b39f25127550d006f69db7d8aabe9c571f8caf91fc6819dee7",
-    "decb2060f0d96ad30146658c2026edae48caf134311b4207d846317c5589467f",
-    "c36c335071f2479526394e667d0448932638fa50b082ae7f82e749b48bc8e964",
-    "550b73ca84e8b69fa24b8b61e6ee8580ed743b765a15256174c1448999247418",
-    "76c868f51c9ac8da08c67f52e8d837401c5457045a659ee7c484f42f69cb252a",
-    "c1f989b1abdcc5e2fe6fe46bfe2fb3e769c2f8288ab09ee5005a9db41c4edd6e",
-    "22890ba4876617ed2956c87596198c021c26e9e57a67b3816a6c67cf6c8d671e",
-    "57431e5864c4c0feecb55a6e1646ae2d0b55417bcdd70d5c03ce814f3c1b12ad",
-    "bcdc96e0773448fb52f12907dd4bb6c39addaac7f1bed8f31182bc8ce37dd595",
-    "83bab2bff36972c9dbb3d079739a23a18d64179da6d8202e1024af6488fb2a40",
-    "d0a57665d75ac51539e2e27e17eae4d16a3916b964ed556bae1bfc553441ad2f",
-}
-
 V1_BY_FIXTURE = {
     "fullframe_pf8": "d0851831db13ec2452b9ac20245f8d308d09dad1cf32984b91d4fb950d5945cd",
     "checker_pf8": "86bbf709af011be19543e165d3e636283f29d4d7189101718ce9aabb9295a56b",
@@ -89,15 +70,6 @@ V1_SOURCE_ORDER = [V1_BY_FIXTURE[name] for name in (
     "fullframe_pf8","checker_pf8","checker_pf16","colored_pf8","colored_pf16",
     "ramp_pf8","ramp_pf16","practical_7x5_pf16","practical_64x36_pf16",
     "constant_exact_5x3_pf16","constant_near_5x3_pf16")]
-V2_SOURCE_ORDER = [V2_BY_FIXTURE[name] for name in (
-    "v2_3x2_pf32","v2_5x5_gamma18_pf8","v2_5x5_gamma18_pf16","v2_5x5_gamma18_pf32",
-    "v2_5x5_gamma24_pf8","v2_5x5_gamma24_pf16","v2_5x5_gamma24_pf32",
-    "v2_17x11_pf8_straight","v2_17x11_pf8_premul","v2_17x11_pf16_straight",
-    "v2_17x11_pf16_premul","v2_17x11_pf32_premul","v2_17x11_pf32_straight")]
-V2_SOURCE_ORDER.insert(0, "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b")
-V2_SOURCE_ORDER.insert(0, "c8d5ded0f9da071eb9e14e7bf20300916a3b8b292f081099d25dfc6359bbafa2")
-V2_SOURCE_ORDER.insert(0, "1c15f67a9d0818a0a0266971720e855acac70a89e2690ccbedf5e142fc1c64f3")
-
 def admission_hash_order(path: Path, function: str, next_function: str) -> list[str]:
     text=re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (path.parent / match[1]).read_text(), path.read_text());body=text.split(function,1)[1].split(next_function,1)[0]
     return re.findall(r'"([0-9a-f]{64})"',body)
@@ -171,14 +143,6 @@ class SourceContract(unittest.TestCase):
     def test_v2_probe_matches_every_fixture_digest(self) -> None:
         probe_hashes = {key:value for key,value in self.rows.items() if key.startswith("v2_")}
         self.assertEqual(probe_hashes, V2_BY_FIXTURE)
-
-    def test_v2_every_fixed_source_is_pinned(self) -> None:
-        text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (V2.parent / match[1]).read_text(), V2.read_text())
-        self.assertTrue(all(value in text for value in V2_HASHES))
-        self.assertIn("V2SourceIs", text)
-
-    def test_v2_tuple_to_digest_placement_is_exact(self) -> None:
-        self.assertEqual(admission_hash_order(V2,"V2SmartAdmission(","ValidatePublicWorlds("),V2_SOURCE_ORDER)
 
     def test_wrong_pf16_17x11_hashes_are_absent(self) -> None:
         text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (V2.parent / match[1]).read_text(), V2.read_text())
