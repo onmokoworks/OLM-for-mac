@@ -20,7 +20,7 @@ text_count = 0
 nested_count = 0
 path_hits = []
 # Machine-specific absolute paths; ~ and /path/to examples are portable docs.
-local_path = re.compile(r'/(?:Users|Volumes|private|tmp|var/folders|home|Applications)/|[A-Za-z]:[\\/]')
+local_path = re.compile(r'/(?:Users|Volumes|private|tmp|var/folders|home|Applications)/|(?<![A-Za-z])[A-Za-z]:[\\/]')
 
 def scan(archive, prefix=''):
     global text_count, nested_count
