@@ -381,13 +381,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		     (edge_blur_direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
 		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0));
-		const bool public_owner_second_source_lane = false;
 		const bool public_owner_zero_four_lane = public_owner_geometry_transfer_lane;
 		const bool bounded_public_owner_lane =
-		    public_owner_lane || public_owner_geometry_transfer_lane ||
-		    public_owner_second_source_lane;
-		const bool exact_32x18_fixture_lane = w == 32 && h == 18 &&
-		    IsBoundedEdgeSource<PixelT>(input);
+		    public_owner_lane || public_owner_geometry_transfer_lane;
 		const bool use_pf32_positive_thin_outside_caller =
             !IsRecoveredPublicBlur(info) && OLMCKPixelTraits<PixelT>::is_32bpc() &&
 		    info.edge_thin_amount > 0 &&
@@ -623,11 +619,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						}
 					}
 					output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
-					if (!keep && exact_32x18_fixture_lane && edge_blur_direction == 1 &&
-					    info.edge_blur_distance_type == 3 &&
-					    info.edge_blur_amount == 4.0 && native_dist == 1.0f) {
-						output_pixel.alpha = std::nextafter(output_pixel.alpha, 0.0f);
-					}
+
 					WritePixel(output, x, y, output_pixel);
 					continue;
 				}

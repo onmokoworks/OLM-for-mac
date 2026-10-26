@@ -152,7 +152,7 @@ def production_effectmain() -> bytes:
         generated = generated.replace(
             "static PF_Err checkout_param(PF_InData*,A_long,A_long,A_long,A_long,PF_ParamDef*);",
             "static PF_Err checkout_param(PF_InData*,A_long,A_long,A_long,A_long,PF_ParamDef*); static void checkin_param(PF_InData*,PF_ParamDef*);")
-        generated = generated.split("static std::vector<int> g_param_order", 1)[0] + HARNESS
+        generated = generated.split("static std::vector<int> g_param_order", 1)[0] + (ROOT / "tests/olmcolorkey_admission_fixtures.inc").read_text() + HARNESS
         source.write_text(generated, encoding="utf-8")
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True,
                              text=True, check=True).stdout.strip()

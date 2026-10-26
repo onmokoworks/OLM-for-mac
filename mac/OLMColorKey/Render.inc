@@ -107,11 +107,7 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	}
 	if (IsGenericEdgeBlurTuple(info)) return true;
 	if (IsGenericEdgeCompositionTuple(info)) return true;
-	if ((size_t)input->rowbytes != (size_t)input->width * pixel_bytes + 8 ||
-	    (size_t)output->rowbytes != (size_t)output->width * pixel_bytes + 8) return false;
-	// Zero-Thin/Blur Lab and toggle fixtures already returned through pixel_local.
-	return IsBoundedEdgeInfo(info, input->width, input->height) &&
-	       IsBoundedEdgeSource<PixelT>(input);
+	return false;
 }
 
 static bool BoundedInDataGeometry(const PF_InData *in_data, bool require_zero_origin)
@@ -303,30 +299,6 @@ static PF_Err GetWorldDepths(PF_InData *in_data,
 	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
 	default: return OLM_COLORKEY_REFUSAL("world-bitdepth");
 	}
-}
-
-static bool ClassicWorldsMatch(const PF_EffectWorld *input,
-	                           const PF_EffectWorld *output,
-	                           PF_PixelFormat input_format,
-	                           PF_PixelFormat output_format)
-{
-	if (!input || !output || !input->data || !output->data ||
-	    input_format != output_format ||
-	    input->width <= 0 || input->height <= 0 ||
-	    input->width != output->width || input->height != output->height ||
-	    input->rowbytes <= 0 || output->rowbytes <= 0) {
-		return false;
-	}
-	A_long pixel_bytes = 0;
-	switch (input_format) {
-	case PF_PixelFormat_ARGB32: pixel_bytes = (A_long)sizeof(PF_Pixel8); break;
-	case PF_PixelFormat_ARGB64: pixel_bytes = (A_long)sizeof(PF_Pixel16); break;
-	case PF_PixelFormat_ARGB128: pixel_bytes = (A_long)sizeof(PF_PixelFloat); break;
-	default: return false;
-	}
-	return input->rowbytes == input->width * pixel_bytes + 8 &&
-	       output->rowbytes == output->width * pixel_bytes + 8 &&
-	       DisjointPayloads(input, output, pixel_bytes);
 }
 
 static PF_Err

@@ -273,7 +273,6 @@ UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
 #include "Parameters.inc"
 #include "Distance.inc"
 #include "ColorMath.inc"
-#include "AdmissionFixtures.inc"
 #include "BlurMath.inc"
 #include "Pixels.inc"
 #include "Kernel.inc"
