@@ -1,0 +1,336 @@
+{
+  "cases": [
+    {
+      "name": "403be984da1ad8593fa159b4",
+      "stage": "polar before B150",
+      "captured_bytes": 1048576,
+      "mac_plane_bytes": 1708800,
+      "compared_bytes": 1048576,
+      "complete_plane": false,
+      "differing_words": 262144,
+      "first": {
+        "word": 0,
+        "original": "00000000",
+        "mac": "7c035b3f"
+      },
+      "original_compared_all_zero": true,
+      "original_output_binding": {
+        "mode": "geometry",
+        "worker_sha256": "e9d99f8af2dc5582e4f2faa71211b5ec2af405d26598f483768e3406034deb10",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "input_sha256": "faba7126148a248d0b909654a03908591fd9905b2b9a1f5a033a403a3bdf850d",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            0,
+            1,
+            16
+          ]
+        },
+        "sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+        "bound": true,
+        "trace_exists": true
+      },
+      "mac": {
+        "result": {
+          "status": "ok",
+          "error": 0,
+          "metadata": {
+            "GEOMETRY_INPUT": "1 48 1 2 1 3 10 11 1",
+            "GEOMETRY_CHECKOUT": "0 0 1 16",
+            "GEOMETRY_PRERENDER": "0 0 1 16",
+            "GEOMETRY": "0 0 1 16",
+            "ERROR": "0",
+            "COUNTS": "1 32 32 1 1 1 1",
+            "INFO": "580.08038330078125 0 52 11"
+          },
+          "output_rect": [
+            0,
+            0,
+            1,
+            16
+          ]
+        },
+        "sha256": "0b1a0fb57f978ba0ea2a2ec66a4dae56eb0c2f51f9303fe7a1fb49c35cb440d3",
+        "guards": [],
+        "planes": {
+          "normalized.bin": {
+            "bytes": 1708800,
+            "sha256": "0f5f37c1fb1b54fe22a0bf54df54bc3d32f4e3bd971f3c1f4201e3069fda13a1"
+          },
+          "span.bin": {
+            "bytes": 427200,
+            "sha256": "0896c17918b0cc54380c2ef908b1985fb65c26ec97c9eaa805225b05c1abaa45"
+          },
+          "source.bin": {
+            "bytes": 256,
+            "sha256": "48f1de5cd1f889fd3361b5571d60528b9d37a97da24dc867c13f25ad6e50c3c4"
+          },
+          "polar.bin": {
+            "bytes": 1708800,
+            "sha256": "d16939912ac09a71cdb378b4103e9baf2d35dc6e6483f7c72628e2373ae3c3f3"
+          },
+          "scalar.bin": {
+            "bytes": 427200,
+            "sha256": "753562b73ebf180a8427b0e747471c25a64bb3740c111df41bc8ebb41518cc21"
+          },
+          "output.bin": {
+            "bytes": 256,
+            "sha256": "0b1a0fb57f978ba0ea2a2ec66a4dae56eb0c2f51f9303fe7a1fb49c35cb440d3"
+          }
+        }
+      }
+    },
+    {
+      "name": "ab18858afb75411545de86c7",
+      "stage": "polar before B150",
+      "captured_bytes": 1048576,
+      "mac_plane_bytes": 713760,
+      "compared_bytes": 713760,
+      "complete_plane": true,
+      "differing_words": 32612,
+      "first": {
+        "word": 0,
+        "original": "00000000",
+        "mac": "00d61a3f"
+      },
+      "original_compared_all_zero": true,
+      "original_output_binding": {
+        "mode": "geometry",
+        "worker_sha256": "e9d99f8af2dc5582e4f2faa71211b5ec2af405d26598f483768e3406034deb10",
+        "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+        "input_sha256": "30d125e466484226f90af5125cd6bd09adccacb47273c045e83c870c63fc16d5",
+        "result": {
+          "status": "ok",
+          "guards_intact": true,
+          "session_clean": true,
+          "output_rect": [
+            0,
+            6,
+            1,
+            16
+          ]
+        },
+        "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+        "bound": true,
+        "trace_exists": true
+      },
+      "mac": {
+        "result": {
+          "status": "ok",
+          "error": 0,
+          "metadata": {
+            "GEOMETRY_INPUT": "1 18 1 1 1 1 1 1 16",
+            "GEOMETRY_CHECKOUT": "0 6 1 16",
+            "GEOMETRY_PRERENDER": "0 6 1 16",
+            "GEOMETRY": "0 6 1 16",
+            "ERROR": "0",
+            "COUNTS": "2 32 32 2 2 1 1",
+            "INFO": "-403.58282470703125 0 41 -4"
+          },
+          "output_rect": [
+            0,
+            6,
+            1,
+            16
+          ]
+        },
+        "sha256": "ee831fd1a52ccbb49bf9d57820878689bff8b227b0db19043638866a3558ad02",
+        "guards": [],
+        "planes": {
+          "normalized.bin": {
+            "bytes": 713760,
+            "sha256": "c91447163c43213ec60b57ba97336b9c7b7f7eeea8e70ff02456da31fcfa8365"
+          },
+          "span.bin": {
+            "bytes": 178440,
+            "sha256": "82f183a4c1f2231e22734dd02be48c5553108ccd7d3688103e9007c9d25d25c7"
+          },
+          "source.bin": {
+            "bytes": 160,
+            "sha256": "19dd9f38b02e9c300af0b47db014b77dc803922682b66bbb8cca02578fb4bb49"
+          },
+          "polar.bin": {
+            "bytes": 713760,
+            "sha256": "2cca8c0c9d53572e6d4300842f4ca179f5ecd915a19bac6e205ba132fcf5a011"
+          },
+          "scalar.bin": {
+            "bytes": 178440,
+            "sha256": "30a0a0b14984520bcf0f3f0f03cfaffbe3ab158f9ee6bb3cab234c0241bd058e"
+          },
+          "output.bin": {
+            "bytes": 80,
+            "sha256": "ee831fd1a52ccbb49bf9d57820878689bff8b227b0db19043638866a3558ad02"
+          }
+        }
+      }
+    }
+  ],
+  "watches": [
+    {
+      "watch": "watch-56f0-272-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-56f0-272-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-9d80-1048576-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-9d80-1048576-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-9fc0-160-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [
+        {
+          "id": "input",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        },
+        {
+          "id": "output",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        }
+      ],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-9fc0-160-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [
+        {
+          "id": "input",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        },
+        {
+          "id": "output",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        }
+      ],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-a270-256-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [
+        {
+          "id": "input",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        },
+        {
+          "id": "output",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        }
+      ],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-a270-256-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 0,
+      "unhookable": [
+        {
+          "id": "input",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        },
+        {
+          "id": "output",
+          "reason": "no direct call site targets the function; checkpoint capture hooks direct call sites and the selector entry, not indirect calls"
+        }
+      ],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-a9d0-1048576-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-a9d0-1048576-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-b150-1048576-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-b150-1048576-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-b150-16944-first",
+      "case": "403be984da1ad8593fa159b4",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    },
+    {
+      "watch": "watch-b150-16944-first",
+      "case": "ab18858afb75411545de86c7",
+      "bound": true,
+      "witnesses": 2,
+      "unhookable": [],
+      "truncated": false,
+      "dropped": 0
+    }
+  ]
+}
