@@ -1,6 +1,0 @@
-# Diagnostic run while the complete gate's O2 bundle still existed.
-# That regenerable bundle was deleted by the gate after its final stage.
-TMPDIR="$PWD/orchestra/state/R12-release-gate-final" OLM_TEST_JOBS=1 '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3' -B tools/fuzz/run.py --plugin colorkeep --candidate plugin-bundle --worker /Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker --plugin-bundle "$PWD/orchestra/state/R12-release-gate-final/complete/bundles/xcode/ColorKeep/products/ColorKeep.plugin" --seed 1 --n 100 --jobs 1 --budget-minutes 15 --case-timeout 10 --shrink-attempts 0 --shrink-seconds 0 --scratch orchestra/state/R12-release-gate-final/ck-geometry-host --corpus orchestra/state/R12-release-gate-final/ck-geometry-corpus --report orchestra/state/R12-release-gate-final/ck-geometry-host.json > orchestra/state/R12-release-gate-final/ck-geometry-host.log 2>&1
-# Result: complete, 100 cases, 100 smart_harness_error; no native-selector proof.
-# Rebuild only this candidate first if reproducing the diagnostic:
-# python3 tools/fuzz/build_F47_bundles.py --scratch orchestra/state/R12-release-gate-final/complete/bundles --plugins ColorKeep

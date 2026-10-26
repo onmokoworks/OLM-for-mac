@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C54-dg-smart-r2/tools/fuzz/check_distancegradation_box_C54.py", line 71, in <module>
-    if __name__=='__main__':main()
-                            ~~~~^^
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/C54-dg-smart-r2/tools/fuzz/check_distancegradation_box_C54.py", line 67, in main
-    assert r.returncode == 0 and not r.stderr, (r.returncode,r.stdout,r.stderr)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: (1, '', 'difference profile4 kernel3 1x1 area0 certified1\n')

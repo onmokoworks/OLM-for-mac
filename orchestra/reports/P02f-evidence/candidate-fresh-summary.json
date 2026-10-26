@@ -1,9 +1,0 @@
-{
-  "seed": 20261024,
-  "n": 100,
-  "geometry": "realistic",
-  "counts": {
-    "unavailable": 45,
-    "exact": 55
-  }
-}

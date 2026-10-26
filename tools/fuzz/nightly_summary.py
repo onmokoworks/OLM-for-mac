@@ -105,7 +105,7 @@ def campaign(directory, ordinal, plugin, sampler, seed, deadline, *, case_limit=
     started = time.monotonic()
     try:
         geometry = 'realistic' if sampler == 'odd-even-v1' else sampler
-        bound = json.loads((ROOT/f'orchestra/reports/T15b-evidence/{plugin}-summary.json').read_text())
+        bound = json.loads((ROOT/f'tools/fuzz/data/T15b/{plugin}-summary.json').read_text())
         worker = (Path.home()/'.cache/olm-emu'/('worker-F53-geom' if geometry == 'realistic-v2' else 'worker-F52c-geom')/'aex-guest-worker') if geometry != 'default' else default_worker()
         args = SimpleNamespace(main=main_checkout(), worker=worker,
                                max_size=bound['maximum'] if sampler == 'odd-even-v1' else 256,

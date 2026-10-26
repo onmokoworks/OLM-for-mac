@@ -1,7 +1,0 @@
-{
-  "probe_sha256": "fe6e87a3922af35b9111f2cec3558ac5aef4353bed4f212dc5706b47767cee45",
-  "worker_sha256": "e9d99f8af2dc5582e4f2faa71211b5ec2af405d26598f483768e3406034deb10",
-  "source_head": "e96d6ed9b0a8170e1d3d427ac6cf65e07dc3144e",
-  "source_archive_sha256": "d6147cd54ce8bbddfd119484ddd47966406313e648615d43c32a0835e3852b39",
-  "recipe": "cargo build --manifest-path guest/Cargo.toml --release -p aex-guest-worker --bin aex-guest-worker --example f30_import_probe -j 1"
-}

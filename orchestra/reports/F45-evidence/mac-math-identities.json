@@ -1,7 +1,0 @@
-{
-  "core/kirakira_warp.h": "29b0d257805b08930ec4b4f2197d01baea6ebc8f1cd77287ad88260878a5d618",
-  "core/ucrt_ms_double_mac.c": "32b107dc17e72b2c5f96d2ca47b36f4bea6816e52066599a3510874121de0250",
-  "ucrtmath/ms/double_tables.h": "83e6edb40d1c252daeebdf188f27604a92c2ba8394428a370a2e1faad54c9d61",
-  "ucrtmath/ms/double.c": "f3723a4f13c8196e82961e775af6f101759b13f0197f633f747817050c4566ab",
-  "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e"
-}

@@ -1,8 +1,0 @@
-olmdirectionalblur tests/fuzz_corpus/olmdirectionalblur/T15b-odd-even-realistic/f34b941132e9.json {'classic': 'refusal', 'smart': 'refusal'}
-Traceback (most recent call last):
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/orchestra/reports/P03b-evidence/probe.py", line 23, in <module>
-    cases = [(w['path'],load_corpus(R/w['path'],a)[0]) for w in summary['witnesses'] if 'refus' in w['failure_class']]
-                        ~~~~~~~~~~~^^^^^^^^^^^^^^^
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/P03b-nonfinite-hdr-admission/tools/fuzz/core.py", line 307, in load_corpus
-    raise ValueError('Replay requires the corpus --max-size')
-ValueError: Replay requires the corpus --max-size

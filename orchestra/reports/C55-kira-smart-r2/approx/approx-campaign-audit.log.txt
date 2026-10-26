@@ -1,1 +1,0 @@
-PASS exact 0 matrix; 0 corpus; 3 campaigns

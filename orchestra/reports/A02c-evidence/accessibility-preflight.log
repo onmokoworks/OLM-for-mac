@@ -1,3 +1,0 @@
-Command: osascript -e 'with timeout of 15 seconds\n tell application "System Events" to get UI elements enabled\nend timeout'
-exit: 0
-false

@@ -1,6 +1,0 @@
-{"axObserverResult":0,"bundle":"\/Applications\/Adobe After Effects 2026\/Adobe After Effects 2026.app","event":"attached","pid":66224}
-{"event":"window","pid":66224,"window":{"kCGWindowAlpha":1,"kCGWindowBounds":{"Height":516,"Width":766,"X":1217,"Y":638},"kCGWindowIsOnscreen":true,"kCGWindowLayer":0,"kCGWindowMemoryUsage":2288,"kCGWindowName":"","kCGWindowNumber":1707,"kCGWindowOwnerName":"After Effects","kCGWindowOwnerPID":66224,"kCGWindowSharingState":1,"kCGWindowStoreType":1}}
-{"event":"capture","pixelHeight":1032,"pixelWidth":1532,"pointHeight":516,"pointWidth":766,"scale":2,"windowID":1707}
-{"event":"capture","pixelHeight":1032,"pixelWidth":1532,"pointHeight":516,"pointWidth":766,"scale":2,"windowID":1707}
-{"event":"capture","pixelHeight":1032,"pixelWidth":1532,"pointHeight":516,"pointWidth":766,"scale":2,"windowID":1707}
-{"event":"blocked","reason":"ScreenCaptureKit capture failed: Target window unavailable"}
