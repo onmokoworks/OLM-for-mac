@@ -1,0 +1,1704 @@
+{
+  "base_sha": "e55bc78a463786e79261b8c251c41e361b218c6c",
+  "source_commit": "5a7bf8e7ba18ddaa625c6f4233ffa94097bb3dc9",
+  "line_counts": [
+    {
+      "file": "mac/OLMBlur/OLMBlur.cpp",
+      "before_lines": 2204,
+      "after_lines": 850,
+      "before_code": 2034,
+      "after_code": 746
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlur.h",
+      "before_lines": 75,
+      "after_lines": 75,
+      "before_code": 63,
+      "after_code": 63
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlurPiPL.r",
+      "before_lines": 33,
+      "after_lines": 33,
+      "before_code": 31,
+      "after_code": 31
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlur_Fixtures.inc",
+      "before_lines": 0,
+      "after_lines": 252,
+      "before_code": 0,
+      "after_code": 220
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlur_Strings.cpp",
+      "before_lines": 23,
+      "after_lines": 23,
+      "before_code": 20,
+      "after_code": 20
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlur_Strings.h",
+      "before_lines": 14,
+      "after_lines": 14,
+      "before_code": 13,
+      "after_code": 13
+    },
+    {
+      "file": "mac/OLMBlur/OLMBlur_Workers.inc",
+      "before_lines": 0,
+      "after_lines": 438,
+      "before_code": 0,
+      "after_code": 394
+    },
+    {
+      "file": "core/olmblur_constants.h",
+      "before_lines": 0,
+      "after_lines": 24,
+      "before_code": 0,
+      "after_code": 13
+    },
+    {
+      "file": "core/olmblur_fullworker_helper.cpp",
+      "before_lines": 162,
+      "after_lines": 164,
+      "before_code": 153,
+      "after_code": 154
+    },
+    {
+      "file": "core/olmblur_fullworker_helper.h",
+      "before_lines": 30,
+      "after_lines": 30,
+      "before_code": 22,
+      "after_code": 22
+    },
+    {
+      "file": "core/olmblur_helper.cpp",
+      "before_lines": 136,
+      "after_lines": 136,
+      "before_code": 123,
+      "after_code": 123
+    },
+    {
+      "file": "core/olmblur_helper.h",
+      "before_lines": 32,
+      "after_lines": 32,
+      "before_code": 22,
+      "after_code": 22
+    },
+    {
+      "file": "core/olmblur_parallel_parts.h",
+      "before_lines": 32,
+      "after_lines": 33,
+      "before_code": 24,
+      "after_code": 25
+    },
+    {
+      "file": "core/olmblur_worker16_legacy.cpp",
+      "before_lines": 138,
+      "after_lines": 141,
+      "before_code": 115,
+      "after_code": 116
+    },
+    {
+      "file": "core/olmblur_worker16_legacy.h",
+      "before_lines": 24,
+      "after_lines": 24,
+      "before_code": 17,
+      "after_code": 17
+    },
+    {
+      "file": "core/olmblur_worker16_nonlegacy.cpp",
+      "before_lines": 157,
+      "after_lines": 160,
+      "before_code": 135,
+      "after_code": 136
+    },
+    {
+      "file": "core/olmblur_worker16_nonlegacy.h",
+      "before_lines": 32,
+      "after_lines": 32,
+      "before_code": 24,
+      "after_code": 24
+    },
+    {
+      "file": "core/olmblur_worker32_legacy.cpp",
+      "before_lines": 117,
+      "after_lines": 120,
+      "before_code": 101,
+      "after_code": 102
+    },
+    {
+      "file": "core/olmblur_worker32_legacy.h",
+      "before_lines": 23,
+      "after_lines": 23,
+      "before_code": 16,
+      "after_code": 16
+    },
+    {
+      "file": "core/olmblur_worker32_nonlegacy.cpp",
+      "before_lines": 110,
+      "after_lines": 113,
+      "before_code": 93,
+      "after_code": 94
+    },
+    {
+      "file": "core/olmblur_worker32_nonlegacy.h",
+      "before_lines": 22,
+      "after_lines": 22,
+      "before_code": 15,
+      "after_code": 15
+    },
+    {
+      "file": "core/olmblur_worker8_legacy.cpp",
+      "before_lines": 135,
+      "after_lines": 138,
+      "before_code": 116,
+      "after_code": 117
+    },
+    {
+      "file": "core/olmblur_worker8_legacy.h",
+      "before_lines": 25,
+      "after_lines": 25,
+      "before_code": 17,
+      "after_code": 17
+    },
+    {
+      "file": "core/olmblur_worker_orchestration.cpp",
+      "before_lines": 114,
+      "after_lines": 117,
+      "before_code": 101,
+      "after_code": 102
+    },
+    {
+      "file": "core/olmblur_worker_orchestration.h",
+      "before_lines": 24,
+      "after_lines": 24,
+      "before_code": 16,
+      "after_code": 16
+    }
+  ],
+  "g1_structure": {
+    "plugin": "olmblur",
+    "seed": 909,
+    "requested_cases": 3000,
+    "counts": {
+      "exact": 12012,
+      "comparisons": 12012,
+      "new_refusals": 0,
+      "execution_errors": 0,
+      "difference": 0,
+      "refusal": 0
+    },
+    "coverage": {
+      "depth:8": 4004,
+      "small": 12000,
+      "geometry:default": 4020,
+      "size:default": 6008,
+      "colours:byte-colours": 12012,
+      "downsample:[[1, 1], [1, 1]]": 5440,
+      "depth:16": 4004,
+      "size:odd-even-v1": 6004,
+      "depth:32": 4004,
+      "geometry:realistic-v1": 3996,
+      "downsample:[[1, 8], [1, 8]]": 1404,
+      "geometry:realistic-v2": 3996,
+      "downsample:[[1, 2], [1, 2]]": 1344,
+      "downsample:[[1, 4], [1, 4]]": 1344,
+      "downsample:[[1, 2], [1, 3]]": 1288,
+      "downsample:[[1, 3], [1, 3]]": 1192,
+      "4k": 12
+    },
+    "differences": [],
+    "builds": {
+      "arm64-reference-base": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "996124ea44758c799df533f529a2682d7c53f14c1adc171d7d2053706e6eb384"
+      },
+      "arm64-reference-head": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "bf093ffcfaf9fb98c87bfbad9395a78a2a0a48b808274ec7e2002c13b7cae8f3"
+      },
+      "arm64-fast-base": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "f9bab1235930abf897ecac93e8e666cd4d9d1537def1a3718ad3ec1814a4c54d"
+      },
+      "arm64-fast-head": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "9e1abd595df0290a414a3f7df0955de51c37b504f6b49995f775d6cb18718ce3"
+      },
+      "x86_64-reference-base": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "ada26fed4b37c3a44729d56e3b7d2f95d4645e0bdf138f0d9db5038e34162419"
+      },
+      "x86_64-reference-head": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "329cccada9290bac2e34fffe5c3f0d6a2aff3e29578fd60ef3763ce0682309ed"
+      },
+      "x86_64-fast-base": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "b2d7af05ee8a5980ed9374ecfdf6436786f343424a189ab56ad17aee4c5074eb"
+      },
+      "x86_64-fast-head": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "2f7462662469d4f90df76830f4d19e9273d237f1ff66822e2733c54858be7154"
+      }
+    },
+    "base": "e55bc78a463786e79261b8c251c41e361b218c6c",
+    "head": "WORKTREE",
+    "worktree_diff_sha256": "906cfc7118e4199b6353a7421dbf56d7ace235a89c257cc96ad2483ecf10a95b"
+  },
+  "g2": [
+    {
+      "corpus": "olmblur-P05c-parallel-boundary",
+      "base_completed": 18,
+      "head_completed": 18,
+      "base_matches_saved": 18,
+      "head_matches_saved": 18,
+      "worker_sha256": [
+        "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+      ]
+    },
+    {
+      "corpus": "olmblur-T15b-odd-even-realistic",
+      "base_completed": 3,
+      "head_completed": 3,
+      "base_matches_saved": 3,
+      "head_matches_saved": 3,
+      "worker_sha256": [
+        "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+      ]
+    },
+    {
+      "corpus": "olmblur",
+      "base_completed": 39,
+      "head_completed": 39,
+      "base_matches_saved": 39,
+      "head_matches_saved": 39,
+      "worker_sha256": [
+        "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+        "9ac2c86cb707e23de7c360c128d61b14d0b4c3b71b417baa3e7e116fe6af42b7",
+        "8b51d0456ff55aa2034a0bbb00b822bd2339cbe27247021c289170a78a3fb53b",
+        "c9d827ffaaf191e099f90ecc2e34ff738598dd93b32729f9d206eb08733206f1"
+      ]
+    },
+    {
+      "corpus": "olmblur_downsample_P01a",
+      "base_completed": 43,
+      "head_completed": 43,
+      "base_matches_saved": 43,
+      "head_matches_saved": 43,
+      "worker_sha256": [
+        "1be0cb14f6e68ab9276ef37be3a381aae9fb0306914987eb91e1a9d23dd94f4b"
+      ]
+    },
+    {
+      "corpus": "olmblur_realistic_P02h",
+      "base_completed": 36,
+      "head_completed": 36,
+      "base_matches_saved": 36,
+      "head_matches_saved": 36,
+      "worker_sha256": [
+        "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e"
+      ]
+    }
+  ],
+  "g3": {
+    "base": {
+      "aex_classic_ok": 76,
+      "aex_classic_reject": 24,
+      "aex_ok": 100,
+      "aex_smart_ok": 100,
+      "both_routes_exact": 7,
+      "classic_exact": 7,
+      "classic_refusal": 93,
+      "pixel_mismatch_cases": 0,
+      "smart_exact": 100
+    },
+    "head": {
+      "aex_classic_ok": 76,
+      "aex_classic_reject": 24,
+      "aex_ok": 100,
+      "aex_smart_ok": 100,
+      "both_routes_exact": 7,
+      "classic_exact": 7,
+      "classic_refusal": 93,
+      "pixel_mismatch_cases": 0,
+      "smart_exact": 100
+    },
+    "result_differences": [],
+    "base_oracle": {
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+      "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "case_timeout_seconds": 10
+    },
+    "base_results_sha256": "cd252c574b19d30bc42002de8ae627b5a456bce7874d924da1a5eb671a70db97",
+    "head_oracle": {
+      "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
+      "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "case_timeout_seconds": 10
+    },
+    "head_results_sha256": "cd252c574b19d30bc42002de8ae627b5a456bce7874d924da1a5eb671a70db97"
+  },
+  "g4": {
+    "counts": {
+      "exact": 675,
+      "refusal": 0,
+      "mismatch": 0
+    },
+    "seconds": 92.68198366698925,
+    "requested": {
+      "plugin": "olmblur",
+      "small": 200,
+      "hd": 20,
+      "uhd": 5,
+      "seed": 1,
+      "jobs": 1,
+      "cycle_depth": true,
+      "max_size": 64,
+      "large_corpus": true,
+      "default_params": false,
+      "corpus_index": null,
+      "max_height": 64,
+      "case_timeout": 180,
+      "parallel": [
+        1,
+        2,
+        8
+      ],
+      "scratch": "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/orchestra/state/Q06-refactor-olmblur/g4/olmblur"
+    }
+  },
+  "g6": {
+    "base": {
+      "Traditional headermap style is no longer supported; please migrate to using separate headermaps and set 'ALWAYS_SEARCH_USER_PATHS' to NO. (in target 'OLMBlur' from project 'OLMBlur')": 1,
+      "Build Carbon Resources build phases are no longer supported.  Rez source files should be moved to the Copy Bundle Resources build phase. (in target 'OLMBlur' from project 'OLMBlur')": 1,
+      "'ALIGN' macro redefined [-Wmacro-redefined]": 6,
+      "'ABS' macro redefined [-Wmacro-redefined]": 2,
+      "the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]": 328,
+      "'&&' within '||' [-Wlogical-op-parentheses]": 14
+    },
+    "head": {
+      "Traditional headermap style is no longer supported; please migrate to using separate headermaps and set 'ALWAYS_SEARCH_USER_PATHS' to NO. (in target 'OLMBlur' from project 'OLMBlur')": 1,
+      "Build Carbon Resources build phases are no longer supported.  Rez source files should be moved to the Copy Bundle Resources build phase. (in target 'OLMBlur' from project 'OLMBlur')": 1,
+      "'ALIGN' macro redefined [-Wmacro-redefined]": 6,
+      "'ABS' macro redefined [-Wmacro-redefined]": 2,
+      "the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]": 328,
+      "'&&' within '||' [-Wlogical-op-parentheses]": 14
+    }
+  },
+  "g1_final": {
+    "plugin": "olmblur",
+    "seed": 909,
+    "requested_cases": 3000,
+    "counts": {
+      "exact": 12012,
+      "comparisons": 12012,
+      "new_refusals": 0,
+      "execution_errors": 0,
+      "difference": 0,
+      "refusal": 0
+    },
+    "coverage": {
+      "depth:8": 4004,
+      "small": 12000,
+      "geometry:default": 4020,
+      "size:default": 6008,
+      "colours:byte-colours": 12012,
+      "downsample:[[1, 1], [1, 1]]": 5440,
+      "depth:16": 4004,
+      "size:odd-even-v1": 6004,
+      "depth:32": 4004,
+      "geometry:realistic-v1": 3996,
+      "downsample:[[1, 8], [1, 8]]": 1404,
+      "geometry:realistic-v2": 3996,
+      "downsample:[[1, 2], [1, 2]]": 1344,
+      "downsample:[[1, 4], [1, 4]]": 1344,
+      "downsample:[[1, 2], [1, 3]]": 1288,
+      "downsample:[[1, 3], [1, 3]]": 1192,
+      "4k": 12
+    },
+    "differences": [],
+    "builds": {
+      "arm64-reference-base": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "996124ea44758c799df533f529a2682d7c53f14c1adc171d7d2053706e6eb384"
+      },
+      "arm64-reference-head": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "76f0777ff342f20bd608c1771276f98e0b789eae12c0be88f3aff59bf5cc6c13"
+      },
+      "arm64-fast-base": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "f9bab1235930abf897ecac93e8e666cd4d9d1537def1a3718ad3ec1814a4c54d"
+      },
+      "arm64-fast-head": {
+        "ready": true,
+        "architecture": "arm64",
+        "binary_sha256": "621ab8e81e57736b43b0ea228b2bf341b0e6a3a44b5906bbd9c33e635c3c3b40"
+      },
+      "x86_64-reference-base": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "ada26fed4b37c3a44729d56e3b7d2f95d4645e0bdf138f0d9db5038e34162419"
+      },
+      "x86_64-reference-head": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "3d6838d7c84361f6a32e4c2c9151dde84655a20c9c94e7bdd866df5f20dea9bc"
+      },
+      "x86_64-fast-base": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "b2d7af05ee8a5980ed9374ecfdf6436786f343424a189ab56ad17aee4c5074eb"
+      },
+      "x86_64-fast-head": {
+        "ready": true,
+        "architecture": "x86_64",
+        "binary_sha256": "06d7d0883d5a885350010f1fe0aad8e88c99f68daacf9b5241ce85de936dd6eb"
+      }
+    },
+    "base": "e55bc78a463786e79261b8c251c41e361b218c6c",
+    "head": "WORKTREE",
+    "worktree_diff_sha256": "547b92ba816cf7013030fcb2b894324724cc1579997ff12f4f04a2454954f726"
+  },
+  "g5_build_commands": [
+    {
+      "name": "g5-xcode-head",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/mac/OLMBlur/Mac/OLMBlur.xcodeproj",
+        "-configuration",
+        "Debug",
+        "-jobs",
+        "1",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "MACOSX_DEPLOYMENT_TARGET=11.0",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/orchestra/state/Q06-refactor-olmblur/xcode-head/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/orchestra/state/Q06-refactor-olmblur/xcode-head/products",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/orchestra/state/Q06-refactor-olmblur/xcode-head/pch",
+        "build"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "g5-package",
+      "command": [
+        "bash",
+        "scripts/package_mac_plugins.sh",
+        "--configuration",
+        "Debug",
+        "--output",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/Q06-refactor-olmblur/orchestra/state/Q06-refactor-olmblur/plugins.zip"
+      ],
+      "exit": 1
+    }
+  ],
+  "package_retry": {
+    "command": "OLM_REFERENCE_ROOT=\"$MAIN\" bash scripts/package_mac_plugins.sh --configuration Debug --skip-build --output \"$STATE/plugins.zip\"",
+    "exit": 0,
+    "sha256": "5eecb19beccffcc175535047cec16bcbc22a7f5f1e71ac4cce799d458b915ac5"
+  },
+  "g2_route_counts": {
+    "classic:refusal": 122,
+    "smart:exact": 139,
+    "classic:exact": 17
+  },
+  "g5_ui_blur": {
+    "updates": 2,
+    "checks_including_reload": 4,
+    "mismatches": 0
+  },
+  "g5_first_corpus_failure": {
+    "path": "tests/fuzz_corpus/colorkeep/P04d-cropped-checkout/seed20261025-case096.json",
+    "sha256": "81836638a1adda2239c39db2b94b2f654589fd40be333dbc6d5ddf77584d2808",
+    "verdict": "FAIL",
+    "retry": null,
+    "error": null
+  },
+  "structural_commit": "64bd41b8f6f4d2e76bdc0276bdaa6553c598dbf6",
+  "g5_release": {
+    "exit": 1,
+    "local_gate_pass": false,
+    "script_sha256": "a3351df2349201d5f6fcea4581dc7f78c3cd909e5639ccf0ecc26fe9a49ca77f",
+    "OLM_TEST_JOBS": 1,
+    "stages": [
+      {
+        "name": "framework",
+        "status": "PASS",
+        "tests": 50,
+        "skipped": 3
+      },
+      {
+        "name": "build",
+        "status": "PASS",
+        "bundles": 10,
+        "executables": [
+          {
+            "plugin": "OLMBlur",
+            "sha256": "5361b73c734c4810dcdf6313e7689a8e67f53a88b0454a0ff99c8299fee0f394",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "ColorKeep",
+            "sha256": "272f7ed95c84f8eaada1fa3c0a2b1bf004271d653fb0c1c203331c7445aa9fbe",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMColorKey",
+            "sha256": "4073ccb15699fb0c9c5f16bc3dc4a3894fc47d002475c838585c3ea352d4bfcd",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMDirectionalBlur",
+            "sha256": "62ee1e5b2d286719bbf73722d3ad40fcd5c95396d5659533f06c1c9c2736f129",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMDistanceGradation",
+            "sha256": "ded82304f34fa70440c327bc668ba35ea0ffe065e04d3cd09627274b6ba79d33",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMKiraKira",
+            "sha256": "706c9db7c003670e3bd7c2c95e3f4bbba6ecc63b4cfdd691ef746c47bdee2673",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMSmoother2",
+            "sha256": "fe31d2d1f885b5e007e541c893a23d3d640eb7162957e21d6d6b9a2b876964b6",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMToonDilate",
+            "sha256": "979adee37f42781ffef9ba0cafc244a444809c65539507c8bae4cb9b4aea4b0f",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMRadialBlur",
+            "sha256": "8419b2c4866176908813b6204119a41dcc39a1c26c7ae93105afcf8c1fa26dae",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          },
+          {
+            "plugin": "OLMSmoother",
+            "sha256": "77397d1490b4abfef1a60c36ce5bfe2ff7794f2923f21c4cd11c7b54977bfa33",
+            "architectures": [
+              "x86_64",
+              "arm64"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "corpus",
+        "status": "FAIL",
+        "counts": {
+          "PASS": 2862,
+          "FAIL": 135,
+          "ORACLE-STOP": 1
+        },
+        "corpus_by_plugin": {
+          "olmblur": 139,
+          "colorkeep": 421,
+          "olmcolorkey": 51,
+          "olmdirectionalblur": 306,
+          "olmdistancegradation": 461,
+          "olmkirakira": 390,
+          "olmsmoother2": 112,
+          "olmtoondilate": 562,
+          "radialblur": 253,
+          "olmsmoother": 303
+        },
+        "total": 2998,
+        "empty_corpora": [],
+        "verdicts": "orchestra/state/Q06-refactor-olmblur/g5-release/replay-verdicts.json"
+      },
+      {
+        "name": "fresh-seeds",
+        "status": "PASS",
+        "counts": {
+          "E": 5692,
+          "M": 0,
+          "R": 250,
+          "U": 58,
+          "errors": 0
+        },
+        "campaigns": [
+          {
+            "plugin": "olmblur",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmblur",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "colorkeep",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "colorkeep",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmcolorkey",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmcolorkey",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmdirectionalblur",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 299,
+              "M": 0,
+              "R": 0,
+              "U": 1,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmdirectionalblur",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 298,
+              "M": 0,
+              "R": 0,
+              "U": 2,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmdistancegradation",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 291,
+              "M": 0,
+              "R": 4,
+              "U": 5,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmdistancegradation",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 290,
+              "M": 0,
+              "R": 2,
+              "U": 8,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmkirakira",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 282,
+              "M": 0,
+              "R": 18,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmkirakira",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 293,
+              "M": 0,
+              "R": 7,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmsmoother2",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmsmoother2",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmtoondilate",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmtoondilate",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 300,
+              "M": 0,
+              "R": 0,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "radialblur",
+            "seed": 2026,
+            "route": "smart",
+            "counts": {
+              "E": 280,
+              "M": 0,
+              "R": 0,
+              "U": 20,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "radialblur",
+            "seed": 2027,
+            "route": "smart",
+            "counts": {
+              "E": 278,
+              "M": 0,
+              "R": 0,
+              "U": 22,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmsmoother",
+            "seed": 2026,
+            "route": "classic",
+            "counts": {
+              "E": 190,
+              "M": 0,
+              "R": 110,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          },
+          {
+            "plugin": "olmsmoother",
+            "seed": 2027,
+            "route": "classic",
+            "counts": {
+              "E": 191,
+              "M": 0,
+              "R": 109,
+              "U": 0,
+              "errors": 0
+            },
+            "status": "PASS",
+            "report_status": "complete"
+          }
+        ]
+      },
+      {
+        "name": "bundle-checks",
+        "status": "FAIL",
+        "F47d": {
+          "counts": {
+            "E": 841,
+            "M": 0,
+            "R": 146,
+            "U": 13,
+            "errors": 0
+          },
+          "plugins": [
+            {
+              "plugin": "olmblur",
+              "counts": {
+                "E": 100,
+                "M": 0,
+                "R": 0,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "colorkeep",
+              "counts": {
+                "E": 0,
+                "M": 0,
+                "R": 100,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmcolorkey",
+              "counts": {
+                "E": 100,
+                "M": 0,
+                "R": 0,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmdirectionalblur",
+              "counts": {
+                "E": 100,
+                "M": 0,
+                "R": 0,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmdistancegradation",
+              "counts": {
+                "E": 95,
+                "M": 0,
+                "R": 1,
+                "U": 4,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmkirakira",
+              "counts": {
+                "E": 97,
+                "M": 0,
+                "R": 3,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmsmoother2",
+              "counts": {
+                "E": 100,
+                "M": 0,
+                "R": 0,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmtoondilate",
+              "counts": {
+                "E": 100,
+                "M": 0,
+                "R": 0,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "radialblur",
+              "counts": {
+                "E": 84,
+                "M": 0,
+                "R": 7,
+                "U": 9,
+                "errors": 0
+              },
+              "status": "PASS"
+            },
+            {
+              "plugin": "olmsmoother",
+              "counts": {
+                "E": 65,
+                "M": 0,
+                "R": 35,
+                "U": 0,
+                "errors": 0
+              },
+              "status": "PASS"
+            }
+          ]
+        },
+        "F51": {
+          "counts": {
+            "equal_render": 3349,
+            "difference": 521,
+            "equal_refuse": 128
+          },
+          "expected": 3998
+        }
+      },
+      {
+        "name": "plugin-tests",
+        "status": "FAIL",
+        "selected": [
+          {
+            "test": "tests/test_colorkeep_generic_beta_20260820.py",
+            "sha256": "bc3be581a5d0e0da39110bf9124fc25f7213b6091a8698bac76f33108072073f",
+            "exit": 1,
+            "status": "FAIL"
+          },
+          {
+            "test": "tests/test_colorkeep_roi_tile_beta_20260820.py",
+            "sha256": "fb836320d8b0ae24d1adf364b1c85ca6ebcca6d11ee59c496d5dc04c28db2bb7",
+            "exit": 1,
+            "status": "FAIL"
+          },
+          {
+            "test": "tests/test_olmblur_generic_beta_lane_20260820.py",
+            "sha256": "f10a918f268706691fb82684b8e84948bf8474e523d5ff2a6a42191b1f833dcf",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmblur_generic_beta_sanitizers_20260820.py",
+            "sha256": "347796b913d20fda6896b3bbc468ed9f200b8f302574b50538e0d48cb6088375",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmblur_generic_classic_beta_20260822.py",
+            "sha256": "dac37838626d1ff6d9f7b692218404640dc5b7b0cd69bcb2303d1d96d1349eee",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmblur_roi_halo_contract_20260820.py",
+            "sha256": "6a2b687922ce5491f25b6a92d84654093123d326b52c0ad9a954cfe9b8a4f906",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+            "sha256": "5f12ebccdc64ee47bb3536e6f38ae4f8befef00fa34ec6f8681cf68339f2ad4f",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+            "sha256": "1805662b1ade79322e6888f0d962a9de1a61a76592c8a8c598f446fd68f6b0be",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmcolorkey_generic_roi_tile.py",
+            "sha256": "10752f47e0badbb06b41dddc77d7a2125d307739435be3d374dfa6b259ed6da1",
+            "exit": 1,
+            "status": "FAIL"
+          },
+          {
+            "test": "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py",
+            "sha256": "c8bf0aee5ab51a02881ce4c70cce97333e84cc60afb597ade32bf8742939c5a9",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
+            "sha256": "eda73a3c2bc556e1b55a4ef9f8e04c3f208c7d13d5773ec9c4f01287f289fcc3",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+            "sha256": "6a8f4c5b881398428457a33324e4b2bbf67e3e1c30f47bfe0b6f6a3cc5de1260",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tools/emulation/test_dblur_generic_admission_budget_20260821.py",
+            "sha256": "c9a06d09f26d588931216a2ada1d5636fcee88e3cdc7d7656278bb08a410b4d3",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tools/emulation/test_dblur_generic_roi_policy_20260820.py",
+            "sha256": "4b14ebe01062072b328d9c47ee9f96ae45539d8954cff707f3fa0a99dcfce4c9",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py",
+            "sha256": "cdc4e8c6309e80d2567feca9e041a5511810f5cab18006567a90d81fb796c6f7",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmdistancegradation_smart_transactional_20260822.py",
+            "sha256": "d1ee084b1d1667e84a776a3330577dc7b9370d42a370fe4f630445fb6a53d16f",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmkirakira_generic_beta_lane_20260820.py",
+            "sha256": "fa4dd07c21f82910e9b66fb4ef88521869355081a2c8a650348622689218355c",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py",
+            "sha256": "37a8bb62623d5af26b23f33892db347a0c1c9f62f2883f3002b94511eb837197",
+            "exit": 1,
+            "status": "FAIL"
+          },
+          {
+            "test": "tests/test_olmkirakira_native_smoke_tuple_20260820.py",
+            "sha256": "acdb61244bee031be88b52aa7f71408f548ce0e807e2d892bab075dc53800903",
+            "exit": 1,
+            "status": "FAIL"
+          },
+          {
+            "test": "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py",
+            "sha256": "bec58af800cd772354d86c20a1104d0f4b6fcc1215ff83fe7551f0e335386787",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py",
+            "sha256": "f3f495aff651fa0b2db82e1590092c975b045df9c4641540fab4965050bd07da",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmradialblur_generic_budget_20260821.py",
+            "sha256": "b877bf85ca1b3facc1dfc91bc0057249388c75e80b67d948d17adff13662caf9",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmradialblur_size_noise_effectmain_20260821.py",
+            "sha256": "d0bc890b0bda4b5aa229c1b34f2d37f35a142564fc7f57d3c28c2ecc20ce16b3",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmradialblur_global_polar_smart_contract_20260820.py",
+            "sha256": "7084d1a6003fa1bbeb63c1259280bb27fc7967e2d61541d85306ad14bf110f91",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py",
+            "sha256": "31c4612f3b5a541ba338962c8caf2c542d0d9b0ca02550efed6eea34e08e3747",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmsmoother_v1_smart_beta_20260822.py",
+            "sha256": "75d13a6202128ebf0ee7f9d9c35af40fb1e8cd411d28582f99b8cfeb90b6885a",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmsmoother2_default_beta_lane_20260820.py",
+            "sha256": "4da408f46ee67ef7028aa4999d0d548dd21c402b7df6331f5a1318a42f5d4661",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmsmoother2_gamma_colors_beta_20260820.py",
+            "sha256": "535171a42bc73ea0c548706c8a59f569eb547ec1a2a4a1233e9b77e815be794c",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py",
+            "sha256": "2f6285fe0630f44fe8425b7e56f243f0729384b29e6cccd06b85cbf1cf5274b6",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmtoondilate_generic_beta.py",
+            "sha256": "05859d000c433c03c9c3ce7c5b342f79968e9740c2b1a8328325a70c0884c401",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olmtoondilate_roi_safety.py",
+            "sha256": "8ec8b25bc6c7f3c594d086872b5805167614bdae71b9198eed7143ee011364e4",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_world_safety.py",
+            "sha256": "bb353c0000660b2fe310f1602ad9cf47fabd1570fb467513509e04ebdcd0062c",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_checked_allocation.py",
+            "sha256": "470bfb79f1ac789560005ed40baf1eca50cc186145e2a4843355d4ac699238ab",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_checked_rect.py",
+            "sha256": "064af474afe5bb353331f7ff238c8b2f2fb57470806526c133083c8658db15aa",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_roi_contract.py",
+            "sha256": "2f87e2e45cf5679a2b0be0119aeb29ff5b3dc8bf6bbb7cfb48409c7afdadf695",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_property_cases.py",
+            "sha256": "03dfb582559d15558b41ef99144199622719129d37d66b44e2452351e9440aea",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_olm_roi_tile_property.py",
+            "sha256": "39269384bf38fe27eea1da0bc6c7def0e9b3161b17d94f4354506e1bf8161b0f",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_generate_aexcompat_oracle_campaign.py",
+            "sha256": "1a1f3e3b0271e951c846ba8a688b215594e3a519c8c2d39bd0a78b1dcc6ab5bf",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_run_aexcompat_reference_20260725.py",
+            "sha256": "d04123d98430f2c8ae1ff2feb482a9f66c2c6053367603283495733c198a42ae",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_generic_beta_windows_oracle_handoff.py",
+            "sha256": "1dbe311366a603b05390040b1bbb433aba873baf98cb0c566de46ba597824b59",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_ae_generalization_smoke.py",
+            "sha256": "4544ac6ec611d2383fc38d57452c24f103fbf7fbc6cbe75237021fdbf06c8958",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_ae_png_completion.py",
+            "sha256": "33f4416543cf48773e62f35dd6b3ccfdeb4434554e1e4e49147d8035183f87e2",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_ae_batch_png_integrity.py",
+            "sha256": "36d8577e56845d0bb0bb1f870d11be514da7168ea03328627226cf75600ab24a",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_run_olm_generic_beta_gate.py",
+            "sha256": "acb58665a6aa18956e9c09d8df546d3c041e520ec366d198de4abfb18553c3b9",
+            "exit": 0,
+            "status": "PASS"
+          },
+          {
+            "test": "tests/test_verify_mac_plugin_package_hash.py",
+            "sha256": "f0311e2725c49e46c59325be8f8666bb7ef7c84ad01e3b73e096b3b505274105",
+            "exit": 0,
+            "status": "PASS"
+          }
+        ],
+        "counts": {
+          "FAIL": 5,
+          "PASS": 40
+        }
+      },
+      {
+        "name": "static",
+        "status": "PASS",
+        "plugins": [
+          {
+            "plugin": "OLMBlur",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                100663360,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                100663360,
+                134222848
+              ]
+            ],
+            "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+          },
+          {
+            "plugin": "ColorKeep",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33554496,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                33554496,
+                134222848
+              ]
+            ],
+            "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+          },
+          {
+            "plugin": "OLMColorKey",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33555520,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                33555520,
+                134222848
+              ]
+            ],
+            "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+          },
+          {
+            "plugin": "OLMDirectionalBlur",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                100663360,
+                134222856
+              ]
+            ],
+            "mac_flags": [
+              [
+                100663360,
+                134222856
+              ]
+            ],
+            "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+          },
+          {
+            "plugin": "OLMDistanceGradation",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                100663360,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                100663360,
+                134222848
+              ]
+            ],
+            "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+          },
+          {
+            "plugin": "OLMKiraKira",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33587264,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                33587264,
+                134222848
+              ]
+            ],
+            "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+          },
+          {
+            "plugin": "OLMSmoother2",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33555520,
+                134222848
+              ]
+            ],
+            "mac_flags": [
+              [
+                33555520,
+                134222848
+              ]
+            ],
+            "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+          },
+          {
+            "plugin": "OLMToonDilate",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33554500,
+                134353920
+              ]
+            ],
+            "mac_flags": [
+              [
+                33554500,
+                134353920
+              ]
+            ],
+            "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+          },
+          {
+            "plugin": "OLMRadialBlur",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                100696128,
+                134222856
+              ]
+            ],
+            "mac_flags": [
+              [
+                100696128,
+                134222856
+              ]
+            ],
+            "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          {
+            "plugin": "OLMSmoother",
+            "release_config": true,
+            "pipl_equal": true,
+            "original_flags": [
+              [
+                33554496,
+                134217728
+              ]
+            ],
+            "mac_flags": [
+              [
+                33554496,
+                134217728
+              ]
+            ],
+            "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+          }
+        ],
+        "count": 10,
+        "known_original_bugs_sha256": "244d10d01a0778c7ba07b2ee8dc4e80c9ce5a682fd5c8cac83fd8c8c66c8478a"
+      }
+    ],
+    "failed_commands": [
+      {
+        "name": "replay-00-colorkeep",
+        "exit": 1
+      },
+      {
+        "name": "replay-01-colorkeep",
+        "exit": 2
+      },
+      {
+        "name": "replay-04-olmblur",
+        "exit": 2
+      },
+      {
+        "name": "replay-05-olmblur",
+        "exit": 2
+      },
+      {
+        "name": "replay-13-olmcolorkey",
+        "exit": 2
+      },
+      {
+        "name": "replay-15-olmdirectionalblur",
+        "exit": 2
+      },
+      {
+        "name": "replay-19-olmdirectionalblur",
+        "exit": 2
+      },
+      {
+        "name": "replay-21-olmdistancegradation",
+        "exit": 1
+      },
+      {
+        "name": "replay-22-olmdistancegradation",
+        "exit": 2
+      },
+      {
+        "name": "replay-24-olmdistancegradation",
+        "exit": 2
+      },
+      {
+        "name": "replay-27-olmdistancegradation",
+        "exit": 2
+      },
+      {
+        "name": "replay-30-olmkirakira",
+        "exit": 2
+      },
+      {
+        "name": "replay-31-olmkirakira",
+        "exit": 2
+      },
+      {
+        "name": "replay-37-olmsmoother",
+        "exit": 2
+      },
+      {
+        "name": "replay-41-olmsmoother2",
+        "exit": 2
+      },
+      {
+        "name": "replay-44-olmtoondilate",
+        "exit": 2
+      },
+      {
+        "name": "replay-47-radialblur",
+        "exit": 1
+      },
+      {
+        "name": "retry-2767-radialblur",
+        "exit": 1
+      },
+      {
+        "name": "replay-49-radialblur",
+        "exit": 2
+      },
+      {
+        "name": "f51",
+        "exit": 1
+      },
+      {
+        "name": "unit-00",
+        "exit": 1
+      },
+      {
+        "name": "unit-01",
+        "exit": 1
+      },
+      {
+        "name": "unit-08",
+        "exit": 1
+      },
+      {
+        "name": "unit-17",
+        "exit": 1
+      },
+      {
+        "name": "unit-18",
+        "exit": 1
+      }
+    ]
+  },
+  "g5_f51_colorkeep": {
+    "count": 521,
+    "arm64_status": "host_error",
+    "x86_64_status": "host_error",
+    "diagnostic": "F47c unsupported/invalid callback: iterate; selector 24 error=516",
+    "first_geometry": [
+      21,
+      19
+    ],
+    "first_depth": 8,
+    "first_input_sha256": "e99780567c9ce233fe369420cc46337c417a13979476627be276756b8371b886"
+  },
+  "g5_olmblur": {
+    "fresh_seed_2026": {
+      "smart_exact": 300,
+      "pixel_mismatch_cases": 0
+    },
+    "fresh_seed_2027": {
+      "smart_exact": 300,
+      "pixel_mismatch_cases": 0
+    },
+    "F47d": {
+      "E": 100,
+      "M": 0,
+      "R": 0,
+      "U": 0,
+      "errors": 0
+    },
+    "F51": {
+      "equal_render": 239
+    },
+    "selected_test_exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "static_release_config": true,
+    "static_pipl_equal": true
+  },
+  "g5_base_probe": {
+    "plugin": "olmdistancegradation",
+    "corpus": "tests/fuzz_corpus/olmdistancegradation_P04a",
+    "exit": 2,
+    "diagnostic": "Replay requires the corpus --max-size"
+  }
+}
