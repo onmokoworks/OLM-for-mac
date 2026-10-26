@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OWNED_SOURCES = (
     ROOT / "mac/OLMBlur/OLMBlur.cpp",
-    ROOT / "mac/OLMColorKey/OLMColorKey.cpp",
+    ROOT / "mac/OLMColorKey/Render.inc",
 )
 
 
