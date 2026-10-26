@@ -68,6 +68,7 @@ inline Status validate_layout(const ConstWorld &world, Layout *layout = nullptr)
     if (!checked_multiply(world.height - 1, world.row_bytes, &preceding_rows) ||
         preceding_rows > std::numeric_limits<std::size_t>::max() - value.active_row_bytes)
         return Status::arithmetic_overflow;
+    // Include padding between rows, but only the active bytes of the final row.
     value.addressable_bytes = preceding_rows + value.active_row_bytes;
     if (layout) *layout = value;
     return Status::ok;

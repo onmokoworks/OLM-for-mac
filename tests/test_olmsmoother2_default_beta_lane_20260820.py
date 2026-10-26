@@ -22,7 +22,7 @@ def function_body(text: str, name: str, next_name: str) -> str:
 class OLMSmoother2DefaultBetaLane(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.text = SOURCE.read_text()
+        cls.text = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (SOURCE.parent / match[1]).read_text(), SOURCE.read_text())
         cls.beta = function_body(
             cls.text, "V2GenericBetaAdmission(", "ValidatePublicWorlds("
         )

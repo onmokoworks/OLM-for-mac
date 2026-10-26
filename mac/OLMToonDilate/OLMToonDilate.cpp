@@ -24,9 +24,9 @@ static PF_Err ToonRefusal(const char *function, const char *tag, int line, PF_Er
         const int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
         if (fd >= 0) {
             char entry[384];
-            const int n = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
-            if (n > 0 && static_cast<size_t>(n) < sizeof(entry)) {
-                const ssize_t written = ::write(fd, entry, static_cast<size_t>(n));
+            const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+            if (length > 0 && static_cast<size_t>(length) < sizeof(entry)) {
+                const ssize_t written = ::write(fd, entry, static_cast<size_t>(length));
                 (void)written;
             }
             ::close(fd);

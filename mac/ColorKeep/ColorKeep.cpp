@@ -135,12 +135,13 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], ColorKeepInfo *info,
 	return err;
 }
 
-// These are the exact float32 constants used by the Windows 2025 AEX.
-static const float kColorKeep8Bias = 0.00196078442968428125f; // 0x3B008081
-static const float kColorKeep8Scale = 255.0f;                 // 0x437F0000
-static const float kColorKeep16Bias = 0.0000152587890625f;    // 0x37800000
-static const float kColorKeep16Scale = 32768.0f;              // 0x47000000
-static const float kColorKeepFloatTolerance = 1.0e-4f;        // 0x38D1B717
+// Windows 2025 AEX quantization biases/scales and PF32 palette tolerance.
+// Keep binary32 multiplication then bias addition in that order (no FMA).
+static constexpr float kColorKeep8Bias = 0.00196078442968428125f; // 0x3B008081
+static constexpr float kColorKeep8Scale = 255.0f;                 // 0x437F0000
+static constexpr float kColorKeep16Bias = 0.0000152587890625f;    // 0x37800000
+static constexpr float kColorKeep16Scale = 32768.0f;              // 0x47000000
+static constexpr float kColorKeepFloatTolerance = 1.0e-4f;        // 0x38D1B717
 
 static bool ColorKeepCountIsAdmitted(A_long count)
 {

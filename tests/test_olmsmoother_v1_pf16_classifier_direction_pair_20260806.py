@@ -17,7 +17,7 @@ SOURCE = ROOT / "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"
 
 
 def _function(name: str) -> str:
-    source = SOURCE.read_text(encoding="utf-8")
+    source = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (SOURCE.parent / match[1]).read_text(), SOURCE.read_text(encoding="utf-8"))
     start = source.index(f"\n{name}(")
     next_marker = source.index("\n// ====", start)
     return source[start:next_marker]
@@ -53,7 +53,7 @@ def test_pf16_forward_pair_cannot_alias_reverse_table_operand() -> None:
 
 
 def test_pf16_uses_generated_exact_walker_and_subhandler() -> None:
-    source = SOURCE.read_text(encoding="utf-8")
+    source = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (SOURCE.parent / match[1]).read_text(), SOURCE.read_text(encoding="utf-8"))
     subhandler16 = _function("SubHandler16")
     assert "SubHandler16Exact(state, neigh" in subhandler16
     assert '#include "OLMSmoother_subhandler16.generated.inc"' in source

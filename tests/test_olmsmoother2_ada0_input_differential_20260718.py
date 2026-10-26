@@ -8,6 +8,8 @@ serial VCOMP schedule.  It compares values, not process-local addresses.
 
 from __future__ import annotations
 
+import re
+
 import json
 import unittest
 from pathlib import Path
@@ -83,7 +85,7 @@ class Ada0InputDifferentialTests(unittest.TestCase):
 
     # Finally pin the relevant current Mac implementation assumptions.  These
     # are source-level ABI checks, not a production behavior claim.
-        port = SOURCE.read_text(encoding="utf-8")
+        port = re.sub(r'#include "(OLMSmoother[^"\n]+\.inc)"', lambda match: (SOURCE.parent / match[1]).read_text(), SOURCE.read_text(encoding="utf-8"))
         for text, label in (
             ("(size_t)w * sizeof(FPix)", "Mac source pixel stride"),
             ("poly.cplane_stride = p.w * 4", "Mac class stride"),
