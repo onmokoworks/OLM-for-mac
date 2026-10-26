@@ -1,19 +1,18 @@
-static constexpr float kByteToUnit = 0.003921568859368563f; // FLOAT32 1/255; AEX 0x11450.
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 template <typename PixelT>
 struct OLMCKPixelTraits;
 
-// Per-depth writers intentionally differ: PF8 rounding, PF16 truncation, PF32 SSE multiplication.
 template <>
 struct OLMCKPixelTraits<PF_Pixel8> {
 	static float max_chan() { return 255.0f; }
 	static float native_key_epsilon() { return 0.5f / 255.0f; }
+	static bool is_16bpc() { return false; }
 	static bool is_32bpc() { return false; }
 	// FUN_180011450 normalizes source bytes by FLOAT32 inverse multiplication.
-	static float r(const PF_Pixel8 &p) { return (float)p.red * kByteToUnit; }
-	static float g(const PF_Pixel8 &p) { return (float)p.green * kByteToUnit; }
-	static float b(const PF_Pixel8 &p) { return (float)p.blue * kByteToUnit; }
-	static float a(const PF_Pixel8 &p) { return (float)p.alpha * kByteToUnit; }
+	static float r(const PF_Pixel8 &p) { return (float)p.red * 0.003921568859368563f; }
+	static float g(const PF_Pixel8 &p) { return (float)p.green * 0.003921568859368563f; }
+	static float b(const PF_Pixel8 &p) { return (float)p.blue * 0.003921568859368563f; }
+	static float a(const PF_Pixel8 &p) { return (float)p.alpha * 0.003921568859368563f; }
 	static void zero(PF_Pixel8 &p) { p.alpha = p.red = p.green = p.blue = 0; }
 	static void zero_alpha(PF_Pixel8 &p) { p.alpha = 0; }
 	static void replace_rgb(PF_Pixel8 &p, const PF_PixelFloat &rep)
@@ -46,6 +45,7 @@ template <>
 struct OLMCKPixelTraits<PF_Pixel16> {
 	static float max_chan() { return (float)PF_MAX_CHAN16; }
 	static float native_key_epsilon() { return 1.0f / 65536.0f; }
+	static bool is_16bpc() { return true; }
 	static bool is_32bpc() { return false; }
 	static float r(const PF_Pixel16 &p) { return (float)p.red / max_chan(); }
 	static float g(const PF_Pixel16 &p) { return (float)p.green / max_chan(); }
@@ -87,6 +87,7 @@ template <>
 struct OLMCKPixelTraits<PF_PixelFloat> {
 	static float max_chan() { return 1.0f; }
 	static float native_key_epsilon() { return 1.0e-6f; }
+	static bool is_16bpc() { return false; }
 	static bool is_32bpc() { return true; }
 	static float r(const PF_PixelFloat &p) { return p.red; }
 	static float g(const PF_PixelFloat &p) { return p.green; }

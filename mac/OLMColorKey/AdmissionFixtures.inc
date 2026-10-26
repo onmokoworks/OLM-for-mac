@@ -26,18 +26,9 @@ static bool BoundedLab76Key(const PF_PixelFloat &key,
 
 static bool ExactColor(const PF_Pixel8 &color,
 	                   A_u_char alpha, A_u_char red,
-	                   A_u_char green, A_u_char blue)
-{
-	return color.alpha == alpha && color.red == red &&
-	       color.green == green && color.blue == blue;
-}
-
+	                   A_u_char green, A_u_char blue);
 static bool ExactColor(const PF_PixelFloat &color,
-	                   float alpha, float red, float green, float blue)
-{
-	return color.alpha == alpha && color.red == red &&
-	       color.green == green && color.blue == blue;
-}
+	                   float alpha, float red, float green, float blue);
 
 template <typename PixelT>
 static bool IsBoundedLab76NativeTuple(const PF_EffectWorld *input,
@@ -81,6 +72,21 @@ static bool IsBoundedLab76NativeTuple(const PF_EffectWorld *input,
 	    BoundedLab76Key(info.colors[0], 26.0f / 255.0f, 191.0f / 255.0f, 204.0f / 255.0f) &&
 	    BoundedLab76Key(info.colors[1], 204.0f / 255.0f, 38.0f / 255.0f, 26.0f / 255.0f);
 	return declared || reversed;
+}
+
+static bool ExactColor(const PF_Pixel8 &color,
+	                   A_u_char alpha, A_u_char red,
+	                   A_u_char green, A_u_char blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
+}
+
+static bool ExactColor(const PF_PixelFloat &color,
+	                   float alpha, float red, float green, float blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
 }
 
 static bool IsBoundedEdgeInfo(const OLMColorKeyInfo &info,

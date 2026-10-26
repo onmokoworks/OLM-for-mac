@@ -1,6 +1,3 @@
-static constexpr float kNativePi = 3.1415927410125732f; // FLOAT32 pi; AEX 0x53a0/0x56f0 phase ratio.
-static constexpr float kNativeHalfPi = 1.5707963705062866f; // FLOAT32 pi/2; AEX 0x5550 phase ratio.
-static constexpr double kNativeHalfPiDouble = 1.57079632679485; // DOUBLE pi/2; AEX 0x53a0/0x56f0 phase offset.
 // Included by OLMColorKey.cpp; preserves the single translation unit.
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info,
@@ -473,13 +470,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					weight = keep ? 1.0f : 0.0f;
 					if (edge_blur_direction == 1) {
 						if (keep && native_dist < amount) {
-							const float ratio = kNativePi / amount;
-							const double phase = (double)NativeBlurPhaseProduct(native_dist, ratio) - kNativeHalfPiDouble;
+							const float ratio = 3.1415927410125732f / amount;
+							const double phase = (double)NativeBlurPhaseProduct(native_dist, ratio) - 1.57079632679485;
 							weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
 					} else if (!keep && native_dist < amount) {
-						const float ratio = kNativePi / amount;
-						const double phase = kNativeHalfPiDouble - (double)NativeBlurPhaseProduct(native_dist, ratio);
+						const float ratio = 3.1415927410125732f / amount;
+						const double phase = 1.57079632679485 - (double)NativeBlurPhaseProduct(native_dist, ratio);
 						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
@@ -493,7 +490,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (native_dist == 0.0f) weight = 0.5f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = keep ? 1.0f : 0.0f;
 					else {
-						float phase = native_dist * (kNativeHalfPi / (float)info.edge_blur_amount);
+						float phase = native_dist * (1.5707963705062866f / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
 						float sine = ucrt_sinf(phase, UCRT_FMA);
 						weight = (sine + 1.0f) * 0.5f;
@@ -504,14 +501,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					continue;
 				}
 				if (bounded_public_owner_lane && edge_blur_direction == 1) {
-					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
+					const float pi = 3.14159265358979323846f;
 					if (keep) weight = 1.0f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = 0.0f;
-					else weight = (std::sin((kPi * 0.5f) -
-					                       native_dist * (kPi / (float)info.edge_blur_amount)) +
+					else weight = (std::sin((pi * 0.5f) -
+					                       native_dist * (pi / (float)info.edge_blur_amount)) +
 					               1.0f) * 0.5f;
 				} else if (bounded_public_owner_lane && edge_blur_direction == 2) {
-					constexpr float kPi = 3.14159265358979323846f; // Float pi for the retained blur curves.
+					const float pi = 3.14159265358979323846f;
 					if (native_dist == 0.0f) weight = 0.5f;
 					else if (native_dist >= (float)info.edge_blur_amount)
 						weight = keep ? 1.0f : 0.0f;
@@ -523,7 +520,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						weight = keep ? 0.9619397521018982f : 0.03806023299694061f;
 					else {
 						float phase = native_dist *
-						    ((kPi * 0.5f) / (float)info.edge_blur_amount);
+						    ((pi * 0.5f) / (float)info.edge_blur_amount);
 						if (!keep) phase = -phase;
 						weight = (ucrt_sinf(phase, UCRT_FMA) + 1.0f) * 0.5f;
 					}
@@ -553,10 +550,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						// post-add result back to float, then performs the final 0.5f
 						// multiply.  Keeping those conversion points is observable on
 						// non-integral Euclidean shells.
-						const float ratio = kNativePi /
+						const float ratio = 3.1415927410125732f /
 						    (float)info.edge_blur_amount;
 						const double phase = (double)(curve_dist * ratio) -
-						    kNativeHalfPiDouble;
+						    1.57079632679485;
 						weight = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 					}
 				}
@@ -612,9 +609,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 							// direction plane is evaluated independently from its
 							// complementary output weight: FLOAT32 distance*pi/amount,
 							// promoted to double for sin(), cast after +1, then *0.5f.
-							const float ratio = kNativePi /
+							const float ratio = 3.1415927410125732f /
 							    (float)info.edge_blur_amount;
-							const double phase = kNativeHalfPiDouble -
+							const double phase = 1.57079632679485 -
 							    (double)(native_dist * ratio);
 							plane = (float)(ucrt_sin(phase, UCRT_FMA) + 1.0) * 0.5f;
 						}
