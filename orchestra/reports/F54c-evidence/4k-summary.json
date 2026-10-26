@@ -1,0 +1,53 @@
+[
+  {
+    "depth": 8,
+    "geometry": [
+      3840,
+      2160
+    ],
+    "output_bytes": 33177600,
+    "output_sha256": "3666b36fa94cd1c9f20bb214f3add5e80b4eafdf88d60edad151f885fcc09d8d",
+    "watch_id": "selector-context",
+    "capture_bytes": 128,
+    "exact": true,
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    }
+  },
+  {
+    "depth": 16,
+    "geometry": [
+      3840,
+      2160
+    ],
+    "output_bytes": 66355200,
+    "output_sha256": "f41147bbf0c68a9a3ee89e151d81ec8708bf179d5b45e0d52c71b8b800cee3fa",
+    "watch_id": "selector-context",
+    "capture_bytes": 128,
+    "exact": true,
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    }
+  },
+  {
+    "depth": 32,
+    "geometry": [
+      3840,
+      2160
+    ],
+    "output_bytes": 132710400,
+    "output_sha256": "a6b2524f3e806e1bc8d617d3ec4621bb674d693c720df1b3c7bfafffd785209a",
+    "watch_id": "selector-context",
+    "capture_bytes": 128,
+    "exact": true,
+    "status": {
+      "status": "ok",
+      "guards_intact": true,
+      "session_clean": true
+    }
+  }
+]

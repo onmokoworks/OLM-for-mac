@@ -1,0 +1,717 @@
+diff --git a/docs/RESIDENT_WATCHES.md b/docs/RESIDENT_WATCHES.md
+new file mode 100644
+index 00000000..0b3d641c
+--- /dev/null
++++ b/docs/RESIDENT_WATCHES.md
+@@ -0,0 +1,49 @@
++# Resident Smart Render watches
++
++Set `AEXCOMPAT_RESIDENT_TRACE` to a JSON output path and
++`AEXCOMPAT_RESIDENT_WATCHES` to a JSON array file. Only SMART_RENDER uses these
++settings. Geometry, cropped checkout, extended arenas and 4K options are unchanged.
++Do not set `AEXCOMPAT_SMART_TRACE` at the same time (explicit configuration error).
++The existing SMART_TRACE interface remains available.
++
++```json
++[
++  {"id":"plane", "function_rva":45392, "register":"rdx", "size":2361600, "occurrence":1},
++  {"id":"context", "instruction_rva":23578, "register":"rcx", "dereference_offset":16912, "size":2361600},
++  {"id":"chain", "function_rva":45392, "register":"stack5", "dereference_offsets":[8,56], "size":132710400}
++]
++```
++
++Numbers are unsigned decimal JSON integers. Supply exactly one RVA selector.
++`instruction_rva` means a direct call instruction, not an arbitrary instruction;
++unsupported sites appear in `trace_configuration.unhookable_watches`.
++Registers: rcx, rdx, r8, r9, rax, stack5 through stack8 (Win64 argument slots).
++`dereference_offset` preserves the C53b single-pointer read. Alternatively,
++`dereference_offsets` follows up to 16 successive pointer reads:
++`base = read_u64(base + offset)` at each step. Use one spelling only.
++Unmapped reads or address overflow produce an unmapped snapshot. Both before and
++after use the pointer captured at entry, even if the callee changes its arguments.
++
++Use `occurrence:1` for first hit; omit it for all hits, or select another positive
++occurrence. IDs must be nonempty and unique; 1–64 watches are accepted. Unknown
++fields, invalid registers, ambiguous RVA selectors and invalid limits fail with
++an input diagnostic, not a panic.
++
++Each watch allows 1–268435456 bytes. This accommodates a complete 3840×2160 RGBA
++float plane (132710400 bytes). A trace reserves at most 256 MiB of logical watch
++bytes and 256 witness pairs, including calls still pending. After reservation is
++exhausted, selected hits increment `dropped_memory_witnesses` and the trace reports
++witness-budget truncation. This bounds retained before/after hex payloads to 1 GiB.
++The changed-range summary stops at 4096 ranges and sets
++`changed_ranges_truncated`; captured hex/raw bytes are still complete.
++
++JSON preserves the existing snapshot status, hashes and hex fields. Every captured
++snapshot also writes `<trace-path>.<witness-index:03>.before.bin` or `.after.bin`,
++where indices refer to `memory_witnesses` array order. IDs never become paths.
++Use a fresh output path per render; a repeated path overwrites matching files and
++may leave old higher-index raw files. Only files corresponding to the current JSON
++are authoritative. Raw export errors fail explicitly. Trace files contain private
++image data: keep them local; share input/output/capture hashes and counts instead.
++
++Tracing is read-only. Bind captures to matching untraced complete output and input
++hashes. No tracing environment variables means no watch configuration or dumps.
+diff --git a/guest/crates/aex-guest-worker/src/classic.rs b/guest/crates/aex-guest-worker/src/classic.rs
+index 05f52f35..699dbdce 100644
+--- a/guest/crates/aex-guest-worker/src/classic.rs
++++ b/guest/crates/aex-guest-worker/src/classic.rs
+@@ -2137,6 +2137,7 @@ impl ClassicHost {
+                 ),
+                 register: "absolute",
+                 dereference_offset: None,
++                dereference_offsets: Vec::new(),
+                 size: format.bytes_per_pixel(),
+                 occurrence: None,
+                 image_coordinate: Some([x, y]),
+@@ -3035,7 +3036,22 @@ impl ClassicHost {
+         // than a plugin-specific address. Unset means no tracing work.
+         let trace_path =
+             std::env::var_os("AEXCOMPAT_SMART_TRACE").filter(|_| selector_name == "SMART_RENDER");
+-        let trace_enabled = trace_enabled || trace_path.is_some();
++        let resident_path = std::env::var_os("AEXCOMPAT_RESIDENT_TRACE")
++            .filter(|_| selector_name == "SMART_RENDER");
++        if resident_path.is_some() && trace_path.is_some() {
++            return Err(ClassicError::Input(
++                "Select either RESIDENT_TRACE or SMART_TRACE".into(),
++            ));
++        }
++        if resident_path.is_some() {
++            let path = std::env::var_os("AEXCOMPAT_RESIDENT_WATCHES").ok_or_else(|| {
++                ClassicError::Input("RESIDENT_WATCHES requires a JSON file".into())
++            })?;
++            let file = std::fs::File::open(path)
++                .map_err(|e| ClassicError::Input(format!("Resident watches: {e}")))?;
++            self.configure_trace(resident_trace_watches(file)?, None);
++        }
++        let trace_enabled = trace_enabled || trace_path.is_some() || resident_path.is_some();
+         if trace_path.is_some() {
+             let config = std::env::var("AEXCOMPAT_SMART_TRACE_WATCH").map_err(|_| {
+                 ClassicError::Input("SMART_TRACE_WATCH requires rva,bytes,first|all".into())
+@@ -3071,7 +3087,12 @@ impl ClassicHost {
+         } else {
+             None
+         };
+-        if let Some(path) = trace_path {
++        if let Some(path) = &resident_path {
++            if let Some(trace) = &trace {
++                write_resident_raw(std::path::Path::new(path), trace)?;
++            }
++        }
++        if let Some(path) = trace_path.or(resident_path) {
+             let file = std::fs::File::create(path)
+                 .map_err(|e| ClassicError::Input(format!("Smart trace file: {e}")))?;
+             serde_json::to_writer(file, &trace)
+@@ -5163,6 +5184,7 @@ fn smart_trace_watches(config: &str) -> Result<Vec<TraceWatchSpec>, ClassicError
+             absolute_address: None,
+             register,
+             dereference_offset: None,
++            dereference_offsets: Vec::new(),
+             size,
+             occurrence,
+             image_coordinate: None,
+@@ -5195,3 +5217,134 @@ fn resident_smart_watch_config_preserves_occurrence_and_bounds() {
+         assert!(smart_trace_watches(bad).is_err(), "{bad}");
+     }
+ }
++
++/// C53b-compatible resident watch configuration. Offsets are successive pointer
++/// reads, never slices. The captured entry pointer is reused on return.
++fn resident_trace_watches(reader: impl std::io::Read) -> Result<Vec<TraceWatchSpec>, ClassicError> {
++    #[derive(serde::Deserialize)]
++    #[serde(deny_unknown_fields)]
++    struct Watch {
++        id: String,
++        function_rva: Option<u64>,
++        instruction_rva: Option<u64>,
++        register: String,
++        dereference_offset: Option<u64>,
++        #[serde(default)]
++        dereference_offsets: Vec<u64>,
++        size: usize,
++        occurrence: Option<u64>,
++    }
++    let invalid = || {
++        ClassicError::Input("Resident watches require 1..64 unique nonempty IDs, exactly one RVA, a supported register, 1..268435456 bytes, positive occurrence and at most 16 pointer offsets (singular or plural)".into())
++    };
++    let specs: Vec<Watch> = serde_json::from_reader(reader)
++        .map_err(|e| ClassicError::Input(format!("Resident watch JSON: {e}")))?;
++    if specs.is_empty() || specs.len() > 64 {
++        return Err(invalid());
++    }
++    let mut ids = std::collections::HashSet::new();
++    specs
++        .into_iter()
++        .map(|w| {
++            if w.id.is_empty()
++                || !ids.insert(w.id.clone())
++                || w.function_rva.is_some() == w.instruction_rva.is_some()
++                || !(1..=268435456).contains(&w.size)
++                || w.occurrence == Some(0)
++                || w.dereference_offsets.len() > 16
++                || (w.dereference_offset.is_some() && !w.dereference_offsets.is_empty())
++            {
++                return Err(invalid());
++            }
++            let register = match w.register.as_str() {
++                "rcx" => "rcx",
++                "rdx" => "rdx",
++                "r8" => "r8",
++                "r9" => "r9",
++                "rax" => "rax",
++                "stack5" => "stack5",
++                "stack6" => "stack6",
++                "stack7" => "stack7",
++                "stack8" => "stack8",
++                _ => return Err(invalid()),
++            };
++            Ok(TraceWatchSpec {
++                id: w.id,
++                function_rva: w.function_rva,
++                instruction_rva: w.instruction_rva,
++                absolute_address: None,
++                register,
++                dereference_offset: w.dereference_offset,
++                dereference_offsets: w.dereference_offsets,
++                size: w.size,
++                occurrence: w.occurrence,
++                image_coordinate: None,
++                image_row_offset: None,
++                image_format: None,
++            })
++        })
++        .collect()
++}
++
++/// Numeric witness indices avoid interpreting user watch IDs as paths. Decode
++/// in bounded chunks so raw export does not allocate another full plane.
++fn write_resident_raw(path: &std::path::Path, trace: &ExecutionTrace) -> Result<(), ClassicError> {
++    use std::io::Write;
++    for (index, witness) in trace.memory_witnesses.iter().enumerate() {
++        for (when, snapshot) in [("before", &witness.before), ("after", &witness.after)] {
++            if let Some(hex) = &snapshot.hex {
++                let mut name = path.as_os_str().to_os_string();
++                name.push(format!(".{index:03}.{when}.bin"));
++                let mut file = std::io::BufWriter::new(
++                    std::fs::File::create(name)
++                        .map_err(|e| ClassicError::Input(format!("Resident raw file: {e}")))?,
++                );
++                for chunk in hex.as_bytes().chunks(8192) {
++                    let bytes = chunk
++                        .chunks_exact(2)
++                        .map(|pair| {
++                            let nibble = |c: u8| if c <= b'9' { c - b'0' } else { c - b'a' + 10 };
++                            (nibble(pair[0]) << 4) | nibble(pair[1])
++                        })
++                        .collect::<Vec<_>>();
++                    file.write_all(&bytes)
++                        .map_err(|e| ClassicError::Input(format!("Resident raw write: {e}")))?;
++                }
++                file.flush()
++                    .map_err(|e| ClassicError::Input(format!("Resident raw flush: {e}")))?;
++            }
++        }
++    }
++    Ok(())
++}
++
++#[test]
++fn resident_watch_configuration_validation() {
++    let parse = |s: &str| resident_trace_watches(s.as_bytes());
++    let good = r#"[{"id":"plane","function_rva":42,"register":"stack5","dereference_offsets":[8,245760],"size":132710400}]"#;
++    let watches = parse(good).unwrap();
++    assert_eq!(watches[0].dereference_offsets, [8, 245760]);
++    assert_eq!(watches[0].occurrence, None);
++    for bad in [
++        "[]".to_string(),
++        good.replace("stack5", "rsp"),
++        good.replace("132710400", "268435457"),
++        good.replace("132710400", "0"),
++        good.replace("\"size\"", "\"unknown\""),
++        good.replace("\"size\":", "\"occurrence\":0,\"size\":"),
++        good.replace("\"size\":", "\"instruction_rva\":1,\"size\":"),
++        good.replace("\"size\":", "\"dereference_offset\":0,\"size\":"),
++        format!(
++            "[{},{}]",
++            &good[1..good.len() - 1],
++            &good[1..good.len() - 1]
++        ),
++    ] {
++        assert!(parse(&bad).is_err(), "{bad}");
++    }
++    let single = good.replace(
++        "\"dereference_offsets\":[8,245760]",
++        "\"dereference_offset\":245760",
++    );
++    assert_eq!(parse(&single).unwrap()[0].dereference_offset, Some(245760));
++}
+diff --git a/guest/crates/aex-guest-worker/src/main.rs b/guest/crates/aex-guest-worker/src/main.rs
+index 0dc883f7..bfb76b4a 100644
+--- a/guest/crates/aex-guest-worker/src/main.rs
++++ b/guest/crates/aex-guest-worker/src/main.rs
+@@ -816,6 +816,7 @@ fn parse_trace_watches(
+             absolute_address: None,
+             register,
+             dereference_offset,
++            dereference_offsets: Vec::new(),
+             size,
+             occurrence,
+             image_coordinate: None,
+diff --git a/guest/crates/aex-guest-worker/src/x64.rs b/guest/crates/aex-guest-worker/src/x64.rs
+index d29735d6..5a3600ba 100644
+--- a/guest/crates/aex-guest-worker/src/x64.rs
++++ b/guest/crates/aex-guest-worker/src/x64.rs
+@@ -305,7 +305,7 @@ const TRACE_FIRST_SAMPLES: usize = 3;
+ const TRACE_LAST_SAMPLES: usize = 3;
+ const TRACE_DISTINCT_SAMPLES: usize = 16;
+ const TRACE_DISTINCT_FINGERPRINTS: usize = 4096;
+-const MAX_TRACE_WATCH_BYTES: usize = 1048576;
++const MAX_TRACE_WATCH_BYTES: usize = 256 * 1024 * 1024;
+ const MAX_TRACE_WITNESSES: usize = 256;
+ const MAX_UNSUPPORTED_SUITE_CALLS: usize = 256;
+ const MAX_SUITE_REQUESTS: usize = 256;
+diff --git a/guest/crates/aex-guest-worker/src/x64/engine.rs b/guest/crates/aex-guest-worker/src/x64/engine.rs
+index 2f0be298..c9ac7fd5 100644
+--- a/guest/crates/aex-guest-worker/src/x64/engine.rs
++++ b/guest/crates/aex-guest-worker/src/x64/engine.rs
+@@ -1171,6 +1171,8 @@ impl GuestEngine<'static> {
+             unhookable_watches: Vec::new(),
+             witnesses: Vec::new(),
+             dropped_witnesses: 0,
++        reserved_watch_bytes: 0,
++        reserved_watch_count: 0,
+             basic_blocks: HashMap::new(),
+             branch_edges: HashMap::new(),
+             dropped_basic_blocks: 0,
+@@ -1333,10 +1335,10 @@ impl GuestEngine<'static> {
+         }
+         let selector_watches = self
+             .unicorn
+-            .get_data()
++            .get_data_mut()
+             .trace
+-            .as_ref()
+-            .map(|capture| capture.selector_watches.clone())
++            .as_mut()
++            .map(|capture| std::mem::take(&mut capture.selector_watches))
+             .unwrap_or_default();
+         let selector_witnesses = selector_watches
+             .into_iter()
+@@ -1348,6 +1350,7 @@ impl GuestEngine<'static> {
+                     self.image_base,
+                     self.image_end,
+                 );
++                let (changed_ranges, changed_ranges_truncated) = trace_changed_ranges(&pending.before, &after);
+                 TraceMemoryWitness {
+                     watch_id: pending.spec_id,
+                     call_id: pending.call_id,
+@@ -1357,7 +1360,8 @@ impl GuestEngine<'static> {
+                     image_coordinate: pending.image_coordinate,
+                     image_row_offset: pending.image_row_offset,
+                     image_format: pending.image_format,
+-                    changed_ranges: trace_changed_ranges(&pending.before, &after),
++                    changed_ranges,
++                    changed_ranges_truncated,
+                     before: pending.before,
+                     after,
+                 }
+diff --git a/guest/crates/aex-guest-worker/src/x64/tests_cases.rs b/guest/crates/aex-guest-worker/src/x64/tests_cases.rs
+index 873bf212..cdeb164f 100644
+--- a/guest/crates/aex-guest-worker/src/x64/tests_cases.rs
++++ b/guest/crates/aex-guest-worker/src/x64/tests_cases.rs
+@@ -1918,6 +1918,7 @@ fn execution_trace_records_jump_to_known_function_as_tail_call() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: None,
+         image_coordinate: None,
+@@ -1975,6 +1976,7 @@ fn execution_trace_watch_can_dereference_pointer_field() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: Some(0),
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: None,
+         image_coordinate: None,
+@@ -2003,6 +2005,7 @@ fn checkpoint_trace_skips_hot_basic_block_collection() {
+         absolute_address: None,
+         register: "rdx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: Some(1),
+         image_coordinate: None,
+@@ -2035,6 +2038,7 @@ fn checkpoint_trace_activates_function_watch_at_selector_entry() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: None,
+         image_coordinate: None,
+@@ -2077,6 +2081,7 @@ fn checkpoint_trace_lists_watches_it_cannot_hook() {
+             absolute_address: None,
+             register: "rdx",
+             dereference_offset: None,
++            dereference_offsets: Vec::new(),
+             size: 1,
+             occurrence: None,
+             image_coordinate: None,
+@@ -2159,6 +2164,7 @@ fn execution_trace_treats_explicitly_watched_first_jump_as_tail_call() {
+         absolute_address: None,
+         register: "stack5",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: None,
+         image_coordinate: None,
+@@ -2199,6 +2205,7 @@ fn execution_trace_applies_watch_occurrence_to_tail_calls() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: Some(2),
+         image_coordinate: None,
+@@ -2237,6 +2244,7 @@ fn execution_trace_activates_function_watch_at_selector_entry() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: None,
+         image_coordinate: None,
+@@ -2406,6 +2414,7 @@ fn execution_trace_witnesses_memory_before_and_after_a_call() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 4,
+         occurrence: None,
+         image_coordinate: None,
+@@ -2453,6 +2462,7 @@ fn execution_trace_selects_one_based_watch_occurrence_without_spending_witness_b
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 1,
+         occurrence: Some(2),
+         image_coordinate: None,
+@@ -2493,6 +2503,7 @@ fn inferred_return_path_completes_pending_memory_witness() {
+         absolute_address: None,
+         register: "rcx",
+         dereference_offset: None,
++        dereference_offsets: Vec::new(),
+         size: 4,
+         occurrence: None,
+         image_coordinate: None,
+@@ -3258,6 +3269,8 @@ fn trace_event_limit_marks_capture_as_truncated() {
+         unhookable_watches: Vec::new(),
+         witnesses: Vec::new(),
+         dropped_witnesses: 0,
++        reserved_watch_bytes: 0,
++        reserved_watch_count: 0,
+         basic_blocks: HashMap::new(),
+         branch_edges: HashMap::new(),
+         dropped_basic_blocks: 0,
+@@ -3673,3 +3686,127 @@ fn census_extents_merge_overlapping_translation_block_variants() {
+     assert_eq!(extents[1].end_rva, 0x1c);
+     assert_eq!(extents[1].block_variants, 2);
+ }
++
++#[test]
++fn resident_checkpoint_pointer_chains_stack_and_occurrences() {
++    const CODE: u64 = 0x1000_0000;
++    // Two calls; leaf loads a two-hop pointer and increments its target.
++    let code = [0xe8,6,0,0,0, 0xe8,1,0,0,0, 0xc3,
++                0x48,0x8b,0x01, 0x48,0x8b,0x00, 0xfe,0x00, 0xc3];
++    for checkpoint in [false, true] {
++        for register in ["rcx", "stack5"] {
++            for occurrence in [Some(1), None] {
++                let mut engine = test_engine(&code);
++                let target = engine.allocate(1,1).unwrap();
++                engine.write(target, &[40]).unwrap();
++                let holder = engine.allocate(8,8).unwrap();
++                engine.write(holder, &target.to_le_bytes()).unwrap();
++                let root = engine.allocate(8,8).unwrap();
++                engine.write(root, &holder.to_le_bytes()).unwrap();
++                // stack5 at leaf entry is caller rsp+0x20. With this tiny
++                // caller (no shadow reservation) that is the fourth home slot.
++                if register == "stack5" {
++                    // Test stack-relative resolution at selector entry instead.
++                    engine.configure_trace_watches(vec![TraceWatchSpec {
++                        id:"chain".into(), function_rva:Some(0), instruction_rva:None,
++                        absolute_address:None, register, dereference_offset:None,
++                        dereference_offsets:vec![0,0], size:1, occurrence,
++                        image_coordinate:None,image_row_offset:None,image_format:None,
++                    }]);
++                } else {
++                    engine.configure_trace_watches(vec![TraceWatchSpec {
++                        id:"chain".into(), function_rva:Some(11), instruction_rva:None,
++                        absolute_address:None, register, dereference_offset:None,
++                        dereference_offsets:vec![0,0], size:1, occurrence,
++                        image_coordinate:None,image_row_offset:None,image_format:None,
++                    }]);
++                }
++                engine.configure_trace_checkpoint_only(checkpoint);
++                engine.begin_execution_trace("SMART_RENDER", CODE).unwrap();
++                engine.call_win64(CODE, [root,0,0,0,root,0]).unwrap();
++                let trace = engine.finish_execution_trace(0).unwrap();
++                let expected = if register == "stack5" || occurrence.is_some() {1} else {2};
++                assert_eq!(trace.memory_witnesses.len(), expected);
++                assert_eq!(trace.memory_witnesses[0].before.u8_values, [40]);
++                assert_eq!(trace.memory_witnesses[0].after.u8_values,
++                           [if register == "stack5" {42} else {41}]);
++                if expected == 2 { assert_eq!(trace.memory_witnesses[1].after.u8_values, [42]); }
++            }
++        }
++    }
++}
++
++#[test]
++fn resident_snapshot_exceeds_old_plane_cap() {
++    const CODE: u64 = 0x1000_0000;
++    let mut engine = test_engine(&[0xc3]);
++    let size = 3840 * 2160 * 16; // Complete 4K float RGBA plane.
++    let buffer = 0x5000_0000;
++    engine.unicorn.mem_map(buffer, (size as u64 + 4095) & !4095, Prot::READ | Prot::WRITE).unwrap();
++    engine.write(buffer + size as u64 - 1, &[73]).unwrap();
++    engine.configure_trace_watches(vec![TraceWatchSpec {
++        id:"large".into(),function_rva:Some(0),instruction_rva:None,
++        absolute_address:None,register:"rcx",dereference_offset:None,
++        dereference_offsets:vec![],size,occurrence:Some(1),
++        image_coordinate:None,image_row_offset:None,image_format:None,
++    }]);
++    engine.configure_trace_checkpoint_only(true);
++    engine.begin_execution_trace("SMART_RENDER", CODE).unwrap();
++    engine.call_win64(CODE, [buffer,0,0,0,0,0]).unwrap();
++    let trace = engine.finish_execution_trace(0).unwrap();
++    let snapshot = &trace.memory_witnesses[0].before;
++    assert_eq!(snapshot.status,"captured");
++    assert_eq!(snapshot.hex.as_ref().unwrap().len(),size*2);
++    assert!(snapshot.hex.as_ref().unwrap().ends_with("49"));
++    assert_eq!(trace.memory_witnesses[0].after.sha256, snapshot.sha256);
++}
++
++#[test]
++fn resident_bad_chains_and_reservation_budget_are_explicit() {
++    const CODE: u64 = 0x1000_0000;
++    let mut engine = test_engine(&[0xc3]);
++    let holder = engine.allocate(8,8).unwrap();
++    engine.write(holder, &u64::MAX.to_le_bytes()).unwrap();
++    let watch = TraceWatchSpec {
++        id:"invalid".into(),function_rva:Some(0),instruction_rva:None,
++        absolute_address:None,register:"rcx",dereference_offset:None,
++        dereference_offsets:vec![0,8],size:1,occurrence:None,
++        image_coordinate:None,image_row_offset:None,image_format:None,
++    };
++    engine.configure_trace_watches(vec![watch.clone()]);
++    engine.configure_trace_checkpoint_only(true);
++    engine.begin_execution_trace("SMART_RENDER", CODE).unwrap();
++    engine.call_win64(CODE, [holder,0,0,0,0,0]).unwrap();
++    let trace = engine.finish_execution_trace(0).unwrap();
++    assert_eq!(trace.memory_witnesses[0].before.status,"unmapped");
++    engine.write(holder, &0xffff_0000_0000_u64.to_le_bytes()).unwrap();
++    engine.begin_execution_trace("SMART_RENDER", CODE).unwrap();
++    engine.call_win64(CODE, [holder,0,0,0,0,0]).unwrap();
++    assert_eq!(engine.finish_execution_trace(0).unwrap().memory_witnesses[0].before.status,"unmapped");
++    engine.begin_execution_trace("SMART_RENDER", CODE).unwrap();
++    let capture = engine.unicorn.get_data_mut().trace.as_mut().unwrap();
++    let mut large = watch;
++    large.size = MAX_TRACE_WATCH_BYTES;
++    assert!(selected_watch_occurrence(capture,&large));
++    assert!(!selected_watch_occurrence(capture,&large));
++    assert_eq!(capture.dropped_witnesses,1);
++    engine.discard_execution_trace().unwrap();
++}
++
++#[test]
++fn resident_changed_ranges_are_bounded_without_losing_snapshot_bytes() {
++    let mut engine = test_engine(&[0xc3]);
++    let size = 10000;
++    let buffer = 0x5000_0000;
++    engine.unicorn.mem_map(buffer, 12288, Prot::READ | Prot::WRITE).unwrap();
++    let before = trace_memory_snapshot(&engine.unicorn,buffer,size,0,0);
++    let mut bytes = vec![0;size];
++    for n in (0..size).step_by(2) { bytes[n]=1; }
++    engine.write(buffer,&bytes).unwrap();
++    let after = trace_memory_snapshot(&engine.unicorn,buffer,size,0,0);
++    let (ranges,truncated) = trace_changed_ranges(&before,&after);
++    assert!(truncated);
++    assert_eq!(ranges.len(),4096);
++    assert_eq!(ranges[4095].offset,8190);
++    assert_eq!(after.hex.unwrap().len(),size*2);
++}
+diff --git a/guest/crates/aex-guest-worker/src/x64/trace.rs b/guest/crates/aex-guest-worker/src/x64/trace.rs
+index 1424c357..604f15c4 100644
+--- a/guest/crates/aex-guest-worker/src/x64/trace.rs
++++ b/guest/crates/aex-guest-worker/src/x64/trace.rs
+@@ -176,8 +176,17 @@ fn selected_watch_occurrence(capture: &mut TraceCapture, spec: &TraceWatchSpec)
+         .entry(spec.id.clone())
+         .or_default();
+     *count += 1;
+-    spec.occurrence
+-        .is_none_or(|occurrence| occurrence == *count)
++    if !spec.occurrence.is_none_or(|occurrence| occurrence == *count) { return false; }
++    // Reserve both snapshots before reading, including nested pending calls.
++    // At most 1 GiB of hex payloads (256 MiB logical before-plane bytes).
++    if capture.reserved_watch_count >= MAX_TRACE_WITNESSES ||
++        spec.size > MAX_TRACE_WATCH_BYTES.saturating_sub(capture.reserved_watch_bytes) {
++        capture.dropped_witnesses += 1;
++        return false;
++    }
++    capture.reserved_watch_bytes += spec.size;
++    capture.reserved_watch_count += 1;
++    true
+ }
+ 
+ fn trace_watch_address(
+@@ -185,19 +194,16 @@ fn trace_watch_address(
+     register: &'static str,
+     stack_offset: u64,
+     dereference_offset: Option<u64>,
++    dereference_offsets: &[u64],
+ ) -> u64 {
+-    let base = trace_register_value(unicorn, register, stack_offset).unwrap_or(0);
+-    let Some(offset) = dereference_offset else {
+-        return base;
+-    };
+-    let Some(pointer_address) = base.checked_add(offset) else {
+-        return 0;
+-    };
+-    let mut bytes = [0u8; 8];
+-    if unicorn.mem_read(pointer_address, &mut bytes).is_err() {
+-        return 0;
++    let mut base = trace_register_value(unicorn, register, stack_offset).unwrap_or(0);
++    for offset in dereference_offset.iter().chain(dereference_offsets.iter()) {
++        let Some(pointer_address) = base.checked_add(*offset) else { return 0; };
++        let mut bytes = [0u8; 8];
++        if unicorn.mem_read(pointer_address, &mut bytes).is_err() { return 0; }
++        base = u64::from_le_bytes(bytes);
+     }
+-    u64::from_le_bytes(bytes)
++    base
+ }
+ 
+ fn select_function_watches(capture: &mut TraceCapture, function_rva: u64) -> Vec<TraceWatchSpec> {
+@@ -365,7 +371,7 @@ fn arm_selector_entry_watches(
+         .into_iter()
+         .map(|spec| {
+             let watch_address =
+-                trace_watch_address(unicorn, spec.register, 0x28, spec.dereference_offset);
++                trace_watch_address(unicorn, spec.register, 0x28, spec.dereference_offset, &spec.dereference_offsets);
+             PendingTraceWatch {
+                 spec_id: spec.id,
+                 register: spec.register,
+@@ -438,7 +444,7 @@ fn checkpoint_instruction(
+         .into_iter()
+         .map(|spec| {
+             let watch_address =
+-                trace_watch_address(unicorn, spec.register, 0x20, spec.dereference_offset);
++                trace_watch_address(unicorn, spec.register, 0x20, spec.dereference_offset, &spec.dereference_offsets);
+             PendingTraceWatch {
+                 spec_id: spec.id,
+                 register: spec.register,
+@@ -699,7 +705,7 @@ fn trace_instruction(
+             .into_iter()
+             .map(|spec| {
+                 let address =
+-                    trace_watch_address(unicorn, spec.register, 0x20, spec.dereference_offset);
++                    trace_watch_address(unicorn, spec.register, 0x20, spec.dereference_offset, &spec.dereference_offsets);
+                 PendingTraceWatch {
+                     spec_id: spec.id,
+                     register: spec.register,
+@@ -799,7 +805,7 @@ fn trace_instruction(
+                 .into_iter()
+                 .map(|spec| {
+                     let address =
+-                        trace_watch_address(unicorn, spec.register, 0x28, spec.dereference_offset);
++                        trace_watch_address(unicorn, spec.register, 0x28, spec.dereference_offset, &spec.dereference_offsets);
+                     PendingTraceWatch {
+                         spec_id: spec.id,
+                         register: spec.register,
+@@ -1134,17 +1140,16 @@ fn trace_memory_snapshot(
+ fn trace_changed_ranges(
+     before: &TraceMemorySnapshot,
+     after: &TraceMemorySnapshot,
+-) -> Vec<TraceChangedRange> {
++) -> (Vec<TraceChangedRange>, bool) {
+     let (Some(before), Some(after)) = (&before.hex, &after.hex) else {
+-        return Vec::new();
++        return (Vec::new(), false);
+     };
+     let before = before.as_bytes().chunks_exact(2);
+     let after = after.as_bytes().chunks_exact(2);
+     let changed = before
+         .zip(after)
+         .enumerate()
+-        .filter_map(|(index, (left, right))| (left != right).then_some(index))
+-        .collect::<Vec<_>>();
++        .filter_map(|(index, (left, right))| (left != right).then_some(index));
+     let mut ranges = Vec::<TraceChangedRange>::new();
+     for offset in changed {
+         if let Some(last) = ranges.last_mut()
+@@ -1152,10 +1157,11 @@ fn trace_changed_ranges(
+         {
+             last.size += 1;
+         } else {
++            if ranges.len() == 4096 { return (ranges, true); }
+             ranges.push(TraceChangedRange { offset, size: 1 });
+         }
+     }
+-    ranges
++    (ranges, false)
+ }
+ 
+ fn complete_trace_watches(
+@@ -1174,6 +1180,7 @@ fn complete_trace_watches(
+                 image_base,
+                 image_end,
+             );
++            let (changed_ranges, changed_ranges_truncated) = trace_changed_ranges(&pending.before, &after);
+             TraceMemoryWitness {
+                 watch_id: pending.spec_id,
+                 call_id: pending.call_id,
+@@ -1183,7 +1190,8 @@ fn complete_trace_watches(
+                 image_coordinate: pending.image_coordinate,
+                 image_row_offset: pending.image_row_offset,
+                 image_format: pending.image_format,
+-                changed_ranges: trace_changed_ranges(&pending.before, &after),
++                changed_ranges,
++                changed_ranges_truncated,
+                 before: pending.before,
+                 after,
+             }
+diff --git a/guest/crates/aex-guest-worker/src/x64/types.rs b/guest/crates/aex-guest-worker/src/x64/types.rs
+index ed875d74..025220e8 100644
+--- a/guest/crates/aex-guest-worker/src/x64/types.rs
++++ b/guest/crates/aex-guest-worker/src/x64/types.rs
+@@ -661,6 +661,8 @@ struct TraceCapture {
+     unhookable_watches: Vec<UnhookableWatch>,
+     witnesses: Vec<TraceMemoryWitness>,
+     dropped_witnesses: u64,
++    reserved_watch_bytes: usize,
++    reserved_watch_count: usize,
+     basic_blocks: HashMap<(u64, u32), u64>,
+     branch_edges: HashMap<(u64, u64), u64>,
+     dropped_basic_blocks: u64,
+@@ -700,6 +702,8 @@ pub struct TraceWatchSpec {
+     pub register: &'static str,
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub dereference_offset: Option<u64>,
++    #[serde(skip_serializing_if = "Vec::is_empty")]
++    pub dereference_offsets: Vec<u64>,
+     pub size: usize,
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub occurrence: Option<u64>,
+@@ -808,6 +812,7 @@ pub struct TraceMemoryWitness {
+     pub before: TraceMemorySnapshot,
+     pub after: TraceMemorySnapshot,
+     pub changed_ranges: Vec<TraceChangedRange>,
++    pub changed_ranges_truncated: bool,
+ }
+ 
+ #[derive(Clone, Debug, Serialize)]
