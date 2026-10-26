@@ -57,6 +57,7 @@ static PF_Err DirectionalCoreError(const char *function, int line, int result)
 #define OLM_DIRECTIONAL_CORE_ERROR(result) DirectionalCoreError(__func__, __LINE__, result)
 
 
+// Legacy host scale uses full-precision pi; core angle builder keeps its AEX literal.
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 #if !defined(OLM_DBLUR_TEST_SEAM)
 static AEGP_PluginID g_aegp_plugin_id = 0;

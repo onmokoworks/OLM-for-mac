@@ -1,12 +1,15 @@
 // Included in OLMDirectionalBlur.cpp; preserve translation-unit order.
+constexpr std::uint32_t kFixedWholeSign = 0x8000u; // AEX 0x180006c50: high-word signed bit.
+constexpr int kFixedWholeModulus = 0x10000; // AEX 0x180006c50: sign-extend the 16-bit whole part.
+
 static PF_FpLong WindowsFixedWholeNumber(PF_Fixed value)
 {
 	// FUN_180006c50 reads the signed word at PF_ParamDef+0x3a.
 	// Preserve the upper 16 bits, including negative fractional angles;
 	// signed division by 65536 would instead truncate them toward zero.
 	const std::uint32_t whole = static_cast<std::uint32_t>(value) >> 16;
-	return static_cast<PF_FpLong>(whole >= 0x8000u
-		? static_cast<std::int32_t>(whole) - 0x10000
+	return static_cast<PF_FpLong>(whole >= kFixedWholeSign
+		? static_cast<std::int32_t>(whole) - kFixedWholeModulus
 		: static_cast<std::int32_t>(whole));
 }
 

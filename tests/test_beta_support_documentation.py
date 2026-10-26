@@ -87,7 +87,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         cls.doc = DOC.read_text(encoding="utf-8")
         cls.readme = README.read_text(encoding="utf-8")
         cls.sources = {
-            name: path.read_text(encoding="utf-8") for name, path in SOURCES.items()
+            name: re.sub(r'#include "(OLMDirectionalBlur_\w+\.inc)"',
+                         lambda m: path.with_name(m[1]).read_text(encoding="utf-8"),
+                         path.read_text(encoding="utf-8")) for name, path in SOURCES.items()
         }
         cls.directional_budget = DIRECTIONAL_BUDGET.read_text(encoding="utf-8")
 

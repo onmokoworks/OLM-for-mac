@@ -1,26 +1,4 @@
 // Included in OLMDirectionalBlur.cpp; preserve translation-unit order.
-#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
-static bool WriteDirectionalBlurCapture(const char *prefix,
-	                                     const char *suffix,
-	                                     const void *data,
-	                                     size_t byte_count)
-{
-	if (!prefix || !*prefix || !suffix || !data) {
-		return false;
-	}
-	char path[4096];
-	const int length = std::snprintf(path, sizeof(path), "%s.%s", prefix, suffix);
-	if (length <= 0 || static_cast<size_t>(length) >= sizeof(path)) {
-		return false;
-	}
-	FILE *file = std::fopen(path, "wb");
-	if (!file) {
-		return false;
-	}
-	const bool complete = std::fwrite(data, 1, byte_count, file) == byte_count;
-	return std::fclose(file) == 0 && complete;
-}
-#endif
 
 static PF_Err RenderExact8(PF_EffectWorld *input,
 	                                PF_EffectWorld *output,
@@ -96,14 +74,6 @@ static PF_Err RenderExact8(PF_EffectWorld *input,
 		return OLM_DIRECTIONAL_CORE_ERROR(result);
 	}
 
-#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
-	const char *capture_prefix = std::getenv("OLM_DBLUR_CAPTURE_PREFIX");
-	const bool capture_enabled = capture_prefix && *capture_prefix;
-	std::vector<std::uint8_t> output_argb;
-	if (capture_enabled) {
-		output_argb.resize(byte_count);
-	}
-#endif
 	for (A_long y = 0; y < height; ++y) {
 		for (A_long x = 0; x < width; ++x) {
 			PF_Pixel8 *pixel = PixelAt<PF_Pixel8>(output, x, y);
@@ -112,41 +82,9 @@ static PF_Err RenderExact8(PF_EffectWorld *input,
 			pixel->green = destination[offset + 1];
 			pixel->blue = destination[offset + 2];
 			pixel->alpha = destination[offset + 3];
-#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
-			if (capture_enabled) {
-				output_argb[offset + 0] = pixel->alpha;
-				output_argb[offset + 1] = pixel->red;
-				output_argb[offset + 2] = pixel->green;
-				output_argb[offset + 3] = pixel->blue;
-			}
-#endif
 		}
 	}
 
-#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
-	if (capture_enabled) {
-		bool capture_ok = true;
-		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "input.rgba8", source.data(), byte_count);
-		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "core-output.rgba8", destination.data(), byte_count);
-		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "callback-output.argb8", output_argb.data(), byte_count);
-		char metadata[512];
-		const int metadata_length = std::snprintf(
-			metadata, sizeof(metadata),
-			"width=%ld\nheight=%ld\ninput_rowbytes=%ld\noutput_rowbytes=%ld\n"
-			"angle=%.17g\nbrightness_gain=%.17g\nfront_strength=%ld\nfront_alpha_fade=%ld\n",
-			static_cast<long>(width), static_cast<long>(height),
-			static_cast<long>(input->rowbytes), static_cast<long>(output->rowbytes),
-			static_cast<double>(info.angle_deg), static_cast<double>(info.brightness_gain),
-			static_cast<long>(info.front_strength), static_cast<long>(info.front_alpha_fade));
-		if (metadata_length > 0) {
-			capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "metadata.txt", metadata,
-				static_cast<size_t>(std::min<int>(metadata_length, sizeof(metadata) - 1)));
-		}
-		if (!capture_ok) {
-			return PF_Err_INTERNAL_STRUCT_DAMAGED;
-		}
-	}
-#endif
 	return PF_Err_NONE;
 }
 

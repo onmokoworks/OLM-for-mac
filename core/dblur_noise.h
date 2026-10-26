@@ -8,6 +8,13 @@
 
 namespace olm::dblur {
 
+constexpr float kNoiseGridPadding = 3.0f; // AEX 0x1800034e0: extra noise lattice cells.
+constexpr float kSmoothstepCubic = 3.0f; // AEX 0x180003370: coefficient in t*t*(3-2*t).
+constexpr int kNoiseTableSamples = 101; // AEX 0x1800034e0: 100 segments plus endpoint.
+constexpr double kNoisePeriod = 100.0; // AEX 0x1800034e0: double random-position scale.
+constexpr float kNoisePeriodF32 = 100.0f; // AEX 0x1800034e0: float position wrap.
+constexpr double kNoiseAmplitude = 0.5; // AEX 0x1800034e0: interpolated modulation amplitude.
+
 struct NoisePlaneView {
     const float* samples;
     int stride;
@@ -39,8 +46,8 @@ inline float sample_noise_plane(const NoisePlaneView& plane, int x, int y,
     const float fraction_y = sample_y - static_cast<float>(iy);
     const float square_x = fraction_x * fraction_x;
     const float square_y = fraction_y * fraction_y;
-    const float smooth_x = (3.0f - (fraction_x + fraction_x)) * square_x;
-    const float smooth_y = (3.0f - (fraction_y + fraction_y)) * square_y;
+    const float smooth_x = (kSmoothstepCubic - (fraction_x + fraction_x)) * square_x;
+    const float smooth_y = (kSmoothstepCubic - (fraction_y + fraction_y)) * square_y;
     const double inverse_x = 1.0 - static_cast<double>(smooth_x);
     const double inverse_y = 1.0 - static_cast<double>(smooth_y);
     return static_cast<float>(inverse_y * static_cast<double>(smooth_x)) *
@@ -60,18 +67,18 @@ inline bool generate_noise_plane(int source_width, int source_height,
         output == nullptr || plane_width == nullptr || plane_height == nullptr) {
         return false;
     }
-    *plane_width = static_cast<int>(static_cast<float>(source_width) / cell_size + 3.0f);
-    *plane_height = static_cast<int>(static_cast<float>(source_height) / cell_size + 3.0f);
+    *plane_width = static_cast<int>(static_cast<float>(source_width) / cell_size + kNoiseGridPadding);
+    *plane_height = static_cast<int>(static_cast<float>(source_height) / cell_size + kNoiseGridPadding);
     if (*plane_width <= 0 || *plane_height <= 0) {
         return false;
     }
 
     std::mt19937 random(seed);
-    constexpr double kUint32Unit = 1.0 / 4294967296.0;
+    constexpr double kUint32Unit = 1.0 / 4294967296.0; // AEX 0x1800034e0: MT19937 unit conversion.
     const auto next_unit = [&random]() {
         return static_cast<double>(random()) * kUint32Unit;
     };
-    std::vector<float> table(101);
+    std::vector<float> table(kNoiseTableSamples);
     for (float& value : table) {
         value = static_cast<float>(next_unit() * 2.0 - 1.0);
     }
@@ -83,14 +90,14 @@ inline bool generate_noise_plane(int source_width, int source_height,
     output->resize(cells);
     for (float& value : *output) {
         const float base = static_cast<float>(next_unit());
-        float table_position = static_cast<float>(next_unit() * 100.0 +
+        float table_position = static_cast<float>(next_unit() * kNoisePeriod +
                                                   static_cast<double>(offset));
         // Consume both random draws for every cell, preserving the AEX stream.
         // Undemanded cells are never passed to the sampler: no allocator-adjacent
         // value is fabricated when their signed table index would be invalid.
         if (only_demanded && value == 0.0f) continue;
-        while (table_position >= 100.0f) {
-            table_position -= 100.0f;
+        while (table_position >= kNoisePeriodF32) {
+            table_position -= kNoisePeriodF32;
         }
         const int table_index = static_cast<int>(table_position);
         // Original RVA 37F3/37F8 can read outside the 101-entry table.
@@ -98,12 +105,12 @@ inline bool generate_noise_plane(int source_width, int source_height,
         // for each interpolation endpoint (index -1 still has a valid right).
         const float fraction = table_position - static_cast<float>(table_index);
         float smooth = ucrt_powf(fraction, 2.0f, UCRT_FMA);
-        smooth *= 3.0f - (fraction + fraction);
+        smooth *= kSmoothstepCubic - (fraction + fraction);
         const float interpolated =
             (1.0f - smooth) * read_noise_table(table, table_index) +
             smooth * read_noise_table(table, static_cast<std::int64_t>(table_index) + 1);
         const float combined = static_cast<float>(
-            static_cast<double>(interpolated) * 0.5 +
+            static_cast<double>(interpolated) * kNoiseAmplitude +
             static_cast<double>(base));
         value = combined < 0.0f ? 0.0f : (combined > 1.0f ? 1.0f : combined);
     }

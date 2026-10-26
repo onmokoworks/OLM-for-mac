@@ -10,6 +10,8 @@
 
 namespace olm::dblur::generic {
 
+constexpr int kMaximumStrength = 4000; // AEX parameter declaration: inclusive Strength UI limit.
+
 // Generic DirectionalBlur is still a full-frame renderer.  Keep its public
 // beta geometry bounded to DCI 4K's pixel count in either orientation, while
 // allowing non-video aspect ratios inside the same area envelope.
@@ -209,8 +211,8 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 	                       RenderEstimate *result,
 	                       bool allow_zero_strength = false, bool smart_render = false) noexcept
 {
-	if (!result || effective_front_strength < 0 || effective_front_strength > 4000 ||
-		effective_back_strength < 0 || effective_back_strength > 4000 ||
+	if (!result || effective_front_strength < 0 || effective_front_strength > kMaximumStrength ||
+		effective_back_strength < 0 || effective_back_strength > kMaximumStrength ||
 		(!allow_zero_strength && effective_front_strength == 0 && effective_back_strength == 0)) {
 		return false;
 	}
