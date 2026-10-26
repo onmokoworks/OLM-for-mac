@@ -24,7 +24,7 @@ An unofficial port that lets you use the "OLM Tools" After Effects plugins, orig
 
 ## Compatibility with the Windows version
 
-We develop this port by analyzing the original plugins, aiming for **output that is bit-for-bit identical to the Windows version** for the same footage and settings.
+We develop this port by analyzing the original plugins, aiming for output that is bit-for-bit identical to the Windows version for the same footage and settings.
 
 We compare the original plugin, running in an emulator, with the Mac version across thousands of random combinations of footage, settings, sizes and preview resolutions. In every case the Windows version can render, the outputs match. See [How we verify](docs/BETA_SUPPORT.en.md) for details and [Known limitations](KNOWN_LIMITATIONS.en.md) for what is known not to work.
 
