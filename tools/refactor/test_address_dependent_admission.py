@@ -38,7 +38,11 @@ def main():
         ('olmdirectionalblur', 'mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp', 'static bool PayloadSpan', 'static bool PublicType3Layer16WorldsExact'),
         ('radialblur', 'mac/OLMRadialBlur/OLMRadialBlur.cpp', 'static bool RadialPayloadSpan', 'static bool RadialActiveRowBytes'),
     ]:
-        body = functions(source(path, args.revision), start, end)
+        text = source(path, args.revision)
+        if start not in text:
+            split = 'OLMDirectionalBlur_admission.inc' if plugin == 'olmdirectionalblur' else 'RadialWorldStorage.inc'
+            text = source(str(Path(path).with_name(split)), args.revision)
+        body = functions(text, start, end)
         new = 'size_t pixel_bytes' in body
         helper = 'RadialPayloadsDisjoint' if plugin == 'radialblur' else 'DisjointPayloads'
         call = helper + '(&a, &b' + (', pixel' if new else '') + ')'
