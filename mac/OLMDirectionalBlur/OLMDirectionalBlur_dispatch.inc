@@ -76,14 +76,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				? RenderExact8(input, output, noise_layer, info)
 				: OLM_DIRECTIONAL_REFUSAL("pf8-natural64-unadmitted-source");
 		}
-		if (IsRetainedNeutralBackExact8(input, output, info) &&
-			CanUseExact8(input, output, nullptr, info)) {
-			// Preserve retained actual-AEX raw-callback Back Strength witnesses and
-			// their historical worker-tail partition before the full-height beta.
-			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteRetainedNeutralBackExact);
-			return RenderExact8(input, output, nullptr, info);
-		}
+
 		if (CanUseGenericNeutral8(input, output, info, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
@@ -112,12 +105,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return OLM_DIRECTIONAL_REFUSAL("pf8-feature-unadmitted");
 	}
 	if (bitdepth == 16) {
-		const bool retained_exact = IsRetainedNeutralExact(input, output, info, 16);
-		if (retained_exact) {
-			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteRetainedNeutralBackExact);
-		}
-        if (!retained_exact && IsGenericDeepFeatureShape(info)) {
+        if (IsGenericDeepFeatureShape(info)) {
             if (!GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info, 0, 1.0, smart_render) ||
                 !GenericDeepLayerWorldSafe<PF_Pixel16>(input, output, noise_layer, info))
                 return OLM_DIRECTIONAL_REFUSAL("pf16-feature-world-or-budget");
@@ -130,211 +118,22 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
             return RenderGenericDeepFeatures(input, output, info, 16, noise_layer);
         }
-		if (!retained_exact &&
-			IsGenericNeutralDeepParameters(info) &&
+		if (IsGenericNeutralDeepParameters(info) &&
 			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info, false, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
 			return RenderGenericNeutral16(input, output, info);
 		}
-		if (!retained_exact && IsGenericNeutralShape(info)) {
+		if (IsGenericNeutralShape(info)) {
 			return OLM_DIRECTIONAL_REFUSAL("pf16-neutral-world-or-budget");
 		}
-		const bool front_only_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			(info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
-			info.back_strength == 0);
-		const bool back_family_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			(((info.front_strength == 0 || info.front_strength == 1 ||
-			   info.front_strength == 2 || info.front_strength == 8) &&
-			  info.back_strength == 1) ||
-			 (info.front_strength == 0 &&
-			  (info.back_strength == 2 || info.back_strength == 8))) &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			info.noise_variation == 0.0);
-		const bool pf16_fade_sharp_family_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-			((info.front_strength == 8 && info.back_strength == 0 &&
-			  info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-			  (((info.front_alpha_fade == 0 || info.front_alpha_fade == 50 ||
-			     info.front_alpha_fade == 100) && info.front_sharp_tail == 0.0) ||
-			   (info.front_alpha_fade == 0 &&
-			    (info.front_sharp_tail == 0.0 || info.front_sharp_tail == 50.0 ||
-			     info.front_sharp_tail == 100.0)) ||
-			   ((info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
-			    (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)))) ||
-			 (info.front_strength == 0 && info.back_strength == 8 &&
-			  info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			  (((info.back_alpha_fade == 0 || info.back_alpha_fade == 50 ||
-			     info.back_alpha_fade == 100) && info.back_sharp_tail == 0.0) ||
-			   (info.back_alpha_fade == 0 &&
-			    (info.back_sharp_tail == 0.0 || info.back_sharp_tail == 50.0 ||
-			     info.back_sharp_tail == 100.0)) ||
-			   ((info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
-			    (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0))))));
-		const bool pf16_size_variation_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-			info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
-			info.brightness_gain == 1.0);
-		const bool pf16_size_fade_cross_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			(info.size_variation == 25.0 || info.size_variation == 50.0 ||
-			 info.size_variation == 100.0) &&
-			(info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.front_sharp_tail == 0.0 && info.back_alpha_fade == 0 &&
-			info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool pf16_size_sharp_cross_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.size_variation == 50.0 &&
-			(info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0) &&
-			info.front_alpha_fade == 0 && info.front_strength == 8 &&
-			info.back_strength == 0 && info.back_alpha_fade == 0 &&
-			info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool pf16_size_back_cross_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.front_strength == 0 && info.back_strength == 8 &&
-			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
-			info.brightness_gain == 1.0 &&
-			(((info.size_variation == 25.0 || info.size_variation == 50.0 ||
-			   info.size_variation == 100.0) &&
-			  (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
-			  info.back_sharp_tail == 0.0) ||
-			 (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
-			  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0))));
-		const bool pf16_noise_size_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			(info.size_variation == 0.0 || info.size_variation == 50.0) &&
-			(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
-			(info.noise_type == 2 ||
-			 (info.noise_type == 3 && noise_layer && noise_layer->data &&
-			  noise_layer->width == input->width && noise_layer->height == input->height &&
-			  noise_layer->rowbytes >= input->width * static_cast<A_long>(sizeof(PF_Pixel16)))) &&
-			info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool noise_public_pairwise_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			NoisePublicPairwiseTuple(info, input->width, input->height) &&
-			(info.noise_type != 3 ||
-			 (noise_layer && noise_layer->data && noise_layer->width == input->width &&
-			  noise_layer->height == input->height &&
-			  noise_layer->rowbytes >= input->width * static_cast<A_long>(sizeof(PF_Pixel16))));
-		const bool noise_coefficient_higher_order_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			NoiseCoefficientHigherOrderTuple(info, input->width, input->height);
-		const bool dual_side_higher_order_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			DualSideHigherOrderTuple(info, input->width, input->height);
-		const bool noise_type2_natural64_exact = input && output &&
-			NoiseType2Natural64Tuple(info, input->width, input->height) &&
-			output->width == 64 && output->height == 36 &&
-			Natural64RowbytesSafe(input->rowbytes, sizeof(PF_Pixel16)) &&
-			Natural64RowbytesSafe(output->rowbytes, sizeof(PF_Pixel16)) &&
-			Natural64SourceExact(input, sizeof(PF_Pixel16));
-		const bool pf16_full_exact = pf16_fade_sharp_family_exact ||
-			pf16_size_variation_exact || pf16_size_fade_cross_exact ||
-			pf16_size_sharp_cross_exact || pf16_size_back_cross_exact ||
-			pf16_noise_size_exact || noise_public_pairwise_exact ||
-			noise_coefficient_higher_order_exact || dual_side_higher_order_exact;
-		const bool minimal_exact = input && output && input->data && output->data &&
-			input->width == output->width && input->height == output->height &&
-			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
-			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
-			(info.size_variation == 0.0 || pf16_size_variation_exact ||
-			 pf16_size_fade_cross_exact || pf16_size_sharp_cross_exact ||
-			 pf16_size_back_cross_exact || pf16_noise_size_exact ||
-			 noise_public_pairwise_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(front_only_exact || back_family_exact || pf16_full_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.front_alpha_fade == 0 || pf16_fade_sharp_family_exact ||
-				 pf16_size_fade_cross_exact || noise_public_pairwise_exact ||
-				 noise_coefficient_higher_order_exact || dual_side_higher_order_exact) &&
-			(info.front_sharp_tail == 0.0 || pf16_fade_sharp_family_exact ||
-				 pf16_size_sharp_cross_exact || noise_public_pairwise_exact ||
-				 noise_coefficient_higher_order_exact || dual_side_higher_order_exact) &&
-			(info.back_alpha_fade == 0 || pf16_fade_sharp_family_exact ||
-				 pf16_size_back_cross_exact || noise_public_pairwise_exact ||
-				 noise_coefficient_higher_order_exact || dual_side_higher_order_exact) &&
-			(info.back_sharp_tail == 0.0 || pf16_fade_sharp_family_exact ||
-			 pf16_size_back_cross_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.noise_variation == 0.0 || pf16_noise_size_exact ||
-			 noise_public_pairwise_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact || noise_type2_natural64_exact ||
-			 (info.noise_variation == 100.0 &&
-			  (info.noise_type == 1 || info.noise_type == 2 ||
-			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
-			    noise_layer->width == input->width && noise_layer->height == input->height)) &&
-			  info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
-			  info.front_strength == 8 && info.angle_deg == 45.0)) &&
-			info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
-		if (minimal_exact) {
-			std::vector<std::uint16_t> source, destination;
-			StageDirectionalWorld<PF_Pixel16>(input, &source);
-			destination.resize(source.size());
-			const int result = pf16_full_exact
-				? olm_dblur_full_argb16(
-					source.data(), destination.data(), input->width, input->height,
-					static_cast<int>(info.front_strength), static_cast<int>(info.front_alpha_fade),
-					static_cast<float>(info.front_sharp_tail), static_cast<int>(info.back_strength),
-					static_cast<int>(info.back_alpha_fade), static_cast<float>(info.back_sharp_tail),
-					static_cast<float>(info.size_variation),
-					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
-					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
-					static_cast<std::uint32_t>(info.seed), info.noise_offset,
-					static_cast<float>(info.thickness),
-					info.noise_type == 3 && noise_layer
-						? reinterpret_cast<const std::uint16_t *>(noise_layer->data) : nullptr,
-					info.noise_type == 3 && noise_layer ? static_cast<int>(noise_layer->rowbytes) : 0,
-					dual_side_higher_order_exact ? 1 : 0)
-				: info.noise_type == 3
-				? olm_dblur_minimal_layer_argb16(
-					source.data(), destination.data(), input->width, input->height,
-					static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
-					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
-					static_cast<float>(info.noise_variation),
-					reinterpret_cast<const std::uint16_t *>(noise_layer->data),
-					static_cast<int>(noise_layer->rowbytes))
-				: olm_dblur_minimal_argb16(
-					source.data(), destination.data(), input->width, input->height,
-					static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
-					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
-					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
-					static_cast<std::uint32_t>(info.seed), info.noise_offset,
-					static_cast<float>(info.thickness));
-			if (result != 0) return OLM_DIRECTIONAL_CORE_ERROR(result);
-			UnstageDirectionalWorld<PF_Pixel16>(destination, output);
-			return PF_Err_NONE;
-		}
+
 		// Do not make a missing PF16 port look like a successful identity
 		// render. Extend the predicate only with an actual-AEX byte oracle.
 		return OLM_DIRECTIONAL_REFUSAL("pf16-unadmitted-profile");
 	}
 	if (bitdepth == 32) {
-		const bool retained_exact = IsRetainedNeutralExact(input, output, info, 32);
-		if (retained_exact) {
-			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteRetainedNeutralBackExact);
-		}
-        if (!retained_exact && IsGenericDeepFeatureShape(info)) {
+        if (IsGenericDeepFeatureShape(info)) {
             // First reserve the complete workspace using unamplified Strength,
             // before reading even a potentially invalid Layer payload.
             if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, 1.0, smart_render) ||
@@ -348,8 +147,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
             return RenderGenericDeepFeatures(input, output, info, 32, noise_layer);
         }
-		if (!retained_exact &&
-			IsGenericNeutralDeepParameters(info) &&
+		if (IsGenericNeutralDeepParameters(info) &&
 			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info, false, smart_render)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
@@ -359,205 +157,13 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			return (smart_render || GenericPF32FiniteInput(input))
 				? RenderGenericNeutral32(input, output, info) : OLM_DIRECTIONAL_REFUSAL("pf32-neutral-nonfinite-input");
 		}
-		if (!retained_exact && IsGenericNeutralShape(info)) {
+		if (IsGenericNeutralShape(info)) {
 			return OLM_DIRECTIONAL_REFUSAL("pf32-neutral-world-or-budget");
 		}
-		const bool front_alpha_fade_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			info.front_alpha_fade >= 0 && info.front_alpha_fade <= 100 &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.size_variation == 0.0 && info.angle_deg == 45.0 &&
-			info.brightness_gain == 1.0 && info.noise_variation == 0.0);
-		const bool front_fade_size_combination_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.front_alpha_fade > 0 && info.front_alpha_fade <= 100 &&
-			info.size_variation > 0.0 && info.size_variation <= 100.0 &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			info.noise_variation == 0.0);
-		const bool size_noise_type1_combination_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			(info.size_variation == 0.0 || info.size_variation == 25.0 ||
-			 info.size_variation == 100.0) &&
-			(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
-			info.noise_type == 1 && info.seed == 1 && info.noise_offset == 0 &&
-			info.thickness == 3.0 && info.front_strength == 8 &&
-			info.back_strength == 0 && info.front_alpha_fade == 0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool fade_noise_type1_combination_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			(info.front_alpha_fade == 0 || info.front_alpha_fade == 50 ||
-			 info.front_alpha_fade == 100) &&
-			(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
-			info.noise_type == 1 && info.seed == 1 && info.noise_offset == 0 &&
-			info.thickness == 3.0 && info.front_strength == 8 &&
-			info.back_strength == 0 && info.size_variation == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool sharp_back_family_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			((info.front_strength == 8 && info.back_strength == 0 &&
-			  (info.front_sharp_tail == 0.0 || info.front_sharp_tail == 50.0 ||
-			   info.front_sharp_tail == 100.0) &&
-			  (info.front_alpha_fade == 0 || info.front_alpha_fade == 50 ||
-			   info.front_alpha_fade == 100) && info.back_alpha_fade == 0 &&
-			  info.back_sharp_tail == 0.0) ||
-			 (info.front_strength == 0 && info.back_strength == 8 &&
-			  info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			  (((info.back_alpha_fade == 0 || info.back_alpha_fade == 50 ||
-			     info.back_alpha_fade == 100) && info.back_sharp_tail == 0.0) ||
-			   (info.back_alpha_fade == 0 &&
-			    (info.back_sharp_tail == 0.0 || info.back_sharp_tail == 50.0 ||
-			     info.back_sharp_tail == 100.0)) ||
-			   ((info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
-			    (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0))))));
-		const bool pf32_noise_size_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output && input->width == 16 && input->height == 16 &&
-			output->width == 16 && output->height == 16 &&
-			(info.size_variation == 0.0 || info.size_variation == 50.0) &&
-			(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
-			(info.noise_type == 2 ||
-			 (info.noise_type == 3 && noise_layer && noise_layer->data &&
-			  noise_layer->width == input->width && noise_layer->height == input->height &&
-			  noise_layer->rowbytes >= input->width * static_cast<A_long>(sizeof(PF_PixelFloat)))) &&
-			info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
-			info.front_strength == 8 && info.back_strength == 0 &&
-			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-			info.angle_deg == 45.0 && info.brightness_gain == 1.0);
-		const bool noise_public_pairwise_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			NoisePublicPairwiseTuple(info, input->width, input->height) &&
-			(info.noise_type != 3 ||
-			 (noise_layer && noise_layer->data && noise_layer->width == input->width &&
-			  noise_layer->height == input->height &&
-			  noise_layer->rowbytes >= input->width * static_cast<A_long>(sizeof(PF_PixelFloat))));
-		const bool noise_coefficient_higher_order_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			NoiseCoefficientHigherOrderTuple(info, input->width, input->height);
-		const bool dual_side_higher_order_exact = input && output &&
-			output->width == input->width && output->height == input->height &&
-			DualSideHigherOrderTuple(info, input->width, input->height);
-		const bool noise_type2_natural64_exact = input && output &&
-			NoiseType2Natural64Tuple(info, input->width, input->height) &&
-			output->width == 64 && output->height == 36 &&
-			Natural64RowbytesSafe(input->rowbytes, sizeof(PF_PixelFloat)) &&
-			Natural64RowbytesSafe(output->rowbytes, sizeof(PF_PixelFloat)) &&
-			Natural64SourceExact(input, sizeof(PF_PixelFloat));
-		const bool pf32_size_coeff_cross_exact = OLM_DIRECTIONAL_FIXTURE_PATHS && (
-			input && output &&
-			((input->width == 16 && input->height == 16) ||
-			 (input->width == 32 && input->height == 18)) &&
-			output->width == input->width && output->height == input->height &&
-			info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
-			info.brightness_gain == 1.0 &&
-			((info.front_strength == 8 && info.back_strength == 0 &&
-			  info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-			  (((info.size_variation == 25.0 || info.size_variation == 50.0 ||
-			     info.size_variation == 100.0) &&
-			    (info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
-			    info.front_sharp_tail == 0.0) ||
-			   (info.size_variation == 50.0 && info.front_alpha_fade == 0 &&
-			    (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)))) ||
-			 (info.front_strength == 0 && info.back_strength == 8 &&
-			  info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			  (((info.size_variation == 25.0 || info.size_variation == 50.0 ||
-			     info.size_variation == 100.0) &&
-			    (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
-			    info.back_sharp_tail == 0.0) ||
-			   (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
-			    (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0))))));
-		const bool minimal_exact = input && output && input->data && output->data &&
-			input->width == output->width && input->height == output->height &&
-			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
-			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
-			((info.size_variation == 0.0 &&
-			  ((info.front_strength == 1 || info.front_strength == 2) ||
-			   (info.front_strength == 0 && info.back_strength == 1) ||
-			   (info.front_strength == 8 && info.back_strength == 0))) ||
-			 (info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
-			  info.front_strength == 8 &&
-			  info.back_strength == 0) || sharp_back_family_exact ||
-			 pf32_noise_size_exact || pf32_size_coeff_cross_exact ||
-			 noise_public_pairwise_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.front_alpha_fade == 0 || front_alpha_fade_exact ||
-			 front_fade_size_combination_exact || fade_noise_type1_combination_exact ||
-			 pf32_size_coeff_cross_exact || noise_public_pairwise_exact ||
-			 noise_coefficient_higher_order_exact || dual_side_higher_order_exact) &&
-			 (info.front_sharp_tail == 0.0 || sharp_back_family_exact ||
-			 pf32_size_coeff_cross_exact || noise_public_pairwise_exact ||
-			 noise_coefficient_higher_order_exact || dual_side_higher_order_exact) &&
-			((info.back_strength == 0 || info.back_strength == 1) || sharp_back_family_exact ||
-			 pf32_size_coeff_cross_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.back_alpha_fade == 0 || sharp_back_family_exact ||
-			 pf32_size_coeff_cross_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.back_sharp_tail == 0.0 || sharp_back_family_exact ||
-			 pf32_size_coeff_cross_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact) &&
-			(info.noise_variation == 0.0 || size_noise_type1_combination_exact ||
-			 fade_noise_type1_combination_exact ||
-			 pf32_noise_size_exact || noise_public_pairwise_exact ||
-			 noise_coefficient_higher_order_exact || dual_side_higher_order_exact ||
-			 noise_type2_natural64_exact ||
-			 (info.noise_variation == 100.0 &&
-			  (info.noise_type == 1 || info.noise_type == 2 ||
-			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
-			    noise_layer->width == input->width && noise_layer->height == input->height)) &&
-			  info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
-			  info.front_strength == 8 && info.back_strength == 0 &&
-			  info.size_variation == 0.0 && info.angle_deg == 45.0)) &&
-			info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
-		if (minimal_exact) {
-			std::vector<float> source, destination;
-			StageDirectionalWorld<PF_PixelFloat>(input, &source);
-			destination.resize(source.size());
-			const float *layer_data = info.noise_type == 3 && noise_layer
-				? reinterpret_cast<const float *>(noise_layer->data) : nullptr;
-			const int layer_rowbytes = info.noise_type == 3 && noise_layer
-				? static_cast<int>(noise_layer->rowbytes) : 0;
-			const int result = sharp_back_family_exact || pf32_size_coeff_cross_exact ||
-				noise_public_pairwise_exact || noise_coefficient_higher_order_exact ||
-				dual_side_higher_order_exact
-				? olm_dblur_full_argb32(source.data(), destination.data(),
-					input->width, input->height, static_cast<int>(info.front_strength),
-					static_cast<int>(info.front_alpha_fade), static_cast<float>(info.front_sharp_tail),
-					static_cast<int>(info.back_strength), static_cast<int>(info.back_alpha_fade),
-					static_cast<float>(info.back_sharp_tail), static_cast<float>(info.size_variation),
-					static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
-					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
-					static_cast<std::uint32_t>(info.seed), info.noise_offset,
-					static_cast<float>(info.thickness), layer_data, layer_rowbytes,
-					dual_side_higher_order_exact ? 1 : 0)
-				: info.front_alpha_fade == 0
-				? olm_dblur_minimal_argb32(source.data(), destination.data(),
-					input->width, input->height, static_cast<int>(info.front_strength),
-					static_cast<int>(info.back_strength), static_cast<float>(info.size_variation),
-					static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
-					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
-					static_cast<std::uint32_t>(info.seed), info.noise_offset,
-					static_cast<float>(info.thickness), layer_data, layer_rowbytes)
-				: olm_dblur_minimal_fade_argb32(source.data(), destination.data(),
-					input->width, input->height, static_cast<int>(info.front_strength),
-					static_cast<int>(info.back_strength), static_cast<int>(info.front_alpha_fade),
-					static_cast<float>(info.size_variation), static_cast<float>(info.angle_deg),
-					static_cast<float>(info.brightness_gain), static_cast<float>(info.noise_variation),
-					static_cast<int>(info.noise_type), static_cast<std::uint32_t>(info.seed),
-					info.noise_offset, static_cast<float>(info.thickness), layer_data, layer_rowbytes);
-			if (result != 0) return OLM_DIRECTIONAL_CORE_ERROR(result);
-			UnstageDirectionalWorld<PF_PixelFloat>(destination, output);
-			return PF_Err_NONE;
-		}
+
 		// Do not make a missing PF32 port look like a successful identity
 		// render. Extend the predicate only with an actual-AEX byte oracle.
 		return OLM_DIRECTIONAL_REFUSAL("pf32-unadmitted-profile");
 	}
 	return OLM_DIRECTIONAL_REFUSAL("unsupported-depth");
 }
-
