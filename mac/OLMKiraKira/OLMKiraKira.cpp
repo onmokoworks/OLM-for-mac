@@ -1933,18 +1933,18 @@ static bool IsGenericBetaTupleForGeometry(
 
 static bool WorldStorageRangesDoNotOverlap(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output);
+	const PF_EffectWorld *output, size_t pixel_size);
 
 static bool IsGenericBetaClassicLayout(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output)
+	const PF_EffectWorld *output, size_t pixel_size)
 {
 	return input && output &&
 		IsGenericBetaFullFrameDimensions(input->width, input->height) &&
 		input->width == output->width && input->height == output->height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
 		output->origin_x == 0 && output->origin_y == 0 &&
-		WorldStorageRangesDoNotOverlap(input, output);
+		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
 }
 
 static bool IsMode3Closure32x18Tuple(const OLMKiraKiraInfo &info)
@@ -2649,7 +2649,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		!exact_closure &&
 		(IsGenericBetaTupleForGeometry(info, input->width, input->height) ||
 		 IsAlphaBoxTuple(info, format)) &&
-		IsGenericBetaClassicLayout(input, output) &&
+		IsGenericBetaClassicLayout(input, output, PixelSizeForFormat(format)) &&
 		GenericBetaInputIsFiniteSDR(input, format);
 	KiraDiagnosticLog("classic admission exact=%d generic=%d family=%d",
 		(int)exact_closure, (int)generic_beta, (int)source_family);
@@ -2732,17 +2732,14 @@ static bool WorldHasFullSmartClosureExtent(const PF_EffectWorld *world)
 
 static bool WorldStorageRangesDoNotOverlap(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output)
+	const PF_EffectWorld *output, size_t pixel_size)
 {
-	if (!input || !output || !input->data || !output->data ||
-		input->rowbytes <= 0 || output->rowbytes <= 0 ||
-		input->height <= 0 || output->height <= 0) {
-		return false;
-	}
-	const uint64_t input_span = static_cast<uint64_t>(input->rowbytes) *
-		static_cast<uint64_t>(input->height);
-	const uint64_t output_span = static_cast<uint64_t>(output->rowbytes) *
-		static_cast<uint64_t>(output->height);
+    if (!WorldLayoutIsSafe(input, pixel_size) || !WorldLayoutIsSafe(output, pixel_size))
+        return false;
+    const uint64_t input_span = static_cast<uint64_t>(input->rowbytes) *
+        static_cast<uint64_t>(input->height - 1) + static_cast<uint64_t>(input->width) * pixel_size;
+    const uint64_t output_span = static_cast<uint64_t>(output->rowbytes) *
+        static_cast<uint64_t>(output->height - 1) + static_cast<uint64_t>(output->width) * pixel_size;
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
 	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
 	if (input_span > static_cast<uint64_t>(UINTPTR_MAX - input_begin) ||
@@ -2776,19 +2773,19 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 		WorldLayoutIsSafe(input, pixel_size) && WorldLayoutIsSafe(output, pixel_size) &&
 		input->world_flags == expected_world_flags &&
 		output->world_flags == expected_world_flags &&
-		WorldStorageRangesDoNotOverlap(input, output);
+		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
 }
 
 // The AEX writer uses source-width row strides and output-width/height loops
 // (18114de30..18114df58); world origins and content extents are not read.
 static bool SmartWorldPairHasBoundedOutput(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output)
+	const PF_EffectWorld *output, size_t pixel_size)
 {
 	return input && output &&
 		IsSmartOwnerFullFrameDimensions(input->width, input->height) &&
 		output->width <= input->width && output->height <= input->height &&
-		WorldStorageRangesDoNotOverlap(input, output);
+		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
 }
 
 static void UnionSmartRect(const PF_LRect &source, PF_LRect &destination)
@@ -2935,7 +2932,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
 		const bool generic_world_layout = pre &&
-			SmartWorldPairHasBoundedOutput(input_world, output_world);
+			SmartWorldPairHasBoundedOutput(input_world, output_world, PixelSizeForFormat(format));
 		KiraDiagnosticLog(
 			"smart layout pre_classic=%d pre_mode3_32=%d pre_generic=%d exact=%d generic=%d pre=%gx%g",
 			(int)pre_is_classic, (int)pre_is_mode3_32x18,

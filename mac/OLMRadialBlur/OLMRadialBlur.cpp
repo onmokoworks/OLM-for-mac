@@ -4736,7 +4736,7 @@ static bool RequiresNoiseLayer(const OLMRadialBlurInfo &info)
 
 static bool RadialPayloadsDisjoint(
 	const PF_EffectWorld *first,
-	const PF_EffectWorld *second);
+	const PF_EffectWorld *second, size_t pixel_bytes);
 
 static PF_Err ValidateNoiseLayerWorld(const PF_EffectWorld *noise_world, short bitdepth)
 {
@@ -4869,7 +4869,7 @@ static PF_Err RenderRadialNoOpCopy(PF_EffectWorld *input, PF_EffectWorld *output
 		input->rowbytes <= 0 || output->rowbytes <= 0 ||
 		active > static_cast<std::size_t>(input->rowbytes) ||
 		active > static_cast<std::size_t>(output->rowbytes) ||
-		!RadialPayloadsDisjoint(input, output)) return OLM_RADIAL_REFUSAL("noop-copy-layout");
+		!RadialPayloadsDisjoint(input, output, bitdepth / 8 * 4)) return OLM_RADIAL_REFUSAL("noop-copy-layout");
 	// Copy bytes to preserve high-depth values, signed zero and NaN payloads.
 	// No polar planes, float arithmetic, alignment or Blur work budget is used.
 	for (A_long y = 0; y < input->height; ++y)
@@ -4892,8 +4892,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	if (RequiresNoiseLayer(info)) {
 		PF_Err noise_err = ValidateNoiseLayerWorld(noise_world, bitdepth);
 		if (noise_err) return noise_err;
-		if (!RadialPayloadsDisjoint(input, noise_world) ||
-			!RadialPayloadsDisjoint(output, noise_world)) return OLM_RADIAL_REFUSAL("noise-payload-overlap");
+		if (!RadialPayloadsDisjoint(input, noise_world, bitdepth / 8 * 4) ||
+			!RadialPayloadsDisjoint(output, noise_world, bitdepth / 8 * 4)) return OLM_RADIAL_REFUSAL("noise-payload-overlap");
 		// Only the exact-source 9x7 Zoom/NV25 tuple is admitted below. Every
 		// other Type-3 layer state remains fail-closed in RenderZoomTyped.
 		if (info.blur_type != 1) return OLM_RADIAL_REFUSAL("type3-nonzoom");
@@ -5419,14 +5419,18 @@ typedef struct {
 
 static bool RadialPayloadSpan(const PF_EffectWorld *world,
 	                          std::uintptr_t *begin,
-	                          std::uintptr_t *end)
+	                          std::uintptr_t *end, size_t pixel_bytes)
 {
 	if (!world || !world->data || !begin || !end || world->rowbytes <= 0 ||
-		world->height <= 0) return false;
+		world->height <= 0 || world->width <= 0 || !pixel_bytes) return false;
 	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
 	const std::size_t height = static_cast<std::size_t>(world->height);
-	if (rowbytes > std::numeric_limits<std::size_t>::max() / height) return false;
-	const std::size_t bytes = rowbytes * height;
+    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
+        return false;
+    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
+    if (active > rowbytes || height - 1 >
+        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
+    const size_t bytes = (height - 1) * rowbytes + active;
 	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
 	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) return false;
 	*begin = first;
@@ -5435,11 +5439,11 @@ static bool RadialPayloadSpan(const PF_EffectWorld *world,
 }
 
 static bool RadialPayloadsDisjoint(const PF_EffectWorld *first,
-	                               const PF_EffectWorld *second)
+	                               const PF_EffectWorld *second, size_t pixel_bytes)
 {
 	std::uintptr_t first_begin = 0, first_end = 0, second_begin = 0, second_end = 0;
-	return RadialPayloadSpan(first, &first_begin, &first_end) &&
-		RadialPayloadSpan(second, &second_begin, &second_end) &&
+	return RadialPayloadSpan(first, &first_begin, &first_end, pixel_bytes) &&
+		RadialPayloadSpan(second, &second_begin, &second_end, pixel_bytes) &&
 		(first_end <= second_begin || second_end <= first_begin);
 }
 
@@ -5666,9 +5670,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			output_world->width > input_world->width || output_world->height > input_world->height))
 			err = OLM_RADIAL_REFUSAL("smartrender-world-bounds");
 
-		if (!err && (!RadialPayloadsDisjoint(input_world, output_world) ||
-			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world) ||
-			                 !RadialPayloadsDisjoint(output_world, noise_world))))) {
+		if (!err && (!RadialPayloadsDisjoint(input_world, output_world, extra->input->bitdepth / 8 * 4) ||
+			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world, extra->input->bitdepth / 8 * 4) ||
+			                 !RadialPayloadsDisjoint(output_world, noise_world, extra->input->bitdepth / 8 * 4))))) {
 			err = OLM_RADIAL_REFUSAL("smartrender-payload-overlap");
 		}
 		for (int i = 1; !err && i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
@@ -5742,7 +5746,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				err = OLM_RADIAL_ERROR("smartrender-generic-budget", PF_Err_OUT_OF_MEMORY);
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
-			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end) ||
+			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end, extra->input->bitdepth / 8 * 4) ||
 				!RadialActiveRowBytes(extra->input->bitdepth, output_world->width,
 				                          &active_row_bytes) ||
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes))) {

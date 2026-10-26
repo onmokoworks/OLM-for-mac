@@ -463,18 +463,21 @@ static bool ExactExtent32x18(const PF_EffectWorld *world)
 
 static bool PayloadSpan(const PF_EffectWorld *world,
 	                    std::uintptr_t *begin,
-	                    std::uintptr_t *end)
+	                    std::uintptr_t *end, size_t pixel_bytes)
 {
 	if (!world || !world->data || !begin || !end || world->rowbytes <= 0 ||
-		world->height <= 0) {
+		world->height <= 0 || world->width <= 0 || !pixel_bytes) {
 		return false;
 	}
 	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
 	const std::size_t height = static_cast<std::size_t>(world->height);
-	if (rowbytes > std::numeric_limits<std::size_t>::max() / height) {
-		return false;
-	}
-	const std::size_t bytes = rowbytes * height;
+    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
+        return false;
+    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
+    if (active > rowbytes || height - 1 >
+        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
+    // A checkout can end at the last pixel, before the stride's trailing pad.
+    const size_t bytes = (height - 1) * rowbytes + active;
 	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
 	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) {
 		return false;
@@ -485,12 +488,12 @@ static bool PayloadSpan(const PF_EffectWorld *world,
 }
 
 static bool DisjointPayloads(const PF_EffectWorld *first,
-	                         const PF_EffectWorld *second)
+	                         const PF_EffectWorld *second, size_t pixel_bytes)
 {
 	std::uintptr_t first_begin = 0, first_end = 0;
 	std::uintptr_t second_begin = 0, second_end = 0;
-	return PayloadSpan(first, &first_begin, &first_end) &&
-		PayloadSpan(second, &second_begin, &second_end) &&
+	return PayloadSpan(first, &first_begin, &first_end, pixel_bytes) &&
+		PayloadSpan(second, &second_begin, &second_end, pixel_bytes) &&
 		(first_end <= second_begin || second_end <= first_begin);
 }
 
@@ -504,9 +507,9 @@ static bool PublicType3Layer16WorldsExact(const PF_EffectWorld *input,
 		output->width != 16 || output->height != 16 ||
 		noise_layer->width != 16 || noise_layer->height != 16 ||
 		!ExactExtent16(input) || !ExactExtent16(output) ||
-		!ExactExtent16(noise_layer) || !DisjointPayloads(input, output) ||
-		!DisjointPayloads(input, noise_layer) ||
-		!DisjointPayloads(output, noise_layer)) {
+		!ExactExtent16(noise_layer) || !DisjointPayloads(input, output, bitdepth / 8 * 4) ||
+		!DisjointPayloads(input, noise_layer, bitdepth / 8 * 4) ||
+		!DisjointPayloads(output, noise_layer, bitdepth / 8 * 4)) {
 		return false;
 	}
 	std::size_t pixel_size = 0;
@@ -555,7 +558,7 @@ static bool PublicDualSideType2WorldsExact(const PF_EffectWorld *input,
 {
 	if (!input || !output || !input->data || !output->data ||
 		input->width != output->width || input->height != output->height ||
-		!DisjointPayloads(input, output)) {
+		!DisjointPayloads(input, output, bitdepth / 8 * 4)) {
 		return false;
 	}
 	const bool geometry32 = input->width == 32 && input->height == 18 &&
@@ -1393,8 +1396,8 @@ static bool GenericDeepLayerWorldSafe(const PF_EffectWorld *input,
         DirectionalWorldHasZeroOrigin(layer, 0) &&
         layer->rowbytes > 0 && static_cast<std::size_t>(layer->rowbytes) >=
             static_cast<std::size_t>(input->width) * sizeof(PixelT) &&
-        PayloadSpan(layer, &begin, &end) && DisjointPayloads(input, layer) &&
-        DisjointPayloads(output, layer);
+        PayloadSpan(layer, &begin, &end, sizeof(PixelT)) && DisjointPayloads(input, layer, sizeof(PixelT)) &&
+        DisjointPayloads(output, layer, sizeof(PixelT));
 }
 
 static PF_Err RenderGenericDeepFeatures(PF_EffectWorld *input, PF_EffectWorld *output,
@@ -1476,7 +1479,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
             (bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
         if (!input || !output || input->width <= 0 || input->height <= 0 ||
             input->width != output->width || input->height != output->height ||
-            !PayloadSpan(input, &begin, &end) || !PayloadSpan(output, &begin, &end) ||
+            !PayloadSpan(input, &begin, &end, pixel_size) || !PayloadSpan(output, &begin, &end, pixel_size) ||
             static_cast<std::size_t>(input->width) * pixel_size > static_cast<std::size_t>(input->rowbytes) ||
             static_cast<std::size_t>(output->width) * pixel_size > static_cast<std::size_t>(output->rowbytes))
             return OLM_DIRECTIONAL_REFUSAL("deep-copy-world");
@@ -2564,10 +2567,10 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		}
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 		if (!err && !output_world) err = OLM_DIRECTIONAL_REFUSAL("smart-output-missing");
-		if (!err && (!DisjointPayloads(input_world, output_world) ||
+		if (!err && (!DisjointPayloads(input_world, output_world, extra->input->bitdepth / 8 * 4) ||
 			(extra->input->bitdepth == 8 && noise_world &&
-                (!DisjointPayloads(input_world, noise_world) ||
-                 !DisjointPayloads(output_world, noise_world))))) {
+                (!DisjointPayloads(input_world, noise_world, extra->input->bitdepth / 8 * 4) ||
+                 !DisjointPayloads(output_world, noise_world, extra->input->bitdepth / 8 * 4))))) {
 			err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
 		}
 		if (!err) {
@@ -2627,7 +2630,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				    input_row_bytes > static_cast<std::size_t>(input_world->rowbytes) ||
 				    output_world->width > input_world->width ||
 				    output_world->height > input_world->height ||
-				    !PayloadSpan(input_world, &begin, &end)) {
+				    !PayloadSpan(input_world, &begin, &end, extra->input->bitdepth / 8 * 4)) {
 					err = OLM_DIRECTIONAL_REFUSAL("smart-workspace-span");
 				} else {
 					workspace = *input_world;
@@ -2651,7 +2654,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				}
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
-			if (!PayloadSpan(render_world, &output_begin, &output_end) ||
+			if (!PayloadSpan(render_world, &output_begin, &output_end, extra->input->bitdepth / 8 * 4) ||
 				!DirectionalActiveRowBytes(extra->input->bitdepth, render_world->width,
 				                           &render_row_bytes) ||
 				render_row_bytes > static_cast<std::size_t>(render_world->rowbytes)) {

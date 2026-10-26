@@ -368,8 +368,8 @@ static PF_Err ValidateToonBetaAdmission(
 			static_cast<size_t>(output->rowbytes)) {
 		return OLM_TOON_ERROR("beta-span-overflow", PF_Err_OUT_OF_MEMORY);
 	}
-	const size_t input_span = input_height * static_cast<size_t>(input->rowbytes);
-	const size_t staged_span = output_height * static_cast<size_t>(output->rowbytes);
+	const size_t input_span = (input_height - 1) * static_cast<size_t>(input->rowbytes) + input_active_rowbytes;
+	const size_t staged_span = (output_height - 1) * static_cast<size_t>(output->rowbytes) + output_active_rowbytes;
 	if (!ToonWorldRangesDoNotOverlap(input, output, input_span, staged_span))
 		return OLM_TOON_ERROR("beta-overlap", PF_Err_BAD_CALLBACK_PARAM);
 	*output_span = staged_span;
