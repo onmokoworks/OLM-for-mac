@@ -1,0 +1,626 @@
+{
+  "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+  "changed_source_sha256": {
+    "mac/ColorKeep/ColorKeep.cpp": "2deadfbd4adfef533b3a4b84ec5017702d35fae9dc0a9374df5931eaad5379c8",
+    "mac/OLMColorKey/Render.inc": "01655e19612d35372ed8a07e89d5685f72412f2a9e5d3482bd2e11c0a73ca1af",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_admission.inc": "19f6da6d9bb4638374de512ce06c8c74f1e45ff7679bb9cc1891fa138ac03931",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_dispatch.inc": "017a24a60607ebbc32087b9a643f170a80597753f2bdae3631508b5fce11ffca",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_host.inc": "ef8cfccb8bc0007176c4533ec1ed1cab0b131e936d845d3c657441633bc80fa7",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_kernels.inc": "33f845e12026ccefa9c1220a2147d1bdddf8142c94e6bd15e94a40577f45f704",
+    "mac/OLMKiraKira/OLMKiraKira.cpp": "650e644852ce0cac9e7440f0ae14614eb8e589b14744ae65092c6608a98384ec",
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "b8247e42e603f8fcf88e5ce332e2d8c02901a5dcd5f4f1ddf67bc6f159c7cc66",
+    "mac/OLMRadialBlur/RadialLayerCompose.inc": "82e0dbd0574e9517f9c808796700539626674d19a5931c4438179c8a009d0c5b",
+    "mac/OLMRadialBlur/RadialWorldStorage.inc": "6195ee647d73fc0c75196fbf886ee452e06c4c3f9be11880f0aae7bebf8fddec",
+    "mac/OLMToonDilate/OLMToonDilate.cpp": "c3287d5237955a348142a440ea47aced73271952e70bb5ac8ceba97bb64ddf31",
+    "tools/refactor/reproduce_B01.py": "da643bff70bb522f1d9baefa422ace7159a9b24f866257ad3033218c39cf9742",
+    "tools/refactor/test_address_dependent_admission.py": "282d15512c64969d558efcb9fde6ff706e570a6e5a936b26c9392fe3ba209afb"
+  },
+  "corpus": {
+    "colorkeep": {
+      "cases": 203,
+      "first_mismatch": null,
+      "matches_saved": 203,
+      "results_sha256": "b08185ded1a71a8c4b63dfb475c8f580a3c5351ed3661fc558366a66d6b6bcdd",
+      "routes": 406
+    },
+    "olmcolorkey": {
+      "cases": 51,
+      "first_mismatch": null,
+      "matches_saved": 51,
+      "results_sha256": "e3655f0e6591e86d616ab83c226f25c628784f53acae0b830a47b913048ed710",
+      "routes": 102
+    },
+    "olmdirectionalblur": {
+      "cases": 106,
+      "first_mismatch": null,
+      "matches_saved": 106,
+      "results_sha256": "efe851a89e968fa6d2731282e705a225a3c79064a8c127e8f364e4c912567a69",
+      "routes": 212
+    },
+    "olmkirakira": {
+      "cases": 12,
+      "first_mismatch": null,
+      "matches_saved": 12,
+      "results_sha256": "42683c39325e68a08efd98881a23e1b7f2c3ba250072fd0ad67b2a485bf30704",
+      "routes": 24
+    },
+    "olmtoondilate": {
+      "cases": 303,
+      "first_mismatch": null,
+      "matches_saved": 303,
+      "results_sha256": "bf9486d1763f10d9d1506011d9c73983d89d4adac715d67fdd876b0649235733",
+      "routes": 606
+    },
+    "radialblur": {
+      "cases": 71,
+      "first_mismatch": null,
+      "matches_saved": 71,
+      "results_sha256": "e4391082f78b10a3b3992b7020c498d75fb41f93e45cefa08ab211a723de2b08",
+      "routes": 142
+    }
+  },
+  "first_mismatch": null,
+  "native": {
+    "colorkeep": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "3ca8d9ef37cb605bd3d4b9aacc139f545e11abc7815e9c922acc6cf484245526",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "9f810a7f71b0ce4e52d10387b4e261cbff22d7b2ef812861375af16bd618ec3e",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "3ca8d9ef37cb605bd3d4b9aacc139f545e11abc7815e9c922acc6cf484245526",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "9f810a7f71b0ce4e52d10387b4e261cbff22d7b2ef812861375af16bd618ec3e",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "34282e9ad3a5528d668460f2bb9110ff5412fb901e5dacc00d8d43d79ae34e07",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "7dffb8b46b3c92407d45406088b7a6407c59847b823d513a5d66b77f4c17f26b",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "34282e9ad3a5528d668460f2bb9110ff5412fb901e5dacc00d8d43d79ae34e07",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "7dffb8b46b3c92407d45406088b7a6407c59847b823d513a5d66b77f4c17f26b",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 12012,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 0
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "colorkeep",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "olmcolorkey": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "57ad330cedc6b0c13844cedcc8a23a8dafb126cb22766340b5ce18390dae4bb1",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "da3460f42e90edf820f56d2a3658e4768c38fab848da37b25d03f8ee15884cf8",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "3057e318d61d1783565786820feccc480d71345576d65f8adbaf86c719e69301",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "81521f2e3c9366935cfac7dbc5c38917d3a47c4b3d1538dccb5ed442c201a619",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "6c3fd9ece3402ac180340b1cd93243dc4041b385905df112b3835337d7e32d79",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "5c74bf1db241df6084c60ccf9b36b31515d88d89dd6d1bec2aae7bf866b89c71",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "c679307bf49182156efc327cc89cd1df846b9f9a8bde41e9422e76e28d837c11",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "8680d04b98c5250c4c463875d9aa58209cd59724e04caa775efc2262390af344",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 12012,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 0
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "olmcolorkey",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "e5ca0bff50e8db4acbd04c088db99fcdcdcdd0f39909063902e78710e417f583"
+    },
+    "olmdirectionalblur": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "e5bb7a535c655c0502f1cc64db76284e2462cd06a4a5759740e4409c34664759",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "e77fcb271e5e6b747bf5a6488a9aff8244e7f6818892dbaab0238567e7b52288",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "0fb1c6f88ce9d09516e84201f70c9dd8c69fde491cf6f868a30b7882adfbbfe8",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "e626ac02a85cf55471de960883938d480b7c39907fd7cd9be73e93bd61ababa7",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "49a2c6457a12d1ed79b21889b769b0119651dd23ab05bb91ccd5d25b93b88081",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "76fceaef6d732b60d657aab048ee5e89c025274bb0ee4d3de142ffb17a114a76",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "b494c3747a303a854fd8e4e96d073062e73de7144e8b75c2362dfd928f671b23",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "3682f58ff8ea6a42747852f4102feef79cc3c0d515003b562c3926e005beb980",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 12012,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 0
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "olmdirectionalblur",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "e5ca0bff50e8db4acbd04c088db99fcdcdcdd0f39909063902e78710e417f583"
+    },
+    "olmkirakira": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "bce58fee0538853bae6721c015fd823cf5ce0ee0387437f836ab64b6ed038c0b",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "c06b74156de9f49768767902f1c05b3db89a8cff91543f237d079722018e5dce",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "60cf172717206daeb3fedfdb9a2736579fd37fd8911b663ebbc21be8f2d5c092",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "6e3f943403f39dbe52f622facf9008dcbb615d6f56f92c4b13c5b77293de85a9",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "7ff60b920b53285b1dbf0f04556e7008bacd7623857fc94656108347747d4f05",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "8a459823c2c5d7d8ed963f3a5d19ee4d591caa2836c71e5ebcd70a9ae4339e68",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "b4f092a1321c252931b035e753a4dd2f29e8cacec6833d46ea4b0643cc395921",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "968535ebf1cbe5b6cc35ff98dfe8cc6f39de7b10e03787c1cda55d097f93f4f8",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 11712,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 300
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "olmkirakira",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "8316c27672e5690c7dc2c9c57f3185cf269317ef179b05d156b7d5f478523af2"
+    },
+    "olmtoondilate": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "e59b38a75d956422ccf26bd0d5eb6bf70a6a15fe1127be02d7306c44a8700a61",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "7600f4323b610f507ebb6a31e5e0de772295593b27e1fb95b1c4b57c6cfddf3a",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "e59b38a75d956422ccf26bd0d5eb6bf70a6a15fe1127be02d7306c44a8700a61",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "7600f4323b610f507ebb6a31e5e0de772295593b27e1fb95b1c4b57c6cfddf3a",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "d79226256be33055bde48c01b113193e74db98a300e2e81310567f5d9e11c649",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "13e443250d3a8920f6ee553ad1679bbdf0ba5c7dd07252cbf139dbce20783b89",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "d79226256be33055bde48c01b113193e74db98a300e2e81310567f5d9e11c649",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "13e443250d3a8920f6ee553ad1679bbdf0ba5c7dd07252cbf139dbce20783b89",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 12012,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 0
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "olmtoondilate",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "d196c017dfad13c9dbdd0b3eed45609ca52a91a646991653a5e7b270055f1f1b"
+    },
+    "radialblur": {
+      "base": "1f5a731d31ef0a5d17cb374803fe3e3ec2b326cd",
+      "builds": {
+        "arm64-fast-base": {
+          "architecture": "arm64",
+          "binary_sha256": "daac2fe21031e23aa6036c10bb7733fb63d3841881f5e2d5c040ef94d79fe4c9",
+          "ready": true
+        },
+        "arm64-fast-head": {
+          "architecture": "arm64",
+          "binary_sha256": "7466161541737befa93a929af04c6b0ab3be77f24672e33d4adaa96e334605bf",
+          "ready": true
+        },
+        "arm64-reference-base": {
+          "architecture": "arm64",
+          "binary_sha256": "75e2954d981bd84448b068c6d01e55a84adcb4360c8b22a0ff5b54680524c514",
+          "ready": true
+        },
+        "arm64-reference-head": {
+          "architecture": "arm64",
+          "binary_sha256": "eb6d4560be60829f5d35540e3933db3312eaa53f9efb613e1805ea435f39acf4",
+          "ready": true
+        },
+        "x86_64-fast-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "86813ec8e5c677a33ea53b1fa23c1bdcb4d8631a400a844fd996f0e884b6bc6a",
+          "ready": true
+        },
+        "x86_64-fast-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "d78af9e3247a74fc6fff8eba922e1e48168af7d6d7127d23150238d5d5b28672",
+          "ready": true
+        },
+        "x86_64-reference-base": {
+          "architecture": "x86_64",
+          "binary_sha256": "c81374372fdbb24e7d9693c94ebd50bc67e1e3d7a3550215c63c2253907bf4fc",
+          "ready": true
+        },
+        "x86_64-reference-head": {
+          "architecture": "x86_64",
+          "binary_sha256": "e39daabe05375551d99d711ec747bedfda1a626088c0cc5c33dbd73ab458b76a",
+          "ready": true
+        }
+      },
+      "counts": {
+        "comparisons": 12012,
+        "difference": 0,
+        "exact": 12012,
+        "execution_errors": 0,
+        "new_refusals": 0,
+        "refusal": 0
+      },
+      "coverage": {
+        "4k": 12,
+        "colours:byte-colours": 12012,
+        "depth:16": 4004,
+        "depth:32": 4004,
+        "depth:8": 4004,
+        "downsample:[[1, 1], [1, 1]]": 5440,
+        "downsample:[[1, 2], [1, 2]]": 1344,
+        "downsample:[[1, 2], [1, 3]]": 1288,
+        "downsample:[[1, 3], [1, 3]]": 1192,
+        "downsample:[[1, 4], [1, 4]]": 1344,
+        "downsample:[[1, 8], [1, 8]]": 1404,
+        "geometry:default": 4020,
+        "geometry:realistic-v1": 3996,
+        "geometry:realistic-v2": 3996,
+        "size:default": 6008,
+        "size:odd-even-v1": 6004,
+        "small": 12000
+      },
+      "differences": [],
+      "head": "WORKTREE",
+      "plugin": "radialblur",
+      "requested_cases": 3000,
+      "seed": 909,
+      "worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "natural_base": {
+    "counts": {
+      "{\"bytes\": 8, \"error\": 0, \"rect\": [1, 0, 3, 1], \"sha256\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"status\": \"ok\", \"tags\": []}": 1000
+    },
+    "oracle": {
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "matches_native": true,
+      "oracle": {
+        "guards_intact": true,
+        "output_rect": [
+          1,
+          0,
+          3,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracle_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "worker": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+      "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+    }
+  },
+  "natural_head": {
+    "counts": {
+      "{\"bytes\": 8, \"error\": 0, \"rect\": [1, 0, 3, 1], \"sha256\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"status\": \"ok\", \"tags\": []}": 1000
+    },
+    "oracle": {
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "matches_native": true,
+      "oracle": {
+        "guards_intact": true,
+        "output_rect": [
+          1,
+          0,
+          3,
+          1
+        ],
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracle_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "worker": "/Users/onmk/.cache/olm-emu/worker-F53-geom/aex-guest-worker",
+      "worker_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+    }
+  },
+  "probes": {
+    "forced-final-base": {
+      "admitted": 0,
+      "first_error": 516,
+      "refused": 1000
+    },
+    "forced-final-head": {
+      "admitted": 1000,
+      "first_error": 0,
+      "refused": 0
+    },
+    "spans-base": {
+      "olmcolorkey": {
+        "adjacent_refusals": 9000,
+        "checks": 9000,
+        "missed_overlap": 0
+      },
+      "olmdirectionalblur": {
+        "adjacent_refusals": 9000,
+        "checks": 9000,
+        "missed_overlap": 0
+      },
+      "radialblur": {
+        "adjacent_refusals": 9000,
+        "checks": 9000,
+        "missed_overlap": 0
+      }
+    },
+    "spans-head": {
+      "olmcolorkey": {
+        "adjacent_refusals": 0,
+        "checks": 9000,
+        "missed_overlap": 0
+      },
+      "olmdirectionalblur": {
+        "adjacent_refusals": 0,
+        "checks": 9000,
+        "missed_overlap": 0
+      },
+      "radialblur": {
+        "adjacent_refusals": 0,
+        "checks": 9000,
+        "missed_overlap": 0
+      }
+    }
+  },
+  "schema": "olm-b01-validation/1"
+}

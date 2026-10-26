@@ -8,6 +8,8 @@ import os
 from pathlib import Path
 import time
 import subprocess
+import sys
+sys.dont_write_bytecode = True
 import native_diff as nd
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,7 +24,7 @@ void* operator new(std::size_t n) {
 void operator delete(void* p) noexcept { if (p!=adjacent_arena+16) std::free(p); }
 void operator delete(void* p, std::size_t) noexcept { ::operator delete(p); }
 int main() {
-    unsigned refused=0, rendered=0; PF_Err first_error=0;
+    unsigned refused=0, admitted=0; PF_Err first_error=0;
     for (int run=0;run<1000;++run) {
         std::memset(adjacent_arena,0,sizeof(adjacent_arena));
         PF_EffectWorld input{},output{};
@@ -36,9 +38,9 @@ int main() {
         force_next=true;
         PF_Err err=PrepareSmartRenderWorld(&input,&output,info,8,&prepared);
         force_next=false;
-        if(err) { ++refused; if(!first_error) first_error=err; } else ++rendered;
+        if(err) { ++refused; if(!first_error) first_error=err; } else ++admitted;
     }
-    std::printf("{\"refused\":%u,\"rendered\":%u,\"first_error\":%d}\n",refused,rendered,int(first_error));
+    std::printf("{\"refused\":%u,\"admitted\":%u,\"first_error\":%d}\n",refused,admitted,int(first_error));
 }
 '''
 
