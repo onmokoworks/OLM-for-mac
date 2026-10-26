@@ -292,6 +292,7 @@ def original_trace(case, aex, *, aex_percent_materialization=False, host_powf=Fa
 def traced_source(source_path, gate_off=True):
     source = source_path.read_text()
     source = source.replace('#include "OLMKiraKira.h"', '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
+    source = source.replace('#include "RampEditor.h"', '#include "'+str(olmkirakira.SOURCE.parent/'RampEditor.h')+'"')
     source = source.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
     source = source.replace('#include "../../ucrtmath/', '#include "'+str(ROOT/'ucrtmath')+'/')
     assert source.count('if (!exact_closure && !generic_beta) {') == 2
@@ -314,7 +315,7 @@ static void F09Dump(const char *name, const void *data, size_t size) {
            '\tF09Dump("source_full", source_pixels.data(), source_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("source", working_pixels.data(), working_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("seed", seed.data(), seed.size()*4);')
     insert('\tfloat scale = (float)info.brightness_gain;', '\n'.join(f'\tF09Dump("ray{i}", {name}.data(), {name}.size()*4);' for i,name in enumerate(('vertical','horizontal','diagonal','diagonal2','highlight'))))
     insert('\tstd::vector<FloatRGBA> composed((size_t)work_width * work_height);','\tF09Dump("glow", glow.data(), glow.size()*sizeof(FloatRGBA));')
-    insert('\tfor (A_long y = 0; y < h; ++y) {\n\t\tfor (A_long x = 0; x < w; ++x) {\n\t\t\tconst size_t idx = (size_t)y * w + x;',
+    insert('\tfor (A_long y = 0; y < output->height; ++y) {\n\t\tfor (A_long x = 0; x < output->width; ++x) {\n\t\t\tconst size_t idx = (size_t)y * w + x;',
            '\tF09Dump("glow_full", glow_full.data(), glow_full.size()*sizeof(FloatRGBA));\n\tF09Dump("composed", output_pixels.data(), output_pixels.size()*sizeof(FloatRGBA));')
     insert('\ttemp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);',
         '\t++F09Ray; F09Dump(("helper"+std::to_string(F09Ray)+"_op0_in").c_str(),temp_a.data(),temp_a.size()*4);')
