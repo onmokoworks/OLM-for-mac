@@ -1,5 +1,11 @@
 // Test-only public render and capture entry points; included by OLMRadialBlur.cpp.
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
+static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info, short bitdepth)
+{
+	return RenderWorld(input, output, NULL, info, bitdepth);
+}
+
 extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 	PF_EffectWorld *input,
 	PF_EffectWorld *output,

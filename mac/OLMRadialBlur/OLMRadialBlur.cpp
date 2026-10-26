@@ -414,12 +414,6 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	return OLM_RADIAL_REFUSAL("render-bitdepth");
 }
 
-static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
-	const OLMRadialBlurInfo &info, short bitdepth)
-{
-	return RenderWorld(input, output, NULL, info, bitdepth);
-}
-
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 #include "../../tools/fuzz/harnesses/radialblur/RadialTestEntry.inc"
 #endif

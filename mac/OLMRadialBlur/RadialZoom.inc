@@ -53,7 +53,6 @@ static PF_Err RenderZoomTyped(
 	const double cx = info.center_x * ((double)w / comp_w);
 	const double cy = info.center_y * ((double)h / comp_h);
 	const double ratio = info.ratio > 0.0 ? info.ratio : 1.0;
-	const double base_angle = info.angle_deg * kPi / 180.0;
 	// Original builder: FLOAT32 Quality -> DIVSS reciprocal; constructor:
 	// CVTSS2SD -> MULSD stored constant -> FLOAT32 radians. Count uses DIVSS.
 	const bool use_native_quality_setup = use_native_zoom_baseline || use_generic_size_noise;
@@ -235,8 +234,6 @@ static PF_Err RenderZoomTyped(
 	const int32_t base_angle_fixed_radians = RadialAngleFixedRadians(info.angle_deg);
 	const float cos_a_f = (float)ucrt_cos((double)base_angle_fixed_radians, UCRT_FMA);
 	const float sin_a_f = (float)ucrt_sin((double)base_angle_fixed_radians, UCRT_FMA);
-	const double cos_a = ucrt_cos(base_angle, UCRT_FMA);
-	const double sin_a = ucrt_sin(base_angle, UCRT_FMA);
 	for (A_long ai = 0; ai < angular_count; ++ai) {
 		const float theta = RadialF32Mul((float)ai, step_rad_f);
 		const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
@@ -539,33 +536,26 @@ static PF_Err RenderZoomTyped(
 	return PF_Err_NONE;
 }
 
-static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output,
-	const OLMRadialBlurInfo &info, PF_EffectWorld *noise_world = nullptr)
+// Per-depth public names share the same capture-free typed dispatch.
+template <typename PixelT>
+static PF_Err RenderZoom(PF_EffectWorld *input, PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info, PF_EffectWorld *noise_world)
 {
-	return RenderZoomTyped<PF_Pixel8>(input, output, info
+	return RenderZoomTyped<PixelT>(input, output, info
 	#if defined(OLM_RADIALBLUR_TEST_SEAM)
 		, nullptr
 	#endif
 		, noise_world);
 }
+
+static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info, PF_EffectWorld *noise_world = nullptr)
+{ return RenderZoom<PF_Pixel8>(input, output, info, noise_world); }
 
 static PF_Err RenderZoom16(PF_EffectWorld *input, PF_EffectWorld *output,
 	const OLMRadialBlurInfo &info, PF_EffectWorld *noise_world = nullptr)
-{
-	return RenderZoomTyped<PF_Pixel16>(input, output, info
-	#if defined(OLM_RADIALBLUR_TEST_SEAM)
-		, nullptr
-	#endif
-		, noise_world);
-}
+{ return RenderZoom<PF_Pixel16>(input, output, info, noise_world); }
 
 static PF_Err RenderZoomFloat(PF_EffectWorld *input, PF_EffectWorld *output,
 	const OLMRadialBlurInfo &info, PF_EffectWorld *noise_world = nullptr)
-{
-	return RenderZoomTyped<PF_PixelFloat>(input, output, info
-	#if defined(OLM_RADIALBLUR_TEST_SEAM)
-		, nullptr
-	#endif
-		, noise_world);
-}
-
+{ return RenderZoom<PF_PixelFloat>(input, output, info, noise_world); }
