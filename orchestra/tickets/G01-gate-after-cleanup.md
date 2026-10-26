@@ -14,3 +14,14 @@
    - every test changed or deleted, with a one-line reason;
    - the seven stage results;
    - the totals: lines of production code (non-comment) per plugin now, compared with Q-series start `12622f68`.
+
+## Resume note (orchestrator decision)
+- First attempt: `git show fd01f189dba201bf85c1ee4075e6e42b5423b0c1:orchestra/reports/G01-gate-after-cleanup.md`.
+- The DirectionalBlur Back-only probe asserts the internal route id `kRouteRetained` (1) for a 16x16 retained case. F01 deliberately removed the retained-neutral fixture routes, so the generic route now serves that case.
+- An internal route id is an implementation detail, not behaviour. Change the probe so it no longer requires a specific route. It must still check that:
+  - PF_Err is NONE;
+  - the active output equals the retained expected bytes;
+  - the input is unchanged;
+  - the padding is not damaged.
+- If the output check then fails, that is a real behaviour failure: stop and report the first differing byte. First split the probe's combined failure into separate codes so the reason is visible.
+- Fix or delete the obsolete source-text assertions you already identified. Then run the full gate to the end.
