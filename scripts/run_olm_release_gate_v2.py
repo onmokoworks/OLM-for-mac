@@ -237,11 +237,28 @@ class Gate:
             plugin = saved['plugin']
             if plugin not in PLUGINS:
                 raise ValueError('unknown corpus plugin: '+plugin)
-            groups[plugin, path.parent].append(path)
+            configuration = tuple(saved.get(key, default) for key, default in
+                (('max_size', 256), ('size_sampler', 'default'), ('size_max_height', None),
+                 ('geometry', 'default'), ('color_sampler', 'default')))
+            groups[plugin, path.parent, configuration].append(path)
             inventory[plugin] += 1
         rows = []; counts = Counter(PASS=0, FAIL=0, **{'ORACLE-STOP':0})
-        for i, ((plugin, directory), paths) in enumerate(sorted(groups.items())):
-            _, report = self.fuzz(f'replay-{i:02d}-{plugin}',plugin,['--replay',directory])
+        for i, ((plugin, directory, configuration), paths) in enumerate(groups.items()):
+            replay_dir = self.state/f'replay-input-{i:02d}'
+            replay_dir.mkdir()
+            originals = {}
+            for path in paths:
+                link = replay_dir/path.name
+                link.symlink_to(path)
+                originals[str(link)] = str(path)
+            flags = []
+            for key, value in zip(('max-size', 'size-sampler', 'size-max-height',
+                                   'geometry', 'color-sampler'), configuration):
+                if value is not None:
+                    flags.extend(['--'+key, str(value)])
+            _, report = self.fuzz(f'replay-{i:02d}-{plugin}',plugin,['--replay',replay_dir,*flags])
+            for row in report.get('replays', []):
+                row['path'] = originals.get(row['path'], row['path'])
             observed = {r['path']:r for r in report.get('replays', [])}
             for path in paths:
                 row = observed.get(str(path), {})
@@ -250,7 +267,7 @@ class Gate:
                 retry = None
                 if not row.get('matches_saved') and has_stop(result):
                     retry = f'retry-{len(rows):04d}-{plugin}'
-                    _, retried = self.fuzz(retry,plugin,['--replay',path,'--case-timeout','120'])
+                    _, retried = self.fuzz(retry,plugin,['--replay',path,'--case-timeout','120',*flags])
                     rr = retried.get('replays', [])
                     verdict = 'FAIL'
                     if len(rr)==1 and retried.get('status')=='replay_complete':
