@@ -27,7 +27,7 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/install_mac_plugins_to_mediacore.sh --package path/to/olm_mac_plugins_Debug_clean.zip
-  scripts/install_mac_plugins_to_mediacore.sh --source-dir path/to/OLM_Mac_Plugins_Debug
+  scripts/install_mac_plugins_to_mediacore.sh --source-dir path/to/OLM_for_Mac
 
 Safely installs the expected OLM macOS AE plug-ins into MediaCore:
 - requires After Effects to be closed unless --allow-ae-running is passed

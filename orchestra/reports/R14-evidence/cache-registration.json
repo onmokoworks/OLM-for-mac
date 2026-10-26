@@ -1,0 +1,13 @@
+{
+  "name": "release-R14",
+  "kind": "release-package",
+  "package_path": "/Users/onmk/.cache/olm-emu/release-R14/OLM_for_Mac.zip",
+  "package_sha256": "040372cfe8e32340f8fea44727b4fd2d8ab1234cacd1bd5e1439ec08a1ae75e5",
+  "manifest_path": "/Users/onmk/.cache/olm-emu/release-R14/OLM_for_Mac.zip.manifest.json",
+  "manifest_sha256": "477e943a68e5d098ee7a7e92ea9cdbbc07a3fee3335d709b0ab794e4bdd38ce9",
+  "source_commit": "679a651fbc368444b6d56b1a7e4a08a077bb8428",
+  "recipe": "orchestra/reports/R12-evidence/build.sh",
+  "published": false,
+  "release_authorized": false,
+  "audit": "orchestra/reports/R14-evidence/package-audit.json"
+}

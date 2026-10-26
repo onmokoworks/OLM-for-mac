@@ -5,11 +5,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIGURATION="Debug"
 OUTPUT=""
 SKIP_BUILD=0
-PIXEL_REFERENCE_PROFILE="legacy"
 
 usage() {
   cat <<'EOF'
-Usage: scripts/package_mac_plugins.sh [--configuration Debug] [--output /tmp/olm_mac_plugins.zip] [--skip-build] [--pixel-reference-profile legacy|normalized-20260618]
+Usage: scripts/package_mac_plugins.sh [--configuration Debug] [--output ./OLM_for_Mac.zip] [--skip-build]
 
 Build/verify the macOS AE plug-in bundles and package them for an AE host.
 By default this runs scripts/build_all_mac_plugins.sh first. Use --skip-build
@@ -30,10 +29,6 @@ while [[ $# -gt 0 ]]; do
     --skip-build)
       SKIP_BUILD=1
       shift
-      ;;
-    --pixel-reference-profile)
-      PIXEL_REFERENCE_PROFILE="$2"
-      shift 2
       ;;
     -h|--help)
       usage
@@ -62,213 +57,26 @@ plugins=(
 
 if [[ -z "$OUTPUT" ]]; then
   stamp="$(date +%Y%m%d)"
-  OUTPUT="/tmp/olm_mac_plugins_${CONFIGURATION}_${stamp}.zip"
+  OUTPUT="$PWD/OLM_for_Mac_${CONFIGURATION}_${stamp}.zip"
 fi
+mkdir -p "$(dirname "$OUTPUT")"
 OUTPUT="$(cd "$(dirname "$OUTPUT")" && pwd)/$(basename "$OUTPUT")"
 
 if [[ "$SKIP_BUILD" -eq 0 ]]; then
   CONFIGURATION="$CONFIGURATION" "$ROOT/scripts/build_all_mac_plugins.sh"
 fi
 
-package_name="OLM_Mac_Plugins_${CONFIGURATION}"
+package_name="OLM_for_Mac"
 stage_parent="$(mktemp -d "${TMPDIR:-/tmp}/olm_mac_plugins_pkg.XXXXXX")"
 trap 'rm -rf "$stage_parent"' EXIT
 stage="$stage_parent/$package_name"
 mkdir -p "$stage"
 
-manifest="$stage/manifest.json"
-install_notes="$stage/INSTALL.txt"
-validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
-validation_template="$stage/AE_VALIDATION_RESULT.template.json"
-pixel_validation_dir="$stage/AE_PIXEL_VALIDATION"
+manifest="$stage_parent/manifest.json"
+cp "$ROOT/docs/PACKAGE_README_JA.md" "$stage/README.md"
+cp "$ROOT/docs/PACKAGE_README_EN.md" "$stage/README.en.md"
+cp "$ROOT/LICENSE" "$stage/LICENSE"
 
-# Public-facing documentation travels with the binaries. Keep this package
-# self-contained and free of checkout-machine absolute paths.
-cp "$ROOT/docs/INSTALL_JA.md" "$stage/INSTALL_JA.md"
-cp "$ROOT/docs/BETA_SUPPORT.md" "$stage/BETA_SUPPORT.md"
-cp "$ROOT/KNOWN_LIMITATIONS.md" "$stage/KNOWN_LIMITATIONS.md"
-cp "$ROOT/docs/INSTALL_EN.md" "$stage/INSTALL_EN.md"
-cp "$ROOT/docs/BETA_SUPPORT.en.md" "$stage/BETA_SUPPORT.en.md"
-cp "$ROOT/KNOWN_LIMITATIONS.en.md" "$stage/KNOWN_LIMITATIONS.en.md"
-# Preserve repository-relative documentation links, plus the legacy root aliases.
-mkdir -p "$stage/docs"
-for doc in INSTALL_JA.md INSTALL_EN.md BETA_SUPPORT.md BETA_SUPPORT.en.md RELEASE_NOTES_JA.md RELEASE_NOTES_EN.md; do
-  cp "$ROOT/docs/$doc" "$stage/docs/$doc"
-done
-for doc in INSTALL_JA.md INSTALL_EN.md BETA_SUPPORT.md BETA_SUPPORT.en.md; do
-  sed 's|(../|(|g' "$ROOT/docs/$doc" > "$stage/$doc"
-done
-for language in JA EN; do
-  sed 's|(../|(|g' "$ROOT/docs/RELEASE_NOTES_${language}.md" > "$stage/RELEASE_NOTES_${language}.md"
-done
-cp "$ROOT/README.md" "$ROOT/README.en.md" "$ROOT/LICENSE" "$stage/"
-mkdir -p "$stage/refs/conformance"
-cp "$ROOT/refs/conformance/olm_release_completion_matrix_20260806.md" \
-  "$stage/refs/conformance/olm_release_completion_matrix_20260806.md"
-
-pixel_validation_presets=(
-  "OLMBlur:olmblur:ae_pixel_olmblur_20260606:olmblur_request.zip"
-  "OLMColorKey:olmcolorkey:ae_pixel_olmcolorkey_20260606:olmcolorkey_request.zip"
-  "OLMToonDilate:olmtoondilate:ae_pixel_olmtoondilate_20260606:olmtoondilate_request.zip"
-  "OLMDistanceGradation:olmdistancegradation:ae_pixel_olmdistancegradation_20260606:olmdistancegradation_request.zip"
-  "OLMDistanceGradationExtended:olmdistancegradation_extended:ae_pixel_olmdistancegradation_extended_20260618:olmdistancegradation_extended_request.zip"
-  "OLMDistanceGradationBlur:olmdistancegradation_blur:ae_pixel_olmdistancegradation_blur_20260618:olmdistancegradation_blur_request.zip"
-)
-
-cat >"$install_notes" <<EOF
-OLM macOS AE plug-ins (${CONFIGURATION})
-
-Install target for development:
-~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
-
-Preferred local install command from this repository:
-scripts/install_mac_plugins_to_mediacore.sh --package path/to/this_package.zip
-
-Optional preflight duplicate check:
-scripts/install_mac_plugins_to_mediacore.sh --audit-only
-
-That command requires After Effects to be closed, backs up any existing OLM
-bundles under MediaCore, installs only this package's bundles, and verifies
-exactly one installed bundle per expected OLM plug-in.
-
-Manual fallback: copy the *.plugin bundles in this folder into MediaCore, then
-restart After Effects. Before manual copying, remove or move old OLM backup
-folders out of MediaCore; After Effects scans nested backup plug-ins too.
-
-The packaging script verifies each binary has arm64 and x86_64 slices and passes
-codesign --verify before adding it to this archive.
-EOF
-
-cat >"$validation_notes" <<'EOF'
-OLM macOS AE host validation checklist
-
-Purpose:
-Confirm that the packaged macOS .plugin bundles load in After Effects and can be
-used for real AE-host render checks. The current Mac-side repository can verify
-CLI algorithms and bundle builds, but it cannot prove final AE host behavior
-without a real AE install.
-
-Environment to record:
-- macOS version
-- Apple Silicon or Intel
-- After Effects version, for example 25.2x131
-- Project Settings > Video Rendering and Effects renderer name
-- Whether the test was run from a clean AE launch after copying the plug-ins
-
-Install:
-1. Quit After Effects.
-2. Copy all *.plugin bundles from this package into:
-   ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
-3. Restart After Effects.
-4. Confirm the effects appear in AE's Effect menu or can be applied to a layer.
-
-Minimum load check:
-- ColorKeep
-- OLM Blur
-- OLM Color Key
-- OLM Directional Blur
-- OLM RadialBlur
-- OLM OLM Kira Kira
-- OLM Toon Dilate
-- OLM Distance Gradation
-- OLM Smoother
-- OLM Smoother v2
-
-Return to the Mac-side porting workspace:
-- AE version and renderer/project_gpu_accel_type if available
-- For each plug-in: loaded yes/no, applied yes/no, render succeeded yes/no
-- Any AE crash, missing effect, parameter UI issue, or render error text
-- For the first pixel validation pass, use the request zips in:
-  AE_PIXEL_VALIDATION/
-  They contain input PNGs, Windows expected PNGs, thresholds, and a result
-  template. Return the rendered PNGs in folders or zips named after the request
-  or preset, for example:
-  - olmblur/
-  - olmcolorkey/
-  - olmtoondilate/
-  - olmdistancegradation/
-  - olmdistancegradation_extended/
-  - olmdistancegradation_blur/
-  Preserve frame names such as case_0001.png inside each folder.
-- Fill AE_VALIDATION_RESULT.template.json and return it with any PNGs or error
-  screenshots/logs. Renaming it to AE_VALIDATION_RESULT.json is preferred, but
-  the Mac verifier also accepts the template filename when it is the returned
-  result JSON.
-- Mac-side one-shot verification for the returned zip/folder:
-  python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package path/to/olm_mac_plugins_Debug_clean.zip --require-all-pass
-  python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package path/to/olm_mac_plugins_Debug_clean.zip --require-all-pass --require-all-pixel-requests
-  python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass
-  python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
-
-Important:
-Do not use the hidden Compositing Options > GPU Rendering / ADBE Force CPU GPU
-value as proof that a render used the GPU or CPU path. Record it as a reference
-field only; use Project Settings renderer/project_gpu_accel_type for path
-context.
-EOF
-
-cat >"$validation_template" <<EOF
-{
-  "kind": "olm_ae_host_validation_result",
-  "package_configuration": "$CONFIGURATION",
-  "ae_version": "",
-  "macos_version": "",
-  "machine": "",
-  "project_gpu_accel_type": {
-    "current_name": "",
-    "raw": null
-  },
-  "clean_ae_launch_after_install": null,
-  "install_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/",
-  "notes": "",
-  "plugins": [
-EOF
-
-for idx in "${!plugins[@]}"; do
-  plugin="${plugins[$idx]}"
-  comma=","
-  if [[ "$idx" -eq "$((${#plugins[@]} - 1))" ]]; then
-    comma=""
-  fi
-  cat >>"$validation_template" <<EOF
-    {
-      "name": "$plugin",
-      "loaded": null,
-      "applied": null,
-      "render_succeeded": null,
-      "effect_menu_name": "",
-      "error": "",
-      "returned_artifacts": []
-    }$comma
-EOF
-done
-
-cat >>"$validation_template" <<'EOF'
-  ]
-}
-EOF
-
-mkdir -p "$pixel_validation_dir"
-for entry in "${pixel_validation_presets[@]}"; do
-  IFS=: read -r _plugin preset _request_id zip_name <<<"$entry"
-  # Worktrees may read the untracked legacy reference assets from MAIN.
-  # Keep the default profile resolution unchanged unless an explicit root is set.
-  reference_args=()
-  if [[ -n "${OLM_REFERENCE_ROOT:-}" && "$PIXEL_REFERENCE_PROFILE" == legacy ]]; then
-    case "$_plugin" in
-      OLMDistanceGradation*) reference_relative="20260605_extra/OLMDistanceGradation" ;;
-      *) reference_relative="20260604_olm/$_plugin" ;;
-    esac
-    reference_args=(--reference "$OLM_REFERENCE_ROOT/refs/win_references/$reference_relative")
-  fi
-  python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
-    --preset "$preset" \
-    --reference-profile "$PIXEL_REFERENCE_PROFILE" \
-    ${reference_args[@]+"${reference_args[@]}"} \
-    --output "$pixel_validation_dir/$zip_name"
-done
-
-beta_support_sha256="$(shasum -a 256 "$stage/BETA_SUPPORT.md" | awk '{print $1}')"
 git_commit="$(git -C "$ROOT" rev-parse HEAD)"
 if [[ -n "$(git -C "$ROOT" status --porcelain)" ]]; then
   git_dirty=true
@@ -290,36 +98,6 @@ sdk_version="$(xcrun --sdk macosx --show-sdk-version)"
   # Do not publish the packager machine's absolute checkout path.
   echo "  \"source_root\": \"OLM-for-mac repository\","
   echo "  \"packaged_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
-  echo "  \"install_notes\": \"INSTALL.txt\","
-  echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
-  echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
-  echo "  \"install_guide_ja\": \"INSTALL_JA.md\","
-  echo "  \"beta_support\": \"BETA_SUPPORT.md\","
-  echo "  \"beta_support_sha256\": \"$beta_support_sha256\","
-  echo "  \"known_limitations\": \"KNOWN_LIMITATIONS.md\","
-  echo "  \"install_guide_en\": \"INSTALL_EN.md\","
-  echo "  \"beta_support_en\": \"BETA_SUPPORT.en.md\","
-  echo "  \"known_limitations_en\": \"KNOWN_LIMITATIONS.en.md\","
-  echo "  \"release_notes_ja\": \"RELEASE_NOTES_JA.md\","
-  echo "  \"release_notes_en\": \"RELEASE_NOTES_EN.md\","
-  echo "  \"readme_ja\": \"README.md\","
-  echo "  \"readme_en\": \"README.en.md\","
-  echo "  \"license\": \"LICENSE\","
-  echo "  \"pixel_reference_profile\": \"$PIXEL_REFERENCE_PROFILE\","
-  echo "  \"ae_pixel_validation_requests\": ["
-  for idx in "${!pixel_validation_presets[@]}"; do
-    IFS=: read -r plugin _preset request_id zip_name <<<"${pixel_validation_presets[$idx]}"
-    comma=","
-    if [[ "$idx" -eq "$((${#pixel_validation_presets[@]} - 1))" ]]; then
-      comma=""
-    fi
-    echo "    {"
-    echo "      \"name\": \"$plugin\","
-    echo "      \"request_id\": \"$request_id\","
-    echo "      \"zip\": \"AE_PIXEL_VALIDATION/$zip_name\""
-    echo "    }$comma"
-  done
-  echo "  ],"
   echo "  \"plugins\": ["
 } >"$manifest"
 
@@ -380,6 +158,7 @@ done
 mkdir -p "$(dirname "$OUTPUT")"
 python3 "$ROOT/scripts/zip_clean.py" "$stage" "$OUTPUT"
 
+cp "$manifest" "$OUTPUT.manifest.json"
 python3 "$ROOT/scripts/verify_mac_plugin_package.py" "$OUTPUT"
 
 echo "wrote $OUTPUT"

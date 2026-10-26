@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit R12 ZIP contents, including text in nested validation ZIPs."""
+"""Audit R12 ZIP contents, and its build-manifest sidecar."""
 import hashlib
 import io
 import json
@@ -55,16 +55,13 @@ with zipfile.ZipFile(package) as archive:
 assert not path_hits, path_hits
 with tempfile.TemporaryDirectory(dir=scratch, prefix='audit-') as tmp:
     command('ditto', '-x', '-k', str(package), tmp)
-    stage = Path(tmp) / 'OLM_Mac_Plugins_Release'
-    manifest = json.loads((stage / 'manifest.json').read_text())
+    stage = Path(tmp) / 'OLM_for_Mac'
+    manifest = json.loads(Path(str(package) + '.manifest.json').read_text())
     assert manifest['git_dirty'] is False, manifest['git_dirty']
     assert manifest['configuration'] == 'Release'
-    fields = ['install_guide_ja', 'install_guide_en', 'beta_support', 'beta_support_en',
-              'known_limitations', 'known_limitations_en', 'release_notes_ja',
-              'release_notes_en', 'readme_ja', 'readme_en', 'license']
-    for field in fields:
-        assert (stage / manifest[field]).is_file(), field
-    assert not any('OLM_MAC_RELEASE_NOTES_20260806' in x for x in listing)
+    sys.path.insert(0, str(root / 'scripts'))
+    from verify_mac_plugin_package import verify_layout
+    verify_layout(stage)
     assert len(list(stage.glob('*.plugin'))) == len(manifest['plugins']) == 10
     rows = []
     for plugin in manifest['plugins']:
@@ -94,12 +91,11 @@ with tempfile.TemporaryDirectory(dir=scratch, prefix='audit-') as tmp:
                 continue
             target = link.split('#', 1)[0]
             assert (doc.parent / target).is_file(), (doc.name, target)
-    for language in ['JA', 'EN']:
-        name = f'RELEASE_NOTES_{language}.md'
-        assert (stage / 'docs' / name).read_bytes() == (root / 'docs' / name).read_bytes()
+    for language, name in [('JA', 'README.md'), ('EN', 'README.en.md')]:
+        assert (stage / name).read_bytes() == (root / 'docs' / f'PACKAGE_README_{language}.md').read_bytes()
 summary = {'package': str(package), 'sha256': hashlib.file_digest(package.open('rb'), 'sha256').hexdigest(),
            'git_commit': manifest['git_commit'], 'git_dirty': manifest['git_dirty'],
-           'zip_entries': len(listing), 'text_files_checked': text_count,
+           'zip_entries': len(listing), 'layout_items_including_root': 14, 'text_files_checked': text_count,
            'nested_zips_checked': nested_count, 'local_path_hits': path_hits, 'plugins': rows}
 evidence.mkdir(parents=True, exist_ok=True)
 (evidence / 'zip-contents.txt').write_text('\n'.join(listing) + '\n')

@@ -5,7 +5,6 @@ export TMPDIR="${OLM_PACKAGE_STATE:-$PWD/orchestra/state/R12-release-gate-final/
 release_cache="${OLM_RELEASE_CACHE:-$HOME/.cache/olm-emu/release-R12}"
 mkdir -p "$TMPDIR"
 export OLM_TEST_JOBS=1
-export OLM_REFERENCE_ROOT="$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
 # Keep the packager's fixed product paths inside ticket scratch as well.
 for plugin in ColorKeep OLMBlur OLMColorKey OLMDirectionalBlur OLMRadialBlur OLMKiraKira OLMToonDilate OLMDistanceGradation OLMSmoother OLMSmoother2; do
   product="$PWD/mac/$plugin/Mac/build/Release"
@@ -25,4 +24,4 @@ xcodebuild() {
   fi
 }
 export -f xcodebuild
-scripts/package_mac_plugins.sh --configuration Release --output "$release_cache/OLM_Mac_Plugins_Release_20261026.zip"
+scripts/package_mac_plugins.sh --configuration Release --output "$release_cache/OLM_for_Mac.zip"
