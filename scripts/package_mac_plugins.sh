@@ -90,7 +90,15 @@ cp "$ROOT/KNOWN_LIMITATIONS.md" "$stage/KNOWN_LIMITATIONS.md"
 cp "$ROOT/docs/INSTALL_EN.md" "$stage/INSTALL_EN.md"
 cp "$ROOT/docs/BETA_SUPPORT.en.md" "$stage/BETA_SUPPORT.en.md"
 cp "$ROOT/KNOWN_LIMITATIONS.en.md" "$stage/KNOWN_LIMITATIONS.en.md"
-cp "$ROOT/refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md" "$stage/RELEASE_NOTES_JA.md"
+# Preserve repository-relative documentation links, plus the legacy root aliases.
+mkdir -p "$stage/docs"
+for doc in INSTALL_JA.md INSTALL_EN.md BETA_SUPPORT.md BETA_SUPPORT.en.md RELEASE_NOTES_JA.md RELEASE_NOTES_EN.md; do
+  cp "$ROOT/docs/$doc" "$stage/docs/$doc"
+done
+for language in JA EN; do
+  sed 's|(../|(|g' "$ROOT/docs/RELEASE_NOTES_${language}.md" > "$stage/RELEASE_NOTES_${language}.md"
+done
+cp "$ROOT/README.md" "$ROOT/README.en.md" "$ROOT/LICENSE" "$stage/"
 mkdir -p "$stage/refs/conformance"
 cp "$ROOT/refs/conformance/olm_release_completion_matrix_20260806.md" \
   "$stage/refs/conformance/olm_release_completion_matrix_20260806.md"
@@ -279,6 +287,10 @@ sdk_version="$(xcrun --sdk macosx --show-sdk-version)"
   echo "  \"beta_support_en\": \"BETA_SUPPORT.en.md\","
   echo "  \"known_limitations_en\": \"KNOWN_LIMITATIONS.en.md\","
   echo "  \"release_notes_ja\": \"RELEASE_NOTES_JA.md\","
+  echo "  \"release_notes_en\": \"RELEASE_NOTES_EN.md\","
+  echo "  \"readme_ja\": \"README.md\","
+  echo "  \"readme_en\": \"README.en.md\","
+  echo "  \"license\": \"LICENSE\","
   echo "  \"pixel_reference_profile\": \"$PIXEL_REFERENCE_PROFILE\","
   echo "  \"ae_pixel_validation_requests\": ["
   for idx in "${!pixel_validation_presets[@]}"; do
