@@ -151,10 +151,11 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 		finite_admission.interp_mode = INTERP_LINEAR;
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
-	if (width > std::numeric_limits<size_t>::max() / height) return false;
+	size_t area;
+	if (!olm::world_safety::checked_multiply(width, height, &area)) return false;
 	// The EDT owns a long-index plane as well as float planes. Preserve the
 	// largest element's vector representability after removing the area cap.
-	if (width * height > std::vector<long>().max_size()) return false;
+	if (area > std::vector<long>().max_size()) return false;
 	if ((reinterpret_cast<uintptr_t>(input->data) % alignof(PF_PixelFloat)) != 0 ||
 	    (reinterpret_cast<uintptr_t>(output->data) % alignof(PF_PixelFloat)) != 0 ||
 	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
@@ -164,10 +165,16 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 		input->data, width, height, (size_t)input->rowbytes, sizeof(PF_PixelFloat)};
 	const olm::world_safety::ConstWorld destination = {
 		output->data, (size_t)output->width, (size_t)output->height, (size_t)output->rowbytes, sizeof(PF_PixelFloat)};
-	if (olm::world_safety::validate_layout(source) != olm::world_safety::Status::ok ||
-	    olm::world_safety::validate_layout(destination) != olm::world_safety::Status::ok ||
-	    olm::world_safety::require_disjoint(source, destination) !=
+	// require_disjoint validates both layouts before comparing their ranges.
+	if (olm::world_safety::require_disjoint(source, destination) !=
 	        olm::world_safety::Status::ok) return false;
+	const bool nonfinite_field = is_admitted_pf32_smart_unblurred_beta(finite_admission) ||
+	    is_admitted_pf32_smart_bilateral_beta(p) ||
+	    is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) ||
+	    is_admitted_pf32_smart_bilateral_general_beta(finite_admission, (long)width, (long)height);
+	const bool extended_field = nonfinite_field ||
+	    (p.blur_mode != BLUR_MODE_MEDIAN &&
+	     is_admitted_pf32_smart_blurred_beta(finite_admission, (long)width, (long)height));
 	for (size_t y = 0; y < height; ++y) {
 		const PF_PixelFloat *row = reinterpret_cast<const PF_PixelFloat *>(
 			reinterpret_cast<const uint8_t *>(input->data) + y * (size_t)input->rowbytes);
@@ -177,10 +184,6 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 			// weighted-sample arithmetic. The mask conversion maps invalid alpha
 			// to zero before filtering; Bilateral consumes that finite
 			// field, while source channels enter only the recovered composition.
-			const bool nonfinite_field = is_admitted_pf32_smart_unblurred_beta(finite_admission) ||
-			    is_admitted_pf32_smart_bilateral_beta(p) ||
-			    is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) ||
-			    is_admitted_pf32_smart_bilateral_general_beta(finite_admission, (long)width, (long)height);
 			if (pixel.alpha * 255.0f >= 2147483648.0f && !nonfinite_field) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
@@ -188,13 +191,7 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 				// C27 pairs finite extended samples through the existing Box/Gaussian
 				// field and callback. Median retains its SDR boundary;
 				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
-				if ((value < 0.0f || value > 1.0f) &&
-				    !is_admitted_pf32_smart_unblurred_beta(p) &&
-				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(finite_admission, (long)width, (long)height)) &&
-				    !is_admitted_pf32_smart_bilateral_beta(p) &&
-				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) &&
-				    !is_admitted_pf32_smart_bilateral_general_beta(finite_admission, (long)width, (long)height) &&
-				    !is_admitted_pf32_smart_unblurred_beta(finite_admission)) return false;
+				if ((value < 0.0f || value > 1.0f) && !extended_field) return false;
 			}
 		}
 	}
@@ -227,8 +224,7 @@ static bool checked_pixel_count(long w, long h, size_t *count)
 	if (!count || w <= 0 || h <= 0) return false;
 	const size_t sw = (size_t)w;
 	const size_t sh = (size_t)h;
-	if (sw > std::numeric_limits<size_t>::max() / sh) return false;
-	*count = sw * sh;
+	if (!olm::world_safety::checked_multiply(sw, sh, count)) return false;
 	return *count <= std::vector<float>().max_size();
 }
 
