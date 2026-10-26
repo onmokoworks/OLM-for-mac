@@ -12,6 +12,7 @@ class KiraKiraGenericBetaLaneTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.source = SOURCE.read_text(encoding="utf-8")
+        cls.source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
 
     def function_body(self, name: str) -> str:
         match = re.search(rf"static [^\n]+ {name}\([^{{]+\)\n\{{", self.source)

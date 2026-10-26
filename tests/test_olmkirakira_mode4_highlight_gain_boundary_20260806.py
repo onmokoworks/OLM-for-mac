@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class Mode4HighlightGainBoundaryTests(unittest.TestCase):
     def test_production_uses_direct_brightness_for_all_exported_owner_layers(self) -> None:
         source = (ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp").read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         self.assertIn("float scale = (float)info.brightness_gain;", source)
         self.assertIn("const float highlight_scale = (float)info.brightness_gain;", source)
         self.assertIn("AddColoredUnion(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp, highlight_scale);", source)

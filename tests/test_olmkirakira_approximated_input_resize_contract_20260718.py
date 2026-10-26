@@ -10,6 +10,7 @@ SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 
 def test_approximated_input_contract():
     source = SOURCE.read_text()
+    source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
     start = source.index("static PF_Err RenderTyped")
     body = source[start:source.index("static PF_Err RenderWorld", start)]
 

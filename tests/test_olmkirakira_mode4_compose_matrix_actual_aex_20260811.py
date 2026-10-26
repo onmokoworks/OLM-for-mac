@@ -31,6 +31,7 @@ class Mode4ComposeMatrixActualAexTests(unittest.TestCase):
 
     def test_production_preserves_actual_slot_order_and_length_one(self) -> None:
         source = PRODUCTION.read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         self.assertIn("if (length <= 0) return input;", source)
         self.assertNotIn("if (length <= 1) return input;", source)
         d2 = source.index("AddColoredUnion(glow, diagonal2")

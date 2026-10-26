@@ -256,6 +256,7 @@ class KiraKiraMode3UiLengthBetaTests(unittest.TestCase):
             {8, 16, 32},
         )
         source = SOURCE.read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         self.assertIn("bool generic_full_frame_request;", source)
         self.assertIn("pre->generic_full_frame_request = generic_beta_request;", source)
         self.assertIn("pre->generic_full_frame_request &&", source)

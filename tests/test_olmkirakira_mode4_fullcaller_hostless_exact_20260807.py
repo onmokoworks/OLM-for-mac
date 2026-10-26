@@ -35,6 +35,7 @@ class Mode4FullCallerHostlessExactTests(unittest.TestCase):
 
     def test_mac_production_owns_the_bounded_highlight_and_typed_writer(self) -> None:
         source = PRODUCTION.read_text(encoding="utf-8")
+        source += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
         self.assertIn("olm::kirakira::highlight_isotropic_box_blur(", source)
         self.assertIn(
             "StoreWorldPixel<PixelT>(output, x, y, PixelTraits<PixelT>::WriteAexTruncate(out));",
