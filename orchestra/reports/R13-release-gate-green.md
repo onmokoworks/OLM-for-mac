@@ -49,7 +49,10 @@ The sixth decision test exercises a mixed-configuration directory and both
 ColorKey's private struct lacked P01c's distance fields. It now extracts the
 production `OLMColorKeyInfo` declaration, rather than maintaining another copy.
 After compilation was repaired, the old Smart/Classic ROI equality assertion
-also failed. The original Smart workers `0x9000/0x94b0/0x9960` read the local
+also failed. This separate expectation became stale at P02i (`122c97ac`),
+whose retained AEX disassembly and measurements are in
+`P02i-colorkey-geometry.md` (91/100 and 89/100 Smart exact, with only original
+guard-corruption refusals unavailable; Classic unchanged). The original Smart workers `0x9000/0x94b0/0x9960` read the local
 input prefix (documented in production `Render.inc`), whereas Classic retains
 origin mapping. The repaired test compares every active byte against its
 route-specific full-frame region and retains every padding/admission assertion.
