@@ -150,7 +150,7 @@ static inline void compose_pixel(
 	// the new alpha. The early ownership exit above already handled unowned
 	// pixels. The Smart callback uses the same selection with or without blur.
 	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
-		out_a = p.smart_owner ? smart_weighted_sample(d_alpha, X) : d_alpha * X;
+		out_a = smart_weighted_sample(d_alpha, X);
 		out_r = src_r; out_g = src_g; out_b = src_b;
 		return;
 	}
@@ -336,14 +336,11 @@ static inline PF_Pixel16 compose_pf16_pixel(
 // Scanline shader: applies compose_pixel row by row for each bit depth
 // ============================================================================
 
+// PF8 and PF32 share composition; PF8 alone quantizes the final channels.
+// PF16 retains its staged field roundtrip and Classic source reconstruction.
 template<typename P>
-static void shade_scanline(const P *src_row, P *dst_row,
-                           const float *x_row, const float *a_row,
-                           const DGParams &p, long w, long h, long y,
-                           const PF_LayerDef *input_world);
-
-template<> void shade_scanline<PF_Pixel8>(
-	const PF_Pixel8 *src, PF_Pixel8 *dst,
+static void shade_scanline(
+	const P *src, P *dst,
 	const float *x_row, const float *a_row,
 	const DGParams &p, long w, long /*h*/, long y,
 	const PF_LayerDef */*input_world*/)
@@ -355,19 +352,22 @@ template<> void shade_scanline<PF_Pixel8>(
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
 		float oa, orv, og, ob;
 		compose_pixel(sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
-		u_char da = clamp8(oa);
-		u_char dr = clamp8(orv);
-		u_char dg = clamp8(og);
-		u_char db = clamp8(ob);
-		dst[i].alpha = da;
-		dst[i].red   = dr;
-		dst[i].green = dg;
-		dst[i].blue  = db;
+		if constexpr (sizeof(P) == sizeof(PF_Pixel8)) {
+			dst[i] = {clamp8(oa), clamp8(orv), clamp8(og), clamp8(ob)};
+		} else {
+			dst[i] = {oa, orv, og, ob};
+		}
 		if (debug_point_selected(points, i, y)) {
-			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel8),
-			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
-			                       da, dr, dg, db,
-			                       dst[i].alpha, dst[i].red, dst[i].green, dst[i].blue);
+			if constexpr (sizeof(P) == sizeof(PF_Pixel8)) {
+				debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(P),
+				                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
+				                       dst[i].alpha, dst[i].red, dst[i].green, dst[i].blue,
+				                       dst[i].alpha, dst[i].red, dst[i].green, dst[i].blue);
+			} else {
+				debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(P),
+				                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
+				                       0, 0, 0, 0, 0, 0, 0, 0);
+			}
 		}
 	}
 }
@@ -462,28 +462,3 @@ template<> void shade_scanline<PF_Pixel16>(
 		}
 	}
 }
-template<> void shade_scanline<PF_PixelFloat>(
-	const PF_PixelFloat *src, PF_PixelFloat *dst,
-	const float *x_row, const float *a_row,
-	const DGParams &p, long w, long /*h*/, long y,
-	const PF_LayerDef */*input_world*/)
-{
-	const char *shade_debug_path = getenv("OLM_DG_SHADE_DEBUG_PATH");
-	const char *points = getenv("OLM_DG_DEBUG_POINTS");
-	for (long i = 0; i < w; ++i) {
-		float sa, sr, sg, sb;
-		load_rgba_norm(&src[i], sa, sr, sg, sb);
-		float oa, orv, og, ob;
-		compose_pixel(sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
-		dst[i].alpha = oa;
-		dst[i].red   = orv;
-		dst[i].green = og;
-		dst[i].blue  = ob;
-		if (debug_point_selected(points, i, y)) {
-			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_PixelFloat),
-			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
-			                       0, 0, 0, 0, 0, 0, 0, 0);
-		}
-	}
-}
-
