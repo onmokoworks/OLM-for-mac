@@ -478,6 +478,14 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize, bool sma
 		float       *out = tmp.data() + (size_t)y * w;
 		for (long x = 0; x < w; ++x) {
 			if (smart_owner && w == 1) { out[x] = row[x]; continue; }
+			// OpenCV SymmRowSmallFilter uses center, near pair, far pair
+			// for a symmetric five-tap float kernel (N02 direct cvSmooth probe).
+			if (smart_owner && ksize == 5) {
+				out[x] = (row[x] * k[2] +
+				    (row[std::max(0L,x-1)] + row[std::min(w-1,x+1)]) * k[3]) +
+				    (row[std::max(0L,x-2)] + row[std::min(w-1,x+2)]) * k[4];
+				continue;
+			}
 			float acc = 0;
 			for (int i = -half; i <= half; ++i) {
 				long xi = x + i;
@@ -530,6 +538,8 @@ static void gauss_blur_rect(float *mat, long w, long h, int kx, int ky)
 		float v=0;
 		if (w==1 || kx==1) v=row[x];
 		else if (kx==3) v=(row[std::max(0L,x-1)]+row[std::min(w-1,x+1)])*0.25f+row[x]*0.5f;
+		else if (kx==5) v=(row[x]*a[2]+(row[std::max(0L,x-1)]+row[std::min(w-1,x+1)])*a[3])+
+		    (row[std::max(0L,x-2)]+row[std::min(w-1,x+2)])*a[4];
 		else for (int i=0;i<kx;++i) v+=row[std::max(0L,std::min(w-1,x+i-kx/2))]*a[i];
 		tmp[(size_t)y*w+x]=v;
 	}
