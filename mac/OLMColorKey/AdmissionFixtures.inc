@@ -1,23 +1,23 @@
 // Included by OLMColorKey.cpp; preserves the single translation unit.
-static bool BoundedLab76Input(const PF_Pixel8 &pixel)
+static inline bool BoundedLab76Input(const PF_Pixel8 &pixel)
 {
 	return pixel.alpha == 255 && pixel.red == 26 &&
 	       pixel.green == 191 && pixel.blue == 204;
 }
 
-static bool BoundedLab76Input(const PF_Pixel16 &pixel)
+static inline bool BoundedLab76Input(const PF_Pixel16 &pixel)
 {
 	return pixel.alpha == 32768 && pixel.red == 3341 &&
 	       pixel.green == 24544 && pixel.blue == 26214;
 }
 
-static bool BoundedLab76Input(const PF_PixelFloat &pixel)
+static inline bool BoundedLab76Input(const PF_PixelFloat &pixel)
 {
 	return pixel.alpha == 1.0f && pixel.red == 26.0f / 255.0f &&
 	       pixel.green == 191.0f / 255.0f && pixel.blue == 204.0f / 255.0f;
 }
 
-static bool BoundedLab76Key(const PF_PixelFloat &key,
+static inline bool BoundedLab76Key(const PF_PixelFloat &key,
 	                        float red, float green, float blue)
 {
 	return key.alpha == 1.0f && key.red == red &&
@@ -148,14 +148,14 @@ template <typename PixelT>
 static PixelT ToggleFixturePixel(A_long x, A_long y);
 
 template <>
-PF_Pixel8 ToggleFixturePixel<PF_Pixel8>(A_long x, A_long y)
+inline PF_Pixel8 ToggleFixturePixel<PF_Pixel8>(A_long x, A_long y)
 {
 	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
 	return PF_Pixel8{(A_u_char)a, (A_u_char)r, (A_u_char)g, (A_u_char)b};
 }
 
 template <>
-PF_Pixel16 ToggleFixturePixel<PF_Pixel16>(A_long x, A_long y)
+inline PF_Pixel16 ToggleFixturePixel<PF_Pixel16>(A_long x, A_long y)
 {
 	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
 	auto wide = [](int value) -> A_u_short {
@@ -165,7 +165,7 @@ PF_Pixel16 ToggleFixturePixel<PF_Pixel16>(A_long x, A_long y)
 }
 
 template <>
-PF_PixelFloat ToggleFixturePixel<PF_PixelFloat>(A_long x, A_long y)
+inline PF_PixelFloat ToggleFixturePixel<PF_PixelFloat>(A_long x, A_long y)
 {
 	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
 	return PF_PixelFloat{a / 255.0f, r / 255.0f, g / 255.0f, b / 255.0f};

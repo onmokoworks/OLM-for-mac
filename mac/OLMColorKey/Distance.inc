@@ -116,38 +116,38 @@ static std::vector<float> Edt1D(const std::vector<float> &f, A_long n, float ste
 	std::vector<float> d((size_t)n, kSquaredDistanceInfinity);
 	if (sites.empty()) return d;
 
-	std::vector<A_long> v(sites.size());
-	std::vector<float> z(sites.size() + 1);
-	A_long k = 0;
-	v[0] = sites[0];
-	z[0] = -kEnvelopeInfinity;
-	z[1] = kEnvelopeInfinity;
+	std::vector<A_long> envelope_sites(sites.size());
+	std::vector<float> breakpoints(sites.size() + 1);
+	A_long envelope_index = 0;
+	envelope_sites[0] = sites[0];
+	breakpoints[0] = -kEnvelopeInfinity;
+	breakpoints[1] = kEnvelopeInfinity;
 	for (size_t site_index = 1; site_index < sites.size(); ++site_index) {
-		A_long q = sites[site_index];
-		float s = 0.0f;
+		A_long query = sites[site_index];
+		float intersection = 0.0f;
 		while (true) {
-			A_long vk = v[(size_t)k];
-			s = ((f[(size_t)q] + (EdtSquare((float)q) * step * step)) -
+			A_long vk = envelope_sites[(size_t)envelope_index];
+			intersection = ((f[(size_t)query] + (EdtSquare((float)query) * step * step)) -
 			     (f[(size_t)vk] + (EdtSquare((float)vk) * step * step))) /
-			    (2.0f * (float)(q - vk) * step) * (1.0f / step);
-			if (s > z[(size_t)k]) break;
-			if (k == 0) break;
-			--k;
+			    (2.0f * (float)(query - vk) * step) * (1.0f / step);
+			if (intersection > breakpoints[(size_t)envelope_index]) break;
+			if (envelope_index == 0) break;
+			--envelope_index;
 		}
-		if (s <= z[(size_t)k]) {
-			k = 0;
+		if (intersection <= breakpoints[(size_t)envelope_index]) {
+			envelope_index = 0;
 		} else {
-			++k;
+			++envelope_index;
 		}
-		v[(size_t)k] = q;
-		z[(size_t)k] = s;
-		z[(size_t)k + 1] = kEnvelopeInfinity;
+		envelope_sites[(size_t)envelope_index] = query;
+		breakpoints[(size_t)envelope_index] = intersection;
+		breakpoints[(size_t)envelope_index + 1] = kEnvelopeInfinity;
 	}
-	k = 0;
-	for (A_long q = 0; q < n; ++q) {
-		while (z[(size_t)k + 1] < (float)q) ++k;
-		A_long vk = v[(size_t)k];
-		d[(size_t)q] = (EdtSquare((float)(q - vk)) * step * step) + f[(size_t)vk];
+	envelope_index = 0;
+	for (A_long query = 0; query < n; ++query) {
+		while (breakpoints[(size_t)envelope_index + 1] < (float)query) ++envelope_index;
+		A_long vk = envelope_sites[(size_t)envelope_index];
+		d[(size_t)query] = (EdtSquare((float)(query - vk)) * step * step) + f[(size_t)vk];
 	}
 	return d;
 }

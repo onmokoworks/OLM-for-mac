@@ -1,3 +1,5 @@
+static constexpr float kLabOutputScale[] = {116.0f, 16.0f, 500.0f, 200.0f}; // Lab L scale/offset and a/b scales; AEX 0x9f50.
+static constexpr float kHueDegrees[] = {60.0f, 120.0f, 240.0f, 360.0f, 180.0f, 540.0f}; // HSV sector angles and Lab hue wrapping; AEX 0x9e10 and retained Lab94 recovery.
 static constexpr float kLabLSource[] = {2.1455016136169434f, 0.6380193829536438f, 0.2165091633796692f}; // Lab L source G/R/B coefficients; AEX 0x9f50.
 static constexpr float kLabLinearL[] = {1938.031494140625f, 576.3229370117188f, 195.57272338867188f}; // Linear Lab L G/R/B coefficients; AEX 0x9f50.
 static constexpr float kLabASource[] = {1.2373713254928589f, 1.0727508068084717f, 0.5412744283676147f}; // Lab a source R/G/B coefficients; AEX 0x9f50.
@@ -36,11 +38,11 @@ static void RGBToPluginLab76(const float rgb[3], float out[3])
 	float fx = LabF(x);
 	out[0] = x <= kLabLinearBreakpoint
 		? g * kLabLinearL[0] + r * kLabLinearL[1] + b * kLabLinearL[2]
-		: ucrt_powf(x, kLabPower, UCRT_FMA) * 116.0f - 16.0f;
+		: ucrt_powf(x, kLabPower, UCRT_FMA) * kLabOutputScale[0] - kLabOutputScale[1];
 	float a_source = r * kLabASource[0] + g * kLabASource[1] + b * kLabASource[2];
 	float b_source = g * kLabBSource[0] + r * kLabBSource[1] + b * kLabBSource[2];
-	out[1] = (LabF(a_source) - fx) * 500.0f;
-	out[2] = (fx - LabF(b_source)) * 200.0f;
+	out[1] = (LabF(a_source) - fx) * kLabOutputScale[2];
+	out[2] = (fx - LabF(b_source)) * kLabOutputScale[3];
 }
 
 static void RGBToPluginHSV(const float rgb[3], float out[3])
@@ -57,11 +59,11 @@ static void RGBToPluginHSV(const float rgb[3], float out[3])
 	const float delta = olm::x86_float::sse_sub(mx, mn);
 	float h;
 	if (equal_or_unordered(mx, mn)) h = 0.0f;
-	else if (equal_or_unordered(r, mx)) h = (g - b) * 60.0f / delta;
-	else if (equal_or_unordered(g, mx)) h = (b - r) * 60.0f * (1.0f / delta) + 120.0f;
-	else h = (r - g) * 60.0f * (1.0f / delta) + 240.0f;
-	h = std::fmod(h, 360.0f);
-	if (!(h >= 0.0f)) h += 360.0f;
+	else if (equal_or_unordered(r, mx)) h = (g - b) * kHueDegrees[0] / delta;
+	else if (equal_or_unordered(g, mx)) h = (b - r) * kHueDegrees[0] * (1.0f / delta) + kHueDegrees[1];
+	else h = (r - g) * kHueDegrees[0] * (1.0f / delta) + kHueDegrees[2];
+	h = std::fmod(h, kHueDegrees[3]);
+	if (!(h >= 0.0f)) h += kHueDegrees[3];
 	out[0] = h * kDegreesToUnit;
 	out[1] = equal_or_unordered(mx, 0.0f) ? 0.0f : delta / mx;
 	out[2] = mx;
@@ -89,10 +91,10 @@ static float Lab94Distance(const float a[3], const float b[3])
 	const float c2 = std::sqrt(b[1] * b[1] + b[2] * b[2]);
 	const float cmean = std::sqrt(c2 * c1);
 	auto hue = [](float aa, float bb) {
-		float h = ucrt_atan2f(bb, aa, UCRT_FMA) * kRadiansToDegrees + 180.0f;
+		float h = ucrt_atan2f(bb, aa, UCRT_FMA) * kRadiansToDegrees + kHueDegrees[4];
 		if (h != 0.0f) {
-			if (h < 0.0f) h += 540.0f;
-			h = std::fmod(h, 360.0f);
+			if (h < 0.0f) h += kHueDegrees[5];
+			h = std::fmod(h, kHueDegrees[3]);
 		}
 		return h;
 	};
