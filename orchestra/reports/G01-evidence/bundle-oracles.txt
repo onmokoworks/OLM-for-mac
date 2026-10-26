@@ -1,0 +1,10 @@
+olmblur-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+colorkeep-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+olmcolorkey-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+olmdirectionalblur-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+olmdistancegradation-plugin-bundle 0 complete {'aex_budget': 2, 'aex_ok': 95, 'aex_reject': 3, 'both_routes_exact': 95, 'pixel_mismatch_cases': 0, 'smart_exact': 95, 'smart_reject': 1, 'smart_uncompared': 4}
+olmkirakira-plugin-bundle 0 complete {'aex_ok': 97, 'aex_reject': 3, 'both_routes_exact': 97, 'pixel_mismatch_cases': 0, 'smart_exact': 97, 'smart_reject': 3}
+olmsmoother2-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+olmtoondilate-plugin-bundle 0 complete {'aex_ok': 100, 'both_routes_exact': 100, 'pixel_mismatch_cases': 0, 'smart_exact': 100}
+radialblur-plugin-bundle 0 complete {'aex_budget': 2, 'aex_ok': 84, 'aex_reject': 14, 'both_routes_exact': 84, 'pixel_mismatch_cases': 0, 'smart_exact': 84, 'smart_reject': 7, 'smart_uncompared': 9}
+olmsmoother-plugin-bundle 0 complete {'aex_ok': 65, 'aex_reject': 35, 'both_routes_exact': 65, 'classic_exact': 65, 'classic_reject': 35, 'pixel_mismatch_cases': 0}

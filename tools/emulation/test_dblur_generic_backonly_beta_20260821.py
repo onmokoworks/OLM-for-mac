@@ -126,7 +126,6 @@ CPP = r'''
   std::fprintf(stderr, "FAIL code=%d line=%d\n", (code), __LINE__); return (code); \
 } } while (0)
 
-static constexpr int kRouteRetained = 1;
 static constexpr int kRouteGeneric = 2;
 static constexpr std::uint8_t kInputPad = 0xa5;
 static constexpr std::uint8_t kOutputPad = 0xee;
@@ -238,8 +237,11 @@ static int render(Storage<Pixel>& storage, short depth,
   int route = -1;
   const PF_Err err = OLMDirectionalBlurTestRenderWorldRoute(
       &storage.input_world, &storage.output_world, &info, depth, &route);
-  if (err != PF_Err_NONE || route != expected_route || !storage.active_changed() ||
-      !storage.input_unchanged() || !storage.padding_ok()) return 1;
+  REQUIRE(err == PF_Err_NONE, 401);
+  REQUIRE(expected_route < 0 || route == expected_route, 402);
+  REQUIRE(storage.active_changed(), 403);
+  REQUIRE(storage.input_unchanged(), 404);
+  REQUIRE(storage.padding_ok(), 405);
   return 0;
 }
 
@@ -308,12 +310,30 @@ static int retained_depth(short depth) {
     {1, 45.0, 1.0}, {8, 45.0, 1.0},
   };
   REQUIRE(!cases.empty(), 103 + depth);
+  // Pre-F01 retained output, captured by G01-evidence/capture_retained.py.
+  std::ifstream expected("__RETAINED__", std::ios::binary);
+  REQUIRE(expected.good(), 406);
+  expected.seekg(depth == 8 ? 0 : depth == 16 ? 2048 : 8192);
   for (std::size_t i = 0; i < cases.size(); ++i) {
     Storage<Pixel> storage(16, 16);
     auto info = Info(0, cases[i].back, cases[i].angle);
     info.brightness_gain = cases[i].gain;
-    REQUIRE(render(storage, depth, info, kRouteRetained) == 0,
+    REQUIRE(render(storage, depth, info, -1) == 0,
             110 + depth + (int)i);
+
+    for (int y = 0; y < storage.height; ++y) {
+      for (std::size_t byte = 0; byte < storage.width * sizeof(Pixel); ++byte) {
+        const int wanted = expected.get();
+        REQUIRE(wanted != EOF, 407);
+        const unsigned actual = storage.output[(std::size_t)y * storage.output_rowbytes + byte];
+        if (actual != (unsigned)wanted) {
+          std::fprintf(stderr, "retained mismatch depth=%d case=%zu back=%d angle=%g gain=%g active_byte=%zu expected=%02x actual=%02x\n",
+              depth, i, cases[i].back, cases[i].angle, cases[i].gain,
+              (std::size_t)y * storage.width * sizeof(Pixel) + byte, wanted, actual);
+          REQUIRE(false, 408);
+        }
+      }
+    }
 
     storage.clear_output();
     storage.input_world.rowbytes = -1;
@@ -479,7 +499,7 @@ static int anchor(const char* input_path, const char* output_path) {
   int route = -1;
   REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(&in, &out, &info, 8, &route) ==
               PF_Err_NONE, 301);
-  REQUIRE(route == kRouteRetained && input == original, 302);
+  REQUIRE(input == original, 302);
   std::ofstream(output_path, std::ios::binary).write(
       reinterpret_cast<const char*>(output.data()), output.size());
   return 0;
@@ -499,7 +519,7 @@ int main(int argc, char** argv) {
   REQUIRE(deep_range_policy() == 0, 10);
   if (argc == 3) REQUIRE(anchor(argv[1], argv[2]) == 0, 11);
   else REQUIRE(argc == 1, 12);
-  std::puts("PASS_DBLUR_GENERIC_BACKONLY_BETA depths=8/16/32 odd=37x23 routes=retained/generic atomic=yes");
+  std::puts("PASS_DBLUR_GENERIC_BACKONLY_BETA depths=8/16/32 odd=37x23 retained_bytes=exact atomic=yes");
   return 0;
 }
 '''
@@ -511,8 +531,10 @@ def build(directory: Path, sanitize: bool) -> Path:
         raise RuntimeError("C++ compiler not found")
     source = directory / "dblur_generic_backonly_probe.cpp"
     binary = directory / "dblur_generic_backonly_probe"
+    retained = ROOT / "tools/emulation/fixtures/dblur_backonly_retained.argb"
+    cpp_path = lambda path: str(path).replace("\\", "\\\\").replace('"', '\\"')
     source.write_text(
-        CPP.replace("__PRODUCTION__", str(PRODUCTION).replace("\\", "\\\\").replace('"', '\\"')),
+        CPP.replace("__RETAINED__", cpp_path(retained)).replace("__PRODUCTION__", cpp_path(PRODUCTION)),
         encoding="utf-8",
     )
     sdk = subprocess.run(

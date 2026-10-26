@@ -1,0 +1,619 @@
+{
+  "schema": "olm-release-gate/2",
+  "started_utc": "2026-10-26T14:38:31.383194+00:00",
+  "git_head": "c80a48c176a3eb9817c0d998baec681e03b3f471",
+  "script_sha256": "abc37eb34c3a23065e69299414904b02b20d16562d00e151ee86651500bd7369",
+  "seeds": [
+    2026,
+    2027
+  ],
+  "n_per_seed": 300,
+  "fuzz_jobs": 1,
+  "OLM_TEST_JOBS": 1,
+  "stages": [],
+  "commands": [
+    {
+      "name": "unit-00",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_colorkeep_generic_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 13.94,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-00.log"
+    },
+    {
+      "name": "unit-01",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_colorkeep_roi_tile_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 10.58,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-01.log"
+    },
+    {
+      "name": "unit-02",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmblur_generic_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-02.log"
+    },
+    {
+      "name": "unit-03",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmblur_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 5.51,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-03.log"
+    },
+    {
+      "name": "unit-04",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmblur_generic_classic_beta_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-04.log"
+    },
+    {
+      "name": "unit-05",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmblur_roi_halo_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.08,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-05.log"
+    },
+    {
+      "name": "unit-06",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmcolorkey_generic_pixel_local_beta.py"
+      ],
+      "exit": 0,
+      "seconds": 2.93,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-06.log"
+    },
+    {
+      "name": "unit-07",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmcolorkey_generic_pixel_local_pairwise.py"
+      ],
+      "exit": 0,
+      "seconds": 12.42,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-07.log"
+    },
+    {
+      "name": "unit-08",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmcolorkey_generic_roi_tile.py"
+      ],
+      "exit": 0,
+      "seconds": 5.99,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-08.log"
+    },
+    {
+      "name": "unit-09",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 10.73,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-09.log"
+    },
+    {
+      "name": "unit-10",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 14.01,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-10.log"
+    },
+    {
+      "name": "unit-11",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_backonly_beta_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 3.57,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-11.log"
+    },
+    {
+      "name": "unit-12",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_admission_budget_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.34,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-12.log"
+    },
+    {
+      "name": "unit-13",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "tools/emulation/test_dblur_generic_roi_policy_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 2.95,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-13.log"
+    },
+    {
+      "name": "unit-14",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.09,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-14.log"
+    },
+    {
+      "name": "unit-15",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmdistancegradation_smart_transactional_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 3.7,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-15.log"
+    },
+    {
+      "name": "unit-16",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmkirakira_generic_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 0.08,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-16.log"
+    },
+    {
+      "name": "unit-17",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmkirakira_generic_beta_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 43.5,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-17.log"
+    },
+    {
+      "name": "unit-18",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmkirakira_native_smoke_tuple_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 5.5,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-18.log"
+    },
+    {
+      "name": "unit-19",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 36.27,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-19.log"
+    },
+    {
+      "name": "unit-20",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 12.45,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-20.log"
+    },
+    {
+      "name": "unit-21",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 3.53,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-21.log"
+    },
+    {
+      "name": "unit-22",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "exit": 0,
+      "seconds": 4.58,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-22.log"
+    },
+    {
+      "name": "unit-23",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.53,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-23.log"
+    },
+    {
+      "name": "unit-24",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmsmoother_v1_generic_classic_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 13.21,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-24.log"
+    },
+    {
+      "name": "unit-25",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmsmoother_v1_smart_beta_20260822.py"
+      ],
+      "exit": 0,
+      "seconds": 15.92,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-25.log"
+    },
+    {
+      "name": "unit-26",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmsmoother2_default_beta_lane_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.1,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-26.log"
+    },
+    {
+      "name": "unit-27",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 6.05,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-27.log"
+    },
+    {
+      "name": "unit-28",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmsmoother2_roi_fullframe_contract_20260820.py"
+      ],
+      "exit": 0,
+      "seconds": 3.07,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-28.log"
+    },
+    {
+      "name": "unit-29",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmtoondilate_generic_beta.py"
+      ],
+      "exit": 0,
+      "seconds": 6.24,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-29.log"
+    },
+    {
+      "name": "unit-30",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olmtoondilate_roi_safety.py"
+      ],
+      "exit": 0,
+      "seconds": 1.15,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-30.log"
+    },
+    {
+      "name": "unit-31",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_world_safety.py"
+      ],
+      "exit": 0,
+      "seconds": 0.55,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-31.log"
+    },
+    {
+      "name": "unit-32",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_checked_allocation.py"
+      ],
+      "exit": 0,
+      "seconds": 0.33,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-32.log"
+    },
+    {
+      "name": "unit-33",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_checked_rect.py"
+      ],
+      "exit": 0,
+      "seconds": 0.32,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-33.log"
+    },
+    {
+      "name": "unit-34",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_roi_contract.py"
+      ],
+      "exit": 0,
+      "seconds": 0.31,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-34.log"
+    },
+    {
+      "name": "unit-35",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_property_cases.py"
+      ],
+      "exit": 0,
+      "seconds": 0.08,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-35.log"
+    },
+    {
+      "name": "unit-36",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_olm_roi_tile_property.py"
+      ],
+      "exit": 0,
+      "seconds": 0.75,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-36.log"
+    },
+    {
+      "name": "unit-37",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_generate_aexcompat_oracle_campaign.py"
+      ],
+      "exit": 0,
+      "seconds": 0.2,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-37.log"
+    },
+    {
+      "name": "unit-38",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_run_aexcompat_reference_20260725.py"
+      ],
+      "exit": 0,
+      "seconds": 1.87,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-38.log"
+    },
+    {
+      "name": "unit-39",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_generic_beta_windows_oracle_handoff.py"
+      ],
+      "exit": 0,
+      "seconds": 2.27,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-39.log"
+    },
+    {
+      "name": "unit-40",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_ae_generalization_smoke.py"
+      ],
+      "exit": 0,
+      "seconds": 0.38,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-40.log"
+    },
+    {
+      "name": "unit-41",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_ae_png_completion.py"
+      ],
+      "exit": 0,
+      "seconds": 2.11,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-41.log"
+    },
+    {
+      "name": "unit-42",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_ae_batch_png_integrity.py"
+      ],
+      "exit": 0,
+      "seconds": 1.55,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-42.log"
+    },
+    {
+      "name": "unit-43",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_run_olm_generic_beta_gate.py"
+      ],
+      "exit": 0,
+      "seconds": 1.97,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-43.log"
+    },
+    {
+      "name": "unit-44",
+      "command": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python3",
+        "-B",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/G01-gate-after-cleanup/tests/test_verify_mac_plugin_package_hash.py"
+      ],
+      "exit": 0,
+      "seconds": 0.15,
+      "log": "orchestra/state/G01-gate-after-cleanup/early-tests/unit-44.log"
+    }
+  ],
+  "real_host": [
+    {
+      "item": "installed identity",
+      "status": "REQUIRES-REAL-HOST"
+    },
+    {
+      "item": "native host smoke",
+      "status": "REQUIRES-REAL-HOST"
+    },
+    {
+      "item": "Windows owner evidence",
+      "status": "REQUIRES-REAL-HOST"
+    }
+  ],
+  "excluded_legacy_tests": {
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": "operation-budget rejection contract (R07)",
+    "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py": "pre-allocation cleanup contract (R07)",
+    "tests/test_olmdistancegradation_generic_production_beta_20260820.py": "PF32 blurred-budget rejection contract (R07)",
+    "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": "zero-length rejection contract (R07)",
+    "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py": "native Windows owner evidence (R05/R07)",
+    "tests/test_olmradialblur_generic_baseline_20260820.py": "PF32 center-domain admission contract (R07)",
+    "tests/test_beta_support_documentation.py": "stale support documentation binding (R05/R07)",
+    "tests/test_generic_beta_perf_smoke_runner.py": "stale performance runner binding (R05/R07)"
+  },
+  "exclusion_evidence": [
+    "orchestra/reports/R05-regenerate-stale-bindings.md",
+    "orchestra/reports/R07-gate-contracts-and-bindings.md"
+  ]
+}

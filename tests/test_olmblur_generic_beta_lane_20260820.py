@@ -34,7 +34,7 @@ class GenericBetaLaneTest(unittest.TestCase):
         # F41b merge 7a0cd797d52c9564c1f89191488f095c73f11b02: AEX has no work/size cap.
         for contract in (
             "width <= 0 || height <= 0",
-            "usize_width > ((size_t)-1) / usize_height",
+            "olm::world_safety::checked_multiply((size_t)width, (size_t)height, &pixels)",
             "pixels > std::vector<float>().max_size() / 4u",
             "raw.amount > 1000.0",
             "raw.repeat > 10",
