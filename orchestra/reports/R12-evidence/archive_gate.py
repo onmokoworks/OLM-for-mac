@@ -8,7 +8,8 @@ import tarfile
 
 root = Path(__file__).resolve().parents[3]
 state = Path(sys.argv[1]).resolve()
-evidence = Path(__file__).resolve().parent
+evidence = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else Path(__file__).resolve().parent
+evidence.mkdir(parents=True, exist_ok=True)
 paths = sorted(set(
     list(state.glob('*.json')) + list(state.glob('*.log')) +
     list((state/'f47d').glob('*.json')) + list((state/'f47d').glob('*.log')) +
