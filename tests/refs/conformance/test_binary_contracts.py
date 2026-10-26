@@ -66,6 +66,12 @@ class TestDistanceGradation(unittest.TestCase):
             r"#define BUILD_VERSION 0",
         )
 
+        # Resolve the named masks before comparing the same assignments to PiPL.
+        for name in ("kGlobalOutFlags", "kGlobalOutFlags2"):
+            value = re.search(r"static constexpr A_long " + name + r" = (0x[0-9a-f]+);", source)
+            self.assertIsNotNone(value)
+            source = re.sub(r"\b" + name + r"\b", value.group(1), source)
+
         source_flags = re.search(
             r"out_data->out_flags\s*=\s*(0x[0-9a-f]+);\s*"
             r"out_data->out_flags2\s*=\s*(0x[0-9a-f]+);",

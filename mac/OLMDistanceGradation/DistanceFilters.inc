@@ -404,8 +404,3 @@ static void median_blur(float *mat, long w, long h, int ksize)
 		}
 	}
 }
-
-// Original IPP scalar expf, FUN_18144ee30, restricted to bilateral's
-// finite [-25, 0] exponent interval. The 2^(j/256) table and polynomial
-// constants are read-only coefficients at 18144f000..18144f817.
-// Keep each double operation rounded separately, as in the SSE2 body.

@@ -1,7 +1,27 @@
+static constexpr float kOwnershipCutoff = 0.0001f; // Smart source ownership cutoff; AEX RVA 0x1170e00.
+static constexpr uint32_t kNativeUcrtPowerInput = 0x3f4d07a5u; // Input to retained Windows UCRT powf witness below.
+template<typename P> static inline void load_rgba_norm(const P *p, float &a, float &r, float &g, float &b);
+
+template<> inline void load_rgba_norm<PF_Pixel8>(const PF_Pixel8 *p, float &a, float &r, float &g, float &b) {
+	a = p->alpha / 255.0f; r = p->red / 255.0f; g = p->green / 255.0f; b = p->blue / 255.0f;
+}
+template<> inline void load_rgba_norm<PF_Pixel16>(const PF_Pixel16 *p, float &a, float &r, float &g, float &b) {
+	a = p->alpha / 32768.0f; r = p->red / 32768.0f; g = p->green / 32768.0f; b = p->blue / 32768.0f;
+}
+template<> inline void load_rgba_norm<PF_PixelFloat>(const PF_PixelFloat *p, float &a, float &r, float &g, float &b) {
+	a = p->alpha; r = p->red; g = p->green; b = p->blue;
+}
+
+// The actual-AEX PF8 and PF16 compose callbacks both use float-to-int
+
+// truncation before storing the channel word (FUN_181170870/FUN_181170480).
+static inline u_char clamp8(float v)   { v = v * 255.0f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
+static inline u_short clamp16(float v) { v = v * 32768.0f; return (v < 0) ? 0 : (v > 32768.f ? 32768 : (u_short)v); }
+
 static inline float smart_weighted_sample(float sample, float weight)
 {
 	if (std::isinf(sample) && weight == 0.0f) {
-		const uint32_t indefinite = 0xffc00000u;
+		constexpr uint32_t indefinite = 0xffc00000u;
 		float result;
 		memcpy(&result, &indefinite, sizeof(result));
 		return result;
@@ -35,7 +55,7 @@ static inline void compose_pixel(
 		float ownership = p.in_out == IN_OUT_BOTH ? 1.0f : src_a;
 		if (p.in_out == IN_OUT_INSIDE) ownership = src_a;
 		else if (p.in_out == IN_OUT_OUTSIDE) ownership = 1.0f - src_a;
-		if (ownership < 0.0001f) {
+		if (ownership < kOwnershipCutoff) {
 			out_a = 0.0f;
 			out_r = out_g = X;
 			out_b = has_effective_blur(p) ? field_aux : X;
@@ -78,8 +98,8 @@ static inline void compose_pixel(
 		    p.pf32_smart_matrix_admitted && p.power == 2.25f) {
 			uint32_t x_bits = 0;
 			memcpy(&x_bits, &X, sizeof(x_bits));
-			if (x_bits == 0x3f4d07a5u) {
-				const uint32_t native_ucrt_bits = 0x3f1b5786u;
+			if (x_bits == kNativeUcrtPowerInput) {
+				constexpr uint32_t native_ucrt_bits = 0x3f1b5786u;
 				memcpy(&X, &native_ucrt_bits, sizeof(X));
 			} else {
 				X = ucrt_powf(X, p.power, UCRT_FMA);
@@ -225,7 +245,7 @@ static inline void compose_pixel(
 			// Keep the older 8bpc path unchanged because that suite is already
 			// canonical AE exact.
 			bool low_alpha_hidden_color = (p.pixel_size != sizeof(PF_Pixel8)) &&
-			                              src_a <= (1.5f / 255.0f) &&
+			                              src_a <= (kMaskRoundThreshold / 255.0f) &&
 			                              src_r <= src_a && src_g <= src_a && src_b <= src_a;
 			bool both_channel_mask_color = (p.pixel_size != sizeof(PF_Pixel8)) &&
 			                               p.in_out == IN_OUT_BOTH &&

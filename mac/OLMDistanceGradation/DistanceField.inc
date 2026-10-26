@@ -1,6 +1,5 @@
-// truncation before storing the channel word (FUN_181170870/FUN_181170480).
-static inline u_char clamp8(float v)   { v = v * 255.0f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
-static inline u_short clamp16(float v) { v = v * 32768.0f; return (v < 0) ? 0 : (v > 32768.f ? 32768 : (u_short)v); }
+static constexpr float kMaskRoundThreshold = 1.5f; // cvConvertScale mask rounding boundary; AEX RVA 0x11749a0.
+static constexpr float kInt32Overflow = 2147483648.0f; // SSE signed conversion overflow boundary; AEX RVA 0x11749a0.
 
 static bool debug_point_selected(const char *points, long x, long y)
 {
@@ -123,10 +122,10 @@ static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size, bool s
 		// FUN_1811749a0 scales raw PF16 alpha by 1/128 (181504a98),
 		// while PF32 uses 255. Undoing PF16 normalization therefore uses 256.
 		const float scaled = alpha * (pixel_size == sizeof(PF_Pixel16) ? 256.0f : 255.0f);
-		return scaled >= 1.5f && scaled < 2147483648.0f;
+		return scaled >= kMaskRoundThreshold && scaled < kInt32Overflow;
 	}
 	if (pixel_size == sizeof(PF_Pixel8)) return alpha > 0.0f;
-	return alpha > (1.5f / 255.0f);
+	return alpha > (kMaskRoundThreshold / 255.0f);
 }
 
 static void debug_dump_distance_field(const char *path, const float *alpha, const DistanceField &df,

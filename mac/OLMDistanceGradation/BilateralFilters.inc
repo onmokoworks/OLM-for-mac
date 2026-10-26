@@ -1,9 +1,29 @@
+// Original IPP scalar expf, FUN_18144ee30, restricted to bilateral's
+// finite [-25, 0] exponent interval. The 2^(j/256) table and polynomial
+// constants are read-only coefficients at 18144f000..18144f817.
+// Keep each double operation rounded separately, as in the SSE2 body.
+static constexpr float kScalarExpTiny = 0x1p-28f; // Linear exp interval; IPP RVA 0x144ee30.
+static constexpr double kScalarLog2Scale = 0x1.71547652b82fep+8; // 256/log(2) range reduction; IPP RVA 0x144ee30.
+static constexpr double kScalarRoundBias = 0x1.8p52; // Nearest-even integer bias; IPP RVA 0x144ee30.
+static constexpr double kScalarExpQuadratic = 0x1.ebfbdff82c58ep-19; // Quadratic residual coefficient; IPP RVA 0x144ee30.
+static constexpr double kScalarExpLinear = 0x1.62e42fefa72c5p-9; // Linear residual coefficient; IPP RVA 0x144ee30.
+static constexpr float kVectorLog2E = 0x1.715476p+0f; // log2(e) range reduction; IPP RVA 0xba5780.
+static constexpr float kVectorRoundBias = 0x1.8p23f; // Nearest-even integer bias; IPP RVA 0xba5780.
+static constexpr float kVectorLn2High = 0x1.62e4p-1f; // High ln(2) split; IPP coefficient block RVA 0x15f0600.
+static constexpr float kVectorLn2Low = 0x1.7f7d1cp-20f; // Low ln(2) split; IPP coefficient block RVA 0x15f0600.
+static constexpr float kVectorExpC5 = 0x1.0fb3fcp-7f; // Degree-five exp coefficient; IPP block RVA 0x15f0600.
+static constexpr float kVectorExpC4 = 0x1.570724p-5f; // Degree-four exp coefficient; IPP block RVA 0x15f0600.
+static constexpr float kVectorExpC3 = 0x1.555958p-3f; // Degree-three exp coefficient; IPP block RVA 0x15f0600.
+static constexpr float kVectorExpC2 = 0x1.fffe68p-2f; // Degree-two exp coefficient; IPP block RVA 0x15f0600.
+static constexpr float kVectorExpC1 = 0x1.fffffcp-1f; // Degree-one exp coefficient; IPP block RVA 0x15f0600.
+static constexpr float kBilateralExpCutoff = -25.0f; // Strict exponent cutoff; AEX RVAs 0x15bd7c4/0x15dce38.
+
 static float bilateral_ipp_exp(float x)
 {
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
-	static const double powers[256] = {
+	static constexpr double powers[256] = {
 		0x1.0000000000000p+0, 0x1.00b1afa5abcbfp+0, 0x1.0163da9fb3335p+0, 0x1.02168143b0281p+0,
 		0x1.02c9a3e778061p+0, 0x1.037d42e11bbccp+0, 0x1.04315e86e7f85p+0, 0x1.04e5f72f654b1p+0,
 		0x1.059b0d3158574p+0, 0x1.0650a0e3c1f89p+0, 0x1.0706b29ddf6dep+0, 0x1.07bd42b72a836p+0,
@@ -69,19 +89,20 @@ static float bilateral_ipp_exp(float x)
 		0x1.f50765b6e4540p+0, 0x1.f6632798844f8p+0, 0x1.f7bfdad9cbe14p+0, 0x1.f91d802243c89p+0,
 		0x1.fa7c1819e90d8p+0, 0x1.fbdba3692d514p+0, 0x1.fd3c22b8f71f1p+0, 0x1.fe9d96b2a23d9p+0,
 	};
-	if (std::fabs(x) < 0x1p-28f) return 1.0f + x;
-	const double scaled = (double)x * 0x1.71547652b82fep+8;
-	const double biased = 0x1.8p52 + scaled;
+	if (std::fabs(x) < kScalarExpTiny) return 1.0f + x;
+	// IPP RVA 0x144ee30: preserve double residual and operation order.
+	const double scaled = (double)x * kScalarLog2Scale;
+	const double biased = kScalarRoundBias + scaled;
 	std::uint64_t bits;
 	std::memcpy(&bits, &biased, sizeof(bits));
 	const std::int32_t n = (std::int32_t)(std::uint32_t)bits;
-	const double residual = scaled + (0x1.8p52 - biased);
+	const double residual = scaled + (kScalarRoundBias - biased);
 	double value = powers[(std::uint32_t)n & 255];
 	std::memcpy(&bits, &value, sizeof(bits));
 	bits += (std::uint64_t)(std::int64_t)(n >> 8) << 52;
 	std::memcpy(&value, &bits, sizeof(bits));
-	const double quadratic = (0x1.ebfbdff82c58ep-19 * residual) * residual;
-	const double linear = 0x1.62e42fefa72c5p-9 * residual + 1.0;
+	const double quadratic = (kScalarExpQuadratic * residual) * residual;
+	const double linear = kScalarExpLinear * residual + 1.0;
 	return (float)(value * (linear + quadratic));
 }
 
@@ -113,7 +134,7 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 			const int squared = x*x + y*y;
 			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
-			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+			offsets.push_back({x, y, exponent > kBilateralExpCutoff ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
 	}
 	const std::vector<float> source(mat, mat + (size_t)w*h);
@@ -127,7 +148,7 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 				const float sample = source[(size_t)sy*w+sx];
 				const float difference = sample-center;
 				const float exponent = (-0.5f*difference)*difference;
-				const float color = exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				const float color = exponent > kBilateralExpCutoff ? bilateral_ipp_exp(exponent) : 0.0f;
 				const float weight = bilateral_noncontracting_product(color, offset.spatial);
 				weight_sum += weight;
 				sum += bilateral_noncontracting_product(sample, weight);
@@ -171,7 +192,7 @@ static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
 				const float sample=source[(size_t)sy*w+sx];
 				const float difference=sample-center;
 				const float exponent=vector_dispatch ? (difference*difference)*-0.5f : (-0.5f*difference)*difference;
-				weights[tap]=exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
+				weights[tap]=exponent > kBilateralExpCutoff ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
 				products[tap]=bilateral_noncontracting_product(sample,weights[tap]);
 			}
 			if (vector_dispatch && group == 0) {
@@ -209,16 +230,17 @@ static float bilateral_ipp_vector_exp(float x)
 #if defined(__clang__)
 #pragma clang fp contract(off)
 #endif
-	const float scaled = bilateral_noncontracting_product(x, 0x1.715476p+0f);
-	const float biased = scaled + 0x1.8p23f;
-	const float n = biased - 0x1.8p23f;
-	const float hi = bilateral_noncontracting_product(n, 0x1.62e4p-1f);
-	const float lo = bilateral_noncontracting_product(n, 0x1.7f7d1cp-20f);
+	// IPP RVA 0xba5780: separate float MULPS/ADDPS, without contraction.
+	const float scaled = bilateral_noncontracting_product(x, kVectorLog2E);
+	const float biased = scaled + kVectorRoundBias;
+	const float n = biased - kVectorRoundBias;
+	const float hi = bilateral_noncontracting_product(n, kVectorLn2High);
+	const float lo = bilateral_noncontracting_product(n, kVectorLn2Low);
 	const float residual = (x - hi) - lo;
-	float poly = bilateral_noncontracting_product(0x1.0fb3fcp-7f, residual) + 0x1.570724p-5f;
-	poly = bilateral_noncontracting_product(poly, residual) + 0x1.555958p-3f;
-	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffe68p-2f;
-	poly = bilateral_noncontracting_product(poly, residual) + 0x1.fffffcp-1f;
+	float poly = bilateral_noncontracting_product(kVectorExpC5, residual) + kVectorExpC4;
+	poly = bilateral_noncontracting_product(poly, residual) + kVectorExpC3;
+	poly = bilateral_noncontracting_product(poly, residual) + kVectorExpC2;
+	poly = bilateral_noncontracting_product(poly, residual) + kVectorExpC1;
 	poly = bilateral_noncontracting_product(poly, residual) + 1.0f;
 	std::uint32_t scale_bits, result_bits;
 	std::memcpy(&scale_bits, &biased, 4);
@@ -249,7 +271,7 @@ static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
 			const int squared = x*x + y*y;
 			if (squared > radius*radius || (finite && squared >= 50)) continue;
 			const float exponent = -0.5f * (float)squared;
-			offsets.push_back({x, y, exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f});
+			offsets.push_back({x, y, exponent > kBilateralExpCutoff ? bilateral_ipp_exp(exponent) : 0.0f});
 		}
 	}
 	const std::vector<float> source(mat, mat + (size_t)w*h);
@@ -265,7 +287,7 @@ static void bilateral_blur_ipp_general(float *mat, long w, long h, int radius)
 				const float sample = source[(size_t)sy*w+sx];
 				const float difference = sample-center;
 				const float exponent = vector_dispatch ? (difference*difference)*-0.5f : (-0.5f*difference)*difference;
-				const float color = exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
+				const float color = exponent > kBilateralExpCutoff ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
 				const float weight = bilateral_noncontracting_product(color, offset.spatial);
 				weight_sum += weight;
 				sum += bilateral_noncontracting_product(sample, weight);
@@ -307,7 +329,7 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 				const float exponent = vector_dispatch ? (difference * difference) * -0.5f : (-0.5f * difference) * difference;
 				// 1806bd7ba..1806bd84f skips exp at/below -25; the exp
 				// helper is only reproduced on that bounded input interval.
-				const float color_weight = exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
+				const float color_weight = exponent > kBilateralExpCutoff ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
 				weight_sum += color_weight;
 				sum += bilateral_noncontracting_product(values[k], color_weight);
 			}
@@ -321,16 +343,3 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 // ============================================================================
 // Helpers: pixel fetch / store (alpha, red, green, blue order in AE)
 // ============================================================================
-template<typename P> static inline void load_rgba_norm(const P *p, float &a, float &r, float &g, float &b);
-
-template<> inline void load_rgba_norm<PF_Pixel8>(const PF_Pixel8 *p, float &a, float &r, float &g, float &b) {
-	a = p->alpha / 255.0f; r = p->red / 255.0f; g = p->green / 255.0f; b = p->blue / 255.0f;
-}
-template<> inline void load_rgba_norm<PF_Pixel16>(const PF_Pixel16 *p, float &a, float &r, float &g, float &b) {
-	a = p->alpha / 32768.0f; r = p->red / 32768.0f; g = p->green / 32768.0f; b = p->blue / 32768.0f;
-}
-template<> inline void load_rgba_norm<PF_PixelFloat>(const PF_PixelFloat *p, float &a, float &r, float &g, float &b) {
-	a = p->alpha; r = p->red; g = p->green; b = p->blue;
-}
-
-// The actual-AEX PF8 and PF16 compose callbacks both use float-to-int

@@ -6,8 +6,6 @@
 #include "../../core/olm_parallel.h"
 #include <math.h>
 #include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <vector>
 #include <algorithm>
 #include <limits>
@@ -56,13 +54,17 @@ About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 	return PF_Err_NONE;
 }
 
+// Captured AEX GlobalSetup flags; preserve the exact exported capability masks.
+static constexpr A_long kGlobalOutFlags = 0x06000040;
+static constexpr A_long kGlobalOutFlags2 = 0x08001400;
+
 static PF_Err
 GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x06000040;
-	out_data->out_flags2 = 0x08001400;
+	out_data->out_flags  = kGlobalOutFlags;
+	out_data->out_flags2 = kGlobalOutFlags2;
 	return PF_Err_NONE;
 }
 
@@ -223,12 +225,10 @@ UpdateParamsUI(PF_InData *in_data)
 struct DGParams {
 	bool          invert;
 	A_long        in_out;           // IN_OUT_*
-	A_long        inside_threshold;
-	A_long        outside_threshold;
+	A_long        inside_threshold, outside_threshold;
 	A_long        render_mode;      // RENDER_MODE_*
 	bool          use_bg;
-	PF_PixelFloat grad_color;
-	PF_PixelFloat bg_color;
+	PF_PixelFloat grad_color, bg_color;
 	A_long        interp_mode;      // INTERP_*
 	float         power;
 	A_long        blur_mode;        // BLUR_MODE_*
@@ -236,8 +236,7 @@ struct DGParams {
 
 	A_long        w, h;             // output dimensions
 	// downsample scale (full-res -> current-res)
-	float         ds_x;
-	float         ds_y;
+	float         ds_x, ds_y;
 	long          reconstructed_w, reconstructed_h;
 	long          blur_size_y;
 	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
