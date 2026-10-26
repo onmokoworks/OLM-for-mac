@@ -85,6 +85,17 @@ struct AddressRange {
     std::uintptr_t end; // one past the last addressable byte
 };
 
+// For callers that already validated their own active or padded byte span.
+inline Status address_range(const void *data, std::size_t span, AddressRange *range) noexcept
+{
+    if (!range) return Status::arithmetic_overflow;
+    const std::uintptr_t begin = reinterpret_cast<std::uintptr_t>(data);
+    if (span > std::numeric_limits<std::uintptr_t>::max() - begin)
+        return Status::arithmetic_overflow;
+    *range = {begin, begin + span};
+    return Status::ok;
+}
+
 inline Status address_range(const ConstWorld &world, AddressRange *range) noexcept
 {
     if (!range) return Status::arithmetic_overflow;

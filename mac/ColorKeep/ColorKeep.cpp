@@ -1,5 +1,6 @@
 #include "ColorKeep.h"
 #include "../DynamicControls.h"
+#include "../../core/olm_world_safety.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 // Optional refusal attribution; errors and output bytes are unchanged.
 #include <cerrno>
@@ -32,11 +33,6 @@ static PF_Err ColorKeepRefusal(const char *function, const char *tag, int line)
 }
 #define OLM_COLORKEEP_REFUSAL(tag) ColorKeepRefusal(__func__, tag, __LINE__)
 
-// T12 scratch experiment only. Default builds retain every guard.
-#ifndef OLM_COLORKEEP_EXPERIMENT_BYPASS
-#define OLM_COLORKEEP_EXPERIMENT_BYPASS 0
-#endif
-
 #include <stdint.h>
 #include <math.h>
 #include <new>
@@ -67,7 +63,7 @@ About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 }
 
 static PF_Err
-GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
+GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
@@ -215,14 +211,13 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
         (size_t)input->width * (size_t)pixel_bytes;
 	const size_t output_span = (size_t)output->rowbytes * (size_t)(output->height - 1) +
         (size_t)output->width * (size_t)pixel_bytes;
-	if (input_begin > UINTPTR_MAX - input_span || output_begin > UINTPTR_MAX - output_span) {
+	using namespace olm::world_safety;
+	AddressRange input_range = {}, output_range = {};
+	if (address_range(input->data, input_span, &input_range) != Status::ok ||
+	    address_range(output->data, output_span, &output_range) != Status::ok)
 		return OLM_COLORKEEP_REFUSAL("world-span-overflow");
-	}
-	const uintptr_t input_end = input_begin + input_span;
-	const uintptr_t output_end = output_begin + output_span;
-	if (input_begin < output_end && output_begin < input_end) {
+	if (ranges_overlap(input_range, output_range))
 		return OLM_COLORKEEP_REFUSAL("world-overlap");
-	}
 	return PF_Err_NONE;
 }
 
@@ -240,21 +235,22 @@ static inline u_short ColorKeepQuantize16(float value)
 	return (u_short)((int)scaled);
 }
 
+template <typename PixelT, typename ChannelT, ChannelT (*Quantize)(float)>
 static PF_Err
-ColorKeep8Func(void *refcon, A_long, A_long, PF_Pixel8 *inP, PF_Pixel8 *outP)
+ColorKeepIntegerFunc(void *refcon, A_long, A_long, PixelT *inP, PixelT *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
 	// Iterate may supply pixels on odd byte strides. Only dereference an
 	// aligned local; copying the representation also preserves float NaN bits.
-	PF_Pixel8 pixel;
+	PixelT pixel;
 	memcpy(&pixel, reinterpret_cast<const uint8_t *>(inP), sizeof(pixel));
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
 		const PF_PixelFloat &c = info->colors[i];
-		if (pixel.red == ColorKeepQuantize8(c.red) &&
-		    pixel.green == ColorKeepQuantize8(c.green) &&
-		    pixel.blue == ColorKeepQuantize8(c.blue) &&
-		    pixel.alpha == ColorKeepQuantize8(c.alpha)) {
+		if (pixel.red == Quantize(c.red) &&
+		    pixel.green == Quantize(c.green) &&
+		    pixel.blue == Quantize(c.blue) &&
+		    pixel.alpha == Quantize(c.alpha)) {
 			match = true; break;
 		}
 	}
@@ -263,29 +259,17 @@ ColorKeep8Func(void *refcon, A_long, A_long, PF_Pixel8 *inP, PF_Pixel8 *outP)
 	return PF_Err_NONE;
 }
 
-static PF_Err
-ColorKeep16Func(void *refcon, A_long, A_long, PF_Pixel16 *inP, PF_Pixel16 *outP)
+static PF_Err ColorKeep8Func(void *refcon, A_long x, A_long y, PF_Pixel8 *inP, PF_Pixel8 *outP)
 {
-	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
-	// Iterate may supply pixels on odd byte strides. Only dereference an
-	// aligned local; copying the representation also preserves float NaN bits.
-	PF_Pixel16 pixel;
-	memcpy(&pixel, reinterpret_cast<const uint8_t *>(inP), sizeof(pixel));
-	bool match = false;
-	for (A_long i = 0; i < info->count; ++i) {
-		const PF_PixelFloat &c = info->colors[i];
-		if (pixel.red == ColorKeepQuantize16(c.red) &&
-		    pixel.green == ColorKeepQuantize16(c.green) &&
-		    pixel.blue == ColorKeepQuantize16(c.blue) &&
-		    pixel.alpha == ColorKeepQuantize16(c.alpha)) {
-			match = true; break;
-		}
-	}
-	if (!match) pixel.alpha = 0;
-	memcpy(reinterpret_cast<uint8_t *>(outP), &pixel, sizeof(pixel));
-	return PF_Err_NONE;
+	return ColorKeepIntegerFunc<PF_Pixel8, u_char, ColorKeepQuantize8>(refcon, x, y, inP, outP);
 }
 
+static PF_Err ColorKeep16Func(void *refcon, A_long x, A_long y, PF_Pixel16 *inP, PF_Pixel16 *outP)
+{
+	return ColorKeepIntegerFunc<PF_Pixel16, u_short, ColorKeepQuantize16>(refcon, x, y, inP, outP);
+}
+
+// PF32 retains ordered comparison rejection, including the AEX NaN fall-through.
 static PF_Err
 ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFloat *outP)
 {
