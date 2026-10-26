@@ -95,7 +95,6 @@ else
 fi
 
 mac_args=(--configuration "$CONFIGURATION" --output "$mac_zip")
-mac_args+=(--pixel-reference-profile "$PIXEL_REFERENCE_PROFILE")
 if [[ "$BUILD_MAC" -eq 0 ]]; then
   mac_args+=(--skip-build)
 fi

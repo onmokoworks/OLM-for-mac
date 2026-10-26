@@ -124,6 +124,15 @@ completed run (`run-head-binding.json`). Production files are unchanged.
 `R13-evidence/gate-evidence.tar.gz` preserves **244 reports/logs**, including every
 F51 row; the archive manifest records its hash and contents.
 
+## Current package recipe (R14)
+
+The R12 `build.sh` recipe reused below now emits `OLM_for_Mac.zip` plus
+`OLM_for_Mac.zip.manifest.json`. The ZIP contains `OLM_for_Mac/`, ten bundles,
+two package READMEs and LICENSE. Run the same recipe with a new cache/state;
+audit with `R12-evidence/verify.py <cache>/OLM_for_Mac.zip <audit-state>`.
+The historical R13 hashes and counts below describe the old archive only;
+the updated verifier intentionally requires the current slim layout.
+
 ## Unpublished package and its actual binaries
 
 R12 recipe (exit 0), then audit (exit 0):

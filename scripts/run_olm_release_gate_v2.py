@@ -350,8 +350,9 @@ class Gate:
             equal=bool(mac) and flags(original)==flags(mac) and digest(aex)==old['aex_sha256']
             rows.append(dict(plugin=name, release_config=configs and code==0, pipl_equal=equal,
                 original_flags=flags(original), mac_flags=flags(mac), aex_sha256=digest(aex)))
+        layout_code=self.run('package-layout', [self.python, '-B', ROOT/'tests/test_release_package_layout.py'])
         known=ROOT/'notes/KNOWN_ORIGINAL_BUGS.md'
-        return dict(plugins=rows, count=len(rows), known_original_bugs_sha256=digest(known)), all(r['release_config'] and r['pipl_equal'] for r in rows)
+        return dict(plugins=rows, count=len(rows), package_layout_pass=layout_code==0, known_original_bugs_sha256=digest(known)), layout_code==0 and all(r['release_config'] and r['pipl_equal'] for r in rows)
 
 
 def main():

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -13,16 +14,6 @@ import zipfile
 from pathlib import Path
 
 from verify_ae_validation_result import EXPECTED_PLUGINS
-
-
-EXPECTED_PIXEL_REQUESTS = {
-    "OLMBlur": "ae_pixel_olmblur_20260606",
-    "OLMColorKey": "ae_pixel_olmcolorkey_20260606",
-    "OLMToonDilate": "ae_pixel_olmtoondilate_20260606",
-    "OLMDistanceGradation": "ae_pixel_olmdistancegradation_20260606",
-    "OLMDistanceGradationExtended": "ae_pixel_olmdistancegradation_extended_20260618",
-    "OLMDistanceGradationBlur": "ae_pixel_olmdistancegradation_blur_20260618",
-}
 
 
 def parse_args() -> argparse.Namespace:
@@ -114,50 +105,24 @@ def signing_kind(bundle: Path) -> str:
 
 
 def single_package_root(root: Path) -> Path:
-    children = [path for path in root.iterdir() if path.is_dir() and path.name != "__MACOSX"]
-    if len(children) != 1:
+    children = list(root.iterdir())
+    if len(children) != 1 or not children[0].is_dir():
         raise ValueError(f"package must contain one top-level directory, found {len(children)}")
     return children[0]
 
 
-def verify_validation_template(repo: Path, template: Path) -> int:
-    verifier = repo / "scripts" / "verify_ae_validation_result.py"
-    proc = subprocess.run(
-        [sys.executable, str(verifier), "--allow-incomplete", str(template)],
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
-    print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
-    return proc.returncode
-
-
-def verify_pixel_request_zip(path: Path, expected_request_id: str) -> str | None:
-    if not path.exists():
-        return f"pixel validation request missing: {path.name}"
-    if not zipfile.is_zipfile(path):
-        return f"pixel validation request is not a zip: {path.name}"
-    with tempfile.TemporaryDirectory(prefix="olm_pixel_request_verify_") as tmp:
-        tmp_path = Path(tmp)
-        with zipfile.ZipFile(path) as archive:
-            archive.extractall(tmp_path)
-        matches = list(tmp_path.rglob("request_manifest.json"))
-        if len(matches) != 1:
-            return f"pixel validation request must contain one request_manifest.json, found {len(matches)}"
-        try:
-            data = load_json(matches[0])
-        except Exception as exc:  # noqa: BLE001
-            return str(exc)
-        if data.get("kind") != "olm_ae_pixel_validation_request":
-            return "pixel request kind must be 'olm_ae_pixel_validation_request'"
-        if data.get("request_id") != expected_request_id:
-            return f"pixel request_id must be {expected_request_id!r}"
-        for rel in ("reference_manifest.json", data.get("input_dir", ""), data.get("expected_dir", "")):
-            if not isinstance(rel, str) or not rel:
-                return "pixel request has an invalid relative path"
-            if not (matches[0].parent / rel).exists():
-                return f"pixel request missing required path: {rel}"
-    return None
+def verify_layout(root: Path) -> None:
+    expected = {name + ".plugin" for name in EXPECTED_PLUGINS} | {"README.md", "README.en.md", "LICENSE"}
+    if root.name != "OLM_for_Mac" or {p.name for p in root.iterdir()} != expected:
+        raise ValueError("package must contain only OLM_for_Mac with ten bundles, two READMEs and LICENSE")
+    for name in ("README.md", "README.en.md", "LICENSE"):
+        if not (root / name).is_file():
+            raise ValueError(f"missing file: {name}")
+    for name in ("README.md", "README.en.md"):
+        for link in re.findall(r"\]\(([^)]+)\)", (root / name).read_text()):
+            if "://" not in link and not link.startswith("#"):
+                if not (root / link.split("#", 1)[0]).is_file():
+                    raise ValueError(f"broken README link: {name}: {link}")
 
 
 def main() -> int:
@@ -180,7 +145,8 @@ def main() -> int:
 
         try:
             root = single_package_root(tmp_path)
-            manifest = load_json(root / "manifest.json")
+            verify_layout(root)
+            manifest = load_json(Path(str(package) + ".manifest.json"))
         except Exception as exc:  # noqa: BLE001
             return fail(str(exc))
 
@@ -191,58 +157,16 @@ def main() -> int:
                 return fail(f"manifest.{key} must be a non-empty string")
         if manifest["configuration"] not in {"Debug", "Release"}:
             return fail("manifest.configuration must be Debug or Release")
-        if root.name != f"OLM_Mac_Plugins_{manifest['configuration']}":
-            return fail("package root does not match manifest.configuration")
-
         if not isinstance(manifest.get("git_dirty"), bool):
             return fail("manifest.git_dirty must be a boolean")
         if len(manifest["git_commit"]) != 40 or any(c not in "0123456789abcdef" for c in manifest["git_commit"].lower()):
             return fail("manifest.git_commit must be a 40-char hexadecimal commit")
 
-        for rel_key in ("install_notes", "validation_checklist", "validation_result_template", "beta_support"):
-            rel = manifest.get(rel_key)
-            if not isinstance(rel, str) or not rel:
-                return fail(f"manifest.{rel_key} must be a non-empty string")
-            if not (root / rel).exists():
-                return fail(f"manifest.{rel_key} missing file: {rel}")
-        beta_support_sha = manifest.get("beta_support_sha256")
-        actual_beta_support_sha = binary_sha256(root / manifest["beta_support"])
-        if beta_support_sha != actual_beta_support_sha:
-            return fail(
-                "manifest.beta_support_sha256 mismatch: "
-                f"manifest={beta_support_sha} actual={actual_beta_support_sha}"
-            )
-
-        pixel_requests = manifest.get("ae_pixel_validation_requests")
-        if not isinstance(pixel_requests, list) or not pixel_requests:
-            return fail("manifest.ae_pixel_validation_requests must be a non-empty list")
-        for name, request_id in EXPECTED_PIXEL_REQUESTS.items():
-            matches = [
-                entry
-                for entry in pixel_requests
-                if isinstance(entry, dict) and entry.get("name") == name and entry.get("request_id") == request_id
-            ]
-            if not matches:
-                return fail(f"missing AE pixel validation request entry: {name}")
-        for entry in pixel_requests:
-            if not isinstance(entry, dict):
-                return fail("manifest.ae_pixel_validation_requests entries must be objects")
-            name = entry.get("name")
-            request_id = entry.get("request_id")
-            if not isinstance(name, str) or not name:
-                return fail("pixel request name must be a non-empty string")
-            if not isinstance(request_id, str) or not request_id:
-                return fail(f"{name}.request_id must be a non-empty string")
-            rel = entry.get("zip")
-            if not isinstance(rel, str) or not rel:
-                return fail(f"{name}.zip must be a non-empty string")
-            problem = verify_pixel_request_zip(root / rel, request_id)
-            if problem:
-                return fail(f"{name}: {problem}")
-
         plugins = manifest.get("plugins")
         if not isinstance(plugins, list):
             return fail("manifest.plugins must be a list")
+        if len(plugins) != len(EXPECTED_PLUGINS):
+            return fail("manifest must contain exactly ten plugins")
         by_name = {entry.get("name"): entry for entry in plugins if isinstance(entry, dict)}
         missing = [name for name in EXPECTED_PLUGINS if name not in by_name]
         extra = [name for name in by_name if name not in EXPECTED_PLUGINS]
@@ -254,7 +178,7 @@ def main() -> int:
         for name in EXPECTED_PLUGINS:
             entry = by_name[name]
             bundle = entry.get("bundle")
-            if not isinstance(bundle, str) or not bundle:
+            if bundle != f"{name}.plugin":
                 return fail(f"{name}.bundle must be a non-empty string")
             bundle_path = root / bundle
             if not bundle_path.is_dir():
@@ -312,10 +236,6 @@ def main() -> int:
                     f"{name}.signing_kind mismatch: manifest={bundle_signing_kind} "
                     f"actual={actual_signing_kind}"
                 )
-
-        template = root / manifest["validation_result_template"]
-        if verify_validation_template(repo, template) != 0:
-            return fail("validation result template failed schema verification")
 
     print(f"[OK] {package}: {len(EXPECTED_PLUGINS)} packaged plug-ins")
     return 0
