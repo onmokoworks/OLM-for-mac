@@ -439,7 +439,7 @@ About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 }
 
 static PF_Err
-GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
+GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
@@ -613,7 +613,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	bool layer_checked_out = false;
 	bool rendered = false;
 	SMParams decoded_params; AEFX_CLR_STRUCT(decoded_params);
-	bool decoded_params_ready = false;
 	short depth = 0;
 	size_t active_bytes = 0;
 	std::vector<uint8_t> input_stage, output_stage;
@@ -648,7 +647,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (!err) {
 				err = FetchParams(in_data, params, &decoded_params);
 				if (err) err = OLM_SM2_ERROR("smartrender-fetch-params", err);
-				if (!err) decoded_params_ready = true;
 			}
 			if (!err) {
 				const size_t pixel_size = depth == 8 ? sizeof(PF_Pixel8) :
@@ -668,8 +666,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				staged_output.data = reinterpret_cast<decltype(staged_output.data)>(output_stage.data());
 				staged_input.rowbytes = staged_output.rowbytes = (A_long)active_bytes;
 				param_list[0].u.ld = staged_input;
-				if (!decoded_params_ready) err = OLM_SM2_REFUSAL("smartrender-params-unready");
-				else if (depth == 8) err = RenderBits<PF_Pixel8>(in_data, params, &staged_input, &staged_output, &decoded_params);
+				if (depth == 8) err = RenderBits<PF_Pixel8>(in_data, params, &staged_input, &staged_output, &decoded_params);
 				else if (depth == 16) err = RenderBits<PF_Pixel16>(in_data, params, &staged_input, &staged_output, &decoded_params);
 				else err = RenderBits<PF_PixelFloat>(in_data, params, &staged_input, &staged_output, &decoded_params);
 				if (err) err = OLM_SM2_ERROR("smartrender-render-bits", err);
@@ -692,11 +689,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
 		if (!param_checked_out[i]) continue;
 		try {
-#ifdef OLMSMOOTHER2_SHIM_H
 			const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &param_list[i]);
-#else
-			const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &param_list[i]);
-#endif
 			if (!err && cleanup_err) err = cleanup_err;
 		} catch (PF_Err &cleanup_err) {
 			if (!err) err = cleanup_err;
