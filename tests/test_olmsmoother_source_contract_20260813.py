@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROBE = ROOT / "tools/emulation/probe_olmsmoother_source_contract_20260813.cpp"
-V1 = ROOT / "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"
+V1 = ROOT / "tests/fixtures/OLMSmoother_admission.inc"
 V2 = ROOT / "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
 
 V1_HASHES = {
