@@ -38,7 +38,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
             (bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
         if (!input || !output || input->width <= 0 || input->height <= 0 ||
             input->width != output->width || input->height != output->height ||
-            !PayloadSpan(input, &begin, &end) || !PayloadSpan(output, &begin, &end) ||
+            !PayloadSpan(input, &begin, &end, pixel_size) || !PayloadSpan(output, &begin, &end, pixel_size) ||
             static_cast<std::size_t>(input->width) * pixel_size > static_cast<std::size_t>(input->rowbytes) ||
             static_cast<std::size_t>(output->width) * pixel_size > static_cast<std::size_t>(output->rowbytes))
             return OLM_DIRECTIONAL_REFUSAL("deep-copy-world");

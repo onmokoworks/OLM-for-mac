@@ -6,7 +6,7 @@ static bool RequiresNoiseLayer(const OLMRadialBlurInfo &info)
 
 static bool RadialPayloadsDisjoint(
 	const PF_EffectWorld *first,
-	const PF_EffectWorld *second);
+	const PF_EffectWorld *second, size_t pixel_bytes);
 
 static PF_Err ValidateNoiseLayerWorld(const PF_EffectWorld *noise_world, short bitdepth)
 {
@@ -139,7 +139,7 @@ static PF_Err RenderRadialNoOpCopy(PF_EffectWorld *input, PF_EffectWorld *output
 		input->rowbytes <= 0 || output->rowbytes <= 0 ||
 		active > static_cast<std::size_t>(input->rowbytes) ||
 		active > static_cast<std::size_t>(output->rowbytes) ||
-		!RadialPayloadsDisjoint(input, output)) return OLM_RADIAL_REFUSAL("noop-copy-layout");
+		!RadialPayloadsDisjoint(input, output, bitdepth / 8 * 4)) return OLM_RADIAL_REFUSAL("noop-copy-layout");
 	// Copy bytes to preserve high-depth values, signed zero and NaN payloads.
 	// No polar planes, float arithmetic, alignment or Blur work budget is used.
 	for (A_long y = 0; y < input->height; ++y)

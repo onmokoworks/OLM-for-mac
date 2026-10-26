@@ -390,10 +390,10 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		}
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 		if (!err && !output_world) err = OLM_DIRECTIONAL_REFUSAL("smart-output-missing");
-		if (!err && (!DisjointPayloads(input_world, output_world) ||
+		if (!err && (!DisjointPayloads(input_world, output_world, extra->input->bitdepth / 8 * 4) ||
 			(extra->input->bitdepth == 8 && noise_world &&
-                (!DisjointPayloads(input_world, noise_world) ||
-                 !DisjointPayloads(output_world, noise_world))))) {
+                (!DisjointPayloads(input_world, noise_world, extra->input->bitdepth / 8 * 4) ||
+                 !DisjointPayloads(output_world, noise_world, extra->input->bitdepth / 8 * 4))))) {
 			err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
 		}
 		if (!err) {
@@ -453,7 +453,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				    input_row_bytes > static_cast<std::size_t>(input_world->rowbytes) ||
 				    output_world->width > input_world->width ||
 				    output_world->height > input_world->height ||
-				    !PayloadSpan(input_world, &begin, &end)) {
+				    !PayloadSpan(input_world, &begin, &end, extra->input->bitdepth / 8 * 4)) {
 					err = OLM_DIRECTIONAL_REFUSAL("smart-workspace-span");
 				} else {
 					workspace = *input_world;
@@ -477,7 +477,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				}
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
-			if (!PayloadSpan(render_world, &output_begin, &output_end) ||
+			if (!PayloadSpan(render_world, &output_begin, &output_end, extra->input->bitdepth / 8 * 4) ||
 				!DirectionalActiveRowBytes(extra->input->bitdepth, render_world->width,
 				                           &render_row_bytes) ||
 				render_row_bytes > static_cast<std::size_t>(render_world->rowbytes)) {

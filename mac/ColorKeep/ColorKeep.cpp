@@ -210,8 +210,10 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	if (!smart && (input_begin % pixel_alignment != 0 || output_begin % pixel_alignment != 0)) {
 		return OLM_COLORKEEP_REFUSAL("world-alignment");
 	}
-	const size_t input_span = (size_t)input->rowbytes * (size_t)input->height;
-	const size_t output_span = (size_t)output->rowbytes * (size_t)output->height;
+	const size_t input_span = (size_t)input->rowbytes * (size_t)(input->height - 1) +
+        (size_t)input->width * (size_t)pixel_bytes;
+	const size_t output_span = (size_t)output->rowbytes * (size_t)(output->height - 1) +
+        (size_t)output->width * (size_t)pixel_bytes;
 	if (input_begin > UINTPTR_MAX - input_span || output_begin > UINTPTR_MAX - output_span) {
 		return OLM_COLORKEEP_REFUSAL("world-span-overflow");
 	}
@@ -340,7 +342,8 @@ static PF_Err ColorKeepRenderMapped(PF_InData *in_data,
 	                                ColorKeepInfo *info,
 	                                PixelFuncT pixel_func)
 {
-	const size_t output_span = (size_t)output->rowbytes * (size_t)output->height;
+	const size_t output_span = (size_t)output->rowbytes * (size_t)(output->height - 1) +
+        (size_t)output->width * sizeof(PixelT);
 	std::vector<uint8_t> staging(output_span);
 	memcpy(staging.data(), output->data, output_span);
 	PF_EffectWorld staged_output = *output;
@@ -555,7 +558,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 
 			const short bpc = extra->input->bitdepth;
 			if (!err) {
-				smart_output_span = (size_t)output_world->rowbytes * (size_t)output_world->height;
+				smart_output_span = (size_t)output_world->rowbytes * (size_t)(output_world->height - 1) +
+                    (size_t)output_world->width * (size_t)(bpc / 8 * 4);
 				smart_output_stage.resize(smart_output_span);
 				memcpy(smart_output_stage.data(), output_world->data, smart_output_span);
 				smart_output_world = *output_world;
