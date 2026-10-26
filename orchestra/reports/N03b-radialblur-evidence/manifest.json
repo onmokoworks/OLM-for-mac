@@ -1,0 +1,122 @@
+[
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-normalized.bin.gz",
+    "bytes": 930980,
+    "sha256": "5276deba28df3afaf7840c52ca6cdcc3a784d9be78ba6f92466479e40a020a4d"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-output.bin.gz",
+    "bytes": 125,
+    "sha256": "cff9e7941e27be3bdecf30d7d2be0f57d4991128b4e0c126a19ffbeb7cc5bbd5"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-polar.bin.gz",
+    "bytes": 859904,
+    "sha256": "81794fca232071e818058462c915049b7fb215dbc0ae61f1d120c6700d69c540"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-scalar.bin.gz",
+    "bytes": 193428,
+    "sha256": "a43ed670bd9f914465af60271507c8ca94fcad8a879b0f420c087ef7919aee3e"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-source.bin.gz",
+    "bytes": 253,
+    "sha256": "d825b3b10ea5f5eb979991ceb0acda23466263373329f2eca4f00e233e63bb9d"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/mac-span.bin.gz",
+    "bytes": 448,
+    "sha256": "45399197fbd9118b38a7fd5dc7af859a058c5778f000b625a129a57deab78719"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/result.json.gz",
+    "bytes": 323,
+    "sha256": "48c988e60b146b99f3dcbc610d585126bfb63abdb9be45bb3340e7dc637b9a70"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/trace.json.gz",
+    "bytes": 37217,
+    "sha256": "fd4b1717c89f22a66811226b1efa474cf6e44fee94426caabec6e875441277d1"
+  },
+  {
+    "path": "captures/403be984da1ad8593fa159b4/watches.json.gz",
+    "bytes": 541,
+    "sha256": "d04727a4d2172069f7910d6af51c50cdb5bc283c64a0a59d9042901ba4fd16f8"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-normalized.bin.gz",
+    "bytes": 38172,
+    "sha256": "1e845deba56bd8639b8e59bd97213ae06e18263dcdcfc42a0824920c07b90d5c"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-output.bin.gz",
+    "bytes": 63,
+    "sha256": "7c27ab90f3fd0494c23ff5a868183002701c80206a594c2060bb588ae9042849"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-polar.bin.gz",
+    "bytes": 28925,
+    "sha256": "d08011638f4ea68b19b8070df7653757ed2fbfd277d18833eea14234aa99d996"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-scalar.bin.gz",
+    "bytes": 14258,
+    "sha256": "11f5eee586bdcae1fe23bd58521bb5f351b56ab1dc346aa7917a85c0eb75b03b"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-source.bin.gz",
+    "bytes": 158,
+    "sha256": "f6728da25064660dfb9bdddb2803624602cb2034befff2a611028ea70cdf5a59"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/mac-span.bin.gz",
+    "bytes": 372,
+    "sha256": "d379cdfc4e749268acd976f675798f87c7f2d4abcd617283288fd9f8f06d1b21"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/result.json.gz",
+    "bytes": 326,
+    "sha256": "9a18f2a83119d4f4957702735ad767468fabb0a00d80d0598e350bb259849c08"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/trace.json.gz",
+    "bytes": 22476,
+    "sha256": "5cea37adeb19670168ec8a8fd4a022b410f80383b998499592b3940e1b55a8aa"
+  },
+  {
+    "path": "captures/ab18858afb75411545de86c7/watches.json.gz",
+    "bytes": 538,
+    "sha256": "50381515adbae526b9ee5dda4ced6e7c4198a41042e80dd447792ff0a082b3ae"
+  },
+  {
+    "path": "mac.py",
+    "bytes": 3113,
+    "sha256": "c648b9ca702d0a8c043688bcaa5ff63e0de4a114bec8d3214a9625394330f48b"
+  },
+  {
+    "path": "original.asm.gz",
+    "bytes": 32847,
+    "sha256": "041d7d7c103d8122824dbb9550863597ed651be951c8c40f2b76cfcdc8e35e65"
+  },
+  {
+    "path": "static.json.gz",
+    "bytes": 276,
+    "sha256": "78c47aa33c89d33fa0093bbac817b014b25cf134f87548725e208bf291f33f47"
+  },
+  {
+    "path": "summarize.py",
+    "bytes": 3457,
+    "sha256": "1bb89ea76abc2496f57fecde9383d1fad17eb9cabdc862e35e2269ef15489697"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 4349,
+    "sha256": "bad9489d2145fd6e73be43d3e299829a45634c9a94723db92bf892f043dcea3d"
+  },
+  {
+    "path": "trace.py",
+    "bytes": 3735,
+    "sha256": "7b737e05992c177b34b9c6f452045476aa57c19bd0210cd8503d5b5de2734e52"
+  }
+]
