@@ -178,3 +178,10 @@ Q08-cleanup-one-off-tools
 R12-release-gate-final
 R13-release-gate-green
 C01-cleanup-shared-math-and-tests
+C02-cleanup-olmradialblur
+C02-cleanup-olmcolorkey
+C02-cleanup-olmkirakira
+C02-cleanup-olmdirectionalblur
+C02-cleanup-olmdistancegradation
+C02-cleanup-olmblur
+C02-cleanup-olmsmall

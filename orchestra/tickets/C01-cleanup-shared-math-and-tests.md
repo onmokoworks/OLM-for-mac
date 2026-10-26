@@ -1,4 +1,4 @@
-# C01: bit-exact cleanup, round 2: dedupe the math, move test code out, shrink the admission code, fewer warnings
+# C01: cleanup round 2, part 1: shared exact math in core/ (other plugins follow in C02-*)
 
 depends: R13-release-gate-green
 
@@ -15,3 +15,8 @@ Read `orchestra/REFACTOR_SPEC.md`: its gates and size limits apply. G1 (`native_
 - G1 is 0 for all 10 plugins, G2 (Mac side) is unchanged, and the release gate v2 still passes 7/7.
 - The report shows the non-comment line count and the warning count per plugin, before and after.
 - If the work is too big for one run, stop at a clean commit and report it as partial, with the next steps.
+
+## Scope change (orchestrator): split for speed
+- This ticket does step 1 only: build the shared `core/` math header and switch every plugin to it.
+- Steps 2-5 run as separate per-plugin tickets, `C02-<plugin>`, in parallel after this one.
+- G1 speed: for intermediate commits, run 500 cases on arm64 for both builds. Run the full 3,000 cases on both archs only once, at the end.
