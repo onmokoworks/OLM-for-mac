@@ -38,6 +38,7 @@ def main() -> int:
     core = CORE.read_text(encoding="utf-8")
     assert "length >= 1 && length <= 1000" in core
     production = PRODUCTION.read_text(encoding="utf-8")
+    production += "\n".join(p.read_text() for p in sorted((ROOT / "mac/OLMKiraKira").glob("Kira*.inc")))
     assert "mode3_gaussian_admitted(rw, rh, length)" in production
     assert "if (blur_mode == 3 && !mode3_admitted) return input;" in production
     assert "prepare_actual_aex_nonfused(length)" in production
