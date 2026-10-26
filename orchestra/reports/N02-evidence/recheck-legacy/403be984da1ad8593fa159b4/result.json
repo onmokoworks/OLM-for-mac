@@ -1,0 +1,14 @@
+{
+  "mode": "legacy",
+  "worker_sha256": "df51edc461ee13ae826c94e62b29c17b813181ef1c2719388e4d9faf180099a2",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "input_sha256": "faba7126148a248d0b909654a03908591fd9905b2b9a1f5a033a403a3bdf850d",
+  "result": {
+    "status": "reject",
+    "returncode": 2,
+    "diagnostic": "usage: aex-guest-worker <inspect|setup|render> <x64.aex> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>] [--render-backend <cpu|opencl|wgpu-metal>] [--gpu-device-index <n>]\n       aex-guest-worker session <x64.aex> <input.raw> <output.raw> <width> <height> <time-scale> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>]\n       aex-guest-worker trace-selector <x64.aex> <GLOBAL_SETUP|PARAMS_SETUP> [--effect <#index|match-name>]\n       aex-guest-worker render-png <x64.aex> <input.png> <output.png> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>] [--render-backend <cpu|opencl|wgpu-metal>] [--gpu-device-index <n>] [name=value | name@slot=a,r,g,b ...]\n       aex-guest-worker render-trace-png <x64.aex> <input.png> <output.png> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>] [--watch <spec>] [--watch-output-pixel x,y] [name=value ...]\n       aex-guest-worker render-region-png <x64.aex> <input.png> <output.png> <left> <top> <right> <bottom> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>] [name=value ...]\n       aex-guest-worker census-png <x64.aex> <input.png> <output.png> [--effect <#index|match-name>] [--pixel-format <argb8|argb16|argb32f>] [name=value ...]\n"
+  },
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bound": false,
+  "trace_exists": false
+}
