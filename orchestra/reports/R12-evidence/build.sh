@@ -7,7 +7,8 @@ export OLM_TEST_JOBS=1
 export OLM_REFERENCE_ROOT="$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
 # Keep the packager's fixed product paths inside ticket scratch as well.
 for plugin in ColorKeep OLMBlur OLMColorKey OLMDirectionalBlur OLMRadialBlur OLMKiraKira OLMToonDilate OLMDistanceGradation OLMSmoother OLMSmoother2; do
-  product="$PWD/mac/$plugin/Mac/build"
+  product="$PWD/mac/$plugin/Mac/build/Release"
+  mkdir -p "$(dirname "$product")"
   mkdir -p "$TMPDIR/products/$plugin"
   if [[ ! -e "$product" ]]; then
     ln -s "$TMPDIR/products/$plugin" "$product"
