@@ -12,6 +12,10 @@ ColorKeep、OLMBlur、OLMColorKey、OLMDirectionalBlur、OLMDistanceGradation、
 
 OLMSmootherは8／16 bpc、ほかの9本は8／16／32 bpcに対応しています。
 
+## v0.2.0-beta.1 からの変更
+
+出力は変わっていません。特定の入力だけに合わせた古い処理を消して、コードを約5,000行減らしました。
+
 ## 8月のBeta版からの変更
 
 - プレビュー解像度を下げたときや、画像の一部だけを描くときに、黒いフレームになる問題を直しました。

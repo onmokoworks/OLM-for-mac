@@ -32,9 +32,9 @@ xattr -dr com.apple.quarantine ~/Library/Application\ Support/Adobe/Common/Plug-
 
 ## More information
 
-- Installation guide: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.1/docs/INSTALL_EN.md
-- Known limitations: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.1/KNOWN_LIMITATIONS.en.md
-- How we verify: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.1/docs/BETA_SUPPORT.en.md
+- Installation guide: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.2/docs/INSTALL_EN.md
+- Known limitations: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.2/KNOWN_LIMITATIONS.en.md
+- How we verify: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.2/docs/BETA_SUPPORT.en.md
 - Bug reports: https://github.com/onmokoworks/OLM-for-mac/issues
 
 ## License

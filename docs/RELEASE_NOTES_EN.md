@@ -12,6 +12,10 @@ Ten plugins: ColorKeep, OLMBlur, OLMColorKey, OLMDirectionalBlur, OLMDistanceGra
 
 OLMSmoother supports 8/16 bpc. The other nine support 8/16/32 bpc.
 
+## Changes since v0.2.0-beta.1
+
+Output is unchanged. We removed old code paths that only served specific inputs, cutting about 5,000 lines.
+
 ## Changes since the August beta
 
 - Fixed black frames at lower preview resolutions and when only part of the image is drawn.
