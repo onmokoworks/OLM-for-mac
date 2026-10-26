@@ -1,8 +1,0 @@
-{
-  "cases": 3,
-  "equal": 0,
-  "different": 3,
-  "both_ok": 3,
-  "worker_sha256": "dbf9766f23de8f247169f63cf8310a0c73e15f053765e2c9373106623c2e9af2",
-  "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
-}

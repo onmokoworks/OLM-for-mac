@@ -1,9 +1,0 @@
-{
-  "actual_jobs": 1,
-  "elapsed_seconds": 900.016,
-  "hours": 0.25,
-  "jobs_limit": 1,
-  "retained_bytes": 48310,
-  "start": "20261025T183048051312",
-  "status": "deadline"
-}

@@ -1,9 +1,0 @@
-{
-  "seed": 1,
-  "n": 100,
-  "geometry": "realistic",
-  "counts": {
-    "unavailable": 39,
-    "exact": 61
-  }
-}

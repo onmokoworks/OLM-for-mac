@@ -1,7 +1,0 @@
-{
-  "build_patch_sha256": "c9aa0946c6177cde6ec33faf33c4cc3c7ee6eac9ea780e7c22aa7f34a2be2ef3",
-  "committed_patch_sha256": "d408dad26bd964dc7d4597d7b25455de183f322c3d3b556dae25a01e03f9d510",
-  "verified_modified_files": 4,
-  "source_bytes_identical": true,
-  "change": "Zero-context unified diff to avoid whitespace-only context lines"
-}

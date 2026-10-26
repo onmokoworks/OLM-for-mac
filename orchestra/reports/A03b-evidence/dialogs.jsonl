@@ -1,5 +1,0 @@
-{"axObserverResult":0,"bundle":"\/Applications\/Adobe After Effects 2026\/Adobe After Effects 2026.app","event":"attached","pid":59462}
-{"event":"window","pid":59462,"window":{"kCGWindowAlpha":1,"kCGWindowBounds":{"Height":516,"Width":766,"X":1217,"Y":638},"kCGWindowIsOnscreen":true,"kCGWindowLayer":0,"kCGWindowMemoryUsage":2288,"kCGWindowName":"","kCGWindowNumber":1607,"kCGWindowOwnerName":"After Effects","kCGWindowOwnerPID":59462,"kCGWindowSharingState":1,"kCGWindowStoreType":1}}
-{"event":"capture","pixelHeight":1032,"pixelWidth":1532,"pointHeight":516,"pointWidth":766,"scale":2,"windowID":1607}
-{"event":"capture","pixelHeight":1032,"pixelWidth":1532,"pointHeight":516,"pointWidth":766,"scale":2,"windowID":1607}
-{"event":"blocked","reason":"blocked: needs Screen Recording for Terminal (capture timeout)"}

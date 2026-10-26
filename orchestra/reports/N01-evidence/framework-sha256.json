@@ -1,5 +1,0 @@
-{
-  "tools/fuzz/nightly.sh": "c27f15e9f705550cabac2c7f960c882f066a72e0b724fa9b449372686eaa3fbe",
-  "tools/fuzz/nightly_summary.py": "216a9d6eb1f206db8f64ed8e2272ea1f7f71b525c81c4149b9f26f0ae70ddc95",
-  "tools/fuzz/test_nightly.py": "68dddb157ca7d454299ac031f9a3ef767d80b0878ada2f8093ee4373279dd99e"
-}

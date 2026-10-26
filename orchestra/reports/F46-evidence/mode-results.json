@@ -1,9 +1,0 @@
-[
-  {
-    "function": "pow",
-    "default_equals_fma1": true,
-    "count": 1024,
-    "raw_sha256": "f2688baf135dea954189939012f064f87122d223851d3b83cc55b850e15ec292",
-    "invalid_exit": -6
-  }
-]

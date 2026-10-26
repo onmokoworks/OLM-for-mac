@@ -1,2 +1,0 @@
-{"event":"inspect","pid":69208,"windows":[{"kCGWindowAlpha":1,"kCGWindowBounds":{"Height":1743,"Width":3200,"X":0,"Y":25},"kCGWindowIsOnscreen":true,"kCGWindowLayer":0,"kCGWindowMemoryUsage":2288,"kCGWindowName":"Adobe After Effects 2026 - 名称未設定プロジェクト *","kCGWindowNumber":1745,"kCGWindowOwnerName":"After Effects","kCGWindowOwnerPID":69208,"kCGWindowSharingState":1,"kCGWindowStoreType":1}]}
-{"event":"blocked","reason":"ScreenCaptureKit capture timeout; permission loss or window transition not established"}

@@ -1,8 +1,0 @@
-{
-  "src/atan2f.c": true,
-  "src/expf.c": true,
-  "src/expf_data.h": true,
-  "src/internal.h": true,
-  "src/powf.c": true,
-  "src/tables.c": true
-}

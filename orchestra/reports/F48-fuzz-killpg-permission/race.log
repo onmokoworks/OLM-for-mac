@@ -1,2 +1,0 @@
-{"('budget', 'no diagnostic')": 199, "('budget', 'done')": 1}
-{"('budget', 'done')": {'status': 'budget', 'reason': 'wall timeout', 'limit_seconds': 1e-06, 'cleanup': {'status': 'done', 'pid': 98382, 'child_reaped': True, 'pipes_drained': True, 'group_cleanup_confirmed': True, 'errors': ['killpg: PermissionError: [Errno 1] Operation not permitted']}}}

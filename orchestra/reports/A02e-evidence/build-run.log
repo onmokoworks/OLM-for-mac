@@ -1,14 +1,0 @@
-build
-Traceback (most recent call last):
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02e-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 273, in <module>
-    main()
-    ~~~~^^
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02e-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 267, in main
-    build(state, a.matrix, prevent_dialogs=not a.no_dialog_prevention)
-    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02e-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 140, in build
-    _build_owned(state, wrapper, out, watcher)
-    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/A02e-real-ae-retest-downsample/tools/ae_smoke/run_ae_smoke.py", line 193, in _build_owned
-    raise RuntimeError('JSX failed: ' + result.get('error', 'unknown'))
-RuntimeError: JSX failed: Error: After Effects エラー: Invalid Value for key: <Depth>.  Property is read-onlyInvalid Value for key: <Color>.  Property is read-only

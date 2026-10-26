@@ -94,3 +94,6 @@ Resources
 /worktrees/
 .opencode/
 /.cache/
+
+# local orchestration (tickets, reports, state)
+/orchestra/

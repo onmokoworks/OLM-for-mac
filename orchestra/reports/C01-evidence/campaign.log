@@ -1,6 +1,0 @@
-default 1 {'exact': 100}
-default 2026 {'exact': 100}
-default 2027 {'exact': 100}
-realistic 1 {'exact': 94, 'uncompared': 6}
-realistic 2026 {'exact': 91, 'uncompared': 9}
-realistic 2027 {'exact': 96, 'uncompared': 4}

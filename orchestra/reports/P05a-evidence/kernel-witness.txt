@@ -1,1 +1,0 @@
-10000 scatter, 120 parallel rowdriver, 200 rotation comparisons; 0 mismatches
