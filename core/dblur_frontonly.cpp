@@ -673,7 +673,23 @@ static int render_minimal_argb32(const float* input_argb,
         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
             back_sharp_tail_percent != 0.0f) {
             component_divisor = build_component_map(a, ww, wh, &map);
-            if (component_divisor <= 0.0f) component_divisor = 1.0f;
+            // AEX 0x61f6 preserves zero. With an empty positive-alpha mask,
+            // 0/0 reaches the prepass as NaN; its wrapping clip visits weights
+            // [1,x). Reproduce that path only when every visited weight was
+            // generated. Otherwise retain the P06a policy for original reads
+            // of undefined backing storage, without reading beyond our vector.
+            if (component_divisor == 0.0f) {
+                for (int y = 0; y < processed_rows; ++y) {
+                    for (int x = 2; x < ww; ++x) {
+                        if (a[rgba_index(ww, x, y) + 3] != 0.0f &&
+                            x > back_alpha_fade) {
+                            component_divisor = 1.0f;
+                            break;
+                        }
+                    }
+                    if (component_divisor != 0.0f) break;
+                }
+            }
         } else {
             for (std::size_t p = 0; p < wp; ++p) { map[p * 4] = 1.0f; map[p * 4 + 3] = 1.0f; }
         }

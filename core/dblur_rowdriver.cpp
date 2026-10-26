@@ -140,7 +140,10 @@ extern "C" void olm_dblur_prepass_f32(int start, int offset,
     }
 
     int backward = trunc_i(static_cast<float>(back_count) * coefficient);
-    if (start - backward < 0) {
+    // AEX 0x1234 CMP / 0x1237 CMOVS tests the wrapping subtraction's sign.
+    // CVTTSS2SI maps a NaN count to INT32_MIN; signed subtraction is UB here.
+    if (((static_cast<std::uint32_t>(start) -
+          static_cast<std::uint32_t>(backward)) & 0x80000000u) != 0) {
         backward = start;
     }
     if (backward > 1) {
