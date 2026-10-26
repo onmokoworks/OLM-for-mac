@@ -1,5 +1,10 @@
 // Typed world adapters and retained PF16 store observation.
 // Included in the main translation unit to preserve worker code generation.
+// Retained case0006 store observation coordinate; diagnostic-only, no pixel correction.
+static constexpr A_long kObservedX = 601;
+// Same retained case0006 observation, vertical coordinate.
+static constexpr A_long kObservedY = 598;
+
 struct BlurObservationConfig {
 	const char *dump_path;
 	const char *case_id;
@@ -52,7 +57,7 @@ observe_blur_store16_pixel(
 	float pre_r, float pre_g, float pre_b,
 	u_short stored_r, u_short stored_g, u_short stored_b, u_short stored_a)
 {
-	if (!observation || !observation->enabled || x != 601 || y != 598) return;
+	if (!observation || !observation->enabled || x != kObservedX || y != kObservedY) return;
 	FILE *fp = fopen(observation->dump_path, "a");
 	if (!fp) return;
 	fprintf(fp,
@@ -161,7 +166,7 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 			(size_t)(bias_dir > 0 ? bias_dir : 0)
 		};
 		olm::blur::worker16::StoreObservation store_observation = {
-			601, 598, false, {0.0f, 0.0f, 0.0f}, {0, 0, 0, 0}
+			kObservedX, kObservedY, false, {0.0f, 0.0f, 0.0f}, {0, 0, 0, 0}
 		};
 		olm::blur::worker16::render_nonlegacy(
 			(const std::uint8_t*)source_argb16.data(), (std::uint8_t*)destination_argb16.data(),
@@ -181,7 +186,7 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 				pixel.green = packed[2];
 				pixel.blue = packed[3];
 				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
-				if (x == 601 && y == 598) {
+				if (x == kObservedX && y == kObservedY) {
 					observe_blur_store16_pixel(observation, bp, (A_long)width, (A_long)height,
 						(A_long)x, (A_long)y,
 						store_observation.pre_store[0], store_observation.pre_store[1],

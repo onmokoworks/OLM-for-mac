@@ -1,3 +1,5 @@
+// AEX 0x180004b80. PF32 admits negative/nonfinite alpha and does not quantize RGB.
+#include "olmblur_constants.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker32_nonlegacy.h"
 
@@ -14,8 +16,8 @@ namespace olm::blur::worker32 {
 namespace {
 
 std::size_t chunk6(std::size_t value, std::size_t part) {
-    const std::size_t base = value / 6;
-    return part == 5 ? value - base * 5 : base;
+    const std::size_t base = value / kPassParts;
+    return part == kLastPassPart ? value - base * kLastPassPart : base;
 }
 
 void horizontal(const std::uint8_t* flags, const float* src, float* dst,
@@ -23,7 +25,7 @@ void horizontal(const std::uint8_t* flags, const float* src, float* dst,
                 std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(height, part), (height / 6) * part, radius};
+            width, height, chunk6(height, part), (height / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::horizontal(flags, src, dst, weights, pass);
         }
@@ -35,7 +37,7 @@ void vertical(const std::uint8_t* flags, const float* src, float* dst,
               std::size_t radius) {
     olm::blur::for_parts(width, height, [&](std::size_t part) {
         const olm::blur::HelperParams pass{
-            width, height, chunk6(width, part), (width / 6) * part, radius};
+            width, height, chunk6(width, part), (width / kPassParts) * part, radius};
         if (pass.passes != 0) {
             olm::blur::vertical(flags, src, dst, weights, pass);
         }
@@ -64,10 +66,10 @@ void render_nonlegacy(const float* source_argb, float* destination_argb,
 
     float decay = 1.0f;
     if (params.repeat > 1) {
-        decay = ucrt_powf(3.0f / params.blur_amount,
+        decay = ucrt_powf(kSigmaDivisor / params.blur_amount,
                          1.0f / static_cast<float>(params.repeat - 1), UCRT_FMA);
     }
-    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + 2;
+    const std::size_t max_radius = static_cast<std::size_t>(params.blur_amount) + kRadiusPadding;
     std::vector<float> weights(max_radius + 1);
     for (std::size_t iteration = 0; iteration < params.repeat; ++iteration) {
         const double radius_value = static_cast<double>(params.blur_amount) *
@@ -80,7 +82,8 @@ void render_nonlegacy(const float* source_argb, float* destination_argb,
         if (radius == 0) {
             break;
         }
-        const float sigma = materialized_radius / 3.0f;
+        const float sigma = materialized_radius / kSigmaDivisor;
+        // Preserve binary32 doubling before multiplication; do not reassociate.
         const float denominator = (sigma + sigma) * sigma;
         for (std::size_t k = 0; k <= radius; ++k) {
             const float exponent =

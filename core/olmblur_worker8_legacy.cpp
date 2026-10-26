@@ -1,3 +1,5 @@
+// AEX 0x180007300. Legacy PF8 uses carry helpers and low-byte stores, unlike Non-Legacy.
+#include "olmblur_constants.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker8_legacy.h"
 
@@ -11,8 +13,8 @@ namespace olm::blur::worker8_legacy {
 namespace {
 
 std::size_t sixth(std::size_t dimension, std::size_t part) {
-    const std::size_t quotient = dimension / 6;
-    return part == 5 ? dimension - quotient * 5 : quotient;
+    const std::size_t quotient = dimension / kPassParts;
+    return part == kLastPassPart ? dimension - quotient * kLastPassPart : quotient;
 }
 
 void horizontal(const std::uint8_t* flags,
@@ -22,12 +24,12 @@ void horizontal(const std::uint8_t* flags,
                 std::size_t width,
                 std::size_t height,
                 std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    for (std::size_t part = 0; part < kPassParts; ++part) {
         const std::size_t rows = sixth(height, part);
         if (rows == 0) continue;
         olm::blur::fullworker::horizontal(
             flags, src, dst, weights,
-            {width, height, width, rows, (height / 6) * part, radius});
+            {width, height, width, rows, (height / kPassParts) * part, radius});
     }
 }
 
@@ -38,17 +40,18 @@ void vertical(const std::uint8_t* flags,
               std::size_t width,
               std::size_t height,
               std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    for (std::size_t part = 0; part < kPassParts; ++part) {
         const std::size_t columns = sixth(width, part);
         if (columns == 0) continue;
         olm::blur::fullworker::vertical(
             flags, src, dst, weights,
-            {width, height, columns, height, (width / 6) * part, radius});
+            {width, height, columns, height, (width / kPassParts) * part, radius});
     }
 }
 
 void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) {
     weights[radius] = 1.0f;
+    // Preserve binary32 doubling before multiplication; do not reassociate.
     const float denominator = (sigma + sigma) * sigma;
     for (std::size_t distance = 1; distance <= radius; ++distance) {
         const float square = static_cast<float>(distance * distance);
@@ -62,9 +65,9 @@ void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) 
 // Converting NaN/infinity directly to uint8_t is undefined in C++; the x86
 // indefinite int32 result has a zero low byte.
 std::uint8_t store_byte(float value) {
-    const float rounded = std::floor(value + 0.5f);
+    const float rounded = std::floor(value + kRoundingHalf);
     const std::int32_t converted =
-        (rounded >= -2147483648.0f && rounded < 2147483648.0f)
+        (rounded >= kInt32LowerBound && rounded < kInt32UpperBound)
             ? static_cast<std::int32_t>(rounded)
             : INT32_MIN;
     return static_cast<std::uint8_t>(static_cast<std::uint32_t>(converted));
@@ -105,8 +108,8 @@ void render(const std::uint8_t* source_argb,
         return;
     }
     std::vector<float> weights(radius * 2 + 1);
-    const float sigma_base = ((params.blur_amount * params.blur_smoothness) / 100.0f) *
-                             (params.blur_amount / 3.0f) * scale;
+    const float sigma_base = ((params.blur_amount * params.blur_smoothness) / kSmoothnessPercent) *
+                             (params.blur_amount / kSigmaDivisor) * scale;
     for (std::size_t iteration = 1; iteration <= params.repeat; ++iteration) {
         make_weights(weights, radius,
                      (sigma_base / static_cast<float>(iteration)));

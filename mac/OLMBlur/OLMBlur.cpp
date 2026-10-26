@@ -18,6 +18,15 @@
 #include <unistd.h>
 #include "../../core/olm_world_safety.h"
 
+// Global flags written by the AEX EffectMain GlobalSetup branch, 0x18000a970.
+static constexpr A_long kGlobalFlags = 0x06000040;
+// Secondary flags written by the same AEX GlobalSetup branch, 0x18000a970.
+static constexpr A_long kGlobalFlags2 = 0x08001400;
+// IEEE-754 exponent mask for the C32 admission policy, not an AEX coefficient.
+static constexpr uint32_t kFloatExponentMask = 0x7f800000u;
+// Finite colour bounds of the retained C32 source admission policy.
+static constexpr float kFiniteColourLimit = 16.0f;
+
 // Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
 // file, each failing admission guard appends "function:tag@line". The file is
 // only opened on a refusal, and the returned error code and all output bytes
@@ -60,8 +69,8 @@ GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x06000040;
-	out_data->out_flags2 = 0x08001400;
+	out_data->out_flags  = kGlobalFlags;
+	out_data->out_flags2 = kGlobalFlags2;
 	return PF_Err_NONE;
 }
 
@@ -204,7 +213,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 			bp->repeat, bp->bias_dir);
 	}
 
-
+	// Smart admission and format validation admit only the six depth/mode routes above.
 	return err;
 }
 
@@ -493,8 +502,8 @@ SmallDefaultPF32Source(const PF_EffectWorld *world)
 			float argb[4]; memcpy(argb,row+(size_t)x*sizeof(argb),sizeof(argb));
 			for (int c=0;c<4;++c) {
 				uint32_t bits; memcpy(&bits, &argb[c], sizeof(bits));
-				if ((bits & 0x7f800000u) == 0x7f800000u) continue;
-				if (!(argb[c]>=-16.0f && argb[c]<=16.0f)) return false;
+				if ((bits & kFloatExponentMask) == kFloatExponentMask) continue;
+				if (!(argb[c]>=-kFiniteColourLimit && argb[c]<=kFiniteColourLimit)) return false;
 			}
 		}
 	}
@@ -550,205 +559,7 @@ enum PublicBlurSourceKind {
 	PublicBlurSourcePF32Legacy24Repeat1Union
 };
 
-static bool
-ExactPublicSource(const PF_EffectWorld *world, short bpc, bool legacy,
-	PublicBlurSourceKind source_kind)
-{
-	if (!world || !world->data) return false;
-	if (source_kind == PublicBlurSourcePF32Legacy24Repeat1Union)
-		return ExactPublicSource(world,bpc,legacy,PublicBlurSourcePF32LegacyStandard) ||
-			ExactPublicSource(world,bpc,legacy,PublicBlurSourceOriginal24);
-	if (source_kind == PublicBlurSourcePF16Standard && bpc == 16 &&
-		((world->width == 12 && world->height == 12 && world->rowbytes == 109) ||
-		 (world->width == 18 && world->height == 18 && world->rowbytes == 157))) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const uint16_t p[4] = {
-				(uint16_t)(legacy ? 32768 : (((x*5 + y*3) % 17) == 0 ? 0 : 32768)),
-				(uint16_t)((257*x + 31*y + 101) % 32769),
-				(uint16_t)((113*x + 211*y + 307) % 32769),
-				(uint16_t)((401*x + 97*y + 503) % 32769)
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*8u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF16MixedAlpha && bpc == 16 && legacy &&
-		world->width == 18 && world->height == 12 &&
-		world->rowbytes == 157) {
-		for (A_long y=0;y<12;++y) for (A_long x=0;x<18;++x) {
-			const bool boundary = x == 0 || x == 17 || y == 0 || y == 11;
-			const bool hole = (x*7 + y*11) % 13 == 0;
-			const uint16_t p[4] = {
-				(uint16_t)(boundary || hole ? 0 : 8192 + ((x*29 + y*17) % 4) * 16384),
-				12800, 25600, 30000
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*8u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF16SevenByFive && bpc == 16 &&
-		world->width == 7 && world->height == 5 && world->rowbytes == 69) {
-		for (A_long y=0;y<5;++y) for (A_long x=0;x<7;++x) {
-			const uint16_t p[4] = {
-				32768,
-				(uint16_t)(1000 + 701*x + 17*y),
-				(uint16_t)(30000 + 37*x + 811*y),
-				(uint16_t)(200 + 503*x + 29*y)
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*8u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF8NonLegacyStandard && bpc == 8 && !legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const unsigned char p[4] = {
-				(unsigned char)(((x*5 + y*3) % 17) == 0 ? 0 : 255),
-				(unsigned char)((17*x + 3*y + 11) & 255),
-				(unsigned char)((7*x + 19*y + 23) & 255),
-				(unsigned char)((29*x + 13*y + 37) & 255)
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*4u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF8LegacyStandard && bpc == 8 && legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const unsigned char p[4] = {
-				255,
-				(unsigned char)((17*x + 3*y + 11) & 255),
-				(unsigned char)((7*x + 19*y + 23) & 255),
-				(unsigned char)((29*x + 13*y + 37) & 255)
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*4u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF8LegacyMixedAlpha && bpc == 8 && legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const bool boundary = x == 0 || x == world->width-1 || y == 0 || y == world->height-1;
-			const bool hole = (x*7 + y*11) % 13 == 0;
-			const unsigned char p[4] = {
-				(unsigned char)(boundary || hole ? 0 : 32 + ((x*29 + y*17) % 4) * 64),
-				50, 100, 150
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*4u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF8LegacyBoundaryGradient && bpc == 8 && legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const bool boundary = x == 0 || x == world->width-1 || y == 0 || y == world->height-1;
-			const unsigned char p[4] = {
-				255,
-				(unsigned char)(boundary ? ((x*19 + y*23 + 7) & 255) : ((31 + x*9 + y*13) & 255)),
-				0, 0
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*4u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF8LegacyByteBoundaries && bpc == 8 && legacy) {
-		static const unsigned char values[] = {0,1,127,128,254,255};
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const unsigned char p[4] = {
-				values[(x+5*y)%6], values[(2*x+y+1)%6],
-				values[(x+3*y+2)%6], values[(5*x+2*y+3)%6]
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*4u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF16LegacyWordBoundaries && bpc == 16 && legacy) {
-		static const uint16_t values[] = {0,1,32767,32768};
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const uint16_t p[4] = {
-				values[(x+3*y)%4], values[(x+y+1)%4],
-				values[(2*x+y+2)%4], values[(x+2*y+3)%4]
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*8u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if ((source_kind == PublicBlurSourcePF32NonLegacyStandard ||
-		source_kind == PublicBlurSourcePF32LegacyStandard) && bpc == 32) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const float p[4] = {
-				(float)(((x*5+y*3)%17)==0 ? 0.0 : ((x+y)%5 ? 1.0 : -0.5)),
-				(float)(-1.25 + 0.17*x + 0.031*y),
-				(float)(0.5 + 0.11*x - 0.23*y),
-				(float)(1.5 + 0.07*x + 0.19*y)
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*16u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF32LegacyMixedAlpha && bpc == 32 && legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const bool boundary=x==0||x==world->width-1||y==0||y==world->height-1;
-			const bool hole=(x*7+y*11)%13==0;
-			const float p[4] = {
-				(float)(boundary||hole?0.0:((x+2*y)%7==0?-0.5:0.25+0.125*((x*3+y)%4))),
-				(float)(0.25+0.031*x),(float)(-0.5+0.017*y),(float)(1.5+0.011*(x+y))
-			};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*16u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind == PublicBlurSourcePF32LegacyRedBoundary && bpc == 32 && legacy) {
-		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
-			const bool boundary=x==0||x==world->width-1||y==0||y==world->height-1;
-			const float p[4]={(float)(boundary?0.0:1.0),(float)(0.2+0.11*x+0.037*y),0.0f,0.0f};
-			const unsigned char *at=(const unsigned char*)world->data+
-				(size_t)y*world->rowbytes+(size_t)x*16u;
-			if (memcmp(at,p,sizeof(p))) return false;
-		}
-		return true;
-	}
-	if (source_kind != PublicBlurSourceOriginal24) return false;
-	if (world->width != 24 || world->height != 24) return false;
-	const size_t pixel_bytes = bpc == 8 ? 4u : (bpc == 16 ? 8u : (bpc == 32 ? 16u : 0u));
-	if (!pixel_bytes || world->rowbytes != (A_long)(24u * pixel_bytes + (bpc == 8 ? 17u : (bpc == 16 ? 23u : 32u)))) return false;
-	static const unsigned char v8[] = {0,1,64,127,128,192,254,255};
-	static const uint16_t v16[] = {0,1,8192,16384,32767,32768};
-	static const float v32[] = {-0.5f,0.0f,1.0f/255.0f,0.25f,0.5f,1.0f,1.25f,2.0f};
-	for (A_long y=0;y<24;++y) for (A_long x=0;x<24;++x) {
-		const int selector=(x*5+y*3)%17;
-		const unsigned char *at=(const unsigned char*)world->data+(size_t)y*world->rowbytes+(size_t)x*pixel_bytes;
-		if (bpc==8) {
-			unsigned char p[4]={(unsigned char)(selector==0?0:v8[(x+3*y)%8]),v8[(2*x+y+1)%8],v8[(x+5*y+2)%8],v8[(7*x+3*y+3)%8]};
-			if (memcmp(at,p,4)) return false;
-		} else if (bpc==16) {
-			uint16_t p[4]={(uint16_t)(selector==0?0:v16[(x+3*y)%6]),v16[(2*x+y+1)%6],v16[(x+5*y+2)%6],v16[(7*x+3*y+3)%6]};
-			if (memcmp(at,p,8)) return false;
-		} else {
-			float p[4]={(float)(selector==0?0.0f:v32[(x+3*y)%8]),v32[(2*x+y+1)%8],v32[(x+5*y+2)%8],v32[(7*x+3*y+3)%8]};
-			if (memcmp(at,p,16)) return false;
-		}
-	}
-	return true;
-}
+#include "OLMBlur_Fixtures.inc"
 
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)

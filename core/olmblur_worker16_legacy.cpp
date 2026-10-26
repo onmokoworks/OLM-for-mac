@@ -1,3 +1,5 @@
+// AEX 0x180005f20. Legacy PF16 keeps the original low-word conversion and carry helpers.
+#include "olmblur_constants.h"
 #include "../ucrtmath/include/ucrtmath.h"
 #include "olmblur_worker16_legacy.h"
 
@@ -11,16 +13,16 @@ namespace olm::blur::worker16_legacy {
 namespace {
 
 std::size_t sixth(std::size_t dimension, std::size_t part) {
-    const std::size_t quotient = dimension / 6;
-    return part == 5 ? dimension - quotient * 5 : quotient;
+    const std::size_t quotient = dimension / kPassParts;
+    return part == kLastPassPart ? dimension - quotient * kLastPassPart : quotient;
 }
 
 void horizontal(const std::uint8_t* flags, const float* src, float* dst,
                 const float* weights, std::size_t width, std::size_t height,
                 std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    for (std::size_t part = 0; part < kPassParts; ++part) {
         const olm::blur::fullworker::Params pass{
-            width, height, width, sixth(height, part), (height / 6) * part,
+            width, height, width, sixth(height, part), (height / kPassParts) * part,
             radius};
         if (pass.rows != 0) {
             olm::blur::fullworker::horizontal(flags, src, dst, weights, pass);
@@ -31,9 +33,9 @@ void horizontal(const std::uint8_t* flags, const float* src, float* dst,
 void vertical(const std::uint8_t* flags, const float* src, float* dst,
               const float* weights, std::size_t width, std::size_t height,
               std::size_t radius) {
-    for (std::size_t part = 0; part < 6; ++part) {
+    for (std::size_t part = 0; part < kPassParts; ++part) {
         const olm::blur::fullworker::Params pass{
-            width, height, sixth(width, part), height, (width / 6) * part,
+            width, height, sixth(width, part), height, (width / kPassParts) * part,
             radius};
         if (pass.columns != 0) {
             olm::blur::fullworker::vertical(flags, src, dst, weights, pass);
@@ -47,12 +49,12 @@ std::uint16_t read_word(const std::uint8_t* bytes) {
 }
 
 std::uint16_t store_word(float value) {
-    const float rounded = std::floor(value + 0.5f);
+    const float rounded = std::floor(value + kRoundingHalf);
     // The Legacy AEX writer (0x180006cf3) executes CVTTSS2SI and stores AX without
     // nominal-range saturation.  Preserve that low-word rule, including the
     // architectural indefinite result for non-representable int32 values.
     const std::int32_t converted =
-        (rounded >= -2147483648.0f && rounded < 2147483648.0f)
+        (rounded >= kInt32LowerBound && rounded < kInt32UpperBound)
             ? static_cast<std::int32_t>(rounded)
             : INT32_MIN;
     return static_cast<std::uint16_t>(static_cast<std::uint32_t>(converted));
@@ -65,6 +67,7 @@ void write_word(std::uint8_t* bytes, std::uint16_t value) {
 
 void make_weights(std::vector<float>& weights, std::size_t radius, float sigma) {
     weights[radius] = 1.0f;
+    // Preserve binary32 doubling before multiplication; do not reassociate.
     const float denominator = (sigma + sigma) * sigma;
     for (std::size_t distance = 1; distance <= radius; ++distance) {
         const float exponent = -static_cast<float>(distance * distance) /
@@ -109,7 +112,7 @@ void render(const std::uint8_t* source_argb16,
 
     std::vector<float> weights(radius * 2 + 1);
     const float sigma_base = ((params.blur_amount * params.blur_smoothness) /
-                              100.0f) * (params.blur_amount / 3.0f) *
+                              kSmoothnessPercent) * (params.blur_amount / kSigmaDivisor) *
                              params.render_scale;
     for (std::size_t iteration = 1; iteration <= params.repeat; ++iteration) {
         make_weights(weights, radius, sigma_base / static_cast<float>(iteration));
