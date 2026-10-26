@@ -1,0 +1,18 @@
+{
+  "status": "blocked",
+  "source_head": "3ab60261c59da842c3eea1b5762d9db3871d9018",
+  "worker_sha256": "3d5eec0c6792f176a9cfbc38093c53b852f4ea1baae2cfd313345c02f55d6fba",
+  "corpus": {
+    "cases": 5687,
+    "exact_ok": 5579,
+    "matching_non_success": 106,
+    "byte_difference": 0,
+    "status_difference": 2
+  },
+  "blocking_cases": [
+    "radialblur/C46_seed1_case000280.json/smart",
+    "radialblur/C49_seed1_case000117.json/smart"
+  ],
+  "reason": "F53 completes in full replay while F54c reaches existing 20-second execution limit; cause unproven",
+  "report": "orchestra/reports/F54c-aexcompat-resident-watches.md"
+}

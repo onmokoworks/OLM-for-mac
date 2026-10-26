@@ -11,6 +11,7 @@ MAIN=Path('/Users/onmk/Documents/Projects/Personal/OLM as')
 def digest(b): return hashlib.sha256(b).hexdigest()
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--scratch-root',type=Path,default=ROOT/'orchestra/state/F54b-aexcompat-numeric-patches-upstream')
     ap.add_argument('--worker',type=Path,required=True)
     ap.add_argument('--baseline',type=Path,default=Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker')
     ap.add_argument('--plugin',required=True)
@@ -21,7 +22,7 @@ def main():
     ap.add_argument('--tag', default='')
     ap.add_argument('--jobs',type=int,choices=(1,),default=1)
     args=ap.parse_args()
-    scratch=ROOT/'orchestra/state/F54b-aexcompat-numeric-patches-upstream'/f'{args.mode}-{args.plugin}{args.tag}'
+    scratch=args.scratch_root/f'{args.mode}-{args.plugin}{args.tag}'
     scratch.mkdir(parents=True,exist_ok=True)
     os.environ.update(TMPDIR=str(scratch),TMP=str(scratch),TEMP=str(scratch),PYTHONDONTWRITEBYTECODE='1')
     cls=importlib.import_module('adapters.'+args.plugin).Adapter

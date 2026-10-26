@@ -1,0 +1,13 @@
+{
+  "cases": 1,
+  "equal": 1,
+  "different": 0,
+  "both_ok": 0,
+  "exact_ok": 0,
+  "matching_non_success": 1,
+  "byte_difference": 0,
+  "status_difference": 0,
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "worker_sha256": "3d5eec0c6792f176a9cfbc38093c53b852f4ea1baae2cfd313345c02f55d6fba",
+  "baseline_sha256": "d88c22f67d06c419608d007619df42eac863a35e317ab7cb380617eff2051fb9"
+}
