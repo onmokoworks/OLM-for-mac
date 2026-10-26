@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace olm::kirakira::editor {
+namespace olm { namespace kirakira { namespace editor {
 struct Rect { int left, top, right, bottom;
     bool contains(int x, int y) const {
         return left <= x && x <= right && top <= y && y <= bottom;
@@ -232,4 +232,4 @@ template<class Ramp> std::vector<DrawCommand> draw(const Ramp& ramp, const State
     }
     return out;
 }
-} // namespace olm::kirakira::editor
+}}} // namespace olm::kirakira::editor

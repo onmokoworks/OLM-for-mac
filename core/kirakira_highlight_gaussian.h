@@ -3,7 +3,7 @@
 #include <cmath>
 #include <vector>
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 
 // Mode 3's Highlight calls GaussianBlur(Size(2*r+1, 2*r+1), 0, 0,
 // BORDER_REFLECT_101), unlike the directional Size(0,1), sigma=length/2
@@ -81,4 +81,4 @@ inline std::vector<float> highlight_gaussian(const std::vector<float>& seed,
     return output;
 }
 
-} // namespace olm::kirakira
+}} // namespace olm::kirakira

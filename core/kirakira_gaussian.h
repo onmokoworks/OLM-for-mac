@@ -5,7 +5,7 @@
 #include <limits>
 #include <vector>
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 
 // The full public hard range is geometry-general above the bounded minimum
 // leaf size. Smaller leaves remain admitted only at complete fixtures.
@@ -179,4 +179,4 @@ private:
     std::vector<float> kernel_;
 };
 
-}  // namespace olm::kirakira
+}}  // namespace olm::kirakira

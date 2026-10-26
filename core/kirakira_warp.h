@@ -6,7 +6,7 @@
 #include <vector>
 #include "olm_parallel.h"
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 constexpr double kWarpPi = 3.14159265358979323846; // Pi; OpenCV getRotationMatrix2D.
 constexpr double kHalfTurnDegrees = 180.0; // Degree conversion; OpenCV getRotationMatrix2D.
 constexpr int kWarpParallelThreshold = 65536; // P07a Mac row scheduling threshold.
@@ -133,4 +133,4 @@ inline std::vector<float> warp_get_rotation_matrix_2d(
 #endif
 }
 
-} // namespace olm::kirakira
+}} // namespace olm::kirakira

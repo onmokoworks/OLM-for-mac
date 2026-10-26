@@ -5,7 +5,7 @@
 
 #include "kirakira_warp.h"
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 
 // Complete actual-AEX chains cover the public radius endpoints, default and
 // non-power-of-two values across small, working and practical rotated leaves.
@@ -116,4 +116,4 @@ inline std::vector<float> centered_crop_scalar(
 	return destination;
 }
 
-} // namespace olm::kirakira
+}} // namespace olm::kirakira

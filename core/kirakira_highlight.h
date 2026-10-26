@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-namespace olm::kirakira {
+namespace olm { namespace kirakira {
 
 inline int highlight_reflect101(int index, int size)
 {
@@ -123,4 +123,4 @@ inline std::vector<float> highlight_isotropic_box_blur(
 	return result;
 }
 
-}  // namespace olm::kirakira
+}}  // namespace olm::kirakira

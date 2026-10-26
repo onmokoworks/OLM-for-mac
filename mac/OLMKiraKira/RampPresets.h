@@ -3,9 +3,9 @@
 #include <cstring>
 // Original PE table 1814d7030; 34 entries, stride 0x144.
 // SHA256: 6c14b37611d1fb94fa67d87c6aeb639a1b2b20dd2c3167e566441b4dec99c13b
-namespace olm::kirakira::editor {
+namespace olm { namespace kirakira { namespace editor {
 constexpr unsigned preset_count = 34;
-inline constexpr std::uint32_t preset_words[34][81] = {
+constexpr std::uint32_t preset_words[34][81] = {
     {
         0x00000003u,0x00000000u,0x3f800000u,0x3f800000u,0x00000000u,0x00000000u,0x3f47ae14u,0x3f800000u,0x3f800000u,
         0x3f26a7f0u,0x00000000u,0x3f800000u,0x3f800000u,0x3f800000u,0x3f800000u,0x3f800000u,0x00000000u,0x00000000u,
@@ -386,4 +386,4 @@ template<class Ramp> Ramp preset(unsigned index) {
     Ramp value{}; if(index<preset_count) std::memcpy(&value,preset_words[index],sizeof(value));
     return value;
 }
-} // namespace olm::kirakira::editor
+}}} // namespace olm::kirakira::editor
