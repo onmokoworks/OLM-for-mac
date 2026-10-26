@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -86,6 +87,9 @@ def test_production_adapters_execute_with_nontrivial_rowbytes_and_padding():
 
 def test_colorkey_pf16_pf32_threshold_and_edge_weight_contracts_are_pinned():
     source = COLOR.read_text(encoding="utf-8")
+    source = re.sub(r'#include "([^"\n]+\.inc)"',
+                    lambda match: (COLOR.parent / match[1]).read_text(encoding="utf-8"),
+                    source)
 
     # Typed threshold epsilons and inclusive boundary comparisons.
     assert "static float native_key_epsilon() { return 1.0f / 65536.0f; }" in source
