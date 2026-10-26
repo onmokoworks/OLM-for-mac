@@ -62,10 +62,10 @@ verify:
 export OLM_TEST_JOBS=1 PYTHONDONTWRITEBYTECODE=1
 export TMPDIR="$PWD/orchestra/state/N02-olmdirectionalblur-nightly-20261025"
 mkdir -p "$TMPDIR"
-python3 orchestra/reports/N02-evidence/verify.py witnesses
-python3 orchestra/reports/N02-evidence/verify.py reference-witnesses
-python3 orchestra/reports/N02-evidence/verify.py campaigns
-python3 orchestra/reports/N02-evidence/verify.py corpora
+python3 orchestra/reports/N02-evidence/verify-directionalblur.py witnesses
+python3 orchestra/reports/N02-evidence/verify-directionalblur.py reference-witnesses
+python3 orchestra/reports/N02-evidence/verify-directionalblur.py campaigns
+python3 orchestra/reports/N02-evidence/verify-directionalblur.py corpora
 python3 orchestra/reports/N02-evidence/edge.py --sanitize
 "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python" orchestra/reports/N02-evidence/trace.py
 python3 tools/perf/ref_vs_fast.py --plugin olmdirectionalblur --scratch "$TMPDIR/perf"
