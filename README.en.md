@@ -5,7 +5,7 @@
 An unofficial port that lets you use the "OLM Tools" After Effects plugins, originally for Windows, on a Mac. It runs on both Apple Silicon and Intel Macs.
 
 > [!WARNING]
-> This is a beta. Before using it for work or production, make backups and take other precautions against risks such as data loss.
+> This is a beta. Before using it for important work, always back up your project.
 
 ## Plugins
 
