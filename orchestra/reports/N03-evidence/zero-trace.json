@@ -1,0 +1,64 @@
+[
+  {
+    "radius": 1,
+    "init_host_callback_count": 0,
+    "range_weight_samples": [
+      {
+        "pc": "0x1806bd7d0",
+        "weight_hex": "0000803f"
+      },
+      {
+        "pc": "0x1806bd7f8",
+        "weight_hex": "0000803f"
+      },
+      {
+        "pc": "0x1806bd816",
+        "weight_hex": "0000803f"
+      },
+      {
+        "pc": "0x1806bd83e",
+        "weight_hex": "0000803f"
+      }
+    ],
+    "kernel_words": 2,
+    "kernel_nonzero_words": 2,
+    "kernel_sha256": "fcbc3ec590b6fe3c2de9ef3d82fb43c43323fe0bb9d4d14df227413fef1ad575",
+    "sums_hex": [
+      "00000000",
+      "98455b40"
+    ],
+    "output_hex": "00000000",
+    "filter_host_callback_count": 0,
+    "mac_output_hex": "00000000",
+    "mac_sums_hex": [
+      "00000000",
+      "98455b40"
+    ],
+    "exact": true
+  },
+  {
+    "radius": 2740,
+    "init_host_callback_count": 0,
+    "range_weight_samples": [
+      {
+        "pc": "0x1806be3d8",
+        "weight_hex": "0000803f"
+      }
+    ],
+    "kernel_words": 23585590,
+    "kernel_nonzero_words": 150,
+    "kernel_sha256": "787279a0a1a405329b3f8fcc41736d548bc9bbd8d84154da8fb5431f7c6a61e9",
+    "sums_hex": [
+      "00000000",
+      "dd0fc940"
+    ],
+    "output_hex": "00000000",
+    "filter_host_callback_count": 0,
+    "mac_output_hex": "00000000",
+    "mac_sums_hex": [
+      "00000000",
+      "dd0fc940"
+    ],
+    "exact": true
+  }
+]

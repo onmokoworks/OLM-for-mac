@@ -1,0 +1,112 @@
+[
+  {
+    "campaign": "final-odd-26031.json",
+    "captured_report_sha256": "69431f2f3649af6683eafa0426c751d15a8524cde7ec7341ac6097327423b4b5",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 191,
+      "smart_exact": 192,
+      "smart_uncompared": 8,
+      "classic_exact": 9
+    }
+  },
+  {
+    "campaign": "final-odd-26032.json",
+    "captured_report_sha256": "c5eebe44179402ecd4a8321b0496dacea763b39d84b053dc72808adbb8bf7615",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 194,
+      "smart_exact": 185,
+      "smart_uncompared": 15,
+      "classic_exact": 6
+    }
+  },
+  {
+    "campaign": "final-odd-26033.json",
+    "captured_report_sha256": "829f946e3b1afccd3de7c15c5d7721e177b5eb77bd1a959aefb4959a2f55ad1b",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 197,
+      "smart_exact": 187,
+      "smart_uncompared": 13,
+      "classic_exact": 3
+    }
+  },
+  {
+    "campaign": "final-v1-26031.json",
+    "captured_report_sha256": "cf138f78bc7c32d8d89cd627c8e866f8c25e44141692b084b5f27ea372fec102",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 192,
+      "smart_exact": 196,
+      "classic_exact": 8,
+      "smart_uncompared": 4
+    }
+  },
+  {
+    "campaign": "final-v1-26032.json",
+    "captured_report_sha256": "fd2414a1848d01416dddcd212028c73f4c2c987215f9a65c71b8161974e32fb2",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 194,
+      "smart_exact": 195,
+      "smart_uncompared": 5,
+      "classic_exact": 6
+    }
+  },
+  {
+    "campaign": "final-v1-26033.json",
+    "captured_report_sha256": "04067671b5dc9ef9caa7d9a877031dc94bf8cf1f10dcd9ca671e033e83c44cd9",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 195,
+      "smart_exact": 192,
+      "smart_uncompared": 8,
+      "classic_exact": 5
+    }
+  },
+  {
+    "campaign": "final-v2-26031.json",
+    "captured_report_sha256": "55c811dac10112e8605634cb46f5e6091afbc884bb8224204a632c319d95e711",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 192,
+      "smart_exact": 199,
+      "classic_exact": 8,
+      "smart_uncompared": 1
+    }
+  },
+  {
+    "campaign": "final-v2-26032.json",
+    "captured_report_sha256": "dec7361af6cff838ae6bffa674ddc4536700b37a88aeac29692e4c11896a572c",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 194,
+      "smart_exact": 196,
+      "smart_uncompared": 4,
+      "classic_exact": 6
+    }
+  },
+  {
+    "campaign": "final-v2-26033.json",
+    "captured_report_sha256": "758895bf08493f19ce21553c2832e6ca1608237e6b794954dbaf1743fa2b4d10",
+    "completed": 200,
+    "counts": {
+      "classic_mismatch": 195,
+      "smart_exact": 195,
+      "classic_exact": 5,
+      "smart_uncompared": 5
+    }
+  },
+  {
+    "campaign": "default.json",
+    "captured_report_sha256": "8fbe69679129ff10ba01e1eb5d511e99391a9369b29a2e9f5c376a2918388e43",
+    "completed": 300,
+    "counts": {
+      "classic_mismatch": 290,
+      "smart_exact": 290,
+      "smart_uncompared": 10,
+      "classic_exact": 10
+    }
+  }
+]
