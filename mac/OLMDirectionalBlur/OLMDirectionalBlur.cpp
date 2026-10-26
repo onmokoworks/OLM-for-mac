@@ -6,6 +6,7 @@
 #include "../../core/dblur_generic_budget.h"
 #include "../../core/dblur_gaussian.h"
 #include "../../core/olm_sha256_rows.h"
+#include "../../core/olm_world_safety.h"
 
 #include <algorithm>
 #include <cmath>
@@ -300,6 +301,10 @@ static void CopyWorld(PF_EffectWorld *input, PF_EffectWorld *output)
 #include "OLMDirectionalBlur_dispatch.inc"
 
 #include "OLMDirectionalBlur_host.inc"
+
+#if defined(OLM_DBLUR_TEST_SEAM)
+#include "tests/TestEntry.inc"
+#endif
 
 extern "C" DllExport
 PF_Err PluginDataEntryFunction2(

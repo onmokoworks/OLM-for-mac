@@ -211,41 +211,7 @@ static bool DirectionalGenericWorldIsFullFrame(const PF_EffectWorld *world,
 		world->height == height && DirectionalWorldHasZeroOrigin(world, 0);
 }
 
-#if defined(OLM_DBLUR_TEST_SEAM)
-extern "C" int OLMDirectionalBlurTestNormalizeFullFrameRequest(
-	const PF_RenderRequest *requested, A_long width, A_long height,
-	PF_RenderRequest *normalized)
-{
-	return requested && DirectionalNormalizeFullFrameRequest(
-		*requested, width, height, normalized) ? 1 : 0;
-}
 
-extern "C" int OLMDirectionalBlurTestGenericWorldIsFullFrame(
-	const PF_EffectWorld *world, A_long width, A_long height)
-{
-	return DirectionalGenericWorldIsFullFrame(world, width, height) ? 1 : 0;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
-	const PF_RenderRequest *request, const PF_EffectWorld *input,
-	const PF_EffectWorld *output, const OLMDirectionalBlurInfo *info,
-	short bitdepth, A_long width, A_long height)
-{
-	if (!request || !info) return 0;
-	PF_RenderRequest normalized = {};
-	const bool retained_exact = IsRetainedNeutralExact(input, output, *info, bitdepth);
-	const bool generic = !retained_exact &&
-		(bitdepth == 8 ? (IsGenericNeutral8Parameters(*info) ||
-            (!CanUseExact8(input, output, nullptr, *info) &&
-                CanUsePF8FeatureFallback(input, output, *info)))
-			: ((bitdepth == 16 || bitdepth == 32) &&
-               (IsGenericNeutralDeepParameters(*info) || IsGenericDeepFeatureShape(*info))));
-	return generic && DirectionalNormalizeFullFrameRequest(
-		*request, width, height, &normalized) &&
-		DirectionalGenericWorldIsFullFrame(input, width, height) &&
-		DirectionalGenericWorldIsFullFrame(output, width, height) ? 1 : 0;
-}
-#endif
 
 static bool DirectionalActiveRowBytes(short bitdepth, A_long width, std::size_t *bytes)
 {

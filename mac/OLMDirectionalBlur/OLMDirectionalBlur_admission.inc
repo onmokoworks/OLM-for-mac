@@ -176,21 +176,14 @@ static bool PayloadSpan(const PF_EffectWorld *world,
 		world->height <= 0 || world->width <= 0 || !pixel_bytes) {
 		return false;
 	}
-	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
-	const std::size_t height = static_cast<std::size_t>(world->height);
-    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
-        return false;
-    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
-    if (active > rowbytes || height - 1 >
-        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
-    // A checkout can end at the last pixel, before the stride's trailing pad.
-    const size_t bytes = (height - 1) * rowbytes + active;
-	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
-	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) {
-		return false;
-	}
-	*begin = first;
-	*end = first + bytes;
+    olm::world_safety::AddressRange range = {};
+    if (olm::world_safety::address_range(olm::world_safety::ConstWorld{
+            world->data, static_cast<std::size_t>(world->width),
+            static_cast<std::size_t>(world->height),
+            static_cast<std::size_t>(world->rowbytes), pixel_bytes}, &range) !=
+        olm::world_safety::Status::ok) return false;
+    *begin = range.begin;
+    *end = range.end;
 	return true;
 }
 

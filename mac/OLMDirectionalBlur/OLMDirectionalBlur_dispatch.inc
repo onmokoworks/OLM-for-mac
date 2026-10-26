@@ -38,9 +38,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
             (bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
         if (!input || !output || input->width <= 0 || input->height <= 0 ||
             input->width != output->width || input->height != output->height ||
-            !PayloadSpan(input, &begin, &end, pixel_size) || !PayloadSpan(output, &begin, &end, pixel_size) ||
-            static_cast<std::size_t>(input->width) * pixel_size > static_cast<std::size_t>(input->rowbytes) ||
-            static_cast<std::size_t>(output->width) * pixel_size > static_cast<std::size_t>(output->rowbytes))
+            !PayloadSpan(input, &begin, &end, pixel_size) || !PayloadSpan(output, &begin, &end, pixel_size))
             return OLM_DIRECTIONAL_REFUSAL("deep-copy-world");
         if (bitdepth == 8) CopyWorld<PF_Pixel8>(input, output);
         else if (bitdepth == 16) CopyWorld<PF_Pixel16>(input, output);
@@ -57,14 +55,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.seed == 1 && info.noise_offset == 0 &&
 		info.thickness == 10.0;
-	if (default_no_op) {
-		switch (bitdepth) {
-		case 8: CopyWorld<PF_Pixel8>(input, output); return PF_Err_NONE;
-		case 16: CopyWorld<PF_Pixel16>(input, output); return PF_Err_NONE;
-		case 32: CopyWorld<PF_PixelFloat>(input, output); return PF_Err_NONE;
-		default: return OLM_DIRECTIONAL_REFUSAL("noop-depth");
-		}
-	}
+    // Supported depths already returned through the general zero-strength copy.
+    if (default_no_op) return OLM_DIRECTIONAL_REFUSAL("noop-depth");
+
 	if (bitdepth == 8) {
 		const bool noise_type2_natural64_tuple = input &&
 			NoiseType2Natural64Tuple(info, input->width, input->height);
@@ -592,148 +585,3 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	return OLM_DIRECTIONAL_REFUSAL("unsupported-depth");
 }
 
-#if defined(OLM_DBLUR_TEST_SEAM)
-struct OLMDirectionalBlurGenericEstimate {
-	std::uint64_t source_pixels;
-	std::uint64_t work_width;
-	std::uint64_t work_height;
-	std::uint64_t work_pixels;
-	std::uint64_t core_workspace_bytes;
-	std::uint64_t wrapper_bytes;
-	std::uint64_t weight_bytes;
-	std::uint64_t smart_staging_bytes;
-	std::uint64_t plugin_owned_live_bytes;
-	std::uint64_t operation_units;
-};
-
-// Test-only transparent view of the exact production estimator.  Tests do not
-// duplicate the geometry, live-allocation, or rowdriver-work arithmetic.
-extern "C" int OLMDirectionalBlurTestGenericEstimate(
-	A_long width,
-	A_long height,
-	short bitdepth,
-	A_long effective_strength,
-	std::size_t smart_staging_bytes,
-	OLMDirectionalBlurGenericEstimate *result)
-{
-	if (!result) return 0;
-	olm::dblur::generic::RenderEstimate estimate = {};
-	if (!olm::dblur::generic::EstimateRender(
-		width, height, bitdepth, static_cast<int>(effective_strength),
-		smart_staging_bytes, &estimate)) {
-		*result = {};
-		return 0;
-	}
-	result->source_pixels = estimate.source_pixels;
-	result->work_width = static_cast<std::uint64_t>(estimate.work.width);
-	result->work_height = static_cast<std::uint64_t>(estimate.work.height);
-	result->work_pixels = estimate.work.pixels;
-	result->core_workspace_bytes = estimate.core_workspace_bytes;
-	result->wrapper_bytes = estimate.wrapper_bytes;
-	result->weight_bytes = estimate.weight_bytes;
-	result->smart_staging_bytes = estimate.smart_staging_bytes;
-	result->plugin_owned_live_bytes = estimate.plugin_owned_live_bytes;
-	result->operation_units = estimate.operation_units;
-	return 1;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericEstimateSides(
-	A_long width,
-	A_long height,
-	short bitdepth,
-	A_long effective_front_strength,
-	A_long effective_back_strength,
-	std::size_t smart_staging_bytes,
-	OLMDirectionalBlurGenericEstimate *result)
-{
-	if (!result) return 0;
-	olm::dblur::generic::RenderEstimate estimate = {};
-	if (!olm::dblur::generic::EstimateRender(
-		width, height, bitdepth, static_cast<int>(effective_front_strength),
-		static_cast<int>(effective_back_strength), smart_staging_bytes, &estimate)) {
-		*result = {};
-		return 0;
-	}
-	result->source_pixels = estimate.source_pixels;
-	result->work_width = static_cast<std::uint64_t>(estimate.work.width);
-	result->work_height = static_cast<std::uint64_t>(estimate.work.height);
-	result->work_pixels = estimate.work.pixels;
-	result->core_workspace_bytes = estimate.core_workspace_bytes;
-	result->wrapper_bytes = estimate.wrapper_bytes;
-	result->weight_bytes = estimate.weight_bytes;
-	result->smart_staging_bytes = estimate.smart_staging_bytes;
-	result->plugin_owned_live_bytes = estimate.plugin_owned_live_bytes;
-	result->operation_units = estimate.operation_units;
-	return 1;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericEffectiveStrength(
-	const OLMDirectionalBlurInfo *info,
-	short bitdepth,
-	int *effective_strength)
-{
-	int front = 0, back = 0;
-	if (!info || !effective_strength ||
-		(bitdepth != 8 && bitdepth != 16 && bitdepth != 32) ||
-		!GenericEffectiveStrengths(*info, bitdepth != 8, &front, &back) ||
-		(front > 0 && back > 0)) {
-		return 0;
-	}
-	*effective_strength = front > 0 ? front : back;
-	return 1;
-}
-
-extern "C" int OLMDirectionalBlurTestGenericEffectiveStrengths(
-	const OLMDirectionalBlurInfo *info,
-	short bitdepth,
-	int *effective_front_strength,
-	int *effective_back_strength)
-{
-	return info && (bitdepth == 8 || bitdepth == 16 || bitdepth == 32) &&
-		GenericEffectiveStrengths(*info, bitdepth != 8,
-			effective_front_strength, effective_back_strength) ? 1 : 0;
-}
-
-// Test-only entrypoint: keep the boundary probe on the production dispatcher.
-extern "C" PF_Err OLMDirectionalBlurTestRenderWorld(
-	PF_EffectWorld *input,
-	PF_EffectWorld *output,
-	const OLMDirectionalBlurInfo *info,
-	short bitdepth,
-	int *used_exact_front_only8)
-{
-	if (!info || !used_exact_front_only8) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
-	*used_exact_front_only8 =
-		bitdepth == 8 && CanUseExact8(input, output, nullptr, *info) ? 1 : 0;
-	return RenderWorld(input, output, nullptr, *info, bitdepth);
-}
-
-extern "C" PF_Err OLMDirectionalBlurTestRenderWorldRoute(
-	PF_EffectWorld *input,
-	PF_EffectWorld *output,
-	const OLMDirectionalBlurInfo *info,
-	short bitdepth,
-	int *observed_route)
-{
-	if (!info || !observed_route) return PF_Err_BAD_CALLBACK_PARAM;
-	return RenderWorld(input, output, nullptr, *info, bitdepth, observed_route);
-}
-
-extern "C" PF_Err OLMDirectionalBlurTestRenderWorldWithNoise(
-	PF_EffectWorld *input,
-	PF_EffectWorld *output,
-	PF_EffectWorld *noise_layer,
-	const OLMDirectionalBlurInfo *info,
-	short bitdepth,
-	int *used_exact8)
-{
-	if (!info || !used_exact8) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
-	*used_exact8 = bitdepth == 8 &&
-		CanUseExact8(input, output, noise_layer, *info) ? 1 : 0;
-	return RenderWorld(input, output, noise_layer, *info, bitdepth);
-}
-#endif
