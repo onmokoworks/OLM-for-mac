@@ -849,7 +849,11 @@ static void bilateral_blur_ipp_scalar(float *mat, long w, long h, int radius)
 // IPP scalar radius-two body FUN_1806bd9a0 groups taps by squared
 // distance 4, 2, 1. Its spatial multiplication follows each four-tap
 // reduction, and the center enters numerator/denominator at different
-// points. A generic row-major circular reduction has different rounding.
+// points. The vector body (1806b7240) instead reduces distance 1, 4, 2,
+// visits distance-four taps L/R/T/B, and adds the center last (1806b7919).
+// A generic row-major circular reduction has different rounding.
+static float bilateral_ipp_vector_exp(float x);
+
 static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
 {
 #if defined(__clang__)
@@ -865,6 +869,8 @@ static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
 	const std::vector<float> source(mat, mat+(size_t)w*h);
 	for (long y=0; y<h; ++y) for (long x=0; x<w; ++x) {
 		const float center=source[(size_t)y*w+x];
+		const bool vector_dispatch = w >= 16 && h > 4 &&
+		    (y < 2 || y >= h-2 || (x >= 2 && x < w-2));
 		float numerators[3], denominators[3];
 		for (int group=0; group<3; ++group) {
 			float weights[4], products[4];
@@ -873,17 +879,23 @@ static void bilateral_blur_ipp_radius_two(float *mat, long w, long h)
 				const long sy=std::max(0L,std::min(h-1,y+taps[group][tap][1]));
 				const float sample=source[(size_t)sy*w+sx];
 				const float difference=sample-center;
-				const float exponent=(-0.5f*difference)*difference;
-				weights[tap]=exponent > -25.0f ? bilateral_ipp_exp(exponent) : 0.0f;
+				const float exponent=vector_dispatch ? (difference*difference)*-0.5f : (-0.5f*difference)*difference;
+				weights[tap]=exponent > -25.0f ? (vector_dispatch ? bilateral_ipp_vector_exp(exponent) : bilateral_ipp_exp(exponent)) : 0.0f;
 				products[tap]=bilateral_noncontracting_product(sample,weights[tap]);
+			}
+			if (vector_dispatch && group == 0) {
+				std::swap(products[0],products[1]); std::swap(products[1],products[2]);
+				std::swap(weights[0],weights[1]); std::swap(weights[1],weights[2]);
 			}
 			numerators[group]=bilateral_noncontracting_product(
 			    ((products[0]+products[1])+products[2])+products[3],spatial[group]);
 			denominators[group]=bilateral_noncontracting_product(
 			    ((weights[0]+weights[1])+weights[2])+weights[3],spatial[group]);
 		}
-		const float numerator=(center+(numerators[0]+numerators[1]))+numerators[2];
-		const float denominator=((denominators[0]+denominators[1])+1.0f)+denominators[2];
+		const float numerator=vector_dispatch ? center+((numerators[2]+numerators[0])+numerators[1]) :
+		    (center+(numerators[0]+numerators[1]))+numerators[2];
+		const float denominator=vector_dispatch ? ((denominators[2]+denominators[0])+denominators[1])+1.0f :
+		    ((denominators[0]+denominators[1])+1.0f)+denominators[2];
 		mat[(size_t)y*w+x]=numerator/denominator;
 	}
 }
@@ -893,9 +905,10 @@ static bool is_scalar_bilateral_shape(const DGParams &p, long w, long h)
 	if (!p.smart_owner || p.blur_mode != BLUR_MODE_BILATERAL ||
 	    p.pixel_size == sizeof(PF_Pixel16) || p.ds_x != 1.0f || p.ds_y != 1.0f) return false;
 	const long radius = (long)((float)p.blur_size * std::min(p.ds_x, p.ds_y) + 0.5f);
-	// Retain PF8 dispatch; PF32 scalar tiles are verified through radius 500.
-	return radius >= (p.pixel_size == sizeof(PF_PixelFloat) ? 2 : 3) && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 500 : 32) &&
-	    (w <= 2*radius || h <= 2*radius);
+	// Retain PF8 dispatch. Radius two has its own scalar/vector body;
+	// larger scalar kernels discard only proven zero-weight finite-field taps.
+	return radius >= (p.pixel_size == sizeof(PF_PixelFloat) ? 2 : 3) && radius <= (p.pixel_size == sizeof(PF_PixelFloat) ? 4096 : 32) &&
+	    (radius == 2 || w <= 2*radius || h <= 2*radius);
 }
 
 // Bounded lane of the original IPP vector exponential (180ba5780).
@@ -1365,18 +1378,28 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
-				if (is_scalar_bilateral_shape(p, w, h)) {
+				if (p.smart_owner && p.pixel_size == sizeof(PF_Pixel16)) {
+					// The original normalizes to [0,32768], filters in FLOAT32,
+					// then packs to PF16. Even equal-valued weighted averages can
+					// move a packing tie by one ULP; this is not an identity filter.
+					for (float &value : df.x) value *= 32768.0f;
+					if (bs == 1) bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
+					else if (bs == 2) bilateral_blur_ipp_radius_two(df.x.data(), w, h);
+					else bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);
+					for (float &value : df.x) value /= 32768.0f;
+				} else if (is_scalar_bilateral_shape(p, w, h)) {
 					if (bs == 2) bilateral_blur_ipp_radius_two(df.x.data(), w, h);
 					else bilateral_blur_ipp_scalar(df.x.data(), w, h, (int)bs);
 				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8) && bs > 1) ||
 				           is_admitted_pf32_smart_bilateral_general_beta(p, w, h)) {
-					bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);
+					if (bs == 2) bilateral_blur_ipp_radius_two(df.x.data(), w, h);
+					else bilateral_blur_ipp_general(df.x.data(), w, h, (int)bs);
 				} else if ((p.smart_owner && p.pixel_size == sizeof(PF_Pixel8)) ||
 				           p.pf32_smart_matrix_admitted || p.pf32_smart_oracle_profile_admitted ||
 				    is_admitted_pf32_smart_bilateral_beta(p)) {
 					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
 				}
-				// PF16 retains its independently proven typed staging.
+				// PF16 packs the filtered plane at the typed boundary below.
 				// Other PF32 Smart tuples remain fail-closed before field creation.
 			}
 		}
@@ -1964,7 +1987,7 @@ static bool is_admitted_pf32_smart_unblurred_beta(const DGParams &p)
 }
 
 // Radius-one bilateral is independently paired to the original IPP producer.
-// It retains the SDR source guard; larger radii and Power are not admitted here.
+// Power reuses the same finite field and the shared UCRT composition.
 static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 {
 	if (p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 0 || p.blur_size > 1 ||
@@ -1972,6 +1995,9 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 		return false;
 	DGParams identity = p;
 	identity.blur_mode = BLUR_MODE_NONE;
+	if (identity.interp_mode == INTERP_POWER && std::isfinite(identity.power) &&
+	    identity.power >= 0.01f && identity.power <= 5.0f)
+		identity.interp_mode = INTERP_LINEAR;
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
@@ -1980,10 +2006,13 @@ static bool is_admitted_pf32_smart_bilateral_beta(const DGParams &p)
 static bool is_admitted_pf32_smart_bilateral_general_beta(const DGParams &p, long w, long h)
 {
     if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
-        p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 3 || p.blur_size > 32 ||
+        p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size < 3 || p.blur_size > 4096 ||
         p.ds_x != 1.0f || p.ds_y != 1.0f || w <= 0 || h <= 0) return false;
     DGParams identity = p;
     identity.blur_mode = BLUR_MODE_NONE;
+    if (identity.interp_mode == INTERP_POWER && std::isfinite(identity.power) &&
+        identity.power >= 0.01f && identity.power <= 5.0f)
+        identity.interp_mode = INTERP_LINEAR;
     return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
@@ -1992,6 +2021,9 @@ static bool is_admitted_pf32_smart_bilateral_scalar_beta(const DGParams &p, long
 	if (p.pixel_size != sizeof(PF_PixelFloat) || !is_scalar_bilateral_shape(p, w, h)) return false;
 	DGParams identity = p;
 	identity.blur_mode = BLUR_MODE_NONE;
+	if (identity.interp_mode == INTERP_POWER && std::isfinite(identity.power) &&
+	    identity.power >= 0.01f && identity.power <= 5.0f)
+		identity.interp_mode = INTERP_LINEAR;
 	return is_admitted_pf32_smart_unblurred_beta(identity);
 }
 
@@ -2059,22 +2091,25 @@ static bool pf32_smart_worlds_are_bounded_sdr(
 			const PF_PixelFloat &pixel = row[x];
 			// C19 restores the original signed-int32 mask conversion and invalid
 			// weighted-sample arithmetic. The mask conversion maps invalid alpha
-			// to zero before filtering; radius-one Bilateral consumes that finite
+			// to zero before filtering; Bilateral consumes that finite
 			// field, while source channels enter only the recovered composition.
-			const bool nonfinite_field = is_admitted_pf32_smart_unblurred_beta(p) ||
-			    is_admitted_pf32_smart_bilateral_beta(p);
+			const bool nonfinite_field = is_admitted_pf32_smart_unblurred_beta(finite_admission) ||
+			    is_admitted_pf32_smart_bilateral_beta(p) ||
+			    is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) ||
+			    is_admitted_pf32_smart_bilateral_general_beta(finite_admission, (long)width, (long)height);
 			if (pixel.alpha * 255.0f >= 2147483648.0f && !nonfinite_field) return false;
 			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : channels) {
 				if (!std::isfinite(value) && !nonfinite_field) return false;
 				// C27 pairs finite extended samples through the existing Box/Gaussian
-				// field and callback. Median and larger-radius Bilateral retain their SDR boundary;
+				// field and callback. Median retains its SDR boundary;
 				// the original large-kernel PF32 Median rejects otherwise-valid inputs.
 				if ((value < 0.0f || value > 1.0f) &&
 				    !is_admitted_pf32_smart_unblurred_beta(p) &&
 				    !(p.blur_mode != BLUR_MODE_MEDIAN && is_admitted_pf32_smart_blurred_beta(finite_admission, (long)width, (long)height)) &&
 				    !is_admitted_pf32_smart_bilateral_beta(p) &&
 				    !is_admitted_pf32_smart_bilateral_scalar_beta(finite_admission, (long)width, (long)height) &&
+				    !is_admitted_pf32_smart_bilateral_general_beta(finite_admission, (long)width, (long)height) &&
 				    !is_admitted_pf32_smart_unblurred_beta(finite_admission)) return false;
 			}
 		}

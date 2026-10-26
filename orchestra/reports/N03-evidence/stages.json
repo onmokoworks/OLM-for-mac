@@ -1,0 +1,638 @@
+[
+  {
+    "all_sum_checks": {
+      "original_pixels": 102,
+      "mac_pixels": 102,
+      "unmatched_original": 0,
+      "unmatched_mac": 0,
+      "comparison": "multiset of paired sums; ordered final output compared separately"
+    },
+    "weight_checks": [],
+    "variant": "baseline",
+    "field": "witness",
+    "output": {
+      "expected_bytes": 408,
+      "actual_bytes": 408,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 408,
+      "first_word": 102,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_numerator": {
+      "expected_bytes": 4,
+      "actual_bytes": 4,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 4,
+      "first_word": 1,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_denominator": {
+      "expected_bytes": 4,
+      "actual_bytes": 4,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 4,
+      "first_word": 1,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "original_numerator_hex": "b3f9873f",
+    "mac_numerator_hex": "b3f9873f",
+    "original_denominator_hex": "a2cba540",
+    "mac_denominator_hex": "a2cba540"
+  },
+  {
+    "all_sum_checks": {
+      "original_pixels": 153,
+      "mac_pixels": 153,
+      "unmatched_original": 68,
+      "unmatched_mac": 68,
+      "comparison": "multiset of paired sums; ordered final output compared separately"
+    },
+    "weight_checks": [
+      {
+        "group": 0,
+        "kind": "spatial",
+        "pc": "0x1806b77fd",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "kind": "spatial",
+        "pc": "0x1806b7905",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "kind": "spatial",
+        "pc": "0x1806b7723",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 0,
+        "pc": "0x1806b77aa",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 1,
+        "pc": "0x1806b7743",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 12,
+          "first_word": 3,
+          "expected_word_hex": "1350533f",
+          "actual_word_hex": "1450533f"
+        }
+      },
+      {
+        "group": 0,
+        "tap": 2,
+        "pc": "0x1806b776c",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 2,
+          "different_words": 2,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "1350533f",
+          "actual_word_hex": "1450533f"
+        }
+      },
+      {
+        "group": 0,
+        "tap": 3,
+        "pc": "0x1806b77e0",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 2,
+          "different_words": 2,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "39156d3f",
+          "actual_word_hex": "3a156d3f"
+        }
+      },
+      {
+        "group": 1,
+        "tap": 0,
+        "pc": "0x1806b7841",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 8,
+          "first_word": 2,
+          "expected_word_hex": "08425d3f",
+          "actual_word_hex": "09425d3f"
+        }
+      },
+      {
+        "group": 1,
+        "tap": 1,
+        "pc": "0x1806b786c",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "08425d3f",
+          "actual_word_hex": "09425d3f"
+        }
+      },
+      {
+        "group": 1,
+        "tap": 2,
+        "pc": "0x1806b78a7",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "tap": 3,
+        "pc": "0x1806b78f0",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "fba4573f",
+          "actual_word_hex": "fca4573f"
+        }
+      },
+      {
+        "group": 2,
+        "tap": 0,
+        "pc": "0x1806b7678",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "tap": 1,
+        "pc": "0x1806b76b7",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 8,
+          "first_word": 2,
+          "expected_word_hex": "08425d3f",
+          "actual_word_hex": "09425d3f"
+        }
+      },
+      {
+        "group": 2,
+        "tap": 2,
+        "pc": "0x1806b769d",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "08425d3f",
+          "actual_word_hex": "09425d3f"
+        }
+      },
+      {
+        "group": 2,
+        "tap": 3,
+        "pc": "0x1806b76fa",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 1,
+          "different_words": 1,
+          "first_byte": 4,
+          "first_word": 1,
+          "expected_word_hex": "9b69683f",
+          "actual_word_hex": "9c69683f"
+        }
+      }
+    ],
+    "variant": "baseline",
+    "field": "vector",
+    "output": {
+      "expected_bytes": 612,
+      "actual_bytes": 612,
+      "different_bytes": 57,
+      "different_words": 57,
+      "first_byte": 0,
+      "first_word": 0,
+      "expected_word_hex": "dc62493f",
+      "actual_word_hex": "dd62493f"
+    },
+    "first_numerator": {
+      "expected_bytes": 16,
+      "actual_bytes": 16,
+      "different_bytes": 1,
+      "different_words": 1,
+      "first_byte": 12,
+      "first_word": 3,
+      "expected_word_hex": "ac4d2d40",
+      "actual_word_hex": "ad4d2d40"
+    },
+    "first_denominator": {
+      "expected_bytes": 16,
+      "actual_bytes": 16,
+      "different_bytes": 1,
+      "different_words": 1,
+      "first_byte": 0,
+      "first_word": 0,
+      "expected_word_hex": "e383ac40",
+      "actual_word_hex": "e283ac40"
+    },
+    "original_numerator_hex": "2cb687407a4b6a40e12f3340ac4d2d40",
+    "mac_numerator_hex": "2cb687407a4b6a40e12f3340ad4d2d40",
+    "original_denominator_hex": "e383ac402e5aa440623da84046a7a640",
+    "mac_denominator_hex": "e283ac402e5aa440623da84046a7a640"
+  },
+  {
+    "all_sum_checks": {
+      "original_pixels": 102,
+      "mac_pixels": 102,
+      "unmatched_original": 0,
+      "unmatched_mac": 0,
+      "comparison": "multiset of paired sums; ordered final output compared separately"
+    },
+    "weight_checks": [],
+    "variant": "current",
+    "field": "witness",
+    "output": {
+      "expected_bytes": 408,
+      "actual_bytes": 408,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 408,
+      "first_word": 102,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_numerator": {
+      "expected_bytes": 4,
+      "actual_bytes": 4,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 4,
+      "first_word": 1,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_denominator": {
+      "expected_bytes": 4,
+      "actual_bytes": 4,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 4,
+      "first_word": 1,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "original_numerator_hex": "b3f9873f",
+    "mac_numerator_hex": "b3f9873f",
+    "original_denominator_hex": "a2cba540",
+    "mac_denominator_hex": "a2cba540"
+  },
+  {
+    "all_sum_checks": {
+      "original_pixels": 153,
+      "mac_pixels": 153,
+      "unmatched_original": 0,
+      "unmatched_mac": 0,
+      "comparison": "multiset of paired sums; ordered final output compared separately"
+    },
+    "weight_checks": [
+      {
+        "group": 0,
+        "kind": "spatial",
+        "pc": "0x1806b77fd",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "kind": "spatial",
+        "pc": "0x1806b7905",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "kind": "spatial",
+        "pc": "0x1806b7723",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 0,
+        "pc": "0x1806b7743",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 1,
+        "pc": "0x1806b776c",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 2,
+        "pc": "0x1806b77aa",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 0,
+        "tap": 3,
+        "pc": "0x1806b77e0",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "tap": 0,
+        "pc": "0x1806b7841",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "tap": 1,
+        "pc": "0x1806b786c",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "tap": 2,
+        "pc": "0x1806b78a7",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 1,
+        "tap": 3,
+        "pc": "0x1806b78f0",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "tap": 0,
+        "pc": "0x1806b7678",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "tap": 1,
+        "pc": "0x1806b76b7",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "tap": 2,
+        "pc": "0x1806b769d",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      },
+      {
+        "group": 2,
+        "tap": 3,
+        "pc": "0x1806b76fa",
+        "diff": {
+          "expected_bytes": 16,
+          "actual_bytes": 16,
+          "different_bytes": 0,
+          "different_words": 0,
+          "first_byte": 16,
+          "first_word": 4,
+          "expected_word_hex": "",
+          "actual_word_hex": ""
+        }
+      }
+    ],
+    "variant": "current",
+    "field": "vector",
+    "output": {
+      "expected_bytes": 612,
+      "actual_bytes": 612,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 612,
+      "first_word": 153,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_numerator": {
+      "expected_bytes": 16,
+      "actual_bytes": 16,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 16,
+      "first_word": 4,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "first_denominator": {
+      "expected_bytes": 16,
+      "actual_bytes": 16,
+      "different_bytes": 0,
+      "different_words": 0,
+      "first_byte": 16,
+      "first_word": 4,
+      "expected_word_hex": "",
+      "actual_word_hex": ""
+    },
+    "original_numerator_hex": "2cb687407a4b6a40e12f3340ac4d2d40",
+    "mac_numerator_hex": "2cb687407a4b6a40e12f3340ac4d2d40",
+    "original_denominator_hex": "e383ac402e5aa440623da84046a7a640",
+    "mac_denominator_hex": "e383ac402e5aa440623da84046a7a640"
+  }
+]
