@@ -342,8 +342,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	if (RequiresNoiseLayer(info)) {
 		PF_Err noise_err = ValidateNoiseLayerWorld(noise_world, bitdepth);
 		if (noise_err) return noise_err;
-		if (!RadialPayloadsDisjoint(input, noise_world) ||
-			!RadialPayloadsDisjoint(output, noise_world)) return OLM_RADIAL_REFUSAL("noise-payload-overlap");
+		if (!RadialPayloadsDisjoint(input, noise_world, bitdepth / 8 * 4) ||
+			!RadialPayloadsDisjoint(output, noise_world, bitdepth / 8 * 4)) return OLM_RADIAL_REFUSAL("noise-payload-overlap");
 		// Only the exact-source 9x7 Zoom/NV25 tuple is admitted below. Every
 		// other Type-3 layer state remains fail-closed in RenderZoomTyped.
 		if (info.blur_type != 1) return OLM_RADIAL_REFUSAL("type3-nonzoom");
@@ -698,9 +698,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			output_world->width > input_world->width || output_world->height > input_world->height))
 			err = OLM_RADIAL_REFUSAL("smartrender-world-bounds");
 
-		if (!err && (!RadialPayloadsDisjoint(input_world, output_world) ||
-			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world) ||
-			                 !RadialPayloadsDisjoint(output_world, noise_world))))) {
+		if (!err && (!RadialPayloadsDisjoint(input_world, output_world, extra->input->bitdepth / 8 * 4) ||
+			(noise_world && (!RadialPayloadsDisjoint(input_world, noise_world, extra->input->bitdepth / 8 * 4) ||
+			                 !RadialPayloadsDisjoint(output_world, noise_world, extra->input->bitdepth / 8 * 4))))) {
 			err = OLM_RADIAL_REFUSAL("smartrender-payload-overlap");
 		}
 		for (int i = 1; !err && i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
@@ -774,7 +774,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				err = OLM_RADIAL_ERROR("smartrender-generic-budget", PF_Err_OUT_OF_MEMORY);
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
-			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end) ||
+			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end, extra->input->bitdepth / 8 * 4) ||
 				!RadialActiveRowBytes(extra->input->bitdepth, output_world->width,
 				                          &active_row_bytes) ||
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes))) {

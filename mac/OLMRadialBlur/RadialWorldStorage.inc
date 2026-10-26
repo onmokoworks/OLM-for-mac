@@ -1,14 +1,18 @@
 // World payload validation and optional diagnostic capture; included by OLMRadialBlur.cpp.
 static bool RadialPayloadSpan(const PF_EffectWorld *world,
 	                          std::uintptr_t *begin,
-	                          std::uintptr_t *end)
+	                          std::uintptr_t *end, size_t pixel_bytes)
 {
 	if (!world || !world->data || !begin || !end || world->rowbytes <= 0 ||
-		world->height <= 0) return false;
+		world->height <= 0 || world->width <= 0 || !pixel_bytes) return false;
 	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
 	const std::size_t height = static_cast<std::size_t>(world->height);
-	if (rowbytes > std::numeric_limits<std::size_t>::max() / height) return false;
-	const std::size_t bytes = rowbytes * height;
+    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
+        return false;
+    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
+    if (active > rowbytes || height - 1 >
+        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
+    const size_t bytes = (height - 1) * rowbytes + active;
 	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
 	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) return false;
 	*begin = first;
@@ -17,11 +21,11 @@ static bool RadialPayloadSpan(const PF_EffectWorld *world,
 }
 
 static bool RadialPayloadsDisjoint(const PF_EffectWorld *first,
-	                               const PF_EffectWorld *second)
+	                               const PF_EffectWorld *second, size_t pixel_bytes)
 {
 	std::uintptr_t first_begin = 0, first_end = 0, second_begin = 0, second_end = 0;
-	return RadialPayloadSpan(first, &first_begin, &first_end) &&
-		RadialPayloadSpan(second, &second_begin, &second_end) &&
+	return RadialPayloadSpan(first, &first_begin, &first_end, pixel_bytes) &&
+		RadialPayloadSpan(second, &second_begin, &second_end, pixel_bytes) &&
 		(first_end <= second_begin || second_end <= first_begin);
 }
 

@@ -14,22 +14,28 @@ RenderWorldDirect(PF_EffectWorld *input, PF_EffectWorld *output,
 	return OLM_COLORKEY_REFUSAL("render-bitdepth");
 }
 
-static bool CheckedPayloadBytes(const PF_EffectWorld *world, size_t *bytes)
+static bool CheckedPayloadBytes(const PF_EffectWorld *world, size_t *bytes, size_t pixel_bytes)
 {
-	if (!world || !bytes || world->rowbytes <= 0 || world->height <= 0) return false;
-	const size_t rowbytes = (size_t)world->rowbytes;
-	const size_t height = (size_t)world->height;
-	if (height > std::numeric_limits<size_t>::max() / rowbytes) return false;
-	*bytes = rowbytes * height;
-	return true;
+	if (!world || !bytes || !pixel_bytes || world->width <= 0 ||
+        world->rowbytes <= 0 || world->height <= 0) return false;
+    const size_t rowbytes = (size_t)world->rowbytes;
+    const size_t height = (size_t)world->height;
+    if ((size_t)world->width > std::numeric_limits<size_t>::max() / pixel_bytes)
+        return false;
+    const size_t active = (size_t)world->width * pixel_bytes;
+    if (active > rowbytes || height - 1 >
+        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
+    // Cropped worlds retain their parent's stride, but not its final row tail.
+    *bytes = (height - 1) * rowbytes + active;
+    return true;
 }
 
-static bool DisjointPayloads(const PF_EffectWorld *input, const PF_EffectWorld *output)
+static bool DisjointPayloads(const PF_EffectWorld *input, const PF_EffectWorld *output, size_t pixel_bytes)
 {
 	size_t input_bytes = 0, output_bytes = 0;
 	if (!input || !output || !input->data || !output->data ||
-	    !CheckedPayloadBytes(input, &input_bytes) ||
-	    !CheckedPayloadBytes(output, &output_bytes)) return false;
+	    !CheckedPayloadBytes(input, &input_bytes, pixel_bytes) ||
+	    !CheckedPayloadBytes(output, &output_bytes, pixel_bytes)) return false;
 	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
 	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
 	if (input_begin > std::numeric_limits<uintptr_t>::max() - input_bytes ||
@@ -63,7 +69,7 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
 	    (size_t)input->rowbytes < (size_t)input->width * pixel_bytes ||
 	    (size_t)output->rowbytes < (size_t)output->width * pixel_bytes ||
-	    !DisjointPayloads(input, output)) return false;
+	    !DisjointPayloads(input, output, pixel_bytes)) return false;
 	if (pixel_local) {
 		const int64_t input_left = WorldOriginX(input);
 		const int64_t input_top = WorldOriginY(input);
@@ -157,8 +163,8 @@ PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	if (!admitted) return OLM_COLORKEY_REFUSAL("public-admission");
 
 	size_t input_bytes = 0, output_bytes = 0;
-	if (!CheckedPayloadBytes(input, &input_bytes) ||
-	    !CheckedPayloadBytes(output, &output_bytes)) return OLM_COLORKEY_REFUSAL("prepared-span");
+	if (!CheckedPayloadBytes(input, &input_bytes, pixel_bytes) ||
+	    !CheckedPayloadBytes(output, &output_bytes, pixel_bytes)) return OLM_COLORKEY_REFUSAL("prepared-span");
 	prepared->input_storage.resize(input_bytes);
 	prepared->output_storage.assign(output_bytes, 0);
 	prepared->active_row_bytes = (size_t)output->width * (size_t)pixel_bytes;
@@ -166,7 +172,7 @@ PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		std::memcpy(prepared->input_storage.data() + (size_t)y * (size_t)input->rowbytes,
 		            reinterpret_cast<const std::uint8_t *>(input->data) +
 		                (size_t)y * (size_t)input->rowbytes,
-		            (size_t)input->rowbytes);
+		            (size_t)input->width * (size_t)pixel_bytes);
 	}
 	prepared->input_world = *input;
 	prepared->output_world = *output;
@@ -184,12 +190,12 @@ PrepareSmartRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                         const OLMColorKeyInfo &info, short bitdepth,
                         ColorKeyPreparedRender *prepared)
 {
-    if (!input || !output || !DisjointPayloads(input, output) ||
+    const A_long pixel_bytes = bitdepth == 8 ? sizeof(PF_Pixel8) :
+        bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+    if (!input || !output || !DisjointPayloads(input, output, pixel_bytes) ||
         output->width <= 0 || output->height <= 0 ||
         output->width > input->width || output->height > input->height)
         return OLM_COLORKEY_REFUSAL("smart-world-dimensions");
-    const A_long pixel_bytes = bitdepth == 8 ? sizeof(PF_Pixel8) :
-        bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
     if (output->rowbytes <= 0 ||
         (size_t)output->rowbytes < (size_t)output->width * pixel_bytes)
         return OLM_COLORKEY_REFUSAL("smart-output-stride");
@@ -205,7 +211,7 @@ PrepareSmartRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
     local_output.rowbytes = input->rowbytes;
     local_output.extent_hint = local_input.extent_hint;
     size_t size = 0;
-    if (!CheckedPayloadBytes(&local_input, &size))
+    if (!CheckedPayloadBytes(&local_input, &size, pixel_bytes))
         return OLM_COLORKEY_REFUSAL("smart-input-span");
     // A full-size destination prevents the original raw neighborhood writer
     // from overrunning a negotiated output. Only delivered rows are committed.
@@ -216,7 +222,10 @@ PrepareSmartRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
         bitdepth == 32 && IsPublicAdmission<PF_PixelFloat>(&local_input, &local_output, info);
     if (!admitted) return OLM_COLORKEY_REFUSAL("smart-public-admission");
     prepared->input_storage.resize(size);
-    std::memcpy(prepared->input_storage.data(), input->data, size);
+    for (A_long y = 0; y < input->height; ++y)
+        std::memcpy(prepared->input_storage.data() + (size_t)y * input->rowbytes,
+            reinterpret_cast<const std::uint8_t *>(input->data) + (size_t)y * input->rowbytes,
+            (size_t)input->width * pixel_bytes);
     prepared->output_storage = std::move(storage);
     prepared->input_world = local_input;
     prepared->output_world = local_output;
@@ -320,7 +329,7 @@ static bool ClassicWorldsMatch(const PF_EffectWorld *input,
 	}
 	return input->rowbytes == input->width * pixel_bytes + 8 &&
 	       output->rowbytes == output->width * pixel_bytes + 8 &&
-	       DisjointPayloads(input, output);
+	       DisjointPayloads(input, output, pixel_bytes);
 }
 
 static PF_Err

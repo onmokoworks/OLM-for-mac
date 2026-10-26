@@ -552,18 +552,18 @@ static bool IsGenericBetaTupleForGeometry(
 
 static bool WorldStorageRangesDoNotOverlap(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output);
+	const PF_EffectWorld *output, size_t pixel_size);
 
 static bool IsGenericBetaClassicLayout(
 	const PF_EffectWorld *input,
-	const PF_EffectWorld *output)
+	const PF_EffectWorld *output, size_t pixel_size)
 {
 	return input && output &&
 		IsGenericBetaFullFrameDimensions(input->width, input->height) &&
 		input->width == output->width && input->height == output->height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
 		output->origin_x == 0 && output->origin_y == 0 &&
-		WorldStorageRangesDoNotOverlap(input, output);
+		WorldStorageRangesDoNotOverlap(input, output, pixel_size);
 }
 
 static bool IsMode3Closure32x18Tuple(const OLMKiraKiraInfo &info)
