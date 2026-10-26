@@ -180,7 +180,28 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 			return PF_Err_INTERNAL_STRUCT_DAMAGED;
 		}
 
-		UnpackBlurWorld<PF_Pixel16, true>(input, output, destination_argb16.data());
+		// This route observes the selected store before the next pixel is copied.
+		for (size_t y = 0; y < height; ++y) {
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
+			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
+			for (size_t x = 0; x < width; ++x) {
+				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
+				PF_Pixel16 source_pixel,pixel; memcpy(&source_pixel,source_row+x*sizeof(source_pixel),sizeof(source_pixel));
+				pixel.alpha = source_pixel.alpha;
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
+				if (x == kObservedX && y == kObservedY) {
+					observe_blur_store16_pixel(observation, bp, (A_long)width, (A_long)height,
+						(A_long)x, (A_long)y,
+						store_observation.pre_store[0], store_observation.pre_store[1],
+						store_observation.pre_store[2], store_observation.stored_argb[1],
+						store_observation.stored_argb[2], store_observation.stored_argb[3],
+						store_observation.stored_argb[0]);
+				}
+			}
+		}
 	} catch (const std::bad_alloc &) {
 		return PF_Err_OUT_OF_MEMORY;
 	}

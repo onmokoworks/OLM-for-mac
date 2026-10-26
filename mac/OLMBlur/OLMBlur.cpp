@@ -228,7 +228,8 @@ ClassicCopyGeometry(const PF_EffectWorld *input, const PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	const std::size_t width = (std::size_t)input->width;
 	const std::size_t height = (std::size_t)input->height;
-	if (width > ((std::size_t)-1) / height || width * height > 3840u * 2160u)
+	// The bounds above already make width * height representable.
+	if (width * height > 3840u * 2160u)
 		return PF_Err_BAD_CALLBACK_PARAM;
 	return PF_Err_NONE;
 }
@@ -438,10 +439,9 @@ GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
 		return false;
 	// The original workers consume the entire checked-out pixel world;
 	// extent_hint is not a clipping rectangle for their filtering passes.
-	const size_t usize_width = (size_t)width;
-	if (usize_width > ((size_t)-1) / pixel_bytes) return false;
-	const size_t active = usize_width * pixel_bytes;
-	return active <= (size_t)world->rowbytes;
+	size_t active = 0;
+	return olm::world_safety::checked_multiply((size_t)width, pixel_bytes, &active) &&
+		active <= (size_t)world->rowbytes;
 }
 
 // Returns the first failing admission reason, or NULL when the tuple is
@@ -461,9 +461,9 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	// historical refusal for unsupported depths, including its ordering.
 	if (width <= 24 && height <= 24 && bpc != 8 && bpc != 16 && bpc != 32)
 		return "generic-small-fixture";
-	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
-	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
-	const size_t pixels = usize_width * usize_height;
+	size_t pixels = 0;
+	if (!olm::world_safety::checked_multiply((size_t)width, (size_t)height, &pixels))
+		return "generic-size-overflow";
 	// Smart admission is limited by actual buffer representability, not an
 	// estimated live-memory or synchronous-work policy. The PF32 packed
 	// world is the largest individual vector (four floats per pixel).
