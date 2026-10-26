@@ -167,7 +167,7 @@
 1806b7567: mov r14d, dword ptr [rsp + 0x118]
 1806b756f: nop dword ptr [rax + rax]
 1806b7577: nop dword ptr [rax]
-1806b757e: nop 
+1806b757e: nop
 1806b7580: movups xmm6, xmmword ptr [r15 + 0x10]
 1806b7585: movaps xmm7, xmm9
 1806b7589: movaps xmm0, xmm6
@@ -216,7 +216,7 @@
 1806b7647: mov r14, qword ptr [rsp + 0x108]
 1806b764f: nop dword ptr [rax + rax]
 1806b7657: nop dword ptr [rax]
-1806b765e: nop 
+1806b765e: nop
 1806b7660: movups xmm3, xmmword ptr [rdi + r14*4]
 1806b7665: movaps xmm13, xmm9
 1806b7669: movups xmm10, xmmword ptr [rdi]
@@ -592,7 +592,7 @@
 1806b7cfc: pop rdi
 1806b7cfd: pop rsi
 1806b7cfe: pop rbx
-1806b7cff: ret 
+1806b7cff: ret
 1806b7d00: psrldq xmm10, 8
 1806b7d06: jmp 0x1806b7358
 1806b7d0b: psrldq xmm10, 0xc
@@ -971,7 +971,7 @@
 1806be1b9: mov r15, qword ptr [rsp + 0xf0]
 1806be1c1: add rsp, 0x1f0
 1806be1c8: pop rbp
-1806be1c9: ret 
+1806be1c9: ret
 1806be1ca: nop dword ptr [rax + rax]
 1806be1d2: nop dword ptr [rax]
 1806be1d9: nop dword ptr [rax]
