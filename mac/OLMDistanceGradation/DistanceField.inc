@@ -397,11 +397,3 @@ static void build_distance_field(
 		}
 	}
 }
-
-// ============================================================================
-// Per-pixel color combination (mirrors FUN_181170870 disassembly)
-// ============================================================================
-// Original MULSS (181170f8b and 181170f1c) produces the negative
-// indefinite NaN for infinity times zero. ARM produces a positive NaN for
-// that invalid operation. Restore the operation before subsequent blending;
-// the distance-field weight is finite on the admitted identity-filter lane.

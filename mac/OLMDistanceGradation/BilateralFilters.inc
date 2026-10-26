@@ -339,7 +339,3 @@ static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
 		}
 	}
 }
-
-// ============================================================================
-// Helpers: pixel fetch / store (alpha, red, green, blue order in AE)
-// ============================================================================

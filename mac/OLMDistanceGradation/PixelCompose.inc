@@ -1,3 +1,7 @@
+// ============================================================================
+// Helpers: pixel fetch / store (alpha, red, green, blue order in AE)
+// ============================================================================
+
 static constexpr float kOwnershipCutoff = 0.0001f; // Smart source ownership cutoff; AEX RVA 0x1170e00.
 static constexpr uint32_t kNativeUcrtPowerInput = 0x3f4d07a5u; // Input to retained Windows UCRT powf witness below.
 template<typename P> static inline void load_rgba_norm(const P *p, float &a, float &r, float &g, float &b);
@@ -13,11 +17,17 @@ template<> inline void load_rgba_norm<PF_PixelFloat>(const PF_PixelFloat *p, flo
 }
 
 // The actual-AEX PF8 and PF16 compose callbacks both use float-to-int
-
 // truncation before storing the channel word (FUN_181170870/FUN_181170480).
 static inline u_char clamp8(float v)   { v = v * 255.0f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
 static inline u_short clamp16(float v) { v = v * 32768.0f; return (v < 0) ? 0 : (v > 32768.f ? 32768 : (u_short)v); }
 
+// ============================================================================
+// Per-pixel color combination (mirrors FUN_181170870 disassembly)
+// ============================================================================
+// Original MULSS (181170f8b and 181170f1c) produces the negative
+// indefinite NaN for infinity times zero. ARM produces a positive NaN for
+// that invalid operation. Restore the operation before subsequent blending;
+// the distance-field weight is finite on the admitted identity-filter lane.
 static inline float smart_weighted_sample(float sample, float weight)
 {
 	if (std::isinf(sample) && weight == 0.0f) {
