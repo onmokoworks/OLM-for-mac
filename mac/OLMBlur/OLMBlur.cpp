@@ -228,7 +228,8 @@ ClassicCopyGeometry(const PF_EffectWorld *input, const PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	const std::size_t width = (std::size_t)input->width;
 	const std::size_t height = (std::size_t)input->height;
-	if (width > ((std::size_t)-1) / height || width * height > 3840u * 2160u)
+	// The bounds above already make width * height representable.
+	if (width * height > 3840u * 2160u)
 		return PF_Err_BAD_CALLBACK_PARAM;
 	return PF_Err_NONE;
 }
@@ -438,10 +439,9 @@ GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
 		return false;
 	// The original workers consume the entire checked-out pixel world;
 	// extent_hint is not a clipping rectangle for their filtering passes.
-	const size_t usize_width = (size_t)width;
-	if (usize_width > ((size_t)-1) / pixel_bytes) return false;
-	const size_t active = usize_width * pixel_bytes;
-	return active <= (size_t)world->rowbytes;
+	size_t active = 0;
+	return olm::world_safety::checked_multiply((size_t)width, pixel_bytes, &active) &&
+		active <= (size_t)world->rowbytes;
 }
 
 // Returns the first failing admission reason, or NULL when the tuple is
@@ -457,31 +457,13 @@ GenericBetaTupleRefusal(const PublicBlurParamValues& raw, A_long width, A_long h
 	if (raw.bias < 1 || raw.bias > 2) return "generic-bias-range";
 	if (raw.legacy != 0 && raw.legacy != 1) return "generic-legacy-range";
 	if (width <= 0 || height <= 0) return "generic-size-invalid";
-	// F17: the non-Legacy single-pass branch avoids repeated-radius decay;
-	// a singleton has no neighbouring samples on either axis. Both integer
-	// depths are exact in the public AEX seed and boundary matrices. Execute
-	// the normal worker; other small families retain their fixture owners.
-	const bool integer_small = (bpc == 8 || bpc == 16) && raw.legacy == 0 &&
-		(raw.repeat == 1 || (width == 1 && height == 1));
-	// C10: the default non-Legacy schedule is independently verified with
-	// arbitrary small-frame sources. PF32's source domain is checked below;
-	// C32 separately verifies nonfinite propagation with the SSE helpers.
-	const bool default_small = (bpc == 8 || bpc == 16 || bpc == 32) && raw.legacy == 0 &&
-		raw.amount == 5.0 && raw.repeat == 2;
-	// C21: PF16/PF32 non-Legacy use the original binary32 expf coefficients
-	// at every repeated radius. PF32's bounded source scan remains below.
-	const bool radius_small = raw.legacy == 0 &&
-		(bpc == 8 || bpc == 16 || bpc == 32);
-	// Legacy integer writers preserve the AEX low-word/byte conversion.
-	// C21: PF16's expf coefficients also match at higher repeated radii.
-	// C32: UCRT coefficients and SSE invalid-result semantics also establish
-	// PF32 Legacy sources; the bounded-finite/nonfinite scan remains below.
-	const bool legacy_small = raw.legacy == 1 &&
-		(bpc == 8 || bpc == 16 || bpc == 32);
-	if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small) return "generic-small-fixture";
-	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
-	if (usize_width > ((size_t)-1) / usize_height) return "generic-size-overflow";
-	const size_t pixels = usize_width * usize_height;
+	// All supported depths now admit both modes at small sizes. Retain the
+	// historical refusal for unsupported depths, including its ordering.
+	if (width <= 24 && height <= 24 && bpc != 8 && bpc != 16 && bpc != 32)
+		return "generic-small-fixture";
+	size_t pixels = 0;
+	if (!olm::world_safety::checked_multiply((size_t)width, (size_t)height, &pixels))
+		return "generic-size-overflow";
 	// Smart admission is limited by actual buffer representability, not an
 	// estimated live-memory or synchronous-work policy. The PF32 packed
 	// world is the largest individual vector (four floats per pixel).
@@ -653,12 +635,12 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	const bool public32NonLegacyRetained = bpc==32 && raw.smoothness_fixed==100*65536 && raw.legacy==0 && (
 		(raw.amount==3.0 && raw.repeat==2 && raw.bias==1 && input_world->width==12 && input_world->height==12) ||
 		(raw.amount==11.0 && raw.repeat==3 && raw.bias==2 && input_world->width==18 && input_world->height==18) ||
-		((raw.amount==129.4 && raw.repeat==2 && (raw.bias==1 || raw.bias==2) ||
-		  raw.amount==125.6 && raw.repeat==4 && raw.bias==1) && input_world->width==4 && input_world->height==3) ||
+		(((raw.amount==129.4 && raw.repeat==2 && (raw.bias==1 || raw.bias==2)) ||
+		  (raw.amount==125.6 && raw.repeat==4 && raw.bias==1)) && input_world->width==4 && input_world->height==3) ||
 		(raw.amount==5.0 && (raw.repeat==2 || raw.repeat==10) && raw.bias==1 && input_world->width==7 && input_world->height==5) ||
-		((raw.amount==129.4 && (raw.repeat==1 && raw.bias==1 || raw.repeat==2 && raw.bias==2) ||
-		  raw.amount==125.6 && raw.repeat==4 && raw.bias==1 ||
-		  raw.amount==5.0 && (raw.repeat==2 || raw.repeat==10) && raw.bias==1) && input_world->width==24 && input_world->height==24));
+		(((raw.amount==129.4 && ((raw.repeat==1 && raw.bias==1) || (raw.repeat==2 && raw.bias==2))) ||
+		  (raw.amount==125.6 && raw.repeat==4 && raw.bias==1) ||
+		  (raw.amount==5.0 && (raw.repeat==2 || raw.repeat==10) && raw.bias==1)) && input_world->width==24 && input_world->height==24));
 	const bool public32Legacy12 = bpc==32 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 && raw.repeat==2 && raw.bias==1 && raw.legacy==1 && input_world->width==12 && input_world->height==12;
 	const bool public32Legacy18 = bpc==32 && raw.amount==11.0 && raw.smoothness_fixed==100*65536 && raw.repeat==3 && raw.bias==2 && raw.legacy==1 && input_world->width==18 && input_world->height==18;
 	const bool public32Legacy18x12 = bpc==32 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 && raw.repeat==2 && raw.bias==2 && raw.legacy==1 && input_world->width==18 && input_world->height==12;

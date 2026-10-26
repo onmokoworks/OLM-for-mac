@@ -74,6 +74,42 @@ observe_blur_store16_pixel(
 	fclose(fp);
 }
 
+// Channel assignments retain their original types. memcpy supports unaligned
+// PF16/PF32 row strides; integer Legacy and PF16 preserve source alpha.
+template <typename Pixel, typename Channel>
+static void PackBlurWorld(const PF_EffectWorld *input, Channel *packed)
+{
+	for (size_t y = 0; y < (size_t)input->height; ++y) {
+		const unsigned char *row = (const unsigned char*)input->data + (size_t)y * input->rowbytes;
+		for (size_t x = 0; x < (size_t)input->width; ++x, packed += 4) {
+			Pixel pixel; memcpy(&pixel, row + (size_t)x * sizeof(pixel), sizeof(pixel));
+			packed[0] = pixel.alpha;
+			packed[1] = pixel.red;
+			packed[2] = pixel.green;
+			packed[3] = pixel.blue;
+		}
+	}
+}
+
+template <typename Pixel, bool PreserveAlpha, typename Channel>
+static void UnpackBlurWorld(const PF_EffectWorld *input, PF_EffectWorld *output,
+                           const Channel *packed)
+{
+	for (size_t y = 0; y < (size_t)input->height; ++y) {
+		const unsigned char *source = (const unsigned char*)input->data + (size_t)y * input->rowbytes;
+		unsigned char *row = (unsigned char*)output->data + (size_t)y * output->rowbytes;
+		for (size_t x = 0; x < (size_t)input->width; ++x, packed += 4) {
+			Pixel pixel;
+			if (PreserveAlpha) memcpy(&pixel, source + (size_t)x * sizeof(pixel), sizeof(pixel));
+			else pixel.alpha = packed[0];
+			pixel.red = packed[1];
+			pixel.green = packed[2];
+			pixel.blue = packed[3];
+			memcpy(row + (size_t)x * sizeof(pixel), &pixel, sizeof(pixel));
+		}
+	}
+}
+
 static PF_Err
 render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 	                       float blur_amount, float blur_smoothness,
@@ -89,17 +125,7 @@ render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<std::uint8_t> source_argb(pixels * 4);
 		std::vector<std::uint8_t> destination_argb(pixels * 4);
 
-		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
-			for (size_t x = 0; x < width; ++x) {
-				const PF_Pixel8 &pixel = source_row[x];
-				std::uint8_t *packed = source_argb.data() + (y * width + x) * 4;
-				packed[0] = pixel.alpha;
-				packed[1] = pixel.red;
-				packed[2] = pixel.green;
-				packed[3] = pixel.blue;
-			}
-		}
+		PackBlurWorld<PF_Pixel8>(input, source_argb.data());
 
 		olm::blur::worker8_legacy::Params params = {
 			blur_amount,
@@ -111,18 +137,7 @@ render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		olm::blur::worker8_legacy::render(
 			source_argb.data(), destination_argb.data(), width, height, params);
 
-		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
-			PF_Pixel8 *output_row = (PF_Pixel8*)((char*)output->data + y * (size_t)output->rowbytes);
-			for (size_t x = 0; x < width; ++x) {
-				const std::uint8_t *packed = destination_argb.data() + (y * width + x) * 4;
-				PF_Pixel8 &pixel = output_row[x];
-				pixel.alpha = source_row[x].alpha;
-				pixel.red = packed[1];
-				pixel.green = packed[2];
-				pixel.blue = packed[3];
-			}
-		}
+		UnpackBlurWorld<PF_Pixel8, true>(input, output, destination_argb.data());
 	} catch (const std::bad_alloc &) {
 		return PF_Err_OUT_OF_MEMORY;
 	}
@@ -147,17 +162,7 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		std::vector<std::uint16_t> source_argb16(pixels * 4);
 		std::vector<std::uint16_t> destination_argb16(pixels * 4);
 
-		for (size_t y = 0; y < height; ++y) {
-			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				PF_Pixel16 pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
-				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
-				packed[0] = pixel.alpha;
-				packed[1] = pixel.red;
-				packed[2] = pixel.green;
-				packed[3] = pixel.blue;
-			}
-		}
+		PackBlurWorld<PF_Pixel16>(input, source_argb16.data());
 
 		olm::blur::worker16::Params params = {
 			blur_amount,
@@ -175,6 +180,7 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 			return PF_Err_INTERNAL_STRUCT_DAMAGED;
 		}
 
+		// This route observes the selected store before the next pixel is copied.
 		for (size_t y = 0; y < height; ++y) {
 			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
 			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
@@ -218,17 +224,7 @@ render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<std::uint16_t> source_argb16(pixels * 4);
 		std::vector<std::uint16_t> destination_argb16(pixels * 4);
 
-		for (size_t y = 0; y < height; ++y) {
-			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				PF_Pixel16 pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
-				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
-				packed[0] = pixel.alpha;
-				packed[1] = pixel.red;
-				packed[2] = pixel.green;
-				packed[3] = pixel.blue;
-			}
-		}
+		PackBlurWorld<PF_Pixel16>(input, source_argb16.data());
 
 		olm::blur::worker16_legacy::Params params = {
 			blur_amount,
@@ -241,19 +237,7 @@ render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			(const std::uint8_t*)source_argb16.data(), (std::uint8_t*)destination_argb16.data(),
 			width, height, params);
 
-		for (size_t y = 0; y < height; ++y) {
-			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
-			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
-				PF_Pixel16 source_pixel,pixel; memcpy(&source_pixel,source_row+x*sizeof(source_pixel),sizeof(source_pixel));
-				pixel.alpha = source_pixel.alpha;
-				pixel.red = packed[1];
-				pixel.green = packed[2];
-				pixel.blue = packed[3];
-				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
-			}
-		}
+		UnpackBlurWorld<PF_Pixel16, true>(input, output, destination_argb16.data());
 	} catch (const std::bad_alloc &) {
 		return PF_Err_OUT_OF_MEMORY;
 	}
@@ -281,17 +265,7 @@ render_8bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outpu
 		return PF_Err_OUT_OF_MEMORY;
 	}
 
-	for (size_t y = 0; y < height; ++y) {
-		const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
-		for (size_t x = 0; x < width; ++x) {
-			const PF_Pixel8 &pixel = source_row[x];
-			u_char *packed = source_argb + (y * width + x) * 4;
-			packed[0] = pixel.alpha;
-			packed[1] = pixel.red;
-			packed[2] = pixel.green;
-			packed[3] = pixel.blue;
-		}
-	}
+	PackBlurWorld<PF_Pixel8>(input, source_argb);
 
 	olm::blur::worker::Params params = {
 		blur_amount,
@@ -308,17 +282,7 @@ render_8bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outpu
 		return PF_Err_OUT_OF_MEMORY;
 	}
 
-	for (size_t y = 0; y < height; ++y) {
-		PF_Pixel8 *output_row = (PF_Pixel8*)((char*)output->data + y * (size_t)output->rowbytes);
-		for (size_t x = 0; x < width; ++x) {
-			const u_char *packed = destination_argb + (y * width + x) * 4;
-			PF_Pixel8 &pixel = output_row[x];
-			pixel.alpha = packed[0];
-			pixel.red = packed[1];
-			pixel.green = packed[2];
-			pixel.blue = packed[3];
-		}
-	}
+	UnpackBlurWorld<PF_Pixel8, false>(input, output, destination_argb);
 
 	free(source_argb);
 	free(destination_argb);
@@ -340,17 +304,7 @@ render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		std::vector<float> source_argb(pixels * 4);
 		std::vector<float> destination_argb(pixels * 4);
 
-		for (size_t y = 0; y < height; ++y) {
-			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				PF_PixelFloat pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
-				float *packed = source_argb.data() + (y * width + x) * 4;
-				packed[0] = pixel.alpha;
-				packed[1] = pixel.red;
-				packed[2] = pixel.green;
-				packed[3] = pixel.blue;
-			}
-		}
+		PackBlurWorld<PF_PixelFloat>(input, source_argb.data());
 
 		olm::blur::worker32::Params params = {
 			blur_amount,
@@ -361,18 +315,7 @@ render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		olm::blur::worker32::render_nonlegacy(
 			source_argb.data(), destination_argb.data(), width, height, params);
 
-		for (size_t y = 0; y < height; ++y) {
-			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				const float *packed = destination_argb.data() + (y * width + x) * 4;
-				PF_PixelFloat pixel;
-				pixel.alpha = packed[0];
-				pixel.red = packed[1];
-				pixel.green = packed[2];
-				pixel.blue = packed[3];
-				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
-			}
-		}
+		UnpackBlurWorld<PF_PixelFloat, false>(input, output, destination_argb.data());
 	} catch (const std::bad_alloc &) {
 		return PF_Err_OUT_OF_MEMORY;
 	}
@@ -395,17 +338,7 @@ render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<float> source_argb(pixels * 4);
 		std::vector<float> destination_argb(pixels * 4);
 
-		for (size_t y = 0; y < height; ++y) {
-			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				PF_PixelFloat pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
-				float *packed = source_argb.data() + (y * width + x) * 4;
-				packed[0] = pixel.alpha;
-				packed[1] = pixel.red;
-				packed[2] = pixel.green;
-				packed[3] = pixel.blue;
-			}
-		}
+		PackBlurWorld<PF_PixelFloat>(input, source_argb.data());
 
 		olm::blur::worker32_legacy::Params params = {
 			blur_amount,
@@ -417,18 +350,7 @@ render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		olm::blur::worker32_legacy::render(
 			source_argb.data(), destination_argb.data(), width, height, params);
 
-		for (size_t y = 0; y < height; ++y) {
-			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
-			for (size_t x = 0; x < width; ++x) {
-				const float *packed = destination_argb.data() + (y * width + x) * 4;
-				PF_PixelFloat pixel;
-				pixel.alpha = packed[0];
-				pixel.red = packed[1];
-				pixel.green = packed[2];
-				pixel.blue = packed[3];
-				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
-			}
-		}
+		UnpackBlurWorld<PF_PixelFloat, false>(input, output, destination_argb.data());
 	} catch (const std::bad_alloc &) {
 		return PF_Err_OUT_OF_MEMORY;
 	}
