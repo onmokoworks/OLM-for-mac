@@ -1,0 +1,23 @@
+{
+  "5bb59841": {
+    "mac/OLMKiraKira": "7bf5b3d73199863e7099ec5dae035d8bec76891e",
+    "tests/olmkirakira_generic_beta_sanitizer_harness.cpp": "0749e0419931333dde4ab6e76d410740109af699",
+    "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py": "2e70e6c457ccd93627d5bb9bc303e34cc2e1bb00",
+    "tests/test_olmkirakira_native_smoke_tuple_20260820.py": "dd1b3737082e9c15c3b956ceb4030889c7030315",
+    "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "dc8d1843233057e5cafe88179cdd447afeea4742"
+  },
+  "5a367085": {
+    "mac/OLMKiraKira": "7bf5b3d73199863e7099ec5dae035d8bec76891e",
+    "tests/olmkirakira_generic_beta_sanitizer_harness.cpp": "0749e0419931333dde4ab6e76d410740109af699",
+    "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py": "2e70e6c457ccd93627d5bb9bc303e34cc2e1bb00",
+    "tests/test_olmkirakira_native_smoke_tuple_20260820.py": "dd1b3737082e9c15c3b956ceb4030889c7030315",
+    "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "dc8d1843233057e5cafe88179cdd447afeea4742"
+  },
+  "b49bb48d": {
+    "mac/OLMKiraKira": "d1666344f611428b4d61b0374e98a3f298f634c7",
+    "tests/olmkirakira_generic_beta_sanitizer_harness.cpp": "0749e0419931333dde4ab6e76d410740109af699",
+    "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py": "2e70e6c457ccd93627d5bb9bc303e34cc2e1bb00",
+    "tests/test_olmkirakira_native_smoke_tuple_20260820.py": "dd1b3737082e9c15c3b956ceb4030889c7030315",
+    "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "dc8d1843233057e5cafe88179cdd447afeea4742"
+  }
+}
