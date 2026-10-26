@@ -20,3 +20,4 @@ Read `orchestra/REFACTOR_SPEC.md` (the size-limits section).
 2. Delete the rest with `git rm` in one commit per directory. Write the deleted list to the report and to `notes/REMOVED_TOOLS.md` (paths plus the last commit that had them, one line each), so they can be restored with `git checkout <sha> -- <path>`.
 3. Do not delete corpora (`tests/fuzz_corpus`), reference data, `decomp/`, `disasm/` or anything a test reads.
 4. Gates: release gate v2 local stages pass; `tools/fuzz/test_*.py` / pytest suites that remain pass; nightly.sh `--hours 0.05` smoke runs; packaging still builds; one corpus replay per plugin gives the same results as before.
+- tools/refactor/reproduce_B01.py --forced fails when run from MAIN (resolves Util/ relative to a worktree layout: '/Users/onmk/Documents/Projects/Util/AEGP_SuiteHandler.cpp'). Works inside worktrees. Fix the path in Q08.
