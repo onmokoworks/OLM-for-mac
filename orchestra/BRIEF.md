@@ -47,7 +47,7 @@ verify: exact command(s) the orchestrator should run to re-check, with expected 
 next: what remains / suggested follow-up ticket
 ```
 
-If any tool call is rejected (permissions) or you must stop for any reason, still
+If a tool call is rejected and you recover with a safe alternative, note it under facts; it does not by itself make the status blocked. If you must stop for any reason, still
 write and commit the report with `status: blocked` before ending. Never end silently.
 
 ## Machine limits (16 GB RAM, shared by up to 5 workers)
