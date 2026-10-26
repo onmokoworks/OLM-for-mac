@@ -50,6 +50,8 @@ def adapter_class(source, gate_off=False, sanitizers=True):
                     body = body.replace('if (!exact_closure && !generic_beta) {', 'if (false) {')
                 body = body.replace('#include "OLMKiraKira.h"',
                                     '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
+                body = body.replace('#include "RampEditor.h"',
+                                    '#include "'+str(olmkirakira.SOURCE.parent/'RampEditor.h')+'"')
                 body = body.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
                 body = body.replace('#include "../../ucrtmath/', '#include "'+str(ROOT/'ucrtmath')+'/')
                 generated = host.parent/'candidate.cpp'

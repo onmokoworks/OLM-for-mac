@@ -2125,9 +2125,13 @@ static bool SmartFilteredInputIsSupported(const PF_EffectWorld *input,
         IsSmartApproximationTuple(info, format, input->width, input->height);
     if (!(IsSmartScalarBrightnessBoxTuple(info, format) ||
           IsSmartColorBoxTuple(info, format) || filtered_alpha || gaussian_source || approximated_scalar || approximated_color)) return false;
-    // The recovered color box aggregator and typed compose clamps discard
-    // unordered ray amounts. Preserve the existing constructor/filter tuples.
-    if (IsSmartColorBoxTuple(info, format) || approximated_color) return true;
+    // N02: scalar brightness/max box paths also discard unordered ray
+    // amounts at aggregation and typed composition (181156740/18115676a).
+    // Keep the existing box tuple limits; Gaussian/approximation scalar
+    // paths still require finite input. Internal NaN payloads need not survive
+    // those original clamps, as the paired public-bound trace demonstrates.
+    if (IsSmartColorBoxTuple(info, format) || approximated_color ||
+        IsSmartScalarBrightnessBoxTuple(info, format)) return true;
     for (A_long y = 0; y < input->height; ++y) {
         for (A_long x = 0; x < input->width; ++x) {
             const PF_PixelFloat pixel = LoadWorldPixel<PF_PixelFloat>(input, x, y);
