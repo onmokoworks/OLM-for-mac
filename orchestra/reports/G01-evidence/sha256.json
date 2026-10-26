@@ -1,0 +1,16 @@
+{
+  "orchestra/reports/G01-evidence/backonly.txt": "0d6ac086455e16d18fcc2a6e35de39c38b7b45855b3e6bf59bc9f8974c1ce6ff",
+  "orchestra/reports/G01-evidence/bundle-architectures.txt": "da7411fe9501c303a205b38884c48cddb39d2b8caf7a7bdd6096c90115438a38",
+  "orchestra/reports/G01-evidence/bundle-oracles.txt": "0b85f7971abc1f256ddcbf4631e9065cc0f3df227153042ac18b59489e7dc05d",
+  "orchestra/reports/G01-evidence/capture_retained.py": "65368f96e489ec3f2ff7557014ec25b257b8c6df4ccf776e097caa2067651adf",
+  "orchestra/reports/G01-evidence/code-lines.json": "d2551d93a87bde975e118121560863de13f8e3263ad2b9fd62252f6ace47ccd6",
+  "orchestra/reports/G01-evidence/corpus-oracle-stops.json": "111297f99104695b641d7fee2f5adb2f33534b4fc5c73e2ccd66d3366c77e54e",
+  "orchestra/reports/G01-evidence/count_code.py": "0293ffdfd554b8be72fbe201dc271c88ba11c97b8a1e9f8a2ffa691bb481a2c5",
+  "orchestra/reports/G01-evidence/early-tests-summary.json": "36960712bd47989e72784f4573616aa83241155cd327fae29e7824027e31dda5",
+  "orchestra/reports/G01-evidence/framework.txt": "9ee46887440daf097f6aa1b2ec96ecc154693401061817310d94c8568c09cabc",
+  "orchestra/reports/G01-evidence/gate-summary.json": "2c20bee7912bdf210ab597d8102b45b4a6b8ae6d10605d46c3ad886191ef3b78",
+  "orchestra/reports/G01-evidence/gate.txt": "ff72c1b395eedf07570f54fc29aa28d4a4a1dee19193cc6afd62fd57b4b86762",
+  "orchestra/reports/G01-evidence/package-layout.txt": "d52cbb1058abf83e3acb402d1c2b8ee089749613d6075f5d973dd66c8ef09200",
+  "orchestra/reports/G01-evidence/replay-verdicts.json": "8fc9f92656c9ace0348dad100e2763270cab2b88a5892ed8f59a2f9303a0335c",
+  "tools/emulation/fixtures/dblur_backonly_retained.argb": "8722e9bfd894895b9148dda941ada8bfb08b119a0e3e80ac42e17c8f1d8600c6"
+}

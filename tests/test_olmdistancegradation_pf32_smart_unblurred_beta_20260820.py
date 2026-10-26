@@ -66,15 +66,15 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
         checked = self.source.index("if (!checked_pixel_count(w, h, &pixel_count))")
         allocated = self.source.index("std::vector<float> alpha(pixel_count")
         self.assertLess(checked, allocated)
-        self.assertIn("std::numeric_limits<size_t>::max() / sh", self.source)
+        self.assertIn("olm::world_safety::checked_multiply(sw, sh, count)", self.source)
 
     def test_pf32_smart_world_contract_is_bounded_aligned_disjoint_and_sdr(self):
         body = self.source.split(
             "static bool pf32_smart_worlds_are_bounded_sdr", 1
         )[1].split("static constexpr uint32_t PF32_POWER_GENERIC_MAX_ULP", 1)[0]
         # F41b retains checked storage products, replacing the beta area cap.
-        self.assertIn("width > std::numeric_limits<size_t>::max() / height", body)
-        self.assertIn("width * height > std::vector<long>().max_size()", body)
+        self.assertIn("olm::world_safety::checked_multiply(width, height, &area)", body)
+        self.assertIn("area > std::vector<long>().max_size()", body)
         self.assertNotIn("input->width > 4096", body)
         self.assertNotIn("4096u * 2160u / height", body)
         self.assertIn("alignof(PF_PixelFloat)", body)
