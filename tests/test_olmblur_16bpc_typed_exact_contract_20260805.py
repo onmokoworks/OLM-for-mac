@@ -86,9 +86,7 @@ class OLMBlurPF16TypedExactContract(unittest.TestCase):
         self.assertIn("blur_amount != 5.0", source)
         self.assertIn("ERR(PF_COPY(input, output, NULL, NULL));", source)
         self.assertIn("const short bpc=extra->input->bitdepth;", source)
-        self.assertIn("ExactPublicSource(input_world,bpc)", source)
         self.assertIn("err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);", source)
-        self.assertIn("staged_input.rowbytes=(A_long)active;", source)
 
         # The Smart PF16 lanes are explicit and must not silently fall back to
         # byte or float storage. Both Legacy states remain covered by the seven

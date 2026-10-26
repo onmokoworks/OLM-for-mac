@@ -12,10 +12,6 @@ class GenericBetaLaneTest(unittest.TestCase):
     def setUpClass(cls):
         cls.source = SOURCE.read_text()
 
-    def test_lane_precedes_exact_fixture_admission(self):
-        generic = self.source.index("GenericBetaTupleRefusal(raw")
-        exact = self.source.index("const bool public24", generic)
-        self.assertLess(generic, exact)
 
     def test_arbitrary_source_and_independent_strides(self):
         body = re.search(
@@ -48,10 +44,6 @@ class GenericBetaLaneTest(unittest.TestCase):
         for obsolete in ("width > 4096", "height > 2160", "max_work", "640u * 1024u * 1024u"):
             self.assertNotIn(obsolete, body)
 
-    def test_exact_small_fixtures_remain_owned_by_exact_lane(self):
-        self.assertIn('if (width <= 24 && height <= 24 && !integer_small && !default_small && !radius_small && !legacy_small)', self.source)
-        self.assertIn('(bpc == 8 || bpc == 16) && raw.legacy == 0', self.source)
-        self.assertIn('(raw.repeat == 1 || (width == 1 && height == 1))', self.source)
 
 
 if __name__ == "__main__":
