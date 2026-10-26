@@ -4,6 +4,7 @@ cd "$(dirname "$0")/../../.."
 export TMPDIR="$PWD/orchestra/state/R11-release-package-and-notes"
 mkdir -p "$TMPDIR"
 export OLM_TEST_JOBS=1
+export OLM_REFERENCE_ROOT="$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
 # Limit the existing serial bundle builder without changing shared build policy.
 xcodebuild() {
   if [[ "${1:-}" == -project ]]; then

@@ -95,6 +95,9 @@ mkdir -p "$stage/docs"
 for doc in INSTALL_JA.md INSTALL_EN.md BETA_SUPPORT.md BETA_SUPPORT.en.md RELEASE_NOTES_JA.md RELEASE_NOTES_EN.md; do
   cp "$ROOT/docs/$doc" "$stage/docs/$doc"
 done
+for doc in INSTALL_JA.md INSTALL_EN.md BETA_SUPPORT.md BETA_SUPPORT.en.md; do
+  sed 's|(../|(|g' "$ROOT/docs/$doc" > "$stage/$doc"
+done
 for language in JA EN; do
   sed 's|(../|(|g' "$ROOT/docs/RELEASE_NOTES_${language}.md" > "$stage/RELEASE_NOTES_${language}.md"
 done
@@ -248,9 +251,20 @@ EOF
 mkdir -p "$pixel_validation_dir"
 for entry in "${pixel_validation_presets[@]}"; do
   IFS=: read -r _plugin preset _request_id zip_name <<<"$entry"
+  # Worktrees may read the untracked legacy reference assets from MAIN.
+  # Keep the default profile resolution unchanged unless an explicit root is set.
+  reference_args=()
+  if [[ -n "${OLM_REFERENCE_ROOT:-}" && "$PIXEL_REFERENCE_PROFILE" == legacy ]]; then
+    case "$_plugin" in
+      OLMDistanceGradation*) reference_relative="20260605_extra/OLMDistanceGradation" ;;
+      *) reference_relative="20260604_olm/$_plugin" ;;
+    esac
+    reference_args=(--reference "$OLM_REFERENCE_ROOT/refs/win_references/$reference_relative")
+  fi
   python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
     --preset "$preset" \
     --reference-profile "$PIXEL_REFERENCE_PROFILE" \
+    ${reference_args[@]+"${reference_args[@]}"} \
     --output "$pixel_validation_dir/$zip_name"
 done
 

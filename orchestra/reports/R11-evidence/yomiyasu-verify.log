@@ -1,0 +1,4 @@
+この最終稿に必要な検査（lint、diff）を実行した記録があり、最終稿のハッシュが記録と合いました。合格の判定ではありません。完了報告を付けるときは、この出力の2行目を写してください。
+yomiyasu-check: executed via=verify run=20261026T015342Z-816c0622 attempt=2 final=sha256:a7772d3cbcb0 mode=rewrite doc_type=manual reader=general checks=lint,diff meaning_risk=0 replay=skipped
+記録: /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/R11-release-package-and-notes/orchestra/state/R11-release-package-and-notes/yomiyasu/runs/20261026T015342Z-816c0622/attempt-2.json
+記録の中身: 見直し候補 最終稿 4件、直した箇所 2か所（原文の件数と元と後は run の出力にあります）
