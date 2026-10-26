@@ -57,7 +57,8 @@ static void KiraDiagnosticWorld(const char *label, const PF_EffectWorld *world)
 		(unsigned long)world->world_flags);
 }
 
-constexpr float kFd90RayEpsilon = 0.001f;
+constexpr float kFd90RayEpsilon = 0.001f; // Ray skip threshold; AEX 18114fd90.
+constexpr double kColorRayEpsilon = 0.001; // COMISD alpha threshold; AEX 18114f152.
 
 struct FloatRGBA {
 	float r = 0.0f;
@@ -225,14 +226,6 @@ struct PixelTraits<PF_Pixel8> {
 			p.alpha * kByteToFloat
 		};
 	}
-	static PF_Pixel8 Write(const FloatRGBA &p) {
-		PF_Pixel8 out;
-		out.alpha = static_cast<A_u_char>(std::lround(Clamp01(p.a) * 255.0f));
-		out.red   = static_cast<A_u_char>(std::lround(Clamp01(p.r) * 255.0f));
-		out.green = static_cast<A_u_char>(std::lround(Clamp01(p.g) * 255.0f));
-		out.blue  = static_cast<A_u_char>(std::lround(Clamp01(p.b) * 255.0f));
-		return out;
-	}
 	static PF_Pixel8 WriteAexTruncate(const FloatRGBA &p) {
 		PF_Pixel8 out;
 		out.alpha = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.a, 255.0f));
@@ -252,14 +245,6 @@ struct PixelTraits<PF_Pixel16> {
 			p.blue / static_cast<float>(PF_MAX_CHAN16),
 			p.alpha / static_cast<float>(PF_MAX_CHAN16)
 		};
-	}
-	static PF_Pixel16 Write(const FloatRGBA &p) {
-		PF_Pixel16 out;
-		out.alpha = static_cast<A_u_short>(std::lround(Clamp01(p.a) * PF_MAX_CHAN16));
-		out.red   = static_cast<A_u_short>(std::lround(Clamp01(p.r) * PF_MAX_CHAN16));
-		out.green = static_cast<A_u_short>(std::lround(Clamp01(p.g) * PF_MAX_CHAN16));
-		out.blue  = static_cast<A_u_short>(std::lround(Clamp01(p.b) * PF_MAX_CHAN16));
-		return out;
 	}
 	static PF_Pixel16 WriteAexTruncate(const FloatRGBA &p) {
 		PF_Pixel16 out;

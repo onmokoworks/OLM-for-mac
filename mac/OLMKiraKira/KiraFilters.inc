@@ -321,6 +321,14 @@ static bool UsesRecoveredColorPipeline(const OLMKiraKiraInfo &info)
         (info.channel == 3 || info.channel == 5 || info.channel == 6);
 }
 
+// Luma constants and operand widths follow the scalar/legacy seed owners.
+constexpr double kLumaGreen = 0.7152; // BT.709 green; AEX 181150600.
+constexpr double kLumaRed = 0.2126; // BT.709 red; AEX 181150600.
+constexpr double kLumaBlue = 0.0722; // BT.709 blue; AEX 181150600.
+constexpr float kLegacyLumaRed = 0.2126f; // Legacy Mac float seed red weight.
+constexpr float kLegacyLumaGreen = 0.7152f; // Legacy Mac float seed green weight.
+constexpr float kLegacyLumaBlue = 0.0722f; // Legacy Mac float seed blue weight.
+constexpr double kLegacyMinStrength = 1.0e-6; // Legacy Mac seed exponent floor.
 static std::vector<float> MakeSeed(
 	const std::vector<FloatRGBA> &pixels,
 	A_long w,
@@ -342,8 +350,8 @@ static std::vector<float> MakeSeed(
 	// Original double threshold 0.001 selects float replacement 0x3a83126f.
 	const bool recovered_seed = UsesRecoveredSeedPipeline(info);
 	const double exponent = recovered_seed
-		? (double)std::max(0.001f, (float)info.strength_multiplier)
-		: std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
+		? (double)std::max(kFd90RayEpsilon, (float)info.strength_multiplier)
+		: std::max<PF_FpLong>(kLegacyMinStrength, info.strength_multiplier);
 	const float fade_threshold = (float)info.fade_out;
     // FUN_1811501b0 UCOMISS/JNE returns zero for both zero and unordered.
 	auto apply_fade = [&](float value) -> float {
@@ -362,8 +370,8 @@ static std::vector<float> MakeSeed(
 					: (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
 				float luma = recovered_seed
-					? (float)((double)p.g * 0.7152 + (double)p.r * 0.2126 + (double)p.b * 0.0722)
-					: p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
+					? (float)((double)p.g * kLumaGreen + (double)p.r * kLumaRed + (double)p.b * kLumaBlue)
+					: p.r * kLegacyLumaRed + p.g * kLegacyLumaGreen + p.b * kLegacyLumaBlue;
 				v = apply_fade(luma) * p.a;
 			} else if (info.channel == 4) {
 				// Original COMISS/CMOVB selects the second operand when

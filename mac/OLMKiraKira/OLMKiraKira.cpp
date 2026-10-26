@@ -264,26 +264,6 @@ constexpr A_long kSmartClosureHeight = 3;
 constexpr A_long kMode3SmartClosureWidth = 32;
 constexpr A_long kMode3SmartClosureHeight = 18;
 
-static bool GenericBetaRenderDimensions(
-	const PF_InData *in_data,
-	A_long *width,
-	A_long *height)
-{
-	if (!in_data || !width || !height || in_data->width <= 0 || in_data->height <= 0 ||
-		in_data->downsample_x.num <= 0 || in_data->downsample_x.den <= 0 ||
-		in_data->downsample_y.num <= 0 || in_data->downsample_y.den <= 0 ||
-		in_data->downsample_x.num != in_data->downsample_x.den ||
-		in_data->downsample_y.num != in_data->downsample_y.den) {
-		return false;
-	}
-	if (!IsSmartOwnerFullFrameDimensions(in_data->width, in_data->height)) {
-		return false;
-	}
-	*width = in_data->width;
-	*height = in_data->height;
-	return true;
-}
-
 static bool WorldStorageRangesDoNotOverlap(
 	const PF_EffectWorld *input,
 	const PF_EffectWorld *output)

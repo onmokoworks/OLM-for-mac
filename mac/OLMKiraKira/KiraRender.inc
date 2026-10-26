@@ -134,7 +134,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
                 const float alpha=(*ray)[i*4+3];
                 // Original 18114f152 COMISD / JBE skips unordered alpha too.
                 // Finite source extremes can overflow into NaN in the filters.
-                if (!((double)alpha > 0.001)) continue;
+                if (!((double)alpha > kColorRayEpsilon)) continue;
                 const float inv=1.0f/alpha;
                 const float a=Clamp01(alpha*norm);
                 g.r = inv*(*ray)[i*4]*a*scale+g.r;
