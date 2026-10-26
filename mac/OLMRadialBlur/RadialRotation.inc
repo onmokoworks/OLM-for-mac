@@ -36,7 +36,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool use_native_quality_setup = use_generic_baseline || use_generic_size_noise;
 	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
 	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
-	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
+	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * kAngleDegreesToRadians) : step_deg * kPi / 180.0;
 	const A_long angular_count = use_native_quality_setup ? (A_long)RadialF32Div(360.0f, (float)step_deg) : (A_long)(360.0 / step_deg);
 
 	const double left = std::max(0.0, -cx);
@@ -387,12 +387,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				if (!polar_valid[source_cell] || seed_alpha == 0.0f || std::isnan(seed_alpha) ||
 					span_factor == 0.0f || std::isnan(span_factor)) continue;
 				const A_long effective_span = std::max<A_long>(0,
-					(A_long)RadialF32Mul((float)std::min<A_long>(outer_span, 3000), span_factor));
+					(A_long)RadialF32Mul((float)std::min<A_long>(outer_span, kRadialMaxSpan), span_factor));
 				if (effective_span > 1) {
 				auto weight_it = weight_cache.find(effective_span);
 				if (weight_it == weight_cache.end()) {
 					weight_it = weight_cache.emplace(
-								effective_span, RotationGaussianWeights(effective_span, use_aex_two_stage)).first;
+								effective_span, RotationGaussianWeights(effective_span)).first;
 				}
 				const std::vector<float> &row_weights = weight_it->second;
 				for (A_long offset = 1; offset < effective_span; ++offset) {
@@ -408,12 +408,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				}
 				}
 				const A_long effective_inner_span = std::max<A_long>(0,
-					(A_long)RadialF32Mul((float)std::min<A_long>(inner_span, 3000), span_factor));
+					(A_long)RadialF32Mul((float)std::min<A_long>(inner_span, kRadialMaxSpan), span_factor));
 				if (effective_inner_span > 1) {
 					auto inner_weights_it = weight_cache.find(effective_inner_span);
 					if (inner_weights_it == weight_cache.end()) {
 						inner_weights_it = weight_cache.emplace(
-								effective_inner_span, RotationGaussianWeights(effective_inner_span, use_aex_two_stage)).first;
+								effective_inner_span, RotationGaussianWeights(effective_inner_span)).first;
 					}
 					const std::vector<float> &inner_weights = inner_weights_it->second;
 					for (A_long offset = 1; offset < effective_inner_span; ++offset) {
@@ -582,7 +582,6 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	}
 
-	const double alpha_quantize_epsilon = 1.0e-4;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			float angle_index = 0.0f;
@@ -606,7 +605,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				if (angle < 0.0f) angle = (float)((double)angle + 0x1.921fb53c8d4f1p+2);
 				angle_raw_debug = angle;
 				const float angle_scale = use_generic_two_stage
-					? RadialF32Div(1.0f, (float)((double)(float)(1.0 / quality) * 0.017453292500000002))
+					? RadialF32Div(1.0f, (float)((double)(float)(1.0 / quality) * kAngleDegreesToRadians))
 					: ((use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
 					   ? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
 					   : (float)(quality * 180.0 / kPi));

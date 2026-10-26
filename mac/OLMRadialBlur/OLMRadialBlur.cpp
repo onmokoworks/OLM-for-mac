@@ -78,18 +78,6 @@ static bool RadialExperimentBypass(const char *tag)
 #include "RadialMath.inc"
 #include "RadialDiagnostics.inc"
 
-static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
-{
-	if (dst->left == dst->right || dst->top == dst->bottom) {
-		*dst = *src;
-	} else if (src->left != src->right && src->top != src->bottom) {
-		if (src->left   < dst->left)   dst->left   = src->left;
-		if (src->top    < dst->top)    dst->top    = src->top;
-		if (src->right  > dst->right)  dst->right  = src->right;
-		if (src->bottom > dst->bottom) dst->bottom = src->bottom;
-	}
-}
-
 static PF_Err
 About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {

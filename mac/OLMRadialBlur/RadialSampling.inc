@@ -1,4 +1,9 @@
 // Polar sampling, convolution and Gaussian weights; included by OLMRadialBlur.cpp.
+static constexpr float kExpLog2Lo = .000004313856607041089f; // log(2)/64 low part; AEX 0x18001ebc0.
+static constexpr float kExpLog2Hi = .01082611083984375f; // log(2)/64 high part; AEX 0x18001ebc0.
+static constexpr float kExpTableScale = 92.33248138427734f; // 64/log(2) range reduction; AEX 0x18001ebc0.
+static constexpr double kGaussianDenominatorBias = 1.0e-5; // denominator regularizer; AEX Gaussian builder 0x18000b680.
+static constexpr float kGaussianVarianceScale = 0.111111119389534f; // squared one-third factor; AEX Gaussian builder 0x18000b680.
 struct FloatImage {
 	A_long width = 0;
 	A_long height = 0;
@@ -251,9 +256,9 @@ static std::vector<float> ZoomGaussianWeights(A_long length)
 	std::vector<float> weights((size_t)length);
 	const float length_f = (float)length;
 	float denom = RadialF32Mul(length_f, length_f);
-	denom = RadialF32Mul(denom, 0.111111119389534f);
+	denom = RadialF32Mul(denom, kGaussianVarianceScale);
 	denom = RadialF32Add(denom, denom);
-	denom = (float)((double)denom + 1.0e-5);
+	denom = (float)((double)denom + kGaussianDenominatorBias);
 	const float inv_denom = RadialF32Div(1.0f, denom);
 	for (A_long i = 0; i < length; ++i) {
 		const int square = (int)i * (int)i;
@@ -268,16 +273,21 @@ static std::vector<float> ZoomGaussianWeights(A_long length)
 // Native Windows RCPPS/ISA selection still requires independent verification.
 static float RotationGaussianSIMDExp(float exponent)
 {
+    // Mantissas for the 64-entry exponential scale table; AEX 0x18001ebc0.
     static constexpr unsigned mantissa[64] = {0x000000u, 0x0164d2u, 0x02cd87u, 0x043a29u, 0x05aac3u, 0x071f62u, 0x08980fu, 0x0a14d5u, 0x0b95c2u, 0x0d1adfu, 0x0ea43au, 0x1031dcu, 0x11c3d3u, 0x135a2bu, 0x14f4f0u, 0x16942du, 0x1837f0u, 0x19e046u, 0x1b8d3au, 0x1d3edau, 0x1ef532u, 0x20b051u, 0x227043u, 0x243516u, 0x25fed7u, 0x27cd94u, 0x29a15bu, 0x2b7a3au, 0x2d583fu, 0x2f3b79u, 0x3123f6u, 0x3311c4u, 0x3504f3u, 0x36fd92u, 0x38fbafu, 0x3aff5bu, 0x3d08a4u, 0x3f179au, 0x412c4du, 0x4346cdu, 0x45672au, 0x478d75u, 0x49b9beu, 0x4bec15u, 0x4e248cu, 0x506334u, 0x52a81eu, 0x54f35bu, 0x5744fdu, 0x599d16u, 0x5bfbb8u, 0x5e60f5u, 0x60ccdfu, 0x633f89u, 0x65b907u, 0x68396au, 0x6ac0c7u, 0x6d4f30u, 0x6fe4bau, 0x728177u, 0x75257du, 0x77d0dfu, 0x7a83b3u, 0x7d3e0cu};
-    const float scaled = RadialF32Mul(exponent, 92.33248138427734f);
+    const float scaled = RadialF32Mul(exponent, kExpTableScale);
     const float lower = std::floor(scaled);
     const float fraction = RadialF32Sub(scaled, lower);
     int n = (int)lower;
     if (fraction > 0.5f || (fraction == 0.5f && (n & 1))) ++n;
-    float r = RadialF32Sub(exponent, RadialF32Mul((float)n, .01082611083984375f));
-    r = RadialF32Sub(r, RadialF32Mul((float)n, .000004313856607041089f));
+    float r = RadialF32Sub(exponent, RadialF32Mul((float)n, kExpLog2Hi));
+    r = RadialF32Sub(r, RadialF32Mul((float)n, kExpLog2Lo));
     const float polynomial = RadialF32Add(RadialF32Add(RadialF32Add(r, r), 2.0f), RadialF32Mul(r, r));
-    const unsigned scale_bits = (((unsigned)(8064+n) >> 6) << 23) | mantissa[n & 63];
+    constexpr int kExpExponentBias = 8064; // (127-1)*64 scale exponent; AEX 0x18001ebc0.
+    constexpr int kExpTableIndexBits = 6; // 64-entry table index width; AEX 0x18001ebc0.
+    constexpr int kExpTableIndexMask = 63; // 64-entry table index mask; AEX 0x18001ebc0.
+    constexpr int kFloatMantissaBits = 23; // FLOAT32 exponent position; AEX 0x18001ebc0.
+    const unsigned scale_bits = (((unsigned)(kExpExponentBias+n) >> kExpTableIndexBits) << kFloatMantissaBits) | mantissa[n & kExpTableIndexMask];
     float scale; std::memcpy(&scale, &scale_bits, sizeof(scale));
     return RadialF32Mul(polynomial, scale);
 }
@@ -289,9 +299,9 @@ static std::vector<float> RotationFadeGaussianWeights(A_long length)
     auto weights = ZoomGaussianWeights(length);
     if (length < 4) return weights;
     float denominator = RadialF32Mul((float)length, (float)length);
-    denominator = RadialF32Mul(denominator, 0.111111119389534f);
+    denominator = RadialF32Mul(denominator, kGaussianVarianceScale);
     denominator = RadialF32Add(denominator, denominator);
-    denominator = (float)((double)denominator + 1.0e-5);
+    denominator = (float)((double)denominator + kGaussianDenominatorBias);
     const float inverse = RadialF32Div(1.0f, denominator);
     // The controlled interpreter supplies a division seed to original RCPPS.
     // Preserve the AEX's separate FLOAT32 Newton operations after that seed.
@@ -305,15 +315,14 @@ static std::vector<float> RotationFadeGaussianWeights(A_long length)
     return weights;
 }
 
-static std::vector<float> RotationGaussianWeights(A_long length, bool apply_case0010_aex_ulp = false)
+static std::vector<float> RotationGaussianWeights(A_long length)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
-	constexpr A_long table_len = 30000;
-	(void)apply_case0010_aex_ulp;
+	constexpr A_long table_len = 30000; // Rotation Gaussian table length; AEX 0x180004640 calls B680.
 	float denom = RadialF32Mul((float)table_len, (float)table_len);
-	denom = RadialF32Mul(denom, 0.111111119389534f);
+	denom = RadialF32Mul(denom, kGaussianVarianceScale);
 	denom = RadialF32Add(denom, denom);
-	denom = (float)((double)denom + 1.0e-5);
+	denom = (float)((double)denom + kGaussianDenominatorBias);
 	const float inv_denom = RadialF32Div(1.0f, denom);
 	const A_long idx_scale = table_len / length;
 	std::vector<float> weights((size_t)length, 1.0f);
@@ -333,7 +342,7 @@ static A_long ZoomEffectiveLength(const OLMRadialBlurInfo &info)
 	A_long span = info.outer_strength;
 	if (info.outer_offset_mode == 2) span = std::max(info.outer_strength, info.outer_offset);
 	else if (info.outer_offset_mode == 3) span = info.outer_offset;
-	return std::max<A_long>(0, std::min<A_long>(span, 3000));
+	return std::max<A_long>(0, std::min<A_long>(span, kRadialMaxSpan));
 }
 
 static A_long RotationEffectiveLength(A_long strength, A_long offset_mode, A_long dynamic_offset)
@@ -342,7 +351,7 @@ static A_long RotationEffectiveLength(A_long strength, A_long offset_mode, A_lon
 	if (offset_mode == 1) span = strength + dynamic_offset;
 	else if (offset_mode == 2) span = std::max(strength, dynamic_offset);
 	else if (offset_mode == 3) span = dynamic_offset;
-	return std::max<A_long>(0, std::min<A_long>(span - 1, 3000));
+	return std::max<A_long>(0, std::min<A_long>(span - 1, kRadialMaxSpan));
 }
 
 static A_long DynamicOffsetForRadius(A_long radius_count, A_long offset, A_long radius_index)
@@ -352,7 +361,7 @@ static A_long DynamicOffsetForRadius(A_long radius_count, A_long offset, A_long 
 }
 
 // Original 24c0 uses DIVSS -> MULSS -> CVTTSS2SI for the radius Offset.
-// 1c90 then applies Add/Max/Override before its separate 3000 cap.
+// 1c90 then applies Add/Max/Override before its separate kRadialMaxSpan cap.
 static A_long RotationResolvedSpanForRadius(A_long strength, A_long offset,
     A_long mode, A_long radius_count, A_long radius_index)
 {

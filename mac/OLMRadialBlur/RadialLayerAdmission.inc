@@ -9,65 +9,6 @@ static PF_Err ComposeType3LayerSpanAEX(
 	size_t cell_count);
 
 template <typename PixelT>
-static bool MatchesType3SmallSourceFixture(const PF_EffectWorld *world)
-{
-	if (!world || !world->data || world->width != 9 || world->height != 7 ||
-		world->rowbytes < 9 * (A_long)sizeof(PixelT)) return false;
-	for (A_long y = 0; y < 7; ++y) {
-		for (A_long x = 0; x < 9; ++x) {
-			const PixelT pixel_value = LoadPixel<PixelT>(world, x, y);
-			const PixelT *pixel = &pixel_value;
-			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
-				if (pixel->alpha != ((x + y) % 5 ? 255 : 127) ||
-					pixel->red != (A_u_char)((x * 31 + y * 7) % 256) ||
-					pixel->green != (A_u_char)((x * 11 + y * 29) % 256) ||
-					pixel->blue != (A_u_char)((x * 47 + y * 13) % 256)) return false;
-			} else if constexpr (std::is_same<PixelT, PF_Pixel16>::value) {
-				if (pixel->alpha != ((x + y) % 5 ? 32768 : 16384) ||
-					pixel->red != (A_u_short)((x * 4093 + y * 257) % 32769) ||
-					pixel->green != (A_u_short)((x * 1237 + y * 3559) % 32769) ||
-					pixel->blue != (A_u_short)((x * 7919 + y * 911) % 32769)) return false;
-			} else {
-				const float alpha = (x + y) % 5 ? 1.0f : 0.5f;
-				const float red = (float)(((x * 31 + y * 7) % 257) / 256.0);
-				const float green = (float)(((x * 11 + y * 29) % 257) / 256.0);
-				const float blue = (float)(((x * 47 + y * 13) % 257) / 256.0);
-				if (pixel->alpha != alpha || pixel->red != red ||
-					pixel->green != green || pixel->blue != blue) return false;
-			}
-		}
-	}
-	return true;
-}
-
-template <typename PixelT>
-static bool MatchesType3SmallLayerFixture(const PF_EffectWorld *world)
-{
-	if (!world || !world->data || world->width != 9 || world->height != 7 ||
-		world->rowbytes < 9 * (A_long)sizeof(PixelT)) return false;
-	for (A_long y = 0; y < 7; ++y) {
-		for (A_long x = 0; x < 9; ++x) {
-			const PixelT pixel_value = LoadPixel<PixelT>(world, x, y);
-			const PixelT *pixel = &pixel_value;
-			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
-				if (pixel->alpha != 191 || pixel->red != (A_u_char)((x * 255) / 8) ||
-					pixel->green != (A_u_char)((y * 255) / 6) ||
-					pixel->blue != (A_u_char)(((x + y) * 255) / 14)) return false;
-			} else if constexpr (std::is_same<PixelT, PF_Pixel16>::value) {
-				if (pixel->alpha != 24575 || pixel->red != (A_u_short)((x * 32768) / 8) ||
-					pixel->green != (A_u_short)((y * 32768) / 6) ||
-					pixel->blue != (A_u_short)(((x + y) * 32768) / 14)) return false;
-			} else {
-				if (pixel->alpha != 0.75f || pixel->red != (float)(x / 8.0) ||
-					pixel->green != (float)(y / 6.0) ||
-					pixel->blue != (float)((x + y) / 14.0)) return false;
-			}
-		}
-	}
-	return true;
-}
-
-template <typename PixelT>
 static bool MatchesType3SmallActiveHash(
 	const PF_EffectWorld *world,
 	const char *const *expected,

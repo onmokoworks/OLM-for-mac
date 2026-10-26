@@ -295,8 +295,8 @@ static bool CheckedRadialGenericBudget(
                 info.outer_offset_mode, static_cast<A_long>(radius), static_cast<A_long>(ri));
             const A_long inner_span = RotationResolvedSpanForRadius(inner, inner_offset,
                 info.inner_offset_mode, static_cast<A_long>(radius), static_cast<A_long>(ri));
-            const uint64_t spans = static_cast<uint64_t>(std::min<A_long>(outer_span, 3000)) +
-                static_cast<uint64_t>(std::min<A_long>(inner_span, 3000));
+            const uint64_t spans = static_cast<uint64_t>(std::min<A_long>(outer_span, kRadialMaxSpan)) +
+                static_cast<uint64_t>(std::min<A_long>(inner_span, kRadialMaxSpan));
             if (spans > UINT64_MAX - fade - 8 || angular > UINT64_MAX / (spans + fade + 8)) return false;
             const uint64_t row_work = angular * (spans + fade + 8);
             if (offset_work > UINT64_MAX - row_work) return false;
@@ -357,15 +357,5 @@ static bool IsGenericType3ZoomProfile(
 	neutral.noise_variation = 0.0;
 	neutral.noise_layer = 0;
 	return IsGenericBaselineWorldPair<PixelT>(input, output, neutral);
-}
-
-template <typename PixelT>
-static void CopyWorld(PF_EffectWorld *input, PF_EffectWorld *output)
-{
-	for (A_long y = 0; y < output->height; ++y) {
-		for (A_long x = 0; x < output->width; ++x) {
-			StorePixel(output, x, y, LoadPixel<PixelT>(input, x, y));
-		}
-	}
 }
 

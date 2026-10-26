@@ -102,7 +102,8 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 static bool RadialSizeVariationEnabled(PF_FpLong percentage)
 {
     const float normalized = RadialF32Mul((float)percentage, 0.01f);
-    return (double)normalized > 0.0001;
+    constexpr double kSizeActivationThreshold = 0.0001; // AEX 0x180008876 COMISD threshold.
+    return (double)normalized > kSizeActivationThreshold;
 }
 
 template <typename PixelT>

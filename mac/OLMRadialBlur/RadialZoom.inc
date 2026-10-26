@@ -59,7 +59,7 @@ static PF_Err RenderZoomTyped(
 	const bool use_native_quality_setup = use_native_zoom_baseline || use_generic_size_noise;
 	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
 	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
-	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
+	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * kAngleDegreesToRadians) : step_deg * kPi / 180.0;
 	const A_long angular_count = use_native_quality_setup ? (A_long)RadialF32Div(360.0f, (float)step_deg) : (A_long)(360.0 / step_deg);
 
 	const double min_dx = (0.0 <= cx && cx < w) ? 0.0 : std::abs(cx < 0.0 ? cx : cx - w);
