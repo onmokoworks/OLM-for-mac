@@ -1,6 +1,6 @@
 // AEX 0x180003710. PF8 writes rounded bytes; PF16 writes low words and PF32 keeps floats.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker_orchestration.h"
 
 #include "olmblur_helper.h"

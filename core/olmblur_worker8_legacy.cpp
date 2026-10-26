@@ -1,6 +1,6 @@
 // AEX 0x180007300. Legacy PF8 uses carry helpers and low-byte stores, unlike Non-Legacy.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker8_legacy.h"
 
 #include "olmblur_fullworker_helper.h"

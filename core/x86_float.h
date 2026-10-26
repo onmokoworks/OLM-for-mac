@@ -7,7 +7,7 @@
 // default NaN supplied by the caller must never be mistaken for a generated one.
 // These helpers retain the host's propagated payload selection, and require
 // normal IEEE compilation (no fast-math / reassociation / contraction).
-namespace olm::x86_float {
+namespace olm { namespace x86_float {
 inline std::uint32_t bits(float value) {
     std::uint32_t word;
     std::memcpy(&word, &value, sizeof(word));
@@ -45,4 +45,4 @@ inline float sse_div(float a, float b) { return sse_result(a / b, a, b); }
 // preserving its bits (including signed zero and a signaling NaN payload).
 inline float sse_min(float a, float b) { return a < b ? a : b; }
 inline float sse_max(float a, float b) { return a > b ? a : b; }
-}  // namespace olm::x86_float
+}}  // namespace olm::x86_float

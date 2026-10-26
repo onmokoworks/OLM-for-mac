@@ -1,6 +1,6 @@
 // AEX 0x180002280. PF16 keeps little-endian word staging, low-word stores, and observation hooks.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker16_nonlegacy.h"
 
 #include "olmblur_helper.h"

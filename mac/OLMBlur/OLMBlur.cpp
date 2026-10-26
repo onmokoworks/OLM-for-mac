@@ -1,4 +1,4 @@
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 #include "OLMBlur.h"
 #include "olmblur_worker_orchestration.h"
 #include "olmblur_worker16_nonlegacy.h"

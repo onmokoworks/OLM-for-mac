@@ -1,4 +1,4 @@
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 #include "OLMKiraKira.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #if defined(__clang__)
@@ -10,7 +10,6 @@
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
 #include "../../core/kirakira_merge2.h"
-#include "../../core/kirakira_sincos.h"
 
 #include "RampEditor.h"
 #include <map>

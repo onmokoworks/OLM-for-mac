@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cmath>
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include <cstddef>
 #include <vector>
 #include "olm_parallel.h"

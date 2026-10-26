@@ -1,6 +1,6 @@
 // AEX 0x180005f20. Legacy PF16 keeps the original low-word conversion and carry helpers.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker16_legacy.h"
 
 #include "olmblur_fullworker_helper.h"

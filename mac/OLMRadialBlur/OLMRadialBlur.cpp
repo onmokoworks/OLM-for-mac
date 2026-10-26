@@ -1,6 +1,6 @@
 #include "RadialScatterSIMD.h"
 #include "RadialRotationRows.h"
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 #include "OLMRadialBlur.h"
 #include "../DynamicControls.h"
 #include "../../core/dblur_noise.h"
