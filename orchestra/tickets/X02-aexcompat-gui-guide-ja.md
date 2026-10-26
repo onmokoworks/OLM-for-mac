@@ -28,3 +28,4 @@ depends: X01-aexcompat-platform-parity
 
 ## Rules
 - Docs only, plus README links. Use 1 process.
+- Parity work continues in X01b. Write the guide for the state on `olm/X01-platform-parity`, and list any remaining Windows/macOS differences plainly in one short section. That section gets updated after X01b.
