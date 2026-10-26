@@ -23,7 +23,7 @@
 ## Gates (all must pass; report real numbers)
 - G1 native differential against the pre-refactor base: `tools/refactor/native_diff.py` (built in Q00).
   - Build the plugin at `--base <base sha>` and at HEAD, in both reference and fast builds, for arm64 and x86_64 (Rosetta).
-  - Compare raw output bytes on at least 3,000 random cases per plugin. Use all samplers: default, realistic, realistic-v2, odd-even, float colours, all depths, downsample, and some 4K cases.
+  - Compare raw output bytes on at least 3,000 random cases per plugin. Use every sampler `native_diff.py` supports for that plugin: default, realistic, realistic-v2, odd-even, all depths, downsample, and some 4K cases. The independent float-colour sampler exists only for Smoother2. For the other plugins, the 32 bpc depth inputs (over-range and NaN values) are the float coverage. Do not extend the samplers in these tickets.
   - Required result: 0 differences, 0 new refusals, the same refusal tags.
 - G2: replay every corpus of the plugin in `tests/fuzz_corpus/` with its recorded flags. The results must equal the base results, including the known-failing ones; do not "fix" them here.
 - G3: fresh fuzz seed 909, `--geometry realistic`, 100 cases against the default oracle. The result must equal the base.
@@ -32,6 +32,8 @@
 - G6: compiler warnings must not increase.
 
 ## Rules
+- Some tests read the main `.cpp` by text. Examples: `tests/ui_oracle/compare_mac.py` extracts `UpdateParameterUI` and its dispatch, and some `tests/test_*parameter_ui*` files assert literal expressions. Keep the code these tests read in the main `.cpp`. If that is impossible, change the test only so that it reads the new file. Never weaken what a test asserts. Run those tests (part of G5).
+- G3 compares Smart only, against the base run. Classic mismatches are outside the contract for the SmartFX plugins (see notes/KNOWN_ORIGINAL_BUGS.md, T14), so they only need to equal the base.
 - One plugin (plus its own `core/` files) per ticket. Do not touch other plugins' code. `core/` files shared by two plugins belong to the ticket named in that ticket's scope.
 - Commit in small steps. Run G1 at least after each structural step, so that a difference can be bisected to one commit.
 - If G1 shows any difference you cannot explain and fix by undoing your change, revert that step. This is a refactor; differences are never accepted.
