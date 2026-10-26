@@ -1,6 +1,6 @@
 // AEX 0x180004b80. PF32 admits negative/nonfinite alpha and does not quantize RGB.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker32_nonlegacy.h"
 
 #include "olmblur_helper.h"

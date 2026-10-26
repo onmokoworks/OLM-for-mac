@@ -4,7 +4,7 @@
 #endif
 #include "dblur_float.h"
 #include "dblur_rotate.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 
 #include <cmath>
 

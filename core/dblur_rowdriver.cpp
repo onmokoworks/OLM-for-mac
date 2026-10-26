@@ -1,5 +1,5 @@
 #include "dblur_float.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "dblur_rowdriver.h"
 #include "dblur_noise.h"
 

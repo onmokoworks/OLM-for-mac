@@ -1,6 +1,6 @@
 // AEX 0x1800086d0. Legacy PF32 keeps sequential carry partitions and unquantized RGB.
 #include "olmblur_constants.h"
-#include "../ucrtmath/include/ucrtmath.h"
+#include "olm_exact_math.h"
 #include "olmblur_worker32_legacy.h"
 
 #include "olmblur_fullworker_helper.h"

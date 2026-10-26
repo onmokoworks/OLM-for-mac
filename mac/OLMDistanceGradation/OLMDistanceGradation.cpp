@@ -1,4 +1,4 @@
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 #include "OLMDistanceGradation.h"
 #include <AEFX_SuiteHelper.h>
 #include "../../core/olmdistancegradation_fieldgen.h"

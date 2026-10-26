@@ -1,4 +1,4 @@
-#include "../../../ucrtmath/include/ucrtmath.h"
+#include "../../../core/olm_exact_math.h"
 // Literal Windows pipeline; includes below preserve one translation unit and evaluation order.
 
 #include "OLMSmoother2.h"

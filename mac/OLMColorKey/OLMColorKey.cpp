@@ -1,4 +1,4 @@
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 #include "OLMColorKey.h"
 #ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
 #include "../DynamicControls.h"

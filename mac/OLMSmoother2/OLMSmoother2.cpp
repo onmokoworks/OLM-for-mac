@@ -1,4 +1,4 @@
-#include "../../ucrtmath/include/ucrtmath.h"
+#include "../../core/olm_exact_math.h"
 // Retained older implementation used by schema/source-contract tooling.
 // The Xcode target and native differential adapter use Mac/OLMSmoother2_port.cpp.
 // Keep this pipeline separate: it does not share the production polygon model.
