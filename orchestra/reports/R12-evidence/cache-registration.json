@@ -1,0 +1,12 @@
+{
+  "name": "release-R12",
+  "kind": "release-package",
+  "package_path": "/Users/onmk/.cache/olm-emu/release-R12/OLM_Mac_Plugins_Release_20261026.zip",
+  "package_sha256": "3bf6c2f8d8755e598b97faad5a6bc8b368d2d25e2f5c1eeeed31252657c2c9b2",
+  "source_commit": "42dcc2f02e87195cc5f38700b764b2fea2725cea",
+  "recipe": "orchestra/reports/R12-evidence/build.sh",
+  "published": false,
+  "local_gate_pass": false,
+  "release_authorized": false,
+  "gate_report": "orchestra/reports/R12-release-gate-final.md"
+}

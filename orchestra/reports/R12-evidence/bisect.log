@@ -1,0 +1,22 @@
+# bad: [853db347f6831db1780142fe0382d841fc9a980e] Merge R11: bilingual release notes, packaging fixes, audited unpublished ZIP
+# good: [fa1af7d2d2a0b3baffc79d1fc1cfb37af63cc43d] Merge R09: release gate v2 (fresh 6,000: 5684/0/263/53; corpus 810/810; bundles 0 diff) + DG deployment target fix
+git bisect start '853db347' 'fa1af7d2'
+# bad: [3dad8bdcade6608ef4770dffdacbfd506dc0ab31] Merge U01: custom UI survey (KiraKira ramp editor is the only drawable UI; UPDATE_PARAMS_UI rules for 8 plugins)
+git bisect bad 3dad8bdcade6608ef4770dffdacbfd506dc0ab31
+# bad: [ac5df7c9f518a96cc72069c47aae6a9768e2fc99] Merge P04b (blocked): cropped-checkout witness needs oracle extension
+git bisect bad ac5df7c9f518a96cc72069c47aae6a9768e2fc99
+# bad: [82287ab5db5b774837dd680a6df9dfe1f499af17] Merge P02f-smoother2-geometry: Smart realistic geometry, 0 Mac-only refusals/mismatches (worker seeds + my seed 909)
+git bisect bad 82287ab5db5b774837dd680a6df9dfe1f499af17
+# good: [d13ff80936b3ab6decbcc30ceadb5f48f0b1ce4e] F52c: negotiate geometry on oracle/source/bundle hosts and measure eight plugins
+git bisect good d13ff80936b3ab6decbcc30ceadb5f48f0b1ce4e
+# bad: [8d17b7468a3bb29d26d4951a0e7ec08037dee81c] Merge P02c: KiraKira Smart realistic geometry exact (worker seeds 1/2 + my seed 909; Smart refusals only where original rejects)
+git bisect bad 8d17b7468a3bb29d26d4951a0e7ec08037dee81c
+# good: [9a260b82dba8180b25c9ff3031bbdbe1c560eead] Merge F52c: geometry-negotiating oracle + source/bundle hosts; realistic campaigns show Mac-only refusals across 8 plugins
+git bisect good 9a260b82dba8180b25c9ff3031bbdbe1c560eead
+# bad: [5a3670853c13989907203bf8aed3bd78289b4419] Merge P02a: ColorKeep Smart realistic geometry exact (worker 2 seeds + my seed 909: 100/100), default unchanged
+git bisect bad 5a3670853c13989907203bf8aed3bd78289b4419
+# bad: [20c4024277b215fe7bf7a673bfe53c7e06cc3d67] Fix ColorKeep Smart geometry using original iterate contract
+git bisect bad 20c4024277b215fe7bf7a673bfe53c7e06cc3d67
+# good: [5bb598413d4a40fc8b23480c7bc3a1a6b036ff18] orchestra: P02a-h per-plugin AE-realistic geometry fixes; T15 now after P02
+git bisect good 5bb598413d4a40fc8b23480c7bc3a1a6b036ff18
+# first bad commit: [20c4024277b215fe7bf7a673bfe53c7e06cc3d67] Fix ColorKeep Smart geometry using original iterate contract

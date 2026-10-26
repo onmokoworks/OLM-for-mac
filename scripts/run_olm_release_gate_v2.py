@@ -153,15 +153,15 @@ def campaign_counts(report, plugin, expected):
 
 
 class Gate:
-    def __init__(self, state, python):
+    def __init__(self, state, python, jobs=2):
         self.state, self.python = state, python
         self.env = {k:v for k,v in os.environ.items() if not k.startswith(('OLM_', 'DBLUR_', 'COLORKEEP_'))}
-        self.env.update(OLM_TEST_JOBS='2', TMPDIR=str(state), TMP=str(state), TEMP=str(state),
+        self.env.update(OLM_TEST_JOBS=str(jobs), TMPDIR=str(state), TMP=str(state), TEMP=str(state),
                         PYTHONDONTWRITEBYTECODE='1', OLM_FUZZ_TEST_SCRATCH=str(state/'framework-scratch'))
         self.summary = dict(schema='olm-release-gate/2', started_utc=datetime.now(timezone.utc).isoformat(),
             git_head=subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT, text=True).strip(),
             script_sha256=digest(__file__), seeds=list(SEEDS), n_per_seed=300, fuzz_jobs=1,
-            OLM_TEST_JOBS=2, stages=[], commands=[], real_host=[
+            OLM_TEST_JOBS=jobs, stages=[], commands=[], real_host=[
                 {'item':item, 'status':'REQUIRES-REAL-HOST'} for item in
                 ('installed identity', 'native host smoke', 'Windows owner evidence')],
             excluded_legacy_tests=EXCLUDED_LEGACY_TESTS,
@@ -340,16 +340,17 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--state',type=Path,default=ROOT/'orchestra/state'/TICKET/'run')
     parser.add_argument('--python',type=Path,default=MAIN/'tools/emulation/.venv/bin/python3')
+    parser.add_argument('--jobs', type=int, choices=(1, 2), default=2)
     args=parser.parse_args()
     if Path(sys.executable).absolute() != args.python.absolute():
         os.execv(str(args.python), [str(args.python), '-B', str(Path(__file__).resolve()), *sys.argv[1:]])
     if sys.flags.optimize or os.environ.get('PYTHONOPTIMIZE'):
         parser.error('optimized Python is not allowed')
     state=args.state.resolve()
-    if not state.is_relative_to(ROOT/'orchestra/state'/TICKET):
-        parser.error('state must be inside this ticket scratch')
+    if not state.is_relative_to((ROOT/'orchestra/state').resolve()):
+        parser.error('state must be inside this worktree orchestra/state')
     state.mkdir(parents=True,exist_ok=False)
-    gate=Gate(state,args.python)
+    gate=Gate(state,args.python,args.jobs)
     try:
         for name,function in [('framework',gate.framework),('build',gate.build),('corpus',gate.replays),
             ('fresh-seeds',gate.campaigns),('bundle-checks',gate.bundles),('plugin-tests',gate.tests),('static',gate.static)]:

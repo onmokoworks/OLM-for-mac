@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from tools.emulation.olm_assets import resolve_asset
 
 import argparse
+import os
 import hashlib
 import importlib.util
 import json
@@ -99,10 +100,10 @@ def fresh_oracle() -> tuple[dict[str, bytes], dict[str, bytes], list[dict]]:
     return inputs,outputs,rows
 
 def build_candidate() -> tuple[Path, dict]:
-    durable = ROOT / "handoffs"; durable.mkdir(exist_ok=True)
+    durable = Path(os.environ.get("TMPDIR", ROOT / "handoffs")); durable.mkdir(exist_ok=True)
     directory = Path(tempfile.mkdtemp(prefix="colorkeep_nine_candidate_20260813.", dir=durable))
     product = directory / "Product"
-    command = ["xcodebuild", "-project", "mac/ColorKeep/Mac/ColorKeep.xcodeproj", "-target", "ColorKeep", "-configuration", "Release", "ARCHS=arm64 x86_64", "ONLY_ACTIVE_ARCH=NO", "CODE_SIGNING_ALLOWED=NO", f"CONFIGURATION_BUILD_DIR={product}", f"OBJROOT={directory/'Obj'}", f"SYMROOT={directory/'Sym'}", "build"]
+    command = ["xcodebuild", "-jobs", os.environ.get("OLM_TEST_JOBS", "1"), "-project", "mac/ColorKeep/Mac/ColorKeep.xcodeproj", "-target", "ColorKeep", "-configuration", "Release", "ARCHS=arm64 x86_64", "ONLY_ACTIVE_ARCH=NO", "CODE_SIGNING_ALLOWED=NO", f"CONFIGURATION_BUILD_DIR={product}", f"OBJROOT={directory/'Obj'}", f"SYMROOT={directory/'Sym'}", "build"]
     run = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     log = directory / "xcodebuild.log"; log.write_text(run.stdout + run.stderr)
     if run.returncode: raise RuntimeError((run.stdout + run.stderr)[-5000:])

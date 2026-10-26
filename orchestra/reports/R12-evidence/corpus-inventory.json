@@ -1,0 +1,526 @@
+{
+  "tests/fuzz_corpus/olmsmoother_P02g_realistic": {
+    "plugin": "olmsmoother",
+    "cases": 224,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira_N02_nightly": {
+    "plugin": "olmkirakira",
+    "cases": 3,
+    "max_sizes": [
+      256,
+      1080
+    ],
+    "size_samplers": [
+      "default",
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmtoondilate_T13": {
+    "plugin": "olmtoondilate",
+    "cases": 23,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_realistic_P02b": {
+    "plugin": "olmdistancegradation",
+    "cases": 226,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/radialblur_realistic_P02d": {
+    "plugin": "radialblur",
+    "cases": 180,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmtoondilate_P02e_realistic": {
+    "plugin": "olmtoondilate",
+    "cases": 236,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother2_realistic_P02f": {
+    "plugin": "olmsmoother2",
+    "cases": 97,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur_realistic_P02j": {
+    "plugin": "olmdirectionalblur",
+    "cases": 200,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/radialblur": {
+    "plugin": "radialblur",
+    "cases": 61,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmblur": {
+    "plugin": "olmblur",
+    "cases": 39,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmblur_downsample_P01a": {
+    "plugin": "olmblur",
+    "cases": 43,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother": {
+    "plugin": "olmsmoother",
+    "cases": 29,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_P04a": {
+    "plugin": "olmdistancegradation",
+    "cases": 72,
+    "max_sizes": [
+      64
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmblur_realistic_P02h": {
+    "plugin": "olmblur",
+    "cases": 36,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother2": {
+    "plugin": "olmsmoother2",
+    "cases": 8,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmtoondilate": {
+    "plugin": "olmtoondilate",
+    "cases": 300,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur": {
+    "plugin": "olmdirectionalblur",
+    "cases": 83,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira_realistic_P02c": {
+    "plugin": "olmkirakira",
+    "cases": 272,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira": {
+    "plugin": "olmkirakira",
+    "cases": 8,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira_gate_off_T06": {
+    "plugin": "olmkirakira",
+    "cases": 62,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/colorkeep_realistic_P02a": {
+    "plugin": "colorkeep",
+    "cases": 218,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey": {
+    "plugin": "olmcolorkey",
+    "cases": 9,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation": {
+    "plugin": "olmdistancegradation",
+    "cases": 147,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/radialblur_N02-nightly-20261025": {
+    "plugin": "radialblur",
+    "cases": 2,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/colorkeep/P04d-cropped-checkout": {
+    "plugin": "colorkeep",
+    "cases": 200,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/colorkeep/T15b-odd-even-realistic": {
+    "plugin": "colorkeep",
+    "cases": 3,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation/T15b-odd-even-realistic": {
+    "plugin": "olmdistancegradation",
+    "cases": 9,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey/P02i-realistic": {
+    "plugin": "olmcolorkey",
+    "cases": 8,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey/T15b-odd-even-realistic": {
+    "plugin": "olmcolorkey",
+    "cases": 3,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey/N02-nightly-20261025": {
+    "plugin": "olmcolorkey",
+    "cases": 3,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey/P05c-lab-key-cache": {
+    "plugin": "olmcolorkey",
+    "cases": 24,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmcolorkey/C01-pf32-nan": {
+    "plugin": "olmcolorkey",
+    "cases": 4,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira_gate_off_T06/other_reductions": {
+    "plugin": "olmkirakira",
+    "cases": 41,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmkirakira/T15b-odd-even-realistic": {
+    "plugin": "olmkirakira",
+    "cases": 4,
+    "max_sizes": [
+      1080
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur/T15b-odd-even-realistic": {
+    "plugin": "olmdirectionalblur",
+    "cases": 4,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur/N02-nightly-20261025": {
+    "plugin": "olmdirectionalblur",
+    "cases": 3,
+    "max_sizes": [
+      256,
+      1920
+    ],
+    "size_samplers": [
+      "default",
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur/P04b2-cropped-checkout": {
+    "plugin": "olmdirectionalblur",
+    "cases": 4,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur/P05a-performance": {
+    "plugin": "olmdirectionalblur",
+    "cases": 7,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdirectionalblur/P06a-investigation": {
+    "plugin": "olmdirectionalblur",
+    "cases": 5,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_N02/default": {
+    "plugin": "olmdistancegradation",
+    "cases": 1,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_N02/realistic-v1": {
+    "plugin": "olmdistancegradation",
+    "cases": 2,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_N02/odd-even-v1": {
+    "plugin": "olmdistancegradation",
+    "cases": 1,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmdistancegradation_N02/realistic-v2": {
+    "plugin": "olmdistancegradation",
+    "cases": 3,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmtoondilate/T15b-odd-even-realistic": {
+    "plugin": "olmtoondilate",
+    "cases": 3,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother2/P04c2-cropped-checkout": {
+    "plugin": "olmsmoother2",
+    "cases": 4,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother2/T15b-odd-even-realistic": {
+    "plugin": "olmsmoother2",
+    "cases": 3,
+    "max_sizes": [
+      623
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother/P05c-stack-frames": {
+    "plugin": "olmsmoother",
+    "cases": 48,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/olmsmoother/T15b-odd-even-realistic": {
+    "plugin": "olmsmoother",
+    "cases": 2,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmblur/P05c-parallel-boundary": {
+    "plugin": "olmblur",
+    "cases": 18,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/olmblur/T15b-odd-even-realistic": {
+    "plugin": "olmblur",
+    "cases": 3,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  },
+  "tests/fuzz_corpus/radialblur/P05b-rotation-performance": {
+    "plugin": "radialblur",
+    "cases": 6,
+    "max_sizes": [
+      256
+    ],
+    "size_samplers": [
+      "default"
+    ]
+  },
+  "tests/fuzz_corpus/radialblur/T15b-odd-even-realistic": {
+    "plugin": "radialblur",
+    "cases": 4,
+    "max_sizes": [
+      1920
+    ],
+    "size_samplers": [
+      "odd-even-v1"
+    ]
+  }
+}
