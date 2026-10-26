@@ -1,0 +1,55 @@
+{
+  "pre_hex": "0000803fdaa4173f00000000daa4173fdaa4173f000000002231ca3e000000000000000000000000daa4173f22314a3f",
+  "mac_post_hex": "a0133c3f04d9ff3edaa4af3e883cb73ea144de3edc1bab3e77109e3e7599aa3ec8010b3e824e603e84c5cb3ec8010b3f",
+  "original_post_hex": "a0133c3f04d9ff3edaa4af3e863cb73ea044de3edc1bab3e77109e3e7499aa3ec7010b3e824e603e84c5cb3ec8010b3f",
+  "filter_diff": {
+    "expected_bytes": 48,
+    "actual_bytes": 48,
+    "different_bytes": 4,
+    "different_words": 4,
+    "first_byte": 12,
+    "first_word": 3,
+    "expected_word_hex": "863cb73e",
+    "actual_word_hex": "883cb73e"
+  },
+  "output_diff": {
+    "expected_bytes": 192,
+    "actual_bytes": 192,
+    "different_bytes": 5,
+    "different_words": 5,
+    "first_byte": 48,
+    "first_word": 12,
+    "expected_word_hex": "bd61a43e",
+    "actual_word_hex": "bc61a43e"
+  },
+  "oracle": {
+    "status": "ok",
+    "guards_intact": true,
+    "session_clean": true,
+    "output_rect": [
+      0,
+      0,
+      4,
+      3
+    ]
+  },
+  "candidate": {
+    "status": "ok",
+    "error": 0,
+    "metadata": {
+      "GEOMETRY_INPUT": "8 9 1 2 1 3 10 11 3",
+      "GEOMETRY_CHECKOUT": "0 0 4 3",
+      "GEOMETRY_PRERENDER": "0 0 4 3",
+      "GEOMETRY": "0 0 4 3",
+      "ERROR": "0",
+      "COUNTS": "1 1 1 1 12 12"
+    },
+    "output_rect": [
+      0,
+      0,
+      4,
+      3
+    ]
+  },
+  "instructions": 22144
+}
