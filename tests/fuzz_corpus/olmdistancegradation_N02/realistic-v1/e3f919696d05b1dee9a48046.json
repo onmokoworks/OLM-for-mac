@@ -201,7 +201,7 @@
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
     "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
     "builder_anomalies": "In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1; real_defaults preserves captured values for explicit P04a corpus",
-    "candidate_sha256": "c99d4dcf5219b561810bc6cd2c96e034e9dbddc16c237526743db491da94c3ed",
+    "candidate_sha256": "121e4412d4c2c5a72973e199241b7d922b28c0f4cfa4290c3d62f766318da415",
     "case_timeout_seconds": 10,
     "declarations_sha256": "80bb9b979f27b4e36df8c921d506aa7b1ff2035e2a1561a0308c0a50ee9eb9c5",
     "dependencies_sha256": {
@@ -241,7 +241,7 @@
       "core/radialblur_scatter_caller.h": "fe2a5a3d99b33b1c5f301f4b238887b4f02ccdb3de2cb4f0c9c04534e9de1837",
       "core/radialblur_scatter_tail.h": "a9a32e04ad9f75cc482e8460a4db7af649105d414e791107eb126226c65c6069",
       "core/x86_float.h": "9da387cbabc988e233eaaffb404e07372cfab869f12da90498caa14421d7d64a",
-      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "dc75c24a907e2417950ec7b138817746c726e808b5e372261d1d6bd4dead9194",
+      "mac/OLMDistanceGradation/OLMDistanceGradation.cpp": "816a4ec2e5fc2c9c59e1396314c4dd6097bf530671885bc13aaef28ca84635da",
       "mac/OLMDistanceGradation/OLMDistanceGradation.h": "79e869d598abed928982849243e0adedc958703f3da66d7f33e7775de338f98c",
       "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.h": "e47681e88ba000b9218bd63e39a982f667acae463c3d6b991de69b6bea1b0349",
       "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
@@ -281,6 +281,7 @@
     "mac_host": "existing public owner contract SDK shim; O2 strict floating-point production EffectMain",
     "oracle_render_path": "smartfx",
     "oracle_routes": {
+      "classic": "classic",
       "smart": "smart"
     },
     "original_routes": {
@@ -305,7 +306,7 @@
     },
     "worker_path": "/Users/onmk/.cache/olm-emu/worker-F52c-geom/aex-guest-worker",
     "worker_sha256": "4d0d729931da4567abb3d0f8cdbb8cbd00833b2bec545173dfdf9a96e6c67a9e",
-    "world": "realistic-v1: sampled input, byte padding, extent, request, aspect; PreRender output rectangle/origin; packed ARGB"
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
   },
   "reduction": {
     "accepted": [
@@ -425,13 +426,21 @@
         "status": "mismatch"
       },
       "smart": {
-        "error": -1,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 1 12 12",
-          "ERROR": "-1",
+          "ERROR": "0",
+          "GEOMETRY": "0 0 6 17",
           "GEOMETRY_INPUT": "6 17 1 1 1 1 1 1 32"
         },
-        "status": "refusal"
+        "output_rect": [
+          0,
+          0,
+          6,
+          17
+        ],
+        "raw_sha256": "2c8885a8fff5dbe0171a94c6e01a385d6c2ecaf22edb3821f294dd1e57a52070",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"
