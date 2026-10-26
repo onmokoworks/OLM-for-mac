@@ -5,18 +5,13 @@ static bool RadialPayloadSpan(const PF_EffectWorld *world,
 {
 	if (!world || !world->data || !begin || !end || world->rowbytes <= 0 ||
 		world->height <= 0 || world->width <= 0 || !pixel_bytes) return false;
-	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
-	const std::size_t height = static_cast<std::size_t>(world->height);
-    if (static_cast<size_t>(world->width) > std::numeric_limits<size_t>::max() / pixel_bytes)
-        return false;
-    const size_t active = static_cast<size_t>(world->width) * pixel_bytes;
-    if (active > rowbytes || height - 1 >
-        (std::numeric_limits<size_t>::max() - active) / rowbytes) return false;
-    const size_t bytes = (height - 1) * rowbytes + active;
-	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
-	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) return false;
-	*begin = first;
-	*end = first + bytes;
+	olm::world_safety::AddressRange range = {};
+	if (olm::world_safety::address_range(
+		{world->data, (size_t)world->width, (size_t)world->height,
+		 (size_t)world->rowbytes, pixel_bytes}, &range) != olm::world_safety::Status::ok)
+		return false;
+	*begin = range.begin;
+	*end = range.end;
 	return true;
 }
 

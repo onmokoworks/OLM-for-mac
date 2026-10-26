@@ -319,11 +319,14 @@ UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
 
 // AE rowbytes are byte strides: odd padding must not create typed references
 // into unaligned storage. Keep channel arithmetic on aligned local pixels.
+#include "../../core/olm_world_safety.h"
 #include "RadialAdmission.inc"
 #include "RadialSampling.inc"
 #include "RadialPixelTraits.inc"
 #include "RadialZoomKernels.inc"
-#include "RadialTestWorkers.inc"
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+#include "../../tools/fuzz/harnesses/radialblur/RadialTestWorkers.inc"
+#endif
 #include "RadialLayerAdmission.inc"
 #include "RadialZoom.inc"
 #include "RadialRotation.inc"
@@ -357,14 +360,11 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	// dispatch for controls that previously selected it.
 	if (IsGenericRadialControlProfile(info)) {
 		bool admitted = false;
-		if (bitdepth == 8) admitted = (IsGenericBaselineWorldPair<PF_Pixel8>(input, output, info) ||
-			IsGenericSizeNoiseWorldPair<PF_Pixel8>(input, output, info)) &&
+		if (bitdepth == 8) admitted = IsGenericBaselineWorldPair<PF_Pixel8>(input, output, info) &&
 			GenericRadialInputIsSDR<PF_Pixel8>(input);
-		else if (bitdepth == 16) admitted = (IsGenericBaselineWorldPair<PF_Pixel16>(input, output, info) ||
-			IsGenericSizeNoiseWorldPair<PF_Pixel16>(input, output, info)) &&
+		else if (bitdepth == 16) admitted = IsGenericBaselineWorldPair<PF_Pixel16>(input, output, info) &&
 			GenericRadialInputIsSDR<PF_Pixel16>(input);
-		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
-			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info));
+		else if (bitdepth == 32) admitted = IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
 		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
 		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached
@@ -420,7 +420,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	return RenderWorld(input, output, NULL, info, bitdepth);
 }
 
-#include "RadialTestEntry.inc"
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+#include "../../tools/fuzz/harnesses/radialblur/RadialTestEntry.inc"
+#endif
 static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_width, PF_FpLong comp_height)
 {
 	OLMRadialBlurInfo info;

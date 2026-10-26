@@ -18,13 +18,9 @@ static void StorePixel(PF_EffectWorld *world, A_long x, A_long y, const PixelT &
 static bool CheckedCellProduct(A_long width, A_long height, size_t channels, size_t *words)
 {
 	if (!words || width <= 0 || height <= 0 || channels == 0) return false;
-	const size_t w = (size_t)width;
-	const size_t h = (size_t)height;
-	if (w > std::numeric_limits<size_t>::max() / h) return false;
-	const size_t cells = w * h;
-	if (cells > std::numeric_limits<size_t>::max() / channels) return false;
-	*words = cells * channels;
-	return true;
+	size_t cells = 0;
+	return olm::world_safety::checked_multiply((size_t)width, (size_t)height, &cells) &&
+		olm::world_safety::checked_multiply(cells, channels, words);
 }
 
 // Original A8F0 chooses the far axis using integer extent/2, then performs
@@ -123,7 +119,8 @@ static bool IsGenericSizeNoiseControlProfile(const OLMRadialBlurInfo &info)
 
 static bool IsGenericRadialControlProfile(const OLMRadialBlurInfo &info)
 {
-	return IsGenericBaselineControlProfile(info) || IsGenericSizeNoiseControlProfile(info);
+	// The historical size/noise profile is a subset of baseline admission.
+	return IsGenericBaselineControlProfile(info);
 }
 
 template <typename PixelT>
