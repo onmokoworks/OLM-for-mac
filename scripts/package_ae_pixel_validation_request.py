@@ -719,7 +719,15 @@ def package_request(config: dict, output: Path) -> None:
         input_dir.mkdir(parents=True)
         expected_dir.mkdir()
 
-        shutil.copy2(reference / "reference_manifest.json", stage / "reference_manifest.json")
+        # Ship portable provenance, not the reference author's machine path.
+        # Preserve all render settings and image references verbatim as values.
+        portable_manifest = dict(manifest)
+        if isinstance(manifest.get("project"), dict):
+            project = dict(manifest["project"])
+            if isinstance(project.get("path"), str):
+                project["path"] = project["path"].replace("\\", "/").rsplit("/", 1)[-1]
+            portable_manifest["project"] = project
+        write_json(stage / "reference_manifest.json", portable_manifest)
         for case in cases:
             input_path = input_override or find_png(reference, case["before_effects_frame"])
             shutil.copy2(input_path, input_dir / case["before_effects_frame"])
