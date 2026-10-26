@@ -52,12 +52,12 @@ bool generate_demanded_noise(const std::vector<float>& source, int width, int he
                                            noise, nw, nh, true);
 }
 
-std::vector<float> gaussian_weights(int count, bool expfloat = false) {
+// Both historical expfloat selections use the same UCRT_FMA function.
+std::vector<float> gaussian_weights(int count, bool = false) {
     std::vector<float> weights(static_cast<std::size_t>(count), 1.0f);
     for (int index = 0; index < count; ++index) {
         weights[static_cast<std::size_t>(index)] =
-            expfloat ? olm::dblur::gaussian_weight_expfloat(count, index)
-                     : olm::dblur::gaussian_weight(count, index);
+            olm::dblur::gaussian_weight(count, index);
     }
     return weights;
 }

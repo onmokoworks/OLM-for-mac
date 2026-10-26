@@ -24,9 +24,4 @@ inline float gaussian_weight(int count, int index)
     return ucrt_expf(gaussian_argument(count, index), UCRT_FMA);
 }
 
-inline float gaussian_weight_expfloat(int count, int index)
-{
-    return ucrt_expf(gaussian_argument(count, index), UCRT_FMA);
-}
-
 }  // namespace olm::dblur
