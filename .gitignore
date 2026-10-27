@@ -98,3 +98,4 @@ Resources
 # local orchestration (tickets, reports, state)
 /orchestra/
 /disasm/
+/.yomiyasu/

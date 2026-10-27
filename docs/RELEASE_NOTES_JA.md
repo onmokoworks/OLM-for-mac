@@ -34,7 +34,7 @@ OLMSmootherは8／16 bpc、ほかの9本は8／16／32 bpcに対応していま�
 
 GPUレンダーには対応していません。ほかの制限は[既知の制限](../KNOWN_LIMITATIONS.md)にまとめています。
 
-インストールの手順は[インストールガイド](INSTALL_JA.md)を見てください。AppleのDeveloper ID署名と公証はしていないので、Gatekeeperへの対処もそこに書いています。
+インストールの手順は[インストールガイド](INSTALL_JA.md)を見てください。AppleのDeveloper ID署名と公証を受けていないので、Gatekeeperへの対処もそこに書いています。
 
 ## ライセンス
 
