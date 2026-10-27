@@ -1,6 +1,6 @@
 # OLM for Mac
 
-Windows版のAfter Effectsプラグイン「OLM Tools」をMacで使えるようにした、非公式の移植版です（Beta版）。大事な作業に使う前に、必ずプロジェクトのバックアップを取ってください。
+Windows版のAfter Effectsプラグイン「OLM Tools」をMacで使えるようにした、非公式の移植版です（Beta版）。大切な作業に使う前に、必ずプロジェクトのバックアップを取ってください。
 
 English: README.en.md
 
