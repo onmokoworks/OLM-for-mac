@@ -186,9 +186,10 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	PF_END_TOPIC(HIGHLIGHT_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GlowRotation_Param_Name),
-	                     -360.0, 360.0, -180.0, 180.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0, GLOW_ROTATION_DISK_ID);
+	// Original PARAMS_SETUP declares an Angle, not a floating-point slider.
+	// Its owner consumes the raw PF_Fixed word (see ReadGlowRotation).
+	PF_ADD_ANGLE(GetStringPtr(StrID_GlowRotation_Param_Name), 0,
+	             GLOW_ROTATION_DISK_ID);
 
 	// Register the ECW event surface after defining its custom controls. The
 	// Windows AEX registers exactly PF_CustomEFlag_EFFECT with all dimensions

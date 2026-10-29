@@ -50,10 +50,19 @@ static PF_FpLong ReadRecoveredPercent(A_long value, const OLMKiraKiraInfo &info)
 	return value / 100.0;
 }
 
+static PF_FpLong ReadGlowRotation(const PF_ParamDef &param)
+{
+	// Original 18114e89d -> 1811542b0 -> 181232670 copies the Angle's
+	// signed 16.16 word directly into the owner; it does not divide by 65536.
+	// Preserve the older hostless probes' untyped, already-decoded float field.
+	return param.param_type == PF_Param_ANGLE
+		? (PF_FpLong)param.u.ad.value : param.u.fs_d.value;
+}
+
 static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKiraInfo *info)
 {
 	AEFX_CLR_STRUCT(*info);
-	info->glow_rotation = params[OLMKIRAKIRA_GLOW_ROTATION]->u.fs_d.value;
+	info->glow_rotation = ReadGlowRotation(*params[OLMKIRAKIRA_GLOW_ROTATION]);
 	info->brightness_gain = params[OLMKIRAKIRA_BRIGHTNESS_GAIN]->u.fs_d.value;
 	info->vertical_length = params[OLMKIRAKIRA_VERTICAL_LENGTH]->u.sd.value;
 	info->horizontal_length = params[OLMKIRAKIRA_HORIZONTAL_LENGTH]->u.sd.value;
@@ -163,7 +172,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 		if (checkout_err) return checkout_err; \
 	} while (false)
 
-	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_ROTATION, info->glow_rotation = param->u.fs_d.value);
+	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_GLOW_ROTATION, info->glow_rotation = ReadGlowRotation(*param));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_BRIGHTNESS_GAIN, info->brightness_gain = param->u.fs_d.value);
 	A_long raw_strength = 0;
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_STRENGTH_MULTIPLIER, raw_strength = param->u.sd.value);
