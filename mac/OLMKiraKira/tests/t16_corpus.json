@@ -1,0 +1,419 @@
+{
+  "schema": "kirakira-t16-ui-corpus/1",
+  "description": "T18 comparable premultiplied soft-alpha imagery; UI Angle units. Animated gain sampled at 0, 0.5, 1 seconds as 18,22,26; host interpolation itself is not emulated.",
+  "cases": [
+    {
+      "name": "isolate-none",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "none",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-v",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "v",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-h",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "h",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-d",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "d",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-d2",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "d2",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-highlight",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "highlight",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-v-h",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "v,h",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-v-d",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "v,d",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-v-d2",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "v,d2",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-v-highlight",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "v,highlight",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-h-d",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "h,d",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-h-d2",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "h,d2",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-h-highlight",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "h,highlight",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-d-d2",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "d,d2",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-d-highlight",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "d,highlight",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-d2-highlight",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "d2,highlight",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "isolate-all",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "fixture-1080-gain1",
+      "parameters": "fixture",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 1
+      }
+    },
+    {
+      "name": "fixture-1080-gain1.25",
+      "parameters": "fixture",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 1.25
+      }
+    },
+    {
+      "name": "fixture-1080-gain18",
+      "parameters": "fixture",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 18
+      }
+    },
+    {
+      "name": "fixture-1080-gain22",
+      "parameters": "fixture",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 22
+      }
+    },
+    {
+      "name": "fixture-1080-gain26",
+      "parameters": "fixture",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 26
+      }
+    },
+    {
+      "name": "brief-1080-gain1",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 1
+      },
+      "scope": "outside-ui: Merge Mode 3; original popup declares only 1..2; retained Mac refusal, not exact"
+    },
+    {
+      "name": "brief-1080-gain18",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 18
+      },
+      "scope": "outside-ui: Merge Mode 3; original popup declares only 1..2; retained Mac refusal, not exact"
+    },
+    {
+      "name": "brief-1080-gain22",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 22
+      },
+      "scope": "outside-ui: Merge Mode 3; original popup declares only 1..2; retained Mac refusal, not exact"
+    },
+    {
+      "name": "brief-1080-gain26",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "5": 26
+      },
+      "scope": "outside-ui: Merge Mode 3; original popup declares only 1..2; retained Mac refusal, not exact"
+    },
+    {
+      "name": "rotation-0",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "all",
+      "overrides": {
+        "40": 0,
+        "5": 18
+      }
+    },
+    {
+      "name": "rotation--17",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "all",
+      "overrides": {
+        "40": -17,
+        "5": 18
+      }
+    },
+    {
+      "name": "rotation-17.25",
+      "parameters": "fixture",
+      "geometry": [
+        192,
+        108
+      ],
+      "rays": "all",
+      "overrides": {
+        "40": 17.25,
+        "5": 18
+      }
+    },
+    {
+      "name": "brief-valid-merge2-1080-gain1",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "3": 2,
+        "5": 1
+      }
+    },
+    {
+      "name": "brief-valid-merge2-1080-gain18",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "3": 2,
+        "5": 18
+      }
+    },
+    {
+      "name": "brief-valid-merge2-1080-gain22",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "3": 2,
+        "5": 22
+      }
+    },
+    {
+      "name": "brief-valid-merge2-1080-gain26",
+      "parameters": "brief",
+      "geometry": [
+        1920,
+        1080
+      ],
+      "rays": "all",
+      "overrides": {
+        "3": 2,
+        "5": 26
+      }
+    }
+  ],
+  "binding": {
+    "requested_sha256": "0b19726666449f3289fe4a4c48b42e2d5e60ccd758d499604007ff9dbe2beabb",
+    "source_sha256": "905fab24603fa24e42ee05b2dd523edab161b56440a53fb4d7e85c66d62c51f3",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  }
+}
