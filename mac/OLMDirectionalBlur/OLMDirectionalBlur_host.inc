@@ -127,7 +127,6 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
-	PF_CheckoutResult noise_result = {};
 
 	A_long full_width = 0, full_height = 0;
 	bool request_contains_full_frame = false;
@@ -152,16 +151,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMDIRECTIONALBLUR_INPUT, OLMDIRECTIONALBLUR_INPUT, &req, in_data->current_time,
 		in_data->time_step, in_data->time_scale, &in_result));
-	// `None` is the actual AEX default for Noise Layer. AE reports that optional
-	// layer as unavailable during pre-render; that must not abort modes which do
-	// not consume it. A selected layer still contributes its requested extent.
-	PF_Err noise_err = PF_Err_BAD_CALLBACK_PARAM;
-	if (!err) {
-		noise_err = extra->cb->checkout_layer(in_data->effect_ref,
-			OLMDIRECTIONALBLUR_NOISE_LAYER, OLMDIRECTIONALBLUR_NOISE_LAYER, &req,
-			in_data->current_time, in_data->time_step, in_data->time_scale,
-			&noise_result);
-	}
+	// AEX entryPointFunc (0x1800083f0), selector 23: only input is requested.
 
 	if (!err) {
 		std::unique_ptr<PreRenderData> pre(new PreRenderData);
@@ -171,10 +161,6 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 			pre->request_contains_full_frame = request_contains_full_frame;
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
-		if (noise_err == PF_Err_NONE) {
-			UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
-			UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
-		}
 		extra->output->pre_render_data = pre.release();
 		extra->output->delete_pre_render_data_func = DeletePreRenderData;
 	}
@@ -291,7 +277,6 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	PF_EffectWorld *noise_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
 	bool input_checked_out = false;
-	bool noise_checked_out = false;
 	PF_ParamDef checked[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
 	bool param_checked_out[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
 	PF_ParamDef *param_ptrs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
@@ -305,18 +290,10 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT, &input_world);
 		input_checked_out = err == PF_Err_NONE;
 		if (!err && !input_world) err = OLM_DIRECTIONAL_REFUSAL("smart-input-missing");
-		if (!err) {
-			const PF_Err noise_err = extra->cb->checkout_layer_pixels(
-				in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world);
-			noise_checked_out = noise_err == PF_Err_NONE;
-			if (!noise_checked_out) noise_world = NULL;
-		}
+
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 		if (!err && !output_world) err = OLM_DIRECTIONAL_REFUSAL("smart-output-missing");
-		if (!err && (!DisjointPayloads(input_world, output_world, extra->input->bitdepth / 8 * 4) ||
-			(extra->input->bitdepth == 8 && noise_world &&
-                (!DisjointPayloads(input_world, noise_world, extra->input->bitdepth / 8 * 4) ||
-                 !DisjointPayloads(output_world, noise_world, extra->input->bitdepth / 8 * 4))))) {
+		if (!err && !DisjointPayloads(input_world, output_world, extra->input->bitdepth / 8 * 4)) {
 			err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
 		}
 		if (!err) {
@@ -335,13 +312,25 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			}
 		}
 		for (int i = 1; i < OLMDIRECTIONALBLUR_NUM_PARAMS && !err; ++i) {
+			// AEX 0x180006c50 selects mode 2 only for positive variation and
+			// Type 3. The depth worker then checks out param 17; Types 1/2
+			// never request a Noise Layer, even when one is selected in AE.
+			param_ptrs[i] = &checked[i];
+			if (i == OLMDIRECTIONALBLUR_NOISE_LAYER &&
+				(checked[OLMDIRECTIONALBLUR_NOISE_TYPE].u.pd.value != 3 ||
+				 WindowsFixedWholeNumber(checked[OLMDIRECTIONALBLUR_NOISE_VARIATION].u.fd.value) <= 0.0)) continue;
 			AEFX_CLR_STRUCT(checked[i]);
 			err = PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
 				in_data->time_step, in_data->time_scale, &checked[i]);
 			if (!err) {
 				param_checked_out[i] = true;
-				param_ptrs[i] = &checked[i];
 			}
+		}
+		if (!err && param_checked_out[OLMDIRECTIONALBLUR_NOISE_LAYER]) {
+			noise_world = &checked[OLMDIRECTIONALBLUR_NOISE_LAYER].u.ld;
+			// Both sources are read-only. Only destination overlap is forbidden.
+			if (noise_world->data && !DisjointPayloads(output_world, noise_world, extra->input->bitdepth / 8 * 4))
+				err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
 		}
 		if (!err) {
 			PF_FpLong render_scale_x, render_scale_y;
@@ -497,15 +486,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			if (!err && !thrown) thrown = std::current_exception();
 		}
 	}
-	if (noise_checked_out) {
-		try {
-			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
-				in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
-			if (!err && !thrown && checkin_err) err = checkin_err;
-		} catch (...) {
-			if (!err && !thrown) thrown = std::current_exception();
-		}
-	}
+
 	if (thrown) std::rethrow_exception(thrown);
 	if (!err && render_complete) {
 		for (A_long y = 0; y < output_world->height; ++y) {

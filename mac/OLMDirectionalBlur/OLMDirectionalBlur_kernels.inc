@@ -156,7 +156,7 @@ static bool GenericDeepLayerWorldSafe(const PF_EffectWorld *input,
         DirectionalWorldHasZeroOrigin(layer, 0) &&
         layer->rowbytes > 0 && static_cast<std::size_t>(layer->rowbytes) >=
             static_cast<std::size_t>(input->width) * sizeof(PixelT) &&
-        PayloadSpan(layer, &begin, &end, sizeof(PixelT)) && DisjointPayloads(input, layer, sizeof(PixelT)) &&
+        PayloadSpan(layer, &begin, &end, sizeof(PixelT)) &&
         DisjointPayloads(output, layer, sizeof(PixelT));
 }
 

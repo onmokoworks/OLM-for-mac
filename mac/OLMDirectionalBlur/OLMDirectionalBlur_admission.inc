@@ -185,7 +185,6 @@ static bool PublicType3Layer16WorldsExact(const PF_EffectWorld *input,
 		noise_layer->width != 16 || noise_layer->height != 16 ||
 		!ExactExtent16(input) || !ExactExtent16(output) ||
 		!ExactExtent16(noise_layer) || !DisjointPayloads(input, output, bitdepth / 8 * 4) ||
-		!DisjointPayloads(input, noise_layer, bitdepth / 8 * 4) ||
 		!DisjointPayloads(output, noise_layer, bitdepth / 8 * 4)) {
 		return false;
 	}
