@@ -25,7 +25,9 @@ Mac側release gateはPASS済み。Windows AEのhash固定7行も7／7 accepted�
   priority order, and the per-plugin **forbidden actions** — obey those.
 - リリース対象と証拠境界は
   `refs/conformance/olm_release_completion_matrix_20260806.md`、機械ゲートは
-  `scripts/run_olm_release_gate_20260806.py`が正本。個別sliceのexactを未記載範囲へ
+  `scripts/run_olm_release_gate_v2.py`が正本(MAINでだけ動く)。旧
+  `scripts/run_olm_release_gate_20260806.py`は2026-10-27の整理で必要なアーカイブが
+  消えたため動かない。個別sliceのexactを未記載範囲へ
   一般化しない。
 
 ## How we find truth (in order — cheapest, most reliable first)
@@ -77,7 +79,7 @@ Keep the emulation harness and this guide; leave the OLM ledger behind.
 ## Pointers
 - Current release notes: `refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md`
 - Current release scope: `refs/conformance/olm_release_completion_matrix_20260806.md`
-- Current release gate: `scripts/run_olm_release_gate_20260806.py`
+- Current release gate: `scripts/run_olm_release_gate_v2.py`
 - Historical roadmap: `notes/PORTING_ROADMAP.md`
 - Status/priority/forbidden actions: `notes/CONFORMANCE_LEDGER.md`
 - Historical scope checker: `refs/conformance/olm_release_scope.json`,
