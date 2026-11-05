@@ -75,13 +75,23 @@ absence of Noise Layer pre-render/pixel checkout.
 
 The replay includes T17's three retained fixtures from commit
 `8bb478938cf7fd968cd3fdb8dcc92b97665e37be` and all older retained corpora:
-309 cases. All 309 have unchanged render statuses, output hashes and difference
-records. However, **strict saved-object matches are 0/309**: each differs only
-at `/routes/smart/metadata/COUNTS`, because parameter checkout/checkin counts
-change from `21 21 1 1 1` to `20 20 1 1 1`. The replay intentionally exits 1;
-it does not rewrite saved results or hide that change. Thus the ticket's literal
-zero-changed-saved-outcomes condition is not met, despite zero pixel or route
-regressions. The orchestrator must resolve this metadata-contract change.
+309 cases. T21b retains the three T17 fixtures locally and updates only
+`/result/routes/smart/metadata/COUNTS` from `21 21 1 1 1` to
+`20 20 1 1 1` in all 309 expectations. Slots 1..21 excluding Noise Layer
+slot 17 give 20 parameter checkouts/checkins for these Types 1/2 cases.
+Historical reduction records, render statuses, raw hashes and numeric records
+are unchanged. T21b strict replay passes **309/309** with no differences.
+
+The lifecycle probes retain first/middle/last checkout and checkin failures
+(last call 20 is parameter slot 21), input preservation, and atomic output.
+The standalone adapter checks input-only pre-render, both returned rectangles,
+and exact slot counts for Types 1/2/3 with zero/positive variation. Its generated
+base keeps the splice markers used by other test harnesses.
+
+T21b still observes two later assertions failing after the checkout changes:
+the cleanup allocation-budget case sees one allocation and error -3, and the
+adapter's PF16 fade-refusal case sees success and written output. Those
+assertions remain intact; these checkout updates do not claim a green gate.
 
 The release gate is run separately with scratch/report paths under T21.
 Its logs include missing historical workers and untracked fixtures in this

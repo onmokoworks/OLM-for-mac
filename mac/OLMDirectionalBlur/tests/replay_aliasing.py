@@ -3,12 +3,12 @@ import json, os, subprocess, sys
 from collections import defaultdict
 from pathlib import Path
 from aliasing import ROOT, STATE, EVIDENCE, memory
-T17='8bb478938cf7fd968cd3fdb8dcc92b97665e37be'
+# AEX 0x180006c50 skips slot 17 for these retained Types 1/2 cases:
+# slots 1..21 minus 17 = 20 checkouts/checkins; all pixel records are retained.
 paths=[p for p in (ROOT/'tests/fuzz_corpus').rglob('*.json') if p.relative_to(ROOT/'tests/fuzz_corpus').parts[0].startswith('olmdirectionalblur')]
-retained=STATE/'realscale-corpus';retained.mkdir(exist_ok=True)
-for name in ('32x18','1920x1080','3840x2160'):
-    p=retained/(name+'.json')
-    p.write_bytes(subprocess.check_output(['git','show',f'{T17}:mac/OLMDirectionalBlur/tests/realscale-corpus/{name}.json'],cwd=ROOT));paths.append(p)
+# T17 8bb478938cf7fd968cd3fdb8dcc92b97665e37be, only COUNTS updated.
+paths += [ROOT/'mac/OLMDirectionalBlur/tests/realscale-corpus'/f'{name}.json'
+          for name in ('32x18', '1920x1080', '3840x2160')]
 corpora=defaultdict(list)
 for p in paths:
     d=json.loads(p.read_text());corpora[(p.parent,d['max_size'],d.get('size_sampler','default'),d.get('size_max_height'))].append(p)

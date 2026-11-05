@@ -61,15 +61,17 @@ bool all_value(const std::vector<std::uint8_t>&b,std::uint8_t v){return std::all
 '''
     new_main = r'''int main(){constexpr short depth=16;const int ps=8,rb=WIDTH*ps+PADDING;int cases=0;
 auto run=[&](int fc,int fi,int tc,int ti,int fo,int to,int fl,int tl,PF_Err expected,int expected_pc,int expected_pi){std::vector<std::uint8_t>inb(rb*HEIGHT),outb(rb*HEIGHT,OUT_PAD);fill(inb,ps,rb);auto before=inb;PF_EffectWorld in{inb.data(),rb,WIDTH,HEIGHT,depth,{0,0,WIDTH,HEIGHT}},out{outb.data(),rb,WIDTH,HEIGHT,depth,{0,0,WIDTH,HEIGHT}};State st{&in,&out};st.fail_output=fo;st.throw_output=to;st.fail_checkin=fl;st.throw_checkin=tl;g_param_checkout=g_param_checkin=0;g_fail_param_checkout=fc;g_fail_param_checkin=fi;g_throw_param_checkout=tc;g_throw_param_checkin=ti;PF_InData id{&st,0,1,1,{1,1},{1,1},nullptr};PF_OutData od{};PF_SmartRenderInput si{depth,nullptr};PF_SmartRenderCallbacks cb{layer_checkout,output_checkout,checkin};PF_SmartRenderExtra ex{&si,&cb};PF_Err err=EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&ex);bool untouched=all_value(outb,OUT_PAD);if(err!=expected||g_param_checkout!=expected_pc||g_param_checkin!=expected_pi||st.checkin!=1||inb!=before||!untouched){std::fprintf(stderr,"case=%d err=%d/%d pc=%d/%d pi=%d/%d checkin=%d input=%d untouched=%d\n",cases,(int)err,(int)expected,g_param_checkout,expected_pc,g_param_checkin,expected_pi,st.checkin,inb==before,untouched);return false;}++cases;return true;};
-for(int n:{1,10,21})if(!run(n,0,0,0,0,0,0,0,-77,n,n-1))return 10+n;
-for(int n:{1,10,21})if(!run(0,n,0,0,0,0,0,0,-78,21,21))return 40+n;
-for(int n:{1,10,21})if(!run(0,0,n,0,0,0,0,0,PF_Err_INTERNAL_STRUCT_DAMAGED,n,n-1))return 70+n;
-for(int n:{1,10,21})if(!run(0,0,0,n,0,0,0,0,PF_Err_INTERNAL_STRUCT_DAMAGED,21,21))return 100+n;
+// AEX 0x180006c50 skips slot 17 for Type 1: slots 1..21 minus 17 = 20.
+// Call 20 is slot 21, the final checkout; retain first/middle/last failures.
+for(int n:{1,10,20})if(!run(n,0,0,0,0,0,0,0,-77,n,n-1))return 10+n;
+for(int n:{1,10,20})if(!run(0,n,0,0,0,0,0,0,-78,20,20))return 40+n;
+for(int n:{1,10,20})if(!run(0,0,n,0,0,0,0,0,PF_Err_INTERNAL_STRUCT_DAMAGED,n,n-1))return 70+n;
+for(int n:{1,10,20})if(!run(0,0,0,n,0,0,0,0,PF_Err_INTERNAL_STRUCT_DAMAGED,20,20))return 100+n;
 if(!run(0,0,0,0,1,0,0,0,-79,0,0))return 130;
 if(!run(0,0,0,0,0,1,0,0,PF_Err_INTERNAL_STRUCT_DAMAGED,0,0))return 131;
-if(!run(0,0,0,0,0,0,1,0,-80,21,21))return 132;
-if(!run(0,0,0,0,0,0,0,1,PF_Err_INTERNAL_STRUCT_DAMAGED,21,21))return 133;
-{std::vector<std::uint8_t>outb(64,OUT_PAD);auto before=outb;PF_EffectWorld in{reinterpret_cast<void*>(0x100000000ull),16,1,2,32,{0,0,1,2}},out{outb.data(),1700000000,1,2,32,{0,0,1,2}};State st{&in,&out};g_param_checkout=g_param_checkin=0;g_fail_param_checkout=g_fail_param_checkin=g_throw_param_checkout=g_throw_param_checkin=0;g_front_strength=2;PF_InData id{&st,0,1,1,{1,1},{1,1},nullptr};PF_OutData od{};PF_SmartRenderInput si{32,nullptr};PF_SmartRenderCallbacks cb{layer_checkout,output_checkout,checkin};PF_SmartRenderExtra ex{&si,&cb};g_armed_allocations=0;g_arm_alloc=true;PF_Err err=EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&ex);g_arm_alloc=false;g_front_strength=0;if(err!=PF_Err_BAD_CALLBACK_PARAM||g_armed_allocations!=0||outb!=before||st.layer!=2||st.out!=1||st.checkin!=1||g_param_checkout!=21||g_param_checkin!=21){std::fprintf(stderr,"budget err=%d alloc=%d output=%d layer=%d out=%d checkin=%d pc=%d pi=%d\n",(int)err,g_armed_allocations,outb==before,st.layer,st.out,st.checkin,g_param_checkout,g_param_checkin);return 134;}++cases;}
+if(!run(0,0,0,0,0,0,1,0,-80,20,20))return 132;
+if(!run(0,0,0,0,0,0,0,1,PF_Err_INTERNAL_STRUCT_DAMAGED,20,20))return 133;
+{std::vector<std::uint8_t>outb(64,OUT_PAD);auto before=outb;PF_EffectWorld in{reinterpret_cast<void*>(0x100000000ull),16,1,2,32,{0,0,1,2}},out{outb.data(),1700000000,1,2,32,{0,0,1,2}};State st{&in,&out};g_param_checkout=g_param_checkin=0;g_fail_param_checkout=g_fail_param_checkin=g_throw_param_checkout=g_throw_param_checkin=0;g_front_strength=2;PF_InData id{&st,0,1,1,{1,1},{1,1},nullptr};PF_OutData od{};PF_SmartRenderInput si{32,nullptr};PF_SmartRenderCallbacks cb{layer_checkout,output_checkout,checkin};PF_SmartRenderExtra ex{&si,&cb};g_armed_allocations=0;g_arm_alloc=true;PF_Err err=EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&ex);g_arm_alloc=false;g_front_strength=0;if(err!=PF_Err_BAD_CALLBACK_PARAM||g_armed_allocations!=0||outb!=before||st.layer!=1||st.out!=1||st.checkin!=1||g_param_checkout!=20||g_param_checkin!=20){std::fprintf(stderr,"budget err=%d alloc=%d output=%d layer=%d out=%d checkin=%d pc=%d pi=%d\n",(int)err,g_armed_allocations,outb==before,st.layer,st.out,st.checkin,g_param_checkout,g_param_checkin);return 134;}++cases;}
 std::printf("PASS_OLMDIRECTIONALBLUR_SMART_CLEANUP_ATOMIC cases=%d\n",cases);return 0;}
 '''
     text = text[:ns_start] + new_namespace + new_main

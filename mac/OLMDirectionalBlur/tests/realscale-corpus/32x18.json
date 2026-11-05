@@ -1,0 +1,247 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      32,
+      18
+    ],
+    "index": 0,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "a",
+        "slot": 1,
+        "value": 27
+      },
+      {
+        "kind": "s",
+        "slot": 2,
+        "value": 1.25
+      },
+      {
+        "kind": "f",
+        "slot": 3,
+        "value": 8
+      },
+      {
+        "kind": "i",
+        "slot": 5,
+        "value": 18
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 12
+      },
+      {
+        "kind": "f",
+        "slot": 7,
+        "value": 8
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 12
+      },
+      {
+        "kind": "i",
+        "slot": 11,
+        "value": 16
+      },
+      {
+        "kind": "f",
+        "slot": 12,
+        "value": 6
+      },
+      {
+        "kind": "f",
+        "slot": 15,
+        "value": 7
+      },
+      {
+        "kind": "u",
+        "slot": 16,
+        "value": 2
+      },
+      {
+        "kind": "i",
+        "slot": 18,
+        "value": 37
+      },
+      {
+        "kind": "a",
+        "slot": 19,
+        "value": 11
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 7
+      }
+    ],
+    "profile": "T18-soft-alpha",
+    "seed": 17
+  },
+  "generator_version": 1,
+  "index": 0,
+  "input_sha256": "712806b07e78697220f2930274953843036fde44740cb319e128dd9911de2bd0",
+  "max_size": 4096,
+  "operations": [],
+  "pixels_zlib_base64": "eNqN0C+M22YYB+APTR1pS01O85jBSYvMom4gMGUZC5oUDUSBlqabDDZg6YjBQHZkoTZaNJJIHQiqQgMGLIV4qiaZuszQe6pppFv/gJ+eXy7v3XvvF0JIw6NQh6eMGDPhRKb6jHMuuORKNnrGnAVLbmWnV9zzyBPPctEbtuzYc5BRD0/q8OhJGp4yYsyEE5nqM8654JIr2egZcxYsuZWdXnHPI088y0Vv2LJjz0FGPdyk3z+6qa9Pb9x/434mnMhUn3HOBZdcyUbPmLNgya3s9Ip7HnniWS56w5Ydew4y6uHW+996f0a39c/xbXpNfJ7I1M9mt/W389v064XPS59XstEz5ixYcis7veKeR554lovesGXHnoOMenjm/Z95f0aMmXDyLB3//OKbt/PXyvcb32fMWbDkVnZ6xT2PPPEsF71hy449Bxn18Nz9z93PiDGT5/X/7f43rzfmMnM5C5bcyk6vuOeRJ57lojds2bHnIKMelvYv7WfEeJn+kCzfu/9Nfs3M5+YLltzKTq+455EnnuWiN2zZsecgox7W3n/t/RkxXn9w95t8l5nP1+m1WNc/let0sZXdul5U3PPIE89y8Xcb8y079hxk1MOd++/cz4jxXfox+3/MzOfmi7v0cXlXv/jst/4qL96R0JhvzXfsOcioh3v77+1nxPg+/SW5/+AbhMx8br64t/++fnvf9T/7zbfmO/YcZNTDg/d/8P6MGDN5SD+831xuvnioH5cP6Yv33P7mf/myMd+a79hzkFEPlfsr9zNizIST6p1vEDa+z8zlLCr3V/X79v9zv/m2qq9dlX7e+71BRj8LB/sP9jNizIQTmR7Sr2aH+vf5Ia0Xh/rTpe9WsvFdxpzFwf7DR+w335rv2B/qT4ZDfR318NL7v/T+jBgz4USm+oxzLrjkSjZ6xpwFS25lp1fc88gTz3LRG7bs2HOQUQ9/uP8P9zNizIQTmeozzrngkivZ6BlzFiy5lZ1ecc8jTzzLRW/YsmPPQUY9vLL/lf2MGDPhRKb6jHMuuORKNnrGnAVLbmWnV9zzyBPPctEbtuzYc5BRD6+9/2vvz4gxE05kqs8454JLrmSjZ8xZsORWdnrFPY888SwXvWHLjj0HGfUwun90PyPGTDiRqT7jnAsuuZKNnjFnwZJb2ekV9zzyxLNc9IYtO/YcZBzTvwEEwK0e",
+  "plugin": "olmdirectionalblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "60a72d6cf588d8632882567119396b6fbe2119cdbb7e741f4cf37548730255c4",
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "e4ed180a02c6eca0ca54c2216f24cbfd22e9fb31f2aaeb0f0c8e8d14138ac25e",
+      "core/dblur_field.h": "eb5da4273883d057eb6daaed2471e377168df0ac56a9e84756fef87b5dfc20ec",
+      "core/dblur_float.h": "b21acbcd0e9c8eac13926ef87fa8ce9aac29527a838f36e695cbcef78b710693",
+      "core/dblur_frontonly.cpp": "11c0436daab3bf07bec99d962e5dd7622f77245370bea44d5887cc76b251bdc6",
+      "core/dblur_frontonly.h": "55281fd1240fa0cae51f6f047e651fefec1ff6fda892d5494f04accb441d6f57",
+      "core/dblur_gaussian.h": "df9273b6832d920b376a9ec718cb18525ebd5854166c3e2ad191a9600db4d8c6",
+      "core/dblur_generic_budget.h": "22b3e5990e5a5a96f47be2eafa3197921cbb21ce05b80df7ef41c082ba4408c2",
+      "core/dblur_noise.h": "e47bd2d333303a54c5f3121c8adeab7603d0bcd39037172e0aa248387f69bb07",
+      "core/dblur_rotate.cpp": "991fcd779f1d4472138071d9d91a839abdbefc2a0ca06ecbba023a1d70f1a71f",
+      "core/dblur_rotate.h": "67c255dc7d9f7a23125c355b64eac3aae43dcebb06dc96a318212764f6a9b57f",
+      "core/dblur_rowdriver.cpp": "4e716763dfd013b24e6c402ae215d03254eb56261adeb3a95b4f608bdd2e4cb0",
+      "core/dblur_rowdriver.h": "2bbe5c880fc4372aad19d497c38cd745852160b6c8096428a96b9739eb11df15",
+      "core/kirakira_gaussian.h": "4d7a06359c4d824ee706eb81c8903f758406618c472b5f387fee0175d1c24039",
+      "core/kirakira_highlight.h": "358fa6889fe9b8739d9d8adba02d1671892df0ddf8316f492438a9bf6aeec844",
+      "core/kirakira_highlight_gaussian.h": "e527dfd82d53adf9b366857664f52902281a3e54967d198093e930564cb1c5ca",
+      "core/kirakira_merge2.h": "72ca0a6da94394c1a299f394bf77afeaabbdf3d7a9050f0bdb89607244999c3b",
+      "core/kirakira_mode4.h": "7edbea0960d4b80752b95df38d5fb4c32a11996441cc463973913f045c668213",
+      "core/kirakira_sincos.h": "63c13cf18c8cfd21368349eff1a739fb2966ae31b583e761dfa5c0636a1ef66f",
+      "core/kirakira_sincos_tables.h": "33eaa7a31ccde031d242059010b6c201e2f350b01384575eb2386f8b6e201f3c",
+      "core/kirakira_warp.h": "d869f20639763872c5e58ce750b55a1292c7c2c3854b8376a03ec6e8fbbfc737",
+      "core/olm_checked_allocation.h": "ba5e81255cf2f85068b34cc0680ab1b951eb34bc3ffcceac921e6dba8fb6df45",
+      "core/olm_checked_rect.h": "37f1361db3e5dac289bc6b8cb6b2f86486e16f17c3045441b9e51631fe17b874",
+      "core/olm_exact_math.h": "71d936240290b202111960fe02e03dbdfb1e87d3e976733efbaa61a864c2223a",
+      "core/olm_parallel.h": "9a3c03d3fc5c9edccb90e5aca0149b7a2b802ba6e21b23acc5991580df0e8cdc",
+      "core/olm_roi_contract.h": "105787ecbff536d11b256994b10a8053f728be1fb8ee0352d3e175c3064dc85e",
+      "core/olm_sha256_rows.h": "27e3ebf7e6128ce201d1f89975175205736c45503999da0352fb8e8d3d76bbd3",
+      "core/olm_world_safety.h": "0a86aa01bf5e0b685e2821e2650c970e528b78472300c2cb582e6301c6009679",
+      "core/olmblur_constants.h": "126caf9c8de0e9bb2d8f315a4a8dc1a2fcecf1317e8e75c017bc890d48de6bbe",
+      "core/olmblur_fullworker_helper.h": "039fa758d7b825795a00f88cfe147392a67879c01a7983fea8f305d6b67e7aa9",
+      "core/olmblur_helper.h": "2d1a2c963cce3ec277c8d801e1027abf684d6736ce28888de46e202b5d36f08d",
+      "core/olmblur_parallel_parts.h": "6295cd101f72c3a54dff4fc6d552f6a9bcbb148d88eae7c4ebb47114c13ada51",
+      "core/olmblur_worker16_legacy.h": "72ab553b0869d363937b6767aeb8c95c60fba05c8e7fffeaa730ff4178b8a44d",
+      "core/olmblur_worker16_nonlegacy.h": "e0403ddd0b2992c1e6ec96fdaff136b686b63e8e6e3f566bbbfd844f6fefcc3f",
+      "core/olmblur_worker32_legacy.h": "d7d91805fa0338a5a94640a0c49aaf5ef03a6b52a0030e45c0a29436f1cd9b2a",
+      "core/olmblur_worker32_nonlegacy.h": "ffd160fafeb41f4dba87137a3e011660c35dcd9ba836225a3e1818f781b616ae",
+      "core/olmblur_worker8_legacy.h": "eaa101dced402b7ec76c4e2887f9b8ab34ab67400f63367581506551cb3284d1",
+      "core/olmblur_worker_orchestration.h": "500cf692663982d5bbc6ecf8cc9ed33351d3d7fc92a8c38e3f9932a80b0f11cd",
+      "core/olmdistancegradation_fieldgen.h": "7f9c1a6e0805bfbda84d957dbf72c9b8047728edbdd51f26fc594a2138b5af10",
+      "core/radialblur_scatter_caller.h": "fe2a5a3d99b33b1c5f301f4b238887b4f02ccdb3de2cb4f0c9c04534e9de1837",
+      "core/radialblur_scatter_tail.h": "a9a32e04ad9f75cc482e8460a4db7af649105d414e791107eb126226c65c6069",
+      "core/x86_float.h": "23efeecbe5c45f0c72a520decb3c129c65664a184bb2dc22845319bf477003c8",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "287cddd5ff8d0dadf928722b90cc1cfb3c990b2851898208fb2357a7d508ace0",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.h": "330057a1aa8608fdccc6e37f53f0db2f9646026eededda648ee6d68a5fc9217b",
+      "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h": "67af5d5e57abb6ee11a5a15eb42804a481a73340542dca848e90e72cd5091362",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+      "tools/emulation/olmblur_installed_effectmain_shim_20260813.h": "155b9dca2ef49e013574814feb158fe452741eac36fed2e5f7343b2a52e18a38",
+      "tools/emulation/olmcolorkey_installed_effectmain_shim_20260813.h": "9aef5fdb5103d215a957da668f163305e697fe8eb891a6532b8a537713100e7e",
+      "tools/emulation/olmkirakira_installed_effectmain_shim_20260813.h": "eccf768d497919c1b875ea10e3c73ec53e35a16af9c4a561303497d25ae8097a",
+      "tools/emulation/olmradialblur_installed_effectmain_shim_20260813.h": "7506106dd5b9bac9e0ecd77cff0b13ab8f4e66823a2fe341759039035f28fb49",
+      "tools/emulation/smoother2_fullchain_port_adapter.h": "6d061f4139fee463eeb8a5556f983282cabd9e7143f3f660faf656884a4752ef",
+      "tools/fuzz/harnesses/geometry.hpp": "87dbb7622301ec8c90b02a38bb8479dc6cb32faacb98c3e967fa1d4152d76160",
+      "ucrtmath/build.sh": "9e87ba1376a147066f2de4b3f5007f65a1eaf0026b96e306054f19a80c57e212",
+      "ucrtmath/include/ucrtmath.h": "a71c6f37afe66ff39b6534f5ccb3cceaab2252d854e7b971dc95e09e642c7a4e",
+      "ucrtmath/src/atan2f.c": "85a26b0d3602e08bc65c9e860d04cafd19880edcc32faabd993ce1c87549963a",
+      "ucrtmath/src/expf.c": "21bb1590e568b10957d89a7b175b35bb8b3f6c6d2ad961f593bf19fa2ed6f636",
+      "ucrtmath/src/expf_data.h": "5d9ec0e9d76099a2881e526cd7a50cff2c79b7743781b7cbccb790c9f54b7d0f",
+      "ucrtmath/src/internal.h": "bbf25ed31d696dc1ed83172b8e8b2a1c284143bfdea71d3c9787bba8f6705632",
+      "ucrtmath/src/powf.c": "76bf6fd749342ced2ba9c73200d8a1822b5c537ad81f34ed5563a1a37567d97b",
+      "ucrtmath/src/tables.c": "eb221f5841082f88cb1a6e491a810204955d1c9d00354222fed96139ca2438c2"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_build": false,
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/worker-F46-pow/aex-guest-worker",
+    "worker_sha256": "6616943ba74e07d7f1c0209fe8e650bd496f6caa92fc5a1d3a4151063a36a903",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "8c85a3cea19ccf7ef67763121abee58ec84be22a772a5a9861492088e3446f48",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "oracles": {
+      "classic": {
+        "guards_intact": true,
+        "raw_sha256": "cfc335996cfae29fdf14fd2db7ea853366d350a5d387aa3c322616e81dacd56b",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "smart": {
+        "guards_intact": true,
+        "raw_sha256": "8c85a3cea19ccf7ef67763121abee58ec84be22a772a5a9861492088e3446f48",
+        "session_clean": true,
+        "status": "ok"
+      }
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 2304,
+          "actual_word_hex": "1c",
+          "different_bytes": 2119,
+          "different_words": 2119,
+          "expected_bytes": 2304,
+          "expected_word_hex": "00",
+          "first_byte": 32,
+          "first_word": 32
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8c85a3cea19ccf7ef67763121abee58ec84be22a772a5a9861492088e3446f48",
+        "status": "mismatch"
+      },
+      "smart": {
+        "error": 0,
+        "metadata": {
+          "COUNTS": "20 20 1 1 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "8c85a3cea19ccf7ef67763121abee58ec84be22a772a5a9861492088e3446f48",
+        "status": "exact"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 17,
+  "size_max_height": 2160,
+  "size_sampler": "odd-even-v1"
+}

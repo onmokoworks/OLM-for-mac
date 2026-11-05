@@ -24,7 +24,7 @@ WIDTH, HEIGHT, PADDING = 3, 2, 4
 PAD, OUT_PAD = 0xA5, 0xEE
 
 
-def compile_probe(directory: Path) -> Path:
+def compile_probe(directory: Path, *, checkout_contract: bool = False) -> Path:
     compiler_name = os.environ.get("CXX", "clang++")
     compiler = shutil.which(compiler_name)
     if not compiler:
@@ -128,13 +128,8 @@ bool pad(const std::vector<std::uint8_t>&b,int rb,std::uint8_t v) {{ for(int y=0
 int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first=true; for(short d:{{16,32}}) {{ int ps=d==16?8:16, rb=WIDTH*ps+PADDING; std::vector<std::uint8_t> inb(rb*HEIGHT),outb(rb*HEIGHT,OUT_PAD),before; fill(inb,ps,rb); before=inb; PF_EffectWorld in{{inb.data(),rb,WIDTH,HEIGHT,d,{{0,0,WIDTH,HEIGHT}}}}, out{{outb.data(),rb,WIDTH,HEIGHT,d,{{0,0,WIDTH,HEIGHT}}}}; State st{{&in,&out}}; PF_InData id{{&st,0,1,1,{{1,1}},{{1,1}},nullptr}}; PF_OutData od{{}}; PF_RenderRequest req{{false}}; PF_PreRenderInput pi{{req}}; PF_PreRenderOutput po{{}}; PF_PreRenderCallbacks pcb{{pre_checkout}}; PF_PreRenderExtra pe{{&pi,&po,&pcb}}; if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&id,&od,nullptr,nullptr,&pe)!=0) return 10; PF_SmartRenderInput si{{d,po.pre_render_data}}; PF_SmartRenderCallbacks scb{{layer_checkout,output_checkout,checkin}}; PF_SmartRenderExtra se{{&si,&scb}}; if(EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&se)!=0) return 11; bool visible=true; for(int y=0;y<HEIGHT;++y) visible=visible&&std::memcmp(inb.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0; bool zero_rgb=true; if(d==16) {{ auto*q=reinterpret_cast<std::uint16_t*>(outb.data()+8); zero_rgb=q[1]==0x1235&&q[2]==0x2345&&q[3]==0x3457; }} else {{ auto*q=reinterpret_cast<float*>(outb.data()+16); zero_rgb=q[1]==1.125f&&q[2]==0.25f&&q[3]==1.5f; }} bool gates=st.pre==1&&st.layer==1&&st.out==1&&st.checkin==1&&st.preserve&&visible&&zero_rgb&&pad(inb,rb,PAD)&&pad(outb,rb,OUT_PAD)&&g_render_entry_calls==0; if(!gates){{std::fprintf(stderr,"gate depth=%d pre=%d layer=%d out=%d checkin=%d preserve=%d visible=%d zero=%d inpad=%d outpad=%d render=%d\\n",d,st.pre,st.layer,st.out,st.checkin,st.preserve,visible,zero_rgb,pad(inb,rb,PAD),pad(outb,rb,OUT_PAD),g_render_entry_calls); return 20+d;}} if(!first)std::printf(","); first=false; std::printf("{{\\"pixel_format\\":\\"PF%d\\",\\"rowbytes\\":%d,\\"preserve_rgb_of_zero_alpha\\":true,\\"zero_alpha_rgb_preserved\\":true,\\"input_padding_preserved\\":true,\\"output_padding_preserved\\":true,\\"smart_render_callbacks\\":{{\\"checkout_layer_pixels\\":1,\\"checkout_output\\":1,\\"checkin_layer_pixels\\":1}},\\"pf_cmd_render_fallbacks\\":0}}",d,rb); if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data); }} std::printf("]}}\\n"); return 0; }}
 ''', encoding="utf-8")
     generated = probe.read_text(encoding="utf-8")
-    generated = generated.replace(
-        "st.pre==1&&st.layer==1&&st.out==1&&st.checkin==1",
-        "st.pre==2&&st.layer==2&&st.out==1&&st.checkin==1",
-    ).replace(
-        '\"checkout_layer_pixels\":1,\"checkout_output\":1,\"checkin_layer_pixels\":1',
-        '\"checkout_layer_pixels\":2,\"checkout_output\":1,\"checkin_layer_pixels\":1',
-    )
+    # AEX 0x180008666 requests only input in pre-render; 0x180007c36
+    # requests only input pixels in SmartRender. Noise uses parameter 17.
     generated = generated.replace(
         'if(!first)std::printf(",");',
         '''if(d==16) for(int family_index=0; family_index<6; ++family_index) {
@@ -278,6 +273,51 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
     prefix, remainder = generated.split(zero_start, 1)
     _, suffix = remainder.split(" bool gates=", 1)
     generated = prefix + "bool zero_rgb=true; bool gates=" + suffix
+    if checkout_contract:
+        # Keep the default generated splice markers stable for other probes.
+        generated = generated.replace(
+            """static int g_render_entry_calls = 0;
+static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_ParamDef *p) { std::memset(p,0,sizeof(*p)); if(index==2)p->u.fs_d.value=1.0; else if(index==16)p->u.pd.value=1; else if(index==18)p->u.sd.value=1; else if(index==20)p->u.fs_d.value=10.0; return PF_Err_NONE; }
+static PF_Err checkin_param() { return PF_Err_NONE; }""",
+            """static int g_contract_type=0,g_contract_variation=0,g_contract_slots[22]={},g_contract_checkins=0;
+static int g_render_entry_calls = 0;
+static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_ParamDef *p) { std::memset(p,0,sizeof(*p)); if(g_contract_type) { ++g_contract_slots[index]; if(index==15)p->u.fd.value=g_contract_variation*65536; if(index==16){p->u.pd.value=g_contract_type;return PF_Err_NONE;} } if(index==2)p->u.fs_d.value=1.0; else if(index==16)p->u.pd.value=1; else if(index==18)p->u.sd.value=1; else if(index==20)p->u.fs_d.value=10.0; return PF_Err_NONE; }
+static PF_Err checkin_param() { if(g_contract_type)++g_contract_checkins; return PF_Err_NONE; }""",
+        )
+        generated = generated.replace(
+            """namespace { struct State { PF_EffectWorld *input, *output; int pre=0, layer=0, out=0, checkin=0; bool preserve=false; }; State *state(PF_ProgPtr p) { return static_cast<State*>(p); }
+PF_Err pre_checkout(PF_ProgPtr p,A_long index,A_long,PF_RenderRequest *r,A_long,A_long,A_long,PF_CheckoutResult *o) { auto*s=state(p); ++s->pre; s->preserve=r->preserve_rgb_of_zero_alpha; if(index==OLMDIRECTIONALBLUR_NOISE_LAYER) return PF_Err_BAD_CALLBACK_PARAM; o->result_rect={0,0,WIDTH,HEIGHT}; o->max_result_rect=o->result_rect; return PF_Err_NONE; }
+PF_Err layer_checkout(PF_ProgPtr p,A_long index,PF_EffectWorld **o) { ++state(p)->layer; if(index==OLMDIRECTIONALBLUR_NOISE_LAYER) { *o=nullptr; return PF_Err_BAD_CALLBACK_PARAM; } *o=state(p)->input; return PF_Err_NONE; } PF_Err output_checkout(PF_ProgPtr p,PF_EffectWorld **o) { ++state(p)->out; *o=state(p)->output; return PF_Err_NONE; } PF_Err checkin(PF_ProgPtr p,A_long) { ++state(p)->checkin; return PF_Err_NONE; }""",
+            """namespace { struct State { PF_EffectWorld *input, *output; int pre=0, layer=0, out=0, checkin=0; bool preserve=false; }; State *state(PF_ProgPtr p) { return static_cast<State*>(p); }
+PF_Err pre_checkout(PF_ProgPtr p,A_long index,A_long checkout_id,PF_RenderRequest *r,A_long,A_long,A_long,PF_CheckoutResult *o) { auto*s=state(p); ++s->pre; s->preserve=r->preserve_rgb_of_zero_alpha; if(index!=OLMDIRECTIONALBLUR_INPUT || checkout_id!=0) return PF_Err_BAD_CALLBACK_PARAM; o->result_rect={0,0,WIDTH,HEIGHT}; o->max_result_rect={-1,-2,WIDTH+3,HEIGHT+4}; return PF_Err_NONE; }
+PF_Err layer_checkout(PF_ProgPtr p,A_long index,PF_EffectWorld **o) { ++state(p)->layer; if(index==OLMDIRECTIONALBLUR_NOISE_LAYER) { *o=nullptr; return PF_Err_BAD_CALLBACK_PARAM; } *o=state(p)->input; return PF_Err_NONE; } PF_Err output_checkout(PF_ProgPtr p,PF_EffectWorld **o) { ++state(p)->out; *o=state(p)->output; return PF_Err_NONE; } PF_Err checkin(PF_ProgPtr p,A_long) { ++state(p)->checkin; return PF_Err_NONE; }""",
+        )
+        generated = generated.replace(
+            'bool gates=',
+            'bool rects=po.result_rect.left==0&&po.result_rect.top==0&&po.result_rect.right==WIDTH&&po.result_rect.bottom==HEIGHT&&po.max_result_rect.left==-1&&po.max_result_rect.top==-2&&po.max_result_rect.right==WIDTH+3&&po.max_result_rect.bottom==HEIGHT+4; bool gates=rects&&inb==before&&',
+        )
+        generated = generated.replace(
+            'if(d==16) for(int family_index',
+            """// AEX builder 0x180006c50 skips 17; 0x180007158..7176 selects
+        // Layer only for positive variation + Type 3. Worker checkouts:
+        // PF8 0x180004efb, PF16 0x18000416b, PF32 0x180005c8b.
+        for(int type : {1,2,3}) for(int variation : {0,100}) {
+          g_contract_type=type; g_contract_variation=variation;
+          std::fill(std::begin(g_contract_slots),std::end(g_contract_slots),0);
+          g_contract_checkins=0;
+          State cs{&in,&out}; id.effect_ref=&cs;
+          PF_Err ce=EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&se);
+          const bool layer=type==3 && variation>0;
+          // Slots 1..21 except 17: 20; consuming Layer adds exactly one.
+          bool slots=g_contract_slots[0]==0;
+          for(int slot=1;slot<22;++slot)
+            slots=slots && g_contract_slots[slot]==(slot==17 ? int(layer) : 1);
+          if(ce || !slots || g_contract_checkins!=(layer?21:20) ||
+             cs.layer!=1 || cs.out!=1 || cs.checkin!=1 || inb!=before) return 43;
+          g_contract_type=0; id.effect_ref=&st;
+        }
+        if(d==16) for(int family_index""",
+        )
     probe.write_text(generated, encoding="utf-8")
     command = [_UCRT_CXX, "--compiler", compiler, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk.stdout.strip(), "-I", str(resolve_asset(ROOT / "Headers")), "-I", str(resolve_asset(ROOT / "Headers/SP")), "-I", str(resolve_asset(ROOT / "Util")), "-I", str(resolve_asset(ROOT / "Resources")), str(probe), str(ROOT / "core/dblur_frontonly.cpp"), str(ROOT / "core/dblur_rotate.cpp"), str(ROOT / "core/dblur_rowdriver.cpp"), str(ROOT / "core/dblur_field.cpp"), "-framework", "Cocoa", "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=False)
@@ -288,16 +328,16 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
 
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_directionalblur_mac_smartrender_") as name:
-        executable = compile_probe(Path(name))
+        executable = compile_probe(Path(name), checkout_contract=True)
         run = subprocess.run([str(executable)], cwd=ROOT, capture_output=True, text=True, check=False)
     if run.returncode:
         raise RuntimeError(f"BLOCKED_FAIL_CLOSED: adapter probe exited {run.returncode}: {run.stderr.strip()}")
     report = json.loads(run.stdout)
     for case in report["cases"]:
-        case["smart_render_callbacks"]["checkout_layer_pixels"] = 2
+        case["smart_render_callbacks"]["checkout_layer_pixels"] = 1
         case["smart_render_callbacks"]["checkin_layer_pixels"] = 1
-        case["smart_render_callbacks"]["checked_layers"] = [0, 17]
-        case["optional_noise_layer_none"] = "checkout failure ignored when the active mode does not consume Noise Layer"
+        case["smart_render_callbacks"]["checked_layers"] = [0]
+        case["optional_noise_layer_none"] = "parameter 17 checked out only for positive-variation Type 3; Types 1/2 never request it"
         case["default_parameter_render"] = "exact row-wise identity at zero front/back strength"
         case["public_effectmain_exact"] = True
         case["unsupported_parameter_contract"] = (

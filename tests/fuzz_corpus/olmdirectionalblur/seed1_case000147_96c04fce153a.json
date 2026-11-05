@@ -283,7 +283,7 @@
       "smart": {
         "error": 0,
         "metadata": {
-          "COUNTS": "21 21 1 1 1",
+          "COUNTS": "20 20 1 1 1",
           "ERROR": "0"
         },
         "raw_sha256": "ef29aaa5f0ed790bfdc8c48d5c23e1465e155400ad520acf412b57cf025eecac",

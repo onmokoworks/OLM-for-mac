@@ -5,8 +5,9 @@ import argparse, hashlib, json, os, struct, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 MAIN = Path('/Users/onmk/Documents/Projects/Personal/OLM as')
-STATE = ROOT/'orchestra/state/T21-directionalblur-noise-aliasing-refusal'
-EVIDENCE = ROOT/'orchestra/reports/T21-directionalblur-noise-aliasing-refusal-evidence'
+TICKET = os.environ.get('OLM_DBLUR_TEST_TICKET', 'T21b-directionalblur-checkout-contract-tests')
+STATE = ROOT/'orchestra/state'/TICKET
+EVIDENCE = ROOT/'orchestra/reports'/f'{TICKET}-evidence'
 STATE.mkdir(parents=True, exist_ok=True); EVIDENCE.mkdir(parents=True, exist_ok=True)
 os.environ.update(TMPDIR=str(STATE), TMP=str(STATE), TEMP=str(STATE), PYTHONDONTWRITEBYTECODE='1')
 sys.path.insert(0, str(ROOT/'tools/emulation'))
