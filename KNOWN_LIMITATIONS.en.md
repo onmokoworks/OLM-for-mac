@@ -34,6 +34,7 @@ With some settings, the Windows version itself fails, or reads memory outside it
 
 ## Per plugin
 
+- OLMKiraKira: opening a project saved with a Mac build before the T16 fix (including the 2026-10-26 build) in a build containing the fix resets Glow Rotation to 0 and discards its keyframes. T16 changed this control from a numeric slider to an angle so that projects created on Windows load correctly. This change is retained to prioritize Windows compatibility. Before updating, save a separate copy of the original project and record the Glow Rotation value and keyframes, then set them again after updating.
 - OLMSmoother: no 32 bpc support (the same as the Windows version). In a 32 bpc comp, AE converts the bit depth for it.
 - OLMRadialBlur: rotation mode at high quality (for example Quality 50) can take over a minute per 1080p frame, because it does the same amount of work as the Windows version.
 - OLMDirectionalBlur: when 32 bpc footage has pixels with negative alpha and Back Alpha Fade is used, the result does not match the Windows version. In this case the Windows version reads memory whose contents are undefined. Ordinary footage never has negative alpha.

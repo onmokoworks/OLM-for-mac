@@ -6,6 +6,10 @@ October 2026 · Beta
 
 An unofficial Mac port of the Windows After Effects plugins "OLM Tools". The plugins are Universal binaries that run on both Apple Silicon and Intel, and require macOS 11 or later.
 
+## 2026-11-05 update: upgrading KiraKira (T16)
+
+T16 changed Glow Rotation from a numeric slider to an angle so that projects created on Windows load correctly. This change is retained to prioritize Windows compatibility. Opening a project saved with a Mac build before the fix (including the 2026-10-26 build) in a build containing the fix resets Glow Rotation to 0 and discards its keyframes. Before updating, save a separate copy of the original project and record the value and keyframes, then set them again after updating. See [Known limitations](../KNOWN_LIMITATIONS.en.md#per-plugin) for details.
+
 ## Included plugins
 
 Ten plugins: ColorKeep, OLMBlur, OLMColorKey, OLMDirectionalBlur, OLMDistanceGradation, OLMKiraKira, OLMRadialBlur, OLMSmoother, OLMSmoother2 and OLMToonDilate.
