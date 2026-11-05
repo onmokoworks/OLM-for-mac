@@ -1,0 +1,23 @@
+--- a/crates/aex-guest-worker/src/x64/iterate_and_suites.rs
++++ b/crates/aex-guest-worker/src/x64/iterate_and_suites.rs
+@@ -2050,6 +2050,20 @@
+             pixel_float[offset..offset + 4]
+                 .copy_from_slice(&(f32::from(channel) / 255.0).to_le_bytes());
+         }
++        // S02: optional host fixture, independent of legacy PF_ColorDef bytes.
++        // params excludes the input layer, so vector index + 1 is the public slot.
++        if let Ok(encoded) = std::env::var("OLM_FLOAT_COLOR_VALUES") {
++            let values: std::collections::BTreeMap<usize, [f32; 4]> =
++                serde_json::from_str(&encoded).map_err(|e| format!("S02 colors: {e}"))?;
++            let slot = unicorn.get_data().params.iter()
++                .position(|p| std::ptr::eq(p, source)).ok_or("S02 missing slot")? + 1;
++            if let Some(channels) = values.get(&slot) {
++                for (index, channel) in channels.iter().enumerate() {
++                    if !channel.is_finite() { return Err("S02 nonfinite color".into()); }
++                    pixel_float[index*4..index*4+4].copy_from_slice(&channel.to_le_bytes());
++                }
++            }
++        }
+         unicorn
+             .mem_write(output, &pixel_float)
+             .map_err(|error| format!("color-param output write: {error}"))?;

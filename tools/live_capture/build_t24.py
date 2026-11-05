@@ -17,6 +17,7 @@ STATE = ROOT/'orchestra/state/T24-aexcompat-worker-32bpc-arena'
 SOURCE = CACHE/'src-T24/reference-guest'
 OUT = CACHE/'worker-T24-arena'
 PATCH = HERE/'T24-arena.patch'
+TRANSPORT = HERE/'T24-S02-transport.patch'
 
 
 def sha(path):
@@ -32,6 +33,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--register', action='store_true')
     parser.add_argument('--verify', action='store_true')
+    parser.add_argument('--replace-existing', action='store_true', help='Replace this ticket\'s initial INDEX entry')
     args = parser.parse_args()
     STATE.mkdir(parents=True, exist_ok=True)
     binary = OUT/'aex-guest-worker'
@@ -39,6 +41,7 @@ def main():
         manifest = json.loads((OUT/'build.json').read_text())
         assert sha(binary) == manifest['worker_sha256']
         assert sha(PATCH) == manifest['patch_sha256']
+        assert sha(TRANSPORT) == manifest['transport_patch_sha256']
         assert tree(SOURCE) == manifest['source_manifest']
         if args.register:
             # Reuse the cache's existing lock without creating files elsewhere.
@@ -55,7 +58,11 @@ def main():
                 if existing is None:
                     data['links'].append(entry)
                 else:
-                    assert existing['worker_sha256'] == entry['worker_sha256']
+                    if existing['worker_sha256'] != entry['worker_sha256']:
+                        assert args.replace_existing, 'Use --replace-existing for a revised T24 build'
+                        (OUT/'previous-index-entry.json').write_text(json.dumps(existing, indent=2)+'\n')
+                        existing.clear()
+                        existing.update(entry)
                 staged = OUT/'INDEX.staged.json'
                 staged.write_text(json.dumps(data, indent=2)+'\n')
                 staged.replace(index)
@@ -70,6 +77,11 @@ def main():
     try:
         shutil.copytree(parent, clean)
         subprocess.run(['patch', '-p1', '-i', str(PATCH)], cwd=clean, check=True)
+        subprocess.run(['patch', '-p1', '-i', str(TRANSPORT)], cwd=clean, check=True)
+        # Preserve the already validated independent AE float-colour transport.
+        callback = 'crates/aex-guest-worker/src/x64/iterate_and_suites.rs'
+        s02 = json.loads((CACHE/'worker-S02-F53/build.json').read_text())
+        assert sha(clean/callback) == s02['callback_sha256']
         if SOURCE.exists():
             assert tree(SOURCE) == tree(clean), 'T24 source differs from patch'
         else:
@@ -99,6 +111,8 @@ def main():
     shutil.copy2(target/'release/aex-guest-worker', binary)
     manifest = dict(worker_sha256=sha(binary), parent_worker_sha256=sha(CACHE/'worker-F53-geom/aex-guest-worker'),
                     patch_sha256=sha(PATCH), source_manifest=tree(SOURCE),
+                    transport_patch_sha256=sha(TRANSPORT), capability='S02-float-colors-v1',
+                    transport_callback_sha256=s02['callback_sha256'],
                     memory_free_percent=free, command=command, tests=test, cwd=str(SOURCE),
                     environment={k: env[k] for k in ('TMPDIR', 'CARGO_TARGET_DIR', 'CARGO_BUILD_JOBS',
                                                     'CMAKE_BUILD_PARALLEL_LEVEL', 'AEXCOMPAT_BUILD_REVISION')})

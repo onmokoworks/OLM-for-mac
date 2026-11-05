@@ -24,16 +24,16 @@ def main():
     args = parser.parse_args()
     args.scratch = args.scratch.resolve()
     args.scratch.mkdir(parents=True, exist_ok=True)
-    old = Path.home()/'.cache/olm-emu/worker-F53-geom/aex-guest-worker'
     records = []
     expected_blocked = {'OLMRadialBlur-smart-G66uct', 'OLMRadialBlur-smart-GrJ092'}
     compare_keys = ('status', 'different_words', 'different_pixels', 'max_diff', 'first',
                     'aex_output_sha256', 'mac_output_sha256')
-    for ticket in ('T22', 'T23'):
+    for ticket in ('T23', 'T22'):
+        old = Path.home()/'.cache/olm-emu'/('worker-S02-F53' if ticket == 'T22' else 'worker-F53-geom')/'aex-guest-worker'
         root = args.captures/f'live_capture_{ticket}'
-        for capture in sorted((root/'caps').iterdir()):
-            if not (capture/'capture.json').is_file():
-                continue
+        captures = [p for p in (root/'caps').iterdir() if (p/'capture.json').is_file()]
+        captures.sort(key=lambda p: (json.loads((p/'capture.json').read_text())['input']['depth'] != 32, p.name))
+        for capture in captures:
             free = int(re.search(r'System-wide memory free percentage: (\d+)%',
                                  subprocess.check_output(['memory_pressure'], text=True))[1])
             assert free >= 30, f'Memory pressure: {free}% free'
