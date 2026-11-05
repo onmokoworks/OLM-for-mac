@@ -238,26 +238,26 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	return err;
 }
 
-static void KiraCaptureRamps(const OLMKiraKiraInfo &info) noexcept {
+static void KiraCaptureRamps(const OLMKiraKiraInfo &info, bool all=false) noexcept {
  if(!olm_live::active)return;
  try {
- if(info.vertical_use_ramp) {
+ if(all || info.vertical_use_ramp) {
  const auto &r=info.vertical_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
  for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
  v<<']';olm_live::active->value(14,"ramp",v.str()); }
- if(info.horizontal_use_ramp) {
+ if(all || info.horizontal_use_ramp) {
  const auto &r=info.horizontal_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
  for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
  v<<']';olm_live::active->value(20,"ramp",v.str()); }
- if(info.diagonal_use_ramp) {
+ if(all || info.diagonal_use_ramp) {
  const auto &r=info.diagonal_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
  for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
  v<<']';olm_live::active->value(26,"ramp",v.str()); }
- if(info.diagonal2_use_ramp) {
+ if(all || info.diagonal2_use_ramp) {
  const auto &r=info.diagonal2_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
  for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
  v<<']';olm_live::active->value(32,"ramp",v.str()); }
- if(info.highlight_use_ramp) {
+ if(all || info.highlight_use_ramp) {
  const auto &r=info.highlight_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
  for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
  v<<']';olm_live::active->value(38,"ramp",v.str()); }
@@ -308,7 +308,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		return OLM_KIRA_REFUSAL("tuple-layout-source");
 	}
 	const short bitdepth = BitDepthForFormat(format);
- KiraCaptureRamps(info);
+ KiraCaptureRamps(info,true);
  capture.world("input",input,bitdepth);
  capture.world("output_initial",output,bitdepth);
 	ERR(RenderWorld(input, output, info, bitdepth));

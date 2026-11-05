@@ -18,6 +18,7 @@ for plugin in ('OLMDistanceGradation','OLMKiraKira'):
     (project/'project.pbxproj').write_text(body)
     command=['xcodebuild','-project',str(project),'-configuration','Debug','-jobs','1',f'SRCROOT={source}',f'SOURCE_ROOT={source}',
         'HEADER_SEARCH_PATHS='+ ' '.join(chr(34)+str(SDK/d)+chr(34) for d in ('Headers','Headers/SP','Util','Resources')),
+        f'INFOPLIST_FILE={source}/{plugin}.plugin-Info.plist',
         'ARCHS=arm64 x86_64','ONLY_ACTIVE_ARCH=NO','MACOSX_DEPLOYMENT_TARGET=11.0',
         f'OBJROOT={STATE}/obj/{plugin}',f'SHARED_PRECOMPS_DIR={STATE}/precompiled/{plugin}',f'CONFIGURATION_BUILD_DIR={STATE}/build',
         'GCC_OPTIMIZATION_LEVEL='+('2' if plugin=='OLMDistanceGradation' else '3'),
