@@ -17,8 +17,8 @@ aligned start `0x43f49e80`, requested end `0x45eedf00`, and limit
 Although DATA_SIZE is 256 MiB, the host bump allocator stops at
 HANDLE_DATA_BASE, only 64 MiB from DATA_BASE. The arena patch leaves all
 existing region addresses and successful low allocations unchanged. On
-overflow it maps a separate 256 MiB host bump arena at `0x500000000`,
-immediately after the reserved WorldSuite region. It does not change guest
+overflow it maps a separate 256 MiB host bump arena at `0xe00000000`,
+beyond the existing world, stream, popup, and handle/token reservations. It does not change guest
 arithmetic, suite semantics, handles, or plugin sources.
 
 Run from this worktree (the builder runs Cargo from its space-free cache

@@ -1,12 +1,13 @@
 --- a/crates/aex-guest-worker/src/x64.rs
 +++ b/crates/aex-guest-worker/src/x64.rs
-@@ -277,6 +277,10 @@
+@@ -277,6 +277,11 @@
  const MAX_PF_HANDLE_COUNT: usize = 16_384;
  const WORLD_DATA_BASE: u64 = PF_HANDLE_DATA_END;
  const WORLD_DATA_END: u64 = WORLD_DATA_BASE + 0x2_0000_0000;
 +// Separate host-only bump arena, mapped on first overflow. Existing region
 +// bases, persistent tokens, PF handles and WorldSuite ownership are unchanged.
-+const HOST_DATA_OVERFLOW_BASE: u64 = WORLD_DATA_END;
++// 0x5... holds guest streams/popups; 0xc.../0xd... hold file/registry tokens.
++const HOST_DATA_OVERFLOW_BASE: u64 = 0x0000_000e_0000_0000;
 +const HOST_DATA_OVERFLOW_SIZE: u64 = 0x1000_0000;
  const CRT_HEAP_BASE: u64 = 0x0000_0010_0000_0000;
  const CRT_HEAP_END: u64 = CRT_HEAP_BASE + MAX_CRT_HEAP_BYTES;
@@ -48,7 +49,7 @@
          Ok(start)
 --- a/crates/aex-guest-worker/src/x64/tests_support.rs
 +++ b/crates/aex-guest-worker/src/x64/tests_support.rs
-@@ -26243,3 +26243,50 @@
+@@ -26243,3 +26243,57 @@
          initialize.join().unwrap();
      });
  }
@@ -57,6 +58,9 @@
 +#[test]
 +fn t24_data_arena_preserves_low_addresses_and_spills_without_overlap() {
 +    let mut engine = test_engine(&[0xc3]);
++    // PARAMS_SETUP stores popup text above WORLD_DATA_END before rendering.
++    engine.unicorn.mem_map(POPUP_CHOICES_BASE, PAGE_SIZE, Prot::READ | Prot::WRITE).unwrap();
++    engine.write(POPUP_CHOICES_BASE, &[0x42]).unwrap();
 +    assert_eq!(engine.allocate(13, 1).unwrap(), DATA_BASE);
 +    assert_eq!(engine.allocate(8, 8).unwrap(), DATA_BASE + 16);
 +    engine.write(DATA_BASE, &[0xa5; 13]).unwrap();
@@ -72,6 +76,10 @@
 +    let mut old = [0; 13];
 +    engine.read(DATA_BASE, &mut old).unwrap();
 +    assert_eq!(old, [0xa5; 13]);
++    let mut popup = [0; 1];
++    engine.read(POPUP_CHOICES_BASE, &mut popup).unwrap();
++    assert_eq!(popup, [0x42]);
++    assert!(HOST_DATA_OVERFLOW_BASE >= POPUP_CHOICES_BASE + MAX_POPUP_CHOICE_PAGES * PAGE_SIZE);
 +    let mut value = [0; 1];
 +    engine.read(spilled + 33_177_728 - 1, &mut value).unwrap();
 +    assert_eq!(value, [0x77]);
