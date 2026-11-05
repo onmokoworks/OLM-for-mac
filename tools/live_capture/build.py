@@ -2,12 +2,13 @@
 """Release-equivalent builds using SDK paths without creating root-level links."""
 import json, os, re, subprocess
 from pathlib import Path
+from targets import T23, TICKET, PLUGINS
 ROOT=Path(__file__).resolve().parents[2]
-STATE=ROOT/'orchestra/state/T22-live-world-capture-dg-kirakira'
+STATE=ROOT/'orchestra/state'/TICKET
 SDK=Path.home()/'Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples'
 STATE.mkdir(parents=True,exist_ok=True)
 (STATE/'tmp').mkdir(exist_ok=True)
-for plugin in ('OLMDistanceGradation','OLMKiraKira'):
+for plugin in PLUGINS:
     source=ROOT/'mac'/plugin/'Mac'
     project=STATE/(plugin+'.xcodeproj');project.mkdir(exist_ok=True)
     body=(source/(plugin+'.xcodeproj/project.pbxproj')).read_text()
@@ -17,7 +18,7 @@ for plugin in ('OLMDistanceGradation','OLMKiraKira'):
     body=body.replace('$(SRCROOT)',str(source)).replace('INFOPLIST_FILE = Info.plist;', 'INFOPLIST_FILE = '+json.dumps(str(source/'Info.plist'))+';')
     (project/'project.pbxproj').write_text(body)
     command=['xcodebuild','-project',str(project),'-configuration','Debug','-jobs','1',f'SRCROOT={source}',f'SOURCE_ROOT={source}',
-        'HEADER_SEARCH_PATHS='+ ' '.join(chr(34)+str(SDK/d)+chr(34) for d in ('Headers','Headers/SP','Util','Resources')),
+        'HEADER_SEARCH_PATHS='+ ' '.join(chr(34)+str(SDK/d)+chr(34) for d in ('Headers','Headers/SP','Util','Resources'))+' '+chr(34)+str(ROOT/'core')+chr(34),
         f'INFOPLIST_FILE={source}/{plugin}.plugin-Info.plist',
         'ARCHS=arm64 x86_64','ONLY_ACTIVE_ARCH=NO','MACOSX_DEPLOYMENT_TARGET=11.0',
         f'OBJROOT={STATE}/obj/{plugin}',f'SHARED_PRECOMPS_DIR={STATE}/precompiled/{plugin}',f'CONFIGURATION_BUILD_DIR={STATE}/build',

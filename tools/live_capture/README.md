@@ -77,3 +77,54 @@ three-byte padded stride, through the existing standalone bundle host. It checks
 both positive replay and an intentional one-byte output change. Results live in
 `orchestra/state/T22-live-world-capture-dg-kirakira/self-test/results.json`.
 Regression invokes existing corpus replay machinery with capture unset, serially.
+
+## T23 blur plugins
+
+Use `--t23` on `build.py`, `self_test.py`, `regression.py`, and `retain.py` to
+select OLMRadialBlur, OLMDirectionalBlur and OLMBlur. Products and logs are under
+`orchestra/state/T23-live-world-capture-radial-dblur-blur/`. The default remains
+T22. All three use the Release script's O3, Universal, macOS 11 settings.
+
+```sh
+python3 tools/live_capture/build.py --t23
+python3 tools/live_capture/self_test.py --t23
+python3 tools/live_capture/regression.py --t23
+# After committing the tested source:
+python3 tools/live_capture/retain.py --t23
+```
+
+The same `OLM_LIVE_CAPTURE_DIR` variable enables Classic and Smart captures.
+Blur records the three parameters read by Classic and all five read by Smart.
+RadialBlur and DirectionalBlur record raw fixed-point/angle/point values before
+worker-side conversions. `noise_layer.raw` records an acquired Noise Layer;
+RadialBlur additionally records `noise_param.raw` from parameter checkout, which
+can occur even when Type 1/2 does not sample that world. An empty world is retained
+as a zero-length file. Type 1/2 does not synthesize or inject a noise source.
+
+The retained F53 worker exposes `--fixture-layers-v1`. The replay tool uses
+its v1 manifest for a packed, full, same-depth Noise Layer. Combining v2 layer
+layouts with the geometry extent option is rejected by the worker. A Type 3
+RadialBlur test reached the original AEX but failed with
+`UC_ERR_WRITE_UNMAPPED` at RVA `0xda65`; this is **not verified second-layer
+support**. Type 1/2 does not use this transport. Empty/mixed-depth/padded or
+nonzero-origin noise worlds are rejected by the replay tool. The primary-world
+geometry and destination initialization limitations above still apply.
+
+The standard T23 self-test covers one corpus input per plugin (positive replay,
+one-byte negative control, capture-off equality, capture-I/O-failure equality).
+`self_test.py --t23 --with-layer` additionally builds an isolated diagnostic
+bundle host and captures a RadialBlur Type 3 derivative with a distinct noise
+world; it currently fails at AEX replay and records the failure in results.json.
+The host generator leaves existing hosts and AEXCompat sources untouched.
+
+Replay any live capture using the unchanged command syntax:
+
+```sh
+python3 tools/live_capture/replay_aex.py "$CAPTURE" \
+  --worker "$HOME/.cache/olm-emu/worker-F53-geom/aex-guest-worker" \
+  --scratch "$PWD/orchestra/state/T23-live-world-capture-radial-dblur-blur/replay"
+```
+
+The command identifies the plugin from `capture.json`; use it separately for
+each RadialBlur, DirectionalBlur and Blur capture. Exact replay establishes the
+captured plugin boundary only, not equality of the final AE composition/export.

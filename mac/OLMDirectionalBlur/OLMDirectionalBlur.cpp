@@ -1,4 +1,5 @@
 #include "OLMDirectionalBlur.h"
+#include "../../tools/live_capture/Capture.h"
 
 #include <AEFX_SuiteHandlerTemplate.h>
 

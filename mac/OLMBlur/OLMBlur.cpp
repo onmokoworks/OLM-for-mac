@@ -1,5 +1,6 @@
 #include "../../core/olm_exact_math.h"
 #include "OLMBlur.h"
+#include "../../tools/live_capture/Capture.h"
 #include "olmblur_worker_orchestration.h"
 #include "olmblur_worker16_nonlegacy.h"
 #include "olmblur_worker16_legacy.h"
@@ -234,9 +235,20 @@ ClassicCopyGeometry(const PF_EffectWorld *input, const PF_EffectWorld *output,
 	return PF_Err_NONE;
 }
 
+static void CaptureBlurParam(int slot, const PF_ParamDef &p) noexcept {
+    switch(slot) {
+    case OLMBLUR_BLUR_AMOUNT: olm_live::scalar(slot,"f",p.u.fs_d.value); break;
+    case OLMBLUR_BLUR_SMOOTHNESS: olm_live::scalar(slot,"f",p.u.fd.value/65536.0); break;
+    case OLMBLUR_REPEAT: olm_live::scalar(slot,"i",p.u.sd.value); break;
+    case OLMBLUR_BIAS_DIRECTION: olm_live::scalar(slot,"u",p.u.pd.value); break;
+    case OLMBLUR_LEGACY: olm_live::scalar(slot,"b",p.u.bd.value); break;
+    }
+}
+
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	olm_live::Capture capture("OLMBlur", "classic", in_data);
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
@@ -285,6 +297,9 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	// Bias and
 	// Legacy are deliberately not consumed: the classic owner does not read
 	// slots 4 or 5.  All numerical/non-default work remains on Smart Render.
+	if (olm_live::active) for (int i=1;i<=3;++i) CaptureBlurParam(i,*params[i]);
+	capture.world("input", input, int(pixel_bytes*2));
+	capture.world("output_initial", output, int(pixel_bytes*2));
 	const PF_FpLong blur_amount = params[OLMBLUR_BLUR_AMOUNT]->u.fs_d.value;
 	const A_long blur_smoothness = params[OLMBLUR_BLUR_SMOOTHNESS]->u.fd.value;
 	const A_long repeat = params[OLMBLUR_REPEAT]->u.sd.value;
@@ -304,8 +319,10 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 			OLM_BLUR_REFUSAL("classic-staging");
 	std::memcpy(staging.output_data(), staging.input_data(),
 		staging.row_bytes() * staging.height());
-	return staging.commit() == olm::world_safety::Status::ok ?
+	err = staging.commit() == olm::world_safety::Status::ok ?
 		PF_Err_NONE : OLM_BLUR_REFUSAL("classic-commit");
+	capture.finish(output, int(pixel_bytes*2), err);
+	return err;
 }
 
 // Original rectangle union, FUN_18000bd90. Empty destinations are replaced;
@@ -478,6 +495,7 @@ CheckoutPublicBlurParams(PF_InData *in_data, BlurParams *bp, PublicBlurParamValu
 		PF_Err err = PF_CHECKOUT_PARAM(in_data, indices[ordinal], in_data->current_time,
 			in_data->time_step, in_data->time_scale, &p);
 		if (err) return err;
+		if (olm_live::active) CaptureBlurParam(indices[ordinal],p);
 		if (ordinal == 0) { raw->amount=p.u.fs_d.value; bp->blur_amount=(float)raw->amount; }
 		else if (ordinal == 1) {
 			raw->smoothness_fixed=p.u.fd.value;
@@ -498,6 +516,8 @@ CheckoutPublicBlurParams(PF_InData *in_data, BlurParams *bp, PublicBlurParamValu
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	olm_live::Capture capture("OLMBlur", "smart", in_data);
+	if (extra && extra->input) capture.request(extra->input->output_request.rect);
 	(void)out_data;
 	if (!in_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
@@ -512,6 +532,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	err = CheckoutPublicBlurParams(in_data, &bp, &raw);
 	if (err) return BlurRefusal(__func__, "smartrender-param-checkout", __LINE__, err);
 	const short bpc=extra->input->bitdepth;
+	capture.world("input", input_world, bpc);
+	capture.world("output_initial", output_world, bpc);
 	const size_t pixel_bytes=bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u));
 	// Generic beta lane.
 	const char *generic_tuple_refusal =
@@ -556,6 +578,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		if (!err) err=checkin_err ? BlurRefusal(__func__, "generic-checkin", __LINE__, checkin_err) : checkin_err;
 		if (!err && staging.commit() != olm::world_safety::Status::ok)
 			err=OLM_BLUR_REFUSAL("generic-commit");
+		capture.finish(output_world, bpc, err);
 		return err;
 	}
 	if (!err) {

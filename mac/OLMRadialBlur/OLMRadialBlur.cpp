@@ -2,6 +2,7 @@
 #include "RadialRotationRows.h"
 #include "../../core/olm_exact_math.h"
 #include "OLMRadialBlur.h"
+#include "../../tools/live_capture/Capture.h"
 #include "../DynamicControls.h"
 #include "../../core/dblur_noise.h"
 #include "../../core/x86_float.h"
@@ -417,8 +418,34 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 #include "../../tools/fuzz/harnesses/radialblur/RadialTestEntry.inc"
 #endif
+static void CaptureParams(PF_ParamDef *params[]) noexcept {
+	if (!olm_live::active) return;
+	olm_live::scalar(OLMRADIALBLUR_BLUR_TYPE, "u", params[OLMRADIALBLUR_BLUR_TYPE]->u.pd.value);
+	olm_live::point(OLMRADIALBLUR_CENTER, params[OLMRADIALBLUR_CENTER]->u.td.x_value / 65536.0, params[OLMRADIALBLUR_CENTER]->u.td.y_value / 65536.0);
+	olm_live::scalar(OLMRADIALBLUR_OUTER_STRENGTH, "i", params[OLMRADIALBLUR_OUTER_STRENGTH]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_OUTER_EDGE_FADE, "i", params[OLMRADIALBLUR_OUTER_EDGE_FADE]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_OUTER_OFFSET_MODE, "u", params[OLMRADIALBLUR_OUTER_OFFSET_MODE]->u.pd.value);
+	olm_live::scalar(OLMRADIALBLUR_OUTER_OFFSET, "i", params[OLMRADIALBLUR_OUTER_OFFSET]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_INNER_STRENGTH, "i", params[OLMRADIALBLUR_INNER_STRENGTH]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_INNER_EDGE_FADE, "i", params[OLMRADIALBLUR_INNER_EDGE_FADE]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_INNER_OFFSET_MODE, "u", params[OLMRADIALBLUR_INNER_OFFSET_MODE]->u.pd.value);
+	olm_live::scalar(OLMRADIALBLUR_INNER_OFFSET, "i", params[OLMRADIALBLUR_INNER_OFFSET]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_REPEAT_BORDER, "b", params[OLMRADIALBLUR_REPEAT_BORDER]->u.bd.value);
+	olm_live::scalar(OLMRADIALBLUR_RATIO, "f", params[OLMRADIALBLUR_RATIO]->u.fs_d.value);
+	olm_live::scalar(OLMRADIALBLUR_ANGLE, "a", params[OLMRADIALBLUR_ANGLE]->u.ad.value / 65536.0);
+	olm_live::scalar(OLMRADIALBLUR_QUALITY, "f", params[OLMRADIALBLUR_QUALITY]->u.fs_d.value);
+	olm_live::scalar(OLMRADIALBLUR_BRIGHTNESS_GAIN, "f", params[OLMRADIALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value);
+	olm_live::scalar(OLMRADIALBLUR_SIZE_VARIATION, "f", params[OLMRADIALBLUR_SIZE_VARIATION]->u.fs_d.value);
+	olm_live::scalar(OLMRADIALBLUR_NOISE_VARIATION, "f", params[OLMRADIALBLUR_NOISE_VARIATION]->u.fs_d.value);
+	olm_live::scalar(OLMRADIALBLUR_NOISE_TYPE, "u", params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value);
+	olm_live::scalar(OLMRADIALBLUR_NOISE_LAYER, "layer", params[OLMRADIALBLUR_NOISE_LAYER]->u.ld.dephault);
+	olm_live::scalar(OLMRADIALBLUR_SEED, "i", params[OLMRADIALBLUR_SEED]->u.sd.value);
+	olm_live::scalar(OLMRADIALBLUR_NOISE_OFFSET, "a", params[OLMRADIALBLUR_NOISE_OFFSET]->u.ad.value / 65536.0);
+	olm_live::scalar(OLMRADIALBLUR_THICKNESS, "f", params[OLMRADIALBLUR_THICKNESS]->u.fs_d.value);
+}
 static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_width, PF_FpLong comp_height)
 {
+	CaptureParams(params);
 	OLMRadialBlurInfo info;
 	info.blur_type = params[OLMRADIALBLUR_BLUR_TYPE]->u.pd.value;
 	info.center_x = (PF_FpLong)params[OLMRADIALBLUR_CENTER]->u.td.x_value / 65536.0;
@@ -513,6 +540,7 @@ GetRadialPixelFormats(
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	olm_live::Capture capture("OLMRadialBlur", "classic", in_data);
 	if (!in_data || !out_data || !params || !output ||
 		!params[OLMRADIALBLUR_INPUT]) return OLM_RADIAL_REFUSAL("render-params-null");
 	for (A_long index = 1; index < OLMRADIALBLUR_NUM_PARAMS; ++index) {
@@ -551,7 +579,12 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	default:
 		return OLM_RADIAL_REFUSAL("render-bitdepth-unknown");
 	}
-	return RenderWorld(input, output, noise_world, info, bitdepth);
+	capture.world("input", input, bitdepth);
+	capture.world("output_initial", output, bitdepth);
+	if (noise_world) capture.world("noise_layer", noise_world, bitdepth);
+	err = RenderWorld(input, output, noise_world, info, bitdepth);
+	capture.finish(output, bitdepth, err);
+	return err;
 }
 
 typedef struct {
@@ -642,6 +675,8 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	olm_live::Capture capture("OLMRadialBlur", "smart", in_data);
+	if (extra && extra->input) capture.request(extra->input->output_request.rect);
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 		!extra->cb->checkin_layer_pixels || !in_data->inter.checkout_param ||
@@ -683,11 +718,16 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (!err && (!noise_world || (!noise_world->data &&
 				(noise_world->width != 0 || noise_world->height != 0))))
 				err = OLM_RADIAL_REFUSAL("smartrender-noise-world");
+			if (!err) capture.world("noise_layer", noise_world, extra->input->bitdepth);
 			if (!err && !noise_world->data) noise_world = nullptr;
 		}
 		if (!err) {
 			err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 			if (!err && (!output_world || !output_world->data)) err = OLM_RADIAL_REFUSAL("smartrender-output-world");
+		}
+		if (!err) {
+			capture.world("input", input_world, extra->input->bitdepth);
+			capture.world("output_initial", output_world, extra->input->bitdepth);
 		}
 		if (!err && (!pre || input_world->width <= 0 || input_world->height <= 0 ||
 			output_world->width <= 0 || output_world->height <= 0 ||
@@ -706,6 +746,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (!err) {
 				param_checked_out[i] = true;
 				param_ptrs[i] = &checked[i];
+				if (i == OLMRADIALBLUR_NOISE_LAYER) capture.world("noise_param", &checked[i].u.ld, extra->input->bitdepth);
 			}
 		}
 		param_ptrs[OLMRADIALBLUR_INPUT] = NULL;
@@ -878,6 +919,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				output_row_bytes);
 		}
 	}
+	capture.finish(output_world, extra->input->bitdepth, err);
 	return err;
 }
 

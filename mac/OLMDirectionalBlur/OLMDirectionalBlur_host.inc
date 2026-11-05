@@ -13,8 +13,27 @@ static PF_FpLong WindowsFixedWholeNumber(PF_Fixed value)
 		: static_cast<std::int32_t>(whole));
 }
 
+static void CaptureParams(PF_ParamDef *params[]) noexcept {
+	if (!olm_live::active) return;
+	olm_live::scalar(OLMDIRECTIONALBLUR_ANGLE, "a", params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN, "f", params[OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_SIZE_VARIATION, "f", params[OLMDIRECTIONALBLUR_SIZE_VARIATION]->u.fd.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_FRONT_STRENGTH, "i", params[OLMDIRECTIONALBLUR_FRONT_STRENGTH]->u.sd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_FRONT_ALPHA_FADE, "i", params[OLMDIRECTIONALBLUR_FRONT_ALPHA_FADE]->u.sd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL, "f", params[OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL]->u.fd.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_BACK_STRENGTH, "i", params[OLMDIRECTIONALBLUR_BACK_STRENGTH]->u.sd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_BACK_ALPHA_FADE, "i", params[OLMDIRECTIONALBLUR_BACK_ALPHA_FADE]->u.sd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_BACK_SHARP_TAIL, "f", params[OLMDIRECTIONALBLUR_BACK_SHARP_TAIL]->u.fd.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_NOISE_VARIATION, "f", params[OLMDIRECTIONALBLUR_NOISE_VARIATION]->u.fd.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_NOISE_TYPE, "u", params[OLMDIRECTIONALBLUR_NOISE_TYPE]->u.pd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_NOISE_LAYER, "layer", params[OLMDIRECTIONALBLUR_NOISE_LAYER]->u.ld.dephault);
+	olm_live::scalar(OLMDIRECTIONALBLUR_SEED, "i", params[OLMDIRECTIONALBLUR_SEED]->u.sd.value);
+	olm_live::scalar(OLMDIRECTIONALBLUR_NOISE_OFFSET, "a", params[OLMDIRECTIONALBLUR_NOISE_OFFSET]->u.ad.value / 65536.0);
+	olm_live::scalar(OLMDIRECTIONALBLUR_THICKNESS, "f", params[OLMDIRECTIONALBLUR_THICKNESS]->u.fs_d.value);
+}
 static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale_x, PF_FpLong render_scale_y)
 {
+	CaptureParams(params);
 	OLMDirectionalBlurInfo info;
 	info.angle_deg = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value);
 	info.brightness_gain = params[OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value;
@@ -67,6 +86,7 @@ static void RenderScaleFromInData(PF_InData *in_data, PF_FpLong &scale_x, PF_FpL
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	olm_live::Capture capture("OLMDirectionalBlur", "classic", in_data);
 	PF_FpLong scale_x, scale_y;
 	RenderScaleFromInData(in_data, scale_x, scale_y);
 	OLMDirectionalBlurInfo info = InfoFromParams(params, scale_x, scale_y);
@@ -101,7 +121,12 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		if (err) return err;
 		if (layer_format != format) return OLM_DIRECTIONAL_REFUSAL("classic-layer-format");
 	}
-	return RenderWorld(input, output, noise_layer, info, bitdepth);
+	capture.world("input", input, bitdepth);
+	capture.world("output_initial", output, bitdepth);
+	if (noise_layer) capture.world("noise_layer", noise_layer, bitdepth);
+	err = RenderWorld(input, output, noise_layer, info, bitdepth);
+	capture.finish(output, bitdepth, err);
+	return err;
 }
 
 typedef struct {
@@ -263,6 +288,8 @@ GetDirectionalPixelFormats(PF_InData *in_data,
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 {
+	olm_live::Capture capture("OLMDirectionalBlur", "smart", in_data);
+	if (extra && extra->input) capture.request(extra->input->output_request.rect);
 	if (!in_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 		!extra->cb->checkin_layer_pixels
@@ -293,6 +320,10 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 		if (!err && !output_world) err = OLM_DIRECTIONAL_REFUSAL("smart-output-missing");
+		if (!err) {
+			capture.world("input", input_world, extra->input->bitdepth);
+			capture.world("output_initial", output_world, extra->input->bitdepth);
+		}
 		if (!err && !DisjointPayloads(input_world, output_world, extra->input->bitdepth / 8 * 4)) {
 			err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
 		}
@@ -328,6 +359,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		}
 		if (!err && param_checked_out[OLMDIRECTIONALBLUR_NOISE_LAYER]) {
 			noise_world = &checked[OLMDIRECTIONALBLUR_NOISE_LAYER].u.ld;
+			capture.world("noise_layer", noise_world, extra->input->bitdepth);
 			// Both sources are read-only. Only destination overlap is forbidden.
 			if (noise_world->data && !DisjointPayloads(output_world, noise_world, extra->input->bitdepth / 8 * 4))
 				err = OLM_DIRECTIONAL_REFUSAL("smart-overlapping-worlds");
@@ -496,5 +528,6 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				active_row_bytes);
 		}
 	}
+	capture.finish(output_world, extra->input->bitdepth, err);
 	return err;
 }

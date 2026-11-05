@@ -72,11 +72,11 @@ struct Data {
     ~Data() { if(enabled && !failed) std::fprintf(stderr,"OLM_LIVE_CAPTURE_DIR: incomplete render capture (%s)\n",dir.c_str()); if(active==this)active=previous; }
     void file(const char *name,const void *data,size_t size) {
         FILE *f=fopen((dir+"/"+name).c_str(),"wbx"); if(!f)throw std::runtime_error("open");
-        bool bad=fwrite(data,1,size,f)!=size; if(fclose(f))bad=true; if(bad)throw std::runtime_error("write/close");
+        bool bad=size && fwrite(data,1,size,f)!=size; if(fclose(f))bad=true; if(bad)throw std::runtime_error("write/close");
     }
     void world(const char *name,const PF_EffectWorld *w,int depth) noexcept {
         if(!enabled||failed)return; try {
-            if(!w||!w->data||w->height<0||w->rowbytes<=0||w->width<0||size_t(w->rowbytes)<size_t(w->width)*4*(depth/8))throw std::runtime_error("world layout");
+            if(!w||(!w->data && (w->width!=0 || w->height!=0))||w->height<0||w->rowbytes<0||w->width<0||size_t(w->rowbytes)<size_t(w->width)*4*(depth/8))throw std::runtime_error("world layout");
             file((std::string(name)+".raw").c_str(),w->data,size_t(w->rowbytes)*w->height);
             meta << ',' << quote(name) << ":{\"width\":" << w->width << ",\"height\":" << w->height << ",\"rowbytes\":" << w->rowbytes
                  << ",\"depth\":" << depth << ",\"origin\":[" << w->origin_x << ',' << w->origin_y << "],\"extent_hint\":" << rect(w->extent_hint) << '}';
@@ -112,6 +112,9 @@ struct Capture {
     template<class R> void request(const R &r) noexcept {if(data)data->request(r);}
     void finish(PF_EffectWorld *w,int depth,PF_Err err) noexcept {if(data)data->finish(w,depth,err);}
 };
+inline void point(int slot,double x,double y) noexcept {
+    if(!active)return;try{std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(17)<<'['<<x<<','<<y<<']';active->value(slot,"p",s.str());}catch(...){active->fail();}
+}
 inline void scalar(int slot,const char *kind,double value) noexcept {
     if(!active)return; try{std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(17)<<value;active->value(slot,kind,s.str());}catch(...){active->fail();}
 }

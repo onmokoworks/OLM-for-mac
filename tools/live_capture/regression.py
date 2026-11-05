@@ -2,12 +2,14 @@
 """Serial existing DG/Kira corpus replays, capture explicitly disabled."""
 import json,os,subprocess,sys
 from pathlib import Path
+from targets import T23, TICKET, PLUGINS
 ROOT=Path(__file__).resolve().parents[2]
-S=ROOT/'orchestra/state/T22-live-world-capture-dg-kirakira/regression';S.mkdir(parents=True,exist_ok=True)
+S=ROOT/'orchestra/state'/TICKET/'regression';S.mkdir(parents=True,exist_ok=True)
 env=dict(os.environ,TMPDIR=str(S),TMP=str(S),TEMP=str(S),OLM_TEST_JOBS='1',PYTHONDONTWRITEBYTECODE='1')
 env.pop('OLM_LIVE_CAPTURE_DIR',None)
+failed=False
 for directory in sorted((ROOT/'tests/fuzz_corpus').iterdir()):
-    if not directory.name.startswith(('olmdistancegradation','olmkirakira')):continue
+    if not directory.name.startswith(tuple('radialblur' if p=='OLMRadialBlur' else p.lower() for p in PLUGINS)):continue
     cases=sorted(directory.glob('*.json'))
     if not cases:continue
     sizes={json.loads(p.read_text())['max_size'] for p in cases}
@@ -25,4 +27,5 @@ for directory in sorted((ROOT/'tests/fuzz_corpus').iterdir()):
         if saved.get('size_max_height'):cmd+=['--size-max-height',str(saved['size_max_height'])]
         with (S/(name+'.log')).open('w') as log:r=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT)
         print(name,1 if target.is_file() else len(cases),r.returncode,flush=True)
-        if r.returncode:raise SystemExit(r.returncode)
+        if r.returncode:failed=True
+if failed:raise SystemExit(1)

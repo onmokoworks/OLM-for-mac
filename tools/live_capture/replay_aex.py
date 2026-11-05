@@ -51,7 +51,7 @@ def compare(expected, actual, depth, width):
 def replay(capture, scratch, worker, main, timeout=600):
     m=json.loads((capture/'capture.json').read_text())
     if m['schema']!=1 or m['render_error']:raise ValueError('incomplete/failed capture')
-    names={'OLMDistanceGradation':'DistanceGradation','OLMKiraKira':'OLMKiraKira'}
+    names={'OLMDistanceGradation':'DistanceGradation','OLMKiraKira':'OLMKiraKira', **{n:n for n in ('OLMRadialBlur','OLMDirectionalBlur','OLMBlur')}}
     aex=main/'plugins_2025'/(names[m['plugin']]+'.aex')
     w,o,h=m['input'],m['output'],m['host']; depth=w['depth']; route=m['route']
     if depth not in (8,16,32) or o['depth']!=depth:raise ValueError('unsupported depth')
@@ -65,6 +65,10 @@ def replay(capture, scratch, worker, main, timeout=600):
     if [math.ceil(h['width']*h['downsample'][0][0]/h['downsample'][0][1]),
         math.ceil(h['height']*h['downsample'][1][0]/h['downsample'][1][1])]!=[w['width'],w['height']]:
         raise ValueError('worker requires a full sampled input world')
+    slots={p['slot']:p['value'] for p in m['parameters']}
+    layer_slot = 26 if m['plugin']=='OLMRadialBlur' else 17
+    needs_layer = ((m['plugin']=='OLMRadialBlur' and slots.get(25)==3 and slots.get(24,0)>0) or
+                   (m['plugin']=='OLMDirectionalBlur' and slots.get(16)==3 and slots.get(15,0)>=1))
     scratch.mkdir(parents=True,exist_ok=True)
     scratch=Path(tempfile.mkdtemp(prefix='replay-',dir=scratch))
     ip,op=scratch/'input.raw',scratch/'aex-output.raw'
@@ -80,7 +84,13 @@ def replay(capture, scratch, worker, main, timeout=600):
             if v!=default_ramp:raise ValueError('custom ramp transport is unsupported; captured ramp is retained')
             continue
         if kind=='c':raw_colors[slot]=v
-        wire={'c':'argb8','a':'angle'}.get(kind,'f64')
+        if kind=='layer':
+            # A layer identifier is not a scalar parameter in the worker protocol.
+            # Type 1/2 never sample it; Type 3 requires an independent world.
+            continue
+        if kind=='p':
+            v=[x*100/n for x,n in zip(v,(w['width'],w['height']))]
+        wire={'c':'argb8','a':'angle','p':'point'}.get(kind,'f64')
         encoded.append(f"param_{slot}@{slot}:{wire}="+(','.join(map(str,v)) if isinstance(v,list) else str(v)))
     # The standard worker reconstructs PF_ColorParamSuite floats from byte colors.
     # Reject an independent AE float color rather than silently quantizing it.
@@ -102,6 +112,21 @@ def replay(capture, scratch, worker, main, timeout=600):
           '--pixel-format',{8:'argb8',16:'argb16',32:'argb32f'}[depth],
           '--fixture-render-path',route,'--negotiate-output','1','--rowbytes-pad',pad,
           '--extent-hint',','.join(map(str,w['extent_hint']))]
+    if needs_layer:
+        layer=m.get('noise_layer')
+        if layer is None:raise ValueError('missing checked-out Noise Layer world')
+        if layer['width']<=0 or layer['height']<=0:raise ValueError('empty Noise Layer transport not verified')
+        if layer['depth']!=depth:raise ValueError('mixed-depth Noise Layer transport not verified')
+        lp=scratch/'noise-layer.raw'
+        with lp.open('wb') as dest:
+            for row in packed_rows(capture/'noise_layer.raw',layer):dest.write(row)
+        manifest=scratch/'layers.json'
+        if layer['origin']!=[0,0] or layer['extent_hint']!=[0,0,layer['width'],layer['height']] or layer['rowbytes']!=layer['width']*4*(depth//8):
+            raise ValueError('combined geometry/layer transport requires a packed full Noise Layer')
+        manifest.write_text(json.dumps({'v':1,'layers':[{
+            'slot':layer_slot,'width':layer['width'],'height':layer['height'],
+            'path':str(lp)}]}))
+        argv+=['--fixture-layers-v1',manifest]
     if h.get('pixel_aspect') and all(h['pixel_aspect']):argv+=['--pixel-aspect','/'.join(map(str,h['pixel_aspect']))]
     if route=='smart':argv+=['--request-rect',','.join(map(str,rect))]
     for axis,ratio in zip(('x','y'),h['downsample']):argv+=['--downsample-'+axis,'/'.join(map(str,ratio))]
