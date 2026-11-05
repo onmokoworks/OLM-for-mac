@@ -110,6 +110,10 @@ struct Capture {
     Capture &operator=(const Capture &)=delete;
     void world(const char *n,const PF_EffectWorld *w,int depth) noexcept {if(data)data->world(n,w,depth);}
     template<class R> void request(const R &r) noexcept {if(data)data->request(r);}
+    // Test SDK shims may omit PF_SmartRenderInput::output_request; record it only when present.
+    template<class In> void request_from(const In *in) noexcept {if(data&&in)request_of(in,0);}
+    template<class In> auto request_of(const In *in,int) noexcept -> decltype(in->output_request.rect, void()) {data->request(in->output_request.rect);}
+    template<class In> void request_of(const In *,long) noexcept {}
     void finish(PF_EffectWorld *w,int depth,PF_Err err) noexcept {if(data)data->finish(w,depth,err);}
 };
 inline void point(int slot,double x,double y) noexcept {

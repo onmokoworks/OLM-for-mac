@@ -453,7 +453,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
  olm_live::Capture capture("OLMKiraKira","smart",in_data);
- if (extra && extra->input) capture.request(extra->input->output_request.rect);
+ if (extra) capture.request_from(extra->input);
 	KiraDiagnosticLog("smart enter bitdepth=%d predata=%p",
 		(extra && extra->input) ? (int)extra->input->bitdepth : -1,
 		(extra && extra->input) ? extra->input->pre_render_data : nullptr);

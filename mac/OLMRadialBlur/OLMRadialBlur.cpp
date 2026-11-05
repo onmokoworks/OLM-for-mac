@@ -676,7 +676,7 @@ static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
 	olm_live::Capture capture("OLMRadialBlur", "smart", in_data);
-	if (extra && extra->input) capture.request(extra->input->output_request.rect);
+	if (extra) capture.request_from(extra->input);
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 		!extra->cb->checkin_layer_pixels || !in_data->inter.checkout_param ||
