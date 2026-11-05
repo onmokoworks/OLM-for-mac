@@ -1,0 +1,101 @@
+--- a/crates/aex-guest-worker/src/x64.rs
++++ b/crates/aex-guest-worker/src/x64.rs
+@@ -277,6 +277,10 @@
+ const MAX_PF_HANDLE_COUNT: usize = 16_384;
+ const WORLD_DATA_BASE: u64 = PF_HANDLE_DATA_END;
+ const WORLD_DATA_END: u64 = WORLD_DATA_BASE + 0x2_0000_0000;
++// Separate host-only bump arena, mapped on first overflow. Existing region
++// bases, persistent tokens, PF handles and WorldSuite ownership are unchanged.
++const HOST_DATA_OVERFLOW_BASE: u64 = WORLD_DATA_END;
++const HOST_DATA_OVERFLOW_SIZE: u64 = 0x1000_0000;
+ const CRT_HEAP_BASE: u64 = 0x0000_0010_0000_0000;
+ const CRT_HEAP_END: u64 = CRT_HEAP_BASE + MAX_CRT_HEAP_BYTES;
+ const ENVIRONMENT_STRINGS_BASE: u64 = 0x0000_0020_0000_0000;
+--- a/crates/aex-guest-worker/src/x64/engine.rs
++++ b/crates/aex-guest-worker/src/x64/engine.rs
+@@ -2531,7 +2531,31 @@
+             .checked_add(u64::try_from(size).map_err(|_| GuestError::DataCapacity)?)
+             .ok_or(GuestError::DataCapacity)?;
+         if end > HANDLE_DATA_BASE {
+-            return Err(GuestError::DataCapacity);
++            // Host fixtures (including negotiated outputs) can exceed the 64 MiB
++            // low arena. Keep all old addresses and handle/world regions intact.
++            let first_overflow = self.next_data <= HANDLE_DATA_BASE;
++            let overflow_start = if first_overflow {
++                HOST_DATA_OVERFLOW_BASE
++                    .checked_add(alignment - 1)
++                    .map(|value| value & !(alignment - 1))
++                    .ok_or(GuestError::DataCapacity)?
++            } else {
++                start
++            };
++            let overflow_end = overflow_start
++                .checked_add(size as u64)
++                .ok_or(GuestError::DataCapacity)?;
++            if overflow_end > HOST_DATA_OVERFLOW_BASE + HOST_DATA_OVERFLOW_SIZE {
++                return Err(GuestError::DataCapacity);
++            }
++            if first_overflow {
++                uc("map host data overflow", self.unicorn.mem_map(
++                    HOST_DATA_OVERFLOW_BASE, HOST_DATA_OVERFLOW_SIZE,
++                    Prot::READ | Prot::WRITE,
++                ))?;
++            }
++            self.next_data = overflow_end;
++            return Ok(overflow_start);
+         }
+         self.next_data = end;
+         Ok(start)
+--- a/crates/aex-guest-worker/src/x64/tests_support.rs
++++ b/crates/aex-guest-worker/src/x64/tests_support.rs
+@@ -26243,3 +26243,50 @@
+         initialize.join().unwrap();
+     });
+ }
++
++
++#[test]
++fn t24_data_arena_preserves_low_addresses_and_spills_without_overlap() {
++    let mut engine = test_engine(&[0xc3]);
++    assert_eq!(engine.allocate(13, 1).unwrap(), DATA_BASE);
++    assert_eq!(engine.allocate(8, 8).unwrap(), DATA_BASE + 16);
++    engine.write(DATA_BASE, &[0xa5; 13]).unwrap();
++    engine.next_data = HANDLE_DATA_BASE - 64;
++    assert_eq!(engine.allocate(64, 64).unwrap(), HANDLE_DATA_BASE - 64);
++    let spilled = engine.allocate(33_177_728, 64).unwrap();
++    assert_eq!(spilled, HOST_DATA_OVERFLOW_BASE);
++    let next = engine.allocate(32, 256).unwrap();
++    assert_eq!(next, (spilled + 33_177_728 + 255) & !255);
++    engine.write(spilled, &[0x5a; 16]).unwrap();
++    engine.write(spilled + 33_177_728 - 1, &[0x77]).unwrap();
++    engine.write(next, &[0x99; 32]).unwrap();
++    let mut old = [0; 13];
++    engine.read(DATA_BASE, &mut old).unwrap();
++    assert_eq!(old, [0xa5; 13]);
++    let mut value = [0; 1];
++    engine.read(spilled + 33_177_728 - 1, &mut value).unwrap();
++    assert_eq!(value, [0x77]);
++    assert_eq!(HANDLE_DATA_BASE, 0x4400_0000);
++    assert_eq!(HANDLE_DATA_END, 0x5000_0000);
++    assert_eq!(HOST_PERSISTENT_BLOB_TOKEN, 0x5000_1000);
++    assert_eq!(PF_HANDLE_DATA_BASE, 0x1_0000_0000);
++    assert_eq!(WORLD_DATA_BASE, 0x3_0000_0000);
++    assert!(HOST_DATA_OVERFLOW_BASE >= WORLD_DATA_END);
++    assert!(HOST_DATA_OVERFLOW_BASE + HOST_DATA_OVERFLOW_SIZE <= CRT_HEAP_BASE);
++}
++
++#[test]
++fn t24_data_arena_capacity_failure_does_not_advance_cursor() {
++    let mut engine = test_engine(&[0xc3]);
++    engine.next_data = HANDLE_DATA_BASE;
++    assert!(matches!(engine.allocate(HOST_DATA_OVERFLOW_SIZE as usize + 1, 64), Err(GuestError::DataCapacity)));
++    assert_eq!(engine.next_data, HANDLE_DATA_BASE);
++    assert_eq!(engine.allocate(1, 64).unwrap(), HOST_DATA_OVERFLOW_BASE);
++    engine.next_data = HOST_DATA_OVERFLOW_BASE + HOST_DATA_OVERFLOW_SIZE - 8;
++    let before = engine.next_data;
++    assert!(matches!(engine.allocate(9, 1), Err(GuestError::DataCapacity)));
++    assert_eq!(engine.next_data, before);
++    assert!(matches!(engine.allocate(usize::MAX, 1), Err(GuestError::DataCapacity)));
++    assert_eq!(engine.next_data, before);
++    assert_eq!(engine.allocate(8, 1).unwrap(), before);
++}

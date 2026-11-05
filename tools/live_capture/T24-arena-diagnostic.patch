@@ -1,0 +1,18 @@
+--- a/crates/aex-guest-worker/src/x64/engine.rs
++++ b/crates/aex-guest-worker/src/x64/engine.rs
+@@ -2520,6 +2520,7 @@
+         }
+     }
+ 
++    #[track_caller]
+     pub fn allocate(&mut self, size: usize, alignment: u64) -> Result<u64, GuestError> {
+         let alignment = alignment.max(1).next_power_of_two();
+         let start = self
+@@ -2531,6 +2532,7 @@
+             .checked_add(u64::try_from(size).map_err(|_| GuestError::DataCapacity)?)
+             .ok_or(GuestError::DataCapacity)?;
+         if end > HANDLE_DATA_BASE {
++            eprintln!("T24_ARENA_EXHAUSTED caller={} size={} alignment={} next={:#x} start={:#x} end={:#x} limit={:#x} guest_rip={:?}", std::panic::Location::caller(), size, alignment, self.next_data, start, end, HANDLE_DATA_BASE, self.unicorn.reg_read(RegisterX86::RIP));
+             return Err(GuestError::DataCapacity);
+         }
+         self.next_data = end;

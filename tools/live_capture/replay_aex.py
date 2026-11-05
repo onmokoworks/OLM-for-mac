@@ -28,7 +28,7 @@ def sha_file(path):
 
 def compare(expected, actual, depth, width):
     if len(expected)!=len(actual): raise ValueError('output length differs')
-    unit=depth//8; count=0; pixel_count=0; last_pixel=-1; first=None; maximum=0
+    unit=depth//8; count=0; pixel_count=0; last_pixel=-1; first=None; maximum=0; max_ulp=0
     for i in range(0,len(expected),unit):
         a,b=expected[i:i+unit],actual[i:i+unit]
         if a==b:continue
@@ -39,10 +39,21 @@ def compare(expected, actual, depth, width):
         if depth==32:
             x,y=struct.unpack('<f',a)[0],struct.unpack('<f',b)[0]
             diff=abs(x-y) if math.isfinite(x) and math.isfinite(y) else None
+            # Monotonic binary32 keys; -0 and +0 remain distinct words (1 ULP).
+            # NaN/Inf differences have no finite ULP distance.
+            def ordered(word):
+                bits=int.from_bytes(word,'little')
+                return (~bits & 0xffffffff) if bits & 0x80000000 else bits | 0x80000000
+            ulp=abs(ordered(a)-ordered(b)) if diff is not None else None
+            if first is not None and 'aex_value' not in first:
+                first.update(aex_value=x if math.isfinite(x) else str(x),
+                             mac_value=y if math.isfinite(y) else str(y),ulp=ulp)
+            max_ulp=None if max_ulp is None or ulp is None else max(max_ulp,ulp)
         else:diff=abs(int.from_bytes(a,'little')-int.from_bytes(b,'little'))
         if diff is None: maximum=None
         elif maximum is not None:maximum=max(maximum,diff)
-    return {'status':'exact' if not count else 'mismatch','different_words':count,
+    return {**({'max_ulp':max_ulp} if depth==32 else {}),
+            'status':'exact' if not count else 'mismatch','different_words':count,
             'different_pixels':pixel_count,'max_diff':maximum,'first':first,
             'comparison':'active ARGB words, bit-exact; row padding excluded',
             'aex_sha256':hashlib.sha256(expected).hexdigest(),'mac_sha256':hashlib.sha256(actual).hexdigest()}
@@ -148,6 +159,7 @@ def replay(capture, scratch, worker, main, timeout=600):
     if result['rect']!=m['output_rect']:raise ValueError('negotiated output rectangle differs from capture')
     report={'status':'exact','different_words':0,'different_pixels':0,'max_diff':0,'first':None,
             'comparison':'active ARGB words, bit-exact; row padding excluded'}
+    if depth==32:report['max_ulp']=0
     mac_hash=hashlib.sha256()
     with op.open('rb') as oracle:
         for y,actual in enumerate(packed_rows(capture/'output.raw',o)):
@@ -157,6 +169,8 @@ def replay(capture, scratch, worker, main, timeout=600):
             if report['first'] is None and row['first'] is not None:
                 report['first']=dict(row['first'],y=y)
             report['max_diff']=None if report['max_diff'] is None or row['max_diff'] is None else max(report['max_diff'],row['max_diff'])
+            if depth==32:
+                report['max_ulp']=None if report['max_ulp'] is None or row['max_ulp'] is None else max(report['max_ulp'],row['max_ulp'])
         if oracle.read(1):raise ValueError('AEX output is longer than captured output')
     if report['different_words']:report['status']='mismatch'
     report.update(artifacts=str(scratch),aex_sha256=sha_file(aex),worker_sha256=sha_file(worker),capture_build=m['build'],
