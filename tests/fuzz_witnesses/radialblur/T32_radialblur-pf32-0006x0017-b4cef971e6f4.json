@@ -1,0 +1,193 @@
+{
+  "case": {
+    "depth": 32,
+    "geometry": [
+      6,
+      17
+    ],
+    "index": 269,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          3,
+          8.5
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 3
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": -189.809707641602
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10
+      }
+    ],
+    "profile": "T15 captured Tag1; packed little-endian ARGB",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 269,
+  "input_sha256": "2b5d2cfcd6b6bf7b4ab95e2c990ef7227512a983807b1e515e2d50aac30723fd",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "eNpjYGiw19poaP99oaq96en3dgyj/FH+KH+UP8of5VOBDwCNw3hx",
+  "plugin": "radialblur",
+  "provenance": {
+    "aex": {
+      "path": "D:\\02_Tools\\olm-win-checks-data\\aex\\OLM\\OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "size": 189952
+    },
+    "case_id": "radialblur-pf32-0006x0017-b4cef971e6f4",
+    "evidence": [
+      {
+        "path": "D:\\02_Tools\\olm-win-checks-data\\cases\\radialblur-pf32-0006x0017-b4cef971e6f4\\case.json",
+        "sha256": "85cfee5d1ca6e7516578fcb5b194d0544892421c03cf040415d859110321cb35",
+        "size": 11449
+      },
+      {
+        "path": "D:\\02_Tools\\olm-win-checks-data\\T15\\cases\\radialblur-pf32-0006x0017-b4cef971e6f4\\radialblur-pf32-0006x0017-b4cef971e6f4-captured\\case.json",
+        "sha256": "50180bcae17a5433b5cc58cc0288476cfee2ec7ccf0a5aa6861cdd415f025a70",
+        "size": 14327
+      },
+      {
+        "path": "D:\\02_Tools\\olm-win-checks-data\\T15\\cases\\radialblur-pf32-0006x0017-b4cef971e6f4\\ae\\radialblur-pf32-0006x0017-b4cef971e6f4\\settings.json",
+        "sha256": "e361c8045246e6bc845ec7d5dc382f1145bba0889648d9f44be6fd0fa4b04ad1",
+        "size": 17510
+      },
+      {
+        "path": "D:\\02_Tools\\olm-win-checks-data\\T15\\cases\\radialblur-pf32-0006x0017-b4cef971e6f4\\ae\\radialblur-pf32-0006x0017-b4cef971e6f4\\captures.json",
+        "sha256": "7802becac3ab6968ebc5a04622e8ebc5564f797a059bdeb43b2c98ce6d8eed86",
+        "size": 5181
+      },
+      {
+        "path": "D:\\02_Tools\\olm-win-checks-data\\T15\\cases\\radialblur-pf32-0006x0017-b4cef971e6f4\\ae\\radialblur-pf32-0006x0017-b4cef971e6f4\\captures\\capture-20c0e36e2c35194c8ad93b3fed48e80e.raw",
+        "sha256": "2b5d2cfcd6b6bf7b4ab95e2c990ef7227512a983807b1e515e2d50aac30723fd",
+        "size": 1632
+      },
+      {
+        "path": "D:\\02_Tools\\OLM-for-mac\\tests\\fuzz_corpus\\radialblur\\seed1_case000269_d7848a7c740d.json",
+        "sha256": "b4cef971e6f4a2a1c302d7b216faf39144bd9ff988124a18513523a744f4fe8e",
+        "size": 9833
+      }
+    ],
+    "geometry": "Full frame, origin 0, downsample 1:1, packed ARGB. AE row padding is not captured.",
+    "input_source": "Actual T15 pre-effect Tag1, not the earlier generated corpus pixels",
+    "issue": "https://github.com/onmokoworks/OLM-for-mac/issues/3",
+    "original_fault_offset": 408,
+    "original_handle_bytes": 408,
+    "original_read_rva": "0xa7b4",
+    "owner_decision": "2026-11-05: handle out-of-range read is zero; same policy as C45",
+    "parameters": "T15 AE readback values; Point/Angle rounded by the existing PF_Fixed harness",
+    "reference_limit": "T31 PF16 varied within AE (3 outputs/5); PF32 matched 5/5. Neither proves AE tail bytes are zero. Tag2 is historical evidence, not a new expected output.",
+    "t15_tag1_sha256": "2b5d2cfcd6b6bf7b4ab95e2c990ef7227512a983807b1e515e2d50aac30723fd",
+    "t15_tag2_sha256": "2b561257780adcff8efb67a27d259531b79bdfd0b99bc3952180686acdbd4987",
+    "ticket": "T32"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 0
+  },
+  "result": {
+    "scope": "Mac full render not run by T32; no AE exact claim",
+    "status": "not_run"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

@@ -211,7 +211,10 @@ static float SampleScalarAEXRepeat(
 	};
 	auto right_at = [&](A_long py) -> float {
 		// FUN_18000a6a0 adds one float after clamping the right tap.
-		return source_with_guard[(size_t)py * width + x1 + 1];
+		// 0xa76f/0xa7b4: preserve that linear neighbor while it is inside
+		// the handle; issue #3 defines a read past width*height as +0.0f.
+		return olm::radialblur::read_plane_or_zero(source_with_guard.data(),
+			(size_t)width * height, (size_t)py * width + x1 + 1);
 	};
 	float result = RadialF32Mul(w00, at(x0, y0));
 	result = RadialF32Add(result, RadialF32Mul(w10, right_at(y0)));

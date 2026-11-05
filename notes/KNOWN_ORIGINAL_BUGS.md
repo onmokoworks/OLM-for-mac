@@ -31,6 +31,64 @@ INFERENCE: Deterministic zero semantics remove allocator dependence in the
 port. Passing finite emulation campaigns does not establish equality to every
 native Windows heap layout or exhaustive parameter coverage.
 
+## RadialBlur handle末尾超え読取り（T32 / issue #3）
+
+**決定（owner、2026-11-05）:** C45と同じく、元の要求handle領域を超える
+読取りはMacではbyte `0` / float **正の `0.0f`** とする。領域内の読取り、
+補間の演算順序、行境界をまたぐ有効なlinear indexは変えない。
+
+| 元AEXのRVA | T15ケース | 要求bytes / fault offset | Macの対応先 |
+|---|---|---|---|
+| `0x8ada` (`cmp byte ptr [rcx+rsi],0`) | PF16 34×23 `d8a8d9a9777c` | 782 / 782 | `BuildRadialSizeFactorPlaneAEX` の行末マスク読取り |
+| `0xa7b4` (`mulss xmm4,[rsi+rax*4+4]`) | PF32 6×17 `b4cef971e6f4` | 408 / 408 | `SampleScalarAEXRepeat` の右下tap |
+
+**事実:** Windows側T30では各2/2回、上記RVAでhandle外readをguard pageで捕捉した。
+tailを00からFF/randomへ変えると、PF16は8値/9値（最大17781/5762）、
+PF32は各3値（最大1 ULP）が変わった。T31の実AE 2025 CPU/Software各5回では、
+PF16が3種類（10ペア中7不一致、最大76）、PF32は5回ともT15保存出力と全bit一致。
+AEのhandle外メモリー内容そのものは未測定であり、AEがゼロを保証するとは言えない。
+証拠は[issue #3とT31コメント](https://github.com/onmokoworks/OLM-for-mac/issues/3)、
+Windows検証リポジトリ `docs/T30_NATIVE_REPEATABILITY.md` / `docs/T31_AE_REPEAT.md`。
+参照AEXは189952 bytes、SHA-256
+`ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`。
+
+**実装事実:** 変更前Macも最後の行を除外／floatゼロ番兵を置いていた。
+T32は`read_plane_or_zero`で論理サイズを明示し、余白の値への依存を除く。
+同じrepeat samplerの右上tap `0xa76f` も右下tapと同じlinear read関数を使う。
+右端をclampし直したり、次行の有効な先頭セルをゼロにしたりしない。
+既存のallocation、左側noise tableのC45、admission、他の演算は変更しない。
+
+**証人:** `tests/fuzz_witnesses/radialblur/T32_*.json` の2件は既存
+`olm-fuzz-case/1`形式。T15の実Tag1のpacked little-endian ARGBを埋め込み、
+21パラメーターはAE読戻し値。元の生成画像や丸め前slider値ではない。
+原資料のpath/size/SHA-256、元corpus、参照AEX、T15 Tag2 hashを記録する。
+`result.status=not_run` はMac全体描画未実行を示す。Tag2は新しいexpected outputではない。
+通常のrelease gateは`tests/fuzz_corpus`以下の全JSONに保存済み描画結果との一致を要求する。
+未測定結果を捏造しないため、この2件は同じ入力形式の保留witnessとして別置きにし、
+Mac全体描画の結果とworker identityを記録してから完成済みcorpusへ移す。
+生成／照合スクリプトはWindows検証リポジトリの `tools/t32_witnesses.py`。
+
+**Windows検証:** Clang 22.1.8、SDK不要のproduction関数抽出テストと
+ASan/UBSanテストを実施。各fixtureにつき71,280スカラー比較、4,211マスク比較
+（4,210小形状の全alpha配置＋当該Tag1のalpha面）。変更前Macとのbit差0、
+最大0 ULP、first mismatchなし。NaN payload、signed zero、有効な次行tap、
+非ゼロ余白、余白なしの入力を検査する。これは関数単位の検証で、全描画ではない。
+
+```sh
+python tools/fuzz/verify_radial_tail_reads_T32.py --scratch /absolute/allowed/scratch/T32/plain
+python tools/fuzz/verify_radial_tail_reads_T32.py --sanitize --scratch /absolute/allowed/scratch/T32/sanitized
+```
+
+macOSのSDK EffectMain/fuzz、Universal build、RadialBlurの既存sanitizer/Size Noise
+回帰は未実行。リポジトリのfuzzはmacOS arm64、Xcode、AE SDKと保持workerを必要とする
+（`tools/fuzz/README.md`）。CI workflowもないため、これらの検証までPRを開いたままにする。
+証人を通常runnerで再描画する場合は明示した`--worker`が必要で、保存値が`not_run`のため
+`replay_matches_saved`は合格条件に使えない。新しい出力・比較結果を個別に評価する。
+
+**推論:** この契約はportのallocator依存を防ぐ。有限の旧Macとの一致を、
+任意のnative Windows heapやAE exactに拡張しない。PF16のAE内変動や元の末尾書込みを
+この読取り修正で解消したとは主張しない。
+
 ## RadialBlur Type 3 with zero Noise Variation and no layer (C46)
 
 The deterministic Mac contract initializes the **scatter span to positive
