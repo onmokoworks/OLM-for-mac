@@ -85,6 +85,8 @@ regressions. The orchestrator must resolve this metadata-contract change.
 
 The release gate is run separately with scratch/report paths under T21.
 Its logs include missing historical workers and untracked fixtures in this
-worktree. Do not infer a green gate or change its fixtures/identities to pass.
+worktree, plus lifecycle assertions expecting the former checkout counts.
+The run was stopped after 156 completed commands (32 passed, 124 failed);
+no final full-gate report was produced. Do not infer a green gate or change its fixtures/identities to pass.
 Full results and the exact command are in the uncommitted T21 report. Real-AE
 T18 rendering and Windows comparison remain the orchestrator's post-merge check.
