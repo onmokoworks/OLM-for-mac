@@ -1,6 +1,7 @@
 #include "../../core/olm_exact_math.h"
 #include "../../core/olm_world_safety.h"
 #include "OLMKiraKira.h"
+#include "../../tools/live_capture/Capture.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #if defined(__clang__)
 #pragma clang fp contract(off)
@@ -28,6 +29,39 @@
 #include <vector>
 
 namespace {
+
+static void KiraCaptureParam(int slot, PF_ParamDef *p) noexcept {
+ if (!olm_live::active) return;
+ switch(slot) {
+ case 1: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 2: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 3: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 4: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 5: olm_live::scalar(slot,"f",p->u.fs_d.value); break;
+ case 6: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 7: olm_live::scalar(slot,"f",p->u.fs_d.value); break;
+ case 8: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 9: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 10: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 11: olm_live::color(slot,p->u.cd.value); break;
+ case 13: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 16: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 17: olm_live::color(slot,p->u.cd.value); break;
+ case 19: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 22: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 23: olm_live::color(slot,p->u.cd.value); break;
+ case 25: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 28: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 29: olm_live::color(slot,p->u.cd.value); break;
+ case 31: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 34: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 35: olm_live::color(slot,p->u.cd.value); break;
+ case 37: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 40: olm_live::scalar(slot,"a",p->u.ad.value/65536.0); break;
+ default: break;
+ }
+}
+
 
 #include "KiraWorld.inc"
 
@@ -204,8 +238,35 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	return err;
 }
 
+static void KiraCaptureRamps(const OLMKiraKiraInfo &info) noexcept {
+ if(!olm_live::active)return;
+ try {
+ if(info.vertical_use_ramp) {
+ const auto &r=info.vertical_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
+ for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
+ v<<']';olm_live::active->value(14,"ramp",v.str()); }
+ if(info.horizontal_use_ramp) {
+ const auto &r=info.horizontal_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
+ for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
+ v<<']';olm_live::active->value(20,"ramp",v.str()); }
+ if(info.diagonal_use_ramp) {
+ const auto &r=info.diagonal_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
+ for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
+ v<<']';olm_live::active->value(26,"ramp",v.str()); }
+ if(info.diagonal2_use_ramp) {
+ const auto &r=info.diagonal2_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
+ for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
+ v<<']';olm_live::active->value(32,"ramp",v.str()); }
+ if(info.highlight_use_ramp) {
+ const auto &r=info.highlight_ramp; std::ostringstream v;v.imbue(std::locale::classic());v<<std::setprecision(17)<<'[';
+ for(unsigned i=0;i<r.count && i<16;++i) { if(i)v<<','; const auto &s=r.stops[i];v<<'['<<s.position<<','<<s.alpha<<','<<s.red<<','<<s.green<<','<<s.blue<<']'; }
+ v<<']';olm_live::active->value(38,"ramp",v.str()); }
+ }catch(...){olm_live::active->fail();}
+}
+
 static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+ olm_live::Capture capture("OLMKiraKira","classic",in_data);
 	KiraDiagnosticLog("classic enter");
 	PF_Err err = PF_Err_NONE;
 	if (!in_data || !in_data->pica_basicP || !out_data || !params || !output ||
@@ -216,6 +277,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		if (!params[index]) return OLM_KIRA_REFUSAL("classic-missing-param");
 	}
 	OLMKiraKiraInfo info;
+	if(olm_live::active) for(int i=1;i<OLMKIRAKIRA_NUM_PARAMS;++i) KiraCaptureParam(i,params[i]);
 	ERR(ReadRenderInfo(in_data, params, &info));
 	if (err) return err;
 	KiraDiagnosticInfo("classic", info);
@@ -246,7 +308,11 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		return OLM_KIRA_REFUSAL("tuple-layout-source");
 	}
 	const short bitdepth = BitDepthForFormat(format);
+ KiraCaptureRamps(info);
+ capture.world("input",input,bitdepth);
+ capture.world("output_initial",output,bitdepth);
 	ERR(RenderWorld(input, output, info, bitdepth));
+ capture.finish(output,bitdepth,err);
 	KiraDiagnosticLog("classic return error=%d", (int)err);
 	return err;
 }
@@ -386,6 +452,8 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 
 static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+ olm_live::Capture capture("OLMKiraKira","smart",in_data);
+ if (extra && extra->input) capture.request(extra->input->output_request.rect);
 	KiraDiagnosticLog("smart enter bitdepth=%d predata=%p",
 		(extra && extra->input) ? (int)extra->input->bitdepth : -1,
 		(extra && extra->input) ? extra->input->pre_render_data : nullptr);
@@ -505,9 +573,13 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			}
 		}
 		if (!err) {
+ KiraCaptureRamps(info);
+ capture.world("input",input_world,extra->input->bitdepth);
+ capture.world("output_initial",output_world,extra->input->bitdepth);
 			err = RenderWorld(input_world, output_world, info,
 				BitDepthForFormat(format),
 				(float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
+ capture.finish(output_world,extra->input->bitdepth,err);
 			KiraDiagnosticLog("smart render_world error=%d", (int)err);
 		}
 	} catch (PF_Err &thrown_err) {

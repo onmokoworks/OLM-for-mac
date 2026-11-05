@@ -1,5 +1,5 @@
 // Included by OLMKiraKira.cpp inside its anonymous namespace.
-static PF_Err CopyColorParam(PF_InData *in_data, PF_ParamDef *param, PF_PixelFloat *out)
+static PF_Err CopyColorParam(PF_InData *in_data, PF_ParamDef *param, PF_PixelFloat *out, int capture_slot)
 {
 	if (!in_data || !param || !out) return PF_Err_BAD_CALLBACK_PARAM;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
@@ -11,6 +11,7 @@ static PF_Err CopyColorParam(PF_InData *in_data, PF_ParamDef *param, PF_PixelFlo
 		in_data->effect_ref, param, &color);
 	if (err) return err;
 	*out = color;
+ olm_live::color(capture_slot,color,"color_float");
 	return PF_Err_NONE;
 }
 
@@ -77,11 +78,11 @@ static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraK
 	info->strength_multiplier = ReadRecoveredPercent(params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value, *info);
 	info->glow_opacity = ReadRecoveredPercent(params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value, *info);
 	info->source_opacity = ReadRecoveredPercent(params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value, *info);
-	PF_Err err = CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
-	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color);
-	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color);
-	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HIGHLIGHT_COLOR], &info->highlight_color);
-	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL2_COLOR], &info->diagonal2_color);
+	PF_Err err = CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color, OLMKIRAKIRA_VERTICAL_COLOR);
+	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color, OLMKIRAKIRA_HORIZONTAL_COLOR);
+	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color, OLMKIRAKIRA_DIAGONAL_COLOR);
+	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_HIGHLIGHT_COLOR], &info->highlight_color, OLMKIRAKIRA_HIGHLIGHT_COLOR);
+	if (!err) err = CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL2_COLOR], &info->diagonal2_color, OLMKIRAKIRA_DIAGONAL2_COLOR);
 	if (err) return err;
 	info->vertical_use_ramp = params[OLMKIRAKIRA_VERTICAL_USE_RAMP]->u.bd.value;
 	info->horizontal_use_ramp = params[OLMKIRAKIRA_HORIZONTAL_USE_RAMP]->u.bd.value;
@@ -122,6 +123,7 @@ static PF_Err CheckoutDecodeSmartParam(
 
 	PF_Err decode_err = PF_Err_NONE;
 	try {
+		KiraCaptureParam(index,&param);
 		decode_err = decode(&param);
 	} catch (PF_Err &thrown_err) {
 		decode_err = thrown_err;
@@ -181,7 +183,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_VERTICAL_LENGTH, info->vertical_length = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_VERTICAL_COLOR,
-		return CopyColorParam(in_data, param, &info->vertical_color));
+ return CopyColorParam(in_data, param, &info->vertical_color, OLMKIRAKIRA_VERTICAL_COLOR));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_VERTICAL_USE_RAMP, info->vertical_use_ramp = param->u.bd.value);
 	if (info->vertical_use_ramp) {
 		CHECKOUT_SMART_DECODE(OLMKIRAKIRA_VERTICAL_RAMP,
@@ -190,7 +192,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_HORIZONTAL_LENGTH, info->horizontal_length = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_HORIZONTAL_COLOR,
-		return CopyColorParam(in_data, param, &info->horizontal_color));
+ return CopyColorParam(in_data, param, &info->horizontal_color, OLMKIRAKIRA_HORIZONTAL_COLOR));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_HORIZONTAL_USE_RAMP, info->horizontal_use_ramp = param->u.bd.value);
 	if (info->horizontal_use_ramp) {
 		CHECKOUT_SMART_DECODE(OLMKIRAKIRA_HORIZONTAL_RAMP,
@@ -199,7 +201,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_DIAGONAL_LENGTH, info->diagonal_length = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_DIAGONAL_COLOR,
-		return CopyColorParam(in_data, param, &info->diagonal_color));
+ return CopyColorParam(in_data, param, &info->diagonal_color, OLMKIRAKIRA_DIAGONAL_COLOR));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_DIAGONAL_USE_RAMP, info->diagonal_use_ramp = param->u.bd.value);
 	if (info->diagonal_use_ramp) {
 		CHECKOUT_SMART_DECODE(OLMKIRAKIRA_DIAGONAL_RAMP,
@@ -208,7 +210,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_DIAGONAL2_LENGTH, info->diagonal2_length = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_DIAGONAL2_COLOR,
-		return CopyColorParam(in_data, param, &info->diagonal2_color));
+ return CopyColorParam(in_data, param, &info->diagonal2_color, OLMKIRAKIRA_DIAGONAL2_COLOR));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_DIAGONAL2_USE_RAMP, info->diagonal2_use_ramp = param->u.bd.value);
 	if (info->diagonal2_use_ramp) {
 		CHECKOUT_SMART_DECODE(OLMKIRAKIRA_DIAGONAL2_RAMP,
@@ -217,7 +219,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_HIGHLIGHT_RADIUS, info->highlight_radius = param->u.sd.value);
 	CHECKOUT_SMART_DECODE(OLMKIRAKIRA_HIGHLIGHT_COLOR,
-		return CopyColorParam(in_data, param, &info->highlight_color));
+ return CopyColorParam(in_data, param, &info->highlight_color, OLMKIRAKIRA_HIGHLIGHT_COLOR));
 	CHECKOUT_SMART_VALUE(OLMKIRAKIRA_HIGHLIGHT_USE_RAMP, info->highlight_use_ramp = param->u.bd.value);
 	if (info->highlight_use_ramp) {
 		CHECKOUT_SMART_DECODE(OLMKIRAKIRA_HIGHLIGHT_RAMP,

@@ -1,5 +1,6 @@
 #include "../../core/olm_exact_math.h"
 #include "OLMDistanceGradation.h"
+#include "../../tools/live_capture/Capture.h"
 #include <AEFX_SuiteHelper.h>
 #include "../../core/olmdistancegradation_fieldgen.h"
 #include "../../core/olm_world_safety.h"
@@ -14,6 +15,26 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <cstdio>
+
+
+static void DGCaptureParam(int slot, PF_ParamDef *p) noexcept {
+ if (!olm_live::active) return;
+ switch(slot) {
+ case 1: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 2: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 3: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 4: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ case 5: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 6: olm_live::scalar(slot,"b",p->u.bd.value); break;
+ case 7: olm_live::color(slot,p->u.cd.value); break;
+ case 8: olm_live::color(slot,p->u.cd.value); break;
+ case 9: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 10: olm_live::scalar(slot,"f",p->u.fs_d.value); break;
+ case 11: olm_live::scalar(slot,"u",p->u.pd.value); break;
+ case 12: olm_live::scalar(slot,"i",p->u.sd.value); break;
+ default: break;
+ }
+}
 
 // Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
 // file, each failing admission guard appends "function:tag". The file is only
@@ -261,6 +282,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], DGParams *p)
 {
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
+ if (olm_live::active) for(int i=1;i<DG_NUM_PARAMS;++i) DGCaptureParam(i,params[i]);
 
 	p->invert            = params[DG_INVERT]->u.bd.value != 0;
 	p->in_out            = params[DG_IN_OUT]->u.pd.value;
@@ -281,6 +303,8 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], DGParams *p)
 		params[DG_BG_COLOR], &p->bg_color));
 	if (err) return err;
 
+ olm_live::color(DG_GRAD_COLOR,p->grad_color,"color_float");
+ olm_live::color(DG_BG_COLOR,p->bg_color,"color_float");
 	p->ds_x = (float)in_data->downsample_x.num / (float)in_data->downsample_x.den;
 	p->ds_y = (float)in_data->downsample_y.num / (float)in_data->downsample_y.den;
 	return err;
@@ -456,6 +480,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+ olm_live::Capture capture("OLMDistanceGradation","classic",in_data);
 	PF_Err err = PF_Err_NONE;
 	if (!in_data || !out_data || !params || !output ||
 	    in_data->output_origin_x != 0 || in_data->output_origin_y != 0 ||
@@ -475,16 +500,21 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (err) return err;
 	if (input_format != output_format) return OLM_DG_REFUSAL("render-format-mismatch");
 
+	const int capture_depth = input_format == PF_PixelFormat_ARGB32 ? 8 : input_format == PF_PixelFormat_ARGB64 ? 16 : 32;
+ capture.world("input",input,capture_depth);
+ capture.world("output_initial",output,capture_depth);
 	switch (input_format) {
 	case PF_PixelFormat_ARGB32:
-		return RenderBits<PF_Pixel8>(in_data, params, input, output);
+		err = RenderBits<PF_Pixel8>(in_data, params, input, output); break;
 	case PF_PixelFormat_ARGB64:
-		return RenderBits<PF_Pixel16>(in_data, params, input, output);
+		err = RenderBits<PF_Pixel16>(in_data, params, input, output); break;
 	case PF_PixelFormat_ARGB128:
-		return RenderBits<PF_PixelFloat>(in_data, params, input, output);
+		err = RenderBits<PF_PixelFloat>(in_data, params, input, output); break;
 	default:
 		return OLM_DG_REFUSAL("render-format-unsupported");
 	}
+ capture.finish(output,capture_depth,err);
+ return err;
 }
 
 // ============================================================================
@@ -606,6 +636,8 @@ RenderSmartPF8PreseededField(const PF_EffectWorld *input_world,
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+ olm_live::Capture capture("OLMDistanceGradation","smart",in_data);
+ if (extra && extra->input) capture.request(extra->input->output_request.rect);
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 	    !extra->cb->checkout_layer_pixels || !extra->cb->checkin_layer_pixels ||
 	    !extra->cb->checkout_output ||
@@ -663,6 +695,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 
 
 		if (!err) {
+ capture.world("input",input_world,depth);
+ capture.world("output_initial",output_world,depth);
 			const size_t pixel_bytes = depth == 8 ? sizeof(PF_Pixel8) :
 				(depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
 			using namespace olm::world_safety;
@@ -739,6 +773,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			std::memcpy((uint8_t*)output_world->data + (size_t)y * output_world->rowbytes,
 				staging.output_data() + (size_t)y * staging.row_bytes(), active);
 	}
+ capture.finish(output_world,extra->input->bitdepth,err);
 	return err;
 }
 
