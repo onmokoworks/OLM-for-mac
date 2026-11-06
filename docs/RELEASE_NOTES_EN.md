@@ -1,45 +1,48 @@
 # OLM for Mac release notes
 
-October 2026 · Beta
+November 2026 · Beta (v0.2.0-beta.3)
 
-[日本語](RELEASE_NOTES_JA.md) (Japanese is the primary version; this is a translation)
+[日本語](RELEASE_NOTES_JA.md)
 
-An unofficial Mac port of the Windows After Effects plugins "OLM Tools". The plugins are Universal binaries that run on both Apple Silicon and Intel, and require macOS 11 or later.
+This is an unofficial Mac port of the Windows After Effects plugin suite "OLM Tools". It is a Universal binary that runs on both Apple Silicon and Intel, supporting macOS 11 and later.
 
-## 2026-11-05 update: upgrading KiraKira (T16)
+## Bundled plugins
 
-T16 changed Glow Rotation from a numeric slider to an angle so that projects created on Windows load correctly. This change is retained to prioritize Windows compatibility. Opening a project saved with a Mac build before the fix (including the 2026-10-26 build) in a build containing the fix resets Glow Rotation to 0 and discards its keyframes. Before updating, save a separate copy of the original project and record the value and keyframes, then set them again after updating. See [Known limitations](../KNOWN_LIMITATIONS.en.md#per-plugin) for details.
+Includes 10 plugins: ColorKeep, OLMBlur, OLMColorKey, OLMDirectionalBlur, OLMDistanceGradation, OLMKiraKira, OLMRadialBlur, OLMSmoother, OLMSmoother2, and OLMToonDilate.
 
-## Included plugins
+OLMSmoother supports 8 and 16 bpc, while the other 9 plugins support 8, 16, and 32 bpc.
 
-Ten plugins: ColorKeep, OLMBlur, OLMColorKey, OLMDirectionalBlur, OLMDistanceGradation, OLMKiraKira, OLMRadialBlur, OLMSmoother, OLMSmoother2 and OLMToonDilate.
+## Changes since v0.2.0-beta.2
 
-OLMSmoother supports 8/16 bpc. The other nine support 8/16/32 bpc.
+We verified opening and exporting projects created on Windows on Mac, and fixed two issues that were found.
 
-## Changes since v0.2.0-beta.1
+- OLMKiraKira: Opening projects created on Windows caused the Glow Rotation value to become 0. This was because the Mac version had declared this parameter as a numerical slider instead of an angle. It has been corrected to an angle so that Windows values can be loaded as-is.
+- OLMDirectionalBlur: When a layer using the same source footage as the layer with the effect applied was specified as the Noise Layer, export stopped with an error. The original plugin only uses Noise Layer when Noise Type is set to Type 3. The Mac version loading behavior was changed to match, enabling export.
+- OLMRadialBlur: Clarified the handling of reading beyond image boundaries to match analysis of the original plugin. There is no change to output.
 
-Output is unchanged. We removed old code paths that only served specific inputs, cutting about 5,000 lines.
+### Notes on updating (OLMKiraKira)
 
-## Changes since the August beta
-
-- Fixed black frames at lower preview resolutions and when only part of the image is drawn.
-- OLMKiraKira's gradient editor and the hiding or disabling of controls based on settings now behave the same as in the original plugin.
-- Heavy settings are faster. With heavy OLMDirectionalBlur settings, a 1080p frame that took about 18 seconds now takes about 1.4 seconds.
+Due to the fix above, the parameter type for Glow Rotation has changed. Consequently, opening projects saved in Mac version beta.2 or earlier in beta.3 will reset the Glow Rotation value to 0 and lose its keyframes. This change was made to prioritize compatibility with projects created on Windows. For projects created in beta.2 or earlier, please save a separate copy to record the Glow Rotation values and keyframes before updating, and reapply them after updating.
 
 ## Verification results
 
-We compare the output with the original Windows plugin bit for bit. See [How we verify](BETA_SUPPORT.en.md) for details.
+Output was compared bit-by-bit against the original Windows plugins. For details on the comparison method, see [Verification methods and results](BETA_SUPPORT.en.md).
 
-- Of 2,000 cases compared with the original plugin, all 1,854 cases that the original could render matched.
-- The Apple Silicon and Intel builds produced no differences. The Intel build was run under Rosetta, not on a real Intel Mac.
-- In After Effects 2026, all 10 plugins rendered at Full to 1/4 resolution.
+- When test projects created on Windows (10 plugins, 8 / 16 / 32 bpc) were opened in After Effects 2026 on Mac, all parameter values matched Windows.
+- During actual export in After Effects, images received by the plugin from AE and images returned by the plugin were saved, and those same images were processed through the original Windows plugins for comparison. Across all 18 cases in 6 plugins where discrepancies had occurred, there was not a single bit of difference.
+- When comparing exported files against Windows, color values can differ by up to 1 in 8 bpc. Because the same difference occurs even with all OLM effects disabled, this is a discrepancy in AE itself, not OLM. 16 bpc and 32 bpc matched.
+- Out of approximately 3,000 archived test cases, only 2 cases failed to match the original plugin under the rendering pipeline used by After Effects 2026 (SmartFX). Both were due to a bug in the original plugin where it writes to uninitialized memory.
 
 ## Limitations and installation
 
-GPU rendering is not supported. See [Known limitations](../KNOWN_LIMITATIONS.en.md) for other limitations.
+GPU rendering is not supported.
 
-See the [installation guide](INSTALL_EN.md) for the steps. The plugins have no Apple Developer ID signature or notarization, so the guide also explains what to do about Gatekeeper.
+Setting Noise Type to Type 3 in OLMRadialBlur results in an error without rendering on the Mac version. This is because on the original Windows version, this setting crashes After Effects entirely. Type 3 in OLMDirectionalBlur can render, but because the original Windows version produces different results on every export even under identical conditions, the rendering results are not guaranteed to match Windows.
+
+Other limitations are documented in [known limitations](../KNOWN_LIMITATIONS.en.md).
+
+For installation instructions, see the [installation guide](INSTALL_EN.md). Because this build is not signed with an Apple Developer ID or notarized, instructions for handling Gatekeeper are also included there.
 
 ## License
 
-This port inherits the license of the original OLM plugins (Apache License 2.0 by OLM Digital). The full text is in [LICENSE](../LICENSE). This is an unofficial port, not affiliated with OLM Digital, and has not been permitted or endorsed by them.
+Inherits the license of the original OLM plugins (Apache License 2.0 by OLM Digital). The full text is available in [LICENSE](../LICENSE). This is an unofficial port and is not affiliated with, authorized, or approved by OLM Digital.

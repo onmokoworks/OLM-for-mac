@@ -1,45 +1,48 @@
 # OLM for Mac リリースノート
 
-2026年10月版・Beta
+2026年11月版・Beta（v0.2.0-beta.3）
 
 [English](RELEASE_NOTES_EN.md)
 
-Windows版のAfter Effectsプラグイン「OLM Tools」をMacに移植した非公式版です。Apple SiliconとIntelの両方で動くUniversalバイナリで、macOS 11以降に対応しています。
-
-## 2026-11-05追記：KiraKiraの更新時の注意（T16）
-
-T16 では、Windows で作ったプロジェクトを正しく読み込むため、Glow Rotation を数値スライダーから角度に変更しました。Windows との互換性を優先するため、この変更を維持します。修正前の Mac ビルド（2026-10-26 ビルドを含む）で保存したプロジェクトを修正を含むビルドで開くと、Glow Rotation の値が 0 に戻り、そのキーフレームが失われます。更新前に元のプロジェクトを別名で保存し、値とキーフレームを控えて、更新後に設定し直してください。詳しくは[既知の制限](../KNOWN_LIMITATIONS.md#プラグイン別)を見てください。
+Windows版のAfter Effectsプラグイン「OLM Tools」をMacに移植した非公式版です。Apple SiliconとIntelの両方で動作するUniversalバイナリで、macOS 11以降に対応しています。
 
 ## 同梱プラグイン
 
 ColorKeep、OLMBlur、OLMColorKey、OLMDirectionalBlur、OLMDistanceGradation、OLMKiraKira、OLMRadialBlur、OLMSmoother、OLMSmoother2、OLMToonDilateの10本です。
 
-OLMSmootherは8／16 bpc、ほかの9本は8／16／32 bpcに対応しています。
+OLMSmootherは8／16 bpc、その他の9本は8／16／32 bpcに対応しています。
 
-## v0.2.0-beta.1 からの変更
+## v0.2.0-beta.2 からの変更
 
-出力は変わっていません。特定の入力だけに合わせた古い処理を消して、コードを約5,000行減らしました。
+Windowsで作成したプロジェクトをMacで開いて書き出す確認を行い、見つかった2つの問題を修正しました。
 
-## 8月のBeta版からの変更
+- OLMKiraKira：Windowsで作成したプロジェクトを開くと、Glow Rotationの値が0になっていました。Mac版がこの項目を角度ではなく数値スライダーとして宣言していたためです。角度に修正し、Windowsの値をそのまま読み込めるようにしました。
+- OLMDirectionalBlur：Noise Layerに、エフェクトを適用したレイヤーと同じ素材のレイヤーを指定すると、書き出しがエラーで停止していました。元のプラグインはNoise TypeがType 3のときしかNoise Layerを使用しません。Mac版も同様の読み込み処理に変更し、書き出せるようにしました。
+- OLMRadialBlur：画像の端を越えて読み込む箇所の扱いを、元のプラグインの解析結果に合わせて明示しました。出力に変更はありません。
 
-- プレビュー解像度を下げたときや、画像の一部だけを描くときに、黒いフレームになる問題を直しました。
-- OLMKiraKiraのグラデーション編集と、設定に応じて項目を隠したり無効にしたりする動きを、元のプラグインと同じにしました。
-- 重い設定の処理を速くしました。OLMDirectionalBlurの重い設定では、1080pで1フレーム約18秒かかっていたのが約1.4秒になりました。
+### 更新するときの注意（OLMKiraKira）
+
+上記の修正により、Glow Rotationの項目の種類が変更されました。そのため、beta.2以前のMac版で保存したプロジェクトをbeta.3で開くと、Glow Rotationの値が0に戻り、そのキーフレームが失われます。Windowsで作成したプロジェクトとの互換性を優先したための変更です。beta.2以前で作成したプロジェクトは、更新前に別名で保存してGlow Rotationの値とキーフレームを控えておき、更新後に再設定してください。
 
 ## 検証結果
 
-元のWindows版プラグインと出力を1ビット単位で比べています。比べ方の詳細は[検証の方法と結果](BETA_SUPPORT.md)を見てください。
+元のWindows版プラグインと出力を1ビット単位で比較しています。比較方法の詳細は[検証の方法と結果](BETA_SUPPORT.md)をご覧ください。
 
-- 元のプラグインと比べた2,000件のうち、元のプラグインが描画できた1,854件はすべて一致しました。
-- Apple Silicon用とIntel用で、出力の差は0件でした。Intel用はRosettaで動かしたもので、Intel Macの実機では確かめていません。
-- After Effects 2026で、10本ともフル〜1/4解像度で描画できることを確かめました。
+- Windowsで作成したテスト用プロジェクト（10本、8／16／32 bpc）をMacのAfter Effects 2026で開くと、すべての項目の値がWindowsと一致しました。
+- 実際のAfter Effectsで書き出す際に、プラグインがAEから受け取った画像と返した画像を保存し、同じ画像を元のWindows版プラグインに通して比較しました。ずれが生じていた6本の18件すべてで、1ビットの違いもありませんでした。
+- 書き出したファイルをWindowsと比較すると、8 bpcでは色の値が最大1ずれることがあります。OLMのエフェクトをすべてオフにしても同様のずれが生じるため、OLMではなくAE側の差異です。16 bpcと32 bpcは一致しました。
+- 保存している約3,000件のテストケースのうち、After Effects 2026が使用する描画方式（SmartFX）で元のプラグインと一致しなかったのは2件のみでした。どちらも、元のプラグインが初期化されていないメモリに書き込みを行う不具合によるものです。
 
 ## 制限とインストール
 
-GPUレンダーには対応していません。ほかの制限は[既知の制限](../KNOWN_LIMITATIONS.md)にまとめています。
+GPUレンダーには対応していません。
 
-インストールの手順は[インストールガイド](INSTALL_JA.md)を見てください。AppleのDeveloper ID署名と公証を受けていないので、Gatekeeperへの対処もそこに書いています。
+OLMRadialBlurのNoise TypeをType 3にすると、Mac版は描画を行わずエラーになります。元のWindows版もこの設定ではAfter Effectsごと強制終了するためです。OLMDirectionalBlurのType 3は描画できますが、元のWindows版は同じ条件でも書き出すたびに結果が変わるため、Windowsと同一の描画結果になるとは限りません。
+
+その他の制限は[既知の制限](../KNOWN_LIMITATIONS.md)にまとめています。
+
+インストールの手順は[インストールガイド](INSTALL_JA.md)をご覧ください。AppleのDeveloper ID署名と公証を受けていないため、Gatekeeperへの対処方法もそちらに記載しています。
 
 ## ライセンス
 
-元のOLMプラグインのライセンス（OLM DigitalによるApache License 2.0）を継承しています。本文は[LICENSE](../LICENSE)にあります。これは非公式の移植で、OLM Digitalとは関係なく、許可や承認は受けていません。
+元のOLMプラグインのライセンス（OLM DigitalによるApache License 2.0）を継承しています。本文は[LICENSE](../LICENSE)にあります。これは非公式の移植であり、OLM Digitalとは関係がなく、許可や承認は受けていません。
