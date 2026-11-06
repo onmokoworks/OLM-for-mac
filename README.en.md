@@ -2,10 +2,10 @@
 
 [日本語](README.md) (Japanese is the primary version; this is a translation)
 
-An unofficial port that lets you use the "OLM Tools" After Effects plugins, originally for Windows, on a Mac. It runs on both Apple Silicon and Intel Macs.
+This is an unofficial port that allows the "OLM Tools" After Effects plugins, originally for Windows, to be used on Mac. It runs on both Apple Silicon and Intel Macs.
 
 > [!WARNING]
-> These plugins are a beta. Before using them for important work, always back up your project.
+> These plugins are in beta. Before using them for important work, please be sure to back up your project.
 
 ## Plugins
 
@@ -24,30 +24,30 @@ An unofficial port that lets you use the "OLM Tools" After Effects plugins, orig
 
 ## Compatibility with the Windows version
 
-We develop this port by analyzing the original plugins, aiming for output that is bit-for-bit identical to the Windows version for the same footage and settings.
+We are developing this port by analyzing the original plugins, aiming for output that is bit-for-bit identical to the Windows version for the same footage and settings.
 
-We compare the original plugin, running in an emulator, with the Mac version across thousands of random combinations of footage, settings, sizes and preview resolutions. In every case the Windows version can render, the outputs match. See [How we verify](docs/BETA_SUPPORT.en.md) for details and [Known limitations](KNOWN_LIMITATIONS.en.md) for what is known not to work.
+We compare the results of the original plugin running in an emulator with those of the Mac version across thousands of random combinations of footage, settings, sizes and preview resolutions. In every case the Windows version can render, the outputs match. Please see [How we verify](docs/BETA_SUPPORT.en.md) for details, and [Known limitations](KNOWN_LIMITATIONS.en.md) for known limitations.
 
 ## Requirements
 
-- macOS 11 or later
-- Tested with After Effects 2026 (26.3). Other versions are untested
-- CPU rendering only (GPU rendering is not supported)
+- macOS 11 or later is supported.
+- Tested with After Effects 2026 (26.3). Other versions are untested.
+- Only CPU rendering is supported (GPU rendering is not supported).
 
 ## Installation
 
-Quit After Effects, then copy the 10 `.plugin` files from the release ZIP into:
+Please quit After Effects, then copy the 10 `.plugin` files from the release ZIP into the following folder:
 
 ```text
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 ```
 
 > [!NOTE]
-> The plugins are not signed or notarized by Apple, so macOS Gatekeeper may show a warning dialog and block them from loading. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. See the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
+> The plugins are not signed or notarized by Apple, so macOS Gatekeeper may show a warning dialog and block them from loading. Signing requires a paid Apple developer membership, so there are no plans for it at the moment. Please see the [installation guide](docs/INSTALL_EN.md) for what to do if macOS blocks them, and for detailed steps.
 
 ## Reporting problems
 
-Please report problems via [Issues](https://github.com/onmokoworks/OLM-for-mac/issues). This information helps:
+Please report problems via [Issues](https://github.com/onmokoworks/OLM-for-mac/issues). It would be helpful if you could provide the following information:
 
 - macOS and After Effects versions, and whether your Mac is Apple Silicon or Intel
 - Plugin name, bit depth, comp size and preview resolution
