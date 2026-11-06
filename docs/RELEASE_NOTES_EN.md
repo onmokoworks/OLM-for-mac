@@ -1,6 +1,6 @@
 # OLM for Mac release notes
 
-November 2026 · Beta (v0.2.0-beta.3)
+November 2026 (v1.0.0)
 
 [日本語](RELEASE_NOTES_JA.md)
 
@@ -22,7 +22,7 @@ We verified opening and exporting projects created on Windows on Mac, and fixed 
 
 ### Notes on updating (OLMKiraKira)
 
-Due to the fix above, the parameter type for Glow Rotation has changed. Consequently, opening projects saved in Mac version beta.2 or earlier in beta.3 will reset the Glow Rotation value to 0 and lose its keyframes. This change was made to prioritize compatibility with projects created on Windows. For projects created in beta.2 or earlier, please save a separate copy to record the Glow Rotation values and keyframes before updating, and reapply them after updating.
+Due to the fix above, the parameter type for Glow Rotation has changed. Consequently, opening projects saved in Mac version beta.2 or earlier in v1.0.0 will reset the Glow Rotation value to 0 and lose its keyframes. This change was made to prioritize compatibility with projects created on Windows. For projects created in beta.2 or earlier, please save a separate copy to record the Glow Rotation values and keyframes before updating, and reapply them after updating.
 
 ## Verification results
 

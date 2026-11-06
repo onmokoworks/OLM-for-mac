@@ -1,6 +1,6 @@
 # OLM for Mac
 
-An unofficial Mac port of the Windows After Effects plugins "OLM Tools" (Beta). Back up your projects before using it for important work.
+An unofficial Mac port of the Windows After Effects plugins "OLM Tools". Back up your projects before using it for important work.
 
 日本語: README.md
 
@@ -32,9 +32,9 @@ xattr -dr com.apple.quarantine ~/Library/Application\ Support/Adobe/Common/Plug-
 
 ## More information
 
-- Installation guide: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/docs/INSTALL_EN.md
-- Known limitations: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/KNOWN_LIMITATIONS.en.md
-- How we verify: https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/docs/BETA_SUPPORT.en.md
+- Installation guide: https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/docs/INSTALL_EN.md
+- Known limitations: https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/KNOWN_LIMITATIONS.en.md
+- How we verify: https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/docs/BETA_SUPPORT.en.md
 - Bug reports: https://github.com/onmokoworks/OLM-for-mac/issues
 
 ## License

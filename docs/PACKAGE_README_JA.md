@@ -1,6 +1,6 @@
 # OLM for Mac
 
-Windows版のAfter Effectsプラグイン「OLM Tools」をMacで使えるようにした、非公式の移植版です（Beta版）。大切な作業に使う前に、必ずプロジェクトのバックアップを取ってください。
+Windows版のAfter Effectsプラグイン「OLM Tools」をMacで使えるようにした、非公式の移植版です。大切な作業に使う前に、必ずプロジェクトのバックアップを取ってください。
 
 English: README.en.md
 
@@ -32,9 +32,9 @@ xattr -dr com.apple.quarantine ~/Library/Application\ Support/Adobe/Common/Plug-
 
 ## くわしい情報
 
-- インストールガイド：https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/docs/INSTALL_JA.md
-- 既知の制限：https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/KNOWN_LIMITATIONS.md
-- 検証の方法と結果：https://github.com/onmokoworks/OLM-for-mac/blob/v0.2.0-beta.3/docs/BETA_SUPPORT.md
+- インストールガイド：https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/docs/INSTALL_JA.md
+- 既知の制限：https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/KNOWN_LIMITATIONS.md
+- 検証の方法と結果：https://github.com/onmokoworks/OLM-for-mac/blob/v1.0.0/docs/BETA_SUPPORT.md
 - 不具合の報告：https://github.com/onmokoworks/OLM-for-mac/issues
 
 ## ライセンス
