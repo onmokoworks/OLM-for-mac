@@ -20,6 +20,8 @@ GPU rendering is not supported.
 
 Rendered files may not match Windows. Even when the plugin computes the same result, AE color management and footage import and export can behave differently on Windows and macOS.
 
+Measured (2026-11): 8 bpc renders can differ from Windows by at most 1 in a color value. The same difference appears with every OLM effect turned off, so it comes from AE, not OLM. 16 bpc and 32 bpc matched. The Mac output was bit-identical to the original Windows version given the same inputs.
+
 ### Extremely large sizes or heavy settings
 
 Extremely large sizes or very heavy settings can fail, because memory and workload limits apply. Sizes up to 3840×2160 have been tested.
@@ -34,6 +36,7 @@ With some settings, the Windows version itself fails, or reads memory outside it
 
 ## Per plugin
 
+- OLMKiraKira: opening a project saved with a Mac build before the T16 fix (including the 2026-10-26 build) in a build containing the fix resets Glow Rotation to 0 and discards its keyframes. T16 changed this control from a numeric slider to an angle so that projects created on Windows load correctly. This change is retained to prioritize Windows compatibility. Before updating, save a separate copy of the original project and record the Glow Rotation value and keyframes, then set them again after updating.
 - OLMSmoother: no 32 bpc support (the same as the Windows version). In a 32 bpc comp, AE converts the bit depth for it.
 - OLMRadialBlur: rotation mode at high quality (for example Quality 50) can take over a minute per 1080p frame, because it does the same amount of work as the Windows version.
 - OLMDirectionalBlur: when 32 bpc footage has pixels with negative alpha and Back Alpha Fade is used, the result does not match the Windows version. In this case the Windows version reads memory whose contents are undefined. Ordinary footage never has negative alpha.

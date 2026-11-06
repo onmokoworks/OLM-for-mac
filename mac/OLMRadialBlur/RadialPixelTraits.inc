@@ -178,11 +178,13 @@ static bool BuildRadialSizeFactorPlaneAEX(
 		component_areas->push_back(area);
 		maximum_area = std::max(maximum_area, area);
 	}
-	// AEX 8ad4 reads x == width before checking the row boundary.  An
+	// AEX 8ada reads x == width before checking the row boundary.  An
 	// occupied next-row first cell extends this run by one, without adding a
-	// horizontal connection across rows.  The source mask has a zero guard.
-	for (size_t edge = (size_t)w - 1; edge + 1 < count; edge += (size_t)w) {
-		if (!mask[edge] || !mask[edge + 1]) continue;
+	// horizontal connection across rows. Issue #3 defines the final read as
+	// zero; no adjacent allocation or padded sentinel belongs to this mask.
+	for (size_t edge = (size_t)w - 1; edge < count; edge += (size_t)w) {
+		if (!mask[edge] || !olm::radialblur::read_plane_or_zero(
+			mask.data(), count, edge + 1)) continue;
 		A_long &area = areas[labels[edge]];
 		if (area == std::numeric_limits<A_long>::max()) return false;
 		++area;

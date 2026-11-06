@@ -6,6 +6,10 @@
 
 Windows版のAfter Effectsプラグイン「OLM Tools」をMacに移植した非公式版です。Apple SiliconとIntelの両方で動くUniversalバイナリで、macOS 11以降に対応しています。
 
+## 2026-11-05追記：KiraKiraの更新時の注意（T16）
+
+T16 では、Windows で作ったプロジェクトを正しく読み込むため、Glow Rotation を数値スライダーから角度に変更しました。Windows との互換性を優先するため、この変更を維持します。修正前の Mac ビルド（2026-10-26 ビルドを含む）で保存したプロジェクトを修正を含むビルドで開くと、Glow Rotation の値が 0 に戻り、そのキーフレームが失われます。更新前に元のプロジェクトを別名で保存し、値とキーフレームを控えて、更新後に設定し直してください。詳しくは[既知の制限](../KNOWN_LIMITATIONS.md#プラグイン別)を見てください。
+
 ## 同梱プラグイン
 
 ColorKeep、OLMBlur、OLMColorKey、OLMDirectionalBlur、OLMDistanceGradation、OLMKiraKira、OLMRadialBlur、OLMSmoother、OLMSmoother2、OLMToonDilateの10本です。
