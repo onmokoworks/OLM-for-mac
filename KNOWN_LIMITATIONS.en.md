@@ -20,6 +20,8 @@ GPU rendering is not supported.
 
 Rendered files may not match Windows. Even when the plugin computes the same result, AE color management and footage import and export can behave differently on Windows and macOS.
 
+Measured (2026-11): 8 bpc renders can differ from Windows by at most 1 in a color value. The same difference appears with every OLM effect turned off, so it comes from AE, not OLM. 16 bpc and 32 bpc matched. The Mac output was bit-identical to the original Windows version given the same inputs.
+
 ### Extremely large sizes or heavy settings
 
 Extremely large sizes or very heavy settings can fail, because memory and workload limits apply. Sizes up to 3840×2160 have been tested.
