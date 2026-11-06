@@ -4,6 +4,7 @@
 #include "OLMRadialBlur.h"
 #include "../DynamicControls.h"
 #include "../../core/dblur_noise.h"
+#include "../../core/radialblur_plane_read.h"
 #include "../../core/x86_float.h"
 #include "../../core/olm_sha256_rows.h"
 

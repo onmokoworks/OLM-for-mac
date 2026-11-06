@@ -7,6 +7,20 @@ Scope: read-only sampler/writeback audit for Rotation polar buffers. Sources:
 
 ## Sampler Helpers
 
+### T32: source handle末尾のゼロ読取り契約（2026-11-05）
+
+参照SHA-256 `ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`
+の命令を再確認した。`0x8ad2`でxを増加し、`0x8ada`でmask byteを比較した後、
+`0x8ae0`で幅を検査する。Mac対応先は`RadialPixelTraits.inc`の
+`BuildRadialSizeFactorPlaneAEX`行末補正。最終行末の次だけがhandle外となる。
+
+`FUN_18000a6a0`はx/yをclampした後も右tapのlinear indexにさらに1を加える
+（`0xa76f` / `0xa7b4`）。Mac対応先は`RadialSampling.inc`の
+`SampleScalarAEXRepeat::right_at`。次行先頭を読むindexが有効なら、そのまま読む。
+`width*height`に達するreadはowner決定により正のゼロとする。
+T30のguard実測は`0xa7b4`であり、`0xa76f`でfaultを測定したという意味ではない。
+詳細と証人は`KNOWN_ORIGINAL_BUGS.md`のT32節。AE exactの追加証拠ではない。
+
 - `FUN_180001270`: non-repeat RGBA polar sampler. It clears the four-float
   destination, accepts coordinates only when `-2 < int(x) < width` and
   `-2 < int(y) < height`, accumulates only in-bounds bilinear taps, weights RGB
