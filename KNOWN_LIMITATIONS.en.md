@@ -36,8 +36,7 @@ With some settings, the Windows version itself fails, or reads memory outside it
 
 ## Per plugin
 
-- OLMKiraKira: opening a project saved with a Mac build before the T16 fix (including the 2026-10-26 build) in a build containing the fix resets Glow Rotation to 0 and discards its keyframes. T16 changed this control from a numeric slider to an angle so that projects created on Windows load correctly. This change is retained to prioritize Windows compatibility. Before updating, save a separate copy of the original project and record the Glow Rotation value and keyframes, then set them again after updating.
-- OLMRadialBlur: with Noise Type set to Type 3, it does not render and reports an error. The original Windows version crashes After Effects with this setting.
+- OLMRadialBlur: with Noise Type set to Type 3, it stops with an error instead of rendering. With this setting, the original Windows version writes to uninitialized memory and can crash After Effects, so the Mac version does not render it.
 - OLMDirectionalBlur: with Noise Type set to Type 3 it renders, but the original Windows version gives a different result on every export under the same conditions, so the result may not match Windows.
 - OLMSmoother: no 32 bpc support (the same as the Windows version). In a 32 bpc comp, AE converts the bit depth for it.
 - OLMRadialBlur: rotation mode at high quality (for example Quality 50) can take over a minute per 1080p frame, because it does the same amount of work as the Windows version.

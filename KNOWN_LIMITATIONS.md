@@ -36,8 +36,7 @@ GPUレンダーには対応していません。
 
 ## プラグイン別
 
-- OLMKiraKira：T16 修正前の Mac ビルド（2026-10-26 ビルドを含む）で保存したプロジェクトを、修正を含むビルドで開くと、Glow Rotation の値が 0 に戻り、そのキーフレームが失われます。Windows で作ったプロジェクトを正しく読み込むため、T16 でこの項目を数値スライダーから角度に変更しました。Windows との互換性を優先するため、この変更を維持します。更新前に元のプロジェクトを別名で保存し、Glow Rotation の値とキーフレームを控えて、更新後に設定し直してください。
-- OLMRadialBlur：Noise TypeをType 3にすると、描画せずエラーになります。元のWindows版もこの設定ではAfter Effectsごと落ちます。
+- OLMRadialBlur：Noise TypeをType 3にすると、描画せずにエラーになります。元のWindows版はこの設定で未初期化のメモリに書き込む不具合があり、After Effectsごと強制終了することがあるため、Mac版ではこの設定を描画しないようにしています。
 - OLMDirectionalBlur：Noise TypeをType 3にすると描画できますが、元のWindows版は同じ条件でも書き出すたびに結果が変わるので、Windowsと同じ絵になるとは限りません。
 - OLMSmoother：32 bpcには非対応です（Windows版も同じ）。32 bpcのコンポでは、AEが色深度を変換して渡します。
 - OLMRadialBlur：回転モードを高品質（Quality 50など）で使うと、1080pで1フレーム1分以上かかることがあります。Windows版と同じ量の計算をしているためです。

@@ -12,18 +12,6 @@ ColorKeep、OLMBlur、OLMColorKey、OLMDirectionalBlur、OLMDistanceGradation、
 
 OLMSmootherは8／16 bpc、その他の9本は8／16／32 bpcに対応しています。
 
-## v0.2.0-beta.2 からの変更
-
-Windowsで作成したプロジェクトをMacで開いて書き出す確認を行い、見つかった2つの問題を修正しました。
-
-- OLMKiraKira：Windowsで作成したプロジェクトを開くと、Glow Rotationの値が0になっていました。Mac版がこの項目を角度ではなく数値スライダーとして宣言していたためです。角度に修正し、Windowsの値をそのまま読み込めるようにしました。
-- OLMDirectionalBlur：Noise Layerに、エフェクトを適用したレイヤーと同じ素材のレイヤーを指定すると、書き出しがエラーで停止していました。元のプラグインはNoise TypeがType 3のときしかNoise Layerを使用しません。Mac版も同様の読み込み処理に変更し、書き出せるようにしました。
-- OLMRadialBlur：画像の端を越えて読み込む箇所の扱いを、元のプラグインの解析結果に合わせて明示しました。出力に変更はありません。
-
-### 更新するときの注意（OLMKiraKira）
-
-上記の修正により、Glow Rotationの項目の種類が変更されました。そのため、beta.2以前のMac版で保存したプロジェクトをv1.0.0で開くと、Glow Rotationの値が0に戻り、そのキーフレームが失われます。Windowsで作成したプロジェクトとの互換性を優先したための変更です。beta.2以前で作成したプロジェクトは、更新前に別名で保存してGlow Rotationの値とキーフレームを控えておき、更新後に再設定してください。
-
 ## 検証結果
 
 元のWindows版プラグインと出力を1ビット単位で比較しています。比較方法の詳細は[検証の方法と結果](BETA_SUPPORT.md)をご覧ください。
@@ -37,7 +25,7 @@ Windowsで作成したプロジェクトをMacで開いて書き出す確認を�
 
 GPUレンダーには対応していません。
 
-OLMRadialBlurのNoise TypeをType 3にすると、Mac版は描画を行わずエラーになります。元のWindows版もこの設定ではAfter Effectsごと強制終了するためです。OLMDirectionalBlurのType 3は描画できますが、元のWindows版は同じ条件でも書き出すたびに結果が変わるため、Windowsと同一の描画結果になるとは限りません。
+OLMRadialBlurのNoise TypeをType 3にすると、Mac版は描画せずにエラーになります。元のWindows版はこの設定で未初期化のメモリに書き込む不具合があり、After Effectsごと強制終了することがあるため、Mac版ではこの設定を描画しないようにしています。OLMDirectionalBlurのType 3は描画できますが、元のWindows版は同じ条件でも書き出すたびに結果が変わるため、Windowsと同一の描画結果になるとは限りません。
 
 その他の制限は[既知の制限](../KNOWN_LIMITATIONS.md)にまとめています。
 
