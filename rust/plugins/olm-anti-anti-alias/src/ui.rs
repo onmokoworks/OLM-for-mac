@@ -4,7 +4,10 @@ use crate::{
     ae::{check, checkout, snapshot, Result, BAD},
     algorithm, palette,
 };
+#[cfg(not(target_os = "macos"))]
 use after_effects_sys::*;
+#[cfg(target_os = "macos")]
+use olm_ae::sys::*;
 use std::{ffi::c_void, ops::Deref, ptr};
 struct Suite<'a, T> {
     basic: &'a SPBasicSuite,

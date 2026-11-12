@@ -429,6 +429,7 @@ name = "olm-anti-anti-alias"
 version = "0.1.0"
 dependencies = [
  "after-effects-sys 0.3.0 (git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9)",
+ "olm-ae",
  "pipl",
  "winres",
 ]
@@ -577,6 +578,7 @@ name = "olm-uv-map"
 version = "0.1.0"
 dependencies = [
  "after-effects-sys 0.3.0 (git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9)",
+ "olm-ae",
  "olm-math",
  "pipl",
  "winres",

@@ -14,3 +14,6 @@ pipl = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b19
 
 [features]
 witness = []
+
+[target.'cfg(target_os = "macos")'.dependencies]
+olm-ae = { path = "../../crates/olm-ae" }

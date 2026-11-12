@@ -11,6 +11,8 @@ def stage(out):
     tree=out/'source';tree.mkdir()
     for name in ['src','resources','tests']:shutil.copytree(HERE/name,tree/name)
     for name in ['Cargo.toml','build.rs']:shutil.copyfile(HERE/name,tree/name)
+    manifest = tree/'Cargo.toml'
+    manifest.write_text(manifest.read_text().replace('../../crates/olm-ae', (HERE.parents[1]/'crates/olm-ae').as_posix()))
     with (tree/'Cargo.toml').open('a') as f:f.write('\n[workspace]\n')
     target=out/'target';env={**os.environ,'CARGO_TARGET_DIR':str(target),'MACOSX_DEPLOYMENT_TARGET':'11.0'}
     for arch in ['aarch64-apple-darwin','x86_64-apple-darwin']:

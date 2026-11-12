@@ -1,5 +1,8 @@
 //! 180004080: Smoothness is enabled exactly when interpolation is Trilinear.
+#[cfg(not(target_os = "macos"))]
 use after_effects_sys::*;
+#[cfg(target_os = "macos")]
+use olm_ae::sys::*;
 pub unsafe fn handle(
     cmd: PF_Cmd,
     i: &PF_InData,

@@ -3,7 +3,10 @@
 //! Host handles hold a length prefix followed by exact flattened bytes.
 #![allow(non_upper_case_globals)]
 use crate::ae::{check, Result, BAD};
+#[cfg(not(target_os = "macos"))]
 use after_effects_sys::*;
+#[cfg(target_os = "macos")]
+use olm_ae::sys::*;
 use std::ptr;
 #[cfg(test)]
 #[path = "arbitrary_tests.rs"]

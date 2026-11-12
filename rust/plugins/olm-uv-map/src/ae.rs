@@ -4,7 +4,10 @@ use crate::{
     algorithm::{self, Layout},
     params,
 };
+#[cfg(not(target_os = "macos"))]
 use after_effects_sys::*;
+#[cfg(target_os = "macos")]
+use olm_ae::sys::*;
 use std::{ffi::c_void, ptr};
 pub type Result<T> = std::result::Result<T, PF_Err>;
 pub const BAD: PF_Err = PF_Err_BAD_CALLBACK_PARAM as _;
@@ -354,4 +357,28 @@ pub unsafe extern "C" fn original_entry_alias(
     e: *mut c_void,
 ) -> PF_Err {
     entry(cmd, i, o, p, w, e)
+}
+
+#[cfg(target_os = "macos")]
+#[no_mangle]
+pub unsafe extern "C" fn PluginDataEntryFunction2(
+    p: PF_PluginDataPtr,
+    cb: PF_PluginDataCB2,
+    _: *const SPBasicSuite,
+    _: *const std::ffi::c_char,
+    _: *const std::ffi::c_char,
+) -> PF_Err {
+    let Some(cb) = cb else { return BAD };
+    cb(
+        p,
+        c"OLM UV Map".as_ptr().cast(),
+        c"OLM UV Map".as_ptr().cast(),
+        c"OLM Plug-ins".as_ptr().cast(),
+        c"EffectMain".as_ptr().cast(),
+        i32::from_be_bytes(*b"eFKT"),
+        13,
+        28,
+        0,
+        c"https://olm.co.jp/".as_ptr().cast(),
+    )
 }

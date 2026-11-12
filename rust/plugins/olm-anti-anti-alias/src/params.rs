@@ -1,7 +1,10 @@
 //! Measured original PARAMS_SETUP, cross-checked with AEXCompat inventory.
 //! Slot order, disk IDs and raw numeric bits are intentional; do not normalize.
 use crate::ae::{check, Result, BAD};
+#[cfg(not(target_os = "macos"))]
 use after_effects_sys::*;
+#[cfg(target_os = "macos")]
+use olm_ae::sys::*;
 pub const VERSION: u32 = 569344;
 pub const FLAGS: u32 = 33554496;
 pub const FLAGS2: u32 = 134222848;

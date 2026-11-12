@@ -16,6 +16,10 @@ def build(out, command='build', features=None):
         shutil.copytree(HERE/name,tree/name)
     for name in ['build.rs','Cargo.toml']:
         shutil.copyfile(HERE/name,tree/name)
+    manifest = tree/'Cargo.toml'
+    manifest.write_text(manifest.read_text().replace('../../crates/olm-ae', (HERE.parents[1]/'crates/olm-ae').as_posix()))
+    manifest = tree/'Cargo.toml'
+    manifest.write_text(manifest.read_text().replace('../../crates/olm-ae', (HERE.parents[1]/'crates/olm-ae').as_posix()))
     with (tree/'Cargo.toml').open('a') as f:f.write('\n[workspace]\n')
     result=run(['cargo',command,'--release','--offline','--manifest-path',tree/'Cargo.toml','-j','2']+(['--features',features] if features else []),out/'process',600,
                env={'CARGO_TARGET_DIR':'D:/olm-rs-target/N-antialias'})
