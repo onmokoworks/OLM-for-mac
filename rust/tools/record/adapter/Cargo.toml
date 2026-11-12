@@ -1,0 +1,16 @@
+[package]
+name = "record-adapter"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[lib]
+name = "record_return_bridge"
+crate-type = ["cdylib"]
+path = "src/return_bridge.rs"
+
+[dependencies]
+serde_json = "1"
+olm-math = { path = "../../../crates/olm-math" }

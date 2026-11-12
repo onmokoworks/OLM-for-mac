@@ -7,3 +7,7 @@ mod field;
 mod filters;
 #[cfg(test)]
 mod reference_tests;
+
+// Diagnostic ABI only; absent from default/release builds unless explicitly enabled.
+#[cfg(feature = "stage-dump")]
+mod stage_dump;

@@ -1,0 +1,730 @@
+{
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9",
+  "unit_tests_passed": 21,
+  "checks": [
+    "python -m unittest discover -s rust/tools/diverge -p test_*.py -v",
+    "Python py_compile: 8 implementation files",
+    "PowerShell build.ps1 parse",
+    "rustfmt --check: two new stage_dump.rs modules"
+  ],
+  "validation": {
+    "runs": {
+      "directional-clean": {
+        "classification": "exact",
+        "first": null,
+        "different_elements": [
+          0,
+          0,
+          0
+        ],
+        "first_difference": null,
+        "report_sha256": "4dc723edc9e74a9cf4d370c11d9a1ad614af37b85e74df8f2b6dba14999c9c12"
+      },
+      "directional-injected": {
+        "classification": "divergent",
+        "first": "rotate.forward",
+        "different_elements": [
+          0,
+          1,
+          1
+        ],
+        "first_difference": {
+          "element": 372,
+          "coordinate": [
+            5,
+            8,
+            0
+          ],
+          "byte_offset": 1488,
+          "reference": {
+            "bits": "0x3eced917",
+            "value": 0.40400001406669617
+          },
+          "candidate": {
+            "bits": "0x3eced918",
+            "value": 0.40400004386901855
+          }
+        },
+        "report_sha256": "2bd76694f52be5b0cac73d1b867169ca7986b8c0625b9cffa2c4c4d54a7e2537"
+      },
+      "distance-clean": {
+        "classification": "exact",
+        "first": null,
+        "different_elements": [
+          0,
+          0,
+          0
+        ],
+        "first_difference": null,
+        "report_sha256": "859a3a786fe9bd5dc1de20a2cd41c19cd3ff891229de741b1ce855cd507ae999"
+      },
+      "distance-injected": {
+        "classification": "divergent",
+        "first": "gaussian.row",
+        "different_elements": [
+          0,
+          1,
+          1
+        ],
+        "first_difference": {
+          "element": 0,
+          "coordinate": [
+            0,
+            0
+          ],
+          "byte_offset": 0,
+          "reference": {
+            "bits": "0x3ebbb837",
+            "value": 0.3666398227214813
+          },
+          "candidate": {
+            "bits": "0x3ebbb838",
+            "value": 0.3666398525238037
+          }
+        },
+        "report_sha256": "971633c546c21347a28015b4d4c2b43b5364109f01beffa4d68885bca1f4c266"
+      },
+      "historical-small": {
+        "first": "gaussian.row",
+        "reduction": {
+          "buffer": "input",
+          "initial_nonzero_words": 187,
+          "remaining_nonzero_words": 2,
+          "remaining_indices": [
+            185,
+            186
+          ],
+          "budget": 64,
+          "budget_exhausted": false,
+          "one_minimal_under_single_word_zeroing": true,
+          "scope": "fixed geometry/parameters; no global/pixel-crop minimality claim",
+          "first_divergent_stage": "gaussian.row",
+          "attempts": [
+            {
+              "directory": "baseline",
+              "kept": true,
+              "input_sha256": "b79a09dea96c13043aa6aa1a63a06a347ee8bab9df782c03bd7488e43fcc7f71"
+            },
+            {
+              "directory": "trial-0001",
+              "kept": true,
+              "input_sha256": "ecaace47adff19bff875bbc2877366627479d7390b9441625089853ae9139624"
+            },
+            {
+              "directory": "trial-0002",
+              "kept": true,
+              "input_sha256": "1c866a0039f3f063cf03d848ff75b103e931c4ed77445666735a2fb913515c7d"
+            },
+            {
+              "directory": "trial-0003",
+              "kept": true,
+              "input_sha256": "d8d417f75a7448fcca6ca764ab3e16b2260014d4036fda9246a6517db324414b"
+            },
+            {
+              "directory": "trial-0004",
+              "kept": true,
+              "input_sha256": "133d5b74284f495733fd6e45a2fd0f46ce3e1dcb357c5dd322bc57e61f77afe2"
+            },
+            {
+              "directory": "trial-0005",
+              "kept": true,
+              "input_sha256": "e7a71c9c8f8d716cbf7a2ce91366de03c1f507c7f74185bfde8ed60c85cc93cc"
+            },
+            {
+              "directory": "trial-0006",
+              "kept": true,
+              "input_sha256": "d6d553ad1abf65f352afac0037d868913122130bffef2a51ed1af79418fe1707"
+            },
+            {
+              "directory": "trial-0007",
+              "kept": false,
+              "input_sha256": "9a1e0206f7a4e66e853de30d998d6c8e26119f62ae4fd73f7478ff03ffefb97e"
+            },
+            {
+              "directory": "trial-0008",
+              "kept": false,
+              "input_sha256": "dd2e6614edbe205c0f20296b4bde41debde942d2a00b04207f978d9f7e3f7e86"
+            }
+          ],
+          "final_report": "verified/report.json",
+          "reproducer": "reduced.json"
+        }
+      },
+      "historical-case39-current": {
+        "classification": "render_and_mapped_stages_exact",
+        "render": "exact",
+        "first": null,
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "report_sha256": "f5b87f07812c392dc2453284ed0574860d8094dca6a01ea5673a4497d1895bfe"
+      },
+      "historical-case39-sse": {
+        "classification": "localized_within_mapped_stages",
+        "render": "mismatched",
+        "first": {
+          "capture": 0,
+          "stage": "gaussian.column",
+          "reproducer": "stage-000\\reproducer.json"
+        },
+        "comparison": {
+          "exact": false,
+          "mismatching_pixels": 1080,
+          "mismatching_samples": 1706,
+          "max_abs_diff": 5.960464477539063e-08,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": [
+            {
+              "x": 5,
+              "y": 0
+            },
+            {
+              "x": 6,
+              "y": 0
+            },
+            {
+              "x": 9,
+              "y": 0
+            },
+            {
+              "x": 26,
+              "y": 0
+            },
+            {
+              "x": 35,
+              "y": 0
+            },
+            {
+              "x": 45,
+              "y": 0
+            },
+            {
+              "x": 50,
+              "y": 0
+            },
+            {
+              "x": 51,
+              "y": 0
+            }
+          ]
+        },
+        "report_sha256": "028f9ae81fcfdf79952fbcc6fe731b207cfe41a34547dbbb5c4fc5462d595db8"
+      }
+    },
+    "sources": {
+      "olm_diverge.py": "ab0e7e5f9459a8ca43c1ebe91ca4f8e214660dec61e1f033ff8a17ac5785aecd",
+      "stage_maps.py": "0920a40383b5cad3ddcfa1133085a03a8bd817f1e4e9864a06db5daf03bc9db8",
+      "capture.py": "af82507a515be8830ba8a0bd571644799ea3805e2bb998e678330276c17e4672",
+      "minimize.py": "ec7e734521529d65d9795f163b5c6a88ca4b8dd0dae61eb14e8aace8ccaafc31"
+    },
+    "all_passed": true
+  },
+  "actual_render_faults": {
+    "directional-render-clean": {
+      "classification": "render_and_mapped_stages_exact",
+      "first_divergent_mapped_stage": null,
+      "candidate_sha256": "8107a0b5a94c0fe29c5fb5456efd42d8d9bc7488e1cfdf42dbfc41272ae6997f",
+      "diagnostic_overrides": {
+        "OLM_STAGE_DUMP_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\runs\\directional-render-clean\\captures",
+        "OLM_STAGE_FAULT_INDEX": null,
+        "OLM_STAGE_HISTORICAL_SSE": null
+      },
+      "captures": [
+        {
+          "metadata": {
+            "plugin": "directional",
+            "width": 41,
+            "height": 41,
+            "angle_bits": 1070141403,
+            "ordinal": 0
+          },
+          "directory": "captures\\rotate-20516-0",
+          "replay": "stage-000",
+          "report_sha256": "daaff265cd93a4ed1ff072ef144dbafaaba6f6d40ff074d7f5af226b4c4f7a60",
+          "classification": "exact",
+          "first_divergent_stage": null,
+          "capture_equals_replay": {
+            "output.bin": true
+          }
+        },
+        {
+          "metadata": {
+            "plugin": "directional",
+            "width": 41,
+            "height": 41,
+            "angle_bits": 3217625051,
+            "ordinal": 1
+          },
+          "directory": "captures\\rotate-20516-1",
+          "replay": "stage-001",
+          "report_sha256": "6a459e91b3bcdc39326f6f0c14946ce524b98361b479cd554923f01d9886da8b",
+          "classification": "exact",
+          "first_divergent_stage": null,
+          "capture_equals_replay": {
+            "output.bin": true
+          }
+        }
+      ],
+      "render": {
+        "status": "exact",
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        }
+      },
+      "report_sha256": "ebd3035daa9bf3bd3180f348c7841cfcde71542f6714f9d4fcd2b496a5d33a69",
+      "raw_directory": "runs\\directional-render-clean"
+    },
+    "directional-render-injected": {
+      "classification": "localized_within_mapped_stages",
+      "first_divergent_mapped_stage": {
+        "capture": 0,
+        "stage": "rotate[0]",
+        "reproducer": "stage-000\\reproducer.json"
+      },
+      "candidate_sha256": "8107a0b5a94c0fe29c5fb5456efd42d8d9bc7488e1cfdf42dbfc41272ae6997f",
+      "diagnostic_overrides": {
+        "OLM_STAGE_DUMP_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\runs\\directional-render-injected\\captures",
+        "OLM_STAGE_FAULT_INDEX": "3360",
+        "OLM_STAGE_HISTORICAL_SSE": null
+      },
+      "captures": [
+        {
+          "metadata": {
+            "plugin": "directional",
+            "width": 41,
+            "height": 41,
+            "angle_bits": 1070141403,
+            "ordinal": 0
+          },
+          "directory": "captures\\rotate-56556-0",
+          "replay": "stage-000",
+          "report_sha256": "db87eeefe51125d7fdb504ee20ca56b1607d05db00b2d9e27ebbcacc0d9c9010",
+          "classification": "divergent",
+          "first_divergent_stage": "rotate[0]",
+          "capture_equals_replay": {
+            "output.bin": true
+          }
+        },
+        {
+          "metadata": {
+            "plugin": "directional",
+            "width": 41,
+            "height": 41,
+            "angle_bits": 3217625051,
+            "ordinal": 1
+          },
+          "directory": "captures\\rotate-56556-1",
+          "replay": "stage-001",
+          "report_sha256": "a7df5a7e461dda03aebf0228104a4aeab45570b9fd20d5d22592b8e5f77c1083",
+          "classification": "exact",
+          "first_divergent_stage": null,
+          "capture_equals_replay": {
+            "output.bin": true
+          }
+        }
+      ],
+      "render": {
+        "status": "mismatched",
+        "comparison": {
+          "exact": false,
+          "mismatching_pixels": 3,
+          "mismatching_samples": 3,
+          "max_abs_diff": 5.960464477539063e-08,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": [
+            {
+              "x": 15,
+              "y": 6
+            },
+            {
+              "x": 15,
+              "y": 8
+            },
+            {
+              "x": 15,
+              "y": 10
+            }
+          ]
+        }
+      },
+      "report_sha256": "264aabe9dffd94cf8a45b0a0e3b72c8aa4dfeb50fa62da9e9df15fddfe61e351",
+      "raw_directory": "runs\\directional-render-injected"
+    },
+    "distance-render-injected": {
+      "classification": "localized_within_mapped_stages",
+      "first_divergent_mapped_stage": {
+        "capture": 0,
+        "stage": "gaussian.row",
+        "reproducer": "stage-000\\reproducer.json"
+      },
+      "candidate_sha256": "07232dcf0bb21510a95b9672e50dd0d857ba0bebc38d6d6a7fcf0ce08f7f0440",
+      "diagnostic_overrides": {
+        "OLM_STAGE_DUMP_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge\\runs\\distance-render-injected\\captures",
+        "OLM_STAGE_FAULT_INDEX": "0",
+        "OLM_STAGE_HISTORICAL_SSE": null
+      },
+      "captures": [
+        {
+          "metadata": {
+            "plugin": "distance",
+            "width": 97,
+            "height": 61,
+            "kx": 8193,
+            "ky": 8193,
+            "native": true,
+            "ordinal": 0
+          },
+          "directory": "captures\\gaussian-47388-0",
+          "replay": "stage-000",
+          "report_sha256": "7181bee938998ff2d3de690e259f0e0594a0551e2fe8ce704a99786fd1ab99bb",
+          "classification": "divergent",
+          "first_divergent_stage": "gaussian.row",
+          "capture_equals_replay": {
+            "middle.bin": true,
+            "output.bin": true
+          }
+        }
+      ],
+      "render": {
+        "status": "mismatched",
+        "comparison": {
+          "exact": false,
+          "mismatching_pixels": 17,
+          "mismatching_samples": 31,
+          "max_abs_diff": 2.9802322387695312e-08,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "x": 0,
+              "y": 5
+            },
+            {
+              "x": 0,
+              "y": 10
+            },
+            {
+              "x": 0,
+              "y": 15
+            },
+            {
+              "x": 0,
+              "y": 20
+            },
+            {
+              "x": 0,
+              "y": 25
+            },
+            {
+              "x": 0,
+              "y": 30
+            },
+            {
+              "x": 0,
+              "y": 33
+            }
+          ]
+        }
+      },
+      "report_sha256": "82a46ddd805932de3a0acc482a50b02aa3a839e8362a19614dc05878efe4c296",
+      "raw_directory": "runs\\distance-render-injected"
+    }
+  },
+  "release_byte_identical": {
+    "olm-directional-blur": true,
+    "olm-distance-gradation": true
+  },
+  "historical_reduction": {
+    "buffer": "middle",
+    "initial_nonzero_words": 5917,
+    "remaining_nonzero_words": 1,
+    "remaining_indices": [
+      5915
+    ],
+    "budget": 64,
+    "budget_exhausted": false,
+    "one_minimal_under_single_word_zeroing": true,
+    "scope": "fixed geometry/parameters; no global/pixel-crop minimality claim",
+    "first_divergent_stage": "gaussian.column",
+    "attempts": [
+      {
+        "directory": "baseline",
+        "kept": true,
+        "input_sha256": "638b310ce8db59da8f8421fc3640b85d38508899e2b0058eca9e9d13ae94f00f"
+      },
+      {
+        "directory": "trial-0001",
+        "kept": true,
+        "input_sha256": "eed1b9d66870ceab8c360ac18ec1cc2fd7657984a0f38a7b37e7c3805fc62034"
+      },
+      {
+        "directory": "trial-0002",
+        "kept": true,
+        "input_sha256": "bfda0760f7524a72c5586748460a84ab8bf069e1db3fcbdaabd4d85aee7af75f"
+      },
+      {
+        "directory": "trial-0003",
+        "kept": true,
+        "input_sha256": "97680b8ecf8955af4e3cd64d5cbce51ad254872beea3d908f09744b88189ad3e"
+      },
+      {
+        "directory": "trial-0004",
+        "kept": true,
+        "input_sha256": "803d26b60fe111505492dd26730e00de6d2274e510741f9afa769cf5ac054b22"
+      },
+      {
+        "directory": "trial-0005",
+        "kept": true,
+        "input_sha256": "6429738d1e31ee40b8aaf2b9134963b5e93255af11bacec88fe37726cdc7dec1"
+      },
+      {
+        "directory": "trial-0006",
+        "kept": true,
+        "input_sha256": "01ace0af25a84ddfb5c56e215fa3017f1d710e89c3d6b35dc40327f5e1e22e07"
+      },
+      {
+        "directory": "trial-0007",
+        "kept": true,
+        "input_sha256": "d3c65aeec502567e329e29859b09212768a0b2d6946ba7a464815c6954cabb61"
+      },
+      {
+        "directory": "trial-0008",
+        "kept": true,
+        "input_sha256": "faeff1ef3c5e31c38a19b33f986618d58c03fbc2a7bf0e77313dc7879df3ea18"
+      },
+      {
+        "directory": "trial-0009",
+        "kept": true,
+        "input_sha256": "8bd10dc95f53511318cbd13aa2c489fe54c4a2993f3cb6388e36c14cea42e631"
+      },
+      {
+        "directory": "trial-0010",
+        "kept": true,
+        "input_sha256": "7a9ff3aff6aa1ad291a1ac546d22322d79d8b75d0ca21e5c10168274d4808236"
+      },
+      {
+        "directory": "trial-0011",
+        "kept": true,
+        "input_sha256": "a6918ea0620d59bb019af10ab3728b2336dc63d408cd8d6f3723fb4fab8fe98c"
+      },
+      {
+        "directory": "trial-0012",
+        "kept": false,
+        "input_sha256": "164731f9a224dd6707fc903da6a4f44a73cf15460bac8f7ef722e20cbd3a6b12"
+      },
+      {
+        "directory": "trial-0013",
+        "kept": true,
+        "input_sha256": "85fcad6c6afe8507c446180bf959a88ca5e436307c95ad6350140502f1e5dce2"
+      },
+      {
+        "directory": "trial-0014",
+        "kept": false,
+        "input_sha256": "bae01bc38a36aca3454790b90cd5bf5c179d2e49f4baa2baf83edc72b51d8913"
+      }
+    ],
+    "final_report": "verified/report.json",
+    "reproducer": "reduced.json"
+  },
+  "source_sha256": {
+    "tools\\diverge\\build_owned.py": "160335b5bb6f4ac13023ed661971c26d6195ed97d362b216c0f7ef263cd25488",
+    "tools\\diverge\\capture.py": "af82507a515be8830ba8a0bd571644799ea3805e2bb998e678330276c17e4672",
+    "tools\\diverge\\collect_evidence.py": "11ce4281bf19cc430287523d7d126b63feafc2bf287952a6d33f9c1237f12647",
+    "tools\\diverge\\examples.py": "044cd513fdd019343c751b6dc1458d64d81213eb00cdc9b1002838965bda85c6",
+    "tools\\diverge\\minimize.py": "ec7e734521529d65d9795f163b5c6a88ca4b8dd0dae61eb14e8aace8ccaafc31",
+    "tools\\diverge\\olm_diverge.py": "ab0e7e5f9459a8ca43c1ebe91ca4f8e214660dec61e1f033ff8a17ac5785aecd",
+    "tools\\diverge\\prove_release.py": "dea5177705450febf70e56b14427ce01e53dfb0699319a1688c1ffe65f65a860",
+    "tools\\diverge\\stage_maps.py": "0920a40383b5cad3ddcfa1133085a03a8bd817f1e4e9864a06db5daf03bc9db8",
+    "tools\\diverge\\test_diverge.py": "c1ced0df25a66abf29bcdf329d249064a9b4dca62c5222a6c171ca34af0f6141",
+    "tools\\diverge\\validate.py": "052b41aef4a6502a4a8884444270018eb5d02bea321121f0f53c3b3c29481bf4",
+    "tools\\diverge\\build.ps1": "14556b22754ba9e0edc2dae023ccefcf4c78a21d63c31e00e862d419961dbf66",
+    "tools\\diverge\\Cargo.toml": "9eccd99f404d6d9c8e2259e9163286290bdfc1925d16bb84aac4920e56fec8e0",
+    "tools\\diverge\\marker.rs": "aec2dc93608ecd38d4992c391f6e09b4a51d87af7e4c3d168fcdfdbbb36734ba",
+    "plugins\\olm-directional-blur\\Cargo.toml": "b4c1c599c1ef0736760132d66f942474d360363365eab4105668d0739865f69b",
+    "plugins\\olm-directional-blur\\src\\lib.rs": "9e99d85f661cdc2349045f87c3f75a70cb00f33fe5517ad214a566eaef77c971",
+    "plugins\\olm-directional-blur\\src\\rotate.rs": "c20421470488c714c3356486ea5d5ac6d5767cf0a54b0fa55b580198c634b2ca",
+    "plugins\\olm-directional-blur\\src\\stage_dump.rs": "e20d5cc71485425ecb88dada465f62020e58cc9a29d1e42c04e924a2059845ee",
+    "plugins\\olm-distance-gradation\\Cargo.toml": "6d8318a4c09a7b0b64ad3ea91f9d06a3c905231e71f2b66d69d2fcf3727b5756",
+    "plugins\\olm-distance-gradation\\src\\lib.rs": "7e32cdf5cf43baeeb6311aac3c763f5103cda595046cf1be7d19e9c7974270a2",
+    "plugins\\olm-distance-gradation\\src\\filters.rs": "4dddebb37584a51ca6b5c66d9cdff85a12ec2bacbbc0590d745498d482bf6d33",
+    "plugins\\olm-distance-gradation\\src\\stage_dump.rs": "ae29fa9f40d94b39ba0aa6b04106e49be8c9f78d4c6bc9e340fd2642d1229fcb"
+  },
+  "cleanup": {
+    "record_scope": "diverge/runs/*process.json plus named final-build/proof log dirs",
+    "records": 159,
+    "distinct_pids": 155,
+    "all_owned_processes_exited": true,
+    "pids": {
+      "48188": "exited",
+      "52276": "exited",
+      "33664": "exited",
+      "62892": "exited",
+      "50372": "exited",
+      "49668": "exited",
+      "62540": "exited",
+      "52896": "exited",
+      "43304": "exited",
+      "57720": "exited",
+      "44508": "exited",
+      "54832": "exited",
+      "64152": "exited",
+      "50588": "exited",
+      "61828": "exited",
+      "62124": "exited",
+      "56392": "exited",
+      "48800": "exited",
+      "17648": "exited",
+      "55972": "exited",
+      "47180": "exited",
+      "59576": "exited",
+      "48464": "exited",
+      "62292": "exited",
+      "48324": "exited",
+      "53632": "exited",
+      "15544": "exited",
+      "47552": "exited",
+      "53084": "exited",
+      "57112": "exited",
+      "53664": "exited",
+      "49540": "exited",
+      "59192": "exited",
+      "4604": "exited",
+      "16488": "exited",
+      "56672": "exited",
+      "47060": "exited",
+      "48068": "exited",
+      "31104": "exited",
+      "63084": "exited",
+      "51272": "exited",
+      "57140": "exited",
+      "49124": "exited",
+      "54588": "exited",
+      "62340": "exited",
+      "49728": "exited",
+      "52468": "exited",
+      "55896": "exited",
+      "48460": "exited",
+      "57200": "exited",
+      "47328": "exited",
+      "53616": "exited",
+      "56364": "exited",
+      "62000": "exited",
+      "56304": "exited",
+      "62408": "exited",
+      "56920": "exited",
+      "48732": "exited",
+      "56728": "exited",
+      "58668": "exited",
+      "61768": "exited",
+      "62584": "exited",
+      "55280": "exited",
+      "59016": "exited",
+      "18020": "exited",
+      "56868": "exited",
+      "61508": "exited",
+      "55592": "exited",
+      "49856": "exited",
+      "53700": "exited",
+      "4008": "exited",
+      "50008": "exited",
+      "62608": "exited",
+      "48156": "exited",
+      "52988": "exited",
+      "44416": "exited",
+      "63564": "exited",
+      "2072": "exited",
+      "51076": "exited",
+      "61484": "exited",
+      "58348": "exited",
+      "3296": "exited",
+      "52120": "exited",
+      "53328": "exited",
+      "49576": "exited",
+      "39160": "exited",
+      "64388": "exited",
+      "58632": "exited",
+      "30452": "exited",
+      "35976": "exited",
+      "47324": "exited",
+      "49376": "exited",
+      "49104": "exited",
+      "62768": "exited",
+      "13136": "exited",
+      "54220": "exited",
+      "10012": "exited",
+      "40784": "exited",
+      "57412": "exited",
+      "56652": "exited",
+      "61716": "exited",
+      "56492": "exited",
+      "57148": "exited",
+      "51752": "exited",
+      "57172": "exited",
+      "60112": "exited",
+      "62116": "exited",
+      "54848": "exited",
+      "36556": "exited",
+      "60744": "exited",
+      "49488": "exited",
+      "63380": "exited",
+      "50476": "exited",
+      "49600": "exited",
+      "51228": "exited",
+      "57676": "exited",
+      "17316": "exited",
+      "48700": "exited",
+      "62580": "exited",
+      "49100": "exited",
+      "61096": "exited",
+      "55588": "exited",
+      "3768": "exited",
+      "16548": "exited",
+      "49640": "exited",
+      "54228": "exited",
+      "46900": "exited",
+      "58788": "exited",
+      "64100": "exited",
+      "51360": "exited",
+      "50696": "exited",
+      "48076": "exited",
+      "62360": "exited",
+      "14148": "exited",
+      "46216": "exited",
+      "49180": "exited",
+      "48776": "exited",
+      "52096": "exited",
+      "51224": "exited",
+      "64092": "exited",
+      "60604": "exited",
+      "1192": "exited",
+      "63936": "exited",
+      "26576": "exited",
+      "60580": "exited",
+      "20456": "exited",
+      "8628": "exited",
+      "51840": "exited",
+      "55840": "exited",
+      "60748": "exited",
+      "58184": "exited",
+      "48268": "exited",
+      "57920": "exited",
+      "37828": "exited",
+      "57136": "exited"
+    },
+    "job_guarantee": "witness records cleanup_verified; oracle.run_process finally closes its private Job and waits before returning"
+  }
+}

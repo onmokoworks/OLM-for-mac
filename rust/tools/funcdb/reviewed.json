@@ -1,0 +1,523 @@
+[
+  {
+    "program": "OLMDirectionalBlur",
+    "rva": "1830",
+    "rust": {
+      "module": "algorithm",
+      "fn": "gaussian"
+    },
+    "cpp": [
+      {
+        "path": "core/dblur_frontonly.cpp",
+        "fn": "gaussian_weights"
+      },
+      {
+        "path": "core/dblur_gaussian.h",
+        "fn": "olm::dblur::gaussian_weight"
+      }
+    ],
+    "confidence": "high",
+    "basis": "IR identifies original table builder; C++ address comment binds argument arithmetic; Rust translates the same table loop.",
+    "sources": [
+      {
+        "path": "notes/IR_OLMDirectionalBlur.md",
+        "contains": "`FUN_180001830(table, length)`"
+      },
+      {
+        "path": "core/dblur_gaussian.h",
+        "contains": "Width and order match AEX 0x180001830"
+      },
+      {
+        "path": "rust/plugins/olm-directional-blur/src/algorithm.rs",
+        "contains": "pub fn gaussian(count: i32)"
+      }
+    ]
+  },
+  {
+    "program": "OLMDirectionalBlur",
+    "rva": "3370",
+    "rust": {
+      "module": "noise",
+      "fn": "sample"
+    },
+    "cpp": [
+      {
+        "path": "core/dblur_noise.h",
+        "fn": "olm::dblur::sample_noise_plane"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Explicit typed C++ candidate address and Rust module translation provenance; original undefined-memory limits retained.",
+    "sources": [
+      {
+        "path": "core/dblur_noise.h",
+        "contains": "Typed candidate for OLMDirectionalBlur FUN_180003370"
+      },
+      {
+        "path": "rust/plugins/olm-directional-blur/src/noise.rs",
+        "contains": "Local translation of shared core/dblur_noise.h"
+      },
+      {
+        "path": "rust/plugins/olm-directional-blur/src/noise.rs",
+        "contains": "pub fn sample(&self"
+      }
+    ]
+  },
+  {
+    "program": "OLMDirectionalBlur",
+    "rva": "34e0",
+    "rust": {
+      "module": "noise",
+      "fn": "demanded"
+    },
+    "cpp": [
+      {
+        "path": "core/dblur_noise.h",
+        "fn": "olm::dblur::generate_noise_plane"
+      }
+    ],
+    "confidence": "medium",
+    "basis": "Original noise generation constants and MT conversion bind C++ generator; Rust implements demanded-cell variant, preserving RNG consumption and documented zero-read policy.",
+    "sources": [
+      {
+        "path": "core/dblur_noise.h",
+        "contains": "AEX 0x1800034e0: MT19937 unit conversion"
+      },
+      {
+        "path": "rust/plugins/olm-directional-blur/src/noise.rs",
+        "contains": "Local translation of shared core/dblur_noise.h"
+      },
+      {
+        "path": "rust/plugins/olm-directional-blur/src/noise.rs",
+        "contains": "pub fn demanded("
+      }
+    ]
+  },
+  {
+    "program": "OLMRadialBlur",
+    "rva": "9680",
+    "rust": {
+      "module": "noise",
+      "fn": "sample"
+    },
+    "cpp": [
+      {
+        "path": "core/dblur_noise.h",
+        "fn": "olm::dblur::sample_radial_noise_plane"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Explicit C++ sampler address; Rust translation preserves float weight and accumulation tree.",
+    "sources": [
+      {
+        "path": "core/dblur_noise.h",
+        "contains": "RadialBlur FUN_180009680 sampler"
+      },
+      {
+        "path": "rust/plugins/olm-radial-blur/src/noise.rs",
+        "contains": "MT19937 and RadialBlur's float canonical conversion"
+      },
+      {
+        "path": "rust/plugins/olm-radial-blur/src/noise.rs",
+        "contains": "pub fn sample(p:"
+      }
+    ]
+  },
+  {
+    "program": "OLMRadialBlur",
+    "rva": "9380",
+    "rust": {
+      "module": "noise",
+      "fn": "generate"
+    },
+    "cpp": [
+      {
+        "path": "core/dblur_noise.h",
+        "fn": "olm::dblur::generate_radial_noise_plane"
+      }
+    ],
+    "confidence": "medium",
+    "basis": "Original arithmetic comment within C++ generator and Rust source translation; under-read policy remains a qualified difference.",
+    "sources": [
+      {
+        "path": "core/dblur_noise.h",
+        "contains": "two separate 0.5f products used by FUN_180009380"
+      },
+      {
+        "path": "rust/plugins/olm-radial-blur/src/noise.rs",
+        "contains": "pub fn generate(w:"
+      }
+    ]
+  },
+  {
+    "program": "OLMBlur",
+    "rva": "1000",
+    "rust": {
+      "module": "algorithm",
+      "fn": "nonlegacy_pass"
+    },
+    "cpp": [
+      {
+        "path": "core/olmblur_helper.cpp",
+        "fn": "olm::blur::horizontal"
+      }
+    ],
+    "confidence": "medium",
+    "basis": "IR helper pair and C++ horizontal kernel map to orientation-parameterized Rust pass (many-to-one).",
+    "sources": [
+      {
+        "path": "notes/IR_OLMBlur.md",
+        "contains": "Non-legacy blur helpers are structurally plain weighted contiguous-span"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "Pure CPU translation of core/olmblur_"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "fn nonlegacy_pass("
+      },
+      {
+        "path": "core/olmblur_helper.cpp",
+        "contains": "bool horizontal("
+      }
+    ]
+  },
+  {
+    "program": "OLMBlur",
+    "rva": "1980",
+    "rust": {
+      "module": "algorithm",
+      "fn": "nonlegacy_pass"
+    },
+    "cpp": [
+      {
+        "path": "core/olmblur_helper.cpp",
+        "fn": "olm::blur::vertical"
+      }
+    ],
+    "confidence": "medium",
+    "basis": "IR helper pair and C++ vertical kernel map to orientation-parameterized Rust pass (many-to-one).",
+    "sources": [
+      {
+        "path": "notes/IR_OLMBlur.md",
+        "contains": "Non-legacy blur helpers are structurally plain weighted contiguous-span"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "fn nonlegacy_pass("
+      },
+      {
+        "path": "core/olmblur_helper.cpp",
+        "contains": "bool vertical("
+      }
+    ]
+  },
+  {
+    "program": "OLMBlur",
+    "rva": "14f0",
+    "rust": {
+      "module": "algorithm",
+      "fn": "legacy_pass"
+    },
+    "cpp": [
+      {
+        "path": "core/olmblur_fullworker_helper.cpp",
+        "fn": "olm::blur::fullworker::horizontal"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Explicit horizontal helper address in C++ contract; orientation-parameterized Rust translation (many-to-one).",
+    "sources": [
+      {
+        "path": "core/olmblur_fullworker_helper.h",
+        "contains": "FUN_1800014f0 (horizontal) and FUN_180001ea0 (vertical)"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "Pure CPU translation of core/olmblur_"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "fn legacy_pass("
+      }
+    ]
+  },
+  {
+    "program": "OLMBlur",
+    "rva": "1ea0",
+    "rust": {
+      "module": "algorithm",
+      "fn": "legacy_pass"
+    },
+    "cpp": [
+      {
+        "path": "core/olmblur_fullworker_helper.cpp",
+        "fn": "olm::blur::fullworker::vertical"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Explicit vertical helper address in C++ contract; orientation-parameterized Rust translation (many-to-one).",
+    "sources": [
+      {
+        "path": "core/olmblur_fullworker_helper.h",
+        "contains": "FUN_1800014f0 (horizontal) and FUN_180001ea0 (vertical)"
+      },
+      {
+        "path": "rust/plugins/olm-blur/src/algorithm.rs",
+        "contains": "fn legacy_pass("
+      }
+    ]
+  },
+  {
+    "program": "ColorKeep",
+    "rva": "1580",
+    "rust": {
+      "module": "crate",
+      "fn": "pixel",
+      "region": "PF8 arm"
+    },
+    "cpp": [
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "fn": "ColorKeep8Func"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Actual-AEX typed callback fixture and C++ production callback; depth arm of the Rust pixel function (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_colorkeep_typed_padded_frame_actual_aex_20260805.py",
+        "contains": "\"PF8\": (0x180001580"
+      },
+      {
+        "path": "rust/plugins/color-keep/src/lib.rs",
+        "contains": "pub fn pixel(p: Pixel"
+      },
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "contains": "ColorKeep8Func(void *refcon"
+      }
+    ]
+  },
+  {
+    "program": "ColorKeep",
+    "rva": "1280",
+    "rust": {
+      "module": "crate",
+      "fn": "pixel",
+      "region": "PF16 arm"
+    },
+    "cpp": [
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "fn": "ColorKeep16Func"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Actual-AEX typed callback fixture and C++ production callback; depth arm of the Rust pixel function (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_colorkeep_typed_padded_frame_actual_aex_20260805.py",
+        "contains": "\"PF16\": (0x180001280"
+      },
+      {
+        "path": "rust/plugins/color-keep/src/lib.rs",
+        "contains": "pub fn pixel(p: Pixel"
+      },
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "contains": "ColorKeep16Func(void *refcon"
+      }
+    ]
+  },
+  {
+    "program": "ColorKeep",
+    "rva": "1850",
+    "rust": {
+      "module": "crate",
+      "fn": "pixel",
+      "region": "PF32 arm"
+    },
+    "cpp": [
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "fn": "ColorKeepFloatFunc"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Actual-AEX typed callback fixture and C++ production callback; depth arm of the Rust pixel function (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_colorkeep_typed_padded_frame_actual_aex_20260805.py",
+        "contains": "\"PF32\": (0x180001850"
+      },
+      {
+        "path": "rust/plugins/color-keep/src/lib.rs",
+        "contains": "pub fn pixel(p: Pixel"
+      },
+      {
+        "path": "mac/ColorKeep/ColorKeep.cpp",
+        "contains": "ColorKeepFloatFunc(void *refcon"
+      }
+    ]
+  },
+  {
+    "program": "OLMToonDilate",
+    "rva": "1a6150",
+    "rust": {
+      "module": "algorithm",
+      "fn": "render",
+      "region": "PF8 lane"
+    },
+    "cpp": [
+      {
+        "path": "mac/OLMToonDilate/OLMToonDilate.cpp",
+        "fn": "RenderTyped",
+        "specialization": "PF_Pixel8"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Typed original worker fixture and explicit Rust translation provenance; depth-parameterized Rust render (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_olmtoondilate_pf8_radius2_shape_20260805.py",
+        "contains": "WORKER = 0x1801A6150"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "Translation of mac/OLMToonDilate/OLMToonDilate.cpp RenderTyped"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "pub fn render(input:"
+      }
+    ]
+  },
+  {
+    "program": "OLMToonDilate",
+    "rva": "1a5a90",
+    "rust": {
+      "module": "algorithm",
+      "fn": "render",
+      "region": "PF16 lane"
+    },
+    "cpp": [
+      {
+        "path": "mac/OLMToonDilate/OLMToonDilate.cpp",
+        "fn": "RenderTyped",
+        "specialization": "PF_Pixel16"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Typed original worker fixture and explicit Rust translation provenance; depth-parameterized Rust render (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_olmtoondilate_pf16_radius2_shape_20260805.py",
+        "contains": "WORKER = 0x1801A5A90"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "Translation of mac/OLMToonDilate/OLMToonDilate.cpp RenderTyped"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "pub fn render(input:"
+      }
+    ]
+  },
+  {
+    "program": "OLMToonDilate",
+    "rva": "1a6800",
+    "rust": {
+      "module": "algorithm",
+      "fn": "render",
+      "region": "PF32 lane"
+    },
+    "cpp": [
+      {
+        "path": "mac/OLMToonDilate/OLMToonDilate.cpp",
+        "fn": "RenderTyped",
+        "specialization": "PF_PixelFloat"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Typed original worker fixture and explicit Rust translation provenance; depth-parameterized Rust render (many-to-one).",
+    "sources": [
+      {
+        "path": "tools/emulation/test_olmtoondilate_pf32_radius3_boundary_tie_20260805.py",
+        "contains": "WORKER,WIDTH,HEIGHT,ROWBYTES,RADIUS=0x1801A6800"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "Translation of mac/OLMToonDilate/OLMToonDilate.cpp RenderTyped"
+      },
+      {
+        "path": "rust/plugins/olm-toon-dilate/src/algorithm.rs",
+        "contains": "pub fn render(input:"
+      }
+    ]
+  },
+  {
+    "program": "OLMColorKey",
+    "rva": "9e10",
+    "rust": {
+      "module": "color",
+      "fn": "convert",
+      "region": "space == 2 (HSV)"
+    },
+    "cpp": [
+      {
+        "path": "mac/OLMColorKey/ColorMath.inc",
+        "fn": "RGBToPluginHSV"
+      }
+    ],
+    "confidence": "high",
+    "basis": "Original HSV arithmetic comment inside C++ converter; Rust space-2 branch preserves its operation order.",
+    "sources": [
+      {
+        "path": "mac/OLMColorKey/ColorMath.inc",
+        "contains": "FUN_180009e10: COMISS/CMOVBE"
+      },
+      {
+        "path": "rust/plugins/olm-color-key/src/color.rs",
+        "contains": "Operation ordering from ColorMath.inc"
+      },
+      {
+        "path": "rust/plugins/olm-color-key/src/color.rs",
+        "contains": "pub fn convert(c:"
+      }
+    ]
+  },
+  {
+    "program": "OLMKiraKira",
+    "rva": "11501b0",
+    "rust": {
+      "module": "algorithm",
+      "fn": "seed",
+      "region": "local apply_fade closure, recovered lane"
+    },
+    "cpp": [
+      {
+        "path": "mac/OLMKiraKira/KiraFilters.inc",
+        "fn": "apply_fade (local lambda)"
+      }
+    ],
+    "confidence": "high",
+    "basis": "IR and hub decompilation identify original fade helper; Rust retains it as a local closure in seed, qualified recovered-seed lane.",
+    "sources": [
+      {
+        "path": "mac/OLMKiraKira/KiraFilters.inc",
+        "contains": "FUN_1811501b0 UCOMISS/JNE"
+      },
+      {
+        "path": "notes/IR_OLMKiraKira.md",
+        "contains": "| Fade Out |"
+      },
+      {
+        "path": "rust/plugins/olm-kirakira/src/algorithm.rs",
+        "contains": "let apply_fade = |v: f32|"
+      }
+    ]
+  }
+]

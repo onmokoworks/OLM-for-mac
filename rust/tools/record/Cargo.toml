@@ -1,0 +1,10 @@
+[package]
+name = "olm-record-marker"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# The parent workspace includes tools/*. The CLI is Python; the optional
+# native adapter is an isolated workspace in adapter/.
+[lib]
+path = "marker.rs"

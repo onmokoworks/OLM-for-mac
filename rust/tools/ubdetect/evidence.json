@@ -1,0 +1,770 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-12",
+  "platform": "Windows x64; AEXCompat CPU only",
+  "passed": true,
+  "unit_tests": 18,
+  "unit_tests_passed": 18,
+  "results": [
+    {
+      "name": "distance",
+      "expected": "original_ub",
+      "passed": true,
+      "verdict": "original_ub",
+      "reason": "original_nondeterminism",
+      "route": "classic8",
+      "poison_proven": true,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 21
+      },
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 2,
+      "candidate_distinct": 2,
+      "reference_varying_pixels": 21,
+      "reference_hashes": [
+        "58c98075fe929a3a2691f029ec585bbad32714f0b9351efbe8d8b3165ad3cd69",
+        "70b8681134f212bf3cbfa3a27deb840e0e8054911f28a93336ec81f24ebaf746",
+        "70b8681134f212bf3cbfa3a27deb840e0e8054911f28a93336ec81f24ebaf746"
+      ],
+      "candidate_hashes": [
+        "70b8681134f212bf3cbfa3a27deb840e0e8054911f28a93336ec81f24ebaf746",
+        "4fea5e6a3ec5f5474a26d858bc77b6d7bd3ab864ea02d988683fdc648602b248",
+        "70b8681134f212bf3cbfa3a27deb840e0e8054911f28a93336ec81f24ebaf746"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "fc9f891f45c3ce3a622f855a529bd869687e153915ac074c231cc21774876d8a",
+            "fc9f891f45c3ce3a622f855a529bd869687e153915ac074c231cc21774876d8a"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "116d770f4b7ad8d52bfa5dfe1b160b5bcf34a17b9b9c894af7aee8be3bac9e74",
+            "116d770f4b7ad8d52bfa5dfe1b160b5bcf34a17b9b9c894af7aee8be3bac9e74"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        }
+      },
+      "case_sha256": "855177b344e942eb6d9cb4f5f078cd96067dc21e762b49fadd9c1d8d600a36db",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\dg-serial-replay",
+        "source_case_sha256": "278ee390d72998df0101d492dc1368fb7bfbb81094ee685508ef0648b60f947c",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+            "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/distance/verdict.json",
+      "verdict_sha256": "c831238a5642439b08413162349b856aae52c1bf3361e2370a597dc6b3fc9b6a",
+      "trials": 11,
+      "mismatch_pixels": 21,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    },
+    {
+      "name": "directional",
+      "expected": "original_ub",
+      "passed": true,
+      "verdict": "original_ub",
+      "reason": "original_nondeterminism",
+      "route": "smart8",
+      "poison_proven": true,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 10
+      },
+      "oob_read_count": 2,
+      "cleanup_verified": true,
+      "reference_distinct": 2,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 24,
+      "reference_hashes": [
+        "b7c7d5295a72da208c76e058c6de5a45d6efd59a35e928bc9163926d4b571ae3",
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+        "b7c7d5295a72da208c76e058c6de5a45d6efd59a35e928bc9163926d4b571ae3"
+      ],
+      "candidate_hashes": [
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+            "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "3295c48833fd12298dde7324cc774912b9d07501ed33147093a8f9b2a297aa9a",
+            "3295c48833fd12298dde7324cc774912b9d07501ed33147093a8f9b2a297aa9a"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+          "sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297"
+        }
+      },
+      "case_sha256": "e05e619a97a67ac909b62bb03113bcdf2e22fb73555924248b3d84911b391218",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-directional-blur\\validation\\final-seed-20261112\\case-0003-smart8",
+        "source_case_sha256": "985889b872ef2f31a9cac0b72b52475a469423660ea06b1c699eb6589e996796",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+          },
+          "candidate": {
+            "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+            "sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/directional/verdict.json",
+      "verdict_sha256": "084cfca594f2ce2baef7a4de2b0bb53776e6b3cffb2d95dce02e8dc6ae789395",
+      "trials": 11,
+      "mismatch_pixels": 24,
+      "outside_ub_support": 0,
+      "oob_sites": {
+        "0x37f3": [
+          -2
+        ],
+        "0x37f8": [
+          -1
+        ]
+      }
+    },
+    {
+      "name": "radial",
+      "expected": "original_ub",
+      "passed": true,
+      "verdict": "original_ub",
+      "reason": "original_nondeterminism",
+      "route": "smart32",
+      "poison_proven": true,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 8
+      },
+      "oob_read_count": 34,
+      "cleanup_verified": true,
+      "reference_distinct": 2,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 6,
+      "reference_hashes": [
+        "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+        "ec364e144926a076e525b68185253674d63d15da688d3fee35c3b4f5c4af3f18",
+        "51f321d7add42675067ba547337a0cb75937df82e5db7881076e38064c30e791"
+      ],
+      "candidate_hashes": [
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+        "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b",
+            "90e3446cd4e13347da40f6812c322f06a1e9ca286af83ba24703af23e158c61b"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "9a4fb0fb67865a564bd1bc5d5b069568cfb899129d349f0e933f0932f063a89d",
+            "9a4fb0fb67865a564bd1bc5d5b069568cfb899129d349f0e933f0932f063a89d"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+          "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+        }
+      },
+      "case_sha256": "c1e6b6ff4a32265ff4d18fe70b790db60a1c5809c032e6b13bd53fedc49a254d",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32",
+        "source_case_sha256": "8170bde2e29875421a401837a85e4c9b6794df5094261551950587b2b44bb4bb",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+            "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/radial/verdict.json",
+      "verdict_sha256": "677ff9b27010fe50af11ba617088979592680c5a0dc52e8fec9e50453a2f92d9",
+      "trials": 11,
+      "mismatch_pixels": 6,
+      "outside_ub_support": 0,
+      "oob_sites": {
+        "0x95cd": [
+          -3,
+          -2,
+          -1
+        ],
+        "0x95d8": [
+          -4,
+          -3,
+          -2,
+          -1
+        ]
+      }
+    },
+    {
+      "name": "exact-blur8",
+      "expected": "inconclusive",
+      "passed": true,
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "route": "smart8",
+      "poison_proven": false,
+      "poison_difference": null,
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc",
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc",
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc"
+      ],
+      "candidate_hashes": [
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc",
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc",
+        "492276e49e5338c1a32cbe1450dff004af34a5c14a66aa9cdf17b08fb4ed29dc"
+      ],
+      "poison_groups": {},
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+          "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+        }
+      },
+      "case_sha256": "cab30c45d0613f95805e58b6848ca19ebfc8532ea817c6e77c581dcacea90ebe",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMBlur\\render\\case-0003-smart8",
+        "source_case_sha256": "6ad4431446e17f776b93b86deeed6a8729990a94e6f8b130bfd13e49cbcf6043",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+            "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMBlur.aex",
+            "sha256": "b5894283c866ac86850ccc9c1aa9d91f2b51d1fba432982484c8c52ca721f54b"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/exact-blur8/verdict.json",
+      "verdict_sha256": "ccbd416fbe1c32a987b4fc6549e304153d06a696ccf62f38ac714d259982053f",
+      "trials": 6,
+      "mismatch_pixels": 0,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    },
+    {
+      "name": "exact-directional16",
+      "expected": "inconclusive",
+      "passed": true,
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "route": "smart16",
+      "poison_proven": false,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 0
+      },
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f"
+      ],
+      "candidate_hashes": [
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+        "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+            "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f",
+            "2424035251d7948765a05a428451c729eb577df17b78724a58ee8d04b0587d5f"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+          "sha256": "d8139a723847a60d98424ba9bfba3c627e46fb2edc299e0832c8c4bdf235b94b"
+        }
+      },
+      "case_sha256": "028295ba02a1f589db8e08fa1e923fd714509788c366c25d9acfaacbfc314510",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMDirectionalBlur\\render\\case-0000-smart16",
+        "source_case_sha256": "06090c84425ebff6645df5d5b81b9e7de05e07132cb4dbae9c1f4dbe3e9dbd33",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+            "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMDirectionalBlur.aex",
+            "sha256": "d8139a723847a60d98424ba9bfba3c627e46fb2edc299e0832c8c4bdf235b94b"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/exact-directional16/verdict.json",
+      "verdict_sha256": "305755c2e388a841aeb70ecca706cb8472d6b9e58f433096a80f8c5f3697daf3",
+      "trials": 11,
+      "mismatch_pixels": 0,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    },
+    {
+      "name": "exact-radial32",
+      "expected": "inconclusive",
+      "passed": true,
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "route": "smart32",
+      "poison_proven": false,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 0
+      },
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a"
+      ],
+      "candidate_hashes": [
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+        "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+            "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a",
+            "ed8e1d7bbe425383ad4ac6a19e45cf362d061c12c55accf9d55e4b84c1acf09a"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+          "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+        }
+      },
+      "case_sha256": "e770f327f234ee7eaaa2f821c3796007ba4e0d70ea587ac2593cbbbc66f13bc4",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0000-smart32",
+        "source_case_sha256": "7c8b8319a346ced1b09265badb328e4b493842a6f2e7196bb090eb74ca0a2444",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+            "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/exact-radial32/verdict.json",
+      "verdict_sha256": "8abbf7eff35c10546004bada1426fd4ce52e31f698927c14749a51f4c8fafd5c",
+      "trials": 11,
+      "mismatch_pixels": 0,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    },
+    {
+      "name": "exact-rust-forward",
+      "expected": "inconclusive",
+      "passed": true,
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "route": "classic8",
+      "poison_proven": false,
+      "poison_difference": null,
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075"
+      ],
+      "candidate_hashes": [
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075"
+      ],
+      "poison_groups": {},
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\ubdetect\\runs\\qualification-final\\forward.aex",
+          "sha256": "b80667f2e222faba42c574ddfe50b7c8f5a6a83cfbfd9fb3d7383d2adee1d43e"
+        }
+      },
+      "case_sha256": "f394c329c4e70cfd49d98681c56c61ba1b45d39f08c363ef2b2ff38094c9c3b0",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\render\\case-0003-classic8",
+        "source_case_sha256": "613e078c2c0b858310987355307e4331fbb428f757e065d5e56b6cc7a99deeb6",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+            "sha256": "623e29b1b779f56350e1b56ac63cafadd8212e70d2acb451fa3395afaefa0abb"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/exact-rust-forward/verdict.json",
+      "verdict_sha256": "39bea379745cbcaa332c1fd8f2dbd8d9d7088aae5bd0670d2009c77145fc405f",
+      "trials": 6,
+      "mismatch_pixels": 0,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    },
+    {
+      "name": "rust-bug",
+      "expected": "stable_mismatch",
+      "passed": true,
+      "verdict": "stable_mismatch",
+      "reason": "stable_in_tested_trials",
+      "route": "classic8",
+      "poison_proven": false,
+      "poison_difference": null,
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075",
+        "0b5e33f6beaa7064de489cff64dffecc43208a1ebab5e896e0f21f11fa3e6075"
+      ],
+      "candidate_hashes": [
+        "bd337e31ed0d8c3d8b89d42b48b6552b66c117c36c188d5ad8f139dae0f99e3e",
+        "bd337e31ed0d8c3d8b89d42b48b6552b66c117c36c188d5ad8f139dae0f99e3e",
+        "bd337e31ed0d8c3d8b89d42b48b6552b66c117c36c188d5ad8f139dae0f99e3e"
+      ],
+      "poison_groups": {},
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+          "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\ubdetect\\runs\\qualification-final\\bug.aex",
+          "sha256": "67603aecf4e3b5593d98fa2733fa71791c16d4b20238a0582875d6f5e4bf1d93"
+        }
+      },
+      "case_sha256": "3c2a66e94f8717141fea1876128f0b581ff55f3d11e346a2cfe0d892e36fafe1",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMSmoother\\render\\case-0003-classic8",
+        "source_case_sha256": "613e078c2c0b858310987355307e4331fbb428f757e065d5e56b6cc7a99deeb6",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+            "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMSmoother.aex",
+            "sha256": "623e29b1b779f56350e1b56ac63cafadd8212e70d2acb451fa3395afaefa0abb"
+          }
+        }
+      },
+      "evidence": "runs/qualification-final/rust-bug/verdict.json",
+      "verdict_sha256": "8ad2d25839705814173a308ad4ae3980527ddc1c974ceb8922aba122b2d99cb9",
+      "trials": 6,
+      "mismatch_pixels": 1,
+      "outside_ub_support": 1,
+      "oob_sites": {}
+    },
+    {
+      "name": "host-suite-fill",
+      "expected": "inconclusive",
+      "passed": true,
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "route": "smart32",
+      "poison_proven": false,
+      "poison_difference": {
+        "png": "poison-difference.png",
+        "npz": "poison-difference.npz",
+        "pixels": 0
+      },
+      "oob_read_count": 0,
+      "cleanup_verified": true,
+      "reference_distinct": 1,
+      "candidate_distinct": 1,
+      "reference_varying_pixels": 0,
+      "reference_hashes": [
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a"
+      ],
+      "candidate_hashes": [
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+        "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a"
+      ],
+      "poison_groups": {
+        "00000000": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+            "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a"
+          ],
+          "varying_pixels": 0
+        },
+        "3f3f3f3f": {
+          "successful": 2,
+          "distinct_outputs": 1,
+          "hashes": [
+            "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a",
+            "1d82d14ee40bde59e2b5f6bed63be2a90e9b427989a070a8e5645cdf0e28977a"
+          ],
+          "varying_pixels": 0
+        }
+      },
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+          "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+          "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+        }
+      },
+      "case_sha256": "635459acd79557dd357bdc5417f7f75d780608206d65e9a5f62aa3a9fbf80134",
+      "case_provenance": {
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\cross-check-final\\OLMRadialBlur\\render\\case-0017-smart32",
+        "source_case_sha256": "8170bde2e29875421a401837a85e4c9b6794df5094261551950587b2b44bb4bb",
+        "historical_identities": {
+          "harness": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+            "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+          },
+          "reference": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+            "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+          },
+          "candidate": {
+            "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\integration\\staged-final\\OLMRadialBlur.aex",
+            "sha256": "51eaea21f9bd0e0e00c69fa2ab402947cfc8af5c75e17f05afbd217f86c366f3"
+          }
+        },
+        "control": "Only Noise Offset slot 28 changed to zero"
+      },
+      "evidence": "runs/qualification-final/host-suite-fill/verdict.json",
+      "verdict_sha256": "7312a3cb3e6f340cc166fad46dae32a9df9f12f03d813ddebc0326488abfc80f",
+      "trials": 11,
+      "mismatch_pixels": 0,
+      "outside_ub_support": 0,
+      "oob_sites": {}
+    }
+  ],
+  "trial_count": 84,
+  "cleanup_verified": true,
+  "raw_evidence": "runs/qualification-final/",
+  "sources": {
+    "ubdetect.py": "e7c462a2bcb04c780a53a1f5621456832ce54cebc27e263b022cb70ce37049c2",
+    "probes.py": "908a14c9dd276f6a005cdf70a815cfdcbc1a883638c9c94917cfddc53b95e8e3",
+    "validate_real.py": "a97928ad01b651f0f87b95ae9b98cb6a4c409d6de589045239f8230286ba0a0b",
+    "bug_fixture.rs": "2750dedbdf46dade223fda8392aa672b24551f60e83445a48adc72bf1487efde",
+    "test_ubdetect.py": "dfc3db10c68e962cb771e0031840c8b54c697163ffc0b24f368b03c1fb1c70b3"
+  },
+  "limits": [
+    "No native AE/macOS qualification",
+    "Distance classic8 is a non-AE debug route",
+    "Param/arbitrary/padded-secondary real-render poisoning requires reviewed profiles or HARNESS_PROPOSAL.md",
+    "Finite stable_mismatch does not prove absence of UB",
+    "Raw artifacts and machine paths are local-only"
+  ]
+}

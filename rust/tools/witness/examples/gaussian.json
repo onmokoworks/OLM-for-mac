@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "module": "../../../../../ghidra_windows_aex/OLMDirectionalBlur.aex",
+  "fma": "auto",
+  "buffers": {"table": {"size": 128, "fill": 165}},
+  "trace": {"math": true, "budget": 8},
+  "calls": [{
+    "label": "DirectionalBlur Gaussian, length 32",
+    "rva": "0x1830",
+    "args": [{"type": "ptr", "buffer": "table"}, {"type": "i32", "value": 32}],
+    "return": "void"
+  }]
+}

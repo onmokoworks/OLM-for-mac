@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "module_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "routes": [
+    "classic8"
+  ],
+  "undefined_contract": true,
+  "hooks": [
+    {
+      "name": "classic_local_refcon",
+      "rva": "0x1174dfd",
+      "instruction": "89bc2474020000",
+      "kind": "span",
+      "address": {
+        "reg": "rsp",
+        "offset": "0x1c8"
+      },
+      "size": 172,
+      "basis": "Classic8 branch local refcon RSP+0x1b0, uninitialized +0x18 through +0xc3; pointers +0,+8,+0x10 and +0xc4,+0xdc are initialized by following instructions. A-diag/report.md section 3; no saved register, return address or cookie is changed."
+    }
+  ]
+}

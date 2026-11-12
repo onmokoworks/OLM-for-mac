@@ -1,0 +1,10 @@
+{
+  "schema_version":1,
+  "module_sha256":"60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "functions":[
+    {"name":"extent_sincos", "rva":"0x132b2e0", "args":["f32"], "return":"f64", "adapter":"kirakira.extent_sincos", "max_calls":8}
+  ],
+  "imports":[
+    {"name":"powf", "args":["f32","f32"], "return":"f32", "adapter":"math.powf", "max_calls":8}
+  ]
+}

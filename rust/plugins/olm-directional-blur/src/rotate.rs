@@ -4,7 +4,7 @@ use olm_math::{
     x86::{add, cvttss2si, div, mul, sub},
     Mode,
 };
-pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f32) {
+pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f32) { #[cfg(feature = "stage-dump")] let capture = crate::stage_dump::begin(src, dst, w, h, angle);
     let co = cosf(angle, Mode::Fma);
     let si = sinf(angle, Mode::Fma);
     for y in 0..h {
@@ -58,7 +58,7 @@ pub fn rgba(src: &[[f32; 4]], dst: &mut [[f32; 4]], w: usize, h: usize, angle: f
             );
             dst[y * w + x] = [r, g, blue, a];
         }
-    }
+    } #[cfg(feature = "stage-dump")] crate::stage_dump::end(dst, capture);
 }
 pub fn scalar(src: &[f32], dst: &mut [f32], w: usize, h: usize, angle: f32) {
     let co = cosf(angle, Mode::Fma);

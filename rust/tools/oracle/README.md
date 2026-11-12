@@ -1,5 +1,12 @@
 # AEXCompat bit-exact oracle
 
+Resident multi-case feasibility is documented in
+[`../fastrender/AEXCOMPAT_PROPOSAL.md`](../fastrender/AEXCOMPAT_PROPOSAL.md).
+Existing AEXCompat sessions retain sequence state and lack the fresh-case
+boundary needed by this oracle. No `--resident` flag was added; per-process
+behavior remains unchanged. The linked measurement records 33 exact original
+self-comparison pairs and cold/warm timing, not resident equivalence.
+
 `olm_oracle.py` compares any two inspectable effect `.aex` files through the
 Windows AEXCompat CPU harness. It never modifies or copies the plug-ins, installs
 into AE, or launches AE. This is **AEXCompat evidence, not native AE conformance**.
@@ -22,7 +29,7 @@ From the repository root, in PowerShell:
 $original = 'D:\Projects\01_Project\04_Tools\olm for mac\ghidra_windows_aex\OLMBlur.aex'
 $candidate = 'D:\build\OLMBlur.aex'
 python rust/tools/oracle/olm_oracle.py inventory --reference $original --candidate $candidate --out rust/tools/oracle/runs/inventory
-python rust/tools/oracle/olm_oracle.py render --reference $original --candidate $candidate --cases 20 --seed 20261112 --jobs 4 --downsample 1,1/2,1/4 --out rust/tools/oracle/runs/comparison
+python rust/tools/oracle/olm_oracle.py render --reference $original --candidate $candidate --cases 20 --seed 20261112 --jobs 3 --downsample 1,1/2,1/4 --out rust/tools/oracle/runs/comparison
 python rust/tools/oracle/olm_oracle.py replay rust/tools/oracle/runs/comparison/case-0003-smart32
 ```
 
@@ -41,7 +48,7 @@ Additional render options:
 | `--extent 0,0,3,7` | SmartFX output demand rectangle `[left,top,right,bottom]`; use SmartFX routes only |
 | `--timeout 120` | Default seconds per render/replay process; inventory defaults to 60. Self-test also defaults to 120; use an explicit override for shorter probes |
 | `--force-classic` | Non-AE debug only: allow classic8/16 probes of a SmartFX effect; labelled `non_ae_debug` in JSON and the table |
-| `--jobs N` | Concurrent route-cases; default half the logical CPU count, minimum one |
+| `--jobs N` | Concurrent route-cases; 1..3, default half the logical CPU count capped at three |
 | `--perturb-candidate 1=0.5` | Debug negative control: add 0.5 to candidate numeric slot 1; repeatable option |
 
 Perturbations are never clamped. New case plans record numeric bounds and reject
@@ -200,10 +207,10 @@ are rejected explicitly rather than silently dropping a requested extent.
 ## Self-test and measured results
 
 ```powershell
-python -m unittest discover -s rust/tools/oracle -p test_oracle.py -v
+python -m unittest discover -s rust/tools/oracle -p "test_*.py" -v
 # Or, if installed:
 python -m pytest rust/tools/oracle -q
-python rust/tools/oracle/self_test.py --out rust/tools/oracle/runs/all-ten-new --jobs 4
+python rust/tools/oracle/self_test.py --out rust/tools/oracle/runs/all-ten-new --jobs 3
 ```
 
 Unit coverage includes deterministic generation across scheduling, alpha inputs,
@@ -358,12 +365,13 @@ To reproduce the final 20-case runs (use new output directories):
 $originals = 'D:\Projects\01_Project\04_Tools\olm for mac\ghidra_windows_aex'
 foreach ($name in @('DistanceGradation', 'OLMRadialBlur')) {
     $aex = Join-Path $originals ($name + '.aex')
-    python rust/tools/oracle/olm_oracle.py render --reference $aex --candidate $aex --cases 20 --seed 20261112 --jobs 4 --downsample 1,1/2,1/4 --timeout 120 --out "rust/tools/oracle/runs/review-new-$name"
+    python rust/tools/oracle/olm_oracle.py render --reference $aex --candidate $aex --cases 20 --seed 20261112 --jobs 3 --downsample 1,1/2,1/4 --timeout 120 --out "rust/tools/oracle/runs/review-new-$name"
 }
 ```
 
-The loop is sequential across plug-ins; within each run, `--jobs 4` controls
-case parallelism. No native AE or GUI was used.
+The loop is sequential across plug-ins; within each run, `--jobs 3` controls
+case parallelism under the current limit. Historical measurements above used
+four jobs; their recorded counts/options are not rewritten. No native AE or GUI was used.
 
 
 ### Additional bounded maxima replay
@@ -581,6 +589,158 @@ the rebuilt harness, tool hash, route counts and plan verification. Full artifac
 `runs/kirakira-777123-untouched-inventory/` and
 `runs/kirakira-777123-untouched-render/`. Earlier KiraKira failures above used the
 old harness/generator and remain historical observations, not this run's result.
+
+## Porting workflows: check, minimize and sweep
+
+Existing public oracle functions remain available with their prior arguments and
+result shapes. `run_process` additionally accepts optional `cwd=None`; existing
+calls are unchanged. Workflows live in `oracle_workflows.py`, loaded lazily by
+the CLI. `generate_sweep_cases` is exported directly from `olm_oracle` for triage.
+The current CLI and self-test limit `--jobs` to **1..3**. Historical four-job
+measurements above remain historical facts.
+
+### Build and check one crate
+
+```powershell
+python rust/tools/oracle/olm_oracle.py check olm-blur --jobs 3
+python rust/tools/oracle/olm_oracle.py check olm-blur --full --jobs 3
+python rust/tools/oracle/olm_oracle.py check new-effect --reference D:\originals\NewEffect.aex --jobs 3
+```
+
+`check` runs `cargo build --release -p <crate> --locked --jobs N
+--message-format=json-render-diagnostics` with `rust/` as its working directory.
+`--rust-root` overrides that workspace. Build output goes only to ignored
+`rust/tools/oracle/runs/cargo-target/`; `--locked` prevents edits to Cargo.lock.
+Workspace/lockfile corrections must be handled by the workspace owner. The tool
+does not rewrite workspace manifests or other kits' directories.
+
+The emitted `cdylib` DLL is taken from Cargo's artifact JSON, not from a guessed
+or possibly stale target path. `--lib-name` supports custom library target names.
+It stages only the candidate DLL under the **original .aex filename**, inside the
+run's `stage/` directory with its own ignore-all `.gitignore`. The original is
+read only and never copied. Plug-ins needing separate runtime dependencies may
+require a separately prepared candidate; this command only stages the DLL.
+
+Next it records inventory and runs the applicable routes. Quick mode uses **6
+cases/route**; `--full` uses the standard **20 cases/route**. Both use seed
+20261112 by default, sizes 1x1/3x7/97x61/256x144 and downsample 1,1/2,1/4.
+`--seed`, `--timeout` (120s), `--build-timeout` (900s), `--harness` and `--out`
+are configurable. Build logs, inventory, staged identity and render summaries
+remain beneath the run directory. One final line reads
+`ORACLE PASS|FAIL|INCOMPLETE|ERROR crate=... mode=... summary=...`.
+No applicable renders is incomplete, not PASS. Exit codes retain 0/1/2 semantics.
+
+The built-in mapping is:
+
+| Crate | Original basename |
+| --- | --- |
+| color-keep | ColorKeep.aex |
+| olm-blur | OLMBlur.aex |
+| olm-color-key | OLMColorKey.aex |
+| olm-directional-blur | OLMDirectionalBlur.aex |
+| olm-distance-gradation | DistanceGradation.aex |
+| olm-kirakira | OLMKiraKira.aex |
+| olm-radial-blur | OLMRadialBlur.aex |
+| olm-smoother | OLMSmoother.aex |
+| olm-smoother2 | OLMSmoother2.aex |
+| olm-toon-dilate | OLMToonDilate.aex |
+
+`--originals` overrides the default original-binary directory; an explicit
+`--reference` takes precedence and also supports new crates.
+
+### Minimize a saved mismatch
+
+```powershell
+python rust/tools/oracle/olm_oracle.py minimize rust/tools/oracle/runs/comparison/case-0003-smart8 --out rust/tools/oracle/runs/minimized --max-attempts 80
+```
+
+The source case, request/input asset hashes and executable hashes are verified
+before any trial. The source is never changed. Each candidate reduction is saved
+as a replayable `step-NNNN-operation/` with both requests, inputs, outputs, logs
+and `diff.json`. Rejected trials remain evidence too. Default **two confirmations**
+must both report a pixel mismatch; harness failures, exact outputs and timeouts
+are rejected. `--confirmations` can explicitly change this count. Trials are
+sequential (no extra worker pool). `--timeout` defaults to 120 seconds per process.
+
+The deterministic greedy reduction tries:
+
+1. Reset one assigned slot on **both sides** by omitting it, returning each side
+   to its own untouched default (including a debug perturbation, if removable).
+2. Normalize both downsample ratios to 1 and update full-resolution dimensions.
+3. Reduce image dimensions by halves, then one pixel, using top-left cropping
+   and nearest-neighbor downscaling. Secondary PNG layers shrink proportionally;
+   full-resolution dimensions and explicit SmartFX request rectangles are updated.
+
+After an accepted reduction the search restarts. A complete unsuccessful pass
+reports `local_minimum_under_documented_moves`; this is **not** a proof of a
+global minimum over all images, crop origins, values or parameter subsets.
+At the attempt budget it reports `attempt_budget_exhausted` and returns the best
+confirmed reproducer without claiming minimality. A non-reproducing baseline
+returns 2. Successful minimization returns 0 even though the saved case is
+intentionally mismatching; ordinary `replay` of it returns 1.
+
+`summary.json` identifies `minimal_case_dir`, original/final dimensions, every
+attempt and the first differing pixel/channel with the value pair. Deep native
+sidecars use packed ARGB indices; PNG uses RGBA. Float differences include raw
+u32 hexadecimal words and textual float values, retaining signed zeros/NaNs.
+The saved requests are authoritative (`requests_authoritative: true`); the old
+input seed remains provenance, not a recipe for regenerating the cropped image.
+Only self-contained PNG-input bundles are supported; external secondary layers
+are rejected. Two confirmations reduce, but cannot prove absence of, nondeterminism.
+
+### Importable one-parameter sweep
+
+```python
+from olm_oracle import generate_sweep_cases, make_request
+
+plans = generate_sweep_cases(inventory["parameters"], seed=42,
+                             size=(31, 19), downsample="1/2")
+requests = [make_request(plan) for plan in plans]
+```
+
+This pure helper returns an untouched baseline, followed by unique typed
+min/max/random assignments with **one slot varied per plan**. All plans share
+the same input seed/geometry so parameter effects can be compared to defaults.
+Values equal to defaults stay untouched, unsupported custom/path payloads stay
+at defaults, and layer probes use the normal deterministic layer input convention.
+Plans carry `sweep.slot`/`sweep.selection` metadata and work with existing
+`make_request`/`run_case`; neither inventory nor global RNG state is mutated.
+
+### Measured demonstration and tests
+
+**28/28 unit tests passed** using
+`python -m unittest discover -s rust/tools/oracle -p "test_*.py" -q`.
+New coverage includes quick/full build orchestration and DLL selection, build
+failure short-circuiting, baseline repeatability, retained rejected trials,
+Windows-native bundle paths, budget accounting, exact float word reporting and
+one-parameter sweeps. Cargo success paths use controlled artifacts in unit tests.
+
+Real AEXCompat demonstration: OLMBlur vs itself, smart8, 97x61, downsample 1/2,
+candidate slot 1 offset +0.5. All other parameters start untouched.
+
+| Measurement | Result |
+| --- | --- |
+| Source image | 97x61 (5917 pixels) |
+| Final image | **2x2 (4 pixels)** |
+| Downsample | 1/2 → **1** |
+| Saved attempts | **38**, including baseline and rejected trials |
+| Confirmation policy | Two mismatching pairs for every accepted step |
+| Minimality | Local minimum under documented moves |
+| First difference | **(x=0,y=1), B (RGBA index 2), reference 73 / candidate 72** |
+| Independent replay | Mismatch reproduced, exit **1**, max absolute difference 1 |
+
+The minimal case is
+`runs/kit-minimized-blur/step-0030-crop-2x2/`; the source is in
+`runs/kit-minimize-source/`, the independent replay in `runs/kit-minimal-replay/`.
+[Workflow evidence](evidence/kit-workflows.json) binds the measured summaries.
+
+The actual `check olm-blur --jobs 3` attempt stopped before compilation because
+Cargo reported `multiple workspace roots found in the same workspace`, naming
+`rust/tools/witness` and `rust`. Its verdict was **ERROR**, exit 2, and the full
+build diagnostic is in `runs/kit-check-blur/build.process.json`. This is an
+external workspace blocker; no other kit's files or Cargo workspace files were
+changed. An end-to-end native Cargo build/check success is therefore **not
+verified** in this run; the orchestration's success/failure paths are unit-tested.
 
 ## Process ownership and limitations
 

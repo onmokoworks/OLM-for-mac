@@ -13,7 +13,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--originals", type=Path, default=Path(r"D:\Projects\01_Project\04_Tools\olm for mac\ghidra_windows_aex"))
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--jobs", type=int, default=4)
+    p.add_argument("--jobs", type=int, choices=range(1, 4), default=3)
     p.add_argument("--timeout", type=float, default=120)
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)

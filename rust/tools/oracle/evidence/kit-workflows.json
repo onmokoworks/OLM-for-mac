@@ -1,0 +1,3035 @@
+{
+  "schema_version": 1,
+  "current_tool": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+    "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+  },
+  "current_workflow_tool": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_workflows.py",
+    "sha256": "635d31a5d44877f9b287b698365dae594e69f6bb16707859e0f8d532a1c738a0"
+  },
+  "unit_tests": {
+    "command": "python -m unittest discover -s rust/tools/oracle -p \"test_*.py\" -q",
+    "passed": 28,
+    "failed": 0
+  },
+  "records": {
+    "source": {
+      "sha256": "0ab4d2e20229ff0fd5f739074c4bd11c699f5fe32568e45a70497dafef505b99",
+      "summary": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "non_ae_debug_routes": [],
+        "seed": 0,
+        "cases": 1,
+        "timeout_seconds": 120,
+        "force_classic": false,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "jobs": 1,
+        "sizes": [
+          [
+            97,
+            61
+          ]
+        ],
+        "downsample": [
+          "1/2"
+        ],
+        "extent": null,
+        "perturb_candidate": [
+          [
+            1,
+            0.5
+          ]
+        ],
+        "inventory_diff": [],
+        "same_binary": true,
+        "results": [
+          {
+            "case": 0,
+            "route": "smart8",
+            "directory": "case-0000-smart8",
+            "processes": {
+              "reference": {
+                "pid": 30200,
+                "returncode": 0,
+                "environment_overrides": {
+                  "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                },
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.40599999999994907,
+                "harness_frame_timeout": false,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 38436,
+                "returncode": 0,
+                "environment_overrides": {
+                  "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                },
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.43800000000010186,
+                "harness_frame_timeout": false,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": false,
+              "mismatching_pixels": 3478,
+              "mismatching_samples": 4106,
+              "max_abs_diff": 4.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": [
+                {
+                  "x": 3,
+                  "y": 0
+                },
+                {
+                  "x": 4,
+                  "y": 0
+                },
+                {
+                  "x": 7,
+                  "y": 0
+                },
+                {
+                  "x": 8,
+                  "y": 0
+                },
+                {
+                  "x": 9,
+                  "y": 0
+                },
+                {
+                  "x": 11,
+                  "y": 0
+                },
+                {
+                  "x": 13,
+                  "y": 0
+                },
+                {
+                  "x": 16,
+                  "y": 0
+                }
+              ]
+            },
+            "status": "mismatched"
+          }
+        ],
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 0,
+            "mismatched": 1,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 4.0,
+            "mismatching_pixels": 3478,
+            "first_coordinates": [
+              {
+                "case": 0,
+                "x": 3,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 4,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 7,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 8,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 9,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 11,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 13,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 16,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "complete": true,
+        "exit_code": 1
+      }
+    },
+    "minimization": {
+      "sha256": "ca6b098a642d5cfef1b43e28c25af8f83647dc11ce97f81c320d806e231cb0b9",
+      "summary": {
+        "schema_version": 1,
+        "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimize-source\\case-0000-smart8",
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "workflow_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_workflows.py",
+          "sha256": "22ae966424be6bed86a8fa7390d29c9c2da8a31f1166ffe5c17c0285549b3f65"
+        },
+        "original_size": [
+          97,
+          61
+        ],
+        "timeout_seconds": 120,
+        "confirmations": 2,
+        "steps": [
+          {
+            "operation": "baseline",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0000-baseline",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0000-baseline",
+                "processes": {
+                  "reference": {
+                    "pid": 49824,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 48576,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 3478,
+                  "mismatching_samples": 4106,
+                  "max_abs_diff": 4.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 4,
+                      "y": 0
+                    },
+                    {
+                      "x": 7,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 11,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 52540,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.5470000000000255,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 34248,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 3478,
+                  "mismatching_samples": 4106,
+                  "max_abs_diff": 4.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 4,
+                      "y": 0
+                    },
+                    {
+                      "x": 7,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 11,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0001-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0001-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 52608,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 48148,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "downsample-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0002-downsample-1",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0002-downsample-1",
+                "processes": {
+                  "reference": {
+                    "pid": 9200,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 32016,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 2999,
+                  "mismatching_samples": 3182,
+                  "max_abs_diff": 4.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 47564,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 47440,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 2999,
+                  "mismatching_samples": 3182,
+                  "max_abs_diff": 4.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0003-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0003-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 34988,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 4704,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-48x30",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0004-crop-48x30",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0004-crop-48x30",
+                "processes": {
+                  "reference": {
+                    "pid": 41060,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 46032,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 677,
+                  "mismatching_samples": 677,
+                  "max_abs_diff": 3.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 16464,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 19576,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.5619999999998981,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 677,
+                  "mismatching_samples": 677,
+                  "max_abs_diff": 3.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0005-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0005-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 30264,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52484,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-24x15",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0006-crop-24x15",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0006-crop-24x15",
+                "processes": {
+                  "reference": {
+                    "pid": 44460,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 1432,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 179,
+                  "mismatching_samples": 179,
+                  "max_abs_diff": 3.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 27444,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 48660,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 179,
+                  "mismatching_samples": 179,
+                  "max_abs_diff": 3.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 12,
+                      "y": 0
+                    },
+                    {
+                      "x": 13,
+                      "y": 0
+                    },
+                    {
+                      "x": 14,
+                      "y": 0
+                    },
+                    {
+                      "x": 16,
+                      "y": 0
+                    },
+                    {
+                      "x": 17,
+                      "y": 0
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0007-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0007-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 47328,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 27868,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-12x7",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0008-crop-12x7",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0008-crop-12x7",
+                "processes": {
+                  "reference": {
+                    "pid": 47204,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.6089999999999236,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 1992,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 35,
+                  "mismatching_samples": 35,
+                  "max_abs_diff": 2.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    },
+                    {
+                      "x": 5,
+                      "y": 1
+                    },
+                    {
+                      "x": 7,
+                      "y": 1
+                    },
+                    {
+                      "x": 9,
+                      "y": 1
+                    },
+                    {
+                      "x": 10,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 47328,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 41744,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.4070000000001528,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 35,
+                  "mismatching_samples": 35,
+                  "max_abs_diff": 2.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 8,
+                      "y": 0
+                    },
+                    {
+                      "x": 9,
+                      "y": 0
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    },
+                    {
+                      "x": 5,
+                      "y": 1
+                    },
+                    {
+                      "x": 7,
+                      "y": 1
+                    },
+                    {
+                      "x": 9,
+                      "y": 1
+                    },
+                    {
+                      "x": 10,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0009-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0009-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 49412,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 45656,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.38999999999987267,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-6x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0010-crop-6x3",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0010-crop-6x3",
+                "processes": {
+                  "reference": {
+                    "pid": 47424,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 9200,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 8,
+                  "mismatching_samples": 8,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 2,
+                      "y": 0
+                    },
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 1,
+                      "y": 1
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    },
+                    {
+                      "x": 4,
+                      "y": 1
+                    },
+                    {
+                      "x": 5,
+                      "y": 1
+                    },
+                    {
+                      "x": 0,
+                      "y": 2
+                    },
+                    {
+                      "x": 3,
+                      "y": 2
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 13888,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.4070000000001528,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 42024,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 8,
+                  "mismatching_samples": 8,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 2,
+                      "y": 0
+                    },
+                    {
+                      "x": 3,
+                      "y": 0
+                    },
+                    {
+                      "x": 1,
+                      "y": 1
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    },
+                    {
+                      "x": 4,
+                      "y": 1
+                    },
+                    {
+                      "x": 5,
+                      "y": 1
+                    },
+                    {
+                      "x": 0,
+                      "y": 2
+                    },
+                    {
+                      "x": 3,
+                      "y": 2
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0011-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0011-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 6076,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52040,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-3x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0012-crop-3x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0012-crop-3x1",
+                "processes": {
+                  "reference": {
+                    "pid": 36772,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 27508,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-3x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0013-nearest-3x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0013-nearest-3x1",
+                "processes": {
+                  "reference": {
+                    "pid": 50776,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52872,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-3x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0014-crop-3x3",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0014-crop-3x3",
+                "processes": {
+                  "reference": {
+                    "pid": 39380,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 42312,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 2,
+                  "mismatching_samples": 2,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 1,
+                      "y": 0
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 50208,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 50416,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 2,
+                  "mismatching_samples": 2,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 1,
+                      "y": 0
+                    },
+                    {
+                      "x": 2,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0015-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0015-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 47812,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 46360,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0016-crop-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0016-crop-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 47292,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 41060,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0017-nearest-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0017-nearest-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 4704,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 43636,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0018-crop-1x3",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0018-crop-1x3",
+                "processes": {
+                  "reference": {
+                    "pid": 47408,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 50932,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0019-nearest-1x3",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0019-nearest-1x3",
+                "processes": {
+                  "reference": {
+                    "pid": 47812,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45400000000017826,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 51652,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-3x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0020-crop-3x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0020-crop-3x1",
+                "processes": {
+                  "reference": {
+                    "pid": 33704,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 49624,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-3x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0021-nearest-3x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0021-nearest-3x1",
+                "processes": {
+                  "reference": {
+                    "pid": 47328,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 36468,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-2x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0022-crop-2x3",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0022-crop-2x3",
+                "processes": {
+                  "reference": {
+                    "pid": 26568,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 45800,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 1,
+                  "mismatching_samples": 1,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 1,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 46360,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42099999999982174,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 47576,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 1,
+                  "mismatching_samples": 1,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 1,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0023-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0023-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 51752,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 49268,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0024-crop-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0024-crop-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 9496,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 44680,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0025-nearest-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0025-nearest-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 47580,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 27548,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0026-crop-1x3",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0026-crop-1x3",
+                "processes": {
+                  "reference": {
+                    "pid": 45800,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52012,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x3",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0027-nearest-1x3",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0027-nearest-1x3",
+                "processes": {
+                  "reference": {
+                    "pid": 51652,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 48636,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-2x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0028-crop-2x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0028-crop-2x1",
+                "processes": {
+                  "reference": {
+                    "pid": 52824,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52032,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-2x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0029-nearest-2x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0029-nearest-2x1",
+                "processes": {
+                  "reference": {
+                    "pid": 33704,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 43516,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-2x2",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0030-crop-2x2",
+            "accepted": true,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0030-crop-2x2",
+                "processes": {
+                  "reference": {
+                    "pid": 17032,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 19540,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45400000000017826,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 1,
+                  "mismatching_samples": 1,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 0,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              },
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "confirmation-1",
+                "processes": {
+                  "reference": {
+                    "pid": 52756,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.375,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 26568,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": false,
+                  "mismatching_pixels": 1,
+                  "mismatching_samples": 1,
+                  "max_abs_diff": 1.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": [
+                    {
+                      "x": 0,
+                      "y": 1
+                    }
+                  ]
+                },
+                "status": "mismatched"
+              }
+            ]
+          },
+          {
+            "operation": "untouched-default-slot-1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0031-untouched-default-slot-1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0031-untouched-default-slot-1",
+                "processes": {
+                  "reference": {
+                    "pid": 13376,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 8204,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0032-crop-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0032-crop-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 51992,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 51068,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0033-nearest-1x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0033-nearest-1x1",
+                "processes": {
+                  "reference": {
+                    "pid": 46440,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.45299999999997453,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 51784,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-1x2",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0034-crop-1x2",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0034-crop-1x2",
+                "processes": {
+                  "reference": {
+                    "pid": 19540,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 52588,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.4070000000001528,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-1x2",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0035-nearest-1x2",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0035-nearest-1x2",
+                "processes": {
+                  "reference": {
+                    "pid": 51084,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 51904,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43800000000010186,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "crop-2x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0036-crop-2x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0036-crop-2x1",
+                "processes": {
+                  "reference": {
+                    "pid": 29180,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 10972,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.42200000000002547,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          },
+          {
+            "operation": "nearest-2x1",
+            "directory": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0037-nearest-2x1",
+            "accepted": false,
+            "results": [
+              {
+                "case": 0,
+                "route": "smart8",
+                "directory": "step-0037-nearest-2x1",
+                "processes": {
+                  "reference": {
+                    "pid": 47812,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.43699999999989814,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  },
+                  "candidate": {
+                    "pid": 49788,
+                    "returncode": 0,
+                    "environment_overrides": {
+                      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                    },
+                    "timeout": false,
+                    "cancelled": false,
+                    "elapsed_seconds": 0.40599999999994907,
+                    "harness_frame_timeout": false,
+                    "ok": true
+                  }
+                },
+                "comparison": {
+                  "exact": true,
+                  "mismatching_pixels": 0,
+                  "mismatching_samples": 0,
+                  "max_abs_diff": 0.0,
+                  "nonfinite_difference_samples": 0,
+                  "first_coordinates": []
+                },
+                "status": "exact"
+              }
+            ]
+          }
+        ],
+        "complete": true,
+        "minimality": "local_minimum_under_documented_moves",
+        "exit_code": 0,
+        "minimal_case_dir": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\kit-minimized-blur\\step-0030-crop-2x2",
+        "final_size": [
+          2,
+          2
+        ],
+        "first_difference": {
+          "x": 0,
+          "y": 1,
+          "channel_index": 2,
+          "depth": 8,
+          "reference_word": 73,
+          "candidate_word": 72,
+          "channel_order": "RGBA",
+          "channel": "B",
+          "reference_value": 73,
+          "candidate_value": 72
+        }
+      }
+    },
+    "replay": {
+      "sha256": "a6eb368256f10ffd3eb24ed79b42b0a135aaa114347b8635ff0391e6a51c2f2c",
+      "summary": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "non_ae_debug_routes": [],
+        "route": "smart8",
+        "case": {
+          "index": 0,
+          "size": [
+            2,
+            2
+          ],
+          "input_seed": 7106521602475165645,
+          "downsample": "1",
+          "assignments": [],
+          "unassigned": [],
+          "untouched_defaults": [],
+          "numeric_ranges": {
+            "1": {
+              "minimum": 1.0,
+              "maximum": 1000.0,
+              "kind": "float"
+            },
+            "2": {
+              "minimum": 1.0,
+              "maximum": 100.0,
+              "kind": "float"
+            },
+            "3": {
+              "minimum": 1.0,
+              "maximum": 10.0,
+              "kind": "integer"
+            },
+            "4": {
+              "minimum": 1.0,
+              "maximum": 2.0,
+              "kind": "integer"
+            },
+            "5": {
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "kind": "integer"
+            }
+          },
+          "requests_authoritative": true
+        },
+        "assets": {
+          "input.png": "b053a293f47a87d0160262b4ecdda21d9337af5599fc579163b4bf7562d18e86",
+          "requests/candidate.json": "11acba1da5584a353ffebf460e2c1c5f236084c2298cd31c702ae5ee70ef8b21",
+          "requests/reference.json": "ae74516d5ab0d2144e860d0b9f85ba32c643adba70e1f7a8820daa2da9c40d9b"
+        },
+        "minimized_by_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_workflows.py",
+          "sha256": "22ae966424be6bed86a8fa7390d29c9c2da8a31f1166ffe5c17c0285549b3f65"
+        },
+        "replayed_by_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "original_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "seed": null,
+        "cases": 1,
+        "results": [
+          {
+            "case": 0,
+            "route": "smart8",
+            "directory": "kit-minimal-replay",
+            "processes": {
+              "reference": {
+                "pid": 51352,
+                "returncode": 0,
+                "environment_overrides": {
+                  "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                },
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.43699999999989814,
+                "harness_frame_timeout": false,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 49236,
+                "returncode": 0,
+                "environment_overrides": {
+                  "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+                },
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.43699999999989814,
+                "harness_frame_timeout": false,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": false,
+              "mismatching_pixels": 1,
+              "mismatching_samples": 1,
+              "max_abs_diff": 1.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": [
+                {
+                  "x": 0,
+                  "y": 1
+                }
+              ]
+            },
+            "status": "mismatched"
+          }
+        ],
+        "complete": true,
+        "timeout_seconds": 120,
+        "render_environment_overrides": {
+          "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+        },
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "route_scope": "ae_dispatch_contract",
+            "exact": 0,
+            "mismatched": 1,
+            "reference_unrenderable": 0,
+            "reference_timeout": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 1.0,
+            "mismatching_pixels": 1,
+            "first_coordinates": [
+              {
+                "case": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        "exit_code": 1
+      }
+    },
+    "check": {
+      "sha256": "d775c9406e42876cd86a538dbee24537ef66eb67ebcecea6dab31a7e63665ce7",
+      "summary": {
+        "schema_version": 1,
+        "crate": "olm-blur",
+        "full": false,
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "7efea931782efb6c1bc064bf8e336e9e586aa724a80b19226a2e88d237029413"
+        },
+        "workflow_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\oracle_workflows.py",
+          "sha256": "32022cb625a97bee79f34996fda17cc49848a35f811b5783386b7ccf7a1a1ed1"
+        },
+        "complete": false,
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "error": "cargo build failed/timed out; see build.process.json",
+        "exit_code": 2,
+        "verdict": "ERROR"
+      }
+    },
+    "build_process": {
+      "argv": [
+        "cargo",
+        "build",
+        "--release",
+        "-p",
+        "olm-blur",
+        "--locked",
+        "--jobs",
+        "3",
+        "--message-format=json-render-diagnostics"
+      ],
+      "pid": 24032,
+      "returncode": 101,
+      "environment_overrides": {
+        "CARGO_TARGET_DIR": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\runs\\cargo-target"
+      },
+      "timeout": false,
+      "cancelled": false,
+      "elapsed_seconds": 0.1089999999999236,
+      "stdout": "",
+      "stderr": "error: multiple workspace roots found in the same workspace:\n  D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\witness\n  D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\n"
+    }
+  },
+  "measured_workflow_source_snapshot": "runs/oracle_workflows.minimize-demo.py"
+}

@@ -64,7 +64,7 @@ pub fn gaussian(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
 pub fn gaussian_native(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
     gaussian_mode(mat, w, h, kx, ky, true);
 }
-fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, native: bool) {
+fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, native: bool) { #[cfg(feature = "stage-dump")] let native = crate::stage_dump::native_mode(native); #[cfg(feature = "stage-dump")] let capture = crate::stage_dump::begin(mat, w, h, kx, ky, native);
     let a = kernel(kx);
     let b = kernel(ky);
     let mut tmp = vec![0.; w * h];
@@ -96,7 +96,7 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
             };
             tmp[y * w + x] = v;
         }
-    }
+    } #[cfg(feature = "stage-dump")] crate::stage_dump::middle(&mut tmp, &capture);
     for y in 0..h {
         for x in 0..w {
             let at = |dy: isize| tmp[cl(y as isize + dy, h) * w + x];
@@ -118,7 +118,7 @@ fn gaussian_mode(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize, nati
             }
             mat[y * w + x] = v;
         }
-    }
+    } #[cfg(feature = "stage-dump")] crate::stage_dump::end(mat, capture);
 }
 pub fn box_blur(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
     let area = kx as f64 * ky as f64;
@@ -245,4 +245,10 @@ pub fn median(mat: &mut [f32], w: usize, h: usize, n: usize) {
             mat[y * w + x] = *mid;
         }
     }
+}
+
+// Diagnostic access to the retained historical arithmetic; no default-build item.
+#[cfg(feature = "stage-dump")]
+pub(crate) fn stage_dump_gaussian_sse(mat: &mut [f32], w: usize, h: usize, kx: usize, ky: usize) {
+    gaussian_mode(mat, w, h, kx, ky, false);
 }

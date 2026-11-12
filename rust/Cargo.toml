@@ -2,7 +2,8 @@
 resolver = "2"
 members = ["crates/*", "plugins/*", "tools/*"]
 # tools/oracle is a Python tool, not a Cargo package.
-exclude = ["olmcolorkey_cli", "tools/oracle"]
+# tools/witness is a standalone native host with its own [workspace].
+exclude = ["olmcolorkey_cli", "tools/oracle", "tools/witness", "tools/fastrender"]
 
 [workspace.package]
 version = "0.1.0"

@@ -1,0 +1,349 @@
+{
+  "artifact_directory": "rust/tools/record/runs/real-final",
+  "date": "2026-11-12",
+  "mechanism": "Windows DEBUG_PROCESS + INT3 in owned process tree",
+  "negative_control": {
+    "adapter": "wrong.gaussian",
+    "adapter_cleanup": true,
+    "adapter_sha256": "7be9ac025f40ffeb7de4b8edca40d501bfa7f0bfcb4ac65c139abc4e6a7f4f71",
+    "comparisons": [
+      {
+        "actual_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "exact": true,
+        "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "first_difference": null,
+        "item": "record/original:return"
+      },
+      {
+        "actual_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "exact": true,
+        "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "first_difference": null,
+        "item": "record/rust:return"
+      },
+      {
+        "actual_sha256": "4bc91efeb66a2f56dd1f18a7623fb8cb5a6799e3bdeab60cf6a8e20913720be6",
+        "bytes": 32,
+        "exact": true,
+        "expected_sha256": "4bc91efeb66a2f56dd1f18a7623fb8cb5a6799e3bdeab60cf6a8e20913720be6",
+        "first_difference": null,
+        "item": "record/original:buffer0"
+      },
+      {
+        "actual_sha256": "3805d0a9bc7481492dbb4741d24268406fac9699b3e1ce5c2971bb68cf7214d8",
+        "bytes": 32,
+        "exact": false,
+        "expected_sha256": "4bc91efeb66a2f56dd1f18a7623fb8cb5a6799e3bdeab60cf6a8e20913720be6",
+        "first_difference": 0,
+        "item": "record/rust:buffer0"
+      }
+    ],
+    "exact": false,
+    "exit_code": 1,
+    "original_cleanup": true,
+    "original_module_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "record_sha256": "586a2d1ef9ad71d962f8dbb3d297927f1ce10a27dfb444d39d2771a142c8fc91",
+    "witness_manifest_sha256": "7b373ecf565734882a5a7eae41a8966f3e60d2945f28d50b51e7c5c7104ad816"
+  },
+  "original_and_rust_compared_bytes_each": 18680,
+  "pass": true,
+  "plugins": {
+    "directional": {
+      "budget_closed": {
+        "expf": "call_budget"
+      },
+      "calls": 18,
+      "capture_manifest_sha256": "846452c26ee5425e74f1983dfa64072a59e02b0a915f1858f2493003842c0de7",
+      "cleanup_verified": true,
+      "control_exact": true,
+      "counts": {
+        "cosf": 2,
+        "expf": 8,
+        "gaussian": 4,
+        "rotate": 2,
+        "sinf": 2
+      },
+      "exact": 18,
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "imports": [
+        {
+          "name": "expf",
+          "provider_rva": "0xa8740",
+          "provider_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+        },
+        {
+          "name": "cosf",
+          "provider_rva": "0xa7f70",
+          "provider_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+        },
+        {
+          "name": "sinf",
+          "provider_rva": "0xac360",
+          "provider_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+        }
+      ],
+      "module_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "original_sha256_after": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "render_evidence": {
+        "gpu_render_dispatched": false,
+        "pre_render_error": 0,
+        "render_path": "smartfx",
+        "smart_render_error": 0,
+        "smart_render_selector_dispatched": true,
+        "smart_render_selector_error": 0,
+        "stage_events": [
+          {
+            "errors": {},
+            "stage": "global_setup",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "global_setup",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "params_setup",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "params_setup",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "smart_render",
+            "state": "begin"
+          },
+          {
+            "errors": {},
+            "stage": "smart_pre_render",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "smart_pre_render",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "smart_render_cpu",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "smart_render_cpu",
+            "state": "end"
+          },
+          {
+            "errors": {
+              "pre_error": 0,
+              "render_error": 0
+            },
+            "stage": "smart_render",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "global_setdown",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "global_setdown",
+            "state": "end"
+          }
+        ],
+        "worker_classification": "ok"
+      },
+      "replay_comparison_sha256": [
+        "119b5d61ac055b16cf511403ac8b0bf6fde7bda6f6f967da6b6570d1b503c2f7",
+        "ede7b3466d2cae7bc5183249f74d5f13b98ac64badc2966b4ac1bc12af970f1b",
+        "aa813b586babb2e3cda491cdf79a838e969a64121db4b481950bfc35a31548a6",
+        "8f87ad86a57fb96c474db580ac1a81d1c9c142b52fd49e050cd01ad81f4b9fad",
+        "27a897c840df48a42771f67b86cf067fcae81035d28ed748b58b76c8643a6dca",
+        "df7221400ecd8e19b654987983b38cc64adb079f3bf482fb0eaf8c520e51f714",
+        "b443192d054fe58ff47031131c67f0c5b3642b2d79166a6720401bc16daf8792",
+        "295a343ec739ebf1db6b33931ef153b7c78fa4e636568b22880289f52b05ec5b",
+        "e12d278864ac41c68ee10d78bbcf963cca5e0ef93918c7354b1e28362b060cff",
+        "a312988dc2d4dcf09ce57d80814dfa95b7f11ddfce331f12bc802bc05384ad48",
+        "eb90510e15988027f5b8aed4c224122ebed6b8dc8e13d5e1cac5dd4b1508f283",
+        "58edc1a3e635d879d0f6f4c120a0b19bdf4c3bf832aec37998da7abb53b67bdb",
+        "933b107f5199708a768d17f99afde696e5a0cf142b9f1c7c18e37358738ad249",
+        "084c1088375fed61ad63303916767c970c80750038199c9801ee1eb0661df664",
+        "a5af325b64ffb671daf20a27f9c0be3d5fe5a3d58b1cce9796aa2d81f2c5d189",
+        "efa4b51d559bff046935f9033cc1ff118c5f58882ffe8a7d71125e9a399225a0",
+        "30e5f769e34d26bcc7137eeba9f21301ead9240c003355ad2cd0efe7ba978bbc",
+        "11a3c3aec4a3044d0f8a4920fd695fdc4df2e009d328e5b64ddd1f6167eb790c"
+      ],
+      "snapshot_bytes": 37136,
+      "unobserved": []
+    },
+    "kirakira": {
+      "budget_closed": {
+        "powf": "call_budget"
+      },
+      "calls": 12,
+      "capture_manifest_sha256": "685a8af3811e485a28741b9300cd28d7b28271d9e45d2c157afc90e783428ff0",
+      "cleanup_verified": true,
+      "control_exact": true,
+      "counts": {
+        "extent_sincos": 4,
+        "powf": 8
+      },
+      "exact": 12,
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "imports": [
+        {
+          "name": "powf",
+          "provider_rva": "0xa9f20",
+          "provider_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+        }
+      ],
+      "module_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "original_sha256_after": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "render_evidence": {
+        "gpu_render_dispatched": false,
+        "pre_render_error": 0,
+        "render_path": "smartfx",
+        "smart_render_error": 0,
+        "smart_render_selector_dispatched": true,
+        "smart_render_selector_error": 0,
+        "stage_events": [
+          {
+            "errors": {},
+            "stage": "global_setup",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "global_setup",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "params_setup",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "params_setup",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "smart_render",
+            "state": "begin"
+          },
+          {
+            "errors": {},
+            "stage": "smart_pre_render",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "smart_pre_render",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "smart_render_cpu",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "smart_render_cpu",
+            "state": "end"
+          },
+          {
+            "errors": {
+              "pre_error": 0,
+              "render_error": 0
+            },
+            "stage": "smart_render",
+            "state": "end"
+          },
+          {
+            "errors": {},
+            "stage": "global_setdown",
+            "state": "begin"
+          },
+          {
+            "errors": {
+              "error": 0
+            },
+            "stage": "global_setdown",
+            "state": "end"
+          }
+        ],
+        "worker_classification": "ok"
+      },
+      "replay_comparison_sha256": [
+        "8f5304f5919c3a4957e440d033511ac5eede6489c41504d061903b960c675954",
+        "df39374424aa0bd7210f98ab65eab73153d2d57445eaed4993cf16504c621df5",
+        "ab7228a4b814399d703cc7cf710add04823d1ea6ed3a5e6764122731ef43de49",
+        "b29f6b55a9f0c6b8a79b98bb7cbce25469d250194943f64c243c46831e6c4349",
+        "2dbd1c055d1841f2ca84edfe5e8baded76a7cb0213438cd5992df389359fe3dd",
+        "f09523e6153c3984b22612917aa03ec86eab690b56364eb6117365d84eb88208",
+        "516781063ee010cdb6c39d3ec0ee18e98d2561a6a18b14c67df26978e6010c5e",
+        "1a2c0511454e215a2316757328391da73fc70d5206c5bca4c23163ff56945460",
+        "46049bbec0ad7b3048ae556ce2e2c646245061c4b27900441176b596f1af8ccb",
+        "2167c053d137906ab34315efefb268ae67c8b57ce943971f2e5bab25f07900dd",
+        "2231875ac38f376ec0fcd7953a1d5da1b22d40e49c01f9f18f3b366aea0ed793",
+        "07922a5402f5e4fd678505a1e7b858c723327dbda294d73560113bfe8eec5c12"
+      ],
+      "snapshot_bytes": 0,
+      "unobserved": []
+    }
+  },
+  "route": "smart8",
+  "schema_version": 1,
+  "seed": 20261112,
+  "size": [
+    11,
+    7
+  ],
+  "source_sha256": {
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-directional-blur\\src\\algorithm.rs": "a6be69ffa505fafa24ebfa9f3dd9aa35feb72ea0b18bdcca8a94c1d20579071a",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-directional-blur\\src\\noise.rs": "0b1f84c25cc2d56594891baa7232c7d792d7b8a4c5d80742f27d1cdda657a241",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-directional-blur\\src\\rotate.rs": "c20421470488c714c3356486ea5d5ac6d5767cf0a54b0fa55b580198c634b2ca",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-directional-blur\\src\\rowdriver.rs": "0e8ead2ec2500702bec1da12f9cd35fb7788551369f997ee32b192d27ea3da65",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-kirakira\\src\\trig.rs": "ec5315733f2c6fc00fcd09fe93d16b2160cb941c2beab11985f90db54325c854",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-kirakira\\src\\trig_tables.rs": "2652c0b804183e276cafd463c5eee4d111db9dfb6f808d0858e4ecf75a4d0382",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record\\adapter\\src\\main.rs": "aa10b708e40953a30cd67328ebfab13bcb39147ba53ee5f0c60378fb29c7191b",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record\\contract.py": "1242360761d1ec88603669ecce9855bef82e8d388b5feac7e1c0b20442db725f",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record\\demo.py": "8e6379e795f56d408a82e8b38f825556b8b885830070f93ebad70f72c40ffb6b",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record\\record.py": "d21539d3c427d3e9dc85f5b32cc8b9eec3034fc5246e9d88b476bcbdeac161ca",
+    "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record\\win_debug.py": "4152ac6eaf42332d2eb7e85974b5010735f6c3f84e56c628a1a1d0a51ca6ae1a"
+  },
+  "summary_sha256": "29ac346096a5cb9d5a94bfcbd7073d0f42feec384d73df389b0109aac060c211",
+  "verification": {
+    "adapter_clippy_D_warnings": "passed",
+    "adapter_fmt_check": "passed",
+    "external_files_edited": false,
+    "original_files_unchanged": true,
+    "python_unittest_passed": 19
+  }
+}

@@ -110,7 +110,7 @@ class WindowsJob:
             self.k.CloseHandle(self.handle)
 
 
-def run_process(argv, timeout, env_overrides=None):
+def run_process(argv, timeout, env_overrides=None, cwd=None):
     if CANCELLED.is_set():
         raise RuntimeError("oracle run cancelled")
     job = WindowsJob() if os.name == "nt" else None
@@ -120,6 +120,7 @@ def run_process(argv, timeout, env_overrides=None):
     started = time.monotonic()
     try:
         p = subprocess.Popen([str(x) for x in argv], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             cwd=cwd,
                              creationflags=0x4 | 0x08000000 if job else 0,
                              env={**os.environ, **env_overrides} if env_overrides else None,
                              start_new_session=not bool(job))
@@ -277,6 +278,37 @@ def validate_numeric(value, bounds, slot):
     if (not math.isfinite(value) or not bounds["minimum"] <= value <= bounds["maximum"]
             or (bounds["kind"] == "integer" and value != math.trunc(value))):
         raise ValueError(f"parameter slot {slot} chosen value is outside its declared valid range/type")
+
+
+def generate_sweep_cases(parameters, seed=0, size=(31, 19), downsample="1"):
+    """Default baseline, then one typed parameter at a time at min/max/random.
+
+    Returns ordinary generate_cases-compatible plans; unsupported custom/path
+    values stay untouched. No harness calls or mutation of the inventory.
+    """
+    selected = generate_cases(parameters, 4, seed, [size], [downsample])
+    baseline = copy.deepcopy(selected[0])
+    # Layer defaults are untouched too; a layer probe supplies only that layer.
+    baseline["assignments"] = []
+    baseline["sweep"] = {"slot": None, "selection": "defaults"}
+    result = [baseline]
+    seen = set()
+    for p in parameters:
+        for label, plan in zip(("default", "minimum", "maximum", "random"), selected):
+            a = next((a for a in plan["assignments"] if a["slot"] == p["slot"]), None)
+            if a is None:
+                continue
+            key = json.dumps(a, sort_keys=True)
+            if key in seen:
+                continue
+            seen.add(key)
+            case = copy.deepcopy(baseline)
+            case["index"] = len(result)
+            case["assignments"] = [copy.deepcopy(a)]
+            case["untouched_defaults"] = [a for a in case["untouched_defaults"] if a["slot"] != p["slot"]]
+            case["sweep"] = {"slot": p["slot"], "selection": label}
+            result.append(case)
+    return result
 
 
 def input_pixels(width, height, seed):
@@ -557,6 +589,8 @@ def main(argv=None):
     CANCELLED.clear()
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    from oracle_workflows import add_commands, dispatch
+    add_commands(sub, DEFAULT_HARNESS)
     for command in ("inventory", "render", "replay"):
         p = sub.add_parser(command)
         p.add_argument("--timeout", type=float, default=60 if command == "inventory" else 120)
@@ -571,7 +605,7 @@ def main(argv=None):
             p.add_argument("--force-classic", action="store_true", help="non-AE debug: allow classic8/16 for SmartFX effects")
             p.add_argument("--cases", type=int, default=20)
             p.add_argument("--seed", type=int, default=0)
-            p.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 2) // 2))
+            p.add_argument("--jobs", type=int, default=min(3, max(1, (os.cpu_count() or 2) // 2)))
             p.add_argument("--routes", default=",".join(ROUTES))
             p.add_argument("--sizes", default="1x1,3x7,97x61,256x144")
             p.add_argument("--downsample", default="1", help="comma-separated ratios: 1,1/2,1/4")
@@ -579,6 +613,8 @@ def main(argv=None):
             p.add_argument("--perturb-candidate", action="append", default=[], metavar="SLOT=DELTA")
     args = parser.parse_args(argv)
     try:
+        if args.command in ("check", "minimize"):
+            return dispatch(args, sys.modules[__name__])
         if args.timeout <= 0:
             raise ValueError("timeout must be positive")
         if args.command == "replay":
@@ -611,8 +647,8 @@ def main(argv=None):
             args.extent = list(map(int, args.extent.split(",")))
             if len(args.extent) != 4 or any(not r.startswith("smart") for r in args.routes):
                 raise ValueError("extent needs four integers and only SmartFX routes")
-        if args.cases < 1 or args.jobs < 1:
-            raise ValueError("cases and jobs must be positive")
+        if args.cases < 1 or not 1 <= args.jobs <= 3:
+            raise ValueError("cases must be positive; jobs must be in 1..3")
         args.out = args.out or Path(__file__).parent / "runs" / time.strftime("%Y%m%d-%H%M%S")
         return render(args)
     except KeyboardInterrupt:

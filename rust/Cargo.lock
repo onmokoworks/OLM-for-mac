@@ -417,6 +417,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "olm-autoport"
+version = "0.1.0"
+
+[[package]]
 name = "olm-blur"
 version = "0.1.0"
 dependencies = [
@@ -469,6 +473,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "olm-diverge-marker"
+version = "0.1.0"
+
+[[package]]
+name = "olm-funcdb"
+version = "0.1.0"
+
+[[package]]
+name = "olm-ghidra-hub"
+version = "0.1.0"
+
+[[package]]
+name = "olm-golden"
+version = "0.1.0"
+dependencies = [
+ "color-keep",
+ "olm-blur",
+ "olm-color-key",
+ "olm-core",
+ "olm-directional-blur",
+ "olm-distance-gradation",
+ "olm-kirakira",
+ "olm-math",
+ "olm-radial-blur",
+ "olm-smoother",
+ "olm-smoother2",
+ "olm-toon-dilate",
+]
+
+[[package]]
 name = "olm-kirakira"
 version = "0.1.0"
 dependencies = [
@@ -499,6 +533,14 @@ dependencies = [
  "pipl",
  "winres",
 ]
+
+[[package]]
+name = "olm-record-marker"
+version = "0.1.0"
+
+[[package]]
+name = "olm-scaffold-marker"
+version = "0.1.0"
 
 [[package]]
 name = "olm-smoother"
@@ -534,6 +576,14 @@ dependencies = [
  "pipl",
  "winres",
 ]
+
+[[package]]
+name = "olm-triage-tool"
+version = "0.1.0"
+
+[[package]]
+name = "olm-ubdetect-marker"
+version = "0.1.0"
 
 [[package]]
 name = "once_cell"
