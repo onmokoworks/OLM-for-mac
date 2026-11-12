@@ -1,9 +1,23 @@
 [workspace]
 resolver = "2"
-members = ["crates/*", "plugins/*", "tools/*"]
-# tools/oracle is a Python tool, not a Cargo package.
-# tools/witness is a standalone native host with its own [workspace].
-exclude = ["olmcolorkey_cli", "tools/oracle", "tools/witness", "tools/fastrender"]
+members = ["crates/*", "plugins/*", "tools/golden"]
+# The other tools are Python (some with Windows-only helper crates or marker
+# manifests) and stay outside the workspace so macOS CI builds only the
+# cross-platform crates. tools/witness is a standalone native host.
+exclude = [
+    "olmcolorkey_cli",
+    "tools/autoport",
+    "tools/diverge",
+    "tools/fastrender",
+    "tools/funcdb",
+    "tools/ghidra-hub",
+    "tools/oracle",
+    "tools/record",
+    "tools/scaffold",
+    "tools/triage",
+    "tools/ubdetect",
+    "tools/witness",
+]
 
 [workspace.package]
 version = "0.1.0"
