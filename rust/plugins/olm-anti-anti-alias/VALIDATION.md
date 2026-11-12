@@ -9,12 +9,16 @@ renders, at most three concurrent renders. Counts below are **per depth**.
 
 | Reference | Smart8 | Smart16 | Smart32 |
 | --- | ---: | ---: | ---: |
-| New 64/2025 | 226 exact | 226 exact | 226 exact |
+| New 64/2025 baseline | 226 exact | 226 exact | 224 exact + 2 session-open failures |
 | New 64/2026 sample | 12 exact | 12 exact | 12 exact |
 | New original-verified golden | 18 exact | 18 exact | 18 exact |
 
-Zero pixel mismatches, reference/candidate failures or timeouts remain in these
-campaigns. Inventory matches the 2025 original. Seeds 20261121/20261122 each supply 110
+No pixel mismatch or timeout remains. Smart32 has two baseline session-open
+`os error 80` failures, one reference and one candidate. Five fixed unchanged
+repeats per side and case all succeed exactly; ubdetect reports
+`inconclusive / no_mismatch`, with cleanup verified. These are not UB findings
+and replay passes do not change baseline totals. See
+[startup replays](../../evidence/integration-20261112/startup-replays.json). Inventory matches the 2025 original. Seeds 20261121/20261122 each supply 110
 random plus default/min/max plans: **220 random plans per depth**, and scale totals
 76/76/74. The shared upstream host now tolerates the redundant original checkin; the
 bridge is no longer needed.

@@ -8,9 +8,9 @@
         "--release",
         "--workspace"
       ],
-      "pid": 21448,
+      "pid": 16736,
       "returncode": 0,
-      "seconds": 1.3374943733215332
+      "seconds": 11.018725633621216
     },
     {
       "check": "workspace-test",
@@ -20,9 +20,9 @@
         "--release",
         "--workspace"
       ],
-      "pid": 57564,
+      "pid": 55328,
       "returncode": 0,
-      "seconds": 14.511647701263428
+      "seconds": 22.631359338760376
     }
   ],
   "tests": {
@@ -31,8 +31,8 @@
     "ignored": 2
   },
   "logs": {
-    "workspace-build.log": "0b61ddecd9c77e3353e890ab5b5f5081c9cba40852bf739a90f4bbe3e82c55b5",
-    "workspace-test.log": "aaed67d3be730c62237e4fc99164914698b28522712d9101982d9e2c3e586e6a",
+    "workspace-build.log": "db82359189575f7656b42cbfc930875830c5f4a0b0b14f8d86967156f798da52",
+    "workspace-test.log": "024f3c71d27a22ab88d39f731a6c9cce782b64a35c275c2b993b526daba02390",
     "stage-fixed.log": "5af72ffa6882571eaa6392013e93512c25b78bf374a762e10d67ef83e2116214",
     "unittest-witness-handle.log": "697753d748b5c52ceb044b308edb6395aa6745a7a6c86ef274e8878f3baf4a0e"
   },
@@ -121,5 +121,10 @@
       "exact": 54,
       "excluded": 0
     }
-  }
+  },
+  "post_ci_rebuild": {
+    "note": "Mac-only bindings/registration changes. All twelve Windows .text sections unchanged; candidate identities changed and the six release campaigns are repeated on staged-ci.",
+    "stage_log_sha256": "e0fa0d1ecac9aa90b1ec6451e0b835e68681224e82292ce13563f5a628e9d43a"
+  },
+  "staging": "staged-ci/manifest.json; twelve files verified against final target/release after Mac-only adapter changes"
 }

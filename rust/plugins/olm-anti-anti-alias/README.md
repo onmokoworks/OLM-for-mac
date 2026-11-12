@@ -5,7 +5,8 @@ Smart16 and Smart32 rendering, palette detection and the three palette buttons.
 The original parameter declarations and Windows PiPL are preserved.
 
 **Status: direct ordinary-oracle qualification passes.** With the updated
-shared AEXCompat host, the new 2025 original matches at 226 cases per depth
+shared AEXCompat host, the new 2025 original has 226/226/224 baseline exact cases at 8/16/32 bpc
+plus two transient startup failures with five exact unchanged replays each
 and the 2026 sample at 12 per depth; all three preview scales are covered.
 The historical bridge is no longer required. See [VALIDATION.md](VALIDATION.md) for exact counts,
 identities, failures and remaining acceptance gaps.

@@ -231,5 +231,5 @@
   ],
   "total_tests": 212,
   "all_passed": true,
-  "witness_note": "Initial descendant cleanup test raced PID reuse and the Store Python alias. Final test pins a live child process handle before releasing the parent and verifies Job cleanup using that same handle. Production cleanup code unchanged."
+  "witness_note": "The initial descendant-cleanup test was ambiguous under PID reuse and the Store Python alias. The final test pins the live child handle before releasing its parent and verifies Job cleanup using that handle; production cleanup code unchanged."
 }

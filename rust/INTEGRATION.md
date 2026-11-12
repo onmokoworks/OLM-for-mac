@@ -3,7 +3,8 @@
 Job I-integrate-20261112, measured on Windows x64 on 2026-11-13. **Twelve CPU
 plug-ins build and stage together.** All six release plug-ins pass the ordinary
 direct oracle against the new 64/2025 originals and separate 64/2026 samples.
-There are no residual failures in these final campaigns. Native AE acceptance
+There are no residual pixel mismatches after fixed-count replays; two transient
+startup failures are retained below. Native AE acceptance
 is still unverified; no GUI, AE, installation or original-binary modification was used.
 
 ## Harness and host-lifecycle repair
@@ -52,7 +53,7 @@ parameter coverage and every baseline result count.
 | DistanceGradation 0.8.3 Develop | 30 / 30 / 30 | 12 / 12 / 12 | 54 |
 | OLM Smoother2 2.2.0 | 30 / 30 / 30 | 12 / 12 / 12 | 54 |
 | OLM UV Map 1.1.1 Develop | 30 / 30 / 30 | 12 / 12 / 12 | 54 |
-| OLM Anti Anti Alias | 226 / 226 / 226 | 12 / 12 / 12 | 54 |
+| OLM Anti Anti Alias | 226 / 226 / 224 + two separately replayed startup failures | 12 / 12 / 12 | 54 |
 
 Anti Anti Alias and Color Key each use seeds **20261121 and 20261122**, each
 with **110 random + default/min/max plans**. Thus each has 220 distinct random
@@ -66,8 +67,22 @@ has independent textures sized 17x9, 1x5 and 33x17. DistanceGradation's declared
 quick-regression domain limits thresholds to 0–128 and blur size to 0–12, with
 other controls sampled over their full declared ranges; it is not a new claim
 about all expensive extrema. Its prior original Median/timeout/instability
-findings remain applicable. No final residual required ubdetect classification;
-no baseline failure was converted into a pass or silently excluded.
+findings remain applicable. The final rebuilt Anti Anti Alias Smart32 baseline has two session-open
+`os error 80` failures: reference seed 20261121/case 45 and candidate seed
+20261122/case 106. `ubdetect --repeats 5 --profile none` completes all ten renders
+per case with one stable identical output on both sides: `inconclusive /
+no_mismatch`, not an UB finding. Baseline counts stay 226/226/224; the two
+separately verified plans recover all 220 random plans per depth without
+inflating those baseline totals. See [startup replay evidence](evidence/integration-20261112/startup-replays.json).
+The [first integrated build](evidence/integration-20261112/qualification-initial.json)
+passed 226/226/226 directly before the Mac-only follow-up; it is separate history.
+
+The Mac follow-up uses the existing normalized `olm-ae::sys` bindings in the
+two new adapters and adds UV Map's registration export. All twelve rebuilt
+Windows `.text` sections are unchanged; [section identities](evidence/integration-20261112/ci-rebuild-sections.json)
+record the differences. Every release campaign and the 51-case older-port smoke
+was repeated against the rebuilt staging directory. All six final Windows PiPL
+resources are [byte-identical](evidence/integration-20261112/pipl.json) to the new 2025 originals.
 
 ## Golden, shared math, staging and tests
 

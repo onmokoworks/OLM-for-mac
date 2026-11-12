@@ -32,7 +32,7 @@ integration. All declared routes are Smart8/16/32 except Smoother Classic8/16.
 | OLMSmoother2 (`olm-smoother2`) | 30 / 12 | 54 | [record](plugins/olm-smoother2/VALIDATION.md); all three versions in golden |
 | OLMToonDilate (`olm-toon-dilate`) | unchanged; 3/depth default sample | 54 | [record](plugins/olm-toon-dilate/VALIDATION.md) |
 | OLMUVMap (`olm-uv-map`) | 30 / 12 | 54 | [record](plugins/olm-uv-map/VALIDATION.md); secondary textures |
-| OLMAntiAntiAlias (`olm-anti-anti-alias`) | 226 / 12 | 54 | [record](plugins/olm-anti-anti-alias/VALIDATION.md); 220 random/depth, direct host |
+| OLMAntiAntiAlias (`olm-anti-anti-alias`) | 226/226/224 baseline + 2 replayed startup failures / 12 | 54 | [record](plugins/olm-anti-anti-alias/VALIDATION.md); 220 random/depth, direct host |
 
 Inventory and complete Windows PiPL resources match for every plug-in in the
 individual reports. Original names, match names, entry aliases, versions, flags,

@@ -1,0 +1,121 @@
+{
+  "note": "Fixed five original/candidate repeats per failed case. Baseline failures retained, replay passes not added to baseline counts. No UB claim.",
+  "cases": [
+    {
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "complete": true,
+      "case": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261121\\case-0045-smart32",
+      "case_sha256": "ebf41816af02104f939798772615af6b8aaea74d98fd99fd279677f68f18117a",
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+          "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+          "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
+        }
+      },
+      "route": "smart32",
+      "repeats": 5,
+      "reference": {
+        "successful": 5,
+        "distinct_outputs": 1,
+        "hashes": [
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de"
+        ],
+        "varying_pixels": 0
+      },
+      "candidate": {
+        "successful": 5,
+        "distinct_outputs": 1,
+        "hashes": [
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de",
+          "66aa5265fb25a9151e9b998b2153e6a19358611fed4e7bdc7b0885ef36ca04de"
+        ],
+        "varying_pixels": 0
+      },
+      "cleanup_verified": true,
+      "source_sha256": {
+        "ubdetect.py": "e7c462a2bcb04c780a53a1f5621456832ce54cebc27e263b022cb70ce37049c2",
+        "probes.py": "908a14c9dd276f6a005cdf70a815cfdcbc1a883638c9c94917cfddc53b95e8e3",
+        "win_debug.py": "2de1ba37a46f2750ed8b0a4ce3934172bc8f6086e2358114e85210cdaa9e2723",
+        "olm_oracle.py": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5",
+        "witness.py": "aad065230719241b2059584f4bf5144476350c268e36bc89c9be1b23b223ae87"
+      },
+      "mismatching_pixels": 0,
+      "verdict_sha256": "4cfba4e1cd76cf7ce22000e5e0a0f56c69c199f794a0c67ac351217634b18a75",
+      "baseline_failure": "session open failed, os error 80; reference in seed 20261121 case 45, candidate in seed 20261122 case 106"
+    },
+    {
+      "verdict": "inconclusive",
+      "reason": "no_mismatch",
+      "complete": true,
+      "case": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261122\\case-0106-smart32",
+      "case_sha256": "c89840673bf874678a10408229ecd12405339c6c199251bef317c269a32bf4c0",
+      "identities": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+          "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+          "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
+        }
+      },
+      "route": "smart32",
+      "repeats": 5,
+      "reference": {
+        "successful": 5,
+        "distinct_outputs": 1,
+        "hashes": [
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df"
+        ],
+        "varying_pixels": 0
+      },
+      "candidate": {
+        "successful": 5,
+        "distinct_outputs": 1,
+        "hashes": [
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df",
+          "5c84648d992451b1f9a9c3c2d9a1654999abc9a897109ad968e7b76f578a32df"
+        ],
+        "varying_pixels": 0
+      },
+      "cleanup_verified": true,
+      "source_sha256": {
+        "ubdetect.py": "e7c462a2bcb04c780a53a1f5621456832ce54cebc27e263b022cb70ce37049c2",
+        "probes.py": "908a14c9dd276f6a005cdf70a815cfdcbc1a883638c9c94917cfddc53b95e8e3",
+        "win_debug.py": "2de1ba37a46f2750ed8b0a4ce3934172bc8f6086e2358114e85210cdaa9e2723",
+        "olm_oracle.py": "8bbe4d726496595339cb95161623700002863bd73cc199d462ce0d12efdc0ba5",
+        "witness.py": "aad065230719241b2059584f4bf5144476350c268e36bc89c9be1b23b223ae87"
+      },
+      "mismatching_pixels": 0,
+      "verdict_sha256": "b70c1c790632e7e883675f18f068d6e4e9c20853625a5742efa063ebefa1caaf",
+      "baseline_failure": "session open failed, os error 80; reference in seed 20261121 case 45, candidate in seed 20261122 case 106"
+    }
+  ]
+}

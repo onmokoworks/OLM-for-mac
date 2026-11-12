@@ -1,13 +1,14 @@
 {
   "scope": "rust/ only; git add -n does not stage",
-  "file_count": 9,
-  "total_bytes": 212863,
+  "file_count": 4,
+  "total_bytes": 37369,
   "existing_tracked_files": [
     "rust/.gitignore",
     "rust/Cargo.lock",
     "rust/Cargo.toml",
     "rust/INTEGRATION.md",
     "rust/README.md",
+    "rust/UPSTREAM_20261112.md",
     "rust/crates/olm-ae/Cargo.toml",
     "rust/crates/olm-ae/src/lib.rs",
     "rust/crates/olm-ae/src/macos_sys.rs",
@@ -20,6 +21,14 @@
     "rust/crates/olm-math/src/lib.rs",
     "rust/crates/olm-math/tests/cpp_reference.rs",
     "rust/crates/olm-math/tests/native_ucrt.rs",
+    "rust/evidence/integration-20261112/checks.json",
+    "rust/evidence/integration-20261112/cleanup.json",
+    "rust/evidence/integration-20261112/harness.json",
+    "rust/evidence/integration-20261112/hygiene.json",
+    "rust/evidence/integration-20261112/older-ports.json",
+    "rust/evidence/integration-20261112/qualification.json",
+    "rust/evidence/integration-20261112/staged-identities.json",
+    "rust/evidence/integration-20261112/tool-tests.json",
     "rust/evidence/integration/checks.json",
     "rust/evidence/integration/cross-check.json",
     "rust/evidence/integration/hygiene.json",
@@ -627,45 +636,24 @@
     "rust/tools/witness/witness.py"
   ],
   "counts_by_area": {
-    "rust/UPSTREAM_20261112.md": 1,
-    "rust/evidence": 8
+    "rust/evidence": 4
   },
   "largest_files": [
     {
-      "path": "rust/evidence/integration-20261112/qualification.json",
-      "bytes": 87862
+      "path": "rust/evidence/integration-20261112/ci-rebuild-sections.json",
+      "bytes": 16103
     },
     {
-      "path": "rust/evidence/integration-20261112/hygiene.json",
-      "bytes": 43022
+      "path": "rust/evidence/integration-20261112/qualification-initial.json",
+      "bytes": 13776
     },
     {
-      "path": "rust/UPSTREAM_20261112.md",
-      "bytes": 33258
+      "path": "rust/evidence/integration-20261112/startup-replays.json",
+      "bytes": 6482
     },
     {
-      "path": "rust/evidence/integration-20261112/older-ports.json",
-      "bytes": 16094
-    },
-    {
-      "path": "rust/evidence/integration-20261112/tool-tests.json",
-      "bytes": 9102
-    },
-    {
-      "path": "rust/evidence/integration-20261112/harness.json",
-      "bytes": 8569
-    },
-    {
-      "path": "rust/evidence/integration-20261112/checks.json",
-      "bytes": 5227
-    },
-    {
-      "path": "rust/evidence/integration-20261112/staged-identities.json",
-      "bytes": 4930
-    },
-    {
-      "path": "rust/evidence/integration-20261112/cleanup.json",
-      "bytes": 4799
+      "path": "rust/evidence/integration-20261112/pipl.json",
+      "bytes": 1008
     }
   ],
   "over_1_MB": [],
@@ -720,6 +708,11 @@
     {
       "document": "rust/plugins/color-keep/VALIDATION.md",
       "target": "../../INTEGRATION.md",
+      "versionable": true
+    },
+    {
+      "document": "rust/plugins/olm-anti-anti-alias/VALIDATION.md",
+      "target": "../../evidence/integration-20261112/startup-replays.json",
       "versionable": true
     },
     {
@@ -981,52 +974,35 @@
   "git_add_dry_run": [
     "add 'rust/INTEGRATION.md'",
     "add 'rust/README.md'",
-    "add 'rust/UPSTREAM_20261112.md'",
     "add 'rust/evidence/integration-20261112/checks.json'",
     "add 'rust/evidence/integration-20261112/cleanup.json'",
-    "add 'rust/evidence/integration-20261112/harness.json'",
-    "add 'rust/evidence/integration-20261112/hygiene.json'",
     "add 'rust/evidence/integration-20261112/older-ports.json'",
     "add 'rust/evidence/integration-20261112/qualification.json'",
     "add 'rust/evidence/integration-20261112/staged-identities.json'",
-    "add 'rust/evidence/integration-20261112/tool-tests.json'"
+    "add 'rust/evidence/integration-20261112/tool-tests.json'",
+    "add 'rust/plugins/olm-anti-anti-alias/README.md'",
+    "add 'rust/plugins/olm-anti-anti-alias/VALIDATION.md'",
+    "add 'rust/evidence/integration-20261112/ci-rebuild-sections.json'",
+    "add 'rust/evidence/integration-20261112/pipl.json'",
+    "add 'rust/evidence/integration-20261112/qualification-initial.json'",
+    "add 'rust/evidence/integration-20261112/startup-replays.json'"
   ],
   "files": [
     {
-      "path": "rust/UPSTREAM_20261112.md",
-      "bytes": 33258
+      "path": "rust/evidence/integration-20261112/ci-rebuild-sections.json",
+      "bytes": 16103
     },
     {
-      "path": "rust/evidence/integration-20261112/checks.json",
-      "bytes": 5227
+      "path": "rust/evidence/integration-20261112/pipl.json",
+      "bytes": 1008
     },
     {
-      "path": "rust/evidence/integration-20261112/cleanup.json",
-      "bytes": 4799
+      "path": "rust/evidence/integration-20261112/qualification-initial.json",
+      "bytes": 13776
     },
     {
-      "path": "rust/evidence/integration-20261112/harness.json",
-      "bytes": 8569
-    },
-    {
-      "path": "rust/evidence/integration-20261112/hygiene.json",
-      "bytes": 43022
-    },
-    {
-      "path": "rust/evidence/integration-20261112/older-ports.json",
-      "bytes": 16094
-    },
-    {
-      "path": "rust/evidence/integration-20261112/qualification.json",
-      "bytes": 87862
-    },
-    {
-      "path": "rust/evidence/integration-20261112/staged-identities.json",
-      "bytes": 4930
-    },
-    {
-      "path": "rust/evidence/integration-20261112/tool-tests.json",
-      "bytes": 9102
+      "path": "rust/evidence/integration-20261112/startup-replays.json",
+      "bytes": 6482
     }
   ]
 }

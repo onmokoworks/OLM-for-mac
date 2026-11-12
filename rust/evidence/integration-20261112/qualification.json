@@ -13,8 +13,8 @@
         "sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
-        "sha256": "32e8bf5b75bc1f1a81b2e4d856b300e5b5e508c56b2d85bbbae2c8ec9e655832"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "sha256": "8c631a83b01fc481315b6a43f26d3914ba08f185e1564c252b01e5b36adb00c0"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -117,7 +117,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "ColorKeep-2025-20261121",
-      "summary_sha256": "1d5a74882baa5425703791ec2a825960d35cd6ebca3588185b2259198fdeec20",
+      "summary_sha256": "be573352465bf12cd6793a55030ffacec8b9cbf817f75fbf378c15fa6cad3aed",
       "counts": {
         "smart16": {
           "exact": 30
@@ -156,8 +156,8 @@
         "sha256": "f378f4319db09f30dc76b0cce009fe542f606bf2a9806b0165fc97cfba55a305"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
-        "sha256": "32e8bf5b75bc1f1a81b2e4d856b300e5b5e508c56b2d85bbbae2c8ec9e655832"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
+        "sha256": "8c631a83b01fc481315b6a43f26d3914ba08f185e1564c252b01e5b36adb00c0"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -260,7 +260,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "ColorKeep-2026-20261123",
-      "summary_sha256": "00484132d7263171c37c3f579d021ba2758c26e37109900da20e6c44b6c2c756",
+      "summary_sha256": "59f5de9eb7bcea96d1d0947598ab37a4d5ac2537b68291cdabb379f7f14549d2",
       "counts": {
         "smart16": {
           "exact": 12
@@ -290,7 +290,7 @@
     },
     {
       "campaign": "ColorKeep-inventory",
-      "summary_sha256": "45f6ade68901da8c94dc3b799486dd0c61c13bef4bbe09c4852c2685aeae91d8",
+      "summary_sha256": "1970f8cf5bdb80991deb82987ad388cc3abbff084e858c1fa56fa6f882b3b072",
       "identical": true,
       "diff": [],
       "parameter_count": 201
@@ -306,8 +306,8 @@
         "sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
-        "sha256": "ab4e7d9592a49951be37436145b5892494ec092451e0d177d5887634c1982797"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "sha256": "da25ab26624744b899b8d13f7cb9b4ec27fa5ae2c16e78063cc126c8deb1d152"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -410,7 +410,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "DistanceGradation-2025-20261121",
-      "summary_sha256": "bacb6c9e53e59c5d071427e03daa1927a5fa1e35b11fcb362b03611dbcdb1050",
+      "summary_sha256": "0a67450d2d94bd4578e02239531a15001855bcca745c7f3b5456a13da0370fdd",
       "counts": {
         "smart16": {
           "exact": 30
@@ -459,8 +459,8 @@
         "sha256": "cb627ab4819b5cb5ef4f24a6afd19685c037bde7546a2c77aed6df35ee8b504e"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
-        "sha256": "ab4e7d9592a49951be37436145b5892494ec092451e0d177d5887634c1982797"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
+        "sha256": "da25ab26624744b899b8d13f7cb9b4ec27fa5ae2c16e78063cc126c8deb1d152"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -563,7 +563,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "DistanceGradation-2026-20261123",
-      "summary_sha256": "84b7930f051896ab9e6bbb1a746b6c9815d19a5a5583e085ce0924bd0ea527a5",
+      "summary_sha256": "a8f1119862b6426df043b17f2b92fa6aeaea0bc0ad3cc147decd3d48199db3df",
       "counts": {
         "smart16": {
           "exact": 12
@@ -603,7 +603,7 @@
     },
     {
       "campaign": "DistanceGradation-inventory",
-      "summary_sha256": "2fee3488dc9b0bb0164a6576d8dcb3038063f77eff9b51fe7c39f18cec4568c9",
+      "summary_sha256": "8893409a95ee9bf9681a0571739c8e99e164121083b0966756327367b92aa9ea",
       "identical": true,
       "diff": [],
       "parameter_count": 13
@@ -619,8 +619,8 @@
         "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
-        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -707,13 +707,13 @@
           "reason": null,
           "cases_run": 113,
           "route_scope": "ae_dispatch_contract",
-          "exact": 113,
+          "exact": 112,
           "mismatched": 0,
-          "reference_unrenderable": 0,
+          "reference_unrenderable": 1,
           "reference_timeout": 0,
           "candidate_failure": 0,
           "tool_error": 0,
-          "reference_harness_failures": 0,
+          "reference_harness_failures": 1,
           "candidate_harness_failures": 0,
           "max_abs_diff": 0.0,
           "mismatching_pixels": 0,
@@ -721,15 +721,16 @@
         }
       },
       "complete": true,
-      "exit_code": 0,
+      "exit_code": 2,
       "campaign": "OLMAntiAntiAlias-2025-20261121",
-      "summary_sha256": "89b51b4e02f6d1c0e12a521dbf22e9a1a3538c182c52a9331a316aa574fbfe9c",
+      "summary_sha256": "3ff883cb409200f91f0d74575e2de5b453f9b603fccc2bcd73abeeacca236c1a",
       "counts": {
         "smart16": {
           "exact": 113
         },
         "smart32": {
-          "exact": 113
+          "exact": 112,
+          "reference_unrenderable": 1
         },
         "smart8": {
           "exact": 113
@@ -749,7 +750,40 @@
         "high_slot_range": null
       },
       "sampling_domain": "ordinary oracle full declared parameter ranges",
-      "baseline_failures": []
+      "baseline_failures": [
+        {
+          "case": 45,
+          "route": "smart32",
+          "directory": "case-0045-smart32",
+          "processes": {
+            "reference": {
+              "pid": 55800,
+              "returncode": 1,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.2180000000007567,
+              "harness_frame_timeout": false,
+              "ok": false
+            },
+            "candidate": {
+              "pid": 32380,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.4069999999992433,
+              "harness_frame_timeout": false,
+              "ok": true
+            }
+          },
+          "status": "reference_unrenderable"
+        }
+      ]
     },
     {
       "schema_version": 1,
@@ -762,8 +796,8 @@
         "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
-        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -850,29 +884,30 @@
           "reason": null,
           "cases_run": 113,
           "route_scope": "ae_dispatch_contract",
-          "exact": 113,
+          "exact": 112,
           "mismatched": 0,
           "reference_unrenderable": 0,
           "reference_timeout": 0,
-          "candidate_failure": 0,
+          "candidate_failure": 1,
           "tool_error": 0,
           "reference_harness_failures": 0,
-          "candidate_harness_failures": 0,
+          "candidate_harness_failures": 1,
           "max_abs_diff": 0.0,
           "mismatching_pixels": 0,
           "first_coordinates": []
         }
       },
       "complete": true,
-      "exit_code": 0,
+      "exit_code": 1,
       "campaign": "OLMAntiAntiAlias-2025-20261122",
-      "summary_sha256": "c4ff8862dc15c5e366321ec1666512aa13fff4a94dbc2743d7a4fc3200a2cb2c",
+      "summary_sha256": "8a78c59450a041f4ddf2c4fdce3ca90e947af87fa13757fb98b16bff1955498b",
       "counts": {
         "smart16": {
           "exact": 113
         },
         "smart32": {
-          "exact": 113
+          "exact": 112,
+          "candidate_failure": 1
         },
         "smart8": {
           "exact": 113
@@ -892,7 +927,40 @@
         "high_slot_range": null
       },
       "sampling_domain": "ordinary oracle full declared parameter ranges",
-      "baseline_failures": []
+      "baseline_failures": [
+        {
+          "case": 106,
+          "route": "smart32",
+          "directory": "case-0106-smart32",
+          "processes": {
+            "reference": {
+              "pid": 61636,
+              "returncode": 0,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.3440000000009604,
+              "harness_frame_timeout": false,
+              "ok": true
+            },
+            "candidate": {
+              "pid": 59416,
+              "returncode": 1,
+              "environment_overrides": {
+                "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+              },
+              "timeout": false,
+              "cancelled": false,
+              "elapsed_seconds": 0.21899999999732245,
+              "harness_frame_timeout": false,
+              "ok": false
+            }
+          },
+          "status": "candidate_failure"
+        }
+      ]
     },
     {
       "schema_version": 1,
@@ -905,8 +973,8 @@
         "sha256": "c0348e4d8351a71c9cca0420cfdfcbda151413c0a013818e2cc1ebf20f05ec4e"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
-        "sha256": "b43431f22c7dd7677ef96cca2f48968e7848aa9f339991073e47495eb75f82da"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
+        "sha256": "d069999675085a0043be114e3464012d39d10c289f48561d6c5ef103584bbc6e"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1009,7 +1077,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMAntiAntiAlias-2026-20261123",
-      "summary_sha256": "9b41e4e193dc180add27654cd9a5ac952858245393529bba37e40202459be0db",
+      "summary_sha256": "5d1b32afdf7735f86e7d7c4699b38308f7a5eab4bd094b402bd2c89457127fab",
       "counts": {
         "smart16": {
           "exact": 12
@@ -1039,7 +1107,7 @@
     },
     {
       "campaign": "OLMAntiAntiAlias-inventory",
-      "summary_sha256": "b8d1fc6d9c4d6fa3a2fc72886ec22c0ca547149eb95bbeaa84cded2e27ee93c0",
+      "summary_sha256": "e775fb1f9ebf13c692c8a9607c6d8276ce8f0008d60b59a9f6fc63f484ad89ed",
       "identical": true,
       "diff": [],
       "parameter_count": 107
@@ -1055,8 +1123,8 @@
         "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
-        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1159,7 +1227,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMColorKey-2025-20261121",
-      "summary_sha256": "75e20e111cec182114560d15c81f1ee4ba3e6d84ff71e22cd8c5fbe235589d1d",
+      "summary_sha256": "41fb6970624da2bc5bfc262b0d73a4dc75591de56a630ea616600119a0883b38",
       "counts": {
         "smart16": {
           "exact": 113
@@ -1201,8 +1269,8 @@
         "sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
-        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1305,7 +1373,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMColorKey-2025-20261122",
-      "summary_sha256": "45e8aeba30c535fbb715ee29ea379082bdbd3486739290035f509c4964d4ced7",
+      "summary_sha256": "7f6aa6dbf24e5e3b614e166d697a18014cb5eb339410d30e64d534b64fe0aa5c",
       "counts": {
         "smart16": {
           "exact": 113
@@ -1347,8 +1415,8 @@
         "sha256": "4752e50132c6d60fc2b9699cf262e4276e9c00b006c248d47b1055899d61c193"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
-        "sha256": "431c4aaca0d1af280d72144f9dc9f26a0f96001f3168c0ace3453bee14538ee1"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
+        "sha256": "77ea264d0dfa8215c95e83366410caea97ba40457ca77f30bf5e00cd868f8c9f"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1451,7 +1519,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMColorKey-2026-20261123",
-      "summary_sha256": "f1ba5f8c57ed12bbd0f7278407bc14c03c382f8719d1067f4f67b0251d20dec9",
+      "summary_sha256": "32bdd0d05975ab2f9c4c3061b7460cbade3c32afb2fd7e0d129609123b75859e",
       "counts": {
         "smart16": {
           "exact": 12
@@ -1484,7 +1552,7 @@
     },
     {
       "campaign": "OLMColorKey-inventory",
-      "summary_sha256": "1af1af626e06905ea9aed300f330c15793d02b58a768654b4677ddc6a96cedd9",
+      "summary_sha256": "0a6674bcc2fca1c579981167b169f445f85588fc71190a5d915defc611438f51",
       "identical": true,
       "diff": [],
       "parameter_count": 1623
@@ -1500,8 +1568,8 @@
         "sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
-        "sha256": "f8a6cd193c39d965c69d690550634f88f22784bd27ef8148df14ae6f7a1ca5c7"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "sha256": "19e05fea673712dd8ef7a1433f172d1893e6765bfc31670e088fd6187a0334c1"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1604,7 +1672,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMSmoother2-2025-20261121",
-      "summary_sha256": "dcbdec50dd52ed7787c15ecdc190aaf587b3357f7037703a2121bc8ade6966a1",
+      "summary_sha256": "bede7035da7ed306fa04c2076995bdfe19aa2a31eca9e794b48fb5383716ae23",
       "counts": {
         "smart16": {
           "exact": 30
@@ -1643,8 +1711,8 @@
         "sha256": "d56118d170b2eb8c6a4f7708486ba221c7e71271a87becce907db13a29fa9ac5"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
-        "sha256": "f8a6cd193c39d965c69d690550634f88f22784bd27ef8148df14ae6f7a1ca5c7"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
+        "sha256": "19e05fea673712dd8ef7a1433f172d1893e6765bfc31670e088fd6187a0334c1"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1747,7 +1815,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMSmoother2-2026-20261123",
-      "summary_sha256": "5bbefeb85883abd4dd10ea994918acb840da9e64f588797e3276cd9e34cba66b",
+      "summary_sha256": "ffcf0494b6c133b0a9dc63ed28253275903b9af9e8e87f332aacaccdf0952464",
       "counts": {
         "smart16": {
           "exact": 12
@@ -1777,7 +1845,7 @@
     },
     {
       "campaign": "OLMSmoother2-inventory",
-      "summary_sha256": "e1bbb88026d3ef3421bafbe8ef49a009cf9ec92d5fcd006a7891544dba2471d0",
+      "summary_sha256": "6ed982d099fefbd8ba4cdf2b75b3dca48c1263436fbf2bdefb06d7a80d663a54",
       "identical": true,
       "diff": [],
       "parameter_count": 15
@@ -1793,8 +1861,8 @@
         "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
-        "sha256": "c3aa2afd562396f1d4ab3e1555940f076baa899eaefc16cee61a9f63f179414e"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "sha256": "b5fe941781d47db12d851a7d6a2da6989b82bbc54d071be4d5b45e32d505583f"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -1910,7 +1978,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMUVMap-2025-20261121",
-      "summary_sha256": "4049fa2d1fd8b5e4f328191d5ffc8bff774275f6bd522458fa708b1a150ce1fb",
+      "summary_sha256": "d68164178dc4634d6288311a970d066332409d7f434cec821bc29c08e6c16947",
       "counts": {
         "smart16": {
           "exact": 30
@@ -1949,8 +2017,8 @@
         "sha256": "c8afcf81c4c037611ccacf9bb2eeed645b33f06d131e9220984c49fa1904e0a8"
       },
       "candidate": {
-        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
-        "sha256": "c3aa2afd562396f1d4ab3e1555940f076baa899eaefc16cee61a9f63f179414e"
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
+        "sha256": "b5fe941781d47db12d851a7d6a2da6989b82bbc54d071be4d5b45e32d505583f"
       },
       "tool": {
         "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
@@ -2066,7 +2134,7 @@
       "complete": true,
       "exit_code": 0,
       "campaign": "OLMUVMap-2026-20261123",
-      "summary_sha256": "38fab8bc874fc10a4f462237af812ab074aa981c0f47e80fb9c34ef997c9b257",
+      "summary_sha256": "bc2430ec20ba3098cd112356d0c5f86db59f7ba648cecf31a0dca9e3d4f6aab8",
       "counts": {
         "smart16": {
           "exact": 12
@@ -2096,7 +2164,7 @@
     },
     {
       "campaign": "OLMUVMap-inventory",
-      "summary_sha256": "acbad84ceebec0ea19eb93b7f453bb554b4b5738b5e4f69b97a5c36f99361490",
+      "summary_sha256": "25ecf668d0f0798b0fbba864b1af81c882190e4ba03e763ade7bc1efaf67f4a6",
       "identical": true,
       "diff": [],
       "parameter_count": 3
@@ -2112,14 +2180,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMAntiAntiAlias-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-inventory"
       ],
-      "pid": 61632,
-      "start": 1794513714.988012,
+      "pid": 42832,
+      "start": 1794514891.6768813,
       "returncode": 0,
-      "seconds": 1.0584337711334229
+      "seconds": 1.0890932083129883
     },
     {
       "label": "OLMAntiAntiAlias-2025-20261121",
@@ -2132,9 +2200,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMAntiAntiAlias-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2148,10 +2216,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 51992,
-      "start": 1794513716.0464458,
-      "returncode": 0,
-      "seconds": 84.03014469146729
+      "pid": 5860,
+      "start": 1794514892.766979,
+      "returncode": 2,
+      "seconds": 87.69974827766418
     },
     {
       "label": "OLMAntiAntiAlias-2025-20261122",
@@ -2164,9 +2232,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMAntiAntiAlias-2025-20261122",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2025-20261122",
         "--seed",
         "20261122",
         "--cases",
@@ -2180,10 +2248,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 54232,
-      "start": 1794513800.0780988,
-      "returncode": 0,
-      "seconds": 83.63843774795532
+      "pid": 53580,
+      "start": 1794514980.4677327,
+      "returncode": 1,
+      "seconds": 85.29768776893616
     },
     {
       "label": "OLMAntiAntiAlias-2026-20261123",
@@ -2196,9 +2264,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2026\\OLMAntiAntiAlias.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMAntiAntiAlias.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMAntiAntiAlias.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMAntiAntiAlias-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMAntiAntiAlias-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2212,10 +2280,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 54972,
-      "start": 1794513883.7175355,
+      "pid": 51216,
+      "start": 1794515065.766422,
       "returncode": 0,
-      "seconds": 9.971261262893677
+      "seconds": 9.674327611923218
     },
     {
       "label": "OLMColorKey-inventory",
@@ -2226,14 +2294,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMColorKey-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-inventory"
       ],
-      "pid": 59176,
-      "start": 1794513893.692797,
+      "pid": 54896,
+      "start": 1794515075.44375,
       "returncode": 0,
-      "seconds": 1.400423288345337
+      "seconds": 1.3878538608551025
     },
     {
       "label": "OLMColorKey-2025-20261121",
@@ -2246,9 +2314,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMColorKey-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2262,10 +2330,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 57544,
-      "start": 1794513895.0942194,
+      "pid": 46192,
+      "start": 1794515076.832602,
       "returncode": 0,
-      "seconds": 99.1972587108612
+      "seconds": 100.32537269592285
     },
     {
       "label": "OLMColorKey-2025-20261122",
@@ -2278,9 +2346,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2025\\OLMColorKey.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMColorKey-2025-20261122",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2025-20261122",
         "--seed",
         "20261122",
         "--cases",
@@ -2294,10 +2362,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 61796,
-      "start": 1794513994.292484,
+      "pid": 55408,
+      "start": 1794515177.1594784,
       "returncode": 0,
-      "seconds": 99.82598519325256
+      "seconds": 100.315025806427
     },
     {
       "label": "OLMColorKey-2026-20261123",
@@ -2310,9 +2378,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKey\\OLMColorKey\\Plugins\\64\\2026\\OLMColorKey.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMColorKey.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMColorKey.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMColorKey-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMColorKey-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2326,10 +2394,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 44340,
-      "start": 1794514094.1184692,
+      "pid": 50240,
+      "start": 1794515277.4755037,
       "returncode": 0,
-      "seconds": 11.607019662857056
+      "seconds": 11.579792976379395
     },
     {
       "label": "ColorKeep-inventory",
@@ -2340,14 +2408,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\ColorKeep-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-inventory"
       ],
-      "pid": 5696,
-      "start": 1794514105.7291372,
+      "pid": 4008,
+      "start": 1794515289.0582967,
       "returncode": 0,
-      "seconds": 1.0831258296966553
+      "seconds": 1.1175978183746338
     },
     {
       "label": "ColorKeep-2025-20261121",
@@ -2360,9 +2428,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2025\\ColorKeep.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\ColorKeep-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2376,10 +2444,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 61724,
-      "start": 1794514106.813264,
+      "pid": 43604,
+      "start": 1794515290.1768937,
       "returncode": 0,
-      "seconds": 23.597636222839355
+      "seconds": 23.671072483062744
     },
     {
       "label": "ColorKeep-2026-20261123",
@@ -2392,9 +2460,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMColorKeep\\OLMColorKeep\\Plugins\\64\\2026\\ColorKeep.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\ColorKeep.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\ColorKeep.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\ColorKeep-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\ColorKeep-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2408,10 +2476,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 4320,
-      "start": 1794514130.4109,
+      "pid": 14704,
+      "start": 1794515313.848966,
       "returncode": 0,
-      "seconds": 10.090077638626099
+      "seconds": 9.954887390136719
     },
     {
       "label": "OLMSmoother2-inventory",
@@ -2422,14 +2490,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMSmoother2-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-inventory"
       ],
-      "pid": 51832,
-      "start": 1794514140.5059814,
+      "pid": 60164,
+      "start": 1794515323.8093877,
       "returncode": 0,
-      "seconds": 1.0655951499938965
+      "seconds": 1.0729622840881348
     },
     {
       "label": "OLMSmoother2-2025-20261121",
@@ -2442,9 +2510,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2025\\OLMSmoother2.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMSmoother2-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2458,10 +2526,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 38044,
-      "start": 1794514141.572578,
+      "pid": 61564,
+      "start": 1794515324.8828557,
       "returncode": 0,
-      "seconds": 23.08043599128723
+      "seconds": 22.29327654838562
     },
     {
       "label": "OLMSmoother2-2026-20261123",
@@ -2474,9 +2542,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMSmoother2AE\\OLMSmoother2AE\\Plugins\\64\\2026\\OLMSmoother2.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother2.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMSmoother2.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMSmoother2-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMSmoother2-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2490,10 +2558,10 @@
         "--downsample",
         "1,1/2,1/4"
       ],
-      "pid": 33464,
-      "start": 1794514164.6540134,
+      "pid": 51992,
+      "start": 1794515347.177132,
       "returncode": 0,
-      "seconds": 9.867195129394531
+      "seconds": 9.597647428512573
     },
     {
       "label": "OLMUVMap-inventory",
@@ -2504,14 +2572,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMUVMap-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-inventory"
       ],
-      "pid": 11432,
-      "start": 1794514174.5277207,
+      "pid": 56940,
+      "start": 1794515356.7813096,
       "returncode": 0,
-      "seconds": 1.3256754875183105
+      "seconds": 1.045177698135376
     },
     {
       "label": "OLMUVMap-2025-20261121",
@@ -2524,9 +2592,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMUVMap-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2542,10 +2610,10 @@
         "--layer-sizes",
         "17x9,1x5,33x17"
       ],
-      "pid": 53680,
-      "start": 1794514175.854396,
+      "pid": 36876,
+      "start": 1794515357.8274863,
       "returncode": 0,
-      "seconds": 22.59702730178833
+      "seconds": 22.507620334625244
     },
     {
       "label": "OLMUVMap-2026-20261123",
@@ -2558,9 +2626,9 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2026\\OLMUVMap.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMUVMap.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\OLMUVMap.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\OLMUVMap-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\OLMUVMap-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2576,10 +2644,10 @@
         "--layer-sizes",
         "17x9,1x5,33x17"
       ],
-      "pid": 29836,
-      "start": 1794514198.4524214,
+      "pid": 53572,
+      "start": 1794515380.336612,
       "returncode": 0,
-      "seconds": 9.542689800262451
+      "seconds": 9.560828447341919
     },
     {
       "label": "DistanceGradation-inventory",
@@ -2590,14 +2658,14 @@
         "--reference",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMDistanceGradation\\OLMDistanceGradation\\Plugins\\64\\2025\\DistanceGradation.aex",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\DistanceGradation-inventory"
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-inventory"
       ],
-      "pid": 56764,
-      "start": 1794514207.999678,
+      "pid": 50520,
+      "start": 1794515389.901965,
       "returncode": 0,
-      "seconds": 1.2531731128692627
+      "seconds": 1.263977289199829
     },
     {
       "label": "DistanceGradation-2025-20261121",
@@ -2605,9 +2673,9 @@
         "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-distance-gradation\\tests\\update_campaign.py",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\DistanceGradation-2025-20261121",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-2025-20261121",
         "--seed",
         "20261121",
         "--cases",
@@ -2615,10 +2683,10 @@
         "--year",
         "2025"
       ],
-      "pid": 51156,
-      "start": 1794514209.2538555,
+      "pid": 516,
+      "start": 1794515391.1669478,
       "returncode": 0,
-      "seconds": 41.39776349067688
+      "seconds": 43.04365921020508
     },
     {
       "label": "DistanceGradation-2026-20261123",
@@ -2626,9 +2694,9 @@
         "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
         "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-distance-gradation\\tests\\update_campaign.py",
         "--candidate",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\DistanceGradation.aex",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-ci\\DistanceGradation.aex",
         "--out",
-        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\final\\DistanceGradation-2026-20261123",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\post-ci\\DistanceGradation-2026-20261123",
         "--seed",
         "20261123",
         "--cases",
@@ -2636,10 +2704,10 @@
         "--year",
         "2026"
       ],
-      "pid": 30152,
-      "start": 1794514250.653124,
+      "pid": 62032,
+      "start": 1794515434.211118,
       "returncode": 0,
-      "seconds": 17.393985748291016
+      "seconds": 17.511082887649536
     }
   ]
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "plugin": "ColorKeep",
+    "identical": true,
+    "bytes": 294,
+    "sha256": "87e282d92db41488b38ffe96dcd751a973feb9356013c5377a3c2cf42b6c697d"
+  },
+  {
+    "plugin": "OLMColorKey",
+    "identical": true,
+    "bytes": 294,
+    "sha256": "5b9de9a7e8f39e1d475339cd4a098dfe9f8740819ccbb20d19bf4b95782d748e"
+  },
+  {
+    "plugin": "DistanceGradation",
+    "identical": true,
+    "bytes": 310,
+    "sha256": "13952b5ee6ed038df3a9b5e66abd3f6a2a9ffad6ecb15ab65b16dd20e3419267"
+  },
+  {
+    "plugin": "OLMSmoother2",
+    "identical": true,
+    "bytes": 294,
+    "sha256": "530e5aec57fb1ad83f202245a700d1f1ae029c263fda4b0ac17faa8f10d96015"
+  },
+  {
+    "plugin": "OLMUVMap",
+    "identical": true,
+    "bytes": 290,
+    "sha256": "ade072a4261f2b5ae623d0776a0cfaf730e7e11e07020b45fe244405b5c18c52"
+  },
+  {
+    "plugin": "OLMAntiAntiAlias",
+    "identical": true,
+    "bytes": 310,
+    "sha256": "9ab79ea8d6a467649eca157cefcff39672e17a6266440b1680d4d15152d2c05d"
+  }
+]

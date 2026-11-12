@@ -1,9 +1,17 @@
 {
-  "checked_at": "2026-11-12T20:16:57.654343+00:00",
+  "checked_at": "2026-11-12T20:32:58.430316+00:00",
   "scope": "Exact recorded controller PIDs only; no process-name scans or termination. Oracle subprocess trees are owned by per-render Windows Jobs.",
   "controllers": [
     {
+      "pid": 516,
+      "open_error": 87
+    },
+    {
       "pid": 2796,
+      "open_error": 87
+    },
+    {
+      "pid": 4008,
       "open_error": 87
     },
     {
@@ -23,6 +31,14 @@
       "open_error": 87
     },
     {
+      "pid": 5860,
+      "open_error": 87
+    },
+    {
+      "pid": 7008,
+      "open_error": 87
+    },
+    {
       "pid": 7944,
       "open_error": 87
     },
@@ -31,7 +47,15 @@
       "open_error": 87
     },
     {
+      "pid": 12864,
+      "open_error": 87
+    },
+    {
       "pid": 14608,
+      "open_error": 87
+    },
+    {
+      "pid": 14704,
       "open_error": 87
     },
     {
@@ -43,11 +67,19 @@
       "open_error": 87
     },
     {
+      "pid": 16736,
+      "open_error": 87
+    },
+    {
       "pid": 21292,
       "open_error": 87
     },
     {
       "pid": 21448,
+      "open_error": 87
+    },
+    {
+      "pid": 22376,
       "open_error": 87
     },
     {
@@ -91,6 +123,10 @@
       "open_error": 87
     },
     {
+      "pid": 33876,
+      "open_error": 87
+    },
+    {
       "pid": 34208,
       "open_error": 87
     },
@@ -107,6 +143,18 @@
       "open_error": 87
     },
     {
+      "pid": 36876,
+      "open_error": 87
+    },
+    {
+      "pid": 36892,
+      "open_error": 87
+    },
+    {
+      "pid": 36968,
+      "open_error": 87
+    },
+    {
       "pid": 38044,
       "open_error": 87
     },
@@ -116,6 +164,18 @@
     },
     {
       "pid": 41680,
+      "open_error": 87
+    },
+    {
+      "pid": 42832,
+      "open_error": 87
+    },
+    {
+      "pid": 43604,
+      "open_error": 87
+    },
+    {
+      "pid": 43908,
       "open_error": 87
     },
     {
@@ -135,11 +195,35 @@
       "open_error": 87
     },
     {
+      "pid": 46192,
+      "open_error": 87
+    },
+    {
+      "pid": 47024,
+      "open_error": 87
+    },
+    {
+      "pid": 47212,
+      "open_error": 87
+    },
+    {
       "pid": 49788,
       "open_error": 87
     },
     {
+      "pid": 50240,
+      "open_error": 87
+    },
+    {
+      "pid": 50336,
+      "open_error": 87
+    },
+    {
       "pid": 50496,
+      "open_error": 87
+    },
+    {
+      "pid": 50520,
       "open_error": 87
     },
     {
@@ -155,6 +239,10 @@
       "open_error": 87
     },
     {
+      "pid": 51216,
+      "open_error": 87
+    },
+    {
       "pid": 51268,
       "open_error": 87
     },
@@ -167,11 +255,23 @@
       "open_error": 87
     },
     {
+      "pid": 51844,
+      "open_error": 87
+    },
+    {
       "pid": 51992,
       "open_error": 87
     },
     {
+      "pid": 51996,
+      "open_error": 87
+    },
+    {
       "pid": 52020,
+      "open_error": 87
+    },
+    {
+      "pid": 52412,
       "open_error": 87
     },
     {
@@ -195,6 +295,18 @@
       "open_error": 87
     },
     {
+      "pid": 53572,
+      "open_error": 87
+    },
+    {
+      "pid": 53580,
+      "open_error": 87
+    },
+    {
+      "pid": 53616,
+      "open_error": 87
+    },
+    {
       "pid": 53680,
       "open_error": 87
     },
@@ -215,11 +327,27 @@
       "open_error": 87
     },
     {
+      "pid": 54896,
+      "open_error": 87
+    },
+    {
       "pid": 54972,
       "open_error": 87
     },
     {
       "pid": 55132,
+      "open_error": 87
+    },
+    {
+      "pid": 55328,
+      "open_error": 87
+    },
+    {
+      "pid": 55408,
+      "open_error": 87
+    },
+    {
+      "pid": 56096,
       "open_error": 87
     },
     {
@@ -239,11 +367,23 @@
       "open_error": 87
     },
     {
+      "pid": 56940,
+      "open_error": 87
+    },
+    {
+      "pid": 57476,
+      "open_error": 87
+    },
+    {
       "pid": 57544,
       "open_error": 87
     },
     {
       "pid": 57564,
+      "open_error": 87
+    },
+    {
+      "pid": 58124,
       "open_error": 87
     },
     {
@@ -259,6 +399,10 @@
       "open_error": 87
     },
     {
+      "pid": 59128,
+      "open_error": 87
+    },
+    {
       "pid": 59176,
       "open_error": 87
     },
@@ -267,7 +411,15 @@
       "open_error": 87
     },
     {
+      "pid": 60164,
+      "open_error": 87
+    },
+    {
       "pid": 60196,
+      "open_error": 87
+    },
+    {
+      "pid": 60860,
       "open_error": 87
     },
     {
@@ -280,6 +432,10 @@
     },
     {
       "pid": 61436,
+      "open_error": 87
+    },
+    {
+      "pid": 61564,
       "open_error": 87
     },
     {
@@ -300,6 +456,14 @@
     },
     {
       "pid": 61796,
+      "open_error": 87
+    },
+    {
+      "pid": 62032,
+      "open_error": 87
+    },
+    {
+      "pid": 62328,
       "open_error": 87
     }
   ],
