@@ -77,21 +77,35 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
     if let Some(dir) = &export {
         fs::create_dir(dir).expect("use a fresh export directory");
     }
-    let golden = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("golden.json");
-    let expected = if export.is_none() {
-        // golden.json is intentionally a flat string-to-string map with no escapes.
-        let text = fs::read_to_string(golden).expect("verified golden.json required");
+    let read_map = |file: &str| {
+        if export.is_some() {
+            return BTreeMap::new();
+        }
+        // Both files are generated flat string-to-SHA256 maps with no escapes.
+        let text = fs::read_to_string(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(file))
+            .expect("original-verified golden and exclusion manifests required");
         let tokens: Vec<_> = text.split('"').skip(1).step_by(2).collect();
         assert_eq!(tokens.len() % 2, 0);
-        tokens
-            .chunks_exact(2)
-            .map(|p| (p[0].to_owned(), p[1].to_owned()))
-            .collect::<BTreeMap<_, _>>()
-    } else {
-        BTreeMap::new()
+        let mut map = BTreeMap::new();
+        for pair in tokens.chunks_exact(2) {
+            assert_eq!(pair[1].len(), 64);
+            assert!(pair[1].bytes().all(|b| b.is_ascii_hexdigit()));
+            assert!(
+                map.insert(pair[0].to_owned(), pair[1].to_owned()).is_none(),
+                "duplicate case"
+            );
+        }
+        map
     };
+    let expected = read_map("golden.json");
+    let exclusions = read_map("exclusions.json");
+    assert!(expected.keys().all(|k| !exclusions.contains_key(k)));
+    if export.is_none() {
+        assert_eq!(expected.len() + exclusions.len(), 522);
+    }
     let mut records = Vec::new();
     let mut count = 0;
+    let mut excluded = 0;
     for index in 0..18 {
         for &depth in depths {
             let (width, height) = [(9, 7), (11, 9), (17, 9)][index % 3];
@@ -130,9 +144,9 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
                         // Experimental PNG routes materialize worlds in
                         // minihost/src/render_pixel_transport.cpp using the
                         // rounded binary32 reciprocal, not integer scaling.
-                        Depth::U16 => Pixel::U16(a.map(|v| {
-                            (v as f32 * (1.0f32 / 255.0) * 32768.0 + 0.5) as u16
-                        })),
+                        Depth::U16 => Pixel::U16(
+                            a.map(|v| (v as f32 * (1.0f32 / 255.0) * 32768.0 + 0.5) as u16),
+                        ),
                         Depth::F32 => Pixel::F32(a.map(|v| v as f32 * (1.0f32 / 255.0))),
                     };
                     world.set(i % width, i / width, pixel).unwrap();
@@ -154,10 +168,23 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
                 })
                 .collect();
             let hash = sha256::hash(&canonical);
+            let mut identity = format!(
+                "{id}/{width}/{height}/{denominator}/{}",
+                case.assignments.join(",")
+            )
+            .into_bytes();
+            identity.extend_from_slice(&input);
+            let fingerprint = sha256::hash(&identity);
             if let Some(dir) = &export {
                 fs::write(dir.join(format!("{id}.rgba")), &source).unwrap();
                 fs::write(dir.join(format!("{id}.raw")), &canonical).unwrap();
-                records.push(format!("{{\"id\":\"{id}\",\"width\":{width},\"height\":{height},\"depth\":{bpc},\"denominator\":{denominator},\"seed\":{seed},\"assignments\":[{}],\"sha256\":\"{hash}\"}}", case.assignments.join(",")));
+                records.push(format!("{{\"id\":\"{id}\",\"width\":{width},\"height\":{height},\"depth\":{bpc},\"denominator\":{denominator},\"seed\":{seed},\"assignments\":[{}],\"sha256\":\"{hash}\",\"fingerprint\":\"{fingerprint}\"}}", case.assignments.join(",")));
+            } else if let Some(bound) = exclusions.get(&id) {
+                assert_eq!(
+                    bound, &fingerprint,
+                    "{id}: changed input/params invalidate original-defect exclusion"
+                );
+                excluded += 1;
             } else {
                 assert_eq!(
                     expected.get(&id),
@@ -180,12 +207,20 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
                 .keys()
                 .filter(|k| k.starts_with(&format!("{name}-")))
                 .count(),
-            count,
+            count - excluded,
             "stale/extra golden cases"
+        );
+        assert_eq!(
+            exclusions
+                .keys()
+                .filter(|k| k.starts_with(&format!("{name}-")))
+                .count(),
+            excluded
         );
     }
     println!(
-        "{name}: {count} cases {}",
+        "{name}: {} cases {}; {excluded} original-nondeterministic cases excluded",
+        count - excluded,
         if args.is_empty() {
             "match original-verified golden"
         } else {

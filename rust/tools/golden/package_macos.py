@@ -1,5 +1,4 @@
 """Stage verified universal bundles using the C++ Mac metadata as authority."""
-import json
 import plistlib
 import re
 import shutil

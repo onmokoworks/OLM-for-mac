@@ -56,7 +56,8 @@ def main():
         subprocess.run(['cargo', 'build', '--release', '-p', 'olm-golden', '--bins'], cwd=RUST, check=True)
         a.bin_dir = Path(os.environ.get('CARGO_TARGET_DIR', RUST/'target'))/'release'
     a.bin_dir = a.bin_dir.resolve()
-    hashes, evidence = {}, {'schema': 1, 'platform': platform.platform(), 'plugins': {}}
+    hashes, exclusions = {}, {}
+    evidence = {'schema': 1, 'platform': platform.platform(), 'plugins': {}}
     failures = []
     for crate, name in PLUGINS.items():
         if a.only and a.only != crate:
@@ -69,6 +70,14 @@ def main():
         cases = json.loads((directory/'cases.json').read_text())
         if a.limit is not None:
             cases = cases[:a.limit]
+        # Predeclared count, applied to EVERY Radial case, never retry-until-pass.
+        repeats = 4 if name == 'OLMRadialBlur' else 1
+        for repeat in range(1, repeats):
+            replay = a.out/f'{name}-pure-{repeat}'
+            subprocess.run([str(exe), '--export', str(replay)], check=True)
+            assert (replay/'cases.json').read_bytes() == (directory/'cases.json').read_bytes()
+            for case in cases:
+                assert (replay/f"{case['id']}.raw").read_bytes() == (directory/f"{case['id']}.raw").read_bytes(), 'pure output is unstable'
 
         def verify(case):
             ident = case['id']
@@ -91,34 +100,45 @@ def main():
             request_path.write_text(json.dumps(request, indent=2)+'\n')
             route = ('classic' if name == 'OLMSmoother' else 'smart') + str(case['depth'])
             timeout = 300 if name in ('OLMRadialBlur', 'DistanceGradation') else 120
-            output = work/'original.png'
-            result = oracle.run_process([harness, '--headless', oracle.ROUTES[route][1],
-                original, image, output, request_path], timeout,
-                env_overrides=oracle.frame_deadline_environment(timeout))
-            (work/'process.json').write_text(json.dumps(result, indent=2)+'\n')
             row = {'id': ident, 'route': route, 'rust_sha256': case['sha256'],
-                   'request_sha256': sha(request_path), 'input_sha256': sha(image),
-                   'returncode': result['returncode'], 'timeout': result['timeout']}
-            if result['timeout'] or result['returncode'] != 0:
-                row['status'] = 'original_error'
-                return row
-            reference = oracle.load_output(output, case['depth']).tobytes()
+                   'fingerprint': case['fingerprint'], 'pure_repeats': repeats,
+                   'request_sha256': sha(request_path), 'input_sha256': sha(image)}
             pure = (directory/f'{ident}.raw').read_bytes()
             assert hashlib.sha256(pure).hexdigest() == case['sha256']
-            row['original_sha256'] = hashlib.sha256(reference).hexdigest()
-            row['status'] = 'exact' if reference == pure else 'mismatch'
-            if reference != pure:
-                row['different_bytes'] = sum(x != y for x, y in zip(reference, pure))
-                row['lengths'] = [len(reference), len(pure)]
+            originals, exact, errors = [], [], []
+            for repeat in range(repeats):
+                output = work/f'original-{repeat}.png'
+                result = oracle.run_process([harness, '--headless', oracle.ROUTES[route][1],
+                    original, image, output, request_path], timeout,
+                    env_overrides=oracle.frame_deadline_environment(timeout))
+                (work/f'process-{repeat}.json').write_text(json.dumps(result, indent=2)+'\n')
+                if result['timeout'] or result['returncode'] != 0:
+                    errors.append({'repeat':repeat,'timeout':result['timeout'],'returncode':result['returncode']})
+                    continue
+                reference = oracle.load_output(output, case['depth']).tobytes()
+                originals.append(hashlib.sha256(reference).hexdigest())
+                exact.append(reference == pure)
+            row['original_sha256'] = originals
+            row['exact_repeats'] = exact
+            if errors:
+                row.update(status='original_error', errors=errors)
+            elif all(exact):
+                row['status'] = 'exact'
+            elif len(set(originals)) > 1 and any(exact) and repeats == 4:
+                row['status'] = 'excluded_original_nondeterminism'
+            else:
+                row['status'] = 'mismatch'
             return row
 
         with ThreadPoolExecutor(max_workers=a.jobs) as pool:
             rows = list(pool.map(verify, cases))
         evidence['plugins'][name] = {'original_sha256': sha(original),
             'harness_sha256': sha(harness), 'runner_sha256': sha(exe),
-            'cases': rows, 'exact': sum(r['status'] == 'exact' for r in rows)}
-        failures.extend(r for r in rows if r['status'] != 'exact')
+            'cases': rows, 'exact': sum(r['status'] == 'exact' for r in rows),
+            'excluded': sum(r['status'] == 'excluded_original_nondeterminism' for r in rows)}
+        failures.extend(r for r in rows if r['status'] not in ('exact','excluded_original_nondeterminism'))
         hashes.update((r['id'], r['rust_sha256']) for r in rows if r['status'] == 'exact')
+        exclusions.update((r['id'],r['fingerprint']) for r in rows if r['status']=='excluded_original_nondeterminism')
         (a.out/'verification.json').write_text(json.dumps(evidence, indent=2)+'\n')
         print(f"{name}: {sum(r['status']=='exact' for r in rows)}/{len(rows)} original-exact", flush=True)
         for row in rows:
@@ -129,15 +149,23 @@ def main():
     if a.only or a.limit is not None:
         print('Diagnostic subset only: golden.json NOT changed')
         return
-    assert len(hashes) == 522 and len(evidence['plugins']) == 10
+    assert len(hashes) + len(exclusions) == 522 and len(evidence['plugins']) == 10
+    # Keep useful coverage at each declared depth and all 18 parameter tuples.
+    radial = evidence['plugins']['OLMRadialBlur']['cases']
+    admitted = [r for r in radial if r['status']=='exact']
+    assert len(admitted) >= 30, 'too few deterministic Radial cases'
+    assert len({r['id'].split('-')[1] for r in admitted}) == 18, 'a parameter tuple lost all depths'
+    assert all(sum(r['route']==f'smart{depth}' for r in admitted) >= 10 for depth in (8,16,32))
     temporary = HERE/'golden.json.tmp'
     temporary.write_text(json.dumps(hashes, indent=2, sort_keys=True)+'\n', encoding='utf-8')
     temporary.replace(HERE/'golden.json')
+    (HERE/'exclusions.json').write_text(json.dumps(exclusions, indent=2, sort_keys=True)+'\n')
     # Keep compact identities/counts; full requests/process logs remain local.
     summary = {name: {k:v for k,v in item.items() if k!='cases'} for name,item in evidence['plugins'].items()}
     (HERE/'verification.json').write_text(json.dumps({'schema':1,'platform':evidence['platform'],
-        'golden_sha256':sha(HERE/'golden.json'),'plugins':summary}, indent=2)+'\n')
-    print('Published 522 golden hashes: every raw output byte equals its original AEX')
+        'golden_sha256':sha(HERE/'golden.json'),'plugins':summary,
+        'excluded_cases':[r for r in radial if r['status']=='excluded_original_nondeterminism']}, indent=2)+'\n')
+    print(f'Published {len(hashes)} golden hashes: every raw output byte equals its original AEX; {len(exclusions)} evidenced nondeterministic exclusions')
 
 
 if __name__ == '__main__':

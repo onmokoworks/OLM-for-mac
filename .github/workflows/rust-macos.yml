@@ -42,8 +42,8 @@ jobs:
         with:
           workspaces: rust
           key: ${{ matrix.target }}
-      - name: Native workspace tests
-        run: cargo test --release --workspace --target ${{ matrix.target }}
+      - name: Native workspace and golden tests
+        run: cargo test --release --workspace --target ${{ matrix.target }} --no-fail-fast
       - name: Universal bundles
         if: matrix.target == 'aarch64-apple-darwin'
         run: bash tools/stage_macos.sh local/macos-universal
@@ -67,7 +67,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: rust
-      - name: Workspace tests
-        run: cargo test --release --workspace
+      - name: Workspace and golden tests
+        run: cargo test --release --workspace --no-fail-fast
       - name: Original binary tests
         run: Write-Output 'SKIP original AEX oracle regeneration (originals and AEXCompat are local-only). Original callback tests remain opt-in ignored tests.'

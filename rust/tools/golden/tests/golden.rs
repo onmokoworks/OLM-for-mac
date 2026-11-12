@@ -1,5 +1,6 @@
 #[test]
 fn all_original_verified_hashes() {
+    let mut failed = Vec::new();
     for exe in [
         env!("CARGO_BIN_EXE_golden-color-keep"),
         env!("CARGO_BIN_EXE_golden-olm-blur"),
@@ -12,9 +13,9 @@ fn all_original_verified_hashes() {
         env!("CARGO_BIN_EXE_golden-olm-smoother2"),
         env!("CARGO_BIN_EXE_golden-olm-toon-dilate"),
     ] {
-        assert!(
-            std::process::Command::new(exe).status().unwrap().success(),
-            "{exe}"
-        );
+        if !std::process::Command::new(exe).status().unwrap().success() {
+            failed.push(exe);
+        }
     }
+    assert!(failed.is_empty(), "golden failures: {failed:?}");
 }

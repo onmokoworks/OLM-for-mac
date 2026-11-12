@@ -211,27 +211,60 @@ Directional and Radial noise sampling have different rounding/accumulation
 orders and must not be substituted. The RCP profile is not a generic math helper.
 No job requested a new shared UCRT extern wrapper.
 
-## macOS: not built here
+## macOS builds and golden CI
 
-All ten Rust macOS builds, packaging, signing and host loading remain unverified.
-A Mac with Xcode command-line tools/SDK, the two Rust targets, compatible C/C++
-compilers, and this full repository's `core/`, `mac/`, `ucrtmath/` sources is
-needed. The workspace is not a standalone source export of `rust/` alone.
+On a Mac with Xcode command-line tools and Rust 1.88.0, from `rust/`:
 
 ```sh
 rustup target add aarch64-apple-darwin x86_64-apple-darwin
-cargo build --release --workspace --target aarch64-apple-darwin
-cargo build --release --workspace --target x86_64-apple-darwin
-cargo test --release --workspace --target aarch64-apple-darwin
-# Run x86_64 tests on a compatible Mac/Rosetta host as a separate qualification.
+export MACOSX_DEPLOYMENT_TARGET=11.0
+cargo test --release --workspace
+bash tools/stage_macos.sh local/macos-universal
 ```
 
-Use a consistent deployment target; combine each pair of dylibs with `lipo`.
-Package `Name.plugin/Contents/MacOS/Name`, generated PiPL `.rsrc` under
-`Contents/Resources`, generated `Info.plist` with matching executable name, and
-`PkgInfo`. Verify exported registration/entry functions, sign/notarize as needed,
-and validate actual native AE loading, saved projects, UI/lifecycle and typed
-CPU output on both architectures. Windows AEXCompat cannot substitute for these.
+The staging script builds both targets, combines each pair of executables using
+`lipo`, verifies the PiPL against the C++ Mac declaration, checks architecture,
+minimum OS and entry exports, and writes `local/macos-universal.zip`. Choose a
+new destination for each staging run. This needs the full repository's `core/`,
+`mac/`, and `ucrtmath/` sources. Nothing is installed into AE or MediaCore.
+The same vendored UCRT C sources compile with Apple clang; C/C++ contraction
+and fast math remain disabled. No transcendental is replaced with platform libm.
+
+The [workflow](../.github/workflows/rust-macos.yml) runs on Rust/native-source
+pushes and PRs, and supports manual dispatch. Native `macos-15` arm64 and
+`macos-15-intel` x86_64 runners execute the release workspace tests, including
+C++ reference tests and the [original-verified golden corpus](tools/golden/README.md).
+Intel tests run natively; Rosetta is not used. A Windows x64 job runs the same
+workspace tests. Tests requiring original AEX files remain opt-in/ignored with
+an explicit CI skip message. The arm64 job also cross-builds x86_64 and uploads
+a zip of all ten universal bundles. A golden mismatch fails CI.
+
+Each bundle has this layout (DistanceGradation uses the C++ Mac name
+`OLMDistanceGradation`, while its Windows original is `DistanceGradation.aex`):
+
+```text
+Name.plugin/Contents/
+  Info.plist
+  PkgInfo                         # eFKTFXTC
+  MacOS/Name                      # arm64 + x86_64
+  Resources/Name.rsrc             # PiPL 16000, both EffectMain entry declarations
+  _CodeSignature/CodeResources    # ad-hoc seal only
+```
+
+Bundle identifiers, names, PiPL version/flags/match names, package type and
+signature match the C++ Mac port. The Rust executable is a Cargo `cdylib`
+(Mach-O dylib); the C++ Xcode target is a Mach-O bundle. The generated Rust
+resource uses the same declaration values and the pinned `pipl` serializer
+instead of Apple's Rez. Plists are based on the C++ templates, with an explicit
+11.0 minimum OS. The package includes the license and UCRT notice; it does not
+include the C++ release's installer/readme package.
+
+**Still unverified:** loading and rendering in native macOS After Effects,
+project round trips, UI/lifecycle behavior and Gatekeeper acceptance. The bundles
+have only local ad-hoc seals for binary integrity, like the C++ packaging script;
+they have no Developer ID signature or notarization. CI and the Windows oracle
+do not substitute for native AE acceptance. `ucrtmath/ms/` and the combined math
+artifacts remain OLM-internal and must not be published standalone.
 
 ## Repository hygiene
 
