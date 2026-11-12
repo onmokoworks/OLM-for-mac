@@ -1,0 +1,344 @@
+[
+  {
+    "name": "older-port-OLMBlur-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMBlur.aex",
+      "sha256": "85a259b38284048eb057c2bfa33ce67e85f3c592b5d358c3afd808fafce89844"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "50d7f60c7bd3fcaf31887689bfc7cc11b8ae3338036057d4af15c60ff3bb1024"
+  },
+  {
+    "name": "older-port-OLMBlur-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMBlur.aex",
+      "sha256": "85a259b38284048eb057c2bfa33ce67e85f3c592b5d358c3afd808fafce89844"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "4fb493e18c474ecd982b36f0b69f22be60a2784f36dbdc480f7de57ca313fd47"
+  },
+  {
+    "name": "older-port-OLMBlur-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMBlur.aex",
+      "sha256": "85a259b38284048eb057c2bfa33ce67e85f3c592b5d358c3afd808fafce89844"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "c7c7efb52526fdb4bee7cda16b5ce3e2fd30f2d9772ac8bbdf4add7671aaa690"
+  },
+  {
+    "name": "older-port-OLMDirectionalBlur-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+      "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMDirectionalBlur.aex",
+      "sha256": "65f243399ac828266c59fdc0eead7d290b9be5f60bbf991052ea0aa27c1b54cb"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "7c298d59ce126f30d9f99fb8b5424c60e858de4f9c152e76f659adadd35fec48"
+  },
+  {
+    "name": "older-port-OLMDirectionalBlur-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+      "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMDirectionalBlur.aex",
+      "sha256": "65f243399ac828266c59fdc0eead7d290b9be5f60bbf991052ea0aa27c1b54cb"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "200423f51d83b7e8a226adc19caad459bbdcb0a2a3542e4f8e6e3af70832048b"
+  },
+  {
+    "name": "older-port-OLMDirectionalBlur-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+      "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMDirectionalBlur.aex",
+      "sha256": "65f243399ac828266c59fdc0eead7d290b9be5f60bbf991052ea0aa27c1b54cb"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "34efaccf895cb3bd033c0b530878ebee15230972e62da91d21c890be2d447454"
+  },
+  {
+    "name": "older-port-OLMKiraKira-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMKiraKira.aex",
+      "sha256": "c388d49445318e54c220daefa9dc3ad06cbc5549a8fca20f021eb6750f40d997"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "0d5f16c4491e0899d13cf82b4295198ac78364e45c80cb0c72da27cf5ee6e975"
+  },
+  {
+    "name": "older-port-OLMKiraKira-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMKiraKira.aex",
+      "sha256": "c388d49445318e54c220daefa9dc3ad06cbc5549a8fca20f021eb6750f40d997"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "37c234420f4493952474eb59da9d6b437c77982b98bbab400139c078f3993d29"
+  },
+  {
+    "name": "older-port-OLMKiraKira-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMKiraKira.aex",
+      "sha256": "c388d49445318e54c220daefa9dc3ad06cbc5549a8fca20f021eb6750f40d997"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "a1b1a6292070db0a4c35556d4e443182c9be41ed8f5c3257007f9c2dd7a1a1ca"
+  },
+  {
+    "name": "older-port-OLMRadialBlur-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMRadialBlur.aex",
+      "sha256": "bb6641fd9139ae9f3017b0bfb0b104fdb5ec35a66cdf23d0e6ee99521feea48d"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "bc6fe604f45892fdf45d8315989837e8ddfa544a281a202e984b4ce823e398da"
+  },
+  {
+    "name": "older-port-OLMRadialBlur-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMRadialBlur.aex",
+      "sha256": "bb6641fd9139ae9f3017b0bfb0b104fdb5ec35a66cdf23d0e6ee99521feea48d"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "a4b03c9b1e8ba2c6ef429c2314970217e652df08cc1b54a84debf157b5f728fb"
+  },
+  {
+    "name": "older-port-OLMRadialBlur-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMRadialBlur.aex",
+      "sha256": "bb6641fd9139ae9f3017b0bfb0b104fdb5ec35a66cdf23d0e6ee99521feea48d"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "c7bc040325cd4b8665e0cd4e696356f481f18d1b3b396265a59bb67f9e28d9d1"
+  },
+  {
+    "name": "older-port-OLMSmoother-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+      "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother.aex",
+      "sha256": "830eeb45ce67acbac782e960d51e880b819d4bf500da50a9474c8151684617f8"
+    },
+    "counts": {
+      "exact": 2
+    },
+    "summary_sha256": "d3cf3085144923090eca25ea12d2d0f79d20e091471fb2afb19555c8fb759cbc"
+  },
+  {
+    "name": "older-port-OLMSmoother-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+      "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother.aex",
+      "sha256": "830eeb45ce67acbac782e960d51e880b819d4bf500da50a9474c8151684617f8"
+    },
+    "counts": {
+      "exact": 2
+    },
+    "summary_sha256": "464028e990eabec4cdd8ff6f2161c320742be01b3ae867c54862ae3cfe43cb42"
+  },
+  {
+    "name": "older-port-OLMSmoother-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+      "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMSmoother.aex",
+      "sha256": "830eeb45ce67acbac782e960d51e880b819d4bf500da50a9474c8151684617f8"
+    },
+    "counts": {
+      "exact": 2
+    },
+    "summary_sha256": "47dea935c4abf6fafa8776ac80f1d7321fc5f4090a5e1f56957e6adc94373146"
+  },
+  {
+    "name": "older-port-OLMToonDilate-ds1",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+      "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMToonDilate.aex",
+      "sha256": "cb49db50b9b8fd6d394190fd28fd1c555607573a259ab7209c4fb96a5ddcdfec"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "dddf3c3500deb4066e71951ae4b9dd4eb39ac8bfe62a0a157c218456ff7bdc0a"
+  },
+  {
+    "name": "older-port-OLMToonDilate-ds1_2",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+      "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMToonDilate.aex",
+      "sha256": "cb49db50b9b8fd6d394190fd28fd1c555607573a259ab7209c4fb96a5ddcdfec"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "819355195ac883f9ed1a31cef16ab64c7510c8fc374bd9a21e7b8b2b89b05844"
+  },
+  {
+    "name": "older-port-OLMToonDilate-ds1_4",
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+      "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\staged-fixed\\OLMToonDilate.aex",
+      "sha256": "cb49db50b9b8fd6d394190fd28fd1c555607573a259ab7209c4fb96a5ddcdfec"
+    },
+    "counts": {
+      "exact": 3
+    },
+    "summary_sha256": "baee2dcfda757cdf66a96a6ca181a4f6773ce1e596b12ceb3818da9b2aa73c9a"
+  }
+]

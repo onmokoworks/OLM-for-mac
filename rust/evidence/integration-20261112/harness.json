@@ -1,0 +1,269 @@
+{
+  "before": {
+    "source": "7418be04e400c5020ea5b088e904db3fdf82b052",
+    "binaries": {
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+      },
+      "worker": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "186f0f00b1e9ff793f6ff5f9f23d6167188af3276d298b2ce6764bb6cf9b94f1"
+      }
+    }
+  },
+  "after": {
+    "source": "032a187621353bac7b92a76ae394ac387ddedf51",
+    "binaries": {
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+      },
+      "worker": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+        "sha256": "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+      }
+    }
+  },
+  "build_commands": [
+    "tools/build-native.ps1 -Target aex_worker",
+    "cargo build --manifest-path broker/Cargo.toml --release -p aexcompat-harness -j 3"
+  ],
+  "native_environment": {
+    "CMAKE_BUILD_PARALLEL_LEVEL": "3",
+    "PATH_additions": [
+      "C:/Program Files (x86)/Microsoft Visual Studio/Installer",
+      "C:/Program Files/Microsoft Visual Studio/18/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja"
+    ]
+  },
+  "old_new_per_process_pixels": [
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart16",
+      "side": "reference",
+      "sha256": "dd3f4d9938f60113e3eb38c26afea538d1e79274a8b893b644bc2293d815221a",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart16",
+      "side": "candidate",
+      "sha256": "dd3f4d9938f60113e3eb38c26afea538d1e79274a8b893b644bc2293d815221a",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart32",
+      "side": "reference",
+      "sha256": "d411d19818485e88f11fc18e56b5713f834fb663fbaaa3d3b3c653fb723d9dd7",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart32",
+      "side": "candidate",
+      "sha256": "d411d19818485e88f11fc18e56b5713f834fb663fbaaa3d3b3c653fb723d9dd7",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart8",
+      "side": "reference",
+      "sha256": "ee7f6abefe277de1c47020ab072fb144c2acb21a42d08604be1171e2e3c2d410",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0000-smart8",
+      "side": "candidate",
+      "sha256": "ee7f6abefe277de1c47020ab072fb144c2acb21a42d08604be1171e2e3c2d410",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart16",
+      "side": "reference",
+      "sha256": "7b00c90fd391b9a97f3cb4c6204d0c216f43c53947838543ade4a5483eff8990",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart16",
+      "side": "candidate",
+      "sha256": "7b00c90fd391b9a97f3cb4c6204d0c216f43c53947838543ade4a5483eff8990",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart32",
+      "side": "reference",
+      "sha256": "f78b8b88f6a6810872b554208380a973de839c0c3bf513e0a88b4f108a7016df",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart32",
+      "side": "candidate",
+      "sha256": "f78b8b88f6a6810872b554208380a973de839c0c3bf513e0a88b4f108a7016df",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart8",
+      "side": "reference",
+      "sha256": "58959070370cf6b4688d46b0dcd722f1fd46cd4101ef2312e5b89fda285eef7c",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0001-smart8",
+      "side": "candidate",
+      "sha256": "58959070370cf6b4688d46b0dcd722f1fd46cd4101ef2312e5b89fda285eef7c",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart16",
+      "side": "reference",
+      "sha256": "47fc45eb3d53212203be8e34d25aae2e21ca8227d08422a8ea032b3f3ddf2a47",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart16",
+      "side": "candidate",
+      "sha256": "47fc45eb3d53212203be8e34d25aae2e21ca8227d08422a8ea032b3f3ddf2a47",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart32",
+      "side": "reference",
+      "sha256": "e6a53a03550a01e86e1e90486668d3b1175cd45a02dc097d822e1a432fd5a769",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart32",
+      "side": "candidate",
+      "sha256": "e6a53a03550a01e86e1e90486668d3b1175cd45a02dc097d822e1a432fd5a769",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart8",
+      "side": "reference",
+      "sha256": "7aa55bf3ea61f60ba79cfe8fe745426b2b6e81a02e6552050ea99f0229f145d9",
+      "equal": true
+    },
+    {
+      "plugin": "Blur",
+      "case": "case-0002-smart8",
+      "side": "candidate",
+      "sha256": "7aa55bf3ea61f60ba79cfe8fe745426b2b6e81a02e6552050ea99f0229f145d9",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0000-classic16",
+      "side": "reference",
+      "sha256": "ac8f7a4260708495702e743ae82a8cfda0a665a9d6147c7784c90f0ebc855667",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0000-classic16",
+      "side": "candidate",
+      "sha256": "ac8f7a4260708495702e743ae82a8cfda0a665a9d6147c7784c90f0ebc855667",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0000-classic8",
+      "side": "reference",
+      "sha256": "979bd31fda03a0da91e22d2db55ef8525abb9cad567a253e2e619dcb94d6ec2b",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0000-classic8",
+      "side": "candidate",
+      "sha256": "979bd31fda03a0da91e22d2db55ef8525abb9cad567a253e2e619dcb94d6ec2b",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0001-classic16",
+      "side": "reference",
+      "sha256": "2675ca17b9b02aec4dc4a607f74cf6df7c14e2085ac8cb3ed97bf64a488b4340",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0001-classic16",
+      "side": "candidate",
+      "sha256": "2675ca17b9b02aec4dc4a607f74cf6df7c14e2085ac8cb3ed97bf64a488b4340",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0001-classic8",
+      "side": "reference",
+      "sha256": "376f13ff886069e88836d5e0f79f2ac3b37b64834f7791f8945234fdb441fb24",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0001-classic8",
+      "side": "candidate",
+      "sha256": "376f13ff886069e88836d5e0f79f2ac3b37b64834f7791f8945234fdb441fb24",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0002-classic16",
+      "side": "reference",
+      "sha256": "aab918f80417166fd70c548ddcddc66980d0ea0eec42fd08750067f55d858872",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0002-classic16",
+      "side": "candidate",
+      "sha256": "aab918f80417166fd70c548ddcddc66980d0ea0eec42fd08750067f55d858872",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0002-classic8",
+      "side": "reference",
+      "sha256": "c48d28c519ccec42da2ee9d8f94d0339a42953b85d884c0eef1c43a7adaf4a85",
+      "equal": true
+    },
+    {
+      "plugin": "Smoother",
+      "case": "case-0002-classic8",
+      "side": "candidate",
+      "sha256": "c48d28c519ccec42da2ee9d8f94d0339a42953b85d884c0eef1c43a7adaf4a85",
+      "equal": true
+    }
+  ],
+  "logs": [
+    {
+      "name": "harness-build.log",
+      "sha256": "c4dd314d41e4927c4448f0255a9d0e65f7cb9b0fde10047d0422c29d813f3017"
+    },
+    {
+      "name": "native-build-final.log",
+      "sha256": "8ffb1c0142e4cd1f5aab7d48447f22b85796e7f94b1379811db5af8d08efc37c"
+    },
+    {
+      "name": "native-build-retry.log",
+      "sha256": "7f2fc5ee6d0d7bcf156ac85f86fbbbd3d3ec9a27520cc812222717406ee81df0"
+    },
+    {
+      "name": "native-build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

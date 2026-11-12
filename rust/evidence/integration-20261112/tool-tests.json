@@ -1,0 +1,235 @@
+{
+  "suites": [
+    {
+      "tool": "autoport",
+      "tests": 23,
+      "passed": true,
+      "log_sha256": "152734b0ffba2043c36aada4e0f00423115dba09523d68bf3ec1b69a2d6ef33a",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-autoport.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "diverge",
+      "tests": 21,
+      "passed": true,
+      "log_sha256": "296c7c0bc02cad86e61dafdb730aa16c2b246c2076ca76b51a440af1d5f9a834",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-diverge.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\diverge",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "fastrender",
+      "tests": 6,
+      "passed": true,
+      "log_sha256": "681b10191ed91d38cb5c7f45ea4e52bac3ae9a159b74433b008a5555971ed9bb",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-fastrender.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\fastrender",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "funcdb",
+      "tests": 14,
+      "passed": true,
+      "log_sha256": "4cb6f0533f7927753cf4365f067eadf6cdf5121fd6001bed3abe8e303e7d7523",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-funcdb.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\funcdb",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "ghidra-hub",
+      "tests": 10,
+      "passed": true,
+      "log_sha256": "ed8b39fbb96f0366fbd273ea0132b90da64c5b8b1608be683a90af3d579c4078",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-ghidra-hub.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\ghidra-hub",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "golden",
+      "tests": 3,
+      "passed": true,
+      "log_sha256": "ced584f2888ed9f9456462c150623056d35722555d28d035ad744734240cb815",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-golden.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\golden",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "oracle",
+      "tests": 47,
+      "passed": true,
+      "log_sha256": "a48e1f496c4fb4226e06768903df766ddae6f73af441c332beb2a5762d2d6002",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-oracle.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "record",
+      "tests": 20,
+      "passed": true,
+      "log_sha256": "6ec2b3eddcbb3e8db9ccef4a315a5c49b9fb0a59363e42f9c932a8de17e8d8ef",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-record.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\record",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "scaffold",
+      "tests": 11,
+      "passed": true,
+      "log_sha256": "d9ff7c3a83588e395d994319134c3d621df48202a18e72aded21d44dfe12604a",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-scaffold.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\scaffold",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "triage",
+      "tests": 21,
+      "passed": true,
+      "log_sha256": "4c37f96edf0eb7d8d762ed8a4111d37b46361d7369ae491fcafdb571ea525473",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-triage.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\triage",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "ubdetect",
+      "tests": 18,
+      "passed": true,
+      "log_sha256": "a77b34284e089ac0074409e808eb4b90f915c9e7681cb087406eb03eb7e3ebac",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-ubdetect.log",
+      "initial_returncode": 0,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\ubdetect",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    },
+    {
+      "tool": "witness",
+      "tests": 18,
+      "passed": true,
+      "log_sha256": "697753d748b5c52ceb044b308edb6395aa6745a7a6c86ef274e8878f3baf4a0e",
+      "log_local_path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\local\\I-integrate-20261112\\unittest-witness-handle.log",
+      "initial_returncode": 1,
+      "command": [
+        "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\witness",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
+    }
+  ],
+  "total_tests": 212,
+  "all_passed": true,
+  "witness_note": "Initial descendant cleanup test raced PID reuse and the Store Python alias. Final test pins a live child process handle before releasing the parent and verifies Job cleanup using that same handle. Production cleanup code unchanged."
+}

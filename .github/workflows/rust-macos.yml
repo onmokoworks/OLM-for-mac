@@ -2,6 +2,7 @@ name: Rust macOS and Windows
 
 on:
   push:
+    branches: [rust-port]
     paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']
   pull_request:
     paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']
@@ -70,5 +71,14 @@ jobs:
           workspaces: rust
       - name: Workspace and golden tests
         run: cargo test --release --workspace --no-fail-fast
+      - name: Stage twelve Windows plug-ins
+        run: ./tools/stage_windows.ps1 -OutputDir local/windows-staged
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OLM-rust-Windows-x64
+          path: rust/local/windows-staged
+          if-no-files-found: error
+      - name: Golden tooling tests
+        run: python -m unittest discover -s tools/golden -v
       - name: Original binary tests
         run: Write-Output 'SKIP original AEX oracle regeneration (originals and AEXCompat are local-only). Original callback tests remain opt-in ignored tests.'

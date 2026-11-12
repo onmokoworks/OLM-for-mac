@@ -1,6 +1,6 @@
 # OLM Rust workspace
 
-All ten CPU plug-ins are implemented as Rust `rlib`/`cdylib` crates. Shared
+All twelve CPU plug-ins are implemented as Rust `rlib`/`cdylib` crates. Shared
 `olm-math`, `olm-core` and `olm-ae` provide numerics, checked worlds and AE glue.
 The math crate compiles this repository's UCRT C sources; C++ algorithm archives
 are reference tests, not the production render path. `olmcolorkey_cli` and the
@@ -9,28 +9,30 @@ Python `tools/oracle` are excluded from Cargo workspace membership.
 Windows x64 builds and AEXCompat comparisons are available. macOS arm64 and
 x86_64 builds and original-verified golden tests run in CI (see below).
 **Native After Effects acceptance remains unverified.**
-See [integration report](INTEGRATION.md) for the fresh seed-20261120 staged run,
+See [integration report](INTEGRATION.md) for the 2026-11-12 upstream release integration,
 build/lint counts, hygiene inventory and unresolved limitations.
 
 ## Status and retained qualification
 
-Counts below are historical exact cases **per depth**, not per size/scale.
-All campaigns cover downsample 1, 1/2 and 1/4. The linked reports bind each
-campaign to its original candidate hash; the integration run binds fresh builds.
-SmartFX is the comparison route except for OLMSmoother's Classic 8/16.
+The six release rows show fresh direct-oracle exact cases **per depth** against
+the new 2025 / 2026 originals. The unchanged six retain their historical broader
+qualification and additionally pass a three-scale default sample in this
+integration. All declared routes are Smart8/16/32 except Smoother Classic8/16.
 
-| Plug-in (crate) | Depths | Exact cases at 8 / 16 / 32 bpc | Exclusions and limits | Validation |
-| --- | --- | --- | --- | --- |
-| ColorKeep (`color-keep`) | 8/16/32 | 203 / 203 / 203 main; +24 palette, +12 crop per depth | One session-creation failure resolved by unchanged replay | [record](plugins/color-keep/VALIDATION.md) |
-| DistanceGradation (`olm-distance-gradation`) | 8/16/32 | 275 / 275 / 275 | Per depth: 9 original Median errors, 2 original 300s timeouts; native IPP CPU-index-4/FMA profile | [record](plugins/olm-distance-gradation/VALIDATION.md) |
-| OLMBlur (`olm-blur`) | 8/16/32 | 221 / 221 / 221 | No failures in qualified Smart corpus | [record](plugins/olm-blur/VALIDATION.md) |
-| OLMColorKey (`olm-color-key`) | 8/16/32 | 203 / 203 / 203 main; +48 palette per depth | Separate crop corpus: 1 exact +11 original failures per depth | [record](plugins/olm-color-key/VALIDATION.md) |
-| OLMDirectionalBlur (`olm-directional-blur`) | 8/16/32 | 250 / 251 / 250 of 256 each | 17 baseline mismatches prove original nondeterminism with negative Noise Offset; Type 3 outside declared popup range | [record](plugins/olm-directional-blur/VALIDATION.md) |
-| OLMKiraKira (`olm-kirakira`) | 8/16/32 | 240 / 240 / 240 | Patched arbitrary/default transport; dimensions >=4 for approximation; active custom ramps outside qualified render lane | [record](plugins/olm-kirakira/VALIDATION.md) |
-| OLMRadialBlur (`olm-radial-blur`) | 8/16/32 | 223 / 222 / 226 | 120 Type-3 plans excluded; 7 original-nondeterministic route-cases; integration Smart32 witness resolved by offset controls/replays, without adding passes; CPU-bound reciprocal profile | [record](plugins/olm-radial-blur/VALIDATION.md) |
-| OLMSmoother (`olm-smoother`) | 8/16 | 206 / 206 / ? | Classic only; 32 bpc not declared | [record](plugins/olm-smoother/VALIDATION.md) |
-| OLMSmoother2 (`olm-smoother2`) | 8/16/32 | 206 / 206 / 206 | No failures in qualified corpus; retained C++ admission limits | [record](plugins/olm-smoother2/VALIDATION.md) |
-| OLMToonDilate (`olm-toon-dilate`) | 8/16/32 | 406 / 406 / 406 | No failures in qualified Smart corpus | [record](plugins/olm-toon-dilate/VALIDATION.md) |
+| Plug-in (crate) | New 2025 / 2026 cases per depth | Golden exact cases | Validation / limits |
+| --- | --- | ---: | --- |
+| ColorKeep (`color-keep`) | 30 / 12 | 54 | [record](plugins/color-keep/VALIDATION.md) |
+| DistanceGradation (`olm-distance-gradation`) | 30 / 12 | 54 | [record](plugins/olm-distance-gradation/VALIDATION.md); bounded thresholds/blur; historical original failures remain |
+| OLMBlur (`olm-blur`) | unchanged; 3/depth default sample | 54 | [record](plugins/olm-blur/VALIDATION.md) |
+| OLMColorKey (`olm-color-key`) | 226 / 12 | 54 | [record](plugins/olm-color-key/VALIDATION.md); 220 random/depth, all high slots |
+| OLMDirectionalBlur (`olm-directional-blur`) | unchanged; 3/depth default sample | 54 | [record](plugins/olm-directional-blur/VALIDATION.md); original negative-offset nondeterminism |
+| OLMKiraKira (`olm-kirakira`) | unchanged; 3/depth default sample | 54 | [record](plugins/olm-kirakira/VALIDATION.md); custom ramps outside qualified render lane |
+| OLMRadialBlur (`olm-radial-blur`) | unchanged; 3/depth default sample | 40 | [record](plugins/olm-radial-blur/VALIDATION.md); 14 historical golden exclusions |
+| OLMSmoother (`olm-smoother`) | unchanged; 3/depth default sample | 36 | [record](plugins/olm-smoother/VALIDATION.md); Classic 8/16 only |
+| OLMSmoother2 (`olm-smoother2`) | 30 / 12 | 54 | [record](plugins/olm-smoother2/VALIDATION.md); all three versions in golden |
+| OLMToonDilate (`olm-toon-dilate`) | unchanged; 3/depth default sample | 54 | [record](plugins/olm-toon-dilate/VALIDATION.md) |
+| OLMUVMap (`olm-uv-map`) | 30 / 12 | 54 | [record](plugins/olm-uv-map/VALIDATION.md); secondary textures |
+| OLMAntiAntiAlias (`olm-anti-anti-alias`) | 226 / 12 | 54 | [record](plugins/olm-anti-anti-alias/VALIDATION.md); 220 random/depth, direct host |
 
 Inventory and complete Windows PiPL resources match for every plug-in in the
 individual reports. Original names, match names, entry aliases, versions, flags,
@@ -58,10 +60,11 @@ powershell -NoProfile -File tools/stage_windows.ps1 -OutputDir local/stage-new
 ```
 
 The staging script builds all crates offline with the default `rust/target`,
-copies ten `target/release/*.dll` files to the supplied directory with names
+copies twelve `target/release/*.dll` files to the supplied directory with names
 `ColorKeep.aex`, `DistanceGradation.aex`, `OLMBlur.aex`, `OLMColorKey.aex`,
 `OLMDirectionalBlur.aex`, `OLMKiraKira.aex`, `OLMRadialBlur.aex`,
-`OLMSmoother.aex`, `OLMSmoother2.aex`, `OLMToonDilate.aex`, verifies SHA-256,
+`OLMSmoother.aex`, `OLMSmoother2.aex`, `OLMToonDilate.aex`,
+`OLMUVMap.aex`, `OLMAntiAntiAlias.aex`, verifies SHA-256,
 and writes `manifest.json`. It refuses existing destination AEX files and known
 installation paths. It never installs into AE or MediaCore. The first dependency
 fetch, if needed on a new machine, precedes the offline staging command.
@@ -75,13 +78,13 @@ and staging directories for each run. From `rust/`:
 ```powershell
 $originals = 'D:\Projects\01_Project\04_Tools\olm for mac\ghidra_windows_aex'
 $harness = 'D:\Projects\01_Project\04_Tools\AEXCompat-wt-main\broker\target\release\aexcompat-harness.exe'
-$kiraHarness = 'D:\AEXCompatWorktrees\olm-diag-kirakira\broker\target\release\aexcompat-harness.exe'
-python tools/validate_windows.py --staged local/stage-new --out local/cross-check-new --reference-dir $originals --harness $harness --kira-harness $kiraHarness
+$upstream = 'D:\Projects\01_Project\04_Tools\olm for mac\upstream_20261112\extracted'
+python tools/validate_windows.py --staged local/stage-new --out local/cross-check-new --reference-dir $originals --harness $harness --upstream-dir $upstream
 ```
 
-This runs `olm_oracle.py inventory` for all ten, then render campaigns with
-`--seed 20261120 --cases 12 --jobs 4 --downsample 1,1/2,1/4`. Plug-ins run
-sequentially; four independent route-cases may execute within a campaign.
+This runs `olm_oracle.py inventory` for all twelve, then render campaigns with
+`--seed 20261120 --cases 12 --jobs 3 --downsample 1,1/2,1/4`. Plug-ins run
+sequentially; three independent route-cases may execute within a campaign.
 Timeouts are 300 seconds for DistanceGradation, 600 for RadialBlur, 120 otherwise,
 with the same internal frame deadline on **both** sides. Sizes are
 1x1, 3x7, 11x7, 31x19, 97x61 normally; Radial uses its documented
@@ -102,7 +105,7 @@ with the same internal frame deadline on **both** sides. Sizes are
   uniformly, never by case index or negative offset alone. See the
   [resolved Smart32 witness](plugins/olm-radial-blur/OFFSET_WITNESS.md).
   Preserve baseline verdicts; replay passes never inflate baseline totals.
-- Kira uses the patched harness and its existing `validate.py`: case zero sends
+- Kira uses the updated shared harness and its existing `validate.py`: case zero sends
   empty assignments; omit only a generated choice of Gain's invalid declared
   0.1 default, preserving each side's own effective default. No invented ramp
   payload or numeric clamp is substituted.
@@ -114,7 +117,7 @@ For a single normal SmartFX effect:
 
 ```powershell
 python tools/oracle/olm_oracle.py inventory --reference "$originals/OLMBlur.aex" --candidate "$PWD/local/stage-new/OLMBlur.aex" --out local/blur-inventory-new
-python tools/oracle/olm_oracle.py render --reference "$originals/OLMBlur.aex" --candidate "$PWD/local/stage-new/OLMBlur.aex" --cases 12 --seed 20261120 --jobs 4 --routes smart8,smart16,smart32 --downsample 1,1/2,1/4 --out local/blur-render-new
+python tools/oracle/olm_oracle.py render --reference "$originals/OLMBlur.aex" --candidate "$PWD/local/stage-new/OLMBlur.aex" --cases 12 --seed 20261120 --jobs 3 --routes smart8,smart16,smart32 --downsample 1,1/2,1/4 --out local/blur-render-new
 ```
 
 Use `classic8,classic16` for OLMSmoother; no forced Classic for SmartFX effects.
@@ -141,8 +144,8 @@ worlds, native AE threading, UI appearance or project round trips.
   expensive originals can time out. A timeout is not proof of inability to render.
   Its non-AE Classic stack-state path is unsuitable for deterministic comparison.
 - Kira declares Gain 0.1 outside [1,100], while effective untouched Gain is 1.
-  The shared baseline harness rejects explicit 0.1 and cannot serialize untouched
-  arbitrary ramps; the patched transport preserves defaults. Inactive original
+  The shared harness rejects explicit 0.1; the updated default transport
+  preserves untouched arbitrary ramps. Inactive original
   ramp capacity is unstable stack data; only active payload identity is claimed.
 - ColorKey's cropped Smart original often fails the harness worker invariant.
   Several SmartFX originals' Classic selectors produce no valid output; these
@@ -191,10 +194,11 @@ All workspace packages set `publish = false`. Preserve `ucrtmath/NOTICE` and the
 separate AMD attribution; see `../ucrtmath/ms/README.md`, `README-double.md` and
 `pow.md` for provenance.
 
-## Shared-code candidates (deferred)
+## Shared-code hoisting and deferred candidates
 
-These are the candidates recorded by the individual jobs; no hoisting is done
-in this integration.
+Smoother2's verified `cbrtf` and its bit-exact tests now live in `olm-math`.
+The optional exhaustive 2^32 check was not run. UV Map's logf and the following
+broader candidates remain local.
 
 | Source job | Candidate |
 | --- | --- |
@@ -224,7 +228,7 @@ bash tools/stage_macos.sh local/macos-universal
 ```
 
 The staging script builds both targets, combines each pair of executables using
-`lipo`, verifies the PiPL against the C++ Mac declaration, checks architecture,
+`lipo`, verifies the PiPL against retained original declarations, checks architecture,
 minimum OS and entry exports, and writes `local/macos-universal.zip`. Choose a
 new destination for each staging run. This needs the full repository's `core/`,
 `mac/`, and `ucrtmath/` sources. Nothing is installed into AE or MediaCore.
@@ -238,7 +242,7 @@ C++ reference tests and the [original-verified golden corpus](tools/golden/READM
 Intel tests run natively; Rosetta is not used. A Windows 2025 x64 job runs the same
 workspace tests. Tests requiring original AEX files remain opt-in/ignored with
 an explicit CI skip message. The arm64 job also cross-builds x86_64 and uploads
-a zip of all ten universal bundles. A golden mismatch fails CI.
+a zip of all twelve universal bundles; Windows stages all twelve AEX files. A golden mismatch fails CI.
 
 Radial's `native_reciprocal_profile_and_gaussians` is explicitly ignored on
 macOS: it qualifies the capture machine's hardware `RCPSS` instruction, whose
@@ -260,11 +264,12 @@ Name.plugin/Contents/
   _CodeSignature/CodeResources    # ad-hoc seal only
 ```
 
-Bundle identifiers, names, PiPL version/flags/match names, package type and
-signature match the C++ Mac port. The Rust executable is a Cargo `cdylib`
+Existing bundle identifiers, package type and signature match the C++ Mac
+port. The six release effects use captured 2025 PiPL metadata and new release
+versions. New IDs are `local.olm-rs.uv-map` and `local.olm-rs.anti-anti-alias`. The Rust executable is a Cargo `cdylib`
 (Mach-O dylib); the C++ Xcode target is a Mach-O bundle. The generated Rust
 resource uses the same declaration values and the pinned `pipl` serializer
-instead of Apple's Rez. Plists are based on the C++ templates, with an explicit
+instead of Apple's Rez. Existing plists use the C++ templates; new effects have generated plists, with an explicit
 11.0 minimum OS. The package includes the license and UCRT notice; it does not
 include the C++ release's installer/readme package.
 
@@ -284,8 +289,9 @@ compact identity/summary JSON, regeneration/capture scripts and required test
 vectors. Historical JSON may refer to ignored absolute/local artifact paths;
 those are local-only evidence, not missing distributable dependencies.
 
-The four DistanceGradation `.bin` files are small native reference vectors read
-by tests, not plug-in executables. `olm-smoother/src/generated.rs` is the sole
+Small DistanceGradation/UV Map `.bin` files are native reference vectors read
+by tests; the new crates also retain measured PiPL declaration resources. None
+of these are plug-in executables. `olm-smoother/src/generated.rs` is the sole
 source larger than 1 MB: its mechanical instruction translation is required by
 the build and deliberately retained without numeric refactoring. The integration
 report records exact sizes and the complete would-be-added manifest.

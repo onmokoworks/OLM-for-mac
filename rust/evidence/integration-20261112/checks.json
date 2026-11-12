@@ -1,0 +1,125 @@
+{
+  "commands": [
+    {
+      "check": "workspace-build",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--workspace"
+      ],
+      "pid": 21448,
+      "returncode": 0,
+      "seconds": 1.3374943733215332
+    },
+    {
+      "check": "workspace-test",
+      "command": [
+        "cargo",
+        "test",
+        "--release",
+        "--workspace"
+      ],
+      "pid": 57564,
+      "returncode": 0,
+      "seconds": 14.511647701263428
+    }
+  ],
+  "tests": {
+    "passed": 115,
+    "failed": 0,
+    "ignored": 2
+  },
+  "logs": {
+    "workspace-build.log": "0b61ddecd9c77e3353e890ab5b5f5081c9cba40852bf739a90f4bbe3e82c55b5",
+    "workspace-test.log": "aaed67d3be730c62237e4fc99164914698b28522712d9101982d9e2c3e586e6a",
+    "stage-fixed.log": "5af72ffa6882571eaa6392013e93512c25b78bf374a762e10d67ef83e2116214",
+    "unittest-witness-handle.log": "697753d748b5c52ceb044b308edb6395aa6745a7a6c86ef274e8878f3baf4a0e"
+  },
+  "golden": {
+    "ColorKeep": {
+      "original_sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "17c3b7c67643a6e88c1b6a04549f462a2ba65fff57be1cda48cacab03d796bf9",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMBlur": {
+      "original_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "268f8c8de35a81e6696482eb11389578e1358ad6adc72f23d98dfce93cc4eebd",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMColorKey": {
+      "original_sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "cd4c31ea1b19d78797abbf65eced60dd494a4b6b752ddd6dceb749f2cf19b57d",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMDirectionalBlur": {
+      "original_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "3b91fc6f403b85219bac6c2c415ba944df21d4302524a0908edb28625526fc47",
+      "exact": 54,
+      "excluded": 0
+    },
+    "DistanceGradation": {
+      "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "73fbc326ccb1e68184a978e63e8b47ff271e6b68422e0843f3ffe77d1c293ac1",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMKiraKira": {
+      "original_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "harness_sha256": "41a939afc290a750a698a9ec55ea09431bf9a0291e85ebd08bbf3f46f0c2fee7",
+      "runner_sha256": "01ef995788c2ed756c6f0bc65085e127121cc8940f503000624407122097cc96",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMRadialBlur": {
+      "original_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "2f33304402cb433e6b99a460e254e9e8390fd44376cbbed20ac7d98a28483085",
+      "exact": 40,
+      "excluded": 14
+    },
+    "OLMSmoother": {
+      "original_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "3fce961283f023f21e7ae6b28fa48c0cba7e0d376b7467436d9e8bcac5a863f1",
+      "exact": 36,
+      "excluded": 0
+    },
+    "OLMSmoother2": {
+      "original_sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "20a51a4d87df78f391a1beadfb1296f3774af84608ff0f304a5e88c10988eb76",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMToonDilate": {
+      "original_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
+      "runner_sha256": "4e238f4b00d034ac3267e1af06882281d8b5b19c50ac6769389bff9aa7d0ac03",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMUVMap": {
+      "original_sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "00c09e850d9ab54aa969c0ae3521b20746fab5722175903bb786aeac95d7c99d",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMAntiAntiAlias": {
+      "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "e37aaa7fdb9f96321da373629fde786b3fc5270b9d89538e509d58540382f158",
+      "exact": 54,
+      "excluded": 0
+    }
+  }
+}
