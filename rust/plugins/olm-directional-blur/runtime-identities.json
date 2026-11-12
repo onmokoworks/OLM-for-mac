@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    },
+    {
+      "path": "C:\\Windows\\System32\\ucrtbase.dll",
+      "sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+    }
+  ],
+  "worker_path_provenance": "Known harness deployment path; worker module path not observed in sampled process tree. Harness reported source_newer_than_worker.",
+  "current_python_process_get_FMA3_enable": 1
+}

@@ -1,0 +1,3133 @@
+[
+  {
+    "slot": 1,
+    "name": "Enabled Color Num",
+    "kind": "integer",
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "value": 1.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": true,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 2,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 3,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 4,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 5,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 6,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 7,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 8,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 9,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 10,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 11,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 12,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 13,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 14,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 15,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 16,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 17,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 18,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 19,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 20,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 21,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 22,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 23,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 24,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 25,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 26,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 27,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 28,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 29,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 30,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 31,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 32,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 33,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 34,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 35,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 36,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 37,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 38,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 39,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 40,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 41,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 42,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 43,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 44,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 45,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 46,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 47,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 48,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 49,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 50,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 51,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 52,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 53,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 54,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 55,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 56,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 57,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 58,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 59,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 60,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 61,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 62,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 63,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 64,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 65,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 66,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 67,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 68,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 69,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 70,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 71,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 72,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 73,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 74,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 75,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 76,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 77,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 78,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 79,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 80,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 81,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 82,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 83,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 84,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 85,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 86,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 87,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 88,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 89,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 90,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 91,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 92,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 93,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 94,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 95,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 96,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 97,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 98,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 99,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 100,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  },
+  {
+    "slot": 101,
+    "name": "Color",
+    "kind": "color",
+    "minimum": 0.0,
+    "maximum": 0.0,
+    "value": 0.0,
+    "choices": [],
+    "color": [
+      255,
+      0,
+      0,
+      0
+    ],
+    "components": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "component_count": 0,
+    "layer_path": null,
+    "enabled": true,
+    "visible": true,
+    "supervised": false,
+    "debug_summary": null,
+    "custom_ui_events": 0,
+    "control_size": [
+      0,
+      0
+    ]
+  }
+]

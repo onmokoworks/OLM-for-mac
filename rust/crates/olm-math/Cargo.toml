@@ -1,0 +1,13 @@
+[package]
+name = "olm-math"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[build-dependencies]
+cc.workspace = true
+
+[dev-dependencies]
+libloading = "0.8"
+

@@ -1,0 +1,31 @@
+{
+  "binaries": [
+    {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-blur\\validation\\bin\\OLMBlur.aex",
+      "sha256": "8f601e9b46ad65ed19ad140e820279eccfe72d3b72a3047d98844a978e736090",
+      "sections": {
+        ".text": "b1b44a78edc156c097662e0bfe7c51da814de7c46ae4792b45dd524838be3849",
+        ".rdata": "7bd76ff609c53f915a9d129d9bf3ccccde317f0aeb0d0ed1b90dd66c1ff32f0d",
+        ".data": "7cc28ee7619dfd86f604193541f2e5c4c060dc508c9054be28c39b9d8737e8c4",
+        ".pdata": "703b375afeb2d82be97abc9fc1e80c579d3eb3495139345c2f06eb70749de56b",
+        ".rsrc": "f6eeb16eb2787fae71c5482b97ab836c446c9f62196194cbf7d1e3163212bfc0",
+        ".reloc": "ac4c1e4c385b6a92a5741225706d95143d351c3e9c3bc63924e7c277ea002c8a"
+      }
+    },
+    {
+      "path": "D:\\olm-rs-target\\P-blur\\release\\olm_blur.dll",
+      "sha256": "d374df21e013d5c78dbae6370b55a86f51ceb952ac660410b47cbcbc9b6bbec0",
+      "sections": {
+        ".text": "57602e5f2e4593f86a37a1be99ce0a0535f6ae65f44a8c23966f68510b4e4506",
+        ".rdata": "f5218470d3505ee2966ed36dfffe797f6185170685d1dff93fb3a30df1f11378",
+        ".data": "3e74bfac0f678c8c61b7a748af5fdacdc9ca5a26581905385984ad15650fde35",
+        ".pdata": "8effc7377e36493b55920abbcdb34f328aba313f8c6d07ad413d781c1a565a6c",
+        ".rsrc": "3d8aa8a99e5f2107104260d587f2c108e85e0ecd5519b2b8e788a7967a25160d",
+        ".reloc": "fecb7e3094466b249195ff5fc03b160cc5d002c31d7632bc864f8fdac510d538"
+      }
+    }
+  ],
+  "identical_sections": [],
+  "equivalence_claim": false,
+  "note": "Formatting changed binary/debug layout. Final binary is independently requalified; preliminary results are not counted for its hash."
+}

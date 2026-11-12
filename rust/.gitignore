@@ -1,0 +1,27 @@
+# Local build products and validation artifacts; never commit plug-in binaries.
+target/
+validation/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.aex
+*.dll
+*.exe
+*.pdb
+*.lib
+*.exp
+*.obj
+*.o
+*.log
+*.png
+*.rgba16le
+*.rgba32f-le
+/local/
+/plugins/*/candidate-path.txt
+/plugins/*/build-workspace/
+/plugins/*/standalone/
+# Smoother2's original job placed runs beside its sources.
+/plugins/olm-smoother2/campaign-*/
+/plugins/olm-smoother2/inventory-*/
+/plugins/olm-smoother2/original-inventory-run/
+/plugins/olm-smoother2/oracle-*/

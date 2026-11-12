@@ -1,0 +1,29 @@
+{
+  "identical_except_PE_timestamps_and_PDB_GUID": true,
+  "excluded_offset_lengths": [
+    [
+      264,
+      4
+    ],
+    [
+      333396,
+      4
+    ],
+    [
+      333816,
+      16
+    ],
+    [
+      333424,
+      4
+    ],
+    [
+      333452,
+      4
+    ]
+  ],
+  "normalized_sha256": [
+    "534dddd96d04d66bf2dbd5314b95337fcd9cff24275c7528ed32998d06f135dc",
+    "534dddd96d04d66bf2dbd5314b95337fcd9cff24275c7528ed32998d06f135dc"
+  ]
+}

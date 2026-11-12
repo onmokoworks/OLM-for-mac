@@ -1,0 +1,19 @@
+[package]
+name = "olm-smoother2"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+olm-core.workspace = true
+olm-math.workspace = true
+olm-ae.workspace = true
+
+[build-dependencies]
+cc.workspace = true
+pipl.workspace = true
+winres = "0.1"

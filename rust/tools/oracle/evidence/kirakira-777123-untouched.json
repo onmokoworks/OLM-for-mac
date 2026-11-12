@@ -1,0 +1,1981 @@
+{
+  "schema_version": 1,
+  "tests": {
+    "passed": 21,
+    "failed": 0,
+    "command": "python -m unittest discover -s rust/tools/oracle -p test_oracle.py -v"
+  },
+  "same_selected_values_and_input_seeds_as_previous_generator": true,
+  "slot5_untouched_cases": [
+    0,
+    8,
+    11
+  ],
+  "cases_sha256": "eeb92241723dd2ad445df84a9ee23ff36b53a8a41583abe8906edac9a647cbb4",
+  "inventory_summary_sha256": "39709fc5623d70a0859a1bed08a12cd220a7b7a9120d3f6a4d2b064f38fca5b0",
+  "inventory_identical": true,
+  "render_summary_sha256": "d4e99e06788582dcdbd551e23a4d5e11a541fe155dac0b985139f830469f9fc5",
+  "render_summary": {
+    "schema_version": 1,
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMKiraKira.aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    "candidate": {
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\claude\\d399b726667e509a\\f4e88ce9-5b8e-4d58-b1e2-473311555016\\scratchpad\\olmv\\OLMKiraKira.aex",
+      "sha256": "62d7173c26c4e08137a0f662f31b8f0242cbc8ba30583eb526105a69bb119e2f"
+    },
+    "tool": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "c86d8515b418c73c183ac49aec72a01873e1101b1210fc368ef205c442223ca3"
+    },
+    "non_ae_debug_routes": [],
+    "seed": 777123,
+    "cases": 15,
+    "timeout_seconds": 120,
+    "force_classic": false,
+    "render_environment_overrides": {
+      "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+    },
+    "jobs": 4,
+    "sizes": [
+      [
+        5,
+        5
+      ],
+      [
+        11,
+        7
+      ],
+      [
+        31,
+        19
+      ],
+      [
+        97,
+        61
+      ]
+    ],
+    "downsample": [
+      "1",
+      "1/2",
+      "1/4"
+    ],
+    "extent": null,
+    "perturb_candidate": [],
+    "inventory_diff": [],
+    "same_binary": false,
+    "results": [
+      {
+        "case": 0,
+        "route": "smart16",
+        "directory": "case-0000-smart16",
+        "processes": {
+          "reference": {
+            "pid": 64208,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9839999999985594,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 59196,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 0,
+        "route": "smart32",
+        "directory": "case-0000-smart32",
+        "processes": {
+          "reference": {
+            "pid": 17316,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9839999999985594,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 61720,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 0,
+        "route": "smart8",
+        "directory": "case-0000-smart8",
+        "processes": {
+          "reference": {
+            "pid": 62388,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9839999999985594,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 66744,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 1,
+        "route": "smart16",
+        "directory": "case-0001-smart16",
+        "processes": {
+          "reference": {
+            "pid": 63660,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 3376,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 1,
+        "route": "smart32",
+        "directory": "case-0001-smart32",
+        "processes": {
+          "reference": {
+            "pid": 58328,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 53176,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 1,
+        "route": "smart8",
+        "directory": "case-0001-smart8",
+        "processes": {
+          "reference": {
+            "pid": 56952,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 65256,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 2,
+        "route": "smart16",
+        "directory": "case-0002-smart16",
+        "processes": {
+          "reference": {
+            "pid": 65200,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 62436,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 2,
+        "route": "smart32",
+        "directory": "case-0002-smart32",
+        "processes": {
+          "reference": {
+            "pid": 19000,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 11724,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 2,
+        "route": "smart8",
+        "directory": "case-0002-smart8",
+        "processes": {
+          "reference": {
+            "pid": 38160,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 33948,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 3,
+        "route": "smart16",
+        "directory": "case-0003-smart16",
+        "processes": {
+          "reference": {
+            "pid": 19920,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 37812,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 3,
+        "route": "smart32",
+        "directory": "case-0003-smart32",
+        "processes": {
+          "reference": {
+            "pid": 64288,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 58460,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 3,
+        "route": "smart8",
+        "directory": "case-0003-smart8",
+        "processes": {
+          "reference": {
+            "pid": 61708,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 10920,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 4,
+        "route": "smart16",
+        "directory": "case-0004-smart16",
+        "processes": {
+          "reference": {
+            "pid": 65320,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 20324,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6710000000002765,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 4,
+        "route": "smart32",
+        "directory": "case-0004-smart32",
+        "processes": {
+          "reference": {
+            "pid": 55408,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 50616,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6710000000002765,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 4,
+        "route": "smart8",
+        "directory": "case-0004-smart8",
+        "processes": {
+          "reference": {
+            "pid": 62832,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 66572,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6710000000002765,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 5,
+        "route": "smart16",
+        "directory": "case-0005-smart16",
+        "processes": {
+          "reference": {
+            "pid": 23452,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9690000000009604,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 33816,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 5,
+        "route": "smart32",
+        "directory": "case-0005-smart32",
+        "processes": {
+          "reference": {
+            "pid": 17520,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9690000000009604,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 65800,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 5,
+        "route": "smart8",
+        "directory": "case-0005-smart8",
+        "processes": {
+          "reference": {
+            "pid": 54128,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 59612,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6710000000002765,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 6,
+        "route": "smart16",
+        "directory": "case-0006-smart16",
+        "processes": {
+          "reference": {
+            "pid": 57448,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9530000000013388,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 63656,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 6,
+        "route": "smart32",
+        "directory": "case-0006-smart32",
+        "processes": {
+          "reference": {
+            "pid": 47636,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 62240,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 6,
+        "route": "smart8",
+        "directory": "case-0006-smart8",
+        "processes": {
+          "reference": {
+            "pid": 52724,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9530000000013388,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 60800,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 7,
+        "route": "smart16",
+        "directory": "case-0007-smart16",
+        "processes": {
+          "reference": {
+            "pid": 60944,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 6528,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 7,
+        "route": "smart32",
+        "directory": "case-0007-smart32",
+        "processes": {
+          "reference": {
+            "pid": 64352,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 49500,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 7,
+        "route": "smart8",
+        "directory": "case-0007-smart8",
+        "processes": {
+          "reference": {
+            "pid": 62676,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 56796,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 8,
+        "route": "smart16",
+        "directory": "case-0008-smart16",
+        "processes": {
+          "reference": {
+            "pid": 14884,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 12824,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 8,
+        "route": "smart32",
+        "directory": "case-0008-smart32",
+        "processes": {
+          "reference": {
+            "pid": 55748,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 56232,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 8,
+        "route": "smart8",
+        "directory": "case-0008-smart8",
+        "processes": {
+          "reference": {
+            "pid": 64264,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 33440,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 9,
+        "route": "smart16",
+        "directory": "case-0009-smart16",
+        "processes": {
+          "reference": {
+            "pid": 66184,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9680000000007567,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 29824,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 9,
+        "route": "smart32",
+        "directory": "case-0009-smart32",
+        "processes": {
+          "reference": {
+            "pid": 12984,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9680000000007567,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 58976,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 9,
+        "route": "smart8",
+        "directory": "case-0009-smart8",
+        "processes": {
+          "reference": {
+            "pid": 66872,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 63508,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6869999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 10,
+        "route": "smart16",
+        "directory": "case-0010-smart16",
+        "processes": {
+          "reference": {
+            "pid": 56392,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 41364,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 10,
+        "route": "smart32",
+        "directory": "case-0010-smart32",
+        "processes": {
+          "reference": {
+            "pid": 21936,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 64180,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.7029999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 10,
+        "route": "smart8",
+        "directory": "case-0010-smart8",
+        "processes": {
+          "reference": {
+            "pid": 10852,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 1160,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 11,
+        "route": "smart16",
+        "directory": "case-0011-smart16",
+        "processes": {
+          "reference": {
+            "pid": 46188,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 57604,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.7029999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 11,
+        "route": "smart32",
+        "directory": "case-0011-smart32",
+        "processes": {
+          "reference": {
+            "pid": 55504,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 60768,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.7029999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 11,
+        "route": "smart8",
+        "directory": "case-0011-smart8",
+        "processes": {
+          "reference": {
+            "pid": 65576,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9369999999998981,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 54308,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.7029999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 12,
+        "route": "smart16",
+        "directory": "case-0012-smart16",
+        "processes": {
+          "reference": {
+            "pid": 53488,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 62200,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 12,
+        "route": "smart32",
+        "directory": "case-0012-smart32",
+        "processes": {
+          "reference": {
+            "pid": 59248,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 45952,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 12,
+        "route": "smart8",
+        "directory": "case-0012-smart8",
+        "processes": {
+          "reference": {
+            "pid": 44828,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 55152,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 13,
+        "route": "smart16",
+        "directory": "case-0013-smart16",
+        "processes": {
+          "reference": {
+            "pid": 63408,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 40360,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 13,
+        "route": "smart32",
+        "directory": "case-0013-smart32",
+        "processes": {
+          "reference": {
+            "pid": 54760,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 55060,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 13,
+        "route": "smart8",
+        "directory": "case-0013-smart8",
+        "processes": {
+          "reference": {
+            "pid": 8652,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9380000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 63964,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6720000000004802,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 14,
+        "route": "smart16",
+        "directory": "case-0014-smart16",
+        "processes": {
+          "reference": {
+            "pid": 32108,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9689999999991414,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 16176,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 14,
+        "route": "smart32",
+        "directory": "case-0014-smart32",
+        "processes": {
+          "reference": {
+            "pid": 7012,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.7819999999992433,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 60908,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.625,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      },
+      {
+        "case": 14,
+        "route": "smart8",
+        "directory": "case-0014-smart8",
+        "processes": {
+          "reference": {
+            "pid": 22808,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.9529999999995198,
+            "harness_frame_timeout": false,
+            "ok": true
+          },
+          "candidate": {
+            "pid": 56368,
+            "returncode": 0,
+            "environment_overrides": {
+              "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+            },
+            "timeout": false,
+            "cancelled": false,
+            "elapsed_seconds": 0.6880000000001019,
+            "harness_frame_timeout": false,
+            "ok": true
+          }
+        },
+        "comparison": {
+          "exact": true,
+          "mismatching_pixels": 0,
+          "mismatching_samples": 0,
+          "max_abs_diff": 0.0,
+          "nonfinite_difference_samples": 0,
+          "first_coordinates": []
+        },
+        "status": "exact"
+      }
+    ],
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 15,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 15,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 15,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 15,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 15,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 15,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "classic8": {
+        "status": "not_applicable",
+        "reason": "SmartFX declared: AE does not dispatch PF_Cmd_RENDER (use --force-classic for non-AE debug)",
+        "cases_run": 0,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "classic16": {
+        "status": "not_applicable",
+        "reason": "SmartFX declared: AE does not dispatch PF_Cmd_RENDER (use --force-classic for non-AE debug)",
+        "cases_run": 0,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "classic32": {
+        "status": "not_applicable",
+        "reason": "SmartFX declared: AE does not dispatch PF_Cmd_RENDER (use --force-classic for non-AE debug)",
+        "cases_run": 0,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "complete": true,
+    "exit_code": 0
+  }
+}

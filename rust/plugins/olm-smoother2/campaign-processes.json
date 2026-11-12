@@ -1,0 +1,58 @@
+[
+  {
+    "seed": 20261116,
+    "pid": 62672,
+    "argv": [
+      "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "render",
+      "--reference",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+      "--candidate",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\OLMSmoother2-verified.aex",
+      "--routes",
+      "smart8,smart16,smart32",
+      "--cases",
+      "103",
+      "--seed",
+      "20261116",
+      "--jobs",
+      "3",
+      "--downsample",
+      "1,1/2,1/4",
+      "--timeout",
+      "120",
+      "--out",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261116"
+    ],
+    "exit_code": 0
+  },
+  {
+    "seed": 20261117,
+    "pid": 67432,
+    "argv": [
+      "C:\\Users\\optim\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "render",
+      "--reference",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+      "--candidate",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\OLMSmoother2-verified.aex",
+      "--routes",
+      "smart8,smart16,smart32",
+      "--cases",
+      "103",
+      "--seed",
+      "20261117",
+      "--jobs",
+      "3",
+      "--downsample",
+      "1,1/2,1/4",
+      "--timeout",
+      "120",
+      "--out",
+      "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261117"
+    ],
+    "exit_code": 0
+  }
+]

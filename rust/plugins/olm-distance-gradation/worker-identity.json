@@ -1,0 +1,25 @@
+{
+  "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+  "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302",
+  "baseline_source": ".codex-jobs/A-diag/identities.json; verified installed worker hash during current campaign",
+  "observed_execution": [
+    {
+      "pid": 31812,
+      "parent_pid": 44324,
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\aexcompat-trusted-worker-62e33039d49149ab9ce1bbf4c11e4b4fcc8debac6af2dc9bea4b0744a7e6919e\\trusted-worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    },
+    {
+      "pid": 1832,
+      "parent_pid": 12796,
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\aexcompat-trusted-worker-62e33039d49149ab9ce1bbf4c11e4b4fcc8debac6af2dc9bea4b0744a7e6919e\\trusted-worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    },
+    {
+      "pid": 14016,
+      "parent_pid": 40564,
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\aexcompat-trusted-worker-62e33039d49149ab9ce1bbf4c11e4b4fcc8debac6af2dc9bea4b0744a7e6919e\\trusted-worker.exe",
+      "sha256": "0481df5fa425af28f0e8a39ea9386185de13656c3c9d488042bed2244bdf8302"
+    }
+  ]
+}

@@ -1,0 +1,774 @@
+{
+  "status": "qualified_with_original_nondeterminism_limit; universal exact definition of done is not met",
+  "campaigns": [
+    {
+      "seed": 20261112,
+      "complete": true,
+      "per_depth": {
+        "smart16": {
+          "exact": 126,
+          "total": 128,
+          "mismatched": 2,
+          "random_total": 125,
+          "random_mismatched": 2,
+          "random_exact": 123
+        },
+        "smart32": {
+          "exact": 125,
+          "total": 128,
+          "random_total": 125,
+          "random_exact": 122,
+          "mismatched": 3,
+          "random_mismatched": 3
+        },
+        "smart8": {
+          "exact": 124,
+          "total": 128,
+          "mismatched": 4,
+          "random_total": 125,
+          "random_mismatched": 4,
+          "random_exact": 121
+        }
+      },
+      "summary_recovery": null,
+      "per_depth_downsample": {
+        "smart16": {
+          "1": {
+            "exact": 42,
+            "mismatched": 1
+          },
+          "1/2": {
+            "exact": 42,
+            "mismatched": 1
+          },
+          "1/4": {
+            "exact": 42
+          }
+        },
+        "smart32": {
+          "1": {
+            "exact": 41,
+            "mismatched": 2
+          },
+          "1/2": {
+            "exact": 43
+          },
+          "1/4": {
+            "exact": 41,
+            "mismatched": 1
+          }
+        },
+        "smart8": {
+          "1": {
+            "exact": 40,
+            "mismatched": 3
+          },
+          "1/2": {
+            "exact": 43
+          },
+          "1/4": {
+            "exact": 41,
+            "mismatched": 1
+          }
+        }
+      },
+      "failure_counts": {
+        "smart8": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        },
+        "smart16": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        },
+        "smart32": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        }
+      },
+      "identities": {
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+          "sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297"
+        },
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+        }
+      }
+    },
+    {
+      "seed": 20261113,
+      "complete": true,
+      "per_depth": {
+        "smart16": {
+          "exact": 125,
+          "total": 128,
+          "random_total": 125,
+          "random_exact": 122,
+          "mismatched": 3,
+          "random_mismatched": 3
+        },
+        "smart32": {
+          "exact": 125,
+          "total": 128,
+          "random_total": 125,
+          "random_exact": 122,
+          "mismatched": 3,
+          "random_mismatched": 3
+        },
+        "smart8": {
+          "exact": 126,
+          "total": 128,
+          "random_total": 125,
+          "random_exact": 123,
+          "mismatched": 2,
+          "random_mismatched": 2
+        }
+      },
+      "summary_recovery": {
+        "reason": "Oracle summary.json.tmp rename failed with WinError 5; renderer futures still completed",
+        "original_summary_preserved": true,
+        "all_384_saved_case_verdicts_present": true,
+        "render_process_exit_success": true,
+        "oracle_process_exit_code": 1
+      },
+      "per_depth_downsample": {
+        "smart16": {
+          "1": {
+            "exact": 42,
+            "mismatched": 1
+          },
+          "1/2": {
+            "exact": 41,
+            "mismatched": 2
+          },
+          "1/4": {
+            "exact": 42
+          }
+        },
+        "smart32": {
+          "1": {
+            "exact": 43
+          },
+          "1/2": {
+            "exact": 41,
+            "mismatched": 2
+          },
+          "1/4": {
+            "exact": 41,
+            "mismatched": 1
+          }
+        },
+        "smart8": {
+          "1": {
+            "exact": 43
+          },
+          "1/2": {
+            "exact": 41,
+            "mismatched": 2
+          },
+          "1/4": {
+            "exact": 42
+          }
+        }
+      },
+      "failure_counts": {
+        "smart8": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        },
+        "smart16": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        },
+        "smart32": {
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0
+        }
+      },
+      "identities": {
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+        },
+        "candidate": {
+          "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+          "sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297"
+        },
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+        }
+      }
+    }
+  ],
+  "totals_per_depth": {
+    "smart16": {
+      "exact": 251,
+      "total": 256,
+      "mismatched": 5,
+      "random_total": 250,
+      "random_mismatched": 5,
+      "random_exact": 245
+    },
+    "smart32": {
+      "exact": 250,
+      "total": 256,
+      "random_total": 250,
+      "random_exact": 244,
+      "mismatched": 6,
+      "random_mismatched": 6
+    },
+    "smart8": {
+      "exact": 250,
+      "total": 256,
+      "mismatched": 6,
+      "random_total": 250,
+      "random_mismatched": 6,
+      "random_exact": 244
+    }
+  },
+  "baseline_mismatches": [
+    {
+      "seed": 20261112,
+      "case": 3,
+      "route": "smart16",
+      "baseline_status": "mismatched",
+      "offset": [
+        -281.3842412212127
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "c897059842084608861c4fbf6c977470fa77a354aabea1482ce06a145b665dff",
+        "c897059842084608861c4fbf6c977470fa77a354aabea1482ce06a145b665dff",
+        "4ecfa9dcfd3ca301565eebbfb388d0ec5ca63fbcb5b2c87936042e3dd8a0144c",
+        "85c6ec29ef62aea019aa921bc215b6a7113d491728fd06028e8f4306c5c78e80",
+        "85c6ec29ef62aea019aa921bc215b6a7113d491728fd06028e8f4306c5c78e80",
+        "85c6ec29ef62aea019aa921bc215b6a7113d491728fd06028e8f4306c5c78e80",
+        "c897059842084608861c4fbf6c977470fa77a354aabea1482ce06a145b665dff"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "exact",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0003-smart16"
+    },
+    {
+      "seed": 20261112,
+      "case": 3,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -281.3842412212127
+      ],
+      "distinct_reference_outputs": 4,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "b7c7d5295a72da208c76e058c6de5a45d6efd59a35e928bc9163926d4b571ae3",
+        "b7c7d5295a72da208c76e058c6de5a45d6efd59a35e928bc9163926d4b571ae3",
+        "e55be9cbd77d9a40cd2b24e0a4dbf8d54110739b896c778114736367d5052e26",
+        "b7c7d5295a72da208c76e058c6de5a45d6efd59a35e928bc9163926d4b571ae3",
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+        "997f8f2f23d86b7d7a9aa959dabac28570e78d128facab4fa725915472a7e591",
+        "7635dcaa6a65ecd64988e614ba38be658e49716496e6ea677cbfef3ba3cb52d6"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0003-smart8"
+    },
+    {
+      "seed": 20261112,
+      "case": 29,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -346.57760392002797
+      ],
+      "distinct_reference_outputs": 4,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "4d0853042c3afcfa83b8c9ae906798f0a643cb7c540b0821658baff207c44f5c",
+        "e7cfedd55af3fbf60909c1c5457737935b6eb1206f7e4779f792c5b18f8d8e98",
+        "804146ca8f0865c0ce5b105e8bca4e2dd0af5b573743ef9fa59b7744029db55b",
+        "e7cfedd55af3fbf60909c1c5457737935b6eb1206f7e4779f792c5b18f8d8e98",
+        "e7cfedd55af3fbf60909c1c5457737935b6eb1206f7e4779f792c5b18f8d8e98",
+        "804146ca8f0865c0ce5b105e8bca4e2dd0af5b573743ef9fa59b7744029db55b",
+        "e74c337548284ff72231c9044f58e04c6a7cc549c3459a858b7cac1317d86f9e"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "exact",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0029-smart32"
+    },
+    {
+      "seed": 20261112,
+      "case": 63,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -154.3021629916854
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "606eb0810b7d59a4f5bbe8214e18202f5107cac32fa7d065a747add1dac8191e",
+        "ed90b7b01add2aad8ec458e08274a46daeea0dfe484fb6ee80a0f9314b9fff24",
+        "ed90b7b01add2aad8ec458e08274a46daeea0dfe484fb6ee80a0f9314b9fff24",
+        "606eb0810b7d59a4f5bbe8214e18202f5107cac32fa7d065a747add1dac8191e",
+        "060b055b1ea0b2115db85284f093cd327996f11887bcf4487ca80efe2a78de02",
+        "ed90b7b01add2aad8ec458e08274a46daeea0dfe484fb6ee80a0f9314b9fff24",
+        "060b055b1ea0b2115db85284f093cd327996f11887bcf4487ca80efe2a78de02"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0063-smart32"
+    },
+    {
+      "seed": 20261112,
+      "case": 63,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -154.3021629916854
+      ],
+      "distinct_reference_outputs": 4,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "f38a87f0350b91483820b8059bd947c310fc941bbae66bb41a7e6a9f341ec216",
+        "945986e96b7b01797f0d4a9002dd4b64d5dae6177c4749d2077e47c918aaf8c9",
+        "386adf2403c1da6cf407bb8178b17e954249f30ee6d9124490b49bde6bf8f452",
+        "d3f106d1d090e3a61ce39c2454dc629bef287f7876f77465cf26c4888cae9323",
+        "f38a87f0350b91483820b8059bd947c310fc941bbae66bb41a7e6a9f341ec216",
+        "386adf2403c1da6cf407bb8178b17e954249f30ee6d9124490b49bde6bf8f452",
+        "f38a87f0350b91483820b8059bd947c310fc941bbae66bb41a7e6a9f341ec216"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0063-smart8"
+    },
+    {
+      "seed": 20261112,
+      "case": 74,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -145.64344696973524
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "8d36423805e98410218b199cbf72843b4f244cc8a7f86efb860223955555f9d0",
+        "1453f359d5aacdb27bbcf8f9e83d764bd70fe682c1db27c2ee4dfbc6b3a3130b",
+        "b666aa344f35503b401b7a02b9abb192fd6858d2bd59d74364247518911893de",
+        "b666aa344f35503b401b7a02b9abb192fd6858d2bd59d74364247518911893de",
+        "8d36423805e98410218b199cbf72843b4f244cc8a7f86efb860223955555f9d0",
+        "1453f359d5aacdb27bbcf8f9e83d764bd70fe682c1db27c2ee4dfbc6b3a3130b",
+        "b666aa344f35503b401b7a02b9abb192fd6858d2bd59d74364247518911893de"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0074-smart8"
+    },
+    {
+      "seed": 20261112,
+      "case": 114,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -81.7155187069011
+      ],
+      "distinct_reference_outputs": 2,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "69cbda98cbe93ff0aabb68acf0d48e31d3bc4c4530462b9478678232deb5c51b",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266",
+        "a6a23d79b7d31423a824647cd764ffe655d00bed270b8534bd240678209b0266"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "exact",
+        "exact"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0114-smart32"
+    },
+    {
+      "seed": 20261112,
+      "case": 114,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -81.7155187069011
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "49d1a00e928ce6ac1bcbc53cd1c829a6e89c9da55705c71545b6dd2322394623",
+        "408fa3d9d45f5433ad9a2613d0736fa4a8b2bb7e5e638c6777c957236d9dc6f1",
+        "d6310e30befa2aea550bdf84c2bc8b64116c446fe7d8eea207b75adb20c916e1",
+        "408fa3d9d45f5433ad9a2613d0736fa4a8b2bb7e5e638c6777c957236d9dc6f1",
+        "d6310e30befa2aea550bdf84c2bc8b64116c446fe7d8eea207b75adb20c916e1",
+        "d6310e30befa2aea550bdf84c2bc8b64116c446fe7d8eea207b75adb20c916e1",
+        "408fa3d9d45f5433ad9a2613d0736fa4a8b2bb7e5e638c6777c957236d9dc6f1"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0114-smart8"
+    },
+    {
+      "seed": 20261112,
+      "case": 127,
+      "route": "smart16",
+      "baseline_status": "mismatched",
+      "offset": [
+        -171.82018129791362
+      ],
+      "distinct_reference_outputs": 2,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "e9f93e1f7dfa9b6d7247a1f68d13bdd3fc75a0ccf1595fe24bdbb344de332bd9",
+        "e9f93e1f7dfa9b6d7247a1f68d13bdd3fc75a0ccf1595fe24bdbb344de332bd9",
+        "b2b88bbebcd30475ff54b5943e753268464a6222a0770436ddb072d4676706e4",
+        "e9f93e1f7dfa9b6d7247a1f68d13bdd3fc75a0ccf1595fe24bdbb344de332bd9",
+        "e9f93e1f7dfa9b6d7247a1f68d13bdd3fc75a0ccf1595fe24bdbb344de332bd9",
+        "b2b88bbebcd30475ff54b5943e753268464a6222a0770436ddb072d4676706e4",
+        "b2b88bbebcd30475ff54b5943e753268464a6222a0770436ddb072d4676706e4"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "exact",
+        "exact"
+      ],
+      "evidence": "validation\\final-seed-20261112\\case-0127-smart16"
+    },
+    {
+      "seed": 20261113,
+      "case": 52,
+      "route": "smart16",
+      "baseline_status": "mismatched",
+      "offset": [
+        -316.28242873245523
+      ],
+      "distinct_reference_outputs": 2,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "e42c2c2b1b6b6724f6af3711e10e24c7fe320e514a632f716d6d7511686c3336",
+        "e42c2c2b1b6b6724f6af3711e10e24c7fe320e514a632f716d6d7511686c3336",
+        "ec4764cb0927d516b1b37e1b743a182d25c7ff7a791710e99d93caccb38e1cb1",
+        "ec4764cb0927d516b1b37e1b743a182d25c7ff7a791710e99d93caccb38e1cb1",
+        "ec4764cb0927d516b1b37e1b743a182d25c7ff7a791710e99d93caccb38e1cb1",
+        "ec4764cb0927d516b1b37e1b743a182d25c7ff7a791710e99d93caccb38e1cb1",
+        "ec4764cb0927d516b1b37e1b743a182d25c7ff7a791710e99d93caccb38e1cb1"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "exact",
+        "exact"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0052-smart16"
+    },
+    {
+      "seed": 20261113,
+      "case": 52,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -316.28242873245523
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "6f5b73481f73c3d48a79307aba5d8c506469e5e166b13f9c01f1e2d50c95724a",
+        "b4ee3add9c9c83a0ed30a27be887ac9f2c3830ead30c33de6ef160fdd9c607ed",
+        "b4ee3add9c9c83a0ed30a27be887ac9f2c3830ead30c33de6ef160fdd9c607ed",
+        "bdb233e82d9c2d7b8d112b992302757d5eb70b8b16e5d203f2cd217223a03484",
+        "6f5b73481f73c3d48a79307aba5d8c506469e5e166b13f9c01f1e2d50c95724a",
+        "6f5b73481f73c3d48a79307aba5d8c506469e5e166b13f9c01f1e2d50c95724a",
+        "6f5b73481f73c3d48a79307aba5d8c506469e5e166b13f9c01f1e2d50c95724a"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "mismatched",
+        "exact"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0052-smart32"
+    },
+    {
+      "seed": 20261113,
+      "case": 52,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -316.28242873245523
+      ],
+      "distinct_reference_outputs": 2,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "9c10fa35e45c981bc9d29dc451f9df2bf525db80410ea4e00f1c516a01334570",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22",
+        "89465650e771d2a318daf27791c1cb6cbaf8acf96104a68b11210e5056f5ff22"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "exact",
+        "exact"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0052-smart8"
+    },
+    {
+      "seed": 20261113,
+      "case": 64,
+      "route": "smart8",
+      "baseline_status": "mismatched",
+      "offset": [
+        -175.16103742372655
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "e42c141599e9f1093a3e5eecaf7ae8b7ac86cc6fd84d2ef128828782a707e64e",
+        "63ae4fd7240d2c677a21732059fad323705de992362d27deb4ecf4e738bec29e",
+        "57041a75b4532860787236141fa8e05a830b840feb90e36717e3292c1a70ec8c",
+        "e42c141599e9f1093a3e5eecaf7ae8b7ac86cc6fd84d2ef128828782a707e64e",
+        "e42c141599e9f1093a3e5eecaf7ae8b7ac86cc6fd84d2ef128828782a707e64e",
+        "e42c141599e9f1093a3e5eecaf7ae8b7ac86cc6fd84d2ef128828782a707e64e",
+        "57041a75b4532860787236141fa8e05a830b840feb90e36717e3292c1a70ec8c"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "exact",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0064-smart8"
+    },
+    {
+      "seed": 20261113,
+      "case": 103,
+      "route": "smart16",
+      "baseline_status": "mismatched",
+      "offset": [
+        -106.4181350428997
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "c1661dd649c064ef6b11a4526da5522a46cc42ea3a067d0f34765db3a0f59d9b",
+        "63f94aaa220d8ac049611afa269494dd66e57464b2d53df87c89da6c03847468",
+        "0854b9e625f981358d2f89b6232a0cec9de462ce9a07a33e0b1879c49b87210d",
+        "c1661dd649c064ef6b11a4526da5522a46cc42ea3a067d0f34765db3a0f59d9b",
+        "63f94aaa220d8ac049611afa269494dd66e57464b2d53df87c89da6c03847468",
+        "63f94aaa220d8ac049611afa269494dd66e57464b2d53df87c89da6c03847468",
+        "c1661dd649c064ef6b11a4526da5522a46cc42ea3a067d0f34765db3a0f59d9b"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0103-smart16"
+    },
+    {
+      "seed": 20261113,
+      "case": 103,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -106.4181350428997
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "74b92278ece864950acff644a2e4ee211bec350595ac78e6af40747bbc8dd91c",
+        "74b92278ece864950acff644a2e4ee211bec350595ac78e6af40747bbc8dd91c",
+        "74b92278ece864950acff644a2e4ee211bec350595ac78e6af40747bbc8dd91c",
+        "bd345c61ae3677ff419f1bd45dd0587ebf563cb3093750afc4c299e97d1e32f5",
+        "bd345c61ae3677ff419f1bd45dd0587ebf563cb3093750afc4c299e97d1e32f5",
+        "1d741b71825f12b03000ed76b92dfc3f5a1b72f0530b27f1530d3ac75bc89789",
+        "bd345c61ae3677ff419f1bd45dd0587ebf563cb3093750afc4c299e97d1e32f5"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "exact",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0103-smart32"
+    },
+    {
+      "seed": 20261113,
+      "case": 104,
+      "route": "smart32",
+      "baseline_status": "mismatched",
+      "offset": [
+        -341.1520776271807
+      ],
+      "distinct_reference_outputs": 5,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "eab6e7cbdb73a65968efaec55ef5fc9f5767f00b0d144bb2706d857a8f0f7f61",
+        "50948730c8bd6dedc064a61bda07a59957f46f2ab25f2d855b85cddb47b8b1ed",
+        "a02fe1be70bc6b8738e24ed080fd8f89e0e932a4fd7d38b07e3faca5dc593b5f",
+        "161663cc69227116f6246e7d9f7350751805f7c004a3aebed4d89fb23af60a32",
+        "a02fe1be70bc6b8738e24ed080fd8f89e0e932a4fd7d38b07e3faca5dc593b5f",
+        "a02fe1be70bc6b8738e24ed080fd8f89e0e932a4fd7d38b07e3faca5dc593b5f",
+        "16b4058bfd44a28a220ebfdfbc553ebf90f0bf2a52f3100263537e0b0977625e"
+      ],
+      "diagnostic_statuses": [
+        "mismatched",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0104-smart32"
+    },
+    {
+      "seed": 20261113,
+      "case": 114,
+      "route": "smart16",
+      "baseline_status": "mismatched",
+      "offset": [
+        -142.709008219959
+      ],
+      "distinct_reference_outputs": 3,
+      "reference_nondeterminism_proven": true,
+      "zero_offset_control_status": "exact",
+      "reference_pixel_hashes": [
+        "2ec55337cd87ffa83c35baa6ae9ab394c37352428cdfb7ee5fef0b0004e76827",
+        "c06aec145764783d47d4bacfbb2f3f23d845ff7d49114dfce946f8b21b780130",
+        "c06aec145764783d47d4bacfbb2f3f23d845ff7d49114dfce946f8b21b780130",
+        "2ec55337cd87ffa83c35baa6ae9ab394c37352428cdfb7ee5fef0b0004e76827",
+        "c06aec145764783d47d4bacfbb2f3f23d845ff7d49114dfce946f8b21b780130",
+        "c06aec145764783d47d4bacfbb2f3f23d845ff7d49114dfce946f8b21b780130",
+        "6a675533319a2934de57977e426ba45417f37de7a418da0d91b8d15b8b11a46b"
+      ],
+      "diagnostic_statuses": [
+        "exact",
+        "mismatched",
+        "mismatched"
+      ],
+      "evidence": "validation\\final-seed-20261113\\case-0114-smart16"
+    }
+  ],
+  "baseline_mismatch_count": 17,
+  "all_mismatches_have_observed_reference_nondeterminism": true,
+  "all_zero_offset_controls_exact": true,
+  "source_hash_drift": [],
+  "inventory_identical": true,
+  "pipl": {
+    "identical": true,
+    "resources": [
+      {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+        "binary_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+        "pipl_size": 310,
+        "pipl_sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+      },
+      {
+        "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+        "binary_sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297",
+        "pipl_size": 310,
+        "pipl_sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+      }
+    ]
+  },
+  "tests": {
+    "passed": 6,
+    "random_cpp_images": 360,
+    "thread_counts": [
+      1,
+      4
+    ],
+    "layer_hdr_nonfinite_cpp_images": 24,
+    "gaussian_words": 5498
+  },
+  "excluded_from_main_counts": [
+    "smoke",
+    "superseded preliminary campaign",
+    "reference self-repeats",
+    "zero-offset controls"
+  ],
+  "limitations": [
+    "AEXCompat only; native AE and macOS not tested",
+    "Original negative-offset table underread: nondeterminism observed, memory cause inferred from grounded C++",
+    "Noise Type 3 original defect; Layer arithmetic tested against C++ only",
+    "Native HDR/negative alpha and Classic/ROI layouts not qualified against original",
+    "Harness reports source_newer_than_worker; worker loaded-module identity not observed"
+  ]
+}

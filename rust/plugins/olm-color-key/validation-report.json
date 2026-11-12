@@ -1,0 +1,878 @@
+{
+  "schema_version": 1,
+  "job": "F-core",
+  "date": "2026-11-12",
+  "plugin": "OLMColorKey",
+  "scope": "Windows x64 AEXCompat CPU validation; not native AE or macOS qualification",
+  "full_frame_resolved_campaign": {
+    "smart8": {
+      "distinct_cases": 203,
+      "random_cases": 200,
+      "boundary_cases": 3,
+      "exact": 203,
+      "mismatches": 0
+    },
+    "smart16": {
+      "distinct_cases": 203,
+      "random_cases": 200,
+      "boundary_cases": 3,
+      "exact": 203,
+      "mismatches": 0
+    },
+    "smart32": {
+      "distinct_cases": 203,
+      "random_cases": 200,
+      "boundary_cases": 3,
+      "exact": 203,
+      "mismatches": 0
+    }
+  },
+  "inventory": {
+    "differences": [],
+    "host_only_exceptions": [],
+    "parameter_count_excluding_input": 223,
+    "pipl_bytes": 294,
+    "pipl_identical": true,
+    "artifact": "pipl-comparison.json"
+  },
+  "runs": {
+    "final-203": {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "candidate": {
+        "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\OLMColorKey.aex",
+        "sha256": "3a4ee5e34203808ad729ffdec0b01b611d186424d828d39cb48f4e82629ada64"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "8f2ea2dee3cfc580c118440f0109b2a9f816c861f9ca1944012f6f695c37ec01"
+      },
+      "non_ae_debug_routes": [],
+      "seed": 20261113,
+      "cases": 203,
+      "timeout_seconds": 120,
+      "force_classic": false,
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 203,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 203,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "summary_artifact": {
+        "path": "rust\\plugins\\olm-color-key\\validation\\final-203\\summary.json",
+        "sha256": "d9f724a1d90b355b95b7195ea6f28b13eaf6b1409696b7bcb4790519fb18b225"
+      },
+      "failure_cases": []
+    },
+    "palette-hits": {
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "candidate": {
+        "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\OLMColorKey.aex",
+        "sha256": "3a4ee5e34203808ad729ffdec0b01b611d186424d828d39cb48f4e82629ada64"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      },
+      "corpus": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-color-key\\validate_pilots.py",
+        "sha256": "0316c89e712234ed328a605da5b7c0816b0cb8c6f289ca9459417e9541dd0f84"
+      },
+      "cases": 48,
+      "seed": 4026646750,
+      "extent": null,
+      "inventory_diff": [],
+      "complete": true,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 48,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 48,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 48,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 48,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 48,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 48,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "recovery": {
+        "reason": "Windows denied atomic summary rename during progress observation; all worker tasks completed",
+        "method": "rechecked every manifest, binary/input hash, process result and raw output comparison; no rerender",
+        "script": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-color-key\\validate_pilots.py",
+          "sha256": "f0388b3544a2380c1b33670efe13c56c3faad31f6d7221e211b53ee66c6c79b6"
+        }
+      },
+      "exit_code": 0,
+      "summary_artifact": {
+        "path": "rust\\plugins\\olm-color-key\\validation\\palette-hits\\summary.json",
+        "sha256": "fec49e57b8c610045b848738b951c181595d46d77c02746a160fbc0341eba447"
+      },
+      "failure_cases": []
+    },
+    "extent": {
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "candidate": {
+        "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\OLMColorKey.aex",
+        "sha256": "3a4ee5e34203808ad729ffdec0b01b611d186424d828d39cb48f4e82629ada64"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      },
+      "corpus": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-color-key\\validate_pilots.py",
+        "sha256": "f0388b3544a2380c1b33670efe13c56c3faad31f6d7221e211b53ee66c6c79b6"
+      },
+      "cases": 12,
+      "seed": 4026646750,
+      "extent": [
+        1,
+        1,
+        6,
+        5
+      ],
+      "inventory_diff": [],
+      "complete": true,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 1,
+          "mismatched": 0,
+          "reference_unrenderable": 11,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 11,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 1,
+          "mismatched": 0,
+          "reference_unrenderable": 11,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 11,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 1,
+          "mismatched": 0,
+          "reference_unrenderable": 11,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 11,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "exit_code": 2,
+      "summary_artifact": {
+        "path": "rust\\plugins\\olm-color-key\\validation\\extent\\summary.json",
+        "sha256": "a483a2dc397eaf11130dcccbf7d9742af3122ee5974aae99dd92a0bce3acc798"
+      },
+      "failure_cases": [
+        {
+          "case": 0,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0000-smart16"
+        },
+        {
+          "case": 0,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0000-smart8"
+        },
+        {
+          "case": 1,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0001-smart8"
+        },
+        {
+          "case": 0,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0000-smart32"
+        },
+        {
+          "case": 1,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0001-smart32"
+        },
+        {
+          "case": 1,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0001-smart16"
+        },
+        {
+          "case": 2,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0002-smart8"
+        },
+        {
+          "case": 2,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0002-smart16"
+        },
+        {
+          "case": 3,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0003-smart8"
+        },
+        {
+          "case": 2,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0002-smart32"
+        },
+        {
+          "case": 3,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0003-smart32"
+        },
+        {
+          "case": 3,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0003-smart16"
+        },
+        {
+          "case": 4,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0004-smart16"
+        },
+        {
+          "case": 4,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0004-smart8"
+        },
+        {
+          "case": 4,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0004-smart32"
+        },
+        {
+          "case": 5,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0005-smart8"
+        },
+        {
+          "case": 5,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0005-smart32"
+        },
+        {
+          "case": 5,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0005-smart16"
+        },
+        {
+          "case": 6,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0006-smart8"
+        },
+        {
+          "case": 6,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0006-smart16"
+        },
+        {
+          "case": 6,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0006-smart32"
+        },
+        {
+          "case": 8,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0008-smart8"
+        },
+        {
+          "case": 8,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0008-smart16"
+        },
+        {
+          "case": 8,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0008-smart32"
+        },
+        {
+          "case": 9,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0009-smart8"
+        },
+        {
+          "case": 9,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0009-smart16"
+        },
+        {
+          "case": 9,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0009-smart32"
+        },
+        {
+          "case": 10,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0010-smart16"
+        },
+        {
+          "case": 10,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0010-smart8"
+        },
+        {
+          "case": 11,
+          "route": "smart8",
+          "status": "reference_unrenderable",
+          "directory": "case-0011-smart8"
+        },
+        {
+          "case": 10,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0010-smart32"
+        },
+        {
+          "case": 11,
+          "route": "smart32",
+          "status": "reference_unrenderable",
+          "directory": "case-0011-smart32"
+        },
+        {
+          "case": 11,
+          "route": "smart16",
+          "status": "reference_unrenderable",
+          "directory": "case-0011-smart16"
+        }
+      ]
+    },
+    "classic-debug": {
+      "schema_version": 1,
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "candidate": {
+        "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\OLMColorKey.aex",
+        "sha256": "3a4ee5e34203808ad729ffdec0b01b611d186424d828d39cb48f4e82629ada64"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      },
+      "non_ae_debug_routes": [
+        "classic8",
+        "classic16"
+      ],
+      "seed": 20261113,
+      "cases": 5,
+      "timeout_seconds": 120,
+      "force_classic": true,
+      "render_environment_overrides": {
+        "AEXCOMPAT_FRAME_DEADLINE_MS": "120000"
+      },
+      "jobs": 2,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "perturb_candidate": [],
+      "inventory_diff": [],
+      "same_binary": false,
+      "routes": {
+        "classic8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 5,
+          "route_scope": "non_ae_debug",
+          "exact": 0,
+          "mismatched": 0,
+          "reference_unrenderable": 5,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 5,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "classic16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 5,
+          "route_scope": "non_ae_debug",
+          "exact": 0,
+          "mismatched": 0,
+          "reference_unrenderable": 5,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 5,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 2,
+      "summary_artifact": {
+        "path": "rust\\plugins\\olm-color-key\\validation\\classic-debug\\summary.json",
+        "sha256": "b31c5cf75ea1ae128839ca93bb7f466c39d781c37aa294e2caaff15eb0c8ba5e"
+      },
+      "failure_cases": [
+        {
+          "case": 0,
+          "route": "classic16",
+          "status": "reference_unrenderable",
+          "directory": "case-0000-classic16"
+        },
+        {
+          "case": 0,
+          "route": "classic8",
+          "status": "reference_unrenderable",
+          "directory": "case-0000-classic8"
+        },
+        {
+          "case": 1,
+          "route": "classic16",
+          "status": "reference_unrenderable",
+          "directory": "case-0001-classic16"
+        },
+        {
+          "case": 1,
+          "route": "classic8",
+          "status": "reference_unrenderable",
+          "directory": "case-0001-classic8"
+        },
+        {
+          "case": 2,
+          "route": "classic16",
+          "status": "reference_unrenderable",
+          "directory": "case-0002-classic16"
+        },
+        {
+          "case": 2,
+          "route": "classic8",
+          "status": "reference_unrenderable",
+          "directory": "case-0002-classic8"
+        },
+        {
+          "case": 3,
+          "route": "classic16",
+          "status": "reference_unrenderable",
+          "directory": "case-0003-classic16"
+        },
+        {
+          "case": 3,
+          "route": "classic8",
+          "status": "reference_unrenderable",
+          "directory": "case-0003-classic8"
+        },
+        {
+          "case": 4,
+          "route": "classic16",
+          "status": "reference_unrenderable",
+          "directory": "case-0004-classic16"
+        },
+        {
+          "case": 4,
+          "route": "classic8",
+          "status": "reference_unrenderable",
+          "directory": "case-0004-classic8"
+        }
+      ]
+    },
+    "current-build-smoke": {
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMColorKey.aex",
+        "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+      },
+      "candidate": {
+        "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-verified-build-zcw63b3s\\OLMColorKey.aex",
+        "sha256": "82f84ceb68cccd18693c0883bda970a0420596a88d52c60d55379f7df43d6262"
+      },
+      "tool": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+        "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+      },
+      "corpus": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-color-key\\validate_pilots.py",
+        "sha256": "f0388b3544a2380c1b33670efe13c56c3faad31f6d7221e211b53ee66c6c79b6"
+      },
+      "cases": 12,
+      "seed": 4026646750,
+      "extent": null,
+      "inventory_diff": [],
+      "complete": true,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "exit_code": 0,
+      "summary_artifact": {
+        "path": "rust\\plugins\\olm-color-key\\validation\\current-build-smoke\\summary.json",
+        "sha256": "1222e6c3f960a0fb9485f6f503e4944205ba36b048dad173a82c6cb99682a84f"
+      },
+      "failure_cases": []
+    }
+  },
+  "anomalies": [
+    "Palette-hit workers all completed, but a Windows reader blocked atomic progress-summary replacement. --recover rehashed binaries/inputs, checked every process result and recomputed all 144 comparisons from raw artifacts; no rerender or mismatch omission."
+  ],
+  "build_identity": {
+    "campaign": {
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-final-nx44fe6i\\OLMColorKey.aex",
+      "sha256": "3a4ee5e34203808ad729ffdec0b01b611d186424d828d39cb48f4e82629ada64"
+    },
+    "current": {
+      "path": "C:\\Users\\optim\\AppData\\Local\\Temp\\olm-rust-fcore-verified-build-zcw63b3s\\OLMColorKey.aex",
+      "sha256": "82f84ceb68cccd18693c0883bda970a0420596a88d52c60d55379f7df43d6262"
+    },
+    "sections": {
+      ".text": {
+        "identical": true,
+        "campaign_sha256": "934dabf88ac98b2eb6730a884a0f428e680e7904011370a0fd143c8afe75e533",
+        "current_sha256": "934dabf88ac98b2eb6730a884a0f428e680e7904011370a0fd143c8afe75e533",
+        "differing_bytes": 0
+      },
+      ".rdata": {
+        "identical": false,
+        "campaign_sha256": "5c17602e39736af499d6dfb8b87975cac8da5fa8f00e495011526a8b0fb3adf1",
+        "current_sha256": "640654807c900d858301cb09bd46083b38c36ba643106c7b5076c10d914f149e",
+        "differing_bytes": 13
+      },
+      ".data": {
+        "identical": true,
+        "campaign_sha256": "3245a64caeab557e748a232a23091238f6c0852d1433df1b7242a550a29d5f54",
+        "current_sha256": "3245a64caeab557e748a232a23091238f6c0852d1433df1b7242a550a29d5f54",
+        "differing_bytes": 0
+      },
+      ".pdata": {
+        "identical": true,
+        "campaign_sha256": "1d8c12cef36903a72856b95f110b121cb2ba7c862edcb4c0662b26ccd8bdd334",
+        "current_sha256": "1d8c12cef36903a72856b95f110b121cb2ba7c862edcb4c0662b26ccd8bdd334",
+        "differing_bytes": 0
+      },
+      ".rsrc": {
+        "identical": true,
+        "campaign_sha256": "b4e485e82c7bc76e0b2ca2df5b3424eb1d2c0a5da78a169034158b1fb17bd6bc",
+        "current_sha256": "b4e485e82c7bc76e0b2ca2df5b3424eb1d2c0a5da78a169034158b1fb17bd6bc",
+        "differing_bytes": 0
+      },
+      ".reloc": {
+        "identical": true,
+        "campaign_sha256": "22c3a43da0289f63dafb6b81fb8009ebd223156553886e7b7c4cfc52cd75c332",
+        "current_sha256": "22c3a43da0289f63dafb6b81fb8009ebd223156553886e7b7c4cfc52cd75c332",
+        "differing_bytes": 0
+      }
+    },
+    "pipl_identical": true,
+    "note": "The final source adds rejection of an empty checkout_plan output; this helper is unused by either pilot. Executable and writable-data/unwind/relocation sections are identical. Read-only panic location/debug/link metadata and VERSIONINFO serialization may differ. The full oracle campaign is bound to the campaign binary; current build gets a separate smoke corpus."
+  },
+  "commands": {
+    "build": "cargo build --release -p color-keep -p olm-color-key",
+    "tests": "cargo test --release --workspace",
+    "test_functions_passed": 12,
+    "test_functions_failed": 0,
+    "cwd": "rust"
+  },
+  "math_validation": {
+    "approach": "cc builds vendored UCRT C on every target",
+    "cpp_numeric_probe_comparisons": 131072,
+    "native_ucrt_probe_comparisons": 82080,
+    "modes": [
+      "NOFMA",
+      "FMA"
+    ],
+    "native_default_mode": "FMA",
+    "native_ucrt_version": "10.0.26100.9711",
+    "native_ucrt_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+  },
+  "limitations": [
+    "macOS builds/bundles and native AE not run on this Windows machine; no AE launch or installation.",
+    "SmartFX flags make Classic selectors non-AE diagnostic routes. Classic32 is not declared.",
+    "Dynamic parameter hiding/custom native UI is not implemented or validated.",
+    "Cross-target bit-exactness is intended from common C/Rust kernels but not measured on macOS.",
+    "Cropped extent [1,1,6,5] of 11x7: original produced 11 reference_unrenderable results per depth and one comparable exact result. Diagnostics report worker_invariant_failure, fatal session error -43, despite zero Smart selector errors; root cause not established.",
+    "Original Classic8/16 produced no valid output in five cases per depth (classic_finalize error -6 / output validation). Not counted as exact.",
+    "Cropped-reference diagnostics include worker_freshness_warning=source_newer_than_worker; results apply to the recorded installed harness/worker environment."
+  ],
+  "cleanup": {
+    "all_started_exec_sessions_collected": true,
+    "live_matching_task_processes_at_final_check": 0,
+    "scope": "Targeted Win32_Process query for Python and AEXCompat processes whose command lines contain this task staging/corpus/script paths; no unrelated processes stopped. Oracle Windows Job Objects own their worker descendants."
+  }
+}

@@ -1,0 +1,4452 @@
+{
+  "schema_version": 1,
+  "identical": true,
+  "diff": [],
+  "inventories": {
+    "reference": {
+      "parameters": [
+        {
+          "slot": 1,
+          "name": "Angle",
+          "kind": "angle",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 1,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 2,
+          "name": "Brightness Gain",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 10.0,
+          "value": 1.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 3,
+          "name": "Size Variation",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 4,
+          "name": "Front Blur Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 5,
+          "name": "Blur Strength",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 4000.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 6,
+          "name": "Alpha Fade",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 7,
+          "name": "Sharp Tail",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 8,
+          "name": "Sharp Tail",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 9,
+          "name": "Back Blur Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 10,
+          "name": "Blur Strength",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 4000.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 11,
+          "name": "Alpha Fade",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 12,
+          "name": "Sharp Tail",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 13,
+          "name": "Sharp Tail",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 14,
+          "name": "Noise Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 15,
+          "name": "Noise Variation",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 16,
+          "name": "Noise Type",
+          "kind": "integer",
+          "minimum": 1.0,
+          "maximum": 2.0,
+          "value": 1.0,
+          "choices": [
+            "Smooth ",
+            " Block ",
+            " Layer"
+          ],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 17,
+          "name": "Noise Layer",
+          "kind": "layer",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 18,
+          "name": "Seed",
+          "kind": "integer",
+          "minimum": 1.0,
+          "maximum": 1000.0,
+          "value": 1.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 19,
+          "name": "Offset",
+          "kind": "angle",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 1,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 20,
+          "name": "Thickness",
+          "kind": "float",
+          "minimum": 1.0,
+          "maximum": 100.0,
+          "value": 10.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 21,
+          "name": "Thickness",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        }
+      ],
+      "host": {
+        "advertised_out_flags": 100663360,
+        "advertised_out_flags2": 134222856,
+        "audio_effect_only": false,
+        "image_render_supported": true,
+        "parameter_metadata": [
+          {
+            "host_range": null,
+            "index": 1,
+            "initial_value": [
+              0.0
+            ],
+            "type": "angle",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 10.0,
+              "minimum": 0.0
+            },
+            "index": 2,
+            "initial_value": 1.0,
+            "type": "float_slider",
+            "user_range": {
+              "maximum": 2.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 3,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 4,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            },
+            "index": 5,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 6,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 7,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 8,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          },
+          {
+            "host_range": null,
+            "index": 9,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            },
+            "index": 10,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 11,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 12,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 13,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          },
+          {
+            "host_range": null,
+            "index": 14,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 15,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 2.0,
+              "minimum": 1.0
+            },
+            "index": 16,
+            "initial_value": 1.0,
+            "type": "popup",
+            "user_range": {
+              "maximum": 2.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 17,
+            "initial_value": 0,
+            "type": "layer",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 1000.0,
+              "minimum": 1.0
+            },
+            "index": 18,
+            "initial_value": 1.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 1000.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 19,
+            "initial_value": [
+              0.0
+            ],
+            "type": "angle",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 1.0
+            },
+            "index": 20,
+            "initial_value": 10.0,
+            "type": "float_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 21,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          }
+        ],
+        "plugin_data": null,
+        "plugin_kind": null,
+        "reported_num_params": 22,
+        "smart_render_advertised": true
+      },
+      "diagnostics": {
+        "dependency_closure": {
+          "dependencies": [],
+          "dependency_count": 0,
+          "provenance": [],
+          "rejected_import_name_count": 0,
+          "search_roots": [
+            "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex"
+          ],
+          "total_bytes": 0,
+          "unresolved_import_count": 8,
+          "unresolved_imports": [
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "api-ms-win-crt-math-l1-1-0.dll",
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "api-ms-win-crt-string-l1-1-0.dll",
+            "kernel32.dll",
+            "vcomp140.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll"
+          ]
+        },
+        "parameters": [
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 1,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "angle",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Angle",
+            "slot": 1,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "name": "Brightness Gain",
+            "slot": 2,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Size Variation",
+            "slot": 3,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Front Blur Parameters",
+            "slot": 4,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 4000.0,
+            "minimum": 0.0,
+            "name": "Blur Strength",
+            "slot": 5,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Alpha Fade",
+            "slot": 6,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 7,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 8,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Back Blur Parameters",
+            "slot": 9,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 4000.0,
+            "minimum": 0.0,
+            "name": "Blur Strength",
+            "slot": 10,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Alpha Fade",
+            "slot": 11,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 12,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 13,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Noise Parameters",
+            "slot": 14,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Noise Variation",
+            "slot": 15,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [
+              "Smooth ",
+              " Block ",
+              " Layer"
+            ],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "name": "Noise Type",
+            "slot": 16,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "layer",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Noise Layer",
+            "slot": 17,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "name": "Seed",
+            "slot": 18,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 1,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "angle",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Offset",
+            "slot": 19,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "name": "Thickness",
+            "slot": 20,
+            "supervised": false,
+            "value": 10.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Thickness",
+            "slot": 21,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          }
+        ],
+        "plugin_identity": {
+          "sha256": "D3E5E4079A759D521DC7457EBF998487FE43B00F182A1E2F910B187936B6C06E",
+          "size_bytes": 56832
+        },
+        "stage": "parameter_inspection",
+        "worker_diagnostics": {
+          "active_stage": null,
+          "advertised_out_flags": 100663360,
+          "advertised_out_flags2": 134222856,
+          "audio_effect_only": false,
+          "bee_facade": {
+            "effect_layer_hand_outs": 0,
+            "layer_vtable_calls": [],
+            "layer_vtable_calls_truncated": false,
+            "trap_count": 0
+          },
+          "callback_addr_denials": [],
+          "callback_addr_denials_truncated": false,
+          "callback_denials": [],
+          "callback_denials_truncated": false,
+          "callback_history": [],
+          "classification": "ok",
+          "compute_cache_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "call_count": 1,
+                "operation": "global_teardown",
+                "outcome": "cleanup",
+                "return_code": 0,
+                "selector": "HOST",
+                "sequence": 0,
+                "slot": 1
+              }
+            ],
+            "truncated": false
+          },
+          "elapsed_ms": 2152,
+          "exit_code": 0,
+          "extended_allocation_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETUP",
+                "sequence": 0
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETUP",
+                "sequence": 1
+              },
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 2
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 3
+              },
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETDOWN",
+                "sequence": 4
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETDOWN",
+                "sequence": 5
+              }
+            ],
+            "truncated": false
+          },
+          "extended_lookup_timeline": {
+            "maximum_records": 128,
+            "records": [],
+            "truncated": false
+          },
+          "failure_stage": null,
+          "first_failure_stage": null,
+          "global_setdown_error": 0,
+          "global_setup_error": 0,
+          "host_callback_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "call_count": 21,
+                "callback": "inter.add_param",
+                "classification": "implemented",
+                "return_code": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 0,
+                "status": "success"
+              }
+            ],
+            "truncated": false
+          },
+          "image_render_supported": true,
+          "inspection_status": "parameters_inspected",
+          "kill_reason": null,
+          "last_completed_stage": "global_setdown",
+          "launch_validation_failure": null,
+          "load_failure": null,
+          "memory_limit_reached": false,
+          "minidump": null,
+          "missing_suites": [],
+          "missing_suites_truncated": false,
+          "module_audit": {
+            "authorized_policy_modules": [],
+            "phase_count": 5,
+            "status": "passed",
+            "unknown_count": 0,
+            "unknown_modules": []
+          },
+          "parameter_count": 21,
+          "parameter_metadata": [
+            {
+              "host_range": null,
+              "index": 1,
+              "initial_value": [
+                0.0
+              ],
+              "type": "angle",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 10.0,
+                "minimum": 0.0
+              },
+              "index": 2,
+              "initial_value": 1.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 3,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 4,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              },
+              "index": 5,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 6,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 7,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 8,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            },
+            {
+              "host_range": null,
+              "index": 9,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              },
+              "index": 10,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 11,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 12,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 13,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            },
+            {
+              "host_range": null,
+              "index": 14,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 15,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              },
+              "index": 16,
+              "initial_value": 1.0,
+              "type": "popup",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 17,
+              "initial_value": 0,
+              "type": "layer",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              },
+              "index": 18,
+              "initial_value": 1.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 19,
+              "initial_value": [
+                0.0
+              ],
+              "type": "angle",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              "index": 20,
+              "initial_value": 10.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 21,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            }
+          ],
+          "params_setup_error": 0,
+          "peak_job_memory_bytes": 3756032,
+          "peak_process_memory_bytes": 2469888,
+          "plugin_data": null,
+          "plugin_kind": null,
+          "process_memory_limit_bytes": 536870912,
+          "reported_num_params": 22,
+          "runtime_module_policy_applied": false,
+          "selector_invocations": {
+            "maximum_records": 64,
+            "records": [
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": null
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-342e51cb6732fe32",
+                  "same_identity_as_global_setup_entry": null,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": null
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "GLOBAL_SETUP",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": null
+                }
+              },
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": true
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-342e51cb6732fe32",
+                  "same_identity_as_global_setup_entry": true,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": true
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "PARAMS_SETUP",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": true
+                }
+              },
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": true
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-342e51cb6732fe32",
+                  "same_identity_as_global_setup_entry": true,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": true
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "GLOBAL_SETDOWN",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": true
+                }
+              }
+            ],
+            "truncated": false
+          },
+          "smart_render_advertised": true,
+          "stage_events": [
+            {
+              "errors": {},
+              "stage": "global_setup",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "global_setup",
+              "state": "end"
+            },
+            {
+              "errors": {},
+              "stage": "params_setup",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "params_setup",
+              "state": "end"
+            },
+            {
+              "errors": {},
+              "stage": "global_setdown",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "global_setdown",
+              "state": "end"
+            }
+          ],
+          "stderr_truncated": false,
+          "suite_acquire_failures": [],
+          "suite_acquire_failures_truncated": false,
+          "suite_call_slot_probe": {
+            "configuration_truncated": false,
+            "enabled": false,
+            "maximum_targets": 8,
+            "slot_count": 32,
+            "targets": [
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "PF AE Private Effect Suite",
+                "truncated": false,
+                "version": 3
+              },
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "PF AE Private Effect Suite",
+                "truncated": false,
+                "version": 5
+              },
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "AEFX ACE Suite",
+                "truncated": false,
+                "version": 1
+              }
+            ]
+          },
+          "suite_timeline": [
+            {
+              "action": "acquire",
+              "name": "AEGP Utility Suite",
+              "result": 0,
+              "selector": "GLOBAL_SETUP",
+              "sequence": 0,
+              "version": 7
+            },
+            {
+              "action": "release",
+              "name": "AEGP Utility Suite",
+              "result": 0,
+              "selector": "GLOBAL_SETUP",
+              "sequence": 1,
+              "version": 7
+            }
+          ],
+          "suite_timeline_truncated": false,
+          "unhandled_exception": null,
+          "unsupported_suite_calls": [],
+          "unsupported_suite_calls_truncated": false,
+          "worker_freshness_warning": "source_newer_than_worker",
+          "worker_peak_commit_bytes": 2469888
+        }
+      }
+    },
+    "candidate": {
+      "parameters": [
+        {
+          "slot": 1,
+          "name": "Angle",
+          "kind": "angle",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 1,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 2,
+          "name": "Brightness Gain",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 10.0,
+          "value": 1.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 3,
+          "name": "Size Variation",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 4,
+          "name": "Front Blur Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 5,
+          "name": "Blur Strength",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 4000.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 6,
+          "name": "Alpha Fade",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 7,
+          "name": "Sharp Tail",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 8,
+          "name": "Sharp Tail",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 9,
+          "name": "Back Blur Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 10,
+          "name": "Blur Strength",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 4000.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 11,
+          "name": "Alpha Fade",
+          "kind": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 12,
+          "name": "Sharp Tail",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 13,
+          "name": "Sharp Tail",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 14,
+          "name": "Noise Parameters",
+          "kind": "group_start",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 15,
+          "name": "Noise Variation",
+          "kind": "float",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 16,
+          "name": "Noise Type",
+          "kind": "integer",
+          "minimum": 1.0,
+          "maximum": 2.0,
+          "value": 1.0,
+          "choices": [
+            "Smooth ",
+            " Block ",
+            " Layer"
+          ],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 17,
+          "name": "Noise Layer",
+          "kind": "layer",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 18,
+          "name": "Seed",
+          "kind": "integer",
+          "minimum": 1.0,
+          "maximum": 1000.0,
+          "value": 1.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 19,
+          "name": "Offset",
+          "kind": "angle",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 1,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 20,
+          "name": "Thickness",
+          "kind": "float",
+          "minimum": 1.0,
+          "maximum": 100.0,
+          "value": 10.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        },
+        {
+          "slot": 21,
+          "name": "Thickness",
+          "kind": "group_end",
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "value": 0.0,
+          "choices": [],
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "components": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "component_count": 0,
+          "layer_path": null,
+          "enabled": true,
+          "visible": true,
+          "supervised": false,
+          "debug_summary": null,
+          "custom_ui_events": 0,
+          "control_size": [
+            0,
+            0
+          ]
+        }
+      ],
+      "host": {
+        "advertised_out_flags": 100663360,
+        "advertised_out_flags2": 134222856,
+        "audio_effect_only": false,
+        "image_render_supported": true,
+        "parameter_metadata": [
+          {
+            "host_range": null,
+            "index": 1,
+            "initial_value": [
+              0.0
+            ],
+            "type": "angle",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 10.0,
+              "minimum": 0.0
+            },
+            "index": 2,
+            "initial_value": 1.0,
+            "type": "float_slider",
+            "user_range": {
+              "maximum": 2.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 3,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 4,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            },
+            "index": 5,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 6,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 7,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 8,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          },
+          {
+            "host_range": null,
+            "index": 9,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            },
+            "index": 10,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 4000.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 11,
+            "initial_value": 0.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 12,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 13,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          },
+          {
+            "host_range": null,
+            "index": 14,
+            "initial_value": null,
+            "type": "group_start",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "index": 15,
+            "initial_value": 0.0,
+            "type": "fixed_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          },
+          {
+            "host_range": {
+              "maximum": 2.0,
+              "minimum": 1.0
+            },
+            "index": 16,
+            "initial_value": 1.0,
+            "type": "popup",
+            "user_range": {
+              "maximum": 2.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 17,
+            "initial_value": 0,
+            "type": "layer",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 1000.0,
+              "minimum": 1.0
+            },
+            "index": 18,
+            "initial_value": 1.0,
+            "type": "slider",
+            "user_range": {
+              "maximum": 1000.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 19,
+            "initial_value": [
+              0.0
+            ],
+            "type": "angle",
+            "user_range": null
+          },
+          {
+            "host_range": {
+              "maximum": 100.0,
+              "minimum": 1.0
+            },
+            "index": 20,
+            "initial_value": 10.0,
+            "type": "float_slider",
+            "user_range": {
+              "maximum": 100.0,
+              "minimum": 1.0
+            }
+          },
+          {
+            "host_range": null,
+            "index": 21,
+            "initial_value": null,
+            "type": "group_end",
+            "user_range": null
+          }
+        ],
+        "plugin_data": null,
+        "plugin_kind": null,
+        "reported_num_params": 22,
+        "smart_render_advertised": true
+      },
+      "diagnostics": {
+        "dependency_closure": {
+          "dependencies": [],
+          "dependency_count": 0,
+          "provenance": [],
+          "rejected_import_name_count": 0,
+          "search_roots": [
+            "D:\\olm-rs-target\\P-dblur"
+          ],
+          "total_bytes": 0,
+          "unresolved_import_count": 7,
+          "unresolved_imports": [
+            "api-ms-win-core-synch-l1-2-0.dll",
+            "api-ms-win-crt-heap-l1-1-0.dll",
+            "api-ms-win-crt-math-l1-1-0.dll",
+            "api-ms-win-crt-runtime-l1-1-0.dll",
+            "kernel32.dll",
+            "ntdll.dll",
+            "vcruntime140.dll"
+          ]
+        },
+        "parameters": [
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 1,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "angle",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Angle",
+            "slot": 1,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "name": "Brightness Gain",
+            "slot": 2,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Size Variation",
+            "slot": 3,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Front Blur Parameters",
+            "slot": 4,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 4000.0,
+            "minimum": 0.0,
+            "name": "Blur Strength",
+            "slot": 5,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Alpha Fade",
+            "slot": 6,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 7,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 8,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Back Blur Parameters",
+            "slot": 9,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 4000.0,
+            "minimum": 0.0,
+            "name": "Blur Strength",
+            "slot": 10,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Alpha Fade",
+            "slot": 11,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 12,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Sharp Tail",
+            "slot": 13,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_start",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Noise Parameters",
+            "slot": 14,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "name": "Noise Variation",
+            "slot": 15,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [
+              "Smooth ",
+              " Block ",
+              " Layer"
+            ],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "name": "Noise Type",
+            "slot": 16,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "layer",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Noise Layer",
+            "slot": 17,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "integer",
+            "layer_path": null,
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "name": "Seed",
+            "slot": 18,
+            "supervised": false,
+            "value": 1.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 1,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "angle",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Offset",
+            "slot": 19,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "float",
+            "layer_path": null,
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "name": "Thickness",
+            "slot": 20,
+            "supervised": false,
+            "value": 10.0,
+            "visible": true
+          },
+          {
+            "choices": [],
+            "color": [
+              255,
+              0,
+              0,
+              0
+            ],
+            "component_count": 0,
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "control_size": [
+              0,
+              0
+            ],
+            "custom_ui_events": 0,
+            "debug_summary": null,
+            "enabled": true,
+            "kind": "group_end",
+            "layer_path": null,
+            "maximum": 0.0,
+            "minimum": 0.0,
+            "name": "Thickness",
+            "slot": 21,
+            "supervised": false,
+            "value": 0.0,
+            "visible": true
+          }
+        ],
+        "plugin_identity": {
+          "sha256": "9CB49720DD34AC114436904BD040EAAA517371FED9747228DCF41B61348A3297",
+          "size_bytes": 260608
+        },
+        "stage": "parameter_inspection",
+        "worker_diagnostics": {
+          "active_stage": null,
+          "advertised_out_flags": 100663360,
+          "advertised_out_flags2": 134222856,
+          "audio_effect_only": false,
+          "bee_facade": {
+            "effect_layer_hand_outs": 0,
+            "layer_vtable_calls": [],
+            "layer_vtable_calls_truncated": false,
+            "trap_count": 0
+          },
+          "callback_addr_denials": [],
+          "callback_addr_denials_truncated": false,
+          "callback_denials": [],
+          "callback_denials_truncated": false,
+          "callback_history": [],
+          "classification": "ok",
+          "compute_cache_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "call_count": 1,
+                "operation": "global_teardown",
+                "outcome": "cleanup",
+                "return_code": 0,
+                "selector": "HOST",
+                "sequence": 0,
+                "slot": 1
+              }
+            ],
+            "truncated": false
+          },
+          "elapsed_ms": 2775,
+          "exit_code": 0,
+          "extended_allocation_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETUP",
+                "sequence": 0
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETUP",
+                "sequence": 1
+              },
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 2
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 3
+              },
+              {
+                "allocations": [],
+                "boundary": "entry",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETDOWN",
+                "sequence": 4
+              },
+              {
+                "allocations": [],
+                "boundary": "exit",
+                "double_frees": 0,
+                "frees": 0,
+                "global_setup_live_allocation_count": 0,
+                "invalid_frees": 0,
+                "live_allocation_count": 0,
+                "new_allocations": 0,
+                "selector": "GLOBAL_SETDOWN",
+                "sequence": 5
+              }
+            ],
+            "truncated": false
+          },
+          "extended_lookup_timeline": {
+            "maximum_records": 128,
+            "records": [],
+            "truncated": false
+          },
+          "failure_stage": null,
+          "first_failure_stage": null,
+          "global_setdown_error": 0,
+          "global_setup_error": 0,
+          "host_callback_timeline": {
+            "maximum_records": 128,
+            "records": [
+              {
+                "call_count": 21,
+                "callback": "inter.add_param",
+                "classification": "implemented",
+                "return_code": 0,
+                "selector": "PARAMS_SETUP",
+                "sequence": 0,
+                "status": "success"
+              }
+            ],
+            "truncated": false
+          },
+          "image_render_supported": true,
+          "inspection_status": "parameters_inspected",
+          "kill_reason": null,
+          "last_completed_stage": "global_setdown",
+          "launch_validation_failure": null,
+          "load_failure": null,
+          "memory_limit_reached": false,
+          "minidump": null,
+          "missing_suites": [],
+          "missing_suites_truncated": false,
+          "module_audit": {
+            "authorized_policy_modules": [],
+            "phase_count": 5,
+            "status": "passed",
+            "unknown_count": 0,
+            "unknown_modules": []
+          },
+          "parameter_count": 21,
+          "parameter_metadata": [
+            {
+              "host_range": null,
+              "index": 1,
+              "initial_value": [
+                0.0
+              ],
+              "type": "angle",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 10.0,
+                "minimum": 0.0
+              },
+              "index": 2,
+              "initial_value": 1.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 3,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 4,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              },
+              "index": 5,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 6,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 7,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 8,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            },
+            {
+              "host_range": null,
+              "index": 9,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              },
+              "index": 10,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 4000.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 11,
+              "initial_value": 0.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 12,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 13,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            },
+            {
+              "host_range": null,
+              "index": 14,
+              "initial_value": null,
+              "type": "group_start",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              "index": 15,
+              "initial_value": 0.0,
+              "type": "fixed_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 0.0
+              }
+            },
+            {
+              "host_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              },
+              "index": 16,
+              "initial_value": 1.0,
+              "type": "popup",
+              "user_range": {
+                "maximum": 2.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 17,
+              "initial_value": 0,
+              "type": "layer",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              },
+              "index": 18,
+              "initial_value": 1.0,
+              "type": "slider",
+              "user_range": {
+                "maximum": 1000.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 19,
+              "initial_value": [
+                0.0
+              ],
+              "type": "angle",
+              "user_range": null
+            },
+            {
+              "host_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              "index": 20,
+              "initial_value": 10.0,
+              "type": "float_slider",
+              "user_range": {
+                "maximum": 100.0,
+                "minimum": 1.0
+              }
+            },
+            {
+              "host_range": null,
+              "index": 21,
+              "initial_value": null,
+              "type": "group_end",
+              "user_range": null
+            }
+          ],
+          "params_setup_error": 0,
+          "peak_job_memory_bytes": 3670016,
+          "peak_process_memory_bytes": 2396160,
+          "plugin_data": null,
+          "plugin_kind": null,
+          "process_memory_limit_bytes": 536870912,
+          "reported_num_params": 22,
+          "runtime_module_policy_applied": false,
+          "selector_invocations": {
+            "maximum_records": 64,
+            "records": [
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": null
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-295fad6ece16ba04",
+                  "same_identity_as_global_setup_entry": null,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": null
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "GLOBAL_SETUP",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": null
+                }
+              },
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": true
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-295fad6ece16ba04",
+                  "same_identity_as_global_setup_entry": true,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": true
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "PARAMS_SETUP",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": true
+                }
+              },
+              {
+                "access_type": null,
+                "appl_id_at_entry": {
+                  "hex_u32": "0x46585443",
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "printable_code": "FXTC",
+                  "same_value_as_global_setup_entry": true
+                },
+                "effect_ref_at_entry": {
+                  "classification": "module",
+                  "process_local_token": "ptr-295fad6ece16ba04",
+                  "same_identity_as_global_setup_entry": true,
+                  "state": "non_null"
+                },
+                "fault_address": null,
+                "fault_module": null,
+                "fault_module_class": null,
+                "global_data_handoff": {
+                  "input_at_entry": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "output_after_return": {
+                    "classification": "null",
+                    "process_local_token": null,
+                    "state": "null"
+                  },
+                  "same_identity_as_previous_output": true
+                },
+                "host_result_code": 0,
+                "invocation_completed_normally": true,
+                "plugin_rva": null,
+                "raw_return_code": 0,
+                "registers": null,
+                "seh_caught": false,
+                "seh_code": null,
+                "selector": "GLOBAL_SETDOWN",
+                "stack_pointer_values": null,
+                "unwind_frames": null,
+                "unwind_stop": null,
+                "version_at_entry": {
+                  "host_setting_source": "worker_effect_bootstrap",
+                  "major": 13,
+                  "minor": 29,
+                  "raw_packed_u32": "0x001d000d",
+                  "same_value_as_global_setup_entry": true
+                }
+              }
+            ],
+            "truncated": false
+          },
+          "smart_render_advertised": true,
+          "stage_events": [
+            {
+              "errors": {},
+              "stage": "global_setup",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "global_setup",
+              "state": "end"
+            },
+            {
+              "errors": {},
+              "stage": "params_setup",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "params_setup",
+              "state": "end"
+            },
+            {
+              "errors": {},
+              "stage": "global_setdown",
+              "state": "begin"
+            },
+            {
+              "errors": {
+                "error": 0
+              },
+              "stage": "global_setdown",
+              "state": "end"
+            }
+          ],
+          "stderr_truncated": false,
+          "suite_acquire_failures": [],
+          "suite_acquire_failures_truncated": false,
+          "suite_call_slot_probe": {
+            "configuration_truncated": false,
+            "enabled": false,
+            "maximum_targets": 8,
+            "slot_count": 32,
+            "targets": [
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "PF AE Private Effect Suite",
+                "truncated": false,
+                "version": 3
+              },
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "PF AE Private Effect Suite",
+                "truncated": false,
+                "version": 5
+              },
+              {
+                "calls": [],
+                "enabled": false,
+                "name": "AEFX ACE Suite",
+                "truncated": false,
+                "version": 1
+              }
+            ]
+          },
+          "suite_timeline": [
+            {
+              "action": "acquire",
+              "name": "AEGP Utility Suite",
+              "result": 0,
+              "selector": "GLOBAL_SETUP",
+              "sequence": 0,
+              "version": 13
+            },
+            {
+              "action": "release",
+              "name": "AEGP Utility Suite",
+              "result": 0,
+              "selector": "GLOBAL_SETUP",
+              "sequence": 1,
+              "version": 13
+            }
+          ],
+          "suite_timeline_truncated": false,
+          "unhandled_exception": null,
+          "unsupported_suite_calls": [],
+          "unsupported_suite_calls_truncated": false,
+          "worker_freshness_warning": "source_newer_than_worker",
+          "worker_peak_commit_bytes": 2396160
+        }
+      }
+    }
+  },
+  "harness": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+    "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+  },
+  "reference": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMDirectionalBlur.aex",
+    "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+  },
+  "candidate": {
+    "path": "D:\\olm-rs-target\\P-dblur\\OLMDirectionalBlur-qualified.aex",
+    "sha256": "9cb49720dd34ac114436904bd040eaaa517371fed9747228dcf41b61348a3297"
+  },
+  "tool": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+    "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+  }
+}

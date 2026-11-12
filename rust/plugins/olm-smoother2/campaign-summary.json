@@ -1,0 +1,188 @@
+{
+  "candidate_sha256": "a5196bd1bfab23fbfc82c30c6eaf168b64d9fc9139ea513d37bbe80bae551609",
+  "identities": {
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother2.aex",
+      "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\OLMSmoother2-verified.aex",
+      "sha256": "a5196bd1bfab23fbfc82c30c6eaf168b64d9fc9139ea513d37bbe80bae551609"
+    },
+    "tool": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+      "sha256": "657b40b68902ac64a9c3d2175e383ae97b9940f2d30a817b9962b350d76b5ab3"
+    }
+  },
+  "required_campaign_passed": true,
+  "rows": [
+    {
+      "seed": 20261116,
+      "route": "smart8",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261116\\summary.json"
+    },
+    {
+      "seed": 20261116,
+      "route": "smart16",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261116\\summary.json"
+    },
+    {
+      "seed": 20261116,
+      "route": "smart32",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261116\\summary.json"
+    },
+    {
+      "seed": 20261117,
+      "route": "smart8",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261117\\summary.json"
+    },
+    {
+      "seed": 20261117,
+      "route": "smart16",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261117\\summary.json"
+    },
+    {
+      "seed": 20261117,
+      "route": "smart32",
+      "counts": {
+        "exact": 103
+      },
+      "exact_by_downsample": {
+        "1": 35,
+        "1/2": 34,
+        "1/4": 34
+      },
+      "random_exact_by_downsample": {
+        "1": 34,
+        "1/2": 33,
+        "1/4": 33
+      },
+      "failures": [],
+      "summary": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother2\\campaign-20261117\\summary.json"
+    }
+  ],
+  "totals": {
+    "smart8": {
+      "counts": {
+        "exact": 206
+      },
+      "exact_by_downsample": {
+        "1": 70,
+        "1/2": 68,
+        "1/4": 68
+      },
+      "random_exact_by_downsample": {
+        "1": 68,
+        "1/2": 66,
+        "1/4": 66
+      },
+      "random_exact": 200
+    },
+    "smart16": {
+      "counts": {
+        "exact": 206
+      },
+      "exact_by_downsample": {
+        "1": 70,
+        "1/2": 68,
+        "1/4": 68
+      },
+      "random_exact_by_downsample": {
+        "1": 68,
+        "1/2": 66,
+        "1/4": 66
+      },
+      "random_exact": 200
+    },
+    "smart32": {
+      "counts": {
+        "exact": 206
+      },
+      "exact_by_downsample": {
+        "1": 70,
+        "1/2": 68,
+        "1/4": 68
+      },
+      "random_exact_by_downsample": {
+        "1": 68,
+        "1/2": 66,
+        "1/4": 66
+      },
+      "random_exact": 200
+    }
+  }
+}

@@ -1,0 +1,853 @@
+{
+  "schema_version": 1,
+  "tool": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+    "sha256": "637e8d16d2dce4a7aebaa1558c378e53f8d701bee0a92935f77d4f0e2b6b362c"
+  },
+  "unit_tests": {
+    "command": "python -m unittest discover -s rust/tools/oracle -p test_oracle.py -v",
+    "passed": 13,
+    "failed": 0
+  },
+  "follow_up_runs": {
+    "dg-serial-mismatch": {
+      "summary_sha256": "b536280422ca00a7bd146aa49bd1ed9951a5cabe5c036ec89dd9415f996e0760",
+      "summary": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\DistanceGradation.aex",
+          "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c638d9e6d043f835f919f99b5608c4003f36330c815124b0709ba1e73a7b5414"
+        },
+        "route": "classic8",
+        "case": {
+          "index": 0,
+          "size": [
+            1,
+            1
+          ],
+          "input_seed": 14565549259281707309,
+          "downsample": "1",
+          "assignments": [
+            {
+              "slot": 1,
+              "value": 0
+            },
+            {
+              "slot": 2,
+              "value": 1
+            },
+            {
+              "slot": 3,
+              "value": 128
+            },
+            {
+              "slot": 4,
+              "value": 128
+            },
+            {
+              "slot": 5,
+              "value": 1
+            },
+            {
+              "slot": 6,
+              "value": 0
+            },
+            {
+              "slot": 7,
+              "color": [
+                255,
+                255,
+                0,
+                0
+              ]
+            },
+            {
+              "slot": 8,
+              "color": [
+                255,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "slot": 9,
+              "value": 2
+            },
+            {
+              "slot": 10,
+              "value": 1.0
+            },
+            {
+              "slot": 11,
+              "value": 1
+            },
+            {
+              "slot": 12,
+              "value": 0
+            }
+          ],
+          "unassigned": []
+        },
+        "assets": {
+          "input.png": "247bebd91185b1becf554e1c39560b579df92b81f5071c6e925a16b5addd5598",
+          "requests\\candidate.json": "e5b92de8eda024644f7f84ee94a7cd0bc0bfeae4475187bf68e98e7c3e16f83d",
+          "requests\\reference.json": "e5b92de8eda024644f7f84ee94a7cd0bc0bfeae4475187bf68e98e7c3e16f83d"
+        },
+        "replayed_by_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c638d9e6d043f835f919f99b5608c4003f36330c815124b0709ba1e73a7b5414"
+        },
+        "seed": null,
+        "cases": 1,
+        "results": [
+          {
+            "case": 0,
+            "route": "classic8",
+            "directory": "dg-serial-mismatch",
+            "processes": {
+              "reference": {
+                "pid": 58572,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.875,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 2824,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.9209999999998217,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": false,
+              "mismatching_pixels": 1,
+              "mismatching_samples": 4,
+              "max_abs_diff": 255.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": [
+                {
+                  "x": 0,
+                  "y": 0
+                }
+              ]
+            },
+            "status": "mismatched"
+          }
+        ],
+        "complete": true,
+        "routes": {
+          "classic8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 0,
+            "mismatched": 1,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 255.0,
+            "mismatching_pixels": 1,
+            "first_coordinates": [
+              {
+                "case": 0,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "exit_code": 1
+      }
+    },
+    "extent-smoke": {
+      "summary_sha256": "7651e0bbc58a3fd518240262de3878ebdc96c53bdceda53d26ddcc7f047d73ce",
+      "summary": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c638d9e6d043f835f919f99b5608c4003f36330c815124b0709ba1e73a7b5414"
+        },
+        "seed": 0,
+        "cases": 1,
+        "jobs": 1,
+        "sizes": [
+          [
+            3,
+            7
+          ]
+        ],
+        "downsample": [
+          "1/2"
+        ],
+        "extent": [
+          0,
+          0,
+          3,
+          7
+        ],
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": true,
+        "results": [
+          {
+            "case": 0,
+            "route": "smart16",
+            "directory": "case-0000-smart16",
+            "processes": {
+              "reference": {
+                "pid": 46200,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.7970000000000255,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 61600,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.7179999999998472,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "smart32",
+            "directory": "case-0000-smart32",
+            "processes": {
+              "reference": {
+                "pid": 53468,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.9220000000000255,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 61604,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 1.219000000000051,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "smart8",
+            "directory": "case-0000-smart8",
+            "processes": {
+              "reference": {
+                "pid": 55916,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.7970000000000255,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 35684,
+                "returncode": 0,
+                "timeout": false,
+                "elapsed_seconds": 0.8119999999998981,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          }
+        ],
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0
+      }
+    },
+    "negative-replay-final": {
+      "summary_sha256": "27a5c4fe0d2c0309b98aae1163b8b98afb9c9d0bf75b8eb3e9d621508a854a19",
+      "summary": {
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "637e8d16d2dce4a7aebaa1558c378e53f8d701bee0a92935f77d4f0e2b6b362c"
+        },
+        "route": "smart32",
+        "case": {
+          "index": 0,
+          "size": [
+            97,
+            61
+          ],
+          "input_seed": 7106521602475165645,
+          "downsample": "1",
+          "assignments": [
+            {
+              "slot": 1,
+              "value": 5.0
+            },
+            {
+              "slot": 2,
+              "value": 100.0
+            },
+            {
+              "slot": 3,
+              "value": 2
+            },
+            {
+              "slot": 4,
+              "value": 1
+            },
+            {
+              "slot": 5,
+              "value": 0
+            }
+          ],
+          "unassigned": []
+        },
+        "assets": {
+          "input.png": "7b0271a152f57afe453940a1d1a64d0f48583bed0c9e93c2a046216eddc830a2",
+          "requests\\candidate.json": "493a9b6b807dd23f8471765f64f43bf7a6ccf8a40681dac2254d10090f4a7e5c",
+          "requests\\reference.json": "69006ca6031f1cc21eb0aa391720fa947175a6498243b3efcbaaba85eb456baa"
+        },
+        "replayed_by_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "637e8d16d2dce4a7aebaa1558c378e53f8d701bee0a92935f77d4f0e2b6b362c"
+        },
+        "original_tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "c638d9e6d043f835f919f99b5608c4003f36330c815124b0709ba1e73a7b5414"
+        },
+        "seed": null,
+        "cases": 1,
+        "results": [
+          {
+            "case": 0,
+            "route": "smart32",
+            "directory": "negative-replay-final",
+            "processes": {
+              "reference": {
+                "pid": 59480,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5470000000000255,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 56296,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5309999999999491,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": false,
+              "mismatching_pixels": 4733,
+              "mismatching_samples": 12543,
+              "max_abs_diff": 0.014009296894073486,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": [
+                {
+                  "x": 1,
+                  "y": 0
+                },
+                {
+                  "x": 2,
+                  "y": 0
+                },
+                {
+                  "x": 3,
+                  "y": 0
+                },
+                {
+                  "x": 4,
+                  "y": 0
+                },
+                {
+                  "x": 6,
+                  "y": 0
+                },
+                {
+                  "x": 7,
+                  "y": 0
+                },
+                {
+                  "x": 8,
+                  "y": 0
+                },
+                {
+                  "x": 9,
+                  "y": 0
+                }
+              ]
+            },
+            "status": "mismatched"
+          }
+        ],
+        "complete": true,
+        "routes": {
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 0,
+            "mismatched": 1,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.014009296894073486,
+            "mismatching_pixels": 4733,
+            "first_coordinates": [
+              {
+                "case": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 2,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 3,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 4,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 6,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 7,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 8,
+                "y": 0
+              },
+              {
+                "case": 0,
+                "x": 9,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "exit_code": 1
+      }
+    },
+    "final-smoke": {
+      "summary_sha256": "825b176c6492154b5595a7660b4d44628ba44a94ba3c4aa8d56bd0b4b8b2e32d",
+      "summary": {
+        "schema_version": 1,
+        "harness": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+          "sha256": "81676eae08b30ee60ad95c29dcf227324755bc0dec7a436ac77f4686e72b3d27"
+        },
+        "reference": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "candidate": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMBlur.aex",
+          "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+        },
+        "tool": {
+          "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\oracle\\olm_oracle.py",
+          "sha256": "637e8d16d2dce4a7aebaa1558c378e53f8d701bee0a92935f77d4f0e2b6b362c"
+        },
+        "seed": 0,
+        "cases": 1,
+        "jobs": 2,
+        "sizes": [
+          [
+            3,
+            7
+          ]
+        ],
+        "downsample": [
+          "1/2"
+        ],
+        "extent": null,
+        "perturb_candidate": [],
+        "inventory_diff": [],
+        "same_binary": true,
+        "results": [
+          {
+            "case": 0,
+            "route": "classic16",
+            "directory": "case-0000-classic16",
+            "processes": {
+              "reference": {
+                "pid": 63464,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.48500000000012733,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 10496,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.4839999999999236,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "classic8",
+            "directory": "case-0000-classic8",
+            "processes": {
+              "reference": {
+                "pid": 57352,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5160000000000764,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 39332,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "smart16",
+            "directory": "case-0000-smart16",
+            "processes": {
+              "reference": {
+                "pid": 64780,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.4839999999999236,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 15128,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5470000000000255,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "smart32",
+            "directory": "case-0000-smart32",
+            "processes": {
+              "reference": {
+                "pid": 55860,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5160000000000764,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 64096,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          },
+          {
+            "case": 0,
+            "route": "smart8",
+            "directory": "case-0000-smart8",
+            "processes": {
+              "reference": {
+                "pid": 59516,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.4839999999999236,
+                "ok": true
+              },
+              "candidate": {
+                "pid": 11992,
+                "returncode": 0,
+                "timeout": false,
+                "cancelled": false,
+                "elapsed_seconds": 0.5470000000000255,
+                "ok": true
+              }
+            },
+            "comparison": {
+              "exact": true,
+              "mismatching_pixels": 0,
+              "mismatching_samples": 0,
+              "max_abs_diff": 0.0,
+              "nonfinite_difference_samples": 0,
+              "first_coordinates": []
+            },
+            "status": "exact"
+          }
+        ],
+        "routes": {
+          "smart8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "smart32": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "classic8": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "classic16": {
+            "status": "tested",
+            "reason": null,
+            "cases_run": 1,
+            "exact": 1,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0.0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          },
+          "classic32": {
+            "status": "not_applicable",
+            "reason": "32 bpc requires FLOAT_COLOR_AWARE and SmartFX (AE contract)",
+            "cases_run": 0,
+            "exact": 0,
+            "mismatched": 0,
+            "reference_unrenderable": 0,
+            "candidate_failure": 0,
+            "tool_error": 0,
+            "reference_harness_failures": 0,
+            "candidate_harness_failures": 0,
+            "max_abs_diff": 0,
+            "mismatching_pixels": 0,
+            "first_coordinates": []
+          }
+        },
+        "complete": true,
+        "exit_code": 0
+      }
+    }
+  }
+}

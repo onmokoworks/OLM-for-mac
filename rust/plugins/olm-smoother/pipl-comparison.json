@@ -1,0 +1,27 @@
+{
+  "reference": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMSmoother.aex",
+    "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "exports": [
+      "entryPointFunc"
+    ],
+    "pipl_bytes": 298,
+    "pipl_sha256": "652dd1cccef7ea16acdf236d5ecad626e08729fe16357bca67050e3798928abd"
+  },
+  "candidate": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-smoother\\validation\\OLMSmoother.aex",
+    "sha256": "21d3ae696808b7ad188ec0b0994c04bfc9da2efe16eef289557b2a5a7be799f7",
+    "exports": [
+      "EffectMain",
+      "entryPointFunc",
+      "rust_win_dbg_logger_init_debug",
+      "rust_win_dbg_logger_init_error",
+      "rust_win_dbg_logger_init_info",
+      "rust_win_dbg_logger_init_trace",
+      "rust_win_dbg_logger_init_warn"
+    ],
+    "pipl_bytes": 298,
+    "pipl_sha256": "652dd1cccef7ea16acdf236d5ecad626e08729fe16357bca67050e3798928abd"
+  },
+  "identical": true
+}
