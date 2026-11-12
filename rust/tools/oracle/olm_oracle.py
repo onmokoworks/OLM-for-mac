@@ -432,6 +432,12 @@ def evaluate_case(directory, manifest, timeout):
 
 
 def run_case(out, case, route, identities, perturb, extent, timeout):
+    directory, manifest = prepare_case(out, case, route, identities, perturb, extent)
+    return evaluate_case(directory, manifest, timeout)
+
+
+def prepare_case(out, case, route, identities, perturb=(), extent=None):
+    """Prepare the existing replayable bundle without choosing a transport."""
     if CANCELLED.is_set():
         raise RuntimeError("oracle run cancelled")
     directory = out / f"case-{case['index']:04d}-{route}"
@@ -448,7 +454,7 @@ def run_case(out, case, route, identities, perturb, extent, timeout):
     manifest = {**identities, "route": route, "case": case}
     manifest["assets"] = {str(p.relative_to(directory)): sha256(p) for p in sorted(directory.rglob("*")) if p.is_file()}
     write_json(directory / "case.json", manifest)
-    return evaluate_case(directory, manifest, timeout)
+    return directory, manifest
 
 
 def summarize(rows, applicability, non_ae_debug_routes=()):
@@ -498,6 +504,9 @@ def render(args):
     out.mkdir(parents=True, exist_ok=False)
     identities = {name: identity(getattr(args, name)) for name in ("harness", "reference", "candidate")}
     identities["tool"] = identity(__file__)
+    if getattr(args, "resident", False):
+        import oracle_resident
+        identities["resident_tool"] = identity(oracle_resident.__file__)
     try:
         inv = {side: inspect(args.harness, getattr(args, side), args.timeout) for side in ("reference", "candidate")}
     except Exception as exc:
@@ -521,6 +530,10 @@ def render(args):
                "inventory_diff": diff, "same_binary": identities["reference"]["sha256"] == identities["candidate"]["sha256"],
                "results": [], "routes": {}, "complete": False}
     rows = summary["results"]
+    if getattr(args, "resident", False):
+        from oracle_resident import render_campaign
+        return render_campaign(args, cases, identities, applicability, debug_routes, summary,
+                               sys.modules[__name__])
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         futures = {pool.submit(run_case, out, case, route, identities, args.perturb_candidate,
                                args.extent, args.timeout): (case, route)
@@ -572,6 +585,9 @@ def replay(args):
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dst)
     manifest["replayed_by_tool"] = identity(__file__)
+    if manifest.get("transport") == "resident":
+        manifest["replay_source_transport"] = "resident"
+        manifest["transport"] = "per_process"
     write_json(out / "case.json", manifest)
     result = evaluate_case(out, manifest, args.timeout)
     summary = {**manifest, "original_tool": manifest["tool"], "tool": identity(__file__),
@@ -602,6 +618,7 @@ def main(argv=None):
         p.add_argument("--reference", type=Path, required=True)
         p.add_argument("--candidate", type=Path, required=True)
         if command == "render":
+            p.add_argument("--resident", action="store_true", help="fresh-instance batches; retain per-process reruns of any mismatch/failure")
             p.add_argument("--force-classic", action="store_true", help="non-AE debug: allow classic8/16 for SmartFX effects")
             p.add_argument("--cases", type=int, default=20)
             p.add_argument("--seed", type=int, default=0)

@@ -1,5 +1,10 @@
 # Independent-case resident rendering: proposal and patch draft
 
+Historical proposal: AEXCompat PR #1828 subsequently implemented the capability.
+See the [oracle follow-up](../oracle/README.md#resident-rendering) for the adapter,
+actual merged contract and qualification. The findings below describe the
+pre-#1828 executables and are retained as the original investigation record.
+
 Status: **AEXCompat changes are required; no resident oracle mode was added.**
 This is Job B-fast-oracle's stop-point under requirement 3. Neither AEXCompat
 checkout was edited or rebuilt, and no issue, PR, commit or push was made.

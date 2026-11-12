@@ -1,5 +1,10 @@
 # Fast oracle feasibility measurement
 
+Historical investigation below predates AEXCompat PR #1828. The follow-up
+implementation and current qualification are documented in the
+[oracle README](../oracle/README.md#resident-rendering); the proposal and original
+measurements here remain unchanged as historical evidence.
+
 **Result: an AEXCompat change is needed.** Existing resident modes retain a
 sequence across frames and do not provide an independent-case reset. The
 oracle therefore has no new `--resident` option. Its implementation and public

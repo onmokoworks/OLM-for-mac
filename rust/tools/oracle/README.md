@@ -1,11 +1,11 @@
 # AEXCompat bit-exact oracle
 
-Resident multi-case feasibility is documented in
-[`../fastrender/AEXCOMPAT_PROPOSAL.md`](../fastrender/AEXCOMPAT_PROPOSAL.md).
-Existing AEXCompat sessions retain sequence state and lack the fresh-case
-boundary needed by this oracle. No `--resident` flag was added; per-process
-behavior remains unchanged. The linked measurement records 33 exact original
-self-comparison pairs and cold/warm timing, not resident equivalence.
+`render --resident` opts into AEXCompat's finite fresh-instance batches.
+Per-process rendering remains the default. Every resident mismatch or failed
+case is rerun per-process with identical saved inputs and requests; both
+observations remain in the report. See [resident rendering](#resident-rendering).
+The earlier [feasibility proposal](../fastrender/AEXCOMPAT_PROPOSAL.md) is a
+historical record from before AEXCompat PR #1828 supplied the missing API.
 
 `olm_oracle.py` compares any two inspectable effect `.aex` files through the
 Windows AEXCompat CPU harness. It never modifies or copies the plug-ins, installs
@@ -742,6 +742,185 @@ external workspace blocker; no other kit's files or Cargo workspace files were
 changed. An end-to-end native Cargo build/check success is therefore **not
 verified** in this run; the orchestration's success/failure paths are unit-tested.
 
+## Resident rendering
+
+Requires AEXCompat's independent-case batch command and a matching native worker
+(PR #1828, merged at `7418be04e400c5020ea5b088e904db3fdf82b052`). The shared
+detached checkout was updated to that revision and **both** Release binaries
+rebuilt in their existing locations. Native compilation used the existing Ninja
+Release/MSVC 14.50 configuration; header dependencies verified for 217 translation
+units. The ordinary-session and independent-case APIs are different: this option
+uses `--render-request-batch`, not persistent animation frames.
+
+```powershell
+python rust/tools/oracle/olm_oracle.py render --reference D:\originals\OLMBlur.aex --candidate D:\staged\OLMBlur.aex --resident --cases 60 --seed 20261112 --jobs 3 --downsample 1,1/2,1/4 --out rust/tools/oracle/runs/resident-new
+```
+
+Omit `--resident` for the unchanged per-process path. Existing `run_case`,
+`evaluate_case`, case generation, comparison and replay arguments remain intact.
+`prepare_case` is the extracted artifact-preparation helper. `check` continues
+using per-process rendering. `replay` of a resident case runs per-process and
+does not reconstruct its preceding resident history; use the saved batch
+manifest to investigate ordering. Batch manifests point at existing outputs,
+so rerunning one requires fresh output destinations.
+
+Partitioning uses side/plug-in identity, route/depth, input dimensions, complete
+static host context (including spatial scale/extent), timing step/scale/duration,
+render settings, dependencies and secondary-layer slots/dimensions/decoded RGBA
+content. Primary pixels, frame time and non-layer parameter edits may change.
+Reference and candidate always get different workers, even for self-comparisons.
+The key is conservative: equivalent differently written context documents may
+split unnecessarily. Groups preserve generation order and split at both 128
+cases and the 1 MiB manifest limit. The full typed requests are passed unchanged;
+the harness remains the final preflight authority. Unique secondary layers can
+force single-case groups and reduce acceleration.
+
+The module/global data, PARAMS_SETUP declarations and owned default source
+handles remain loaded. Each case gets fresh parameter/instance definitions,
+owned arbitrary-value copies and sequence setup/setdown. Frame and SmartFX
+cleanup follows the selected route. DLL statics, TLS, global caches and allocator
+history remain shared: **fresh instance/sequence isolation is not process
+isolation or native AE conformance**. See the upstream
+[batch contract](https://github.com/onmokoworks/AEXCompat/blob/7418be04e400c5020ea5b088e904db3fdf82b052/docs/INDEPENDENT_CASE_BATCH.md).
+This models independent effect instances in one loaded host, where module/global
+state can legitimately persist. It does not model successive frames of one AE
+effect instance, which may retain sequence state; process-local hidden state can
+still make a plug-in differ from the per-process authority.
+
+Memory-fill diagnostics from PR #1827 are supported by ordinary typed requests
+but explicitly unsupported in resident batches; the adapter rejects them rather
+than dropping them. Forced Classic probes of SmartFX effects are also rejected.
+GPU, audio, custom UI and auxiliary-channel manifests are outside this batch
+interface. The oracle does not expand its existing input-generation coverage.
+
+The global `--jobs` cap (1..3) covers both reference and candidate batches.
+Each batch runs under the existing private Windows Job; descendants are collected
+on success, cancellation or failure. The internal watchdog remains per-case.
+The outer finite batch budget is `(case_count + 1) * --timeout`, allowing one
+extra case budget for discovery/startup/close. It is not an unlimited discovery
+wait or a single-case timeout applied to an entire campaign.
+
+### Reports and per-process authority
+
+Each original `case-NNNN-route/` retains the same requests, inputs, outputs,
+`case.json`, side process records and `diff.json`. `batches/batch-NNNNN/` adds the
+exact manifest and raw batch process report. Side records reference their batch
+and stable case ID, and separate case timing from batch wall time. The module
+source identity is recorded as `resident_tool` alongside the ordinary tool hash.
+
+Mapping checks the complete result population, unique IDs, indices, route,
+loaded identity and final close evidence. A batch may exit 1 for a recoverable
+failed case while other cases remain valid. A failed final close, missing report,
+protocol failure or process timeout cannot produce an accepted exact result,
+even if an output file exists. Native 16/32-bit sidecars remain authoritative.
+
+**Every non-exact resident result is rerun per-process**, after resident workers
+have exited, using hash-checked copies of the saved inputs/requests. These
+artifacts live in `case-NNNN-route/per-process-authority/` and never overwrite
+resident outputs. `diff.json.per_process_authority` and
+`summary.json.per_process_reruns` contain the second verdict. The top-level
+`results` and `routes` retain resident verdicts; `per_process_rerun_routes`
+summarizes only the reruns, not an independently rerun whole campaign.
+
+The CLI prints both verdicts for each rerun. An exact per-process rerun does not
+turn a resident failure/mismatch into a pass. Exit 1 applies if either transport
+shows a mismatch or candidate failure; otherwise incomplete/error observations
+return 2. Success remains 0 only when the attempted resident comparisons are
+exact and inventory comparison passes. Input preparation errors return 2 with
+an incomplete summary; no render verdict is invented when dispatch never began.
+
+### Qualification commands and corpus
+
+```powershell
+python -m unittest discover -s rust/tools/oracle -p 'test_*.py' -q
+python rust/tools/oracle/qualify_resident.py --out rust/tools/oracle/runs/resident-qualification-new --cases 60 --seed 20261112 --jobs 3
+```
+
+The driver accepts `--originals`, `--candidates`, `--harness`, and `--only` for a
+named configuration. It never builds or copies a plug-in. Candidate defaults
+are the already-staged Rust artifacts in `rust/local/integration/staged-final`.
+
+All-ten self-comparisons use 60 cases per advertised route: ten six-case
+A/B/A/edited-C/B/A blocks, with seeded image triplets and alpha coverage from
+the normal oracle, 97×61 pixels, preview scales 1, 1/2 and 1/4. A single numeric
+slot is edited by a bounded one-unit step; all other parameters remain untouched.
+This is a declared lifecycle/reset corpus, not a full-range parameter campaign.
+Rust OLMBlur and ColorKeep use the ordinary full-range generator, 60 cases per
+route, sizes 11×7/31×19 and the same three scales and seed. No post-result
+exclusion or pass substitution is performed.
+
+Both transports get identical saved plans and asset hashes. The driver compares
+every verdict, both side PNG file bytes, and both native deep sidecars; absence
+is recorded separately from successful equality. Wall times include input and
+request preparation, dispatch, I/O, report processing, comparison and owned
+cleanup, with the common inventory acquisition outside both clocks. Transport
+order alternates across configurations. These are single campaign samples on a
+shared machine with warm filesystem caches, not benchmark medians.
+
+### Measured resident qualification (2026-11-12)
+
+[Recorded evidence](evidence/resident-20261112.json) binds the binaries, source,
+full comparison reports, tests and retained local artifacts by SHA256. The shared
+detached checkout was updated to `7418be04e400c5020ea5b088e904db3fdf82b052`.
+Both `cargo build --release -p aexcompat-harness` in `broker/` and
+`tools/build-native.ps1 -BuildDir target/minihost-build` succeeded. The existing
+Ninja/MSVC Release configuration and output locations were retained. The build
+needed the existing VS Installer and Ninja directories on PATH; the initial
+verification failure and successful repeat are both saved. No upstream source
+was edited. Full old/new harness and worker hashes are in the evidence file.
+
+The rebuilt per-process harness reproduced the saved OLMBlur Smart8 and
+OLMSmoother Classic8 baseline: three seeded inputs each, **12/12 PNG files
+byte-identical**, with all six reference/candidate comparisons exact.
+
+The qualified complete campaigns below cover **2,100 route-cases**, with
+**4,200/4,200 side outputs** and **6,960/6,960 PNG/native artifact comparisons**
+identical between transports. All verdicts also match. Each advertised route
+has 60 cases; Smoother has two routes and the other configurations have three.
+
+| Configuration | Per-process seconds | Resident seconds | Speed-up |
+|---|---:|---:|---:|
+| Original ColorKeep | 60.10 | 11.74 | 5.12x |
+| Original DistanceGradation | 92.67 | 17.08 | 5.43x |
+| Original OLMBlur | 59.71 | 13.15 | 4.54x |
+| Original OLMColorKey (full repeat) | 60.06 | 13.51 | 4.45x |
+| Original OLMDirectionalBlur | 59.02 | 9.98 | 5.91x |
+| Original OLMKiraKira | 120.63 | 35.89 | 3.36x |
+| Original OLMRadialBlur | 59.39 | 12.92 | 4.60x |
+| Original OLMSmoother | 38.54 | 6.98 | 5.52x |
+| Original OLMSmoother2 | 60.25 | 12.09 | 4.98x |
+| Original OLMToonDilate | 67.36 | 12.35 | 5.46x |
+| Rust OLMBlur vs original | 64.00 | 12.38 | 5.17x |
+| Rust ColorKeep vs original | 59.70 | 17.92 | 3.33x |
+| Sum / ratio of summed times | **801.44** | **176.00** | **4.55x** |
+
+The first ColorKey campaign is **not** marked equivalent: per-process case 22
+Smart8 reference failed at session open with `file already exists (os error 80)`
+before rendering. Its candidate and both resident outputs agree. The initial
+report remains under `runs/resident-qualification-60/` and records 179/180 matching
+verdicts and 359/360 matching side outputs for ColorKey. Three unchanged
+per-process replays then matched both resident outputs, followed by the separate
+complete campaign in `runs/resident-colorkey-requalification-60/`. The table uses
+that complete repeat for ColorKey; it does not splice passing cases into the
+initial run. The startup error's root cause is unproven.
+
+The timed sources are preserved under `runs/resident-qualification-60/source/`.
+Final review corrected manifest byte accounting (pretty JSON and Windows
+newlines), replay transport metadata and the qualification check for missing
+outputs (matching failures alone cannot prove byte equivalence). An offline check confirmed that all
+246 timed batch manifests remain exactly identical under the final partitioner;
+the complete ColorKey repeat exercised the final code. Final validation passed
+**45 Python tests**, **12 upstream native batch tests**, **5 upstream CLI tests**
+and **4 native self-test executables**.
+
+Live controls also preserved both observations: three deliberately perturbed
+OLMBlur routes mismatched in both transports; RadialBlur's full-range case 2
+failed in both transports and retained both failure reports. Replaying the
+resident Smart32 negative control through the default per-process authority
+still mismatched and correctly recorded its transport. These controls are not
+counted in the successful equivalence totals. The scoped cleanup audit found
+no remaining task process; recycled Windows PIDs were left alone.
+
 ## Process ownership and limitations
 
 On Windows each harness starts suspended, is assigned to a new private Job
@@ -754,7 +933,8 @@ on Windows; no macOS/native AE/GPU qualification is implied.
 
 The installed worker can report `worker_freshness_warning=source_newer_than_worker`.
 This is preserved in the inspection diagnostics. The executable used is hashed;
-this job does not rebuild the harness or change its workers. Timing, callbacks,
+the resident follow-up rebuilt the shared harness and worker at the merge named
+above, in their existing output locations. Timing, callbacks,
 arbitrary/custom UI payloads, dynamic parameter UI behavior, masks, GPU routes,
 temporal sequences, HDR input and exhaustive combinations remain outside this
 bounded corpus. Harness failures are observations, not proof of candidate bugs.
