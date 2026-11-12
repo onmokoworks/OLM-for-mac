@@ -2,7 +2,11 @@
 //! checked byte views. All host pointers and checkout lifetimes stay here.
 #![allow(non_upper_case_globals)] // Adobe SDK selector names are ABI constants.
 pub use after_effects;
+#[cfg(not(target_os = "macos"))]
 pub use after_effects::sys;
+#[cfg(target_os = "macos")]
+#[path = "macos_sys.rs"]
+pub mod sys;
 use olm_core::{Depth, Layout, View, ViewMut};
 use std::{
     ffi::{c_void, CString},
