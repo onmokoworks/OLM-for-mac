@@ -6,8 +6,9 @@ The math crate compiles this repository's UCRT C sources; C++ algorithm archives
 are reference tests, not the production render path. `olmcolorkey_cli` and the
 Python `tools/oracle` are excluded from Cargo workspace membership.
 
-Windows x64 builds and AEXCompat comparisons are available. **Native After
-Effects acceptance and macOS builds are not established by these results.**
+Windows x64 builds and AEXCompat comparisons are available. macOS arm64 and
+x86_64 builds and original-verified golden tests run in CI (see below).
+**Native After Effects acceptance remains unverified.**
 See [integration report](INTEGRATION.md) for the fresh seed-20261120 staged run,
 build/lint counts, hygiene inventory and unresolved limitations.
 
@@ -234,10 +235,18 @@ The [workflow](../.github/workflows/rust-macos.yml) runs on Rust/native-source
 pushes and PRs, and supports manual dispatch. Native `macos-15` arm64 and
 `macos-15-intel` x86_64 runners execute the release workspace tests, including
 C++ reference tests and the [original-verified golden corpus](tools/golden/README.md).
-Intel tests run natively; Rosetta is not used. A Windows x64 job runs the same
+Intel tests run natively; Rosetta is not used. A Windows 2025 x64 job runs the same
 workspace tests. Tests requiring original AEX files remain opt-in/ignored with
 an explicit CI skip message. The arm64 job also cross-builds x86_64 and uploads
 a zip of all ten universal bundles. A golden mismatch fails CI.
+
+Radial's `native_reciprocal_profile_and_gaussians` is explicitly ignored on
+macOS: it qualifies the capture machine's hardware `RCPSS` instruction, whose
+seed bits differ on the Intel Mac runner. Production uses the fixed Windows
+profile on both Mac architectures, verified by the original-backed golden
+hashes; no algorithm or table is changed. The Windows test remains enabled.
+Windows 2025 supplies the 26100-generation UCRT used for native DLL comparison;
+Windows 2022's older DLL differs for generated NaN signs.
 
 Each bundle has this layout (DistanceGradation uses the C++ Mac name
 `OLMDistanceGradation`, while its Windows original is `DistanceGradation.aex`):

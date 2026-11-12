@@ -12,6 +12,10 @@ extern "C" {
 }
 #[cfg(target_arch = "x86_64")]
 #[test]
+#[cfg_attr(
+    target_os = "macos",
+    ignore = "Capture-machine RCPSS qualification: Intel Mac hardware has a different seed profile; portable golden tests validate the preserved Windows profile"
+)]
 fn native_reciprocal_profile_and_gaussians() {
     unsafe {
         use std::arch::x86_64::{_mm_cvtss_f32, _mm_rcp_ss, _mm_set_ss};

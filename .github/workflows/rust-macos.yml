@@ -56,7 +56,8 @@ jobs:
 
   windows:
     name: Windows x64
-    runs-on: windows-2022
+    # The native UCRT qualification targets the Windows 26100 generation.
+    runs-on: windows-2025
     timeout-minutes: 45
     defaults:
       run:
