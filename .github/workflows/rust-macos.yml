@@ -1,0 +1,73 @@
+name: Rust macOS and Windows
+
+on:
+  push:
+    paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']
+  pull_request:
+    paths: ['rust/**', 'core/**', 'ucrtmath/**', 'mac/**', '.github/workflows/rust-macos.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    name: macOS ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            target: aarch64-apple-darwin
+          - runner: macos-15-intel
+            target: x86_64-apple-darwin
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: rust
+        shell: bash
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '11.0'
+      CC: clang
+      CXX: clang++
+      CFLAGS: '-ffp-contract=off -fno-fast-math'
+      CXXFLAGS: '-ffp-contract=off -fno-fast-math'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88.0
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+          key: ${{ matrix.target }}
+      - name: Native workspace tests
+        run: cargo test --release --workspace --target ${{ matrix.target }}
+      - name: Universal bundles
+        if: matrix.target == 'aarch64-apple-darwin'
+        run: bash tools/stage_macos.sh local/macos-universal
+      - uses: actions/upload-artifact@v4
+        if: matrix.target == 'aarch64-apple-darwin'
+        with:
+          name: OLM-rust-macOS-universal
+          path: rust/local/macos-universal.zip
+          if-no-files-found: error
+
+  windows:
+    name: Windows x64
+    runs-on: windows-2022
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - name: Workspace tests
+        run: cargo test --release --workspace
+      - name: Original binary tests
+        run: Write-Output 'SKIP original AEX oracle regeneration (originals and AEXCompat are local-only). Original callback tests remain opt-in ignored tests.'
