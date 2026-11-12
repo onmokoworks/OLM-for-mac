@@ -1,5 +1,7 @@
 use crate::algorithm::{render, Params};
 use olm_ae::{sys::*, Effect, Kind, Param, RenderContext, Value};
+#[path = "pre_render.rs"]
+mod pre_render;
 #[path = "shared_candidates.rs"]
 mod shared_candidates;
 #[path = "ui.rs"]
@@ -27,8 +29,8 @@ fn popup(id: i32, name: &str, choices: &str, default: i16) -> Param {
 impl Effect for Plugin {
     const NAME: &'static str = "Distance Gradation";
     const MATCH_NAME: &'static str = "OLM Distance Gradation";
-    const VERSION: u32 = 266752;
-    const FLAGS: u32 = 0x06000040;
+    const VERSION: u32 = 268288;
+    const FLAGS: u32 = 0x06000240;
     fn params() -> Vec<Param> {
         vec![
             param(1, "Invert", 0, Kind::Checkbox(false)),
@@ -41,7 +43,7 @@ impl Effect for Plugin {
                     min: 0,
                     max: 1000,
                     slider_min: 0,
-                    slider_max: 512,
+                    slider_max: 1000,
                     default: 128,
                 },
             ),
@@ -53,7 +55,7 @@ impl Effect for Plugin {
                     min: 0,
                     max: 1000,
                     slider_min: 0,
-                    slider_max: 512,
+                    slider_max: 1000,
                     default: 128,
                 },
             ),
@@ -88,6 +90,7 @@ impl Effect for Plugin {
                     default: 0,
                 },
             ),
+            param(13, "Use Padding", 0, Kind::Checkbox(false)),
         ]
     }
     fn render(
@@ -117,6 +120,7 @@ impl Effect for Plugin {
                 power: at(10) as f32,
                 blur_mode: at(11) as i32,
                 blur_size: at(12) as u32,
+                use_padding: at(13) != 0.,
                 scale_x: (
                     ctx.downsample_x.numerator as u32,
                     ctx.downsample_x.denominator,
@@ -138,6 +142,15 @@ pub unsafe extern "C" fn EffectMain(
     w: *mut PF_LayerDef,
     e: *mut std::ffi::c_void,
 ) -> PF_Err {
+    if cmd == PF_Cmd_SMART_PRE_RENDER {
+        return std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            let Some(input) = i.as_ref() else {
+                return olm_ae::BAD;
+            };
+            pre_render::run(input, e).err().unwrap_or(0)
+        }))
+        .unwrap_or(olm_ae::BAD);
+    }
     if cmd == PF_Cmd_UPDATE_PARAMS_UI {
         return std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             let Some(input) = i.as_ref() else {

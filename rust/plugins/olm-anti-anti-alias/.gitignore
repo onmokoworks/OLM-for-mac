@@ -1,0 +1,8 @@
+target/
+local/
+*.aex
+__pycache__/
+
+# Required declaration resources (not executable plug-ins).
+!resources/
+!resources/*.bin

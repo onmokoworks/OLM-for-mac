@@ -15,6 +15,7 @@ pub struct Params {
     pub power: f32,
     pub blur_mode: i32,
     pub blur_size: u32,
+    pub use_padding: bool,
     pub scale_x: (u32, u32),
     pub scale_y: (u32, u32),
 }
@@ -33,6 +34,7 @@ impl Default for Params {
             power: 1.,
             blur_mode: 1,
             blur_size: 0,
+            use_padding: false,
             scale_x: (1, 1),
             scale_y: (1, 1),
         }
@@ -109,16 +111,24 @@ pub fn compose(
 pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Result<()> {
     let l = input.layout();
     let o = output.layout();
-    let (w, h) = (l.width, l.height);
-    if w == 0 || h == 0 || o.width > w || o.height > h || o.depth != l.depth {
+    let (iw, ih) = (l.width, l.height);
+    if iw == 0 || ih == 0 || o.depth != l.depth {
         return Err(Error::Bounds);
     }
     let mut p = params.clone();
     if p.scale_x.0 == 0 || p.scale_x.1 == 0 || p.scale_y.0 == 0 || p.scale_y.1 == 0 {
         return Err(Error::Unsupported);
     }
-    let rw = (w as u32).wrapping_mul(p.scale_x.1) as f32 / p.scale_x.0 as f32;
-    let rh = (h as u32).wrapping_mul(p.scale_y.1) as f32 / p.scale_y.0 as f32;
+    let (border, px, py) = padding(&p)?;
+    let w = iw.checked_add(2 * px).ok_or(Error::Bounds)?;
+    let h = ih.checked_add(2 * py).ok_or(Error::Bounds)?;
+    if o.width > w || o.height > h {
+        return Err(Error::Bounds);
+    }
+    let rw =
+        (iw as u32).wrapping_mul(p.scale_x.1) as f32 / p.scale_x.0 as f32 + (border * 2) as f32;
+    let rh =
+        (ih as u32).wrapping_mul(p.scale_y.1) as f32 / p.scale_y.0 as f32 + (border * 2) as f32;
     if !(rw >= 1. && rh >= 1. && rw < 2147483648. && rh < 2147483648.) {
         return Err(Error::Bounds);
     }
@@ -132,9 +142,7 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
         p.interpolation = 2;
     }
     let blurred = p.blur_mode != 1
-        && (bx > 0
-            || ((p.blur_mode == 2 || p.blur_mode == 3) && by > 0)
-            || (l.depth != Depth::U16 && p.blur_mode == 5));
+        && (bx > 0 || ((p.blur_mode == 2 || p.blur_mode == 3) && by > 0) || p.blur_mode == 5);
     // Mirror the existing PF32 Smart admission. Large Median Power remains refused.
     if l.depth == Depth::F32 {
         if !(1..=2).contains(&p.render_mode)
@@ -169,9 +177,9 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
     }
     let mut mask = vec![0u8; count];
     let mut any = false;
-    let mut any_not = false;
-    for y in 0..h {
-        for x in 0..w {
+    let mut any_not = px != 0 || py != 0;
+    for y in 0..ih {
+        for x in 0..iw {
             let src = normalized(input.get(x, y)?);
             if l.depth == Depth::F32 {
                 let nonfinite = !blurred || p.blur_mode == 5;
@@ -186,7 +194,7 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
             }
             let scaled = src[0] * if l.depth == Depth::U16 { 256. } else { 255. };
             let owns = scaled >= 1.5 && scaled < 2147483648.;
-            mask[y * w + x] = owns as u8;
+            mask[(y + py) * w + x + px] = owns as u8;
             any |= owns;
             any_not |= !owns;
         }
@@ -221,8 +229,13 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
             let mut a = make(&mask, p.inside);
             let m: Vec<_> = mask.iter().map(|v| 1 - v).collect();
             let b = make(&m, p.outside);
-            for (a, b) in a.iter_mut().zip(b) {
-                *a = a.max(b);
+            // Native drivers use two masked cvCopy calls, not a maximum.
+            // Fractional preview padding can interpolate nonzero values onto
+            // both sides of the edge; ownership remains the original mask.
+            for ((a, b), &owns) in a.iter_mut().zip(b).zip(&mask) {
+                if owns == 0 {
+                    *a = b;
+                }
             }
             a
         }
@@ -287,7 +300,13 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
     for y in 0..o.height {
         for x in 0..o.width {
             let i = y * o.width + x;
-            let src = normalized(input.get(x, y)?);
+            // Upstream callbacks subtract the preview-space border from the
+            // output coordinate; out-of-source samples are transparent black.
+            let src = if x >= px && y >= py && x - px < iw && y - py < ih {
+                normalized(input.get(x - px, y - py)?)
+            } else {
+                [0.; 4]
+            };
             let v = compose(
                 src,
                 if blurred { aux[i] } else { 0. },
@@ -305,6 +324,27 @@ pub fn render(input: &View<'_>, output: &mut ViewMut<'_>, params: &Params) -> Re
         }
     }
     Ok(())
+}
+
+/// Full-resolution padding and its truncated preview-space offsets, from
+/// the new SmartPreRender / RenderBits drivers (RVAs 0x1174330 / 0x1171050).
+pub(crate) fn padding(p: &Params) -> Result<(usize, usize, usize)> {
+    if p.scale_x.0 == 0 || p.scale_x.1 == 0 || p.scale_y.0 == 0 || p.scale_y.1 == 0 {
+        return Err(Error::Unsupported);
+    }
+    let mut border = 0i32;
+    if p.use_padding {
+        border = (p.scale_y.1 as f32 / p.scale_y.0 as f32) as i32;
+        if p.in_out == 2 || p.in_out == 3 {
+            border = border.max(p.outside);
+        }
+    }
+    if border < 0 {
+        return Err(Error::Bounds);
+    }
+    let x = (border as f32 * p.scale_x.0 as f32 / p.scale_x.1 as f32) as usize;
+    let y = (border as f32 * p.scale_y.0 as f32 / p.scale_y.1 as f32) as usize;
+    Ok((border as usize, x, y))
 }
 
 fn normalized(p: Pixel) -> [f32; 4] {

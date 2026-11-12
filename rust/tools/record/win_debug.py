@@ -175,6 +175,16 @@ class Debugger:
                     status = 0x80010001
                 elif exception == 0x80000003 and address in p['bps']:
                     if p['step']:
+                        if p['step']['tid'] != tid:
+                            # Another thread can have hit INT3 before we suspended
+                            # it, leaving its debug event queued behind this step.
+                            # It is in our suspended set. DBG_REPLY_LATER retains
+                            # the event until we ResumeThread after the owner's
+                            # single-step; do not consume or rewind it twice.
+                            if tid not in p['step']['suspended']:
+                                raise RuntimeError('queued breakpoint thread was not suspended')
+                            status = 0x40010001  # DBG_REPLY_LATER (Windows 10+)
+                            return True
                         raise RuntimeError('unexpected nested breakpoint while stepping')
                     bp, ctx = p['bps'][address], self.context(p, tid)
                     rsp = ctx.get(152)

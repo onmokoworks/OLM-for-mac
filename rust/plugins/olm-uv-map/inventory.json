@@ -1,0 +1,718 @@
+{
+  "parameters": [
+    {
+      "slot": 1,
+      "name": "Texture",
+      "kind": "layer",
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "value": 0.0,
+      "choices": [],
+      "color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "components": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "component_count": 0,
+      "layer_path": null,
+      "enabled": true,
+      "visible": true,
+      "supervised": false,
+      "debug_summary": null,
+      "custom_ui_events": 0,
+      "control_size": [
+        0,
+        0
+      ]
+    },
+    {
+      "slot": 2,
+      "name": "Interpolation Method",
+      "kind": "integer",
+      "minimum": 1.0,
+      "maximum": 3.0,
+      "value": 3.0,
+      "choices": [
+        "Nearest Neighbor",
+        "Bilinear",
+        "Trilinear"
+      ],
+      "color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "components": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "component_count": 0,
+      "layer_path": null,
+      "enabled": true,
+      "visible": true,
+      "supervised": false,
+      "debug_summary": null,
+      "custom_ui_events": 0,
+      "control_size": [
+        0,
+        0
+      ]
+    },
+    {
+      "slot": 3,
+      "name": "Smoothness",
+      "kind": "float",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "value": 0.5,
+      "choices": [],
+      "color": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "components": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "component_count": 0,
+      "layer_path": null,
+      "enabled": true,
+      "visible": true,
+      "supervised": true,
+      "debug_summary": null,
+      "custom_ui_events": 0,
+      "control_size": [
+        0,
+        0
+      ]
+    }
+  ],
+  "host": {
+    "advertised_out_flags": 33554496,
+    "advertised_out_flags2": 402658304,
+    "audio_effect_only": false,
+    "image_render_supported": true,
+    "parameter_metadata": [
+      {
+        "host_range": null,
+        "index": 1,
+        "initial_value": -1,
+        "type": "layer",
+        "user_range": null
+      },
+      {
+        "host_range": {
+          "maximum": 3.0,
+          "minimum": 1.0
+        },
+        "index": 2,
+        "initial_value": 3.0,
+        "type": "popup",
+        "user_range": {
+          "maximum": 3.0,
+          "minimum": 1.0
+        }
+      },
+      {
+        "host_range": {
+          "maximum": 1.0,
+          "minimum": 0.0
+        },
+        "index": 3,
+        "initial_value": 0.5,
+        "type": "float_slider",
+        "user_range": {
+          "maximum": 1.0,
+          "minimum": 0.0
+        }
+      }
+    ],
+    "plugin_data": null,
+    "plugin_kind": null,
+    "reported_num_params": 4,
+    "smart_render_advertised": true
+  },
+  "diagnostics": {
+    "dependency_closure": {
+      "dependencies": [],
+      "dependency_count": 0,
+      "provenance": [],
+      "rejected_import_name_count": 0,
+      "search_roots": [
+        "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025"
+      ],
+      "total_bytes": 0,
+      "unresolved_import_count": 8,
+      "unresolved_imports": [
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "kernel32.dll",
+        "msvcp140.dll",
+        "vcruntime140.dll",
+        "vcruntime140_1.dll"
+      ]
+    },
+    "parameters": [
+      {
+        "choices": [],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "component_count": 0,
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_size": [
+          0,
+          0
+        ],
+        "custom_ui_events": 0,
+        "debug_summary": null,
+        "enabled": true,
+        "kind": "layer",
+        "layer_path": null,
+        "maximum": 0.0,
+        "minimum": 0.0,
+        "name": "Texture",
+        "slot": 1,
+        "supervised": false,
+        "value": 0.0,
+        "visible": true
+      },
+      {
+        "choices": [
+          "Nearest Neighbor",
+          "Bilinear",
+          "Trilinear"
+        ],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "component_count": 0,
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_size": [
+          0,
+          0
+        ],
+        "custom_ui_events": 0,
+        "debug_summary": null,
+        "enabled": true,
+        "kind": "integer",
+        "layer_path": null,
+        "maximum": 3.0,
+        "minimum": 1.0,
+        "name": "Interpolation Method",
+        "slot": 2,
+        "supervised": false,
+        "value": 3.0,
+        "visible": true
+      },
+      {
+        "choices": [],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "component_count": 0,
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "control_size": [
+          0,
+          0
+        ],
+        "custom_ui_events": 0,
+        "debug_summary": null,
+        "enabled": true,
+        "kind": "float",
+        "layer_path": null,
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "name": "Smoothness",
+        "slot": 3,
+        "supervised": true,
+        "value": 0.5,
+        "visible": true
+      }
+    ],
+    "plugin_identity": {
+      "sha256": "412DE99A5AF617F41D8C0DEDDC2BDC7FB8B38065B34AF2966730E01B72CB2C62",
+      "size_bytes": 40960
+    },
+    "stage": "parameter_inspection",
+    "worker_diagnostics": {
+      "active_stage": null,
+      "advertised_out_flags": 33554496,
+      "advertised_out_flags2": 402658304,
+      "audio_effect_only": false,
+      "bee_facade": {
+        "effect_layer_hand_outs": 0,
+        "layer_vtable_calls": [],
+        "layer_vtable_calls_truncated": false,
+        "trap_count": 0
+      },
+      "callback_addr_denials": [],
+      "callback_addr_denials_truncated": false,
+      "callback_denials": [],
+      "callback_denials_truncated": false,
+      "callback_history": [],
+      "classification": "ok",
+      "compute_cache_timeline": {
+        "maximum_records": 128,
+        "records": [
+          {
+            "call_count": 1,
+            "operation": "global_teardown",
+            "outcome": "cleanup",
+            "return_code": 0,
+            "selector": "HOST",
+            "sequence": 0,
+            "slot": 1
+          }
+        ],
+        "truncated": false
+      },
+      "elapsed_ms": 128,
+      "exit_code": 0,
+      "extended_allocation_timeline": {
+        "maximum_records": 128,
+        "records": [
+          {
+            "allocations": [],
+            "boundary": "entry",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "GLOBAL_SETUP",
+            "sequence": 0
+          },
+          {
+            "allocations": [],
+            "boundary": "exit",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "GLOBAL_SETUP",
+            "sequence": 1
+          },
+          {
+            "allocations": [],
+            "boundary": "entry",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "PARAMS_SETUP",
+            "sequence": 2
+          },
+          {
+            "allocations": [],
+            "boundary": "exit",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "PARAMS_SETUP",
+            "sequence": 3
+          },
+          {
+            "allocations": [],
+            "boundary": "entry",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "GLOBAL_SETDOWN",
+            "sequence": 4
+          },
+          {
+            "allocations": [],
+            "boundary": "exit",
+            "double_frees": 0,
+            "frees": 0,
+            "global_setup_live_allocation_count": 0,
+            "invalid_frees": 0,
+            "live_allocation_count": 0,
+            "new_allocations": 0,
+            "selector": "GLOBAL_SETDOWN",
+            "sequence": 5
+          }
+        ],
+        "truncated": false
+      },
+      "extended_lookup_timeline": {
+        "maximum_records": 128,
+        "records": [],
+        "truncated": false
+      },
+      "failure_stage": null,
+      "first_failure_stage": null,
+      "global_setdown_error": 0,
+      "global_setup_error": 0,
+      "host_callback_timeline": {
+        "maximum_records": 128,
+        "records": [
+          {
+            "call_count": 3,
+            "callback": "inter.add_param",
+            "classification": "implemented",
+            "return_code": 0,
+            "selector": "PARAMS_SETUP",
+            "sequence": 0,
+            "status": "success"
+          }
+        ],
+        "truncated": false
+      },
+      "image_render_supported": true,
+      "inspection_status": "parameters_inspected",
+      "kill_reason": null,
+      "last_completed_stage": "global_setdown",
+      "launch_validation_failure": null,
+      "load_failure": null,
+      "memory_limit_reached": false,
+      "minidump": null,
+      "missing_suites": [],
+      "missing_suites_truncated": false,
+      "module_audit": {
+        "authorized_policy_modules": [],
+        "phase_count": 5,
+        "status": "passed",
+        "unknown_count": 0,
+        "unknown_modules": []
+      },
+      "parameter_count": 3,
+      "parameter_metadata": [
+        {
+          "host_range": null,
+          "index": 1,
+          "initial_value": -1,
+          "type": "layer",
+          "user_range": null
+        },
+        {
+          "host_range": {
+            "maximum": 3.0,
+            "minimum": 1.0
+          },
+          "index": 2,
+          "initial_value": 3.0,
+          "type": "popup",
+          "user_range": {
+            "maximum": 3.0,
+            "minimum": 1.0
+          }
+        },
+        {
+          "host_range": {
+            "maximum": 1.0,
+            "minimum": 0.0
+          },
+          "index": 3,
+          "initial_value": 0.5,
+          "type": "float_slider",
+          "user_range": {
+            "maximum": 1.0,
+            "minimum": 0.0
+          }
+        }
+      ],
+      "params_setup_error": 0,
+      "peak_job_memory_bytes": 3596288,
+      "peak_process_memory_bytes": 2330624,
+      "plugin_data": null,
+      "plugin_kind": null,
+      "process_memory_limit_bytes": 536870912,
+      "reported_num_params": 4,
+      "runtime_module_policy_applied": false,
+      "selector_invocations": {
+        "maximum_records": 64,
+        "records": [
+          {
+            "access_type": null,
+            "appl_id_at_entry": {
+              "hex_u32": "0x46585443",
+              "host_setting_source": "worker_effect_bootstrap",
+              "printable_code": "FXTC",
+              "same_value_as_global_setup_entry": null
+            },
+            "effect_ref_at_entry": {
+              "classification": "module",
+              "process_local_token": "ptr-f872e6c15878b81d",
+              "same_identity_as_global_setup_entry": null,
+              "state": "non_null"
+            },
+            "fault_address": null,
+            "fault_module": null,
+            "fault_module_class": null,
+            "global_data_handoff": {
+              "input_at_entry": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "output_after_return": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "same_identity_as_previous_output": null
+            },
+            "host_result_code": 0,
+            "invocation_completed_normally": true,
+            "plugin_rva": null,
+            "raw_return_code": 0,
+            "registers": null,
+            "seh_caught": false,
+            "seh_code": null,
+            "selector": "GLOBAL_SETUP",
+            "stack_pointer_values": null,
+            "unwind_frames": null,
+            "unwind_stop": null,
+            "version_at_entry": {
+              "host_setting_source": "worker_effect_bootstrap",
+              "major": 13,
+              "minor": 29,
+              "raw_packed_u32": "0x001d000d",
+              "same_value_as_global_setup_entry": null
+            }
+          },
+          {
+            "access_type": null,
+            "appl_id_at_entry": {
+              "hex_u32": "0x46585443",
+              "host_setting_source": "worker_effect_bootstrap",
+              "printable_code": "FXTC",
+              "same_value_as_global_setup_entry": true
+            },
+            "effect_ref_at_entry": {
+              "classification": "module",
+              "process_local_token": "ptr-f872e6c15878b81d",
+              "same_identity_as_global_setup_entry": true,
+              "state": "non_null"
+            },
+            "fault_address": null,
+            "fault_module": null,
+            "fault_module_class": null,
+            "global_data_handoff": {
+              "input_at_entry": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "output_after_return": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "same_identity_as_previous_output": true
+            },
+            "host_result_code": 0,
+            "invocation_completed_normally": true,
+            "plugin_rva": null,
+            "raw_return_code": 0,
+            "registers": null,
+            "seh_caught": false,
+            "seh_code": null,
+            "selector": "PARAMS_SETUP",
+            "stack_pointer_values": null,
+            "unwind_frames": null,
+            "unwind_stop": null,
+            "version_at_entry": {
+              "host_setting_source": "worker_effect_bootstrap",
+              "major": 13,
+              "minor": 29,
+              "raw_packed_u32": "0x001d000d",
+              "same_value_as_global_setup_entry": true
+            }
+          },
+          {
+            "access_type": null,
+            "appl_id_at_entry": {
+              "hex_u32": "0x46585443",
+              "host_setting_source": "worker_effect_bootstrap",
+              "printable_code": "FXTC",
+              "same_value_as_global_setup_entry": true
+            },
+            "effect_ref_at_entry": {
+              "classification": "module",
+              "process_local_token": "ptr-f872e6c15878b81d",
+              "same_identity_as_global_setup_entry": true,
+              "state": "non_null"
+            },
+            "fault_address": null,
+            "fault_module": null,
+            "fault_module_class": null,
+            "global_data_handoff": {
+              "input_at_entry": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "output_after_return": {
+                "classification": "null",
+                "process_local_token": null,
+                "state": "null"
+              },
+              "same_identity_as_previous_output": true
+            },
+            "host_result_code": 0,
+            "invocation_completed_normally": true,
+            "plugin_rva": null,
+            "raw_return_code": 0,
+            "registers": null,
+            "seh_caught": false,
+            "seh_code": null,
+            "selector": "GLOBAL_SETDOWN",
+            "stack_pointer_values": null,
+            "unwind_frames": null,
+            "unwind_stop": null,
+            "version_at_entry": {
+              "host_setting_source": "worker_effect_bootstrap",
+              "major": 13,
+              "minor": 29,
+              "raw_packed_u32": "0x001d000d",
+              "same_value_as_global_setup_entry": true
+            }
+          }
+        ],
+        "truncated": false
+      },
+      "smart_render_advertised": true,
+      "stage_events": [
+        {
+          "errors": {},
+          "stage": "global_setup",
+          "state": "begin"
+        },
+        {
+          "errors": {
+            "error": 0
+          },
+          "stage": "global_setup",
+          "state": "end"
+        },
+        {
+          "errors": {},
+          "stage": "params_setup",
+          "state": "begin"
+        },
+        {
+          "errors": {
+            "error": 0
+          },
+          "stage": "params_setup",
+          "state": "end"
+        },
+        {
+          "errors": {},
+          "stage": "global_setdown",
+          "state": "begin"
+        },
+        {
+          "errors": {
+            "error": 0
+          },
+          "stage": "global_setdown",
+          "state": "end"
+        }
+      ],
+      "stderr_truncated": false,
+      "suite_acquire_failures": [],
+      "suite_acquire_failures_truncated": false,
+      "suite_call_slot_probe": {
+        "configuration_truncated": false,
+        "enabled": false,
+        "maximum_targets": 8,
+        "slot_count": 32,
+        "targets": [
+          {
+            "calls": [],
+            "enabled": false,
+            "name": "PF AE Private Effect Suite",
+            "truncated": false,
+            "version": 3
+          },
+          {
+            "calls": [],
+            "enabled": false,
+            "name": "PF AE Private Effect Suite",
+            "truncated": false,
+            "version": 5
+          },
+          {
+            "calls": [],
+            "enabled": false,
+            "name": "AEFX ACE Suite",
+            "truncated": false,
+            "version": 1
+          }
+        ]
+      },
+      "suite_timeline": [
+        {
+          "action": "acquire",
+          "name": "AEGP Utility Suite",
+          "result": 0,
+          "selector": "GLOBAL_SETUP",
+          "sequence": 0,
+          "version": 7
+        },
+        {
+          "action": "release",
+          "name": "AEGP Utility Suite",
+          "result": 0,
+          "selector": "GLOBAL_SETUP",
+          "sequence": 1,
+          "version": 7
+        }
+      ],
+      "suite_timeline_truncated": false,
+      "unhandled_exception": null,
+      "unsupported_suite_calls": [],
+      "unsupported_suite_calls_truncated": false,
+      "worker_peak_commit_bytes": 2330624
+    }
+  }
+}

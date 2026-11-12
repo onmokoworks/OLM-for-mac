@@ -201,7 +201,7 @@ unsafe fn setup<E: Effect>(i: &PF_InData, o: &mut PF_OutData) -> Result<()> {
 
 struct CheckedParam<'a> {
     i: &'a PF_InData,
-    p: PF_ParamDef,
+    p: Box<PF_ParamDef>,
     active: bool,
 }
 impl CheckedParam<'_> {
@@ -209,7 +209,7 @@ impl CheckedParam<'_> {
         self.active = false;
         check(self.i.inter.checkin_param.ok_or(BAD)?(
             self.i.effect_ref,
-            &mut self.p,
+            &mut *self.p,
         ))
     }
 }
@@ -265,17 +265,18 @@ unsafe fn values<E: Effect>(
         let p = if smart {
             let checkout = i.inter.checkout_param.ok_or(BAD)?;
             i.inter.checkin_param.ok_or(BAD)?;
-            let mut p = std::mem::zeroed();
+            // The host owns this address until checkin, including moves of the guard.
+            let mut p = Box::new(std::mem::zeroed());
             check(checkout(
                 i.effect_ref,
                 (n + 1) as _,
                 i.current_time,
                 i.time_step,
                 i.time_scale,
-                &mut p,
+                &mut *p,
             ))?;
             checked = Some(CheckedParam { i, p, active: true });
-            &checked.as_ref().unwrap().p
+            &*checked.as_ref().unwrap().p
         } else {
             if params.is_null() {
                 return Err(BAD);
@@ -585,6 +586,24 @@ mod tests {
     unsafe extern "C" fn checkin(_: PF_ProgPtr, _: i32) -> PF_Err {
         CHECKINS.fetch_add(1, Ordering::SeqCst);
         43
+    }
+    thread_local! { static PARAM_ADDRESS: std::cell::Cell<usize> = const { std::cell::Cell::new(0) }; }
+    unsafe extern "C" fn param_checkin(_: PF_ProgPtr, p: *mut PF_ParamDef) -> PF_Err {
+        PARAM_ADDRESS.with(|a| if a.replace(0) == p as usize { 0 } else { BAD })
+    }
+    #[test]
+    fn moved_parameter_guard_retains_checkout_address() {
+        unsafe {
+            let mut i: PF_InData = std::mem::zeroed();
+            i.inter.checkin_param = Some(param_checkin);
+            let mut p = Box::new(std::mem::zeroed());
+            PARAM_ADDRESS.with(|a| a.set((&mut *p as *mut PF_ParamDef) as usize));
+            let guard = CheckedParam { i: &i, p, active: true };
+            // Exercise a move into and out of another allocation, as in held checkouts.
+            let mut guards = vec![guard];
+            let mut moved = std::hint::black_box(guards.pop().unwrap());
+            moved.finish().unwrap();
+        }
     }
     struct Dummy;
     impl Effect for Dummy {

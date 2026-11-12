@@ -8,9 +8,8 @@ TOOLS = Path(__file__).resolve().parent.parent
 
 
 def scaffold(aex, out, name, probe, evidence):
-    spec = importlib.util.spec_from_file_location("autoport_scaffold",TOOLS/"scaffold/olm_scaffold.py")
-    s = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(s)
+    from button_scaffold import load_scaffold
+    s = load_scaffold()
     evidence.mkdir(parents=True,exist_ok=False)
     oracle = s.oracle_module()
     res = s.resources(aex)

@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "platform": "Windows-10-10.0.26300-SP0",
-  "golden_sha256": "15ee359aea525a939dee0640564353726f91a6a0dfbac788db364d983d84fc3a",
+  "golden_sha256": "744bd7bf4c35a66faedc3556464e88e80b6ff7d30051eb38b418fd513e1e7ab2",
   "plugins": {
     "ColorKeep": {
-      "original_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
-      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
-      "runner_sha256": "bae17ad5d9c88a0f4c763c3a9a00e7a9ad1ba1c10d1f53479776c1ad0600c9d0",
+      "original_sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "17c3b7c67643a6e88c1b6a04549f462a2ba65fff57be1cda48cacab03d796bf9",
       "exact": 54,
       "excluded": 0
     },
@@ -18,9 +18,9 @@
       "excluded": 0
     },
     "OLMColorKey": {
-      "original_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
-      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
-      "runner_sha256": "8c762f17b574f8da2ed6820101e6aaffef932040c91e69d95ef8e4a6d1024eee",
+      "original_sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "cd4c31ea1b19d78797abbf65eced60dd494a4b6b752ddd6dceb749f2cf19b57d",
       "exact": 54,
       "excluded": 0
     },
@@ -32,9 +32,9 @@
       "excluded": 0
     },
     "DistanceGradation": {
-      "original_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
-      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
-      "runner_sha256": "5b0214e88a2936f7ff18203b8e8bda37298bc246c5b2c9259d6815bfb1ebe515",
+      "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "73fbc326ccb1e68184a978e63e8b47ff271e6b68422e0843f3ffe77d1c293ac1",
       "exact": 54,
       "excluded": 0
     },
@@ -60,9 +60,9 @@
       "excluded": 0
     },
     "OLMSmoother2": {
-      "original_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
-      "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
-      "runner_sha256": "432dcb692a1aa4bd1da860c6907fd85e9d1fc06055d5fcfcc9c34be52df0c635",
+      "original_sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "20a51a4d87df78f391a1beadfb1296f3774af84608ff0f304a5e88c10988eb76",
       "exact": 54,
       "excluded": 0
     },
@@ -70,6 +70,20 @@
       "original_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
       "harness_sha256": "17dea194b332711ebc9c003eaa6ba4aa61f6b068e1a081a8d8f54f39d617e62d",
       "runner_sha256": "4e238f4b00d034ac3267e1af06882281d8b5b19c50ac6769389bff9aa7d0ac03",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMUVMap": {
+      "original_sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "00c09e850d9ab54aa969c0ae3521b20746fab5722175903bb786aeac95d7c99d",
+      "exact": 54,
+      "excluded": 0
+    },
+    "OLMAntiAntiAlias": {
+      "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+      "harness_sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc",
+      "runner_sha256": "e37aaa7fdb9f96321da373629fde786b3fc5270b9d89538e509d58540382f158",
       "exact": 54,
       "excluded": 0
     }

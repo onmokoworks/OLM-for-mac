@@ -38,6 +38,14 @@ is handled by checking exit status/signaling and `ThreadIsTerminated`; an
 unexplained inability to suspend fails the capture. Thread order is observed
 under instrumentation, not claimed to be the uninstrumented scheduler's order.
 
+An INT3 event can already be queued for a different thread when the stepping
+owner suspends it. For that owned suspended thread only, the debugger uses
+`DBG_REPLY_LATER`: after the owner's single step reinserts the hook and resumes
+the thread, Windows redelivers its pending event. Same-thread nested INT3 and
+events outside the owned suspended set remain errors. Job N-uvmap reproduced
+this scheduling race and added eight repeated multithread captures to the
+20-test regression suite; all completed calls and cleanup checks passed.
+
 The controller drains debug exit events, terminates its job, checks the job's
 active count reaches zero, and waits on a separately retained process handle.
 Normal completion, crash, timeout and controller errors use the same cleanup.

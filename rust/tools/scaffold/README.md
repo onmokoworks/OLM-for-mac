@@ -32,7 +32,9 @@ harness, declared routes, seed and one-worker render settings.
 
 `--harness PATH` overrides the harness. `--timeout SECONDS` bounds each inspection.
 `--probe PATH` reuses an already built bundled capture proxy; without it, the
-generator builds one in a fresh ignored `local/capture-*` directory. The proxy
+generator stages one in a fresh ignored `local/capture-*` directory. Compilation
+honors `CARGO_TARGET_DIR` when set, otherwise uses that capture's `target/`.
+This keeps concurrent jobs' build artifacts in their assigned target directory. The proxy
 is only an inspection instrument and must not be installed in AE.
 
 `verify_reference.py` reads `oracle.json`, stages a single-link `.aex` copy of

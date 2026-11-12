@@ -6,6 +6,7 @@ fn main() {
         let grad = c.color(7, [255, 255, 32, 0]);
         let bg = c.color(8, [255, 0, 17, 64]);
         let p = Params {
+            use_padding: false,
             invert: i % 2 == 1,
             in_out: 1 + (i % 3) as i32,
             inside: 3 + (i % 4) as i32,

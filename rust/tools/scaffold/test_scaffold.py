@@ -31,6 +31,16 @@ def example():
 
 
 class ScaffoldTests(unittest.TestCase):
+    def test_probe_honors_job_target_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); capture=root/'capture';capture.mkdir()
+            target=root/'job-target';(target/'debug').mkdir(parents=True)
+            (target/'debug/olm_scaffold_probe.dll').write_bytes(b'probe')
+            with mock.patch.dict(s.os.environ, {'CARGO_TARGET_DIR':str(target)}), mock.patch.object(s,'run_checked') as run:
+                probe=s.build_probe(object(),capture)
+            args=run.call_args.args[1]
+            self.assertEqual(args[args.index('--target-dir')+1],target.resolve())
+            self.assertEqual(probe.read_bytes(),b'probe')
     def test_pipl_short_einf_and_nonascii_bytes_retained(self):
         data=pipl([(b'eINF',b'\0\0'),(b'eVER',b'\0\x88\x08\0')])
         self.assertEqual(s.pipl_properties(data),{'eINF':b'\0\0','eVER':b'\0\x88\x08\0'})

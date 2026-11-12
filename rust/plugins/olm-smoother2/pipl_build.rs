@@ -12,7 +12,7 @@ pub fn embed() {
         },
         Property::AE_Effect_Version {
             version: 2,
-            subversion: 1,
+            subversion: 2,
             bugversion: 0,
             stage: Stage::Develop,
             build: 0,

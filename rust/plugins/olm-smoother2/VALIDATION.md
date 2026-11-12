@@ -1,4 +1,217 @@
-# Module split and staged validation plan
+# OLM Smoother2 — integrated 2026-11-12 release
+
+## Current direct qualification (2026-11-13)
+
+The final twelve-plug-in workspace candidate passes the **ordinary direct oracle**
+using AEXCompat `032a187621353bac7b92a76ae394ac387ddedf51`. No bridge or sparse
+fixture is used. Smart8/16/32, downsample 1, 1/2 and 1/4, fresh per-process
+renders, at most three concurrent renders. Counts below are **per depth**.
+
+| Reference | Smart8 | Smart16 | Smart32 |
+| --- | ---: | ---: | ---: |
+| New 64/2025 | 30 exact | 30 exact | 30 exact |
+| New 64/2026 sample | 12 exact | 12 exact | 12 exact |
+| New original-verified golden | 18 exact | 18 exact | 18 exact |
+
+Zero pixel mismatches, reference/candidate failures or timeouts remain in these
+campaigns. Inventory matches the 2025 original. The unchanged cbrtf implementation and
+native bit-exact tests now live in olm-math; 1,033,289 native UCRT probes pass.
+
+[Integration report](../../INTEGRATION.md),
+[hash-bound qualification](../../evidence/integration-20261112/qualification.json),
+[staged identity](../../evidence/integration-20261112/staged-identities.json) and
+[golden verification](../../tools/golden/verification.json) are the current
+authority. Native AE UI/project acceptance remains unverified. Prior job reports
+below retain their original hashes and diagnostic observations as **history**;
+their old bridge, harness-limit, pending-golden or local-only hoisting statements
+are superseded by the direct evidence above.
+
+---
+
+# 2026-11-12 upstream update — measured 2026-11-13
+
+**Current result:** effect 2.2.0 matches the new Windows AE 2025 original in
+**681/681** final comparisons (**227 per depth**), with **36/36** additional
+comparisons against the AE 2026 original (**12 per depth**). No pixel mismatch,
+reference/candidate render failure or timeout remains in these final runs.
+All **21 release tests pass**. These are headless Windows AEXCompat CPU results,
+not native AE, macOS, GPU, saved-project or UI interaction qualification.
+
+[upstream-validation.json](upstream-validation.json) binds the final candidate,
+originals, UCRT provider, source hashes, campaigns and cleanup. Full diagnostic
+artifacts are local-only under `upstream-work/`; the older evidence below is
+historical 2.1.0 qualification and is not the current release's authority.
+
+## Final measured coverage
+
+| Original / corpus | Isolation | Smart8 | Smart16 | Smart32 |
+| --- | --- | ---: | ---: | ---: |
+| 2025, seed 20261114, 100 random + default/min/max | Resident fresh sequence | 103 | 103 | 103 |
+| 2025, seed 20261115, 100 random + default/min/max | Resident fresh sequence | 103 | 103 | 103 |
+| 2025, seed 20261116, independent control | Fresh process | 12 | 12 | 12 |
+| 2025, three fractional ranges × three gamma modes, Oklab | Fresh process | 9 | 9 | 9 |
+| **2025 final total** | | **227** | **227** | **227** |
+| **2026, seed 20261116** | Fresh process | **12** | **12** | **12** |
+
+The primary two-seed campaign covers downsample 1 / 1/2 / 1/4 with
+70 / 68 / 68 cases per depth, including 68 / 66 / 66 random cases.
+Among its 200 random parameter tuples, versions 1 / 2 / 3 occur 73 / 68 / 59
+times, and 53 tuples use a fractional range. Dimensions cycle through 1×1,
+3×7, 97×61 and 256×144. All runs use `--jobs 2`, with equal 120-second process
+and host frame bounds. Classic rendering is outside the advertised SmartFX
+dispatch contract and is not counted.
+
+Resident cases share module globals but use fresh sequences. No mismatch/failure
+required an automatic per-process replay. Independent fresh-process controls
+and the focused Oklab cases are separately counted above. An earlier candidate
+also passed 618 fresh-process 2025 comparisons, 36 fresh-process 2026 comparisons
+and 36 smoke comparisons; these are excluded from the final artifact totals.
+
+## Upstream facts and implementation
+
+- Effect version 2.1.0 → 2.2.0. Version choices are exactly
+  `v1 (sRGB)|v2 (Linear)|v2 (Oklab)`, default 2, flags 64 (supervised).
+- Slot 6 / disk ID 5 changes from integer to float slider, default 2, valid/UI
+  range 0–100, one decimal. Parameter construction at new RVA `0x5c60` converts
+  the float UI value using **float multiplication by 0.01**; classifier `0xc110`
+  then adds 0.001. The old `0xae10` divided an integer by 100.
+- The new classifier includes the penultimate column's top-right neighbor.
+  Old `x+1 < width-1` becomes `x < width-1`. The class-plane update is shared by
+  all versions and explains the observed old/default edge changes.
+- New conversion leaves `0x5520` / `0x5840` implement linear RGB ↔ Oklab.
+  Setup `0x5bc0` decodes sRGB before Oklab; output `0x5990` performs inverse
+  Oklab then sRGB encoding. Matrix arithmetic order and binary32 constants are
+  retained. Distance `0xc4e0` uses L directly for the Oklab luminance term.
+- Gamma is bypassed for Oklab in parameter construction and `0xd0f0` / `0xc400`.
+  New `0xc400` leaves intermediate channels unclamped; output conversion and
+  final clamping happen in the output driver (`0x3ca0` for PF32). Rust follows
+  that order and avoids reading inactive gamma colors through the host suite.
+- UI `0x23b0` disables Gamma Correction, Gamma Value and Number of Gamma Colors
+  in Oklab, and hides all gamma color controls. Other modes retain the existing
+  gamma-dependent rules. This is statically grounded implementation; native UI
+  interaction has not been exercised.
+- Raw declaration capture exposed a pre-existing Rust omission: checkbox
+  captions for Enable Color Key / Invert Color Key were empty. Both captions
+  now match the original.
+
+Final inventory is identical in all exposed fields. Supplementary raw captures
+also match **every field**, including disk IDs, actual AE types, popup labels,
+flags, float precision and checkbox captions. All **294 PiPL bytes** match the
+2025 build (resource 16000, language 1033, hash
+`530e5aec57fb1ad83f202245a700d1f1ae029c263fda4b0ac17faa8f10d96015`).
+The supplied 2026 build has SDK minor 29 rather than 28; the candidate targets
+the primary 2025 declaration. 2026 sample render equality does not mean its PiPL
+is byte-identical to the 2025 candidate.
+
+## Cube root and function-level evidence
+
+The AEX imports **`cbrtf`**, through `api-ms-win-crt-math-l1-1-0.dll`.
+Live render recording resolved it to **System32 ucrtbase.dll 10.0.26100.9711**,
+SHA-256 `dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca`,
+RVA **0x54ed0**. This is not `cbrt`, `powf`, or an AEX-local cube-root routine.
+
+Read-only disassembly shows scalar binary32 normalization, a rational estimate,
+one refinement and exponent reconstruction, with no FMA dispatch. Functional
+constants at provider RVAs `0x1029e0..0x1029f4` are retained as exact float words
+in `src/oklab.rs`; basic operations use `olm_math::x86`. No system libm or
+expected-output table is called by production Rust. Special values preserve
+the observed input bits, including signaling NaNs. The implementation is
+**OLM-internal**, and `oklab::cbrtf` is an **olm-math hoisting candidate**.
+
+| Evidence | Observed result |
+| --- | --- |
+| UCRT direct test, 1,000,000 xorshift words + 33,280 exponent-boundary probes + 9 special words | **1,033,289 raw-word matches** |
+| Native witness / diverge, each matrix on 128 RGBA vectors, including signed/HDR leaf inputs | **256/256 exact** |
+| Native `0xc110` versus actual Rust whole-plane builder, every 7×5 pixel, versions 1/2/3, ranges 0/.1/1.7/2/2.9/49.9/100 | **735/735 exact** |
+| Real Smart8 recording, four forward matrices, four inverse matrices, twelve cbrtf calls | **20 captured calls; all 40 original/Rust replays exact** |
+| Oklab full renders at .1/1.7/2.9, gamma modes None/Colors/All, each depth | **27/27 exact; gamma mode does not alter any output word** |
+
+The cube-root test is sampled, not exhaustive over all 2³² words. Return bits
+under nearest rounding/gradual underflow are the contract; errno, FP exception
+flags and alternate rounding modes are excluded. Signed/HDR matrix probes do
+not establish arbitrary HDR/NaN whole-frame behavior.
+
+## Old-to-new triage, localization and compatibility
+
+The existing U-triage report supplies the old/new behavior and full matched
+parameter sensitivity sweeps. Its omitted retyped range is covered here by an
+explicit same-slot integer-domain sweep: versions 1/2 × ranges 0/1/2/3/50/100
+at all depths, giving **30 changed and 6 exact** renders, with no failures.
+These are intended upstream deltas, not failures of the updated port. A default
+v2/range-2 Smart32 pair was classified by ubdetect with three independent
+renders per side: **stable_mismatch**, no observed instability. Final updated
+candidate comparisons have no residual mismatch to exclude or classify as UB.
+
+Independent old/new native classifier calls localized the first changed output
+to the top-right classification byte at pixel (5,2) of a 7×5 plane. A bounded
+minimization reduced 87 nonzero input words to **one alpha word**, with a fresh
+replay and complete single-word-zeroing minimality check. This proves the
+isolated boundary change; it is not a claim of global image/parameter minimality.
+
+This job's funcdb run classified the 574 new functions as **516 exact, 19 fuzzy,
+39 unknown**. The prior triage's 17 referenced-data change candidates map to
+existing geometry routines; normalized matches abstract callees/global state
+and do not independently qualify those functions. Updated setup, converters,
+classification, gamma/output and UI code were inspected in this job's isolated
+hub. Existing geometry/scanners were retained and exercised by the tests and
+full oracle corpus; no output tuning or broad geometry rewrite was made.
+
+All 15 control slots and disk IDs, match name and defaults are preserved except
+the original's explicit declaration changes. **Migration risk:** same disk ID
+5 now carries a float instead of an integer. Native AE's old-project/keyframe
+conversion remains untested; no conversion absent from the original is added.
+Versions 1/2 follow the new edge behavior. The pure integer `Params` API remains
+compatible; `render_with_range` supplies fractional UI values to the same pipeline.
+
+The existing C++ reference remains unchanged outside this crate. Its extracted
+test-only class loop receives the two explicitly documented new-release deltas
+(right boundary and range multiplication) in `build.rs`. Consequently the
+full-frame C++ tests are regression checks with a documented adapter, **not an
+independent new-original oracle**. Native leaf and whole-AEX comparisons above
+provide that authority.
+
+## Reproduction, identity and remaining shared work
+
+See [README.md](README.md) for build/test commands. The final candidate is
+`upstream-work/OLMSmoother2-final.aex`, identical to
+`D:/olm-rs-target/Up-smoother2/release/olm_smoother2.dll`, SHA-256
+`a84f8850d0bc5d026f30711592c5c8715c1d2d665e8ed11d44828eed23a854b7`.
+The primary original is `add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137`;
+2026 is `d56118d170b2eb8c6a4f7708486ba221c7e71271a87becce907db13a29fa9ac5`.
+
+`run_upstream_validation.py --resident` generated the final campaigns;
+`supplement_upstream.py` generated old-domain and gamma probes;
+`summarize_upstream.py` binds the completed evidence. The 2025 raw declaration
+comparison is `upstream-work/declarations-final-comparison.json`.
+
+Shared changes required outside this job's ownership:
+
+- Golden regeneration only publishes after an all-ten run. `--only` is
+  diagnostic, so **54 Smoother2 golden hashes must be regenerated by the tool
+  owner against the new original**, with Oklab/fractional tuples added. Shared
+  golden manifests were not changed. The existing Mac packaging checker also
+  uses C++ declaration baselines and must account for the upstream version change.
+- Hoist the qualified local `cbrtf` implementation into olm-math.
+- Give the hub an explicit per-instance data/project directory option. The local
+  launcher currently overrides its fixed defaults without editing shared tools.
+- Let the diverge reducer declare input dtype independently of output dtype.
+  Its stock guard rejects this u8-output/f32-input classifier. A local wrapper
+  changes only that guard; native comparisons, budget, input checks and final
+  replay remain the shared implementation.
+- Add Smoother2 adapters to the record replay dispatcher. The local replay bridge
+  uses the unchanged witness and verifies exact recorded inputs/outputs/provider
+  hashes for all 20 calls.
+
+Ghidra hub PID **4744**, port **8783**, was stopped gracefully. Its shutdown
+record reports `exited=true`, `forced=[]`, `remaining=[]`; subsequent status was
+`running=false`. Native witness/record/ubdetect jobs verify child cleanup; oracle
+processes use the shared Windows Job lifecycle and all campaign parents were
+awaited to exit 0. Only this crate was edited. No AE/GUI, installation, commits,
+pushes, subagents or shared tool/source edits occurred.
+
+---
+
+# Historical 2.1.0 module split and staged validation
 
 1. `types.rs`, `frame.rs`, `lut.rs`: RGBA scratch types, PF8/PF16 loading and packing,
    key filtering, sRGB transfers and the captured 10,000-entry LUTs. Compare each

@@ -142,6 +142,14 @@ pub fn composite(center: Pixel, samples: &[Vertex], scalar: bool) -> Pixel {
 }
 
 pub fn post_unpremultiply(p: &mut Pixel, enable: bool, value: f32) {
+    post_unpremultiply_unclamped(p,enable,value);
+    for c in [&mut p.r, &mut p.g, &mut p.b, &mut p.a] {
+        if *c < 0.0 { *c = 0.0; } else if *c > 1.0 { *c = 1.0; }
+    }
+}
+
+/// New c400 leaves values unclamped until the output color-space conversion.
+pub fn post_unpremultiply_unclamped(p: &mut Pixel, enable: bool, value: f32) {
     if p.a != 0.0 && p.a != 1.0 {
         p.r = x86::div(p.r, p.a);
         p.g = x86::div(p.g, p.a);
@@ -149,13 +157,6 @@ pub fn post_unpremultiply(p: &mut Pixel, enable: bool, value: f32) {
     }
     if enable && value > 0.0 {
         power_rgb(p, value as f64);
-    }
-    for c in [&mut p.r, &mut p.g, &mut p.b, &mut p.a] {
-        if *c < 0.0 {
-            *c = 0.0;
-        } else if *c > 1.0 {
-            *c = 1.0;
-        }
     }
 }
 

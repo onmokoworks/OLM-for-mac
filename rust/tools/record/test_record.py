@@ -144,6 +144,15 @@ class NativeTests(unittest.TestCase):
         self.assertTrue(rows)
         self.assertTrue(all(r['status']=='complete' for r in rows))
 
+    def test_queued_thread_breakpoints_during_single_step(self):
+        # Multiple threads may already have queued INT3 events when their peer
+        # starts a single-step. All calls must still be recorded exactly once.
+        for _ in range(8):
+            code, _, manifest, rows = self.run_fixture()
+            self.assertEqual(code, 0, manifest)
+            self.assertEqual(manifest['counts'], {'mixed':12,'nested':4,'returned':1,'ippRecordFixture':12})
+            self.assertTrue(all(r['status']=='complete' for r in rows))
+
     def test_timeout_cleanup(self):
         code, _, m, _ = self.run_fixture('timeout',timeout=1)
         self.assertEqual(code,2)

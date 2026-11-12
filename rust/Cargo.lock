@@ -7,7 +7,7 @@ name = "after-effects"
 version = "0.3.0"
 source = "git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9#0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9"
 dependencies = [
- "after-effects-sys",
+ "after-effects-sys 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "bincode",
  "bitflags",
  "cstr-literal",
@@ -32,6 +32,14 @@ name = "after-effects-sys"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ec61a1cf15ebdf997b5f5c14dbb0af64ece085464bc7f4c6206ecd307e2ba42"
+dependencies = [
+ "bindgen",
+]
+
+[[package]]
+name = "after-effects-sys"
+version = "0.3.0"
+source = "git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9#0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9"
 dependencies = [
  "bindgen",
 ]
@@ -417,6 +425,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "olm-anti-anti-alias"
+version = "0.1.0"
+dependencies = [
+ "after-effects-sys 0.3.0 (git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9)",
+ "pipl",
+ "winres",
+]
+
+[[package]]
 name = "olm-blur"
 version = "0.1.0"
 dependencies = [
@@ -473,6 +490,7 @@ name = "olm-golden"
 version = "0.1.0"
 dependencies = [
  "color-keep",
+ "olm-anti-anti-alias",
  "olm-blur",
  "olm-color-key",
  "olm-core",
@@ -484,6 +502,7 @@ dependencies = [
  "olm-smoother",
  "olm-smoother2",
  "olm-toon-dilate",
+ "olm-uv-map",
 ]
 
 [[package]]
@@ -549,6 +568,16 @@ dependencies = [
  "cc",
  "olm-ae",
  "olm-core",
+ "pipl",
+ "winres",
+]
+
+[[package]]
+name = "olm-uv-map"
+version = "0.1.0"
+dependencies = [
+ "after-effects-sys 0.3.0 (git+https://github.com/virtualritz/after-effects.git?rev=0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9)",
+ "olm-math",
  "pipl",
  "winres",
 ]

@@ -1,0 +1,620 @@
+{
+  "status": "implemented; direct original-host render acceptance blocked; diagnostic bridge results are separate",
+  "original_2025": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+    "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+  },
+  "original_2026_sha256": "c0348e4d8351a71c9cca0420cfdfcbda151413c0a013818e2cc1ebf20f05ec4e",
+  "candidate": {
+    "path": "local/final-build/OLMAntiAntiAlias.aex",
+    "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+  },
+  "bridge": {
+    "path": "rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+    "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080",
+    "intervention": "tolerate first unmatched param checkin after slot 2; arithmetic/parameters/worlds unchanged"
+  },
+  "direct_2025": {
+    "artifact": "rust/plugins/olm-anti-anti-alias/local/smoke-02/summary.json",
+    "sha256": "b044a15a9abfaf81d2c3772869737aef88ebb5475068f76caacdd3f438c356bb",
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 12,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 12,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 12,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 12,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 12,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 12,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\build-02\\OLMAntiAntiAlias.aex",
+      "sha256": "66e35ed746e29050e53406eec121a370314a8c4353f0001136806a1a48d7718c"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2025\\OLMAntiAntiAlias.aex",
+      "sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0"
+    },
+    "seed": 20261113
+  },
+  "final_bridge_campaigns": [
+    {
+      "artifact": "rust/plugins/olm-anti-anti-alias/local/final-campaign/seed-20261113/summary.json",
+      "sha256": "ca64f759af34aa81e604ef16d8ea2eaf5dbcc24ae426d4b1e6749a7c4c29501f",
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 101,
+          "mismatched": 0,
+          "reference_unrenderable": 2,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 2,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+        "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+        "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+      },
+      "seed": 20261113
+    },
+    {
+      "artifact": "rust/plugins/olm-anti-anti-alias/local/final-campaign/seed-20261114/summary.json",
+      "sha256": "fc8d9949129b65d10d2163c0161b40eb7ed97c549b3f22dfb601a2d6a32b0351",
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+        "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+        "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+      },
+      "seed": 20261114
+    }
+  ],
+  "session_error_replays": [
+    {
+      "artifact": "rust/plugins/olm-anti-anti-alias/local/replay-final-16/summary.json",
+      "sha256": "7692a6ae1b035a59c236ea7d1e0497de5891617139e24d4b0e3629452c631571",
+      "routes": {
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 1,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 1,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+        "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+        "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+      },
+      "seed": null
+    },
+    {
+      "artifact": "rust/plugins/olm-anti-anti-alias/local/replay-final-87/summary.json",
+      "sha256": "4f8c592ae2288bfb6cabcf852ef03b9b7a8ad199a0511815659e591bb7f30286",
+      "routes": {
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 1,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 1,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+        "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+      },
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+        "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+      },
+      "seed": null
+    }
+  ],
+  "supplemental": {
+    "artifact": "rust/plugins/olm-anti-anti-alias/local/supplemental-02/summary.json",
+    "sha256": "e7403382df64f04529ee784b14c4a62779fbb869dbcc36a84cef6c2475b5f6b3",
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 12,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 12,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 12,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 12,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+      "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+      "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+    },
+    "seed": null
+  },
+  "bridge_2026": {
+    "artifact": "rust/plugins/olm-anti-anti-alias/local/bridged-2026/summary.json",
+    "sha256": "1205c4c555360e50340257a0a05296f1fb0ac8d0a01065d80e99155c420f29f9",
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 18,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 18,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 18,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 18,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 18,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 18,
+        "mismatched": 0,
+        "reference_unrenderable": 0,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 0,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0.0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\build-06\\OLMAntiAntiAlias.aex",
+      "sha256": "5644383c5f60f4066c58b3a00716da87919fb9f5a3a7cdf259425dd59595bbd3"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\tools\\autoport\\local\\n-antialias\\reference-proxy.aex",
+      "sha256": "50ebed58fa2f6a1c684423bdf6cdab6d43d7f8042dc439e88d4f6dc31af5c080"
+    },
+    "seed": 20261115
+  },
+  "projection_witness": {
+    "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+    "candidate_sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8",
+    "batches": [
+      {
+        "cases": 256,
+        "failure": null
+      },
+      {
+        "cases": 256,
+        "failure": null
+      },
+      {
+        "cases": 256,
+        "failure": null
+      },
+      {
+        "cases": 256,
+        "failure": null
+      }
+    ]
+  },
+  "detection_witness": {
+    "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+    "candidate_sha256": "070ecc43df7f116217086948aecb34c470431bc2f7146d58302216538211bafb",
+    "results": [
+      {
+        "bpp": 4,
+        "cases": 256,
+        "failure": null
+      },
+      {
+        "bpp": 8,
+        "cases": 256,
+        "failure": null
+      },
+      {
+        "bpp": 16,
+        "cases": 256,
+        "failure": null
+      }
+    ]
+  },
+  "record_replay": {
+    "records": 8,
+    "exact": true,
+    "capture_sha256": "d3ad7bbc8fa0d77618ae09731e22e9cbce0d891f8a82cada4c191e7ed69de664",
+    "scope": "original projection calls during bridge-assisted Smart32; all nine buffers and return bits replayed against original and production helper"
+  },
+  "autoport": {
+    "codex_calls": 7,
+    "limit": 80,
+    "generated_functions": 3,
+    "leaf_attempt_seconds": 64.313,
+    "projection_generation_seconds": 112.78100000000086,
+    "leaves": [
+      {
+        "rva": "0x1680",
+        "cases": 512
+      },
+      {
+        "rva": "0x1740",
+        "cases": 512
+      }
+    ]
+  },
+  "funcdb": {
+    "exact": 88,
+    "fuzzy": 6,
+    "unknown": 58,
+    "verified_rust_candidates": 0,
+    "report_sha256": "5e7cd358cf19fbe2350986ad179ba43e165452aed052bd1df52f806b8e296709"
+  },
+  "unit_tests": {
+    "rust_passed": 10,
+    "rust_ignored": 0,
+    "autoport_passed": 23,
+    "rust_stdout_sha256": "fc44a11d3ed4c6943878b01e9d2b51124caf4542569406231855060cef9e3888"
+  },
+  "ubdetect": {
+    "verdict": "inconclusive",
+    "reason": "incomplete_evidence",
+    "reference_successful": 0,
+    "candidate_successful": 3,
+    "cleanup_verified": true,
+    "artifact_sha256": "daa118ba6a655cada0cb9cd93045b096fc5f4724b5c48e6ab39f7dde50d9477e"
+  },
+  "hub_cleanup": {
+    "pid": 53256,
+    "port": 8774,
+    "owned_pids": [
+      6748,
+      50764,
+      53256,
+      53148
+    ],
+    "graceful_requested": true,
+    "exited": true,
+    "remaining": [],
+    "status_checked_running": false,
+    "shared_hub_untouched": true
+  },
+  "campaign_job_cleanup": [
+    true,
+    true
+  ],
+  "source_sha256": {
+    "Cargo.toml": "d4c47658fd18e356b4c0fc470c340c21d5ee5a0b0e1d2017e16041ef6a235dad",
+    "build.rs": "ef4d385ea7314a209d4474bd47a221793783f355956dde4e71e28fbddc7c982c",
+    "src/ae.rs": "fe1c1d59d2071e673c07592904a7eca7886c1dc89998a1171fd4f62636086f66",
+    "src/algorithm.rs": "8225d10e30a1c448313e71bfaf5c7b7a9d6debbc56f4c1ef436985334faf9446",
+    "src/lib.rs": "a2e4ec3d970bdc734fa08783d424d638247cdfa2b50b0ec2691a7b3b6cc4b9ca",
+    "src/palette.rs": "bc1f318b8d92b5c41bce7ce1153aaa92657ec367f12f62891eb7c1c02362b654",
+    "src/params.rs": "1385d6a05c974344afcbc5b7cea5f9e6c10dfa80c756d1a6d148823f39bfc295",
+    "src/ui.rs": "40f534027cc58292318f615499aa35d5b4e0ac42e7ae18f7e3bfbaa83c6e6e6c",
+    "src/ui_tests.rs": "22c120f77b927c0ce1967dec2e84467a1323a62f0347c08d15eee574f2155755",
+    "src/witness.rs": "1bf23fe33438372bca62526367b528ca556a117616449570ae9f6b2edfccaa59",
+    "src/generated/f_180001680.rs": "8215e981e105865fa2b9df3e091a56649c047a4a0a19c2ceb4228c82a6f2d444",
+    "src/generated/f_180001740.rs": "dd6333554045c2f14987de441d66913e9ebd35616caed030489b436c22ec3743",
+    "src/generated/f_18000a630.rs": "a978e03c19f60300ea46bc862ea8a4825274cc9a02336644964d0f17fead7c8c",
+    "src/generated/mod.rs": "0d890dc47a191ef22f760be013b6499ce12431e2327dfbf84302479a082b8fd1"
+  },
+  "gaps": [
+    "No direct 2025 host oracle success",
+    "No native AE project round-trip/Undo/Redo/button acceptance",
+    "No macOS build or render run",
+    "Manual image passes not each individually native-witness qualified",
+    "HDR/nonfinite whole-image inputs and native host ROI/tiling unqualified"
+  ],
+  "direct_2026": {
+    "artifact": "rust/plugins/olm-anti-anti-alias/local/direct-2026/summary.json",
+    "sha256": "acd42993cfeea8e6583925b5dfb2093a35e8798bc110b7adad85cfb8ea967a2c",
+    "routes": {
+      "smart8": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 6,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 6,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 6,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart16": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 6,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 6,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 6,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      },
+      "smart32": {
+        "status": "tested",
+        "reason": null,
+        "cases_run": 6,
+        "route_scope": "ae_dispatch_contract",
+        "exact": 0,
+        "mismatched": 0,
+        "reference_unrenderable": 6,
+        "reference_timeout": 0,
+        "candidate_failure": 0,
+        "tool_error": 0,
+        "reference_harness_failures": 6,
+        "candidate_harness_failures": 0,
+        "max_abs_diff": 0,
+        "mismatching_pixels": 0,
+        "first_coordinates": []
+      }
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-anti-anti-alias\\local\\final-build\\OLMAntiAntiAlias.aex",
+      "sha256": "50eb895baf749c06dfa7bf152e98e4f43c3879c3042220040992111c38e9b8e8"
+    },
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMAntiAntiAlias\\OLMAntiAntiAlias\\Plugins\\64\\2026\\OLMAntiAntiAlias.aex",
+      "sha256": "c0348e4d8351a71c9cca0420cfdfcbda151413c0a013818e2cc1ebf20f05ec4e"
+    }
+  },
+  "windows_pipl": {
+    "candidate": [
+      {
+        "type": "PIPL",
+        "id": 16000,
+        "language": 1033,
+        "sha256": "9ab79ea8d6a467649eca157cefcff39672e17a6266440b1680d4d15152d2c05d"
+      }
+    ],
+    "exact": true
+  }
+}

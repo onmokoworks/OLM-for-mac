@@ -1,4 +1,4 @@
-"""Fresh, sequential ten-plugin integration campaign using the shared oracle.
+"""Fresh, sequential twelve-plugin integration campaign using the shared oracle.
 
 Each oracle owns/reaps its harness process trees. Raw results and logs stay in
 --out; copy only compact-report.json into versioned evidence after review.
@@ -26,6 +26,8 @@ PLUGINS = [
     ("olm-smoother", "OLMSmoother"),
     ("olm-smoother2", "OLMSmoother2"),
     ("olm-toon-dilate", "OLMToonDilate"),
+    ("olm-uv-map", "OLMUVMap"),
+    ("olm-anti-anti-alias", "OLMAntiAntiAlias"),
 ]
 
 
@@ -39,18 +41,26 @@ def main():
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--reference-dir", type=Path, required=True)
     p.add_argument("--harness", type=Path, required=True)
-    p.add_argument("--kira-harness", type=Path, required=True)
+    p.add_argument("--kira-harness", type=Path, help="defaults to the shared harness")
+    p.add_argument("--upstream-dir", type=Path, help="2026-11-12 extracted root; overrides six originals with 64/2025 builds")
     args = p.parse_args()
+    args.kira_harness = args.kira_harness or args.harness
     args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=False)
-    report = {"seed": 20261120, "cases": 12, "jobs": 4, "runner_pid": os.getpid(),
+    report = {"seed": 20261120, "cases": 12, "jobs": 3, "runner_pid": os.getpid(),
               "downsample": ["1", "1/2", "1/4"],
               "runner": identity(Path(__file__)), "oracle": identity(ORACLE),
               "raw_artifacts": {"path": str(args.out), "local_only": True},
               "plugins": [], "complete": False}
     for crate, name in PLUGINS:
         harness = args.kira_harness if name == "OLMKiraKira" else args.harness
-        common = ["--reference", str((args.reference_dir / (name + ".aex")).resolve()),
+        reference = args.reference_dir / (name + ".aex")
+        if args.upstream_dir and name in ("ColorKeep", "DistanceGradation", "OLMColorKey", "OLMSmoother2", "OLMUVMap", "OLMAntiAntiAlias"):
+            matches = list(args.upstream_dir.glob(f"*/*/Plugins/64/2025/{name}.aex"))
+            if len(matches) != 1:
+                raise ValueError(f"Expected exactly one new 2025 original for {name}: {matches}")
+            reference = matches[0]
+        common = ["--reference", str(reference.resolve()),
                   "--candidate", str((args.staged / (name + ".aex")).resolve()),
                   "--harness", str(harness.resolve())]
         worker = harness.resolve().parents[3] / "target/minihost-build/aex_worker.exe"
@@ -67,9 +77,11 @@ def main():
                 if name in ("OLMKiraKira", "OLMRadialBlur"):
                     script = RUST / "plugins" / crate / "validate.py"
                 routes = "classic8,classic16" if name == "OLMSmoother" else "smart8,smart16,smart32"
-                options = ["--seed", "20261120", "--cases", "12", "--jobs", "4",
+                options = ["--seed", "20261120", "--cases", "12", "--jobs", "3",
                            "--downsample", "1,1/2,1/4", "--routes", routes,
                            "--timeout", str(timeout), "--sizes", sizes]
+            if command == "render" and name == "OLMUVMap":
+                options += ["--layer-sizes", "17x9,1x5,33x17"]
             argv = [sys.executable, "-X", "utf8", str(script), command, *common, *options, "--out", str(output)]
             print(name, command, flush=True)
             log = args.out / (name + "-" + command + ".log")
@@ -90,7 +102,7 @@ def main():
                     row["case_plans_identity"] = identity(plans_path)
                     if name in ("OLMDirectionalBlur", "OLMRadialBlur"):
                         slot = 16 if name == "OLMDirectionalBlur" else 25
-                        types = [next(a["value"] for a in c["assignments"] if a["slot"] == slot) for c in plans]
+                        types = [next(a["value"] for a in c["assignments"] + c.get("untouched_defaults", []) if a["slot"] == slot) for c in plans]
                         if 3 in types:
                             raise RuntimeError("Type 3 unexpectedly admitted")
                         row["noise_type_audit"] = {"slot": slot, "admitted_values": types,

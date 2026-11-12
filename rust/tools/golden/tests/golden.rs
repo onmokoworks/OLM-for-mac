@@ -12,6 +12,8 @@ fn all_original_verified_hashes() {
         env!("CARGO_BIN_EXE_golden-olm-smoother"),
         env!("CARGO_BIN_EXE_golden-olm-smoother2"),
         env!("CARGO_BIN_EXE_golden-olm-toon-dilate"),
+        env!("CARGO_BIN_EXE_golden-olm-uv-map"),
+        env!("CARGO_BIN_EXE_golden-olm-anti-anti-alias"),
     ] {
         if !std::process::Command::new(exe).status().unwrap().success() {
             failed.push(exe);

@@ -681,7 +681,8 @@ intentionally mismatching; ordinary `replay` of it returns 1.
 
 `summary.json` identifies `minimal_case_dir`, original/final dimensions, every
 attempt and the first differing pixel/channel with the value pair. Deep native
-sidecars use packed ARGB indices; PNG uses RGBA. Float differences include raw
+request sidecars and PNG use RGBA indices (fixture checkpoint buffers are
+separately packed ARGB). Float differences include raw
 u32 hexadecimal words and textual float values, retaining signed zeros/NaNs.
 The saved requests are authoritative (`requests_authoritative: true`); the old
 input seed remains provenance, not a recipe for regenerating the cropped image.
@@ -938,3 +939,26 @@ above, in their existing output locations. Timing, callbacks,
 arbitrary/custom UI payloads, dynamic parameter UI behavior, masks, GPU routes,
 temporal sequences, HDR input and exhaustive combinations remain outside this
 bounded corpus. Harness failures are observations, not proof of candidate bugs.
+
+## Secondary-layer sizes (N-uvmap)
+
+`render --layer-sizes 17x9,1x1,2x1,1x5,33x17,8x16` cycles independently sized
+secondary PNGs through the case plans. Omitting the option preserves the old
+same-size behavior. Importable cases optionally contain
+`"layer_sizes": {"1": [17, 9]}` for slot 1; dimensions must be positive integers.
+`prepare_case` still emits the existing request schema and asset hashes. Saved
+and minimized bundles record the actual secondary asset dimensions, including
+a resized/cropped layer, so replay metadata remains accurate.
+
+These are PNG preview dimensions. The harness promotes channel values to each
+depth and obtains checkout layers through `PF_CHECKOUT_PARAM`. A downsample
+request supplies the rational scale to the effect; it does not authorize an
+oracle-side resize of the supplied secondary PNG. Output `--extent` is a
+SmartFX demand rectangle. It is distinct from setting a texture world's own
+origin, extent, or row padding. Current fixture-v2 Smart sessions reject custom
+world layouts before rendering, so such probes are not native AE acceptance.
+N-uvmap validated distinct sizes and 1, 1/2, 1/4 requests on Smart 8/16/32.
+
+The additive size option, legacy behavior, invalid-size rejection, replay
+assets, deep request-sidecar RGBA channel labels, and resized-bundle metadata
+are covered by the 47 passing oracle tests (2026-11-13).

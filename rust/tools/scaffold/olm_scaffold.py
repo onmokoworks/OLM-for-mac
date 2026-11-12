@@ -114,7 +114,7 @@ def run_checked(oracle, argv, timeout, env=None, log=None):
 
 
 def build_probe(oracle, directory):
-    target = directory / "target"
+    target = Path(os.environ.get("CARGO_TARGET_DIR", directory / "target")).resolve()
     run_checked(oracle, ["cargo", "build", "--offline", "--locked", "--manifest-path", HERE/"probe/Cargo.toml",
                         "--target-dir", target, "-j", "2"], 600, log=directory/"probe-build.json")
     probe = directory / "capture.aex"

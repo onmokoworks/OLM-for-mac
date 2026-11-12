@@ -1,0 +1,662 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-13",
+  "campaigns": {
+    "release-seed-20261113": {
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+        "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+      },
+      "seed": 20261113,
+      "cases": 103,
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "layer_sizes": [
+        [
+          17,
+          9
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          33,
+          17
+        ],
+        [
+          8,
+          16
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "random_cases_per_depth": 100,
+      "processes_waited": 618,
+      "all_processes_ok": true
+    },
+    "release-seed-20261114": {
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+        "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+      },
+      "seed": 20261114,
+      "cases": 103,
+      "jobs": 3,
+      "sizes": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ],
+        [
+          97,
+          61
+        ]
+      ],
+      "layer_sizes": [
+        [
+          8,
+          16
+        ],
+        [
+          33,
+          17
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          17,
+          9
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 103,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 103,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "random_cases_per_depth": 100,
+      "processes_waited": 618,
+      "all_processes_ok": true
+    },
+    "release-2026": {
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2026\\OLMUVMap.aex",
+        "sha256": "c8afcf81c4c037611ccacf9bb2eeed645b33f06d131e9220984c49fa1904e0a8"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+        "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+      },
+      "seed": 20261115,
+      "cases": 24,
+      "jobs": 3,
+      "sizes": [
+        [
+          3,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          31,
+          19
+        ]
+      ],
+      "layer_sizes": [
+        [
+          17,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          33,
+          17
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": null,
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 24,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 24,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 24,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 24,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 24,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 24,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "random_cases_per_depth": 21,
+      "processes_waited": 144,
+      "all_processes_ok": true
+    },
+    "release-crop": {
+      "reference": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+        "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+      },
+      "candidate": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+        "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+      },
+      "harness": {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+        "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+      },
+      "seed": 778899,
+      "cases": 12,
+      "jobs": 3,
+      "sizes": [
+        [
+          11,
+          7
+        ]
+      ],
+      "layer_sizes": [
+        [
+          17,
+          9
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "downsample": [
+        "1",
+        "1/2",
+        "1/4"
+      ],
+      "extent": [
+        1,
+        1,
+        9,
+        6
+      ],
+      "routes": {
+        "smart8": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart16": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        },
+        "smart32": {
+          "status": "tested",
+          "reason": null,
+          "cases_run": 12,
+          "route_scope": "ae_dispatch_contract",
+          "exact": 12,
+          "mismatched": 0,
+          "reference_unrenderable": 0,
+          "reference_timeout": 0,
+          "candidate_failure": 0,
+          "tool_error": 0,
+          "reference_harness_failures": 0,
+          "candidate_harness_failures": 0,
+          "max_abs_diff": 0.0,
+          "mismatching_pixels": 0,
+          "first_coordinates": []
+        }
+      },
+      "complete": true,
+      "exit_code": 0,
+      "random_cases_per_depth": 9,
+      "processes_waited": 72,
+      "all_processes_ok": true
+    }
+  },
+  "declarations": {
+    "identical": true,
+    "candidate_sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631",
+    "original_sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+  },
+  "numerics": {
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "provider": {
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca"
+    },
+    "seed": 20261113,
+    "results": [
+      {
+        "mode": 0,
+        "count": 50009,
+        "mismatches": 0,
+        "first": []
+      },
+      {
+        "mode": 1,
+        "count": 50009,
+        "mismatches": 0,
+        "first": []
+      }
+    ],
+    "scope": "return bits only; errno and FP exception flags excluded"
+  },
+  "function_witness": {
+    "bilinear8": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "bilinear16": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "bilinear32": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "pixel8": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "pixel16": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "pixel32": {
+      "cases": 48,
+      "exact": true,
+      "failure": null
+    },
+    "mipmaps8": {
+      "cases": 18,
+      "exact": true,
+      "failure": null
+    },
+    "mipmaps16": {
+      "cases": 18,
+      "exact": true,
+      "failure": null
+    },
+    "mipmaps32": {
+      "cases": 18,
+      "exact": true,
+      "failure": null
+    }
+  },
+  "recorded_derivative": {
+    "cases": 61,
+    "exact": true,
+    "failure": null
+  },
+  "no_texture": {
+    "smart8:method1": "exact",
+    "smart16:method1": "exact",
+    "smart32:method1": "exact",
+    "smart8:method2": "exact",
+    "smart16:method2": "exact",
+    "smart32:method2": "exact",
+    "smart8:method3": "exact",
+    "smart16:method3": "exact",
+    "smart32:method3": "exact"
+  },
+  "tests": {
+    "rust": 12,
+    "oracle": 47,
+    "scaffold": 11,
+    "record": 20,
+    "clippy": "-D warnings passed"
+  },
+  "autoport": {
+    "codex_calls": 1,
+    "functions_generated": 1,
+    "vectors": 128,
+    "attempt_seconds": 27.609,
+    "generation_seconds": 26.453,
+    "input_tokens": 13821,
+    "output_tokens": 984,
+    "final_status": "needs_human"
+  },
+  "limitations": [
+    "macOS build/bundle and native AE untested",
+    "saved-project round trip untested",
+    "custom SmartFX world layouts blocked by harness",
+    "image oracle is finite PNG-promoted SDR",
+    "CPU FMA profile fixed to capture machine"
+  ],
+  "relinked_production": {
+    "equal_except_link_metadata": true,
+    "binaries": [
+      {
+        "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+        "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631",
+        "ignored": [
+          {
+            "offset": 264,
+            "size": 4,
+            "kind": "PE link timestamp"
+          },
+          {
+            "offset": 137236,
+            "size": 4,
+            "kind": "debug timestamp"
+          },
+          {
+            "offset": 137592,
+            "size": 20,
+            "kind": "CodeView build GUID and age"
+          },
+          {
+            "offset": 137264,
+            "size": 4,
+            "kind": "debug timestamp"
+          },
+          {
+            "offset": 137292,
+            "size": 4,
+            "kind": "debug timestamp"
+          }
+        ],
+        "normalized_sha256": "8e1cfd06577b143baf4fbb8e0ed9a633774562de2571ca8e090ab807b49fd35e"
+      },
+      {
+        "path": "D:\\olm-rs-target\\N-uvmap\\release\\olm_uv_map.dll",
+        "sha256": "6d6cda2c775f8ead338598ae35a5c88815827b887edfe4c5a1f3ba2b6b20c08e",
+        "ignored": [
+          {
+            "offset": 264,
+            "size": 4,
+            "kind": "PE link timestamp"
+          },
+          {
+            "offset": 137236,
+            "size": 4,
+            "kind": "debug timestamp"
+          },
+          {
+            "offset": 137592,
+            "size": 20,
+            "kind": "CodeView build GUID and age"
+          },
+          {
+            "offset": 137264,
+            "size": 4,
+            "kind": "debug timestamp"
+          },
+          {
+            "offset": 137292,
+            "size": 4,
+            "kind": "debug timestamp"
+          }
+        ],
+        "normalized_sha256": "8e1cfd06577b143baf4fbb8e0ed9a633774562de2571ca8e090ab807b49fd35e"
+      }
+    ]
+  }
+}

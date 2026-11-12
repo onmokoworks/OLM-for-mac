@@ -1,5 +1,20 @@
 //! Meijster EDT and Smart owner resize/normalization, from the shared C++ core.
+mod native_rsqrt {
+    include!("rsqrt_table.rs");
+    pub fn positive_normal(x: f32) -> f32 {
+        let bits = x.to_bits();
+        let exponent = ((bits >> 23) & 255) as i32;
+        let parity = (exponent - 127) & 1;
+        let index = parity as usize * 4096 + ((bits & 0x7fffff) >> 11) as usize;
+        let adjustment = ((exponent - 127 - parity) / 2) << 23;
+        f32::from_bits((RSQRT[index] as i32 - adjustment) as u32)
+    }
+}
+#[cfg(feature = "stage-dump")]
 pub fn edt(mask: &[u8], w: usize, h: usize) -> Vec<f32> {
+    edt_impl(mask, w, h, true)
+}
+fn edt_impl(mask: &[u8], w: usize, h: usize, native: bool) -> Vec<f32> {
     let inf = (w + h) as i64;
     let mut g = vec![0i64; w * h];
     for x in 0..w {
@@ -59,6 +74,36 @@ pub fn edt(mask: &[u8], w: usize, h: usize) -> Vec<f32> {
                 q -= 1;
             }
         }
+        if native {
+            // IPP CPU index 4: RVA 0x2f1e20 aligns to eight floats, then
+            // processes sixteen at a time. Prefix/tail helper 0x6e4d00 uses
+            // the same FMA polynomial and whole-group zero fallback.
+            let prefix = ((8 - (y * w) % 8) % 8).min(w);
+            let mut x = 0;
+            while x < w {
+                let n = if x == 0 && prefix != 0 {
+                    prefix
+                } else {
+                    (w - x).min(16)
+                };
+                let group = &mut dst[y * w + x..y * w + x + n];
+                let regular = group.iter().all(|v| *v > 0.);
+                for v in group {
+                    *v = if regular {
+                        let r = native_rsqrt::positive_normal(*v);
+                        let product = r * *v;
+                        let residual = (-product).mul_add(r, 1.);
+                        let scale = 0.375f32.mul_add(residual, 0.5);
+                        let correction = r * residual;
+                        *v * scale.mul_add(correction, r)
+                    } else {
+                        v.sqrt()
+                    };
+                }
+                x += n;
+            }
+            continue;
+        }
         let mut x = 0;
         while x < w && (y * w + x) % 4 != 0 {
             dst[y * w + x] = dst[y * w + x].sqrt();
@@ -96,8 +141,34 @@ pub fn normalized(
     constant: bool,
     max: f32,
 ) -> Vec<f32> {
+    normalized_impl(mask, w, h, rw, rh, threshold, constant, max, false)
+}
+#[cfg(test)]
+pub fn normalized_legacy(
+    mask: &[u8],
+    w: usize,
+    h: usize,
+    rw: usize,
+    rh: usize,
+    threshold: f32,
+    constant: bool,
+    max: f32,
+) -> Vec<f32> {
+    normalized_impl(mask, w, h, rw, rh, threshold, constant, max, true)
+}
+fn normalized_impl(
+    mask: &[u8],
+    w: usize,
+    h: usize,
+    rw: usize,
+    rh: usize,
+    threshold: f32,
+    constant: bool,
+    max: f32,
+    legacy: bool,
+) -> Vec<f32> {
     let mut field = if w == rw && h == rh {
-        edt(mask, w, h)
+        edt_impl(mask, w, h, !legacy)
     } else {
         let mut expanded = vec![0; rw * rh];
         let sx = w as f64 / rw as f64;
@@ -108,18 +179,34 @@ pub fn normalized(
                     + ((x as f64 * sx) as usize).min(w - 1)];
             }
         }
-        let d = edt(&expanded, rw, rh);
+        let d = edt_impl(&expanded, rw, rh, !legacy);
         let mut f = vec![0.; w * h];
         for y in 0..h {
-            let mut fy = ((y as f64 + 0.5) * rh as f64 / h as f64 - 0.5) as f32;
-            let iy = fy.floor() as isize;
-            fy -= iy as f32;
+            let cy = (y as f64 + 0.5) * (rh as f64 / h as f64) - 0.5;
+            let iy = if legacy {
+                (cy as f32).floor() as isize
+            } else {
+                cy.floor() as isize
+            };
+            let fy = if legacy {
+                cy as f32 - iy as f32
+            } else {
+                (cy - iy as f64) as f32
+            };
             let y0 = iy.clamp(0, rh as isize - 1) as usize;
             let y1 = (iy + 1).clamp(0, rh as isize - 1) as usize;
             for x in 0..w {
-                let mut fx = ((x as f64 + 0.5) * rw as f64 / w as f64 - 0.5) as f32;
-                let mut ix = fx.floor() as isize;
-                fx -= ix as f32;
+                let cx = (x as f64 + 0.5) * (rw as f64 / w as f64) - 0.5;
+                let mut ix = if legacy {
+                    (cx as f32).floor() as isize
+                } else {
+                    cx.floor() as isize
+                };
+                let mut fx = if legacy {
+                    cx as f32 - ix as f32
+                } else {
+                    (cx - ix as f64) as f32
+                };
                 if ix < 0 {
                     ix = 0;
                     fx = 0.;
@@ -130,9 +217,20 @@ pub fn normalized(
                 }
                 let xx = ix as usize;
                 let x1 = (xx + 1).min(rw - 1);
-                let a = d[y0 * rw + xx] * (1. - fx) + d[y0 * rw + x1] * fx;
-                let b = d[y1 * rw + xx] * (1. - fx) + d[y1 * rw + x1] * fx;
-                f[y * w + x] = a * (1. - fy) + b * fy;
+                // IPP index-4 rows: 0x729e60 / 0x72a040 use delta
+                // interpolation, FMA for groups of four, scalar tail otherwise.
+                let blend = |a: f32, b: f32, t: f32| {
+                    if legacy {
+                        a * (1. - t) + b * t
+                    } else if x < w / 4 * 4 {
+                        (b - a).mul_add(t, a)
+                    } else {
+                        a + (b - a) * t
+                    }
+                };
+                let a = blend(d[y0 * rw + xx], d[y0 * rw + x1], fx);
+                let b = blend(d[y1 * rw + xx], d[y1 * rw + x1], fx);
+                f[y * w + x] = blend(a, b, fy);
             }
         }
         f
@@ -142,13 +240,35 @@ pub fn normalized(
             *v = if *v > threshold { max } else { 0. };
         }
     } else {
-        let th = threshold.max(1.);
+        // 2026-11-12 RVA 0x11750f0: cvThreshold(TRUNC) uses 0.1
+        // for zero threshold, then cvNormalize's upper bound is reduced by
+        // observed_max / requested_threshold. Preserve its double arithmetic.
+        let th = if legacy {
+            threshold.max(1.)
+        } else if threshold == 0. {
+            0.1
+        } else {
+            threshold
+        };
         let mut raw = 0f32;
         for v in &mut field {
             *v = v.min(th);
             raw = raw.max(*v);
         }
-        let scale = if raw > 0. { max / raw } else { 0. };
+        let scale = if raw > 0. {
+            if legacy {
+                max / raw
+            } else {
+                let upper = if raw < threshold {
+                    raw as f64 / threshold as f64
+                } else {
+                    1.
+                };
+                ((upper * max as f64) / raw as f64) as f32
+            }
+        } else {
+            0.
+        };
         for v in &mut field {
             *v *= scale;
         }

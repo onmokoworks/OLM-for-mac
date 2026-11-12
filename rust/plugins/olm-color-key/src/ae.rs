@@ -1,7 +1,7 @@
 //! AE parameter surface and adapter.
-use crate::algorithm::{Key, Params};
+use crate::algorithm::{Key, Params, MAX_COLORS};
 use olm_ae::{Effect, Kind, Param, RenderContext, Value};
-struct Plugin;
+pub(super) struct Plugin;
 fn param(id: i32, name: &str, flags: i32, kind: Kind) -> Param {
     Param {
         id,
@@ -41,7 +41,7 @@ fn popup(id: i32, name: &str, choices: &str, default: i16) -> Param {
 }
 impl Effect for Plugin {
     const NAME: &'static str = "OLM Color Key";
-    const VERSION: u32 = 1148928;
+    const VERSION: u32 = 1153024;
     const FLAGS: u32 = 0x02000440;
     const PRESERVE_ZERO_ALPHA_RGB: Option<bool> = Some(false);
     fn params() -> Vec<Param> {
@@ -96,7 +96,7 @@ impl Effect for Plugin {
                 64,
                 Kind::Integer {
                     min: 0,
-                    max: 25,
+                    max: MAX_COLORS as i32,
                     slider_min: 0,
                     slider_max: 30,
                     default: 1,
@@ -104,13 +104,23 @@ impl Effect for Plugin {
             ),
             param(0x20b, "Enable Replace", 64, Kind::Checkbox(false)),
         ];
-        for i in 0..25 {
+        p.reserve(MAX_COLORS * 8);
+        for i in 0..MAX_COLORS as i32 {
             let n = i + 1;
-            p.push(check(0x20c + i * 3, &format!("Use Color {n}")));
-            p.push(check(0x20d + i * 3, &format!("Use Replace Color {n}")));
-            p.push(param(0x16 + i * 5, &format!("Color {n}"), 32, Kind::Color));
+            // Upstream splits disk IDs after color 100 (RVA 0x1000).
+            // Slots stay contiguous; extending the first formulas would collide.
+            let color_id = 0x16 + i * 5 + if i >= 100 { 302 } else { 0 };
+            let use_id = 0x20c + i * 3 + if i >= 100 { 500 } else { 0 };
             p.push(param(
-                0x20e + i * 3,
+                use_id,
+                &format!("Use Color {n}"),
+                0,
+                Kind::Checkbox(true),
+            ));
+            p.push(check(use_id + 1, &format!("Use Replace Color {n}")));
+            p.push(param(color_id, &format!("Color {n}"), 32, Kind::Color));
+            p.push(param(
+                use_id + 2,
                 &format!("Replace Color {n}"),
                 32,
                 Kind::Color,
@@ -124,7 +134,7 @@ impl Effect for Plugin {
             .iter()
             .enumerate()
             {
-                p.push(float(0x17 + i * 5 + j as i32, &format!("{name} {n}")));
+                p.push(float(color_id + 1 + j as i32, &format!("{name} {n}")));
             }
         }
         p
@@ -157,9 +167,10 @@ impl Effect for Plugin {
             step_y: ctx.downsample_y.denominator as f32,
         };
         let n = at(22) as usize;
-        if n > 25 {
+        if n > MAX_COLORS {
             return Err(olm_core::Error::Unsupported);
         }
+        p.keys.reserve(n);
         for i in 0..n {
             let s = 24 + i * 8;
             let c = v[s + 1].color;
@@ -180,4 +191,5 @@ impl Effect for Plugin {
         }
     }
 }
-olm_ae::export_effect!(Plugin, entry_point);
+#[path = "host.rs"]
+mod host;

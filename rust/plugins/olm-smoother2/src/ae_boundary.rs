@@ -7,7 +7,7 @@ type Result<T> = olm_ae::Result<T>;
 fn check(e:PF_Err)->Result<()>{if e==0{Ok(())}else{Err(e)}}
 struct CheckedParam<'a> {
     i: &'a PF_InData,
-    p: PF_ParamDef,
+    p: Box<PF_ParamDef>,
     active: bool,
 }
 impl CheckedParam<'_> {
@@ -15,7 +15,7 @@ impl CheckedParam<'_> {
         self.active = false;
         check(self.i.inter.checkin_param.ok_or(BAD)?(
             self.i.effect_ref,
-            &mut self.p,
+            &mut *self.p,
         ))
     }
 }
@@ -73,17 +73,18 @@ unsafe fn values<E: Effect>(
         let p = if smart {
             let checkout = i.inter.checkout_param.ok_or(BAD)?;
             i.inter.checkin_param.ok_or(BAD)?;
-            let mut p = std::mem::zeroed();
+            // The host owns this address until checkin, including moves of the guard.
+            let mut p = Box::new(std::mem::zeroed());
             check(checkout(
                 i.effect_ref,
                 (n + 1) as _,
                 i.current_time,
                 i.time_step,
                 i.time_scale,
-                &mut p,
+                &mut *p,
             ))?;
             checked = Some(CheckedParam { i, p, active: true });
-            &checked.as_ref().unwrap().p
+            &*checked.as_ref().unwrap().p
         } else {
             if params.is_null() {
                 return Err(BAD);
@@ -103,7 +104,7 @@ unsafe fn values<E: Effect>(
             Kind::Color => {
                 let mut c = std::mem::zeroed();
                 // Original reads suite floats only for enabled key/active gamma colors.
-                if (n==1 && out[0].number!=0.0) || (n>=10 && out[7].number==2.0 && n-10<(out[9].number as usize).min(5)) {
+                if (n==1 && out[0].number!=0.0) || (n>=10 && out[6].number!=3.0 && out[7].number==2.0 && n-10<(out[9].number as usize).min(5)) {
                     check(color(i.effect_ref, p, &mut c))?;
                 }
                 v.color = [c.alpha, c.red, c.green, c.blue];

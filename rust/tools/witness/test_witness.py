@@ -174,24 +174,47 @@ class NativeTests(unittest.TestCase):
         self.assertLess(m["process"]["elapsed_seconds"], 5)
 
     def test_descendant_cleanup_on_parent_exit(self):
+        import ctypes as c
+        import time
+        from concurrent.futures import ThreadPoolExecutor
         out = self.base / "descendant"
         out.mkdir()
-        code = "import subprocess,sys; p=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)']); print(p.pid,flush=True)"
-        result = witness.run_owned([sys.executable, "-c", code], 10, out)
-        self.assertTrue(result["cleanup_verified"])
-        pid = int((out / "stdout.txt").read_text().strip())
-        import ctypes as c
+        native = c.create_unicode_buffer(32768)
+        c.windll.kernel32.GetModuleFileNameW(None, native, len(native))
+        release = out / "release-parent"
+        code = ("import subprocess,time,pathlib; p=subprocess.Popen([" + repr(native.value)
+                + ",'-c','import time; time.sleep(30)']); print(p.pid,flush=True); "
+                + "release=pathlib.Path(" + repr(str(release)) + "); "
+                + "\nwhile not release.exists(): time.sleep(.01)")
         k = c.WinDLL("kernel32", use_last_error=True)
         k.OpenProcess.argtypes = [c.c_uint32, c.c_int, c.c_uint32]
         k.OpenProcess.restype = c.c_void_p
         k.WaitForSingleObject.argtypes = [c.c_void_p, c.c_uint32]
         k.CloseHandle.argtypes = [c.c_void_p]
-        handle = k.OpenProcess(0x100000, False, pid)
-        if handle:
+        # Retain the actual child's handle before cleanup. Looking up an exited
+        # PID after run_owned returns can open an unrelated newly spawned process.
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            future = pool.submit(witness.run_owned, [native.value, "-c", code], 10, out)
+            handle = None
             try:
-                self.assertEqual(k.WaitForSingleObject(handle, 0), 0)
+                deadline = time.monotonic() + 5
+                while time.monotonic() < deadline:
+                    stdout = out / "stdout.txt"
+                    if stdout.exists() and stdout.read_text().strip():
+                        break
+                    time.sleep(.01)
+                pid = int(stdout.read_text().strip())
+                handle = k.OpenProcess(0x100000, False, pid)
+                self.assertTrue(handle)
+                self.assertEqual(k.WaitForSingleObject(handle, 0), 258)
+                release.touch()
+                result = future.result(timeout=15)
+                self.assertTrue(result["cleanup_verified"])
+                self.assertEqual(k.WaitForSingleObject(handle, 5000), 0)
             finally:
-                k.CloseHandle(handle)
+                release.touch()
+                if handle:
+                    k.CloseHandle(handle)
 
     def test_buffer_overwrite_detected(self):
         self.spec["buffers"] = {"data": {"size": 8}}

@@ -1,0 +1,3 @@
+# Regenerable private Ghidra, host, witness and binary artifacts.
+/upstream-work/
+/__pycache__/

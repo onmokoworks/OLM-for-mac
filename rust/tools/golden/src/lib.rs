@@ -1,5 +1,5 @@
 //! Seeded, host-free render cases. Each binary links exactly one plug-in rlib:
-//! linking all ten together would collide on their exported AE entry symbols.
+//! linking multiple plug-ins together would collide on their exported AE entry symbols.
 use olm_core::{Depth, Layout, Pixel, View, ViewMut};
 use std::{collections::BTreeMap, fs, path::PathBuf};
 
@@ -13,8 +13,19 @@ pub struct Case {
     pub denominator: u32,
     pub depth: Depth,
     assignments: Vec<String>,
+    layers: Vec<(usize, usize, usize, Vec<u8>)>,
 }
 impl Case {
+    /// Add a reproducible secondary PNG and return its depth-promoted ARGB bytes.
+    pub fn layer(&mut self, slot: usize, width: usize, height: usize) -> Vec<u8> {
+        let source = rgba(0x554d0001 + self.index as u32 * 7919, width, height);
+        self.assignments.push(format!(
+            "{{\"slot\":{slot},\"layer\":\"layer-{slot}.png\"}}"
+        ));
+        let bytes = promote(&source, self.depth);
+        self.layers.push((slot, width, height, source));
+        bytes
+    }
     pub fn scale(&self) -> f32 {
         1.0 / self.denominator as f32
     }
@@ -101,7 +112,7 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
     let exclusions = read_map("exclusions.json");
     assert!(expected.keys().all(|k| !exclusions.contains_key(k)));
     if export.is_none() {
-        assert_eq!(expected.len() + exclusions.len(), 522);
+        assert_eq!(expected.len() + exclusions.len(), 630);
     }
     let mut records = Vec::new();
     let mut count = 0;
@@ -117,6 +128,7 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
                 denominator,
                 depth,
                 assignments: vec![],
+                layers: vec![],
             };
             let bpc = match depth {
                 Depth::U8 => 8,
@@ -174,11 +186,27 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
             )
             .into_bytes();
             identity.extend_from_slice(&input);
+            for (slot, w, h, source) in &case.layers {
+                identity.extend_from_slice(format!("/{slot}/{w}/{h}/").as_bytes());
+                identity.extend_from_slice(source);
+            }
             let fingerprint = sha256::hash(&identity);
             if let Some(dir) = &export {
                 fs::write(dir.join(format!("{id}.rgba")), &source).unwrap();
                 fs::write(dir.join(format!("{id}.raw")), &canonical).unwrap();
-                records.push(format!("{{\"id\":\"{id}\",\"width\":{width},\"height\":{height},\"depth\":{bpc},\"denominator\":{denominator},\"seed\":{seed},\"assignments\":[{}],\"sha256\":\"{hash}\",\"fingerprint\":\"{fingerprint}\"}}", case.assignments.join(",")));
+                let layers: Vec<_> = case
+                    .layers
+                    .iter()
+                    .map(|(slot, w, h, source)| {
+                        let file = format!("{id}-layer-{slot}.rgba");
+                        fs::write(dir.join(&file), source).unwrap();
+                        format!(
+                            "{{\"slot\":{slot},\"width\":{w},\"height\":{h},\"file\":\"{file}\"}}"
+                        )
+                    })
+                    .collect();
+                let layers = layers.join(",");
+                records.push(format!("{{\"id\":\"{id}\",\"width\":{width},\"height\":{height},\"depth\":{bpc},\"denominator\":{denominator},\"seed\":{seed},\"assignments\":[{}],\"sha256\":\"{hash}\",\"fingerprint\":\"{fingerprint}\",\"layers\":[{layers}]}}", case.assignments.join(",")));
             } else if let Some(bound) = exclusions.get(&id) {
                 assert_eq!(
                     bound, &fingerprint,
@@ -230,3 +258,48 @@ pub fn run(name: &str, depths: &[Depth], render: fn(&mut Case, &View<'_>, &mut V
 }
 
 pub const ALL_DEPTHS: &[Depth] = &[Depth::U8, Depth::U16, Depth::F32];
+
+/// Canonical PNG promotion used by AEXCompat, packed native ARGB.
+pub fn promote(source: &[u8], depth: Depth) -> Vec<u8> {
+    source
+        .chunks_exact(4)
+        .flat_map(|p| {
+            [p[3], p[0], p[1], p[2]]
+                .into_iter()
+                .flat_map(|v| match depth {
+                    Depth::U8 => vec![v],
+                    Depth::U16 => ((v as f32 * (1.0f32 / 255.0) * 32768.0 + 0.5) as u16)
+                        .to_le_bytes()
+                        .to_vec(),
+                    Depth::F32 => (v as f32 * (1.0f32 / 255.0)).to_le_bytes().to_vec(),
+                })
+        })
+        .collect()
+}
+pub fn native_bytes(input: &View<'_>) -> Vec<u8> {
+    let l = input.layout();
+    (0..l.height)
+        .flat_map(|y| {
+            (0..l.width).flat_map(move |x| match input.get(x, y).unwrap() {
+                Pixel::U8(p) => p.to_vec(),
+                Pixel::U16(p) => p.into_iter().flat_map(u16::to_le_bytes).collect(),
+                Pixel::F32(p) => p.into_iter().flat_map(f32::to_le_bytes).collect(),
+            })
+        })
+        .collect()
+}
+pub fn write_native(bytes: &[u8], out: &mut ViewMut<'_>) {
+    let l = out.layout();
+    for (i, p) in bytes.chunks_exact(l.depth.pixel_bytes()).enumerate() {
+        let pixel = match l.depth {
+            Depth::U8 => Pixel::U8(p.try_into().unwrap()),
+            Depth::U16 => Pixel::U16(std::array::from_fn(|c| {
+                u16::from_le_bytes(p[c * 2..c * 2 + 2].try_into().unwrap())
+            })),
+            Depth::F32 => Pixel::F32(std::array::from_fn(|c| {
+                f32::from_le_bytes(p[c * 4..c * 4 + 4].try_into().unwrap())
+            })),
+        };
+        out.set(i % l.width, i / l.width, pixel).unwrap();
+    }
+}

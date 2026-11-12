@@ -16,6 +16,17 @@ import oracle_workflows as w
 
 
 class WorkflowTests(unittest.TestCase):
+    def test_bundle_retains_actual_resized_secondary_dimensions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);source=self.bundle(root)
+            state=w.load_bundle(source,o)
+            state['manifest']['case']['layer_sizes']={'3':[100,100]}
+            state['images']['texture.png']=Image.new('RGBA',(7,3))
+            for req in state['requests'].values():
+                req['assignments'].append({'slot':3,'layer':'texture.png'})
+            w.write_bundle(root/'resized',state,o)
+            saved=json.loads((root/'resized/case.json').read_text())
+            self.assertEqual(saved['case']['layer_sizes'],{'3':[7,3]})
     def test_check_build_stage_and_campaign(self):
         for full in (False, True):
             with self.subTest(full=full), tempfile.TemporaryDirectory() as tmp:
@@ -153,7 +164,8 @@ class WorkflowTests(unittest.TestCase):
             (root/'candidate.rgba32f-le').write_bytes(b.tobytes())
             first=w.first_difference(root,'smart32',o)
             self.assertEqual(first['channel_index'],2)
-            self.assertEqual(first['channel'],'G')
+            self.assertEqual(first['channel'],'B')
+            self.assertEqual(first['channel_order'],'RGBA')
             self.assertEqual(first['reference_bits'],'0x00000000')
             self.assertEqual(first['candidate_bits'],'0x80000000')
 

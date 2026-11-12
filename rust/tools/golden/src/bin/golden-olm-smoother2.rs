@@ -15,7 +15,7 @@ fn main() {
         c.color(2, [255; 4]);
         c.color(11, [255; 4]);
         let p = Params {
-            version: 1 + (i % 2) as i32,
+            version: 1 + (i % 3) as i32,
             smoothness: [25, 70, 100][i % 3],
             extra: if i >= 9 { 50 } else { 0 },
             range: [0, 2, 20][(i / 3) % 3],
@@ -46,12 +46,13 @@ fn main() {
             },
             keep_premultiplied: false,
         };
+        let range = [0.1f32, 2.9, 20.0][(i / 3) % 3];
         for (s, n) in [
             (1, key as u8 as f64),
             (3, invert as u8 as f64),
             (4, p.smoothness as f64),
             (5, p.extra as f64),
-            (6, p.range as f64),
+            (6, range as f64),
             (7, p.version as f64),
             (8, gamma as f64),
             (9, 2.2),
@@ -69,11 +70,12 @@ fn main() {
                 });
             }
         }
-        let result = algorithm::render(
+        let result = algorithm::render_with_range(
             &source,
             c.width,
             c.height,
             &p,
+            range,
             1,
             &mut Budget::new(64 * 1024 * 1024),
         )

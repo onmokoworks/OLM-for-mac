@@ -9,6 +9,7 @@ pub mod frame;
 pub mod gamma;
 mod geometry;
 pub mod lut;
+pub mod oklab;
 pub mod polygon;
 pub mod scan;
 pub mod types;

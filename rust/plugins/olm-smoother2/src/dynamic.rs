@@ -24,10 +24,11 @@ pub(super) unsafe fn update(i:*mut PF_InData,params:PF_ParamList)->Result<()>{
     let i=i.as_ref().ok_or(BAD)?;if params.is_null(){return Err(BAD);}
     let at=|n:usize|(*params.add(n)).as_ref().ok_or(BAD);
     let key=at(1)?.u.bd.value!=0;let mode=at(8)?.u.pd.value;let count=at(10)?.u.sd.value;
-    for (slot,disabled) in [(2,!key),(3,!key),(9,mode==1),(10,mode!=2)] {
+    let oklab=at(7)?.u.pd.value==3;
+    for (slot,disabled) in [(2,!key),(3,!key),(8,oklab),(9,oklab || mode==1),(10,oklab || mode!=2)] {
         let mut p=*at(slot)?;
         if disabled{p.ui_flags|=PF_PUI_DISABLED as i32;}else{p.ui_flags&=!(PF_PUI_DISABLED as i32);}
         suite::<PF_ParamUtilsSuite3,_,_>(i,kPFParamUtilsSuite,3,|s|check(s.PF_UpdateParamUI.ok_or(BAD)?(i.effect_ref,slot as i32,&p)))?;
     }
-    for n in 0..5 {hidden(i,11+n,!(mode==2 && n<count))?;}Ok(())
+    for n in 0..5 {hidden(i,11+n,!(!oklab && mode==2 && n<count))?;}Ok(())
 }

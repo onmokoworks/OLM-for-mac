@@ -334,13 +334,15 @@ def setup_work(config, out):
             number += 1
         return out/"setup"/f"{name}-{number}"
     # Build the public scaffold capture proxy in our owned directory.
-    probe = out/"probe-target/debug/olm_scaffold_probe.dll"
+    probe_target = Path(config.get("target_dir", out/"probe-target"))
+    probe = Path(config.get("probe", probe_target/"debug/olm_scaffold_probe.dll"))
     command = ["cargo","build","--offline","--locked","--manifest-path",TOOLS/"scaffold/probe/Cargo.toml",
-               "--target-dir",out/"probe-target","-j","2"]
+               "--target-dir",probe_target,"-j","2"]
     if not work.exists():
-        build = run(command,stage_dir("probe"),config["setup_seconds"])
-        if build["returncode"] or build["timeout"]:
-            raise RuntimeError("scaffold proxy build failed")
+        if not config.get("probe"):
+            build = run(command,stage_dir("probe"),config["setup_seconds"])
+            if build["returncode"] or build["timeout"]:
+                raise RuntimeError("scaffold proxy build failed")
         staged = out/"capture.aex"
         shutil.copyfile(probe,staged)  # break Cargo hardlinks, required by AEXCompat
         log = stage_dir("scaffold")
@@ -366,7 +368,7 @@ def setup_work(config, out):
     if not (work/"src/autoport/mod.rs").exists():
         (work/"src/autoport/mod.rs").write_text("",encoding="utf-8")
     result = run(["cargo","build","--release","--offline","--manifest-path",work/"Cargo.toml","-j","2"],
-                 stage_dir("build"),config["setup_seconds"],env={"CARGO_TARGET_DIR":str(work/"target")})
+                 stage_dir("build"),config["setup_seconds"],env={"CARGO_TARGET_DIR":str(Path(config.get("target_dir",work/"target")))})
     if result["returncode"] or result["timeout"]:
         raise RuntimeError("initial work crate build failed")
 
@@ -414,6 +416,12 @@ def final_oracle(config, out, state, graph):
     driver.write_text("import sys\nfrom pathlib import Path\n"+
         f"sys.path.insert(0,{str(TOOLS/'oracle')!r})\nimport olm_oracle, oracle_workflows\n"+
         f"oracle_workflows.HERE = Path({str(out/'oracle-owned')!r})\n"+
+        ("original_run = olm_oracle.run_process\n"+
+         "def scoped_run(argv, *args, **kwargs):\n"+
+         "    if str(argv[0]) == 'cargo':\n"+
+         f"        kwargs['env_overrides'] = {{**kwargs.get('env_overrides', {{}}), 'CARGO_TARGET_DIR': {str(Path(config['target_dir']).resolve())!r}}}\n"+
+         "    return original_run(argv, *args, **kwargs)\n"+
+         "olm_oracle.run_process = scoped_run\n" if config.get("target_dir") else "")+
         "raise SystemExit(olm_oracle.main())\n",encoding="utf-8")
     oracle_out, process_out = out/"oracle", out/"oracle-process"
     retry = 1
@@ -581,10 +589,10 @@ def _execute(config,out):
                 (attempt/"function.rs").write_text(code,encoding="utf-8")
                 write_modules(work,state,address)
                 build = run(["cargo","build","--release","--offline","--manifest-path",work/"Cargo.toml","-j","2"],
-                    attempt/"build",deadline-time.monotonic(),env={"CARGO_TARGET_DIR":str(work/"target")})
+                    attempt/"build",deadline-time.monotonic(),env={"CARGO_TARGET_DIR":str(Path(config.get("target_dir",work/"target")))})
                 if build["timeout"] or build["returncode"]:
                     raise RuntimeError("Rust build failure: "+(attempt/"build/stderr.txt").read_text(encoding="utf-8",errors="replace")[-4000:])
-                dll = work/"target/release"/(config["crate_name"].replace("-","_")+".dll")
+                dll = Path(config.get("target_dir",work/"target"))/"release"/(config["crate_name"].replace("-","_")+".dll")
                 verdict = verify(contract,rows,config,address,graph,dll,attempt,deadline)
                 if verdict["exact"]:
                     rec["status"] = "verified"
@@ -639,6 +647,10 @@ def main():
             config[key] = getattr(args,key)
     config["codex"] = config.get("codex") or codex_executable()
     config["aex"] = str(Path(config["aex"]).resolve(strict=True))
+    if config.get("probe"):
+        config["probe"] = str(Path(config["probe"]).resolve(strict=True))
+    if config.get("target_dir"):
+        config["target_dir"] = str(Path(config["target_dir"]).resolve())
     for key in ["generation_seconds","attempt_seconds","function_seconds","witness_seconds","setup_seconds","oracle_seconds"]:
         if not isinstance(config[key],(int,float)) or not math.isfinite(config[key]) or config[key] <= 0:
             raise ValueError(f"positive finite {key} required")

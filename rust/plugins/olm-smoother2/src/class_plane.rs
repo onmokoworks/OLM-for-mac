@@ -3,6 +3,10 @@ use crate::types::Pixel;
 use olm_core::{Budget, Error, Result};
 
 pub fn distance(a: Pixel, b: Pixel) -> f32 {
+    distance_in_space(a, b, 2)
+}
+
+pub fn distance_in_space(a: Pixel, b: Pixel, version: i32) -> f32 {
     if a.a == 0.0 && b.a == 0.0 {
         return 0.0;
     }
@@ -11,7 +15,7 @@ pub fn distance(a: Pixel, b: Pixel) -> f32 {
     let db = (a.b - b.b).abs();
     let la = a.r * 0.2126 + a.g * 0.7152 + a.b * 0.0722;
     let lb = b.r * 0.2126 + b.g * 0.7152 + b.b * 0.0722;
-    let dy = (la - lb).abs();
+    let dy = if version == 3 { dr } else { (la - lb).abs() };
     // COMISS/CMOVBE followed by MAXSS: unordered selection is not f32::max.
     let mut max = if dg > dr { dg } else { dr };
     max = if db > max { db } else { max };
@@ -29,6 +33,12 @@ pub fn build(
     threads: usize,
     budget: &mut Budget,
 ) -> Result<Vec<[u8; 4]>> {
+    build_with_range(input, width, height, smooth_range as f32, 2, threads, budget)
+}
+
+pub fn build_with_range(input: &[Pixel], width: usize, height: usize,
+    smooth_range: f32, version: i32, threads: usize, budget: &mut Budget,
+) -> Result<Vec<[u8; 4]>> {
     let n = olm_core::image_len(width, height)?;
     if width >= i32::MAX as usize || height >= i32::MAX as usize || threads == 0 {
         return Err(Error::Geometry);
@@ -37,12 +47,12 @@ pub fn build(
         return Err(Error::Bounds);
     }
     let mut output = olm_core::allocate(n, [0; 4], budget)?;
-    let threshold = smooth_range as f32 / 100.0 + 0.001;
+    let threshold = smooth_range * 0.01 + 0.001;
     olm_core::parallel_rows(&mut output, width, threads, |y, row| {
         for (x, out) in row.iter_mut().enumerate() {
             let p = input[y * width + x];
             let edge = |xx, yy| {
-                if distance(p, input[yy * width + xx]) >= threshold {
+                if distance_in_space(p, input[yy * width + xx], version) >= threshold {
                     255
                 } else {
                     0
@@ -56,8 +66,8 @@ pub fn build(
                 if x >= 1 {
                     out[2] = edge(x - 1, y - 1);
                 }
-                // Deliberately excludes the penultimate column, as in the AEX.
-                if x + 1 < width - 1 {
+                // 2026-11-12 c110 includes the penultimate column.
+                if x + 1 < width {
                     out[3] = edge(x + 1, y - 1);
                 }
             }

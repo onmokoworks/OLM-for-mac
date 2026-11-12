@@ -3,7 +3,7 @@
 `cargo test --release -p olm-golden --test golden -- --nocapture` runs the
 plug-ins' public pure algorithm APIs, without an AE host or AEXCompat. It also
 runs as part of `cargo test --release --workspace`. Separate small executables
-avoid collisions between the ten crates' exported `EffectMain` symbols. The
+avoid collisions between the plug-in crates' exported `EffectMain` symbols. The
 tests call Rust algorithms directly; they do not call the C++ reference archives
 or the exported AE callbacks.
 
@@ -14,7 +14,13 @@ IDs, and exclusions whose inputs or parameters have changed. Exclusions do not
 count as passes. The exact verification counts and original/harness/runner
 identities are in `verification.json`.
 
-The Windows verification on 2026-11-12 retained **508 exact cases**: 54 each for
+The integrated release corpus contains **616 exact hashes + 14 historical
+RadialBlur exclusions** across twelve plug-ins. The six release effects each
+have 54 freshly verified cases against the new 2025 original (324/324 exact),
+using the ordinary shared harness at 032a1876. Unselected identities and
+exclusions are retained. See [integration](../../INTEGRATION.md).
+
+The historical Windows verification on 2026-11-12 retained **508 exact cases**: 54 each for
 ColorKeep, Blur, ColorKey, DirectionalBlur, DistanceGradation, KiraKira,
 Smoother2 and ToonDilate; 36 for Smoother; and 40 for RadialBlur (12/15/13 at
 8/16/32 bpc). Radial's other 14 route-cases met the fixed replay exclusion rule
@@ -25,7 +31,7 @@ replays), with no original errors or timeouts. Full local evidence is under
 exclusions' original hash sequences and exact-replay results.
 
 There are 18 predefined parameter tuples per plug-in, at every declared depth:
-54 planned cases for each of nine effects and 36 for Smoother (522 total).
+54 planned cases for each of eleven effects and 36 for Smoother (630 total).
 Every tuple uses a reproducible xorshift32 image, with seed
 `0x4f4c4d01 + 7919 * tuple_index`, dimensions 9x7/11x9/17x9 and downsample
 1, 1/2 or 1/4. Inputs include opaque palette hits, partial alpha
@@ -34,16 +40,18 @@ PNG-promoted deep worlds, not arbitrary HDR/NaN or cropped/padded worlds.
 
 | Effect | Parameter coverage |
 | --- | --- |
-| ColorKeep | Palette counts 0/1/2/5/9/100; exact white/black hits and rejections |
+| ColorKeep | Palette counts 0/1/2/101/199/200; exact white/black hits and rejections |
 | Blur | Legacy on/off, both bias directions, three amounts/smoothness/repeat values |
-| ColorKey | All six spaces, all three precision modes, keep/remove, replacement, premultiplication, component/per-color thresholds, all thin/blur distance and direction modes |
+| ColorKey | All six spaces, all three precision modes, keep/remove, replacement, premultiplication, component/per-color thresholds, all thin/blur distance and direction modes; 200-color tuples actively match the last key above slot 1,024 |
 | DirectionalBlur | Angles 0/45/90, front/back/fades/tails, variation and procedural Noise Types 1/2 |
 | DistanceGradation | In/Out 1/2/3, both render modes, invert/background, all four interpolation modes, no blur/Box/Gaussian/Bilateral |
 | KiraKira | All six declared channels × three declared blur modes, both merge modes, approximated input, all five ray lengths/colors |
 | RadialBlur | Zoom/Rotation, both procedural noise types, all three inner/outer offset modes, repeat border on/off, ellipse angle/ratio, strength/fade/size/noise |
 | Smoother | Key on/off, six tolerance values including 0 and 255; Classic 8/16 only |
-| Smoother2 | Both versions, all gamma modes, key/inverted key, smoothness/extra/range |
+| Smoother2 | All three versions including Oklab, all gamma modes, key/inverted key, smoothness/extra, fractional range |
 | ToonDilate | Six radii including 0, fractional radii and downsample rounding |
+| UV Map | All interpolation modes and Smoothness 0/.5/1, separately hashed textures at 17x9/1x5/8x16 |
+| Anti Anti Alias | Automatic/manual palettes, counts 0/1/2/3/25/100, matching black/white and nonmatching red |
 
 The finite corpus chooses nonnegative procedural noise offsets. It makes no
 claim that all negative offsets are invalid. Noise Type 3 is outside the
@@ -88,8 +96,25 @@ original-vs-original exclusion rule in Radial's validation report; there is no
 case-index blacklist, retry-until-pass or offset-based dismissal. Other
 effects receive one original render per case and no automatic exclusions.
 
-Only a complete, successful all-ten run writes the committed manifests.
-`--only` and `--limit` are diagnostic options and never publish golden files.
+A complete successful run writes the committed manifests. `--plugins` permits
+publication of complete selected plug-ins while preserving all other hashes,
+exclusions and their original verification identities. Every selected case
+must be present exactly once; missing, extra, overlapping or failed cases
+prevent publication. `--only` and `--limit` remain diagnostic and never publish.
+The originals directory may be a flat AEX directory or the extracted release
+root (`*/*/Plugins/64/2025/NAME.aex`); originals are never copied.
+
+To regenerate just this release, using the ordinary updated shared harness:
+
+```powershell
+python tools/golden/regenerate.py --originals '<absolute upstream_20261112/extracted>' --harness '<absolute aexcompat-harness.exe>' --plugins color-keep olm-color-key olm-distance-gradation olm-smoother2 olm-uv-map olm-anti-anti-alias --out local/golden-release-new --jobs 3
+```
+
+Secondary images are exported as exact RGBA bytes, promoted to the native depth
+for the pure runner, and written as PNGs for the original. Their bytes and
+geometry participate in each case fingerprint. Verification records their hashes.
+`python -m unittest discover -s tools/golden -v` checks subset publication refusal
+and preservation of unselected exclusions.
 `--bin-dir` selects already-built runners; their executable hashes are recorded.
 Originals stay external and are never copied into the repository. Full raw
 outputs, requests and process logs stay in the local output directory. The
@@ -101,8 +126,9 @@ failure raises an error. CI has no originals and cannot regenerate these files.
 `package_macos.py` is called by `../stage_macos.sh`. The pinned PiPL crate writes
 classic resource files directly, with resource type `PiPL` and ID 16000; Rez and
 an Adobe SDK installation are unnecessary for the Rust build. The helper parses
-the resource map and checks declarations against the C++ `*PiPL.r`, checks the
-two architecture resources are identical, and uses the C++ plist/Xcode bundle
-identifier. It checks both executable exports and minimum deployment versions,
+the resource map and checks new-release declarations against hash-bound original metadata in
+`upstream-metadata.json` and unchanged effects against the C++ `*PiPL.r`, checks the
+two architecture resources are identical, and retains existing C++ plist/Xcode bundle identifiers. The two new
+bundles use `local.olm-rs.uv-map` and `local.olm-rs.anti-anti-alias`. It checks both executable exports and minimum deployment versions,
 then creates and verifies an ad-hoc seal after `lipo`. There is no Developer ID
 signature or notarization, and the helper does not install into MediaCore.

@@ -14,4 +14,4 @@ done
 target_dir="${CARGO_TARGET_DIR:-$root/target}"
 python3 tools/golden/package_macos.py "$target_dir" "$dest"
 ditto -c -k --sequesterRsrc --keepParent "$dest" "$dest.zip"
-echo "Wrote $dest.zip (ten universal plug-ins; ad-hoc only, not notarized)"
+echo "Wrote $dest.zip (twelve universal plug-ins; ad-hoc only, not notarized)"

@@ -12,6 +12,83 @@ extern "C" {
     fn olm_ck_cpp_boundary(input: *const u8, w: i32, h: i32, output: *mut u8);
 }
 #[test]
+fn last_palette_entry_and_first_match_priority() {
+    use crate::algorithm::{self, Key, Params, MAX_COLORS};
+    use olm_core::{Depth, Layout, Pixel, View, ViewMut};
+    for depth in [Depth::U8, Depth::U16, Depth::F32] {
+        let layout = Layout {
+            width: 1,
+            height: 1,
+            stride: depth.pixel_bytes(),
+            depth,
+            origin: (0, 0),
+        };
+        let mut bytes = vec![0; depth.pixel_bytes()];
+        let mut output = vec![0; depth.pixel_bytes()];
+        let (input, expected) = match depth {
+            Depth::U8 => (Pixel::U8([128, 255, 0, 0]), Pixel::U8([128, 0, 0, 255])),
+            Depth::U16 => (
+                Pixel::U16([16384, 32768, 0, 0]),
+                Pixel::U16([16384, 0, 0, 32768]),
+            ),
+            Depth::F32 => (
+                Pixel::F32([0.5, 1.0, 0.0, 0.0]),
+                Pixel::F32([0.5, 0.0, 0.0, 1.0]),
+            ),
+        };
+        ViewMut::new(&mut bytes, layout)
+            .unwrap()
+            .set(0, 0, input)
+            .unwrap();
+        let mut p = Params {
+            keep: true,
+            replace: true,
+            keys: vec![
+                Key {
+                    enabled: false,
+                    replace: true,
+                    color: [1.0, 0.0, 0.0],
+                    replacement: [0.0, 0.0, 1.0],
+                    threshold: 0.0,
+                    components: [0.0; 3],
+                };
+                MAX_COLORS
+            ],
+            ..Params::default()
+        };
+        p.keys[MAX_COLORS - 1].enabled = true;
+        for space in 1..=6 {
+            p.space = space;
+            algorithm::render(
+                &View::new(&bytes, layout).unwrap(),
+                &mut ViewMut::new(&mut output, layout).unwrap(),
+                &p,
+            )
+            .unwrap();
+            assert_eq!(
+                View::new(&output, layout).unwrap().get(0, 0).unwrap(),
+                expected
+            );
+        }
+        p.keys[0].enabled = true;
+        p.keys[0].replacement = [1.0, 0.0, 0.0];
+        algorithm::render(
+            &View::new(&bytes, layout).unwrap(),
+            &mut ViewMut::new(&mut output, layout).unwrap(),
+            &p,
+        )
+        .unwrap();
+        assert_eq!(output, bytes);
+        p.keys.push(p.keys[0].clone());
+        assert!(algorithm::render(
+            &View::new(&bytes, layout).unwrap(),
+            &mut ViewMut::new(&mut output, layout).unwrap(),
+            &p
+        )
+        .is_err());
+    }
+}
+#[test]
 fn cpp_color_math() {
     let mut seed = 0x53a01234u32;
     let mut next = || {

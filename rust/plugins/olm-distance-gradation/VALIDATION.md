@@ -1,4 +1,201 @@
-# OLMDistanceGradation Rust validation (P-dgrad)
+# DistanceGradation — integrated 2026-11-12 release
+
+## Current direct qualification (2026-11-13)
+
+The final twelve-plug-in workspace candidate passes the **ordinary direct oracle**
+using AEXCompat `032a187621353bac7b92a76ae394ac387ddedf51`. No bridge or sparse
+fixture is used. Smart8/16/32, downsample 1, 1/2 and 1/4, fresh per-process
+renders, at most three concurrent renders. Counts below are **per depth**.
+
+| Reference | Smart8 | Smart16 | Smart32 |
+| --- | ---: | ---: | ---: |
+| New 64/2025 | 30 exact | 30 exact | 30 exact |
+| New 64/2026 sample | 12 exact | 12 exact | 12 exact |
+| New original-verified golden | 18 exact | 18 exact | 18 exact |
+
+Zero pixel mismatches, reference/candidate failures or timeouts remain in these
+campaigns. Inventory matches the 2025 original. This quick regression bounds thresholds
+to 0–128 and blur size to 0–12; other controls use their full declared ranges.
+Historical original instability and expensive-extrema limits remain.
+
+[Integration report](../../INTEGRATION.md),
+[hash-bound qualification](../../evidence/integration-20261112/qualification.json),
+[staged identity](../../evidence/integration-20261112/staged-identities.json) and
+[golden verification](../../tools/golden/verification.json) are the current
+authority. Native AE UI/project acceptance remains unverified. Prior job reports
+below retain their original hashes and diagnostic observations as **history**;
+their old bridge, harness-limit, pending-golden or local-only hoisting statements
+are superseded by the direct evidence above.
+
+---
+
+# 2026-11-12 upstream update (Up-dgrad)
+
+The current source targets the new **2025 Windows build**. Qualification below
+is AEXCompat CPU evidence, with explicit original-instability exclusions; it is
+**not native AE exact**. The earlier P-dgrad report is retained below as history,
+not as qualification of this release.
+
+Machine-readable results and identities:
+[upstream-validation-report.json](upstream-validation-report.json) and
+[upstream-static-report.json](upstream-static-report.json).
+All edits are inside this crate. No Git operations, shared-source edits,
+subagents, GUI, AE launch, installation, or changes to original binaries occurred.
+
+## Upstream findings and implementation
+
+| Area | New-release evidence and port change |
+|---|---|
+| Declarations | Use Padding appended at slot/disk ID 13, default off; slider display maxima 512 → 1000; valid maxima remain 1000. Existing IDs/types retained. |
+| PiPL / setup | Version `0x41800` (0.8.3 Develop), out_flags `0x06000240`, out_flags2 `0x08001400`; complete Windows PiPL byte-identical to 2025. |
+| SmartPreRender `0x1174330` | Expands result and maximum extents by truncated preview padding. Implemented in local `pre_render.rs`; parameter checkouts are balanced. |
+| Drivers `0x1171050`, `0x1171f20`, `0x1172df0` | Build transparent padded input, reconstruct full-resolution dimensions, and offset source coordinates. Both mode copies each field through the original mask. |
+| Pixel callbacks `0x1170460`, `0x1170880`, `0x1170cc0` | Reviewed padding offsets and composition against the new drivers. |
+| Field `0x11750f0` | Zero truncation threshold uses 0.1. Normalization retains observed_max/requested_threshold when the field does not reach the threshold. |
+| Existing IPP sqrt path | Dispatch index 4 reaches `0x4a940`, then `0x190ee0` / `0x2f1e20`; translated RSQRT/FMA refinement, 8-float alignment, 16-float groups and zero fallback. |
+| Existing IPP resize path | `0x12af8c0` → `0x12addd0` / IPP → `0x363e80`; row routines `0x729e60` and `0x72a040` use delta interpolation, FMA groups of four, and non-fused tails. |
+| Bilateral size zero | Native `cvSmooth` still executes a radius-one filter. Removed the old U16 bypass. |
+
+The old and new 2025 binaries are 26,289,664 and 26,292,736 bytes respectively.
+No PE imports were added or removed. `IPPCODE` and `IPPDATA` are byte-identical
+old/new and 2025/2026. OpenCV 4.5.5 was already statically linked; the large file
+is not evidence of a newly added library. Padding exposes existing numeric
+paths that the previous Rust staging did not reproduce fully.
+
+The saved U-triage results were verified against exact original hashes:
+12 behavior cases/depth (9 changed), 26 sensitivity cases/depth (24 changed),
+139 changed functions (90 normalized-code changes, 49 referenced-data-only),
+60 added and 59 removed. Funcdb reports 15,956 exact, 601 fuzzy and 13 unknown
+functions. These counts guide review, not proof of equivalence. Nine effect
+functions were reviewed explicitly; hash-bound details are in the static report.
+
+Complete scaffold declaration capture has **zero differences**, including
+checkbox labels and Power's 2025 curve tolerance. The 2026 declaration differs
+in SDK minor 29 versus 28 and Power curve tolerance 0 versus 0.05. The port uses
+2025 declarations, with separate 2026 pixel checks below.
+
+## Final oracle counts
+
+Every row covers Smart8, Smart16 and Smart32 at downsample 1, 1/2 and 1/4.
+Equality is exact sample/word equality; no tolerance or NaN canonicalization.
+Candidate SHA-256:
+`fae669a69389d3292f94d87a3854607d6eab13f5756f64cd6bd2dce7d3365318`.
+
+| Corpus | Planned per depth | Exact 8 / 16 / 32 | Original-varying 32-bit cases | Original errors per depth |
+|---|---:|---:|---:|---:|
+| 2025 seed 20261112 | 133 | 130 / 130 / 129 | 1 | 3 |
+| 2025 seed 20261113 | 133 | 131 / 131 / 129 | 2 | 2 |
+| 2025 fully opaque edges / slider boundaries | 42 | 42 / 42 / 40 | 2 | 0 |
+| 2026 fully opaque edges / slider boundaries | 42 | 42 / 42 / 39 | 3 | 0 |
+| 2026 mixed-alpha sample | 18 | 18 / 18 / 18 | 0 | 0 |
+
+There are **255 successfully rendered random cases per depth over two seeds**,
+in addition to six default/minimum/maximum cases. Of the random cases, 255 are
+exact at each integer depth and 252 at float depth. This exceeds the requested
+200 random cases per depth. Original error cases (seed 1: 60/75/78; seed 2:
+111/112) remain errors, not passes. Final candidate-only failures: zero.
+
+Random thresholds sample 0–128, Blur Size 0–12, with other controls over their
+full exposed ranges. Sizes are 1×1, 3×7, 11×7, 17×11 and 31×19. This is a
+declared bounded corpus, not full-range random qualification. The separate
+42-case opaque corpus covers padding on/off, all In/Out and Render modes,
+all three scales, and explicit thresholds 512 and 1000. The initial full-extrema
+attempt is retained in `validation/upstream/smoke-v1`; all-max padding plus blur
+timed out in the original at each depth. It was not clamped or counted as exact.
+
+The two seed originals were rendered in fresh per-process workers. After the
+last implementation change, the final candidate was rendered again against
+their immutable original outputs with executable/input/request/output hashes
+checked. These are `final-v8-seed-20261112` and `final-v8-seed-20261113`.
+Both opaque corpora and the 2026 sample are fresh paired per-process runs.
+All campaigns use at most two render workers. Raw evidence is under ignored
+`validation/upstream/`; no historical failed run was overwritten.
+
+A direct original-2025 versus original-2026 comparison also verifies all 18
+mixed-alpha samples per depth exactly, with input/request identity checked.
+The opaque pair comparison is 42/42/41 exact at 8/16/32 bpc; its one float
+difference is covered by the original-variation evidence below.
+
+## Residuals and native alignment
+
+All eight retained float mismatch pairs were classified with **eight original
+and eight candidate fresh-process repeats each**. Every original produced two
+different outputs; every candidate produced one, also observed in the original
+population. Maximum retained difference is `5.960464477539063e-8`.
+
+`tests/update_report.py` separately checks the actual saved campaign pairs
+against each complete variation mask: **zero mismatch pixels outside observed
+original variation**, and both saved outputs occur in the original population.
+This explicit check matters because ubdetect's automatic-exclusion flag is
+false when its own first trial happens to be exact. Baseline differences stay
+in the table; classifications are not added to exact totals. No poisoning or
+out-of-bounds-read claim is made.
+
+There is binary-grounded evidence for address-sensitive square-root rounding.
+The captured 267×263 distance plane starts at address 16 modulo 32. Applying
+the native group/fallback arithmetic at that offset matches every recorded
+word; canonical offset zero differs at 19 words. This arithmetic check recovers
+integer squared distances from the recorded roots and is not an independent
+EDT proof. It supports the alignment explanation for observed instability.
+The Rust implementation deliberately uses a deterministic canonical alignment.
+The RSQRT table is a tested CPU profile: 140,960 instruction probes cover 8,192
+bins plus random normal inputs. Other CPU implementations are not qualified.
+
+## Stage evidence and regression checks
+
+- Captured field, resize, EDT, normalization and filter planes with the local
+  IplImage adapter and the unchanged shared record/witness tools. Input/output
+  blobs and native records have SHA-256 provenance.
+- The 75×71 / 300×284 case exposed sqrt/FMA differences; its final five mapped
+  stages are exact. The 69×63 / 282×258 case isolated resize and is exact after
+  the FMA/tail fix. The 117×121 / 236×244 case has exact fields, EDTs and Bilateral
+  output; driver inspection then localized the Both-mode masked-copy bug.
+- Four recorded native fields and a complete ARGB8 masked-copy regression are
+  checked-in small fixtures. The old C++ field oracle is retained explicitly
+  as `normalized_legacy`; it does not validate the new normalization semantics.
+- `python tests/update_build.py test`: **13 passed, 0 failed**, including the
+  new native fixtures, UI callbacks, existing numerical filters and concurrency.
+- Default release build succeeds without warnings. The copied v8 candidate and
+  the current default Cargo DLL have the same SHA-256. Diagnostic exports are
+  feature gated and absent from that artifact.
+
+The shared diverge maps cover Distance's Gaussian passes, not its new field
+staging/resize paths. Job-local capture/witness adapters provide the needed
+stage comparisons without changing shared tools. Ghidra's inferred non-returning
+thunks hid part of IPP initialization; bounded disassembly resolved those paths.
+
+## Compatibility, handoff and limits
+
+Old AE projects retain their effect match name and existing parameter IDs/types.
+Use Padding is appended and off by default. New upstream normalization changes
+the image even when padding is off; this is intentional release compatibility,
+not preservation of old pixels.
+
+The shared golden owner must:
+
+1. Add `use_padding: false` to the `Params` literal in
+   `rust/tools/golden/src/bin/golden-olm-distance-gradation.rs`. The new public
+   field otherwise makes that runner fail to compile. No shared file was edited.
+2. Regenerate the **54 DistanceGradation golden hashes** against the new 2025
+   original. Current `--only` is diagnostic; publication requires a complete
+   all-ten run, so existing shared manifests were not rewritten.
+3. Resolve the shared workspace lockfile update independently. Builds here use
+   an isolated offline snapshot of this crate and its three shared dependencies,
+   with `CARGO_TARGET_DIR=D:/olm-rs-target/Up-dgrad`.
+
+No native AE/macOS build or execution is claimed. HDR/nonfinite inputs, arbitrary
+cropped/strided worlds, other CPUs, and untested high-cost parameter families
+remain outside this qualification. Existing Classic-route limitations remain;
+Classic is not advertised as an AE-dispatched route here.
+
+Owned Ghidra hub PIDs 60012 and 59484 were stopped and their exits verified;
+the latter's five owned PIDs all exited without force. The unrelated shared hub
+was left running. Render/record/witness/ubdetect tools own and verify their worker
+trees; all task exec sessions completed. No background helper was installed.
+
+---
+
+# Historical OLMDistanceGradation Rust validation (P-dgrad)
 
 This crate is a pure Rust SmartFX implementation with a small AE adapter. The C++
 reference archive is used only by unit tests. All work and evidence are confined

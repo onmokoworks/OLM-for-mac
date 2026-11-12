@@ -2,6 +2,9 @@
 //! Requires round-to-nearest, gradual underflow. No global mode or CPU dispatch.
 //! `Mode::Fma` is the lane explicitly used by the Mac pilot sources.
 
+mod cbrtf;
+pub use cbrtf::cbrtf;
+
 /// UCRT evaluation lane (not an instruction-set requirement).
 #[repr(i32)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

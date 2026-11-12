@@ -43,7 +43,7 @@ def run(row):
  o.write_json(directory/'diff.json',result)
  return result
 app={r:None for r in old['routes']}
-with ThreadPoolExecutor(max_workers=3) as pool:
+with ThreadPoolExecutor(max_workers=2) as pool:
  futures=[pool.submit(run,r) for r in old['results']]
  try:
   for f in as_completed(futures):

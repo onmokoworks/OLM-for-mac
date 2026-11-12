@@ -436,10 +436,27 @@ def run_case(out, case, route, identities, perturb, extent, timeout):
     return evaluate_case(directory, manifest, timeout)
 
 
+def secondary_layer_size(case, slot):
+    """Optional per-slot preview dimensions; old plans retain primary dimensions.
+
+    Dimensions are already downsampled, just like the primary PNG. They do not
+    change composition full-resolution size or pretend to set a world extent.
+    """
+    sizes = case.get("layer_sizes", {})
+    if not isinstance(sizes, dict):
+        raise ValueError("layer_sizes must map string slots to positive [width,height]")
+    size = sizes.get(str(slot), case["size"])
+    if not isinstance(size, (tuple, list)) or len(size) != 2 or any(type(n) is not int or n <= 0 for n in size):
+        raise ValueError("secondary layer sizes must be positive integer WxH")
+    return tuple(size)
+
+
 def prepare_case(out, case, route, identities, perturb=(), extent=None):
     """Prepare the existing replayable bundle without choosing a transport."""
     if CANCELLED.is_set():
         raise RuntimeError("oracle run cancelled")
+    layer_sizes = {a["slot"]: secondary_layer_size(case, a["slot"])
+                   for a in case["assignments"] if "layer" in a}
     directory = out / f"case-{case['index']:04d}-{route}"
     directory.mkdir()
     (directory / "requests").mkdir()
@@ -447,7 +464,8 @@ def prepare_case(out, case, route, identities, perturb=(), extent=None):
     Image.fromarray(input_pixels(w, h, case["input_seed"])).save(directory / "input.png")
     for a in case["assignments"]:
         if "layer" in a:
-            Image.fromarray(input_pixels(w, h, case["input_seed"] ^ a["slot"])).save(directory / a["layer"])
+            lw, lh = layer_sizes[a["slot"]]
+            Image.fromarray(input_pixels(lw, lh, case["input_seed"] ^ a["slot"])).save(directory / a["layer"])
     for side in ("reference", "candidate"):
         write_json(directory / "requests" / f"{side}.json",
                    make_request(case, perturb if side == "candidate" else (), extent, route))
@@ -517,6 +535,10 @@ def render(args):
         write_json(out / f"{side}.inventory.json", inv[side])
     diff = inventory_diff(inv["reference"], inv["candidate"])
     cases = generate_cases(inv["reference"]["parameters"], args.cases, args.seed, args.sizes, args.downsample)
+    if getattr(args, "layer_sizes", None):
+        for case in cases:
+            size = args.layer_sizes[case["index"] % len(args.layer_sizes)]
+            case["layer_sizes"] = {str(a["slot"]): list(size) for a in case["assignments"] if "layer" in a}
     write_json(out / "cases.json", cases)
     applicability = {r: route_support(inv["reference"], r, args.force_classic) for r in args.routes}
     debug_routes = [r for r in args.routes if args.force_classic and r.startswith("classic")
@@ -527,6 +549,7 @@ def render(args):
                "render_environment_overrides": frame_deadline_environment(args.timeout),
                "jobs": args.jobs, "sizes": args.sizes, "downsample": args.downsample,
                "extent": args.extent, "perturb_candidate": args.perturb_candidate,
+               "layer_sizes": getattr(args, "layer_sizes", None),
                "inventory_diff": diff, "same_binary": identities["reference"]["sha256"] == identities["candidate"]["sha256"],
                "results": [], "routes": {}, "complete": False}
     rows = summary["results"]
@@ -625,6 +648,7 @@ def main(argv=None):
             p.add_argument("--jobs", type=int, default=min(3, max(1, (os.cpu_count() or 2) // 2)))
             p.add_argument("--routes", default=",".join(ROUTES))
             p.add_argument("--sizes", default="1x1,3x7,97x61,256x144")
+            p.add_argument("--layer-sizes", help="optional cyclic secondary PNG preview sizes, e.g. 17x9,1x5; default matches primary")
             p.add_argument("--downsample", default="1", help="comma-separated ratios: 1,1/2,1/4")
             p.add_argument("--extent", help="SmartFX output rectangle: left,top,right,bottom")
             p.add_argument("--perturb-candidate", action="append", default=[], metavar="SLOT=DELTA")
@@ -654,6 +678,10 @@ def main(argv=None):
         args.sizes = [tuple(map(int, s.lower().replace("×", "x").split("x"))) for s in args.sizes.split(",")]
         if any(len(s) != 2 or min(s) <= 0 for s in args.sizes):
             raise ValueError("sizes must be positive WxH")
+        if args.layer_sizes:
+            args.layer_sizes = [tuple(map(int, s.lower().split("x"))) for s in args.layer_sizes.split(",")]
+            if any(len(s) != 2 or min(s) <= 0 for s in args.layer_sizes):
+                raise ValueError("layer sizes must be positive WxH")
         args.downsample = [str(Fraction(s)) for s in args.downsample.split(",")]
         if any(not 0 < Fraction(s) <= 1 for s in args.downsample):
             raise ValueError("downsample must be in (0,1]")

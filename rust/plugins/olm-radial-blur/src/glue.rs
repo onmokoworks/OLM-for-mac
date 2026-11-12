@@ -170,7 +170,7 @@ unsafe fn setup<E: Effect>(i: &PF_InData, o: &mut PF_OutData) -> Result<()> {
 
 struct CheckedParam<'a> {
     i: &'a PF_InData,
-    p: PF_ParamDef,
+    p: Box<PF_ParamDef>,
     active: bool,
 }
 impl CheckedParam<'_> {
@@ -178,7 +178,7 @@ impl CheckedParam<'_> {
         self.active = false;
         check(self.i.inter.checkin_param.ok_or(BAD)?(
             self.i.effect_ref,
-            &mut self.p,
+            &mut *self.p,
         ))
     }
 }
@@ -211,17 +211,18 @@ unsafe fn values<E: Effect>(
         let p = if smart {
             let checkout = i.inter.checkout_param.ok_or(BAD)?;
             i.inter.checkin_param.ok_or(BAD)?;
-            let mut p = std::mem::zeroed();
+            // The host owns this address until checkin, including moves of the guard.
+            let mut p = Box::new(std::mem::zeroed());
             check(checkout(
                 i.effect_ref,
                 (n + 1) as _,
                 i.current_time,
                 i.time_step,
                 i.time_scale,
-                &mut p,
+                &mut *p,
             ))?;
             checked = Some(CheckedParam { i, p, active: true });
-            &checked.as_ref().unwrap().p
+            &*checked.as_ref().unwrap().p
         } else {
             if params.is_null() {
                 return Err(BAD);

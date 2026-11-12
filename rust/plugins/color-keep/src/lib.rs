@@ -1,17 +1,20 @@
-//! ColorKeep pixel algorithm translated from mac/ColorKeep/ColorKeep.cpp.
+//! ColorKeep 1.1.0, translated from the 2026-11-12 Windows CPU release.
 use olm_core::{Pixel, View, ViewMut};
 
-/// Palette colors are host float ARGB, including alpha. RGB survives rejection.
+/// Palette colors are host float ARGB; only RGB participates in matching.
+/// New 2025 callbacks: RVAs 0x15c0 / 0x1690 / 0x1780 (8/16/32 bpc).
+/// Conversion helpers 0x7080 / 0x70f0 multiply in binary32; 0x7160 copies.
+/// COMISS/JA rejects strictly greater differences, accepting unordered values.
+/// The original copies the input world first, then writes only output alpha.
 pub fn pixel(p: Pixel, palette: &[[f32; 4]]) -> Pixel {
-    let hit = palette.iter().any(|c| match p {
-        Pixel::U8(v) => (0..4).all(|i| {
-            v[i] == (olm_math::x86::cvttss2si((c[i] + f32::from_bits(0x3b008081)) * 255.0) as u8)
-        }),
-        Pixel::U16(v) => (0..4).all(|i| {
-            v[i] == (olm_math::x86::cvttss2si((c[i] + f32::from_bits(0x37800000)) * 32768.0) as u16)
-        }),
-        Pixel::F32(v) => (0..4).all(|i| !((v[i] - c[i]).abs() > 1.0e-4f32)),
-    });
+    let normalized = match p {
+        Pixel::U8(v) => v.map(|x| x as f32 * f32::from_bits(0x3b808081)),
+        Pixel::U16(v) => v.map(|x| x as f32 * f32::from_bits(0x38000000)),
+        Pixel::F32(v) => v,
+    };
+    let hit = palette
+        .iter()
+        .any(|c| (1..4).all(|i| !((c[i] - normalized[i]).abs() > 1.0e-4f32)));
     if hit {
         p
     } else {
@@ -23,7 +26,7 @@ pub fn render(
     output: &mut ViewMut<'_>,
     palette: &[[f32; 4]],
 ) -> olm_core::Result<()> {
-    if palette.len() > 100 {
+    if palette.len() > 200 {
         return Err(olm_core::Error::Unsupported);
     }
     let l = output.layout();
@@ -46,9 +49,9 @@ mod ae {
     use olm_ae::{Effect, Kind, Param, RenderContext, Value};
     pub struct Plugin;
     impl Effect for Plugin {
-        const NAME: &'static str = "Color Keep";
+        const NAME: &'static str = "OLM Color Keep";
         const MATCH_NAME: &'static str = "OLM Color Keep";
-        const VERSION: u32 = 526336;
+        const VERSION: u32 = 557056;
         const FLAGS: u32 = 0x02000040;
         fn params() -> Vec<Param> {
             let mut p = vec![Param {
@@ -57,13 +60,13 @@ mod ae {
                 flags: 64,
                 kind: Kind::Integer {
                     min: 0,
-                    max: 100,
+                    max: 200,
                     slider_min: 0,
-                    slider_max: 100,
+                    slider_max: 200,
                     default: 1,
                 },
             }];
-            for i in 0..100 {
+            for i in 0..200 {
                 p.push(Param {
                     id: 2 + i,
                     name: "Color".into(),
@@ -79,7 +82,7 @@ mod ae {
             input: &super::View<'_>,
             out: &mut super::ViewMut<'_>,
         ) -> olm_core::Result<()> {
-            let n = (v[0].number as usize).min(100);
+            let n = (v[0].number as usize).min(200);
             let colors: Vec<_> = v[1..=n].iter().map(|v| v.color).collect();
             if ctx.smart {
                 let l = out.layout();
@@ -101,16 +104,40 @@ mod ae {
             }
         }
     }
-    olm_ae::export_effect!(Plugin, entryPointFunc);
+    olm_ae::export_effect!(Plugin, entry_point);
 }
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
-    fn alpha_is_part_of_key() {
+    fn alpha_is_not_part_of_key() {
         let p = Pixel::U8([128, 255, 0, 0]);
-        assert_eq!(pixel(p, &[[1.0, 1.0, 0.0, 0.0]]), Pixel::U8([0, 255, 0, 0]));
+        assert_eq!(pixel(p, &[[1.0, 1.0, 0.0, 0.0]]), p);
         assert_eq!(pixel(p, &[[128.0 / 255.0, 1.0, 0.0, 0.0]]), p);
+    }
+    #[test]
+    fn normalized_integer_thresholds() {
+        // PF16 admits a three-word difference, but rejects four words.
+        let p = Pixel::U16([1234, 16384, 0, 0]);
+        assert_eq!(pixel(p, &[[1.0, 16387.0 / 32768.0, 0.0, 0.0]]), p);
+        assert_eq!(
+            pixel(p, &[[1.0, 16388.0 / 32768.0, 0.0, 0.0]]),
+            p.with_alpha(0.0)
+        );
+        // PF8 no longer rounds an arbitrary float palette to a byte key.
+        let p = Pixel::U8([123, 128, 0, 0]);
+        let r = 128.0 * f32::from_bits(0x3b808081);
+        assert_eq!(pixel(p, &[[0.0, r + 0.00005, 0.0, 0.0]]), p);
+        assert_eq!(pixel(p, &[[0.0, r + 0.0002, 0.0, 0.0]]), p.with_alpha(0.0));
+    }
+    #[test]
+    fn last_palette_entry_and_empty_palette() {
+        let p = Pixel::F32([0.5, 1.0, 0.0, 0.0]);
+        let mut colors = [[1.0, 0.0, 0.0, 0.0]; 200];
+        colors[199] = [0.0, 1.0, 0.0, 0.0];
+        assert_eq!(pixel(p, &colors), p);
+        assert_eq!(pixel(p, &colors[..199]), p.with_alpha(0.0));
+        assert_eq!(pixel(p, &[]), p.with_alpha(0.0));
     }
     #[test]
     fn unordered_falls_through() {

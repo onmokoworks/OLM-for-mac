@@ -53,7 +53,8 @@ unsafe fn setup<E: Effect>(i: &PF_InData, o: &mut PF_OutData) -> olm_ae::Result<
                 p.param_type = PF_Param_CHECKBOX;
                 p.u.bd.value = *v as _;
                 p.u.bd.dephault = *v as _;
-                p.u.bd.u.nameptr = c"".as_ptr();
+                text = Some(CString::new(s.name.as_bytes()).map_err(|_| BAD)?);
+                p.u.bd.u.nameptr = text.as_ref().unwrap().as_ptr();
             }
             Kind::Color => {
                 p.param_type = PF_Param_COLOR;

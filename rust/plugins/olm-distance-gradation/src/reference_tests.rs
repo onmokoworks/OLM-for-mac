@@ -39,6 +39,98 @@ fn native_fma_exp() {
     }
 }
 #[test]
+fn upstream_recorded_fields() {
+    // Native 2025 RVA 0x11750f0 inputs/outputs captured during Smart32.
+    // Includes long outside distances that exercise native IPP RSQRT/FMA.
+    let data = include_bytes!("../tests/upstream-field.bin");
+    let mut at = 0;
+    while at < data.len() {
+        let word = |i| u32::from_le_bytes(data[i..i + 4].try_into().unwrap());
+        let (w, h, rw, rh) = (
+            word(at) as usize,
+            word(at + 4) as usize,
+            word(at + 8) as usize,
+            word(at + 12) as usize,
+        );
+        let threshold = word(at + 16) as f32;
+        let constant = word(at + 20) == 1;
+        let max = f32::from_bits(word(at + 24));
+        at += 28;
+        let actual = field::normalized(
+            &data[at..at + w * h],
+            w,
+            h,
+            rw,
+            rh,
+            threshold,
+            constant,
+            max,
+        );
+        at += w * h;
+        for (v, bytes) in actual.iter().zip(data[at..at + w * h * 4].chunks_exact(4)) {
+            assert_eq!(v.to_bits(), u32::from_le_bytes(bytes.try_into().unwrap()));
+        }
+        at += w * h * 4;
+    }
+}
+#[test]
+fn upstream_padding_geometry() {
+    for factor in [1, 2, 4] {
+        let mut p = Params {
+            use_padding: true,
+            scale_x: (1, factor),
+            scale_y: (1, factor),
+            ..Default::default()
+        };
+        assert_eq!(
+            crate::algorithm::padding(&p).unwrap(),
+            (factor as usize, 1, 1)
+        );
+        p.in_out = 2;
+        p.outside = 7;
+        assert_eq!(
+            crate::algorithm::padding(&p).unwrap(),
+            (7, 7 / factor as usize, 7 / factor as usize)
+        );
+        p.use_padding = false;
+        assert_eq!(crate::algorithm::padding(&p).unwrap(), (0, 0, 0));
+    }
+}
+#[test]
+fn upstream_both_uses_masked_copy() {
+    use olm_core::{Depth, Layout, View, ViewMut};
+    let data = include_bytes!("../tests/upstream-masked-copy.bin");
+    let word = |i| u32::from_le_bytes(data[i..i + 4].try_into().unwrap()) as usize;
+    let (w, h, ow, oh) = (word(0), word(4), word(8), word(12));
+    let layout = |width, height| Layout {
+        width,
+        height,
+        stride: width * 4,
+        depth: Depth::U8,
+        origin: (0, 0),
+    };
+    let input = View::new(&data[16..16 + w * h * 4], layout(w, h)).unwrap();
+    let mut bytes = vec![0; ow * oh * 4];
+    let mut output = ViewMut::new(&mut bytes, layout(ow, oh)).unwrap();
+    let p = Params {
+        in_out: 3,
+        inside: 33,
+        outside: 115,
+        use_bg: true,
+        grad: [180., 149., 240., 226.].map(|v| v / 255.),
+        bg: [9., 94., 171., 7.].map(|v| v / 255.),
+        interpolation: 4,
+        blur_mode: 5,
+        blur_size: 12,
+        use_padding: true,
+        scale_x: (1, 2),
+        scale_y: (1, 2),
+        ..Default::default()
+    };
+    crate::algorithm::render(&input, &mut output, &p).unwrap();
+    assert_eq!(bytes, &data[16 + w * h * 4..]);
+}
+#[test]
 fn native_fma_filters() {
     let data = include_bytes!("../tests/native-ipp-fma.bin");
     let mut at = 0;
@@ -82,7 +174,7 @@ fn cpp_fields() {
                         let m: Vec<_> = (0..w * h)
                             .map(|_| (next(&mut seed) % 7 != 0) as u8)
                             .collect();
-                        let actual = field::normalized(
+                        let actual = field::normalized_legacy(
                             &m,
                             w,
                             h,

@@ -17,3 +17,7 @@ olm-ae.workspace = true
 cc.workspace = true
 pipl.workspace = true
 winres = "0.1"
+
+[[example]]
+name = "upstream_witness"
+crate-type = ["cdylib"]

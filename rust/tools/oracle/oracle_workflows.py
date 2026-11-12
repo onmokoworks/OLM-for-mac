@@ -175,6 +175,11 @@ def write_bundle(directory, state, o):
     manifest = copy.deepcopy(state["manifest"])
     manifest["case"]["size"] = list(state["images"]["input.png"].size)
     manifest["case"]["assignments"] = copy.deepcopy(state["requests"]["reference"]["assignments"])
+    if "layer_sizes" in manifest["case"]:
+        manifest["case"]["layer_sizes"] = {
+            str(a["slot"]): list(state["images"][a["layer"]].size)
+            for a in manifest["case"]["assignments"] if "layer" in a
+        }
     manifest["case"]["untouched_defaults"] = []
     manifest["case"]["requests_authoritative"] = True
     manifest["minimized_by_tool"] = o.identity(__file__)
@@ -235,10 +240,11 @@ def first_difference(directory, route, o):
     if not len(locations):
         return None
     y,x,c = map(int, locations[0])
-    # Native world sidecars are packed ARGB; PNG samples are RGBA.
+    # Request .rgba16le/.rgba32f-le sidecars and PNGs are RGBA. Fixture-v2
+    # checkpoint output.bin is a different transport and is packed ARGB.
     result = {"x": x, "y": y, "channel_index": c, "depth": depth,
               "reference_word": int(a[y,x,c]), "candidate_word": int(b[y,x,c])}
-    result["channel_order"] = "RGBA" if depth == 8 else "ARGB"
+    result["channel_order"] = "RGBA"
     result["channel"] = result["channel_order"][c]
     if depth == 32:
         result.update(reference_bits=f"0x{int(a[y,x,c]):08x}", candidate_bits=f"0x{int(b[y,x,c]):08x}",

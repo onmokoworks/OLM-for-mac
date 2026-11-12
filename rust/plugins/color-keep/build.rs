@@ -3,7 +3,7 @@ fn main() {
     let target = std::env::var("CARGO_CFG_TARGET_OS").unwrap();
     let mut props = vec![
         Property::Kind(PIPLType::AEEffect),
-        Property::Name("Color Keep"),
+        Property::Name("OLM Color Keep"),
         Property::Category("OLM Plug-ins"),
         Property::AE_PiPL_Version { major: 2, minor: 0 },
         Property::AE_Effect_Spec_Version {
@@ -12,8 +12,8 @@ fn main() {
         },
         Property::AE_Effect_Version {
             version: 1,
-            subversion: 0,
-            bugversion: 1,
+            subversion: 1,
+            bugversion: 0,
             stage: Stage::Develop,
             build: 0,
         },
@@ -24,7 +24,7 @@ fn main() {
         Property::AE_Reserved_Info(0),
     ];
     if target == "windows" {
-        props.insert(3, Property::CodeWin64X86("entryPointFunc"));
+        props.insert(3, Property::CodeWin64X86("entry_point"));
     }
     if target == "macos" {
         props.insert(3, Property::CodeMacIntel64("EffectMain"));

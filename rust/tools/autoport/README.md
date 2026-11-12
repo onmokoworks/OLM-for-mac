@@ -325,3 +325,5 @@ The blockers are concrete:
 
 Only the first nine leaf functions are qualified on these corpora. The orchestrator
 preserves that boundary and leaves both overall ports `needs_human`.
+
+Job N-antialias adds scoped button capture, target-directory control and an explicitly labelled reference bridge; see [N_ANTIALIAS.md](N_ANTIALIAS.md).

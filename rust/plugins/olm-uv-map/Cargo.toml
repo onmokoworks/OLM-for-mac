@@ -1,0 +1,16 @@
+[package]
+name = "olm-uv-map"
+version = "0.1.0"
+edition = "2021"
+publish = false
+[features]
+witness = []
+[lib]
+crate-type = ["cdylib", "rlib"]
+[target.'cfg(any(target_os = "windows", target_os = "macos"))'.dependencies]
+after-effects-sys = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
+[dependencies]
+olm-math = { path = "../../crates/olm-math" }
+[build-dependencies]
+pipl = { git = "https://github.com/virtualritz/after-effects.git", rev = "0e0b197850f28c1bb24e8c82fce2e3d4c120d1e9" }
+winres = "=0.1.12"

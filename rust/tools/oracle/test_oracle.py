@@ -29,6 +29,24 @@ def param(slot=1, kind="float", **kw):
 
 
 class OracleTests(unittest.TestCase):
+    def test_secondary_dimensions_and_replay_assets(self):
+        case = {"index": 0, "size": [3, 7], "downsample": "1/4", "input_seed": 123,
+                "assignments": [{"slot": 1, "layer": "layer-1.png"}], "layer_sizes": {"1": [11, 2]}}
+        self.assertEqual(o.secondary_layer_size(case, 1), (11, 2))
+        self.assertEqual(o.secondary_layer_size(case, 2), (3, 7))
+        with tempfile.TemporaryDirectory() as tmp:
+            directory, manifest = o.prepare_case(Path(tmp), case, "smart16", {})
+            with Image.open(directory / "layer-1.png") as layer:
+                self.assertEqual(layer.size, (11, 2))
+                np.testing.assert_array_equal(np.asarray(layer), o.input_pixels(11, 2, 122))
+            request = json.loads((directory / "requests/reference.json").read_text())
+            self.assertEqual(request["host_context"]["spatial"]["full_resolution_width"], 12)
+            self.assertEqual(manifest["assets"]["layer-1.png"], o.sha256(directory / "layer-1.png"))
+        for size in [[0, 2], [2], [1.5, 2], [True, 2], "1x2"]:
+            case["layer_sizes"] = {"1": size}
+            with self.assertRaises(ValueError):
+                o.secondary_layer_size(case, 1)
+
     def test_deterministic_generation_and_parallel_inputs(self):
         params = [param(), param(2, "integer"), param(3, "color"), param(4, "point"), param(5, "layer")]
         cases = o.generate_cases(params, 20, 184)

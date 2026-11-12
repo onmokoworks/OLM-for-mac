@@ -1,0 +1,173 @@
+[
+  {
+    "name": "m1-d8",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0001-smart8",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "2319036ee06ed524ab3fd13cd83ae3282d2dfbff13320ed7c9fea836c6654f35",
+    "texture_sha256": "65c7a20a7a79d93d3e568a48a0ad4ce03b6a0a6dfd6bee69cbccc4a09aafefa8",
+    "expected_sha256": "a169d76d69cc2ced4cd99102a743e72d93b19cf213a29d3e23f5c4a31882eaf6"
+  },
+  {
+    "name": "m2-d8",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0063-smart8",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "76316d4d0c9eee39301af22547d15a132931342705cc2de692bf99f838824779",
+    "texture_sha256": "588dd7c41e8d0576868f16160c2f6d6d80b27b709d9246a9bebec648615de611",
+    "expected_sha256": "6dfd75f6f33c954c5e6f04ecd157ba2023b8fb7ab0cca9b4ee018d6a0dc6320e"
+  },
+  {
+    "name": "m3-d8",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0002-smart8",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "01f04d4ab4653f09cc2ca45b958e706cefb71778793d01433c47327ce337c63b",
+    "texture_sha256": "b25677a8b1bd3bba3be4728ae276db80332286bf40d6bd2cbb9723fc892d8f47",
+    "expected_sha256": "c9dca249fb087b819a160a872d632b5bf2ddc8fa6dd8ccea115e8ea2fc069c85"
+  },
+  {
+    "name": "m1-d16",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0001-smart16",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "779e498c62f3a468b5217ecf256db199d37c1bb6593d703817eb29c40e6f32a4",
+    "texture_sha256": "6868ac181c7738d1f3564860bcbc0d4208660049dcf4d06823774fe30e7b7e73",
+    "expected_sha256": "bf9d5b5cf0c1825ccde3176d1c38285c81738448ff6e8916818a38a5a9f607e2"
+  },
+  {
+    "name": "m2-d16",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0063-smart16",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "5758bae5cd629d8101a465970ba4df0b8cd1e95cd51b80e441a9a5ef91bded1c",
+    "texture_sha256": "e2d34752fb90567429ad4931c5acaccc741e1ff50f7f676fd13b77b0f72de287",
+    "expected_sha256": "0fba48ef409fd9fde2e0dde63c7e577f0cce326cde23ec4a319ef4b440a3095c"
+  },
+  {
+    "name": "m3-d16",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0002-smart16",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "1024de60d02797ef1409bfeaf898dbaca4b09676bed43bf1931deb7258bb7935",
+    "texture_sha256": "56bf65e53a420a89abe88fe6c7de056279fc83044c4da2e1c1ccffce293374f7",
+    "expected_sha256": "fb7c5932f90b0395b1f951a08bba85aea4642085801a70a6e7b70e4216e467e9"
+  },
+  {
+    "name": "m1-d32",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0001-smart32",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "810b05405cd94486509bf495d5b575c223f7cc54f9868d9bcf392dc15bcbae49",
+    "texture_sha256": "af4ec1e1d45aa70e1e70344848e2e95800f4c518a4b81025f0287166c8c94658",
+    "expected_sha256": "f42247a445e37db0138b6812de9a0d8e4cebb8bbb61c62c7a848c88ba213b217"
+  },
+  {
+    "name": "m2-d32",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0063-smart32",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "110dae31ffa1cb40f6657192824a335642c840442fe9ecdba1838a729701f36e",
+    "texture_sha256": "b7656e5be02e633529f06be9b7b34d8ed4016d98f7b3c6743d356510b87ea794",
+    "expected_sha256": "a21bc61cf32b46ffb8c3b45aff7756f9428bb7d34c64e2f0e94da4e20c98aa49"
+  },
+  {
+    "name": "m3-d32",
+    "source": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\release-seed-20261113\\case-0002-smart32",
+    "reference": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\upstream_20261112\\extracted\\OLMUVMap\\OLMUVMap\\Plugins\\64\\2025\\OLMUVMap.aex",
+      "sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62"
+    },
+    "candidate": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\OLM-for-mac\\rust\\plugins\\olm-uv-map\\local\\final-bin-v3\\OLMUVMap.aex",
+      "sha256": "9b99346d70716491f0e2ef18b347f9a4bcc43dfdbd901cdb2626bd1b53484631"
+    },
+    "harness": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+      "sha256": "68a251fed8131d3a32cdcbd8797aba9959be417d8da68d1e80f44d087c75e9ba"
+    },
+    "uv_sha256": "c774adc5c723a51707047d719e98c122b50baccc302cb8a2f85fb0329ccd6d61",
+    "texture_sha256": "eca9abff3124b3965a240eb5ee190b1754444b796fc0cd546f0d9ec091eb9384",
+    "expected_sha256": "38cc8f3f8404364505a0a31efb9a09b90e27d17799bbcfa4a13d47db868718c4"
+  }
+]

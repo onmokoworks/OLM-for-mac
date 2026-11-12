@@ -1,6 +1,8 @@
 //! Host-independent ColorKey kernel, translated from the current Mac sources.
 use olm_core::{allocate, Budget, Depth, Error, Pixel, View, ViewMut};
 use olm_math::{x86, Mode};
+/// 2026-11-12 upstream palette capacity (200 colors, eight controls each).
+pub const MAX_COLORS: usize = 200;
 #[derive(Clone, Debug)]
 pub struct Key {
     pub enabled: bool,
@@ -132,7 +134,7 @@ fn render_impl(
     let w = l.width;
     let h = l.height;
     let n = olm_core::image_len(w, h)?;
-    if p.keys.len() > 25
+    if p.keys.len() > MAX_COLORS
         || !(1..=6).contains(&p.space)
         || !(1..=3).contains(&p.direction)
         || !p.blur.is_finite()

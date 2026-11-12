@@ -5,7 +5,7 @@ fn main() {
         let i = c.index;
         let color = c.color(26, [255; 4]);
         let replacement = c.color(27, [255, 255, 0, 0]);
-        let p = Params {
+        let mut p = Params {
             keep: i % 2 == 1,
             threshold: 0.25,
             premultiplied: i % 3 == 1,
@@ -31,6 +31,24 @@ fn main() {
             step_x: c.denominator as f32,
             step_y: c.denominator as f32,
         };
+        if i >= 12 {
+            let last = p.keys[0].clone();
+            p.keys[0].enabled = false;
+            for index in 1..200 {
+                let mut key = last.clone();
+                key.enabled = index == 199;
+                let slot = 24 + index * 8;
+                c.number(slot, key.enabled as u8 as f64);
+                c.number(slot + 1, 1.);
+                c.color(slot + 2, [255; 4]);
+                c.color(slot + 3, [255, 255, 0, 0]);
+                c.number(slot + 4, 0.35);
+                c.number(slot + 5, 0.1);
+                c.number(slot + 6, 0.2);
+                c.number(slot + 7, 0.3);
+                p.keys.push(key);
+            }
+        }
         for (s, n) in [
             (1, p.keep as u8 as f64),
             (2, 0.25),
@@ -47,9 +65,9 @@ fn main() {
             (18, p.blur as f64),
             (19, p.blur_distance as f64),
             (20, p.direction as f64),
-            (22, 1.),
+            (22, p.keys.len() as f64),
             (23, p.replace as u8 as f64),
-            (24, 1.),
+            (24, p.keys[0].enabled as u8 as f64),
             (25, 1.),
             (28, 0.35),
             (29, 0.1),

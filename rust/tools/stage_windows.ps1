@@ -1,5 +1,5 @@
 <#[Synopsis]
-Build the Windows workspace and copy the ten DLLs under their original names.
+Build the Windows workspace and copy the twelve DLLs under their original names.
 This is staging only. Use a fresh output directory outside any host installation.
 #>
 [CmdletBinding()]
@@ -21,6 +21,8 @@ $plugins = [ordered]@{
     olm_smoother = 'OLMSmoother'
     olm_smoother2 = 'OLMSmoother2'
     olm_toon_dilate = 'OLMToonDilate'
+    olm_uv_map = 'OLMUVMap'
+    olm_anti_anti_alias = 'OLMAntiAntiAlias'
 }
 foreach ($name in $plugins.Values) {
     if (Test-Path -LiteralPath (Join-Path $destination "$name.aex")) {

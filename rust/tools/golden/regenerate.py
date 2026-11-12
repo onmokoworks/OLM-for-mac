@@ -14,7 +14,6 @@ import platform
 import subprocess
 import sys
 
-from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 RUST = HERE.parents[1]
@@ -24,6 +23,7 @@ PLUGINS = {
     'olm-kirakira': 'OLMKiraKira', 'olm-radial-blur': 'OLMRadialBlur',
     'olm-smoother': 'OLMSmoother', 'olm-smoother2': 'OLMSmoother2',
     'olm-toon-dilate': 'OLMToonDilate',
+    'olm-uv-map': 'OLMUVMap', 'olm-anti-anti-alias': 'OLMAntiAntiAlias',
 }
 
 
@@ -31,17 +31,32 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def merge_subset(old_hashes, old_exclusions, hashes, exclusions, names):
+    expected = {f'{name}-{index:02}-{depth}' for name in names
+                for index in range(18) for depth in ((8,16) if name=='OLMSmoother' else (8,16,32))}
+    if set(hashes) & set(exclusions) or set(hashes) | set(exclusions) != expected:
+        raise ValueError('subset must contain every planned case exactly once')
+    keep = lambda values: {k:v for k,v in values.items() if k.split('-')[0] not in names}
+    return {**keep(old_hashes), **hashes}, {**keep(old_exclusions), **exclusions}
+
+
 def main():
+    from PIL import Image
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--originals', required=True, type=Path)
     p.add_argument('--harness', required=True, type=Path)
-    p.add_argument('--kira-harness', required=True, type=Path)
+    p.add_argument('--kira-harness', type=Path, help='defaults to ordinary shared harness')
     p.add_argument('--out', required=True, type=Path, help='fresh local evidence directory')
-    p.add_argument('--jobs', type=int, choices=range(1, 5), default=2)
+    p.add_argument('--jobs', type=int, choices=range(1, 4), default=2)
     p.add_argument('--only', choices=PLUGINS, help='diagnostic subset; NEVER publishes golden.json')
     p.add_argument('--limit', type=int, help='diagnostic first N cases; NEVER publishes golden.json')
     p.add_argument('--bin-dir', type=Path, help='already-built release binaries; default builds workspace package')
+    p.add_argument('--plugins', nargs='+', choices=PLUGINS, help='publish complete verified replacements for these plug-ins; preserve others')
     a = p.parse_args()
+    a.kira_harness = a.kira_harness or a.harness
+    if a.plugins and (a.only or a.limit is not None):
+        p.error('--plugins cannot be combined with diagnostic --only/--limit')
+    selected = set(a.plugins or ([a.only] if a.only else PLUGINS))
     if platform.system() != 'Windows':
         p.error('golden regeneration requires native Windows original AEX execution')
     a.out = a.out.resolve()
@@ -60,10 +75,15 @@ def main():
     evidence = {'schema': 1, 'platform': platform.platform(), 'plugins': {}}
     failures = []
     for crate, name in PLUGINS.items():
-        if a.only and a.only != crate:
+        if crate not in selected:
             continue
         harness = a.kira_harness if name == 'OLMKiraKira' else a.harness
         original = a.originals/f'{name}.aex'
+        if not original.exists():
+            matches = list(a.originals.glob(f'*/*/Plugins/64/2025/{name}.aex'))
+            if len(matches) != 1:
+                raise ValueError(f'expected exactly one 2025 original for {name}: {matches}')
+            original = matches[0]
         directory = a.out/name
         exe = a.bin_dir/f'golden-{crate}.exe'
         subprocess.run([str(exe), '--export', str(directory)], check=True)
@@ -86,8 +106,15 @@ def main():
             image = work/'input.png'
             Image.frombytes('RGBA', (case['width'], case['height']),
                             (directory/f'{ident}.rgba').read_bytes()).save(image)
+            for layer in case.get('layers', []):
+                Image.frombytes('RGBA', (layer['width'], layer['height']),
+                    (directory/layer['file']).read_bytes()).save(work/f"layer-{layer['slot']}.png")
             ratio = {'numerator': 1, 'denominator': case['denominator']}
-            request = {'schema_version': 1, 'assignments': case['assignments'],
+            assignments = [dict(x) for x in case['assignments']]
+            for item in assignments:
+                if 'layer' in item:
+                    item['layer'] = str(work/item['layer'])
+            request = {'schema_version': 1, 'assignments': assignments,
                 'host_context': {'mask_scene': {'masks': []}, 'spatial': {
                     'downsample_x': ratio, 'downsample_y': ratio,
                     'pixel_aspect_ratio': {'numerator': 1, 'denominator': 1},
@@ -102,7 +129,8 @@ def main():
             timeout = 300 if name in ('OLMRadialBlur', 'DistanceGradation') else 120
             row = {'id': ident, 'route': route, 'rust_sha256': case['sha256'],
                    'fingerprint': case['fingerprint'], 'pure_repeats': repeats,
-                   'request_sha256': sha(request_path), 'input_sha256': sha(image)}
+                   'request_sha256': sha(request_path), 'input_sha256': sha(image),
+                   'layers': [{**layer, 'sha256': sha(work/f"layer-{layer['slot']}.png")} for layer in case.get('layers', [])]}
             pure = (directory/f'{ident}.raw').read_bytes()
             assert hashlib.sha256(pure).hexdigest() == case['sha256']
             originals, exact, errors = [], [], []
@@ -149,22 +177,35 @@ def main():
     if a.only or a.limit is not None:
         print('Diagnostic subset only: golden.json NOT changed')
         return
-    assert len(hashes) + len(exclusions) == 522 and len(evidence['plugins']) == 10
-    # Keep useful coverage at each declared depth and all 18 parameter tuples.
-    radial = evidence['plugins']['OLMRadialBlur']['cases']
-    admitted = [r for r in radial if r['status']=='exact']
-    assert len(admitted) >= 30, 'too few deterministic Radial cases'
-    assert len({r['id'].split('-')[1] for r in admitted}) == 18, 'a parameter tuple lost all depths'
-    assert all(sum(r['route']==f'smart{depth}' for r in admitted) >= 10 for depth in (8,16,32))
+    expected_count = sum(36 if PLUGINS[c] == 'OLMSmoother' else 54 for c in selected)
+    assert len(hashes) + len(exclusions) == expected_count
+    assert len(evidence['plugins']) == len(selected)
+    radial = evidence['plugins'].get('OLMRadialBlur', {}).get('cases', [])
+    if radial:
+        admitted = [r for r in radial if r['status']=='exact']
+        assert len(admitted) >= 30, 'too few deterministic Radial cases'
+        assert len({r['id'].split('-')[1] for r in admitted}) == 18
+        assert all(sum(r['route']==f'smart{depth}' for r in admitted) >= 10 for depth in (8,16,32))
+    previous = json.loads((HERE/'verification.json').read_text())
+    if a.plugins:
+        hashes, exclusions = merge_subset(
+            json.loads((HERE/'golden.json').read_text()),
+            json.loads((HERE/'exclusions.json').read_text()), hashes, exclusions,
+            {PLUGINS[c] for c in selected})
     temporary = HERE/'golden.json.tmp'
     temporary.write_text(json.dumps(hashes, indent=2, sort_keys=True)+'\n', encoding='utf-8')
     temporary.replace(HERE/'golden.json')
     (HERE/'exclusions.json').write_text(json.dumps(exclusions, indent=2, sort_keys=True)+'\n')
     # Keep compact identities/counts; full requests/process logs remain local.
     summary = {name: {k:v for k,v in item.items() if k!='cases'} for name,item in evidence['plugins'].items()}
+    if a.plugins:
+        summary = {**previous['plugins'], **summary}
+    excluded_cases = [r for r in previous.get('excluded_cases', [])
+                      if r['id'].split('-')[0] not in {PLUGINS[c] for c in selected}]
+    excluded_cases += [r for r in radial if r['status']=='excluded_original_nondeterminism']
     (HERE/'verification.json').write_text(json.dumps({'schema':1,'platform':evidence['platform'],
         'golden_sha256':sha(HERE/'golden.json'),'plugins':summary,
-        'excluded_cases':[r for r in radial if r['status']=='excluded_original_nondeterminism']}, indent=2)+'\n')
+        'excluded_cases':excluded_cases}, indent=2)+'\n')
     print(f'Published {len(hashes)} golden hashes: every raw output byte equals its original AEX; {len(exclusions)} evidenced nondeterministic exclusions')
 
 

@@ -1,0 +1,80 @@
+{
+  "ColorKeep": {
+    "name": "OLM Color Keep",
+    "match_name": "OLM Color Keep",
+    "category": "OLM Plug-ins",
+    "entry": "entry_point",
+    "version": 557056,
+    "flags": 33554496,
+    "flags2": 134222848,
+    "crate": "color-keep",
+    "release_version": "1.1.0",
+    "original_sha256": "f6e5f09e53b31be6c64e7c1d17a8fac4aac65bbd6487011c54916497ce9ea633",
+    "windows_pipl_sha256": "87e282d92db41488b38ffe96dcd751a973feb9356013c5377a3c2cf42b6c697d"
+  },
+  "OLMColorKey": {
+    "name": "OLM Color Key",
+    "match_name": "OLM Color Key",
+    "category": "OLM Plug-ins",
+    "entry": "entry_point",
+    "version": 1153024,
+    "flags": 33555520,
+    "flags2": 134222848,
+    "crate": "olm-color-key",
+    "release_version": "2.3.3",
+    "original_sha256": "9cd1645c8f75f45d9a6ea61bc61b7fd8bcbed198fb1124457de216e9e9b9d5ed",
+    "windows_pipl_sha256": "5b9de9a7e8f39e1d475339cd4a098dfe9f8740819ccbb20d19bf4b95782d748e"
+  },
+  "OLMDistanceGradation": {
+    "name": "Distance Gradation",
+    "match_name": "OLM Distance Gradation",
+    "category": "OLM Plug-ins",
+    "entry": "entryPointFunc",
+    "version": 268288,
+    "flags": 100663872,
+    "flags2": 134222848,
+    "crate": "olm-distance-gradation",
+    "release_version": "0.8.3",
+    "original_sha256": "fd151598c015baf7068ce7ef59eead7430657cab083d9000c2a35e9b84da5e63",
+    "windows_pipl_sha256": "13952b5ee6ed038df3a9b5e66abd3f6a2a9ffad6ecb15ab65b16dd20e3419267"
+  },
+  "OLMSmoother2": {
+    "name": "OLM Smoother v2",
+    "match_name": "OLM Smoother v2",
+    "category": "OLM Plug-ins",
+    "entry": "entry_point",
+    "version": 1114112,
+    "flags": 33555520,
+    "flags2": 134222848,
+    "crate": "olm-smoother2",
+    "release_version": "2.2.0",
+    "original_sha256": "add776af61499d425f3978f4e5e4c2c8b4062db6d7276db66a22928749227137",
+    "windows_pipl_sha256": "530e5aec57fb1ad83f202245a700d1f1ae029c263fda4b0ac17faa8f10d96015"
+  },
+  "OLMUVMap": {
+    "name": "OLM UV Map",
+    "match_name": "OLM UV Map",
+    "category": "OLM Plug-ins",
+    "entry": "entryPointFunc",
+    "version": 559104,
+    "flags": 33554496,
+    "flags2": 402658304,
+    "crate": "olm-uv-map",
+    "release_version": "1.1.1",
+    "original_sha256": "412de99a5af617f41d8c0deddc2bdc7fb8b38065b34af2966730e01b72cb2c62",
+    "windows_pipl_sha256": "ade072a4261f2b5ae623d0776a0cfaf730e7e11e07020b45fe244405b5c18c52"
+  },
+  "OLMAntiAntiAlias": {
+    "name": "OLM Anti Anti Alias",
+    "match_name": "OLM OLM Anti Anti Alias",
+    "category": "OLM Plug-ins",
+    "entry": "entryPointFunc",
+    "version": 569344,
+    "flags": 33554496,
+    "flags2": 134222848,
+    "crate": "olm-anti-anti-alias",
+    "release_version": "1.1.6",
+    "original_sha256": "9ea6e2d85ab64ec6549653072a00e81315ae9c6791752a5ee634d2f599490cc0",
+    "windows_pipl_sha256": "9ab79ea8d6a467649eca157cefcff39672e17a6266440b1680d4d15152d2c05d"
+  }
+}

@@ -6,3 +6,5 @@ mod color;
 mod distance;
 #[cfg(test)]
 mod reference_tests;
+#[cfg(feature = "upstream-witness")]
+mod upstream_witness;

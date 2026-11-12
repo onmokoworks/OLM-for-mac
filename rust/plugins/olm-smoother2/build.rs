@@ -48,8 +48,12 @@ fn main() {
         .split_once("if (g_olmsmoother2_trace_x >= 0 && g_olmsmoother2_trace_y >= 0)")
         .unwrap()
         .0;
+    // Explicit 2026-11-12 delta, grounded at new AEX c110. The surrounding
+    // C++ geometry is unchanged; original-only tests are no longer the authority.
+    assert!(class_loop.contains("x + 1 < w - 1"));
+    let class_loop = class_loop.replace("x + 1 < w - 1", "x + 1 < w");
     fs::write(out.join("class_reference.inc"),format!(
-        "extern \"C\" void sm2_ref_class_plane(const FPix *class_base, int w, int h, int range, uint8_t *out) {{\nconst float WIN_LUMA_R{metric}\nconst float threshold=(float)range/100.0f+WIN_THRESH_BIAS;\nstd::vector<uint8_t> class_plane((size_t)w*h*4,0);\n{class_loop}\nstd::memcpy(out,class_plane.data(),class_plane.size());\n}}\n"
+        "extern \"C\" void sm2_ref_class_plane(const FPix *class_base, int w, int h, int range, uint8_t *out) {{\nconst float WIN_LUMA_R{metric}\nconst float threshold=(float)range*0.01f+WIN_THRESH_BIAS;\nstd::vector<uint8_t> class_plane((size_t)w*h*4,0);\n{class_loop}\nstd::memcpy(out,class_plane.data(),class_plane.size());\n}}\n"
     )).unwrap();
     println!("cargo:rerun-if-changed={}", port_path.display());
     for (name, header) in [

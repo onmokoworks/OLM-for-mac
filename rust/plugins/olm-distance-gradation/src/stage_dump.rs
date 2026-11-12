@@ -1,6 +1,97 @@
 //! OLM-internal, opt-in native witness ABI. Never installed or used by AE.
 //! Calls the production filters; witness owns and dumps the raw float buffers.
 
+#[cfg(target_arch = "x86_64")]
+#[no_mangle]
+pub unsafe extern "C" fn olm_update_rsqrt_v1(x: f32) -> f32 {
+    use std::arch::x86_64::*;
+    _mm_cvtss_f32(_mm_rsqrt_ss(_mm_set_ss(x)))
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn olm_update_edt_v1(
+    mask: *const u8,
+    output: *mut f32,
+    w: u32,
+    h: u32,
+) -> i32 {
+    let n = w as usize * h as usize;
+    if n == 0 || n > 4_194_304 || mask.is_null() || output.is_null() {
+        return -1;
+    }
+    let result = crate::field::edt(std::slice::from_raw_parts(mask, n), w as usize, h as usize);
+    std::slice::from_raw_parts_mut(output, n).copy_from_slice(&result);
+    0
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn olm_update_field_v1(
+    mask: *const u8,
+    output: *mut f32,
+    w: u32,
+    h: u32,
+    rw: u32,
+    rh: u32,
+    threshold: i32,
+    interpolation: i32,
+    maximum: f32,
+) -> i32 {
+    let n = w as usize * h as usize;
+    if n == 0
+        || n > 4_194_304
+        || rw as u64 * rh as u64 > 4_194_304
+        || mask.is_null()
+        || output.is_null()
+    {
+        return -1;
+    }
+    let result = crate::field::normalized(
+        std::slice::from_raw_parts(mask, n),
+        w as usize,
+        h as usize,
+        rw as usize,
+        rh as usize,
+        threshold as f32,
+        interpolation == 1,
+        maximum,
+    );
+    std::slice::from_raw_parts_mut(output, n).copy_from_slice(&result);
+    0
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn olm_update_filter_v1(
+    input: *const f32,
+    output: *mut f32,
+    w: u32,
+    h: u32,
+    mode: i32,
+    kx: u32,
+    ky: u32,
+) -> i32 {
+    let n = w as usize * h as usize;
+    if n == 0 || n > 4_194_304 || input.is_null() || output.is_null() {
+        return -1;
+    }
+    let out = std::slice::from_raw_parts_mut(output, n);
+    out.copy_from_slice(std::slice::from_raw_parts(input, n));
+    match mode {
+        1 => crate::filters::box_blur(out, w as usize, h as usize, kx as usize, ky as usize),
+        2 => crate::filters::gaussian_native(out, w as usize, h as usize, kx as usize, ky as usize),
+        3 => crate::filters::median(out, w as usize, h as usize, kx as usize),
+        4 => crate::bilateral::blur_mode(
+            out,
+            w as usize,
+            h as usize,
+            (kx / 2).max(1) as usize,
+            false,
+            true,
+        ),
+        _ => return -2,
+    }
+    0
+}
+
 /// Replay Gaussian stages with distinct initialized width * height float buffers.
 /// native=0 reproduces the documented historical SSE arithmetic; native=1 uses
 /// production AVX/FMA semantics. fault_index=-1 disables one-ULP injection.

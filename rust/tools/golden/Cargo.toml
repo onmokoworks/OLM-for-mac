@@ -18,3 +18,5 @@ olm-radial-blur = { path = "../../plugins/olm-radial-blur" }
 olm-smoother = { path = "../../plugins/olm-smoother" }
 olm-smoother2 = { path = "../../plugins/olm-smoother2" }
 olm-toon-dilate = { path = "../../plugins/olm-toon-dilate" }
+olm-uv-map = { path = "../../plugins/olm-uv-map" }
+olm-anti-anti-alias = { path = "../../plugins/olm-anti-anti-alias" }
