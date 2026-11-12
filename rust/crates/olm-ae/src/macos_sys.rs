@@ -28,7 +28,7 @@ signed_constants!(PF_PixelFormat;
     PF_PixelFormat_VUYA32, PF_PixelFormat_NTSCDV25, PF_PixelFormat_PALDV25,
     PF_PixelFormat_INVALID,
 );
-signed_constants!(PF_ArbFunction;
+signed_constants!(PF_FunctionSelector;
     PF_Arbitrary_NEW_FUNC, PF_Arbitrary_DISPOSE_FUNC, PF_Arbitrary_COPY_FUNC,
     PF_Arbitrary_FLAT_SIZE_FUNC, PF_Arbitrary_FLATTEN_FUNC,
     PF_Arbitrary_UNFLATTEN_FUNC, PF_Arbitrary_INTERP_FUNC,
