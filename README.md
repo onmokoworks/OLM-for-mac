@@ -28,6 +28,16 @@ Windows版After Effectsプラグイン「OLM Tools」をMacで利用できるよ
 
 エミュレーター上で動作させた元のプラグインの結果とMac版の結果を、ランダムに選んだ素材、設定、サイズ、プレビュー解像度の組み合わせで数千通り比較しています。Windows版で描画できる条件では、すべて一致しています。詳細については[検証の方法と結果](docs/BETA_SUPPORT.md)を、判明している制限については[既知の制限](KNOWN_LIMITATIONS.md)をご確認ください。
 
+## Rust版（開発中）
+
+現在配布しているv1.0.0は、2026年11月12日のOLM Toolsの更新より前の版をもとにしています。この更新（新規のOLM UV MapとOLM Anti Anti Alias、ColorKeep、OLMColorKey、OLMDistanceGradation、OLMSmoother2の更新）には、[`rust/`](rust/README.md) 以下で開発中のRust版が対応しています。
+
+- 12個のプラグインすべてについて、エミュレーター上で動作させた最新の元のプラグインと出力を比較し、各プラグインが対応する色深度のうち元のプラグインが描画できる条件では、1ビットの差異もないことを確認しています。
+- Windows（x64）とMac（Apple Silicon／Intel）向けにビルドでき、自動テストで同じ結果になることを確認しています。
+- After Effects上での動作確認はまだ行っていないため、配布はしていません。準備ができ次第、リリースとして公開します。
+
+検証の詳細やビルド方法については、[Rust版のREADME](rust/README.md)（英語）をご確認ください。
+
 ## 動作環境
 
 - macOS 11以降に対応しています。
