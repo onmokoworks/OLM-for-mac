@@ -1,0 +1,190 @@
+{
+  "job": "misc round 2",
+  "date": "2026-11-13",
+  "source_commit": "29b135aa1d21874cd60cc7cd9bf6ca35fde1c597",
+  "merged_main": "1b4df7f3",
+  "size": [
+    1920,
+    1080
+  ],
+  "benchmark": [
+    {
+      "depth": 8,
+      "preset": "default",
+      "round1_ratio": 1.1563952075261283,
+      "round2_ratio": 0.295949208207079,
+      "original_ms": 25.9727,
+      "rust_ms": 7.6866,
+      "round1_rust_ms": 32.3527,
+      "rust_speedup": 4.208974058751593
+    },
+    {
+      "depth": 8,
+      "preset": "heavy",
+      "round1_ratio": 1.2091358232987703,
+      "round2_ratio": 0.3038964037636374,
+      "original_ms": 25.9855,
+      "rust_ms": 7.8969,
+      "round1_rust_ms": 32.966,
+      "rust_speedup": 4.1745495067684795
+    },
+    {
+      "depth": 16,
+      "preset": "default",
+      "round1_ratio": 1.2325853290590234,
+      "round2_ratio": 0.4005042933078915,
+      "original_ms": 26.4132,
+      "rust_ms": 10.5786,
+      "round1_rust_ms": 35.9502,
+      "rust_speedup": 3.3983892008394307
+    },
+    {
+      "depth": 16,
+      "preset": "heavy",
+      "round1_ratio": 1.25335167081223,
+      "round2_ratio": 0.44266362996333647,
+      "original_ms": 25.9931,
+      "rust_ms": 11.5062,
+      "round1_rust_ms": 36.1795,
+      "rust_speedup": 3.144348264413968
+    },
+    {
+      "depth": 32,
+      "preset": "default",
+      "round1_ratio": 1.3749229477881098,
+      "round2_ratio": 0.6790158154270677,
+      "original_ms": 27.3973,
+      "rust_ms": 18.6032,
+      "round1_rust_ms": 41.9335,
+      "rust_speedup": 2.254101444912703
+    },
+    {
+      "depth": 32,
+      "preset": "heavy",
+      "round1_ratio": 1.4130748315403712,
+      "round2_ratio": 0.7102635431918009,
+      "original_ms": 27.32,
+      "rust_ms": 19.4044,
+      "round1_rust_ms": 41.8362,
+      "rust_speedup": 2.156016161283008
+    }
+  ],
+  "identities": {
+    "original": {
+      "path": "D:\\Projects\\01_Project\\04_Tools\\olm for mac\\ghidra_windows_aex\\OLMToonDilate.aex",
+      "sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    },
+    "rust": {
+      "path": "D:\\olm-rs-target\\misc-evidence\\r2-staged\\OLMToonDilate.aex",
+      "sha256": "83f5b169ed780ff9d2dad6bd821106ee52dbf06d0139ecffa609e6fab616e1e0"
+    },
+    "heavy": [
+      {
+        "slot": 1,
+        "value": 8
+      }
+    ],
+    "edited_parameter_metadata": [
+      {
+        "slot": 1,
+        "name": "Search Radius",
+        "kind": "float",
+        "minimum": 0.0,
+        "maximum": 100.0,
+        "value": 2.0,
+        "choices": [],
+        "color": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "component_count": 0,
+        "layer_path": null,
+        "enabled": true,
+        "visible": true,
+        "supervised": false,
+        "debug_summary": null,
+        "custom_ui_events": 4,
+        "control_size": [
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "harness": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\broker\\target\\release\\aexcompat-harness.exe",
+    "sha256": "92280aa7ca441a59f9edb0b9343779ebf237e6d6949a3e33d2d54515d4130dbc"
+  },
+  "worker": {
+    "path": "D:\\Projects\\01_Project\\04_Tools\\AEXCompat-wt-main\\target\\minihost-build\\aex_worker.exe",
+    "sha256": "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+  },
+  "tests": {
+    "workspace_passed": 130,
+    "ignored": 2,
+    "golden_exact": 616,
+    "historical_exclusions": 14,
+    "exhaustive_mask_band_comparisons": 65536,
+    "large_band_comparisons": 270,
+    "cpp_comparisons": 3318,
+    "fmt_toon": "passed",
+    "clippy_toon": "passed with inherited warnings"
+  },
+  "audit": {
+    "evidence": {
+      "path": "D:\\olm-rs-target\\misc-evidence\\r2-bench\\evidence.json",
+      "sha256": "305fd949c3c59fea304a3163c6894bc4cfcbcb4f7c35f8432a2094f4bd81d541"
+    },
+    "counts": {
+      "exact_cells": 6,
+      "raw_reports_verified": 12,
+      "png_files_verified": 72,
+      "exact_frame_pairs_including_warmup": 36,
+      "exact_timed_frame_pairs": 30,
+      "deep_files_verified": 48
+    },
+    "loaded_worker_hashes": [
+      "7a6598974b903fd4b068587b726d41c8adb8b198a294add88d544582482c71cf"
+    ],
+    "executables_unchanged": 4,
+    "passed": true
+  },
+  "retained_bytes_after_runs": 3181075167,
+  "raw_evidence_retained_per_user_no_deletion": true,
+  "oracle": [
+    {
+      "seed": 20261123,
+      "targeted": false,
+      "exact_per_depth": {
+        "smart8": 53,
+        "smart16": 53,
+        "smart32": 53
+      }
+    },
+    {
+      "seed": 20261124,
+      "targeted": false,
+      "exact_per_depth": {
+        "smart8": 53,
+        "smart16": 53,
+        "smart32": 53
+      }
+    },
+    {
+      "seed": 20261125,
+      "targeted": true,
+      "exact_per_depth": {
+        "smart8": 24,
+        "smart16": 24,
+        "smart32": 24
+      }
+    }
+  ]
+}

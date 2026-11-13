@@ -1,5 +1,30 @@
 # OLMToonDilate Rust validation — P-toon
 
+## Performance round 2 (2026-11-13)
+
+Round 2 preserves the two chamfer raster orders in `mac/OLMToonDilate/OLMToonDilate.cpp:276`: forward left/upper-left/up/upper-right, then backward right/lower-right/down/lower-left. Strict first-neighbor ties and immediate color copies matter; a separable distance-only transform would not establish color equivalence. This is source-backed reconstruction corroborated by original-AEX comparisons below, not a new native disassembly claim.
+
+Equal-sized worlds now use contiguous pixel/distance planes with a one-pixel sentinel border. Fixed-size byte pixels retain float payloads. Each scan keeps the same neighbor order; the backward scan skips distances 0/1 because no strict improvement exists. Distances above the radius can remain infinity because they cannot produce or block a visible write. Independent horizontal bands include a radius-sized vertical halo: a copied color's predecessor chain has at most radius steps and each step changes y by at most one, so all influencing paths and equal-distance choices remain inside the halo. Both raster scans remain serial within each band. Workers are bounded by available parallelism and ceil(height / max(128, 4*radius)). Differently sized/cropped outputs retain the old ordered implementation, including out-of-output copy no-ops.
+
+The 960x540 microprofile isolated propagation as the dominant cost: radius-zero copying took 0.05-0.27 ms; active radius 5/50 took 6.75-9.15 ms before and 0.99-2.72 ms after, across all depths and dense/sparse seed patterns. See `examples/profile.rs`. This is kernel time, not host selector time.
+
+One final 1080p original-AEX benchmark, one warm-up plus five timed frames per cell, serial normal-priority harness execution. Rust/original ratios (lower is faster):
+
+| bpc | Round 1 default / heavy | Round 2 default / heavy |
+|---:|---:|---:|
+| 8 | 1.156 / 1.209 | 0.296 / 0.304 |
+| 16 | 1.233 / 1.253 | 0.401 / 0.443 |
+| 32 | 1.375 / 1.413 | 0.679 / 0.710 |
+
+All six cells are below 1. All 36 frame pairs (30 timed) are exact; audit verifies 12 raw reports, 72 PNGs, 48 deep outputs and four unchanged executable identities. Prior round ratios are retained as historical separate-campaign observations; shared-machine timing is not native AE/macOS performance.
+
+After merging current main: `cargo test --release -j 1` passes **130 tests**, with two existing opt-in ignores, and all **616 golden hashes** (14 historical RadialBlur exclusions retained). Serial compilation avoids inherited duplicate `profile` example output names. ToonDilate fmt and release Clippy pass, retaining inherited warnings. Added tests exhaust all 4,096 masks of a 3x4 image over four radii and four band heights (**65,536 comparisons**); **270** larger 257x259 padded/raw-payload comparisons cover all depths, no/all/dense/sparse seeds, radii 1/2/5/50/100/400, and forced 1/2/7 workers. Existing 3,318 production-C++ differential comparisons also pass, including cropped/larger outputs.
+
+`tools/qualify.py` records **390/390 original-AEX comparisons**: seeds 20261123/20261124 each have 53 cases per depth (100 random plans plus default/min/max across both seeds); seed 20261125 adds 24 targeted cases per depth. Downsample 1, 1/2, 1/4; random radius plans span the full declared range. Targeted 257x259, 13x541 and 1x541 inputs include competing equal-distance seeds, sparse grids, seeds around band boundaries, and no/all seeds. No mismatches, original errors, candidate failures or timeouts. Per-process authority remains enabled for any non-exact resident result; none required replay.
+
+Compact record: `performance-round2.json`. Original and final candidate identities, timing samples and full campaign index are retained in `D:/olm-rs-target/misc-evidence/r2-qualification.json`. Round-one raw files were compacted by the director; historical paths below may no longer exist. Per the subsequent no-deletion instruction, new raw artifacts and the worktree are left for director cleanup (listed in the final report); retained job target/evidence total was 3.18 GB after the runs. No other round-one effect implementation changed. Remaining cost is deep-pixel halo copying/allocation and ordered scans inside each band; native AE MFR/macOS throughput remains unmeasured.
+
+
 ## Performance (S-misc, 2026-11-13)
 
 Active source rows are copied in bulk and seed rows use bounded workers. The AE adapter reuses its existing transaction buffer, avoiding duplicate staging; publication still follows successful pixel checkin. Fixed 4/8/16-byte pixel copies compile separately. Propagation splits adjacent distance rows once per scan row; ordered propagation and first-neighbor ties remain serial and unchanged.
