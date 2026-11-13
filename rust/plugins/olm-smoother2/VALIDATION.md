@@ -421,3 +421,27 @@ The `campaign-*`, `inventory-*`, `original-inventory-run`, `oracle-*` and
 `standalone/` directories are also **local-only evidence/build workspaces**.
 Root-level campaign-summary, geometry-generation, rebuild-equivalence,
 rebuild-sections, process records and validation-report JSON are retained.
+
+## Performance implementation (S-smoother, 2026-11-13)
+
+The AE adapter now requests available CPU parallelism instead of hardcoding one
+worker. Setup (copy, color key, transfer LUT and Oklab), classification and
+smoothing operate on independent row chunks. The crate-local row scheduler caps
+workers at available_parallelism and uses at least 16K pixels per worker; small
+frames and explicit one-worker calls execute inline. Every scope joins before
+returning, with no global mutable state or persistent worker pool. Floating-point
+operations and per-pixel sample accumulation order are unchanged. `olm-math`
+and its scalar cbrtf are unchanged; no local or vector cube root is substituted.
+
+`examples/profile.rs` provides reproducible 1080p phase timings. In the bounded
+24-logical-CPU diagnostic, serial v2 setup took 22-31 ms and Oklab setup 106-121
+ms. Three scalar cbrtf calls per pixel took 71-82 ms; serial class planes took
+15-26 ms. Complete pure pipelines took 435-583 ms with one worker and 68-95 ms
+with the available workers. These are diagnostic samples on a shared machine,
+not the host benchmark medians or a claim of exclusive CPU attribution.
+
+The added 257x193 full-frame test crosses the parallel threshold with uneven
+chunks and compares exact float words for requested workers 1/2/3/usize::MAX,
+all three versions, all gamma modes, fractional range, color key/inversion,
+extra smoothing and premultiplied output. The existing C++ and adapter tests
+remain active. No parameter or host-contract changes are introduced.

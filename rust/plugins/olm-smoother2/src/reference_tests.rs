@@ -3,10 +3,49 @@ use crate::{
     types::{Pixel, Vertex},
 };
 extern "C" {
-    fn sm2_ref_sha(data:*const u8,n:usize,out:*mut u8);
-    fn sm2_ref_render(pixels:*mut Pixel,w:i32,h:i32,version:i32,smooth:i32,extra:i32,range:i32,mode:i32,gamma:f32,palette:*const Pixel,colors:i32,key_mode:i32,keep:i32,out:*mut Pixel);
-    fn sm2_ref_polygon(pixels:*mut Pixel,classes:*const u8,w:i32,h:i32,x:i32,y:i32,smooth:i32,extra:i32,out:*mut Vertex)->i32;
-    fn sm2_ref_leaf(id:i32,pixels:*mut Pixel,classes:*const u8,w:i32,h:i32,x:i32,y:i32,smooth:f32,extra:f32,desc:*const i32,scale:f32,out:*mut Vertex,count:*mut i32)->i32;
+    fn sm2_ref_sha(data: *const u8, n: usize, out: *mut u8);
+    fn sm2_ref_render(
+        pixels: *mut Pixel,
+        w: i32,
+        h: i32,
+        version: i32,
+        smooth: i32,
+        extra: i32,
+        range: i32,
+        mode: i32,
+        gamma: f32,
+        palette: *const Pixel,
+        colors: i32,
+        key_mode: i32,
+        keep: i32,
+        out: *mut Pixel,
+    );
+    fn sm2_ref_polygon(
+        pixels: *mut Pixel,
+        classes: *const u8,
+        w: i32,
+        h: i32,
+        x: i32,
+        y: i32,
+        smooth: i32,
+        extra: i32,
+        out: *mut Vertex,
+    ) -> i32;
+    fn sm2_ref_leaf(
+        id: i32,
+        pixels: *mut Pixel,
+        classes: *const u8,
+        w: i32,
+        h: i32,
+        x: i32,
+        y: i32,
+        smooth: f32,
+        extra: f32,
+        desc: *const i32,
+        scale: f32,
+        out: *mut Vertex,
+        count: *mut i32,
+    ) -> i32;
     fn sm2_ref_class_plane(input: *const Pixel, w: i32, h: i32, range: i32, out: *mut u8);
     fn sm2_ref_weights(span: i32, offset: i32, key: i32, scalar: i32, out: *mut f32);
     fn sm2_ref_line(p2: *const f32, p3: *const f32, offset: i32, scalar: i32, out: *mut f32);
@@ -62,44 +101,107 @@ extern "C" {
 }
 
 #[test]
-fn source_identity_sha256(){
-    let mut rng=Rng(0x51a256);
-    for n in (0..257).chain([1024,8192,65536]) {
-        let input:Vec<u8>=(0..n).map(|_|rng.word() as u8).collect();let mut expected=[0;32];
-        unsafe{sm2_ref_sha(input.as_ptr(),n,expected.as_mut_ptr());}
-        assert_eq!(crate::sha256::digest(&input),expected,"length={n}");
+fn source_identity_sha256() {
+    let mut rng = Rng(0x51a256);
+    for n in (0..257).chain([1024, 8192, 65536]) {
+        let input: Vec<u8> = (0..n).map(|_| rng.word() as u8).collect();
+        let mut expected = [0; 32];
+        unsafe {
+            sm2_ref_sha(input.as_ptr(), n, expected.as_mut_ptr());
+        }
+        assert_eq!(crate::sha256::digest(&input), expected, "length={n}");
     }
 }
 
 #[test]
 fn stage7_complete_polygons() {
-    for seed in [0x7a11,0x20261114] {
-        let mut rng=Rng(seed);
-        for (w,h) in [(1,1),(3,7),(11,9),(31,19)] {
-            let mut pixels:Vec<_>=(0..w*h).map(|_|rng.pixel()).collect();
+    for seed in [0x7a11, 0x20261114] {
+        let mut rng = Rng(seed);
+        for (w, h) in [(1, 1), (3, 7), (11, 9), (31, 19)] {
+            let mut pixels: Vec<_> = (0..w * h).map(|_| rng.pixel()).collect();
             for case in 0..256 {
-                let mut classes:Vec<u8>=(0..w*h*4).map(|_|(rng.word()&1) as u8).collect();
+                let mut classes: Vec<u8> = (0..w * h * 4).map(|_| (rng.word() & 1) as u8).collect();
                 // All 256 index bit patterns at an interior pixel, with random surrounding runs.
-                if w>3 {
-                    let x=w/2;let y=h/2;
-                    for (bit,dx,dy,ch) in [(3,0,0,0),(1,0,0,1),(0,0,0,2),(2,0,0,3),(4,1,0,0),(5,-1,1,3),(6,0,1,1),(7,1,1,2)] {
-                        classes[((y+dy)*w*4+(x+dx)*4+ch) as usize]=if case&(1<<bit)==0 {1}else{0};
+                if w > 3 {
+                    let x = w / 2;
+                    let y = h / 2;
+                    for (bit, dx, dy, ch) in [
+                        (3, 0, 0, 0),
+                        (1, 0, 0, 1),
+                        (0, 0, 0, 2),
+                        (2, 0, 0, 3),
+                        (4, 1, 0, 0),
+                        (5, -1, 1, 3),
+                        (6, 0, 1, 1),
+                        (7, 1, 1, 2),
+                    ] {
+                        classes[((y + dy) * w * 4 + (x + dx) * 4 + ch) as usize] =
+                            if case & (1 << bit) == 0 { 1 } else { 0 };
                     }
                 }
-                for (x,y) in [(0,0),(w-1,0),(0,h-1),(w-1,h-1),(w/2,h/2)] {
-                    let smooth=[1,25,50,100][case%4];let extra=[0,25,100][case%3];
-                    let mut natural=vec![0u8;(w*h*4) as usize];
-                    unsafe{sm2_ref_class_plane(pixels.as_ptr(),w,h,(case%101) as i32,natural.as_mut_ptr());}
-                    let classes=if w>3 && x==w/2 && y==h/2 {&classes}else{&natural};
-                    let mut expected=[Vertex::default();12];
-                    let n=unsafe{sm2_ref_polygon(pixels.as_mut_ptr(),classes.as_ptr(),w,h,x,y,smooth,extra,expected.as_mut_ptr())};
-                    let mut p=crate::geometry::State::new(&pixels,&classes,w,h,x,y,smooth as f32/100.0,extra as f32/100.0).unwrap();
+                for (x, y) in [
+                    (0, 0),
+                    (w - 1, 0),
+                    (0, h - 1),
+                    (w - 1, h - 1),
+                    (w / 2, h / 2),
+                ] {
+                    let smooth = [1, 25, 50, 100][case % 4];
+                    let extra = [0, 25, 100][case % 3];
+                    let mut natural = vec![0u8; (w * h * 4) as usize];
+                    unsafe {
+                        sm2_ref_class_plane(
+                            pixels.as_ptr(),
+                            w,
+                            h,
+                            (case % 101) as i32,
+                            natural.as_mut_ptr(),
+                        );
+                    }
+                    let classes = if w > 3 && x == w / 2 && y == h / 2 {
+                        &classes
+                    } else {
+                        &natural
+                    };
+                    let mut expected = [Vertex::default(); 12];
+                    let n = unsafe {
+                        sm2_ref_polygon(
+                            pixels.as_mut_ptr(),
+                            classes.as_ptr(),
+                            w,
+                            h,
+                            x,
+                            y,
+                            smooth,
+                            extra,
+                            expected.as_mut_ptr(),
+                        )
+                    };
+                    let mut p = crate::geometry::State::new(
+                        &pixels,
+                        &classes,
+                        w,
+                        h,
+                        x,
+                        y,
+                        smooth as f32 / 100.0,
+                        extra as f32 / 100.0,
+                    )
+                    .unwrap();
                     crate::geometry::build(&mut p);
-                    let actual=p.vertices().unwrap();
-                    assert_eq!(actual.len(),n as usize,"seed={seed:x} size={w}x{h} case={case} xy={x},{y}");
-                    for (i,(a,b)) in actual.iter().zip(expected).enumerate(){
-                        same(a.pixel,b.pixel);
-                        assert_eq!(a.weight.to_bits(),b.weight.to_bits(),"seed={seed:x} size={w}x{h} case={case} xy={x},{y} vertex={i}");
+                    let actual = p.vertices().unwrap();
+                    assert_eq!(
+                        actual.len(),
+                        n as usize,
+                        "seed={seed:x} size={w}x{h} case={case} xy={x},{y}"
+                    );
+                    for (i, (a, b)) in actual.iter().zip(expected).enumerate() {
+                        same(a.pixel, b.pixel);
+                        assert_eq!(
+                            a.weight.to_bits(),
+                            b.weight.to_bits(),
+                            "seed={seed:x} size={w}x{h} case={case} xy={x},{y} vertex={i}"
+                        );
                     }
                 }
             }
@@ -109,25 +211,85 @@ fn stage7_complete_polygons() {
 
 #[test]
 fn stage8_full_render() {
-    use crate::algorithm::{Params,render};
+    use crate::algorithm::{render, Params};
     use gamma::GammaMode;
-    for seed in [0x8f00d,0x20261115] {
-        let mut rng=Rng(seed);
-        for (w,h) in [(1,1),(3,7),(11,9),(31,19)] {
+    for seed in [0x8f00d, 0x20261115] {
+        let mut rng = Rng(seed);
+        for (w, h) in [(1, 1), (3, 7), (11, 9), (31, 19)] {
             for case in 0..144 {
-                let palette:Vec<_>=(0..5).map(|_|rng.pixel()).collect();
-                let input:Vec<_>=(0..w*h).map(|i|{
-                    let mut v=if case%3==0 {palette[(i%5) as usize]}else if case%3==1 {palette[((i/w+i%w)/3%5) as usize]}else{rng.pixel()};
-                    if case%4==0{v.a=1.0;} if case%4==1 && i%3==0{v.a=0.0;}v
-                }).collect();
-                let key_mode=case%3;let colors=case%6;
-                let p=Params{version:1+case%2,smoothness:[0,1,50,100][(case/2%4) as usize],extra:[0,25,100][(case/8%3) as usize],range:[0,1,2,50,100][(case/3%5) as usize],gamma_mode:[GammaMode::None,GammaMode::Colors,GammaMode::All][(case/4%3) as usize],gamma:[0.0,0.5,1.0,2.2,2.4,5.0][(case/6%6) as usize],gamma_colors:palette[..colors as usize].to_vec(),key:if key_mode==0{None}else{Some((palette[0],key_mode==2))},keep_premultiplied:case%2==0};
-                let mut source=input.clone();let mut expected=vec![Pixel::default();input.len()];
-                unsafe{sm2_ref_render(source.as_mut_ptr(),w,h,p.version,p.smoothness,p.extra,p.range,p.gamma_mode as i32,p.gamma,palette.as_ptr(),colors,key_mode,p.keep_premultiplied as i32,expected.as_mut_ptr());}
-                for threads in [1,3,7] {
-                    let actual=render(&input,w as usize,h as usize,&p,threads,&mut olm_core::Budget::new(input.len()*36)).unwrap();
-                    for (i,(a,b)) in actual.into_iter().zip(&expected).enumerate(){
-                        assert_eq!(a.words(),b.words(),"seed={seed:x} size={w}x{h} case={case} threads={threads} pixel={i}");
+                let palette: Vec<_> = (0..5).map(|_| rng.pixel()).collect();
+                let input: Vec<_> = (0..w * h)
+                    .map(|i| {
+                        let mut v = if case % 3 == 0 {
+                            palette[(i % 5) as usize]
+                        } else if case % 3 == 1 {
+                            palette[((i / w + i % w) / 3 % 5) as usize]
+                        } else {
+                            rng.pixel()
+                        };
+                        if case % 4 == 0 {
+                            v.a = 1.0;
+                        }
+                        if case % 4 == 1 && i % 3 == 0 {
+                            v.a = 0.0;
+                        }
+                        v
+                    })
+                    .collect();
+                let key_mode = case % 3;
+                let colors = case % 6;
+                let p = Params {
+                    version: 1 + case % 2,
+                    smoothness: [0, 1, 50, 100][(case / 2 % 4) as usize],
+                    extra: [0, 25, 100][(case / 8 % 3) as usize],
+                    range: [0, 1, 2, 50, 100][(case / 3 % 5) as usize],
+                    gamma_mode: [GammaMode::None, GammaMode::Colors, GammaMode::All]
+                        [(case / 4 % 3) as usize],
+                    gamma: [0.0, 0.5, 1.0, 2.2, 2.4, 5.0][(case / 6 % 6) as usize],
+                    gamma_colors: palette[..colors as usize].to_vec(),
+                    key: if key_mode == 0 {
+                        None
+                    } else {
+                        Some((palette[0], key_mode == 2))
+                    },
+                    keep_premultiplied: case % 2 == 0,
+                };
+                let mut source = input.clone();
+                let mut expected = vec![Pixel::default(); input.len()];
+                unsafe {
+                    sm2_ref_render(
+                        source.as_mut_ptr(),
+                        w,
+                        h,
+                        p.version,
+                        p.smoothness,
+                        p.extra,
+                        p.range,
+                        p.gamma_mode as i32,
+                        p.gamma,
+                        palette.as_ptr(),
+                        colors,
+                        key_mode,
+                        p.keep_premultiplied as i32,
+                        expected.as_mut_ptr(),
+                    );
+                }
+                for threads in [1, 3, 7] {
+                    let actual = render(
+                        &input,
+                        w as usize,
+                        h as usize,
+                        &p,
+                        threads,
+                        &mut olm_core::Budget::new(input.len() * 36),
+                    )
+                    .unwrap();
+                    for (i, (a, b)) in actual.into_iter().zip(&expected).enumerate() {
+                        assert_eq!(
+                            a.words(),
+                            b.words(),
+                            "seed={seed:x} size={w}x{h} case={case} threads={threads} pixel={i}"
+                        );
                     }
                 }
             }
@@ -137,32 +299,83 @@ fn stage8_full_render() {
 
 #[test]
 fn stage6_directional_leaves() {
-    let mut calls=0;
-    for seed in [0x61eaf,0x20261113] {
-        let mut rng=Rng(seed);
+    let mut calls = 0;
+    for seed in [0x61eaf, 0x20261113] {
+        let mut rng = Rng(seed);
         for case in 0..512 {
-            let (w,h)=(11,9);
-            let mut pixels:Vec<_>=(0..w*h).map(|_|rng.pixel()).collect();
-            let mut classes=vec![0;w*h*4];
-            for (i,b) in classes.iter_mut().enumerate() {
-                *b=if case<16 {if case&(1<<(i%4))!=0 {255}else{0}} else {if rng.word()%3==0 {255}else{0}};
+            let (w, h) = (11, 9);
+            let mut pixels: Vec<_> = (0..w * h).map(|_| rng.pixel()).collect();
+            let mut classes = vec![0; w * h * 4];
+            for (i, b) in classes.iter_mut().enumerate() {
+                *b = if case < 16 {
+                    if case & (1 << (i % 4)) != 0 {
+                        255
+                    } else {
+                        0
+                    }
+                } else {
+                    if rng.word() % 3 == 0 {
+                        255
+                    } else {
+                        0
+                    }
+                };
             }
-            let desc=[2,2,(rng.word()%10) as i32,8,6,(rng.word()%10) as i32];
-            let smooth=[0.0,0.01,0.5,1.0][case%4]; let extra=[0.0,0.25,1.0][case%3];
-            let scale=[0.0,0.5,1.0][case%3];
+            let desc = [
+                2,
+                2,
+                (rng.word() % 10) as i32,
+                8,
+                6,
+                (rng.word() % 10) as i32,
+            ];
+            let smooth = [0.0, 0.01, 0.5, 1.0][case % 4];
+            let extra = [0.0, 0.25, 1.0][case % 3];
+            let scale = [0.0, 0.5, 1.0][case % 3];
             for id in 0..32 {
-                let mut expected=[Vertex::default();12];let mut count=0;
-                let expected_flag=unsafe{sm2_ref_leaf(id,pixels.as_mut_ptr(),classes.as_ptr(),w as i32,h as i32,5,4,smooth,extra,desc.as_ptr(),scale,expected.as_mut_ptr(),&mut count)};
-                let mut state=crate::geometry::State::new(&pixels,&classes,w as i32,h as i32,5,4,smooth,extra).unwrap();
-                let flag=crate::geometry::test_leaf(id as usize,&desc,scale,&mut state);
-                assert_eq!(flag as i32,expected_flag,"seed={seed} case={case} leaf={id}");
-                let actual=state.vertices().unwrap(); assert_eq!(actual.len(),count as usize);
-                for (a,b) in actual.iter().zip(expected.iter()) {same(a.pixel,b.pixel);assert_eq!(a.weight.to_bits(),b.weight.to_bits(),"seed={seed} case={case} leaf={id}");}
-                calls+=1;
+                let mut expected = [Vertex::default(); 12];
+                let mut count = 0;
+                let expected_flag = unsafe {
+                    sm2_ref_leaf(
+                        id,
+                        pixels.as_mut_ptr(),
+                        classes.as_ptr(),
+                        w as i32,
+                        h as i32,
+                        5,
+                        4,
+                        smooth,
+                        extra,
+                        desc.as_ptr(),
+                        scale,
+                        expected.as_mut_ptr(),
+                        &mut count,
+                    )
+                };
+                let mut state = crate::geometry::State::new(
+                    &pixels, &classes, w as i32, h as i32, 5, 4, smooth, extra,
+                )
+                .unwrap();
+                let flag = crate::geometry::test_leaf(id as usize, &desc, scale, &mut state);
+                assert_eq!(
+                    flag as i32, expected_flag,
+                    "seed={seed} case={case} leaf={id}"
+                );
+                let actual = state.vertices().unwrap();
+                assert_eq!(actual.len(), count as usize);
+                for (a, b) in actual.iter().zip(expected.iter()) {
+                    same(a.pixel, b.pixel);
+                    assert_eq!(
+                        a.weight.to_bits(),
+                        b.weight.to_bits(),
+                        "seed={seed} case={case} leaf={id}"
+                    );
+                }
+                calls += 1;
             }
         }
     }
-    assert_eq!(calls,32768);
+    assert_eq!(calls, 32768);
 }
 
 #[test]
@@ -770,6 +983,57 @@ fn stage1_key_setup_and_unpremultiply() {
             }
             for (a, b) in actual.into_iter().zip(expected) {
                 same(a, b);
+            }
+        }
+    }
+}
+
+#[test]
+fn parallel_large_frames_all_versions() {
+    use crate::algorithm::{render_with_range, Params};
+    use gamma::GammaMode;
+    let (w, h) = (257, 193); // Crosses the parallel threshold, with uneven row chunks.
+    let mut rng = Rng(0x519223);
+    let palette: Vec<_> = (0..6).map(|_| rng.pixel()).collect();
+    let input: Vec<_> = (0..w * h)
+        .map(|i| {
+            if i % 7 == 0 {
+                rng.pixel()
+            } else {
+                palette[(i / w + i % w / 3) % 6]
+            }
+        })
+        .collect();
+    for version in 1..=3 {
+        for mode in [GammaMode::None, GammaMode::Colors, GammaMode::All] {
+            let p = Params {
+                version,
+                smoothness: 100,
+                extra: 75,
+                range: 2,
+                gamma_mode: mode,
+                gamma: 2.4,
+                gamma_colors: palette.clone(),
+                key: Some((palette[0], version % 2 == 0)),
+                keep_premultiplied: true,
+            };
+            let run = |threads| {
+                render_with_range(
+                    &input,
+                    w,
+                    h,
+                    &p,
+                    2.375,
+                    threads,
+                    &mut olm_core::Budget::new(w * h * 36),
+                )
+                .unwrap()
+            };
+            let expected = run(1);
+            for threads in [2, 3, usize::MAX] {
+                for (a, b) in run(threads).iter().zip(&expected) {
+                    assert_eq!(a.words(), b.words());
+                }
             }
         }
     }
